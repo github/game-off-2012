@@ -24,7 +24,7 @@ All of the winners and runners up will be showcased on our blog.
 
 ### Everyone's a winner!
 
-All particpants will receive a limited edition [Coderwall](http://www.coderwall.com) badge as shown above. Winners and runners up will also get one their own special version of it.
+All particpants will receive a limited edition [Coderwall](http://www.coderwall.com) badge as shown above. Winners and runners up will also get their own special version of it.
 
 ## Judging
 
