@@ -50,7 +50,7 @@ We have a number of awesome judges who graciously volunteered to take a look at 
 * Be sure to follow @github on Twitter for updates
 * Make sure your code is pushed to the master branch of before Dec 1st!
 * Make sure you have a README file with a brief description, what open source projects (if any) you used, and a screenshot.
-* Your repo should have a brief description and a URL where the game is playable (this will make our judging process easier):
+* Your repo should have a brief description and a URL where the game is playable entered into the fields shown below (this will make our judging process easier):
 
 ![](https://img.skitch.com/20121010-x2ecpu95fi91us6hbfehg2dgit.png)
 
