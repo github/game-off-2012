@@ -1,7 +1,5 @@
 Here at GitHub, we're no strangers to hosting or sponsoring hackathons. With the growing number of games and game development resources on GitHub, we thought it was about time to throw our very own game jam!
 
-<img src="http://f.cl.ly/items/331q0G0c0S301F1K2L0i/Screen%20Shot%202012-10-24%20at%205.17.58%20PM.png" style="border: 0;">
-
 ## The Challenge
 
 You have the entire month of November to create a **web-based** game loosely built around one or more of the following:
