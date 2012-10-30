@@ -2,7 +2,7 @@
 $(document).ready(function() {
 
   // Initialize Crafty 640 Pixels Wide 480 Pixles Tall
-  Crafty.init(640,480).canvas.init();
+  Crafty.init().canvas.init();
   Crafty.background("black");
 
   // Let's draw us a Hero and a Blob

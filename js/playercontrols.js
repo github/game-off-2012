@@ -25,6 +25,8 @@ Crafty.c("PlayerControls", {
     });
   }
 });
+
+
 Crafty.c("AI",{
   _directions:  [[0,-1], [0,1], [1,0], [-1,0]],
   init: function() {
