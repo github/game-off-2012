@@ -3,9 +3,10 @@ $(document).ready(function() {
   // Initialize Crafty
   Crafty.init().canvas.init();
 
-  Crafty.scene("main",function() {
+    Crafty.scene("main",function() {
     Crafty.background("#000");
-    loadMap("levels/map1.tsv",function() {
+
+      loadMap("levels/map01.tsv",function(levelData) {
       var player = Crafty.e("2D, Canvas, DOM, SpriteAnimation, PlayerControls, Solid, hero1")
       .attr({x:0, y:32, z:1})
       .playerControls(1.5)
