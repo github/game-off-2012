@@ -4,12 +4,12 @@
 You are a  scientist in a secret underground lab working for -insert corp here- when an earthquake hits!  Breaking lots of infrastructure & being generally bad!
 It is only you, and Ned the Janitor, and Ned the Janitor, and Ned the Janitor, and, well, a bunch of clones of Ned the Janitor, and you must ESCAPE! while overcoming the following obstacles:
 
-    * Roaring Fires!!!
-        * Using Ned the Janitor as a fire extinguisher.
-    * Perilous Chasms!!!
-        * Having Ned the Janitor find objects to throw in said chasm & possibly using himself.
-    * Other Dangerous Obstacles!!!
-        * They are very dangerous!
+  * Roaring Fires!!!
+      * Using Ned the Janitor as a fire extinguisher.
+  * Perilous Chasms!!!
+      * Having Ned the Janitor find objects to throw in said chasm & possibly using himself.
+  * Other Dangerous Obstacles!!!
+      * They are very dangerous!
 
 ## Objectives
 You need to complete each level with only yourself & the cloning machine intact in order to move on to the next level.
