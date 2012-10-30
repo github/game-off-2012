@@ -8,11 +8,11 @@ $(document).ready(function() {
     loadMap("levels/map1.tsv",function() {
       var player = Crafty.e("2D, Canvas, DOM, SpriteAnimation, PlayerControls, Solid, hero1")
       .attr({x:0, y:32, z:1})
-      .playerControls(1)
-      .animate("walk_left", 3, 1, 0)
-      .animate("walk_right", 3, 2, 0)
-      .animate("walk_up", 3, 3, 0)
-      .animate("walk_down", 3, 0, 0)
+      .playerControls(1.5)
+      .animate("walk_left", 2, 1, 0)
+      .animate("walk_right", 2, 2, 0)
+      .animate("walk_up", 2, 3, 0)
+      .animate("walk_down", 2, 0, 0)
       //change direction when a direction change event is received
       .bind("NewDirection",
         function (direction) {
