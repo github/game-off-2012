@@ -1,4 +1,15 @@
 Crafty.c("PlayerControls", {
+    init: function() {
+        this.requires('Multiway');
+    },
+    
+    playerControls: function(speed) {
+        this.multiway(speed, {W: -90, S: 90, D: 0, A: 180});
+        return this;
+    }
+    
+});
+/*Crafty.c("PlayerControls", {
   _keys: {
   UP_ARROW: [0,-1],
   DOWN_ARROW: [0,1],
@@ -24,7 +35,7 @@ Crafty.c("PlayerControls", {
       }
     });
   }
-});
+});*/
 
 
 Crafty.c("AI",{
