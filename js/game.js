@@ -3,12 +3,14 @@ $(document).ready(function() {
   // Initialize Crafty
   Crafty.init().canvas.init();
 
-    Crafty.scene("main",function() {
+  Crafty.scene("main",function() {
+
     Crafty.background("#000");
 
-      loadMap("levels/map01.tsv",function(levelData) {
+    loadMap("levels/map1.tsv",function() {
+
       var player = Crafty.e("2D, Canvas, DOM, SpriteAnimation, PlayerControls, Solid, hero1")
-      .attr({x:0, y:32, z:1})
+      .attr({x:0, y:32*11, z:1})
       .playerControls(1.5)
       .animate("walk_left", 2, 1, 0)
       .animate("walk_right", 2, 2, 0)
@@ -37,8 +39,10 @@ $(document).ready(function() {
               this.stop();
           }
         });
+
+
       var dad = Crafty.e("2D, Canvas, dad1, Solid, AI")
-      .attr({x:32, y:32, z:1});
+      .attr({x:32*39, y:32*11, z:1});
     });
   });
 

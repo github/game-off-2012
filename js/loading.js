@@ -8,14 +8,22 @@ Crafty.sprite(32,"images/dungeon.png", {
 Crafty.sprite(32,"images/hero.png", {
    hero1: [1,0]
 });
+
 // This will create entities called dad1
 Crafty.sprite(32,"images/dad.png", {
    dad1: [1,0]
 });
 
+Crafty.sprite(32,"images/NessPajamas.png", {
+  ness: [1,0]
+});
+
 //the loading screen that will display while our assets load
 Crafty.scene("loading", function() {
-  Crafty.load(["images/dungeon.png","images/hero.png","images/dad.png"], function() {
+  Crafty.load(["images/dungeon.png"
+               ,"images/hero.png"
+               ,"images/dad.png"
+              ,"images/NessPajamas.png"], function() {
     Crafty.scene("main"); //when everything is loaded, run the main scene
   });
 });
