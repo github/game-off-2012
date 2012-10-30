@@ -1,5 +1,3 @@
-TEST
-
 Here at GitHub, we're no strangers to hosting or sponsoring hackathons. With the growing number of games and game development resources on GitHub, we thought it was about time to throw our very own game jam!
 
 ## The Challenge
