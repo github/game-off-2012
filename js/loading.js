@@ -20,7 +20,6 @@ Crafty.scene("loading", function() {
   });
 });
 
-
 function loadMap(file, callback) {
   $.get(file,function(data) {
     var level = [];
