@@ -25,6 +25,7 @@ public class FireScript : MonoBehaviour
         {
             time = 0.0f;
             var temp = (Transform)Instantiate(ammunition,new Vector3(transform.position.x, transform.position.y+(transform.localScale.y+0.5f), transform.position.z),Quaternion.identity);
+            temp.GetChild(0).gameObject.active = false;
             temp.rigidbody.AddForce(-transform.forward * speed);
         }
 	    
