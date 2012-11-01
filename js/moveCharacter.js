@@ -13,11 +13,11 @@ var bg = document.getElementById("bg"); //get canvas element
 
 if(bg.getContext){ //execute if canvas element was present
 	ctx = bg.getContext("2d");
-	trackTransforms(ctx);
+	shiftCanvas(ctx);
 	
-	function redraw(){
-		var origin = ctx.transformedPoint(0, 0); 
-		var max = ctx.transformedPoint(bg.width, bg.height);
+	function redraw(ctx){
+		var origin = ctx.transformPt(0, 0); 
+		var max = ctx.transformPt(bg.width, bg.height);
 		ctx.clearRect(origin.x, origin.y, max.x - origin.x, max.y - origin.y);
 		
 		/*Load image here*/
@@ -25,12 +25,13 @@ if(bg.getContext){ //execute if canvas element was present
 		
 		/*Start of Test Canvas*/
 		ctx.fillStyle="#ffffff";
-		ctx.fillRect(-100, 0, 400, 400);
+		ctx.fillRect(-100, -100, 1600, 1200);
 		ctx.fillStyle="#00ff00";
-		ctx.fillRect(400,0,200,400);
+		ctx.fillRect(400, 0, 200, 400);
+		ctx.fillRect(0, 0, 200, 800);
 		/*End of Test Canvas*/
 	}
-	redraw() //initial draw on load of script
+	redraw(ctx) //initial draw on load of script
 	
 	function moveCharacter(evt) {
 		/* alert('moveCharacter()'); */
@@ -50,22 +51,22 @@ if(bg.getContext){ //execute if canvas element was present
 			case direction.left: //shift image right//scrolls left
 				//alert('left');
 				ctx.translate(left, 0); //shift//not visible untill the image is updated
-				redraw(); //update the image in the canvas
+				redraw(ctx); //update the image in the canvas
 				break;
 			case direction.right: //shift image left
 				//alert('right');
 				ctx.translate(right, 0); //shift
-				redraw(); //update the image in the canvas
+				redraw(ctx); //update the image in the canvas
 				break;
 			case direction.up: //shift image down
 				//alert('up'); 
 				ctx.translate(0, up); //shift
-				redraw(); //update the image in the canvas
+				redraw(ctx); //update the image in the canvas
 				break;
 			case direction.down: //shift image up
 				//alert('down');
 				ctx.translate(0, down); //shift
-				redraw(); //update the image in the canvas
+				redraw(ctx); //update the image in the canvas
 				break;
 			default:
 				//alert('default');
@@ -74,51 +75,23 @@ if(bg.getContext){ //execute if canvas element was present
 	}
 }
 
-/*This code is voodoo*/
-function trackTransforms(ctx){
+function shiftCanvas(ctx2){
 
-	var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
-	var xform = svg.createSVGMatrix();
-	ctx.getTransform = function(){ return xform; };
-	
-	var savedTransforms = [];
-	var save = ctx.save;
-	ctx.save = function(){
-		savedTransforms.push(xform.translate(0,0));
-		return save.call(ctx);
-	};
-	var restore = ctx.restore;
-	ctx.restore = function(){
-		xform = savedTransforms.pop();
-		return restore.call(ctx);
-	};
+	var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg'); //create an element using the svg namespace
+	var xform = svg.createSVGMatrix(); //create a matrix for storing image data
 
-	var translate = ctx.translate;
-	ctx.translate = function(dx,dy){
+	var translate = ctx2.translate;
+	ctx2.translate = function(dx,dy){
 		xform = xform.translate(dx,dy);
-		return translate.call(ctx,dx,dy);
+		return translate.call(ctx2,dx,dy);
 	};
-	var transform = ctx.transform;
-	ctx.transform = function(a,b,c,d,e,f){
-		var m2 = svg.createSVGMatrix();
-		m2.a=a; m2.b=b; m2.c=c; m2.d=d; m2.e=e; m2.f=f;
-		xform = xform.multiply(m2);
-		return transform.call(ctx,a,b,c,d,e,f);
-	};
-	var setTransform = ctx.setTransform;
-	ctx.setTransform = function(a,b,c,d,e,f){
-		xform.a = a;
-		xform.b = b;
-		xform.c = c;
-		xform.d = d;
-		xform.e = e;
-		xform.f = f;
-		return setTransform.call(ctx,a,b,c,d,e,f);
-	};
+
 	var pt  = svg.createSVGPoint();
-	ctx.transformedPoint = function(x,y){
+	ctx2.transformPt = function(x,y){
 		pt.x=x; pt.y=y;
 		return pt.matrixTransform(xform.inverse());
 	}
 }
+
 onkeydown=moveCharacter; //negates the need for an onkeydown in the html file
+
