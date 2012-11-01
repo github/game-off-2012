@@ -44,11 +44,13 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Camera\FollowPlayer.cs" />
-     <Compile Include="Assets\Scripts\Character\FireScript.cs" />
-     <Compile Include="Assets\Scripts\Character\Movement.cs" />
-     <Compile Include="Assets\Scripts\LockXAxis.cs" />
-     <Compile Include="Assets\Scripts\Objects\Bombs\Explode.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\Camera\FollowPlayer.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\Character\FireScript.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\Character\Movement.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\LockXAxis.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\MainMenu\BombGenerator.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\MainMenu\mainMenuButtons.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\Objects\Bombs\Explode.cs" />
      <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
      <None Include="Assets\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
