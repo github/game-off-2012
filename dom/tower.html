@@ -1,0 +1,234 @@
+<html>
+<head>
+<style type="text/css">
+body {
+	margin: 0px;
+}
+#field {
+	position: relative;
+	height: 100%;
+	width: 80%;
+	overflow: hidden;
+	cursor: move;
+	-webkit-user-select: none;
+}
+#view-wrapper {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0px;
+	height: 0px;
+}
+#view {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#info {
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	width: 20%;
+}
+.entity {
+	position: absolute;
+	width: 16px;
+	height: 16px;
+}
+.tower {
+	cursor: pointer;
+/* 	background-color: black; */
+/* 	border: 1px solid black; */
+	background-image: url('http://www.useragentman.com/blog/wp-content/uploads/2012/04/asterisk_orange.png');
+}
+.land {
+	background-image: url('http://harrysd.net16.net/wp-content/themes/Win7/images/land-button.png');
+}
+.monster {
+	background-image: url('http://icons.iconarchive.com/icons/deleket/green-monster/16/Green-Monster-30-icon.png');
+}
+.tower:hover {
+	background-color: orange;
+}
+</style>
+</head>
+<body>
+
+<div id="game">
+	<div id="field">
+		<div id="view-wrapper">
+			<div id="view" style="top: 0px; left: 0px">
+				<!-- Towers go here! -->
+			</div>
+		</div>
+	</div>
+	<div id="info">
+	</div>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="sprite-dom.js"></script>
+<script type="text/javascript">
+function Tile(x, y, type) {
+	var sp = new Sprite().type('entity '+type).x(x*16).y(y*16);
+	
+	this.update = function(dt) {
+// 		if (Math.random() > 0.1) return;
+// 		sp.x(sp.x() + dt * (Math.random() - 0.5));
+// 		sp.y(sp.y() + dt * (Math.random() - 0.5));
+	}
+	
+	this.render = function() {
+		return sp.render();
+	}
+	this.dispose = function() {
+		sp.dispose();
+	}
+	this.click = function(cb) {
+		sp.click(cb);
+	}
+}
+
+function Tower(x, y) {
+	Tile.call(this, x, y, 'tower');
+	return this;
+}
+
+function Land(x, y) {
+	Tile.call(this, x, y, 'land');
+	return this;
+}
+
+function Monster(x, y, paths) {
+	var sp = new Sprite().type('entity monster').x(x).y(y);
+	var pathi = 0;
+	var pathd = 0;
+	
+	this.update = function(dt) {
+		while (dt > 0.0001) {
+			if (pathi >= paths.length) {
+				sp.x(x);
+				sp.y(y);
+				pathi = 0;
+			}
+			var p = paths[pathi];
+			var d = p.v * dt;
+			if (pathd + d > p.d) {
+				var d = p.d - pathd;
+				pathi++;
+				pathd = 0;
+			}
+			dt -= (1/p.v) * d;
+			sp.x(sp.x() + d*p.x);
+			sp.y(sp.y() + d*p.y);
+			pathd += d;
+// 			console.log(p, d, dt, pathd, pathi);
+		}
+	}
+	
+	this.dispose = function() {
+		sp.dispose();
+	}
+}
+
+function openinfo(t, i, j) {
+	return function() {
+		$('#info').html("Tower (" + i + ", " + j + ") selected!");
+	}
+}
+
+map = [
+"10000000000000000001",
+"11111111010000000001",
+"10000000010000000001",
+"10111111110000000001",
+"22222222222222222222",
+];
+
+sprites = [];
+for (var i = 0; i < map.length; i++) {
+	for (var j = 0; j < map[i].length; j++) {
+		if (map[i][j] == "1") {
+			t = new Tower(j, i);
+			t.click(openinfo(t, j, i));
+			sprites.push(t);
+		} else if (map[i][j] == "2") {
+			l = new Land(j, i);
+			sprites.push(l);
+		}
+	}
+}
+
+
+(function() {
+  var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                              window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+  window.requestAnimationFrame = requestAnimationFrame;
+})();
+
+$(function() {
+	var v = document.getElementById('view');
+	var f = document.getElementById('field');
+	(function(g) {
+		f.onmousedown = mdown;
+		f.onmouseup = mup;
+		var x = 0;
+		var y = 0;
+		function mdown(ev) {
+			f.onmousemove = mmove;
+			document.onselectstart = function(){return false;}
+			x = ev.screenX;
+			y = ev.screenY;
+			console.log('mdown', x, y);
+		}
+		function mup(ev) {
+			f.onmousemove = null;
+			document.onselectstart = null;
+			console.log('mup', x, y);
+		}
+		function mmove(ev) {
+			var dx = ev.screenX - x;
+			var dy = ev.screenY - y;
+			v.style.left = parseInt(v.style.left) + dx + 'px';
+			v.style.top = parseInt(v.style.top) + dy + 'px';
+			x = ev.screenX;
+			y = ev.screenY;
+			console.log('mmove', x, y, dx, dy);
+		}
+	})(v);
+	var startts = Date.now();
+	function render(ts) {
+		var dt = ts - startts;
+		startts = ts;
+		for (var i = 0; i < sprites.length; i++) {
+			sprites[i].update(dt/60);
+// 			if (Math.random() > 0.9) {
+// 				sprites[i].dispose();
+// 				sprites.splice(i, 1);
+// 			}
+		}
+		
+		if (Math.random() > 0.9) {
+			var m = new Monster(16, 0, [
+			{x: 1, y: 0, d: 112, v:1},
+			{x: 0, y: 1, d: 32, v: 1},
+			{x: -1, y: 0, d: 112, v: 1},
+			{x: 0, y: 1, d: 16, v: 1},
+			]);
+			sprites.push(m);
+			$('#info').html(sprites.length + " sprites onscreen!");
+		}
+		
+// 		html = "";
+// 		for (var i = 0; i < sprites.length; i++) {
+// 			html += sprites[i].render();
+// 		}
+// 		g.innerHTML = html;
+		requestAnimationFrame(render);
+	}
+	requestAnimationFrame(render);
+});
+</script>
+</body>
+</html>
