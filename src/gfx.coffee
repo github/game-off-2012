@@ -1,5 +1,9 @@
 class Screen
+  constructor:->
+    @canvas = document.getElementById("board");
+    @ctx = @canvas.getContext('2d');
+    console.log(@ctx)
+  
   render:(x, y, tile)->
-    console.log(x);
-    console.log(y);
-    console.log(tile);
+    @ctx.fillStyle = '#FF00FF'
+    @ctx.fillRect(x, y, 16, 16)
