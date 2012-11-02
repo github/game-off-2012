@@ -68,7 +68,7 @@ body {
 </div>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script src="sprite-dom.js"></script>
+<script src="sprite.js"></script>
 <script type="text/javascript">
 function Tile(x, y, type) {
 	var sp = new Sprite().type('entity '+type).x(x*16).y(y*16);
@@ -112,18 +112,22 @@ function Monster(x, y, paths) {
 				sp.y(y);
 				pathi = 0;
 			}
+			
 			var p = paths[pathi];
+			
 			var d = p.v * dt;
-			if (pathd + d > p.d) {
-				var d = p.d - pathd;
+			pathd += d;
+			
+			if (pathd > p.d) {
+				d = p.d - pathd;
+				
 				pathi++;
 				pathd = 0;
 			}
-			dt -= (1/p.v) * d;
-			sp.x(sp.x() + d*p.x);
-			sp.y(sp.y() + d*p.y);
-			pathd += d;
-// 			console.log(p, d, dt, pathd, pathi);
+			dt -= d / p.v;
+			
+			sp.x(sp.x() + d * p.x);
+			sp.y(sp.y() + d * p.y);
 		}
 	}
 	
@@ -198,6 +202,7 @@ $(function() {
 		}
 	})(v);
 	var startts = Date.now();
+	$(document).focus(function() {starttts = Date.now()});
 	function render(ts) {
 		var dt = ts - startts;
 		startts = ts;
