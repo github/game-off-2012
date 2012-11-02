@@ -146,10 +146,12 @@ window.onload = ->
 
   Crafty.scene("game", ->
     Crafty.background("#000")
-    window.e1 = Crafty.e("2D, Canvas, GreenCodeBlock, Tween").attr(x: 100, y:50)
-    window.e2 = Crafty.e("2D, Canvas, GreenCodeBlock, Tween").attr(x: 100, y:150)
-    window.e3 = Crafty.e("2D, Canvas, RedCodeBlock, Tween").attr(x: 100, y:250)
-
+    window.e1 = Crafty.e("2D, Canvas, Collision, GreenCodeBlock, Tween").attr(x: 100, y:50)
+    window.e2 = Crafty.e("2D, Canvas, Collision, GreenCodeBlock, Tween").attr(x: 100, y:150)
+    window.e3 = Crafty.e("2D, Canvas, Collision, RedCodeBlock, Tween").attr(x: 100, y:250)
+    window.player = Crafty.e("2D, Canvas, Color, Collision, Velocity, SimpleVelocityControls")
+    .attr(x: 300, y:250, w: 10, h: 10)
+    .color("ffffff")
   )
 
   Crafty.scene("game")
