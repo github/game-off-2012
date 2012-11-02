@@ -6,10 +6,12 @@
 var container; //background layer
 var sprite; //character layer
 var layer1; //another layer
+var layer2; //another layer
+var isBlue = true;
 
 function init() {
   var canvas = document.getElementById("bg"); //get canvas element bg
-  container = new CanvasLayers.Container(canvas, false); //allocate mem for container
+  container = new CanvasLayers.Container(canvas, true); //allocate mem for container
 
   /*Give container initial action*/
   container.onRender = function(layer, rect, context) {
@@ -21,7 +23,7 @@ function init() {
   container.getChildren().add(sprite);
 
   sprite.onRender = function(layer, rect, context) {
-    context.fillStyle = "#00f";
+    context.fillStyle = isBlue ? '#00f' : '#f00';
     context.fillRect(0, 0, layer.getWidth(), layer.getHeight());
   }
   
@@ -29,8 +31,16 @@ function init() {
   container.getChildren().add(layer1);
 
   layer1.onRender = function(layer, rect, context) {
-  context.fillStyle = '#0f0';
-  context.fillRect(0, 0, layer.getWidth(), layer.getHeight());
+    context.fillStyle = '#0f0';
+    context.fillRect(0, 0, layer.getWidth(), layer.getHeight());
+  }
+
+  layer2 = new CanvasLayers.Layer(100, 200, 100, 100);
+  container.getChildren().add(layer2);
+
+  layer2.onRender = function(layer, rect, context) {
+    context.fillStyle = '#0f0';
+    context.fillRect(0, 0, layer.getWidth() - 20, layer.getHeight() - 20);
   }
 
   layer1.lowerToBottom();
@@ -39,7 +49,11 @@ function init() {
 }
 
 function changeScene() {
-  layer1.moveTo(layer1.getRelativeX() + 1, layer1.getRelativeY());
+//  isBlue = !isBlue;
+
+  sprite.markRectDamaged(new CanvasLayers.Rectangle(0,0, sprite.getWidth(), sprite.getHeight()));
+  layer1.moveTo(layer1.getRelativeX() - 1, layer1.getRelativeY());
+  layer2.moveTo(layer2.getRelativeX(), layer2.getRelativeY() + 1);
   container.redraw();
 }
 
