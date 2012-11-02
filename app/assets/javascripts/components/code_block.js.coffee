@@ -17,7 +17,7 @@ Crafty.c("CodeBlock", {
     @requires("2D, Canvas")
     @w = 50
     @h = 50
-    @rotation = Math.random() / 2
+    @rotation = Crafty.math.randomNumber(0, 90)
     @color = "#004400"
     @
 
@@ -26,10 +26,14 @@ Crafty.c("CodeBlock", {
 
     ctx.save()
     ctx.translate(@x,@y)
-    ctx.rotate(@rotation)
+    ctx.rotate(@rotation * (Math.PI/180))
 
-    ox = -1 * @w/2
-    oy = -1 * @h/2
+#    These are the nicer origins
+#    ox = -1 * @w/2
+#    oy = -1 * @h/2
+
+    ox = 0
+    oy = 0
 
     ctx.fillStyle = @color
     ctx.beginPath()
@@ -76,6 +80,7 @@ Crafty.c "RedCodeBlock",
     @color = "#330000"
     random = Crafty.math.randomNumber(0, 20)
     @color = increase_brightness(@color, random)
+
 
 Crafty.c "LineOfCode",
   init: ->
