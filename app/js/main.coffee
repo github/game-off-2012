@@ -88,7 +88,7 @@ window.onload = ->
 
 
 
-  Crafty.init(400, 336)
+  Crafty.init(480, 320)
 
   Crafty.scene("game", ->
     Crafty.background("#000")
