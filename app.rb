@@ -6,8 +6,8 @@ class ReleaseCyclesApp < Sinatra::Base
   register Sinatra::AssetPack
 
   assets {
-    js :application, '/js/app.js', ['/js/*.js']
-    css :application, '/css/app.css', ['/css/*.css']
+    js :application, '/js/app.js', ['/js/*.js', '/js/**/*.js']
+    css :application, '/css/app.css', ['/css/*.css','/css/**/*.css']
   }
 
   get '/' do
