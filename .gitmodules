@@ -1,0 +1,3 @@
+[submodule "lib/limejs"]
+	path = lib/limejs
+	url = git://github.com/digitalfruit/limejs.git
