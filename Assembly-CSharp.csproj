@@ -46,11 +46,16 @@
   <ItemGroup>
      <Compile Include="Assets\EpicFailInc\Scripts\Camera\FollowPlayer.cs" />
      <Compile Include="Assets\EpicFailInc\Scripts\Character\FireScript.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\Character\HealthAndLifeRelated.cs" />
      <Compile Include="Assets\EpicFailInc\Scripts\Character\Movement.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\GameManager.cs" />
      <Compile Include="Assets\EpicFailInc\Scripts\LockXAxis.cs" />
-     <Compile Include="Assets\EpicFailInc\Scripts\MainMenu\BombGenerator.cs" />
-     <Compile Include="Assets\EpicFailInc\Scripts\MainMenu\mainMenuButtons.cs" />
      <Compile Include="Assets\EpicFailInc\Scripts\Objects\Bombs\Explode.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\PlayerGui.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\Scene Specific\Death Scene\LoadScoreLifeSpan.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\Scene Specific\Death Scene\MainMenuButton.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\Scene Specific\MainMenu\BombGenerator.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\Scene Specific\MainMenu\mainMenuButtons.cs" />
      <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
      <None Include="Assets\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
   </ItemGroup>

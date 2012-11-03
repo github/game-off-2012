@@ -48,8 +48,18 @@ public class Explode : MonoBehaviour {
         var colliders = Physics.OverlapSphere( transform.position, explosionRadius );
         foreach (var hit in colliders)
         {
-            if( hit.rigidbody  && hit.rigidbody != transform.rigidbody)
-                hit.rigidbody.AddExplosionForce(explosionPower, transform.position, explosionRadius);
+            if (hit.rigidbody && hit.rigidbody != transform.rigidbody)
+            {
+                switch(hit.gameObject.tag)
+                {
+                    case "DestructableWall":
+                        Destroy(hit.gameObject);
+                        break;
+                    default:
+                        hit.rigidbody.AddExplosionForce(explosionPower, transform.position, explosionRadius);
+                        break;
+                }
+            }
         }
     }
 }
