@@ -17,12 +17,12 @@ gameOff.start = ->
   map.add_thing hero, 1, 1
   map.add_thing mob, 5, 5
 
-  director = new lime.Director document.body,grid.size_x * scale, grid.size_y * scale
+  director = new lime.Director document.body,grid.width * scale, grid.length * scale
   director.makeMobileWebAppCapable()
   director.setDisplayFPS(false)
   map_scene = new lime.Scene();
   map_layer = new lime.Layer().setPosition(0,0).setRenderer(lime.Renderer.CANVAS).setAnchorPoint(0,0)
-  map_sprite = new lime.Sprite().setSize(grid.size_x * scale, grid.size_y * scale).setFill('#000').setPosition(0,0).setAnchorPoint(0,0)
+  map_sprite = new lime.Sprite().setSize(grid.width * scale, grid.length * scale).setFill('#000').setPosition(0,0).setAnchorPoint(0,0)
   hero_sprite = new lime.Sprite().setSize(1 * scale,1 * scale).setFill('#FFF').setPosition(hero.cell.x * scale, hero.cell.y * scale)
   mob_sprite = new lime.Sprite().setSize(1 * scale, 1 * scale).setFill('#F00').setPosition(mob.cell.x * scale, mob.cell.y * scale)
 
@@ -52,13 +52,11 @@ class Grid
   @RIGHT = 3
   @LEFT  = 4
   
-  constructor: (size_x, size_y) ->
-    @size_x = size_x
-    @size_y = size_y
+  constructor: (@width, @length) ->
     @grid = []
-    for i in [0..size_x] 
+    for i in [0..@width - 1] 
       @grid[i] = []
-      for j in [0..size_y]
+      for j in [0..@length - 1]
         @grid[i][j] = new Cell this, i,j
 
   move: (thing, direction) ->
@@ -75,7 +73,7 @@ class Grid
     return thing
 
   get_cell: (x,y) ->
-    if (x > @size_x) or (x < 0) or (y > @size_y) or (y < 0)
+    if (x >= @width) or (x < 0) or (y >= @length) or (y < 0)
       return null
     @grid[x][y]
    
@@ -132,4 +130,8 @@ class Mob extends Mover
 class AI extends Mover
   where_to: ->
     [0,0]
-    
+
+#for export
+gameOff.Grid = Grid
+gameOff.Cell = Cell
+gameOff.Thing = Thing
