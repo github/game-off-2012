@@ -32,6 +32,10 @@
   var W = canvas.width = ui.body.width();
   var H = canvas.height = ui.body.height();
 
+  // Set Canvas Width/Height in Config
+  mit.config.canvas_width = W;
+  mit.config.canvas_height = H;
+
   // Gravity
   var gravity = mit.gravity = 0.2;
 
@@ -39,6 +43,9 @@
   var vx = 0;
   var vy = 0;
 
+  // Velocity cap on either sides of the
+  // number system.
+  // 
   // You can console.log velocities in drawing methods
   // and from there decide what to set as the cap.
   var v_cap = 4;
