@@ -1,7 +1,24 @@
 ### Instructions
 
-To run the project, first make sure you've downloaded lime.js and installed node.js, npm, and coffescript
+To run the project: 
 
-Once you have, pull the project and then move the gameOff directory into the limejs folder.
+* Install
+  * node.js
+  * npm
+  * coffeescript
+  * git-svn
+  * python
+  * java
 
-cd to the limejs folder then run coffee -c gameOff/gameOff.coffee
+Run:
+
+    git clone git://github.com/LPMC-Game-Off-2012/game-off-2012.git
+    cd game-off-2012
+    git submodule init
+    git submodule update
+    cd lib/limejs
+    bin/lime.py init
+    cd ../../gameOff
+    coffee -c gameOff.coffee
+
+Now you can open gameOff/gameOff.html with a browser and play the game. (hopefully)
