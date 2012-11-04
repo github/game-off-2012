@@ -25,7 +25,7 @@ body {
 	left: -32768px;
 	width: 65536px;
 	height: 65536px;
-	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAACJJREFUOMtj3LVr13+GgQK7du36z0SpIaMGjBowagCVDAAAbtEGeH+fJQgAAAAASUVORK5CYII=');
+	background: url('grid.png');
 /* background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wLBBEOI3CaRQkAAAAlSURBVDjLY2CgAOzates/EwOFYNSAUQNGDaCSAYy7du36T4kBACeDBnie5uW8AAAAAElFTkSuQmCC'); */
 }
 #info {
@@ -37,8 +37,8 @@ body {
 }
 .entity {
 	position: absolute;
-	width: 16px;
-	height: 16px;
+	width: 32px;
+	height: 32px;
 }
 .tower {
 	cursor: pointer;
@@ -76,7 +76,7 @@ body {
 <script src="sprite.js"></script>
 <script type="text/javascript">
 function Tile(x, y, type) {
-	var sp = new Sprite().type('entity '+type).x(x*16).y(y*16);
+	var sp = new Sprite().type('entity '+type).x(x*32).y(y*32);
 	
 	this.update = function(dt) {
 // 		if (Math.random() > 0.1) return;
@@ -152,7 +152,7 @@ map = [
 "11111111010000000001",
 "10000000010000000001",
 "10111111110000000001",
-"22222222222222222222",
+"02000000000000000001",
 ];
 
 sprites = [];
@@ -224,12 +224,12 @@ $(function() {
 // 			}
 		}
 		
-		if (Math.random() > 0.9) {
-			var m = new Monster(16, 0, [
-			{x: 1, y: 0, d: 112, v:1},
+		if (Math.random() > 0.99) {
+			var m = new Monster(32, 0, [
+			{x: 1, y: 0, d: 224, v:1},
+			{x: 0, y: 1, d: 64, v: 1},
+			{x: -1, y: 0, d: 224, v: 1},
 			{x: 0, y: 1, d: 32, v: 1},
-			{x: -1, y: 0, d: 112, v: 1},
-			{x: 0, y: 1, d: 16, v: 1},
 			]);
 			sprites.push(m);
 			$('#info').html(sprites.length + " sprites onscreen!");
