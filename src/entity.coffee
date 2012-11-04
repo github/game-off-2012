@@ -11,6 +11,16 @@ class TestEntity extends Entity
   
 class Model
   constructor:(@world) ->
+    @body
+  
+  getX:->
+    @body.GetPosition().x
+    
+  getY:->
+    @body.GetPosition().y
+    
+  setPosition:(x, y)->
+    @body.SetPosition(new b2Vec2(x, y), 0)
     
     
 class PlayerModel extends Model
@@ -39,7 +49,6 @@ class PlayerModel extends Model
     
     @fixDef = @body.CreateFixture(@fixDef)
     @sensor = @body.CreateFixture(@sensor)
-    
 
 class GroundModel extends Model
   constructor:(@world, @game) ->
@@ -59,7 +68,8 @@ class GroundModel extends Model
     
     @fixDef.shape = new b2PolygonShape;
     @fixDef.shape.SetAsBox((2000/@scale)/2, (8/@scale)/2)
-    @body = @world.CreateBody(@bodyDef).CreateFixture(@fixDef)
+    @body = @world.CreateBody(@bodyDef)
+    @body.CreateFixture(@fixDef)
     
     
 class TeleporterModel extends Model
