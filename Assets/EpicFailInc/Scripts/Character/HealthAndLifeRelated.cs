@@ -9,6 +9,8 @@ public class HealthAndLifeRelated : MonoBehaviour
     public bool Alive = true;
     public bool IsThePlayer = true;
 
+    public double FallDamageMultiplier = 90/(9.81*2.5);
+
     //Private
     private float _aliveTimeInSeconds = 0;
     private int _lastTick = 0;
@@ -65,7 +67,7 @@ public class HealthAndLifeRelated : MonoBehaviour
             if (collision.relativeVelocity.y >= 5)
             {
                 //collision.relativeVelocity.y is an indication of how fast they were falling when they hit the ground
-                CurrentHealth -= (int) (MaxHealth*((collision.relativeVelocity.y*2)*.01)); //This calculuation probably needs to be made better
+                CurrentHealth -= (int)(MaxHealth * ((collision.relativeVelocity.y * FallDamageMultiplier) * .01)); //This calculuation probably needs to be made better
                 CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
                 if (CurrentHealth <= 0) //Should never be less than because of the Clamp, but oh well.
                 {

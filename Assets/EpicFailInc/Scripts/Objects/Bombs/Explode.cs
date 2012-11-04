@@ -8,11 +8,24 @@ public class Explode : MonoBehaviour {
     private float time;
     private GameObject explosion;
 
+    //Explosion scores
+    public int DestructableWallPoints = 10;
+
+    //Private
+    private GameManager _gameManager;
+    private bool _hasManager = false;
+
 
 	// Use this for initialization
 	void Start ()
 	{
 	    explosion = transform.GetChild(0).gameObject;
+	    GameObject manager = GameObject.FindGameObjectWithTag("Manager");
+	    if (manager != null)
+	    {
+	        _gameManager = (GameManager) manager.GetComponent("GameManager");
+	        _hasManager = true;
+	    }
 	}
 	
 	// Update is called once per frame
@@ -43,7 +56,7 @@ public class Explode : MonoBehaviour {
     {
         explosion.active = true;
         var explosionPower = 500;
-        var explosionRadius = 5;
+        var explosionRadius = 3;
 
         var colliders = Physics.OverlapSphere( transform.position, explosionRadius );
         foreach (var hit in colliders)
@@ -54,6 +67,7 @@ public class Explode : MonoBehaviour {
                 {
                     case "DestructableWall":
                         Destroy(hit.gameObject);
+                        if (_hasManager) _gameManager.Score += DestructableWallPoints;
                         break;
                     default:
                         hit.rigidbody.AddExplosionForce(explosionPower, transform.position, explosionRadius);
