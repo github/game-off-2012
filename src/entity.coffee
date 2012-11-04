@@ -28,11 +28,11 @@ class PlayerModel extends Model
     @bodyDef.position.y = @y/@scale/2
 
     @fixDef.shape = new b2PolygonShape
-    @fixDef.shape.SetAsBox((20/@scale)/2, (15/@scale)/2)
+    @fixDef.shape.SetAsBox((20/@scale)/2, (20/@scale)/2)
     
     @sensor = new b2FixtureDef
     @sensor.shape = new b2PolygonShape
-    @sensor.shape.SetAsBox((25/@scale)/2, (20/@scale)/2)
+    @sensor.shape.SetAsBox((25/@scale)/2, (25/@scale)/2)
     @sensor.isSensor = true
     
     @body = @world.CreateBody(@bodyDef)

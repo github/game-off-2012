@@ -28,13 +28,14 @@ class Game
     @scale = 30.0
     
     @screen = new Screen(@width, @height)
+    @world = new b2World(new b2Vec2(0, 10), true)
     @debugDraw = new b2DebugDraw()
-    @debugDraw.SetSprite(@screen.getContext())
+    @debugDraw.SetSprite(document.getElementById("board").getContext("2d"))
     @debugDraw.SetDrawScale(@scale)
     @debugDraw.SetFillAlpha(0.3)
     @debugDraw.SetLineThickness(1.0)
     @debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit)
-    @world = new b2World(new b2Vec2(0, 10), true)
+    
     @world.SetDebugDraw(@debugDraw)
     
     @contactListener = new Box2D.Dynamics.b2ContactListener;
@@ -102,6 +103,7 @@ class Game
       @checkCamera()
       
       @world.DrawDebugData();
+      @world.ClearForces();
       window.requestAnimFrame(@render)
       #@e.render(@screen)
       

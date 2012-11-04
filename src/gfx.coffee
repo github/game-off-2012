@@ -1,10 +1,10 @@
 class Screen
   constructor:(@w, @h)->
-    @canvas = document.getElementById("board");
-    @canvas.style.width = @w
-    @canvas.style.height = @h
-    @ctx = @canvas.getContext('2d');
-    console.log(@ctx)
+    #@canvas = document.getElementById("board");
+    #@canvas.style.width = @w
+    #@canvas.style.height = @h
+    #@ctx = @canvas.getContext('2d');
+    #console.log(@ctx)
   
   render:(x, y, tile)->
     @ctx.fillStyle = '#FF00FF'
