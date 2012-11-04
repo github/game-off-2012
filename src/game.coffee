@@ -38,11 +38,15 @@ class Game
     
     @world.SetDebugDraw(@debugDraw)
     
+    @teleports= new List
+    
     @contactListener = new Box2D.Dynamics.b2ContactListener;
     @contactListener.BeginContact = @beginContacts
     @world.SetContactListener(@contactListener);
     
     @modelList = new List
+    
+    
     
     @player = new PlayerModel @world , this, 40, 40
 
@@ -51,6 +55,10 @@ class Game
     @modelList.add @ground
     @modelList.add new PlayerModel @world, this, 100, 80
     @modelList.add new PlayerModel @world, this, 900, 80
+    
+    @tp1 = new TeleporterModel @world, this, 300, 80
+    
+    @modelList.add @tp1
     
     @init()
   
@@ -92,8 +100,11 @@ class Game
       
       
   beginContacts:(begin, manifold)=>
-    if begin.m_fixtureA is @player.sensor or begin.m_fixtureB is @player.sensor 
-      console.log("sensor hit something")
+    if begin.m_fixtureA is @player.sensor
+      if begin.m_fixtureB is @tp1.sensor        
+        @teleports.add([@player,@tp1])
+        #@player.setPosition(400/@scale, @player.getY()) 
+      
     #console.log(begin)
     #console.log("contact")
     
@@ -103,6 +114,13 @@ class Game
   
   render: =>
       @world.Step(1 / 60, 10, 10);
+      
+      if @teleports.size() > 0
+        for i in [0..@teleports.size()-1]    
+          e = @teleports.get(i)[0]
+          console.log("set")
+          e.setPosition(600/@scale, 60/@scale)
+          @teleports.del(i--)
       
       @checkCamera()
       
@@ -116,14 +134,16 @@ class Game
     
     @xOffset =0
     
+    
     if (position.x*@scale) > 240
-      @xOffset = -(5/@scale)   
+      @xOffset = -(5/@scale)
       @player.body.SetPosition(new b2Vec2(240/@scale, position.y), 0)
       
     if (position.x*@scale) < 40
-      @xOffset = +(5/@scale)   
+      @xOffset = +(5/@scale)
       @player.body.SetPosition(new b2Vec2(40/@scale, position.y), 0)
       
+    console.log(@xoff)
     
     for i in [0..@modelList.size()-1]
       e = @modelList.get(i)
