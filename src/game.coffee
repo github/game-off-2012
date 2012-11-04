@@ -42,16 +42,20 @@ class Game
     @contactListener.BeginContact = @beginContacts
     @world.SetContactListener(@contactListener);
     
-    @player = new PlayerModel @world , this, 40, 40
+    @modelList = new List
     
-    @e1 = new PlayerModel @world, this, 100, 80
-    @e2 = new PlayerModel @world, this, 900, 80
+    @player = new PlayerModel @world , this, 40, 40
+
+    @ground = new GroundModel @world , this
+    
+    @modelList.add @ground
+    @modelList.add new PlayerModel @world, this, 100, 80
+    @modelList.add new PlayerModel @world, this, 900, 80
     
     @init()
   
   init: ->
     @xOffset = 0
-    @ground = new GroundModel @world , this
     
     @canvas = @screen.canvas
     window.addEventListener("keydown", @keys)   
@@ -120,11 +124,13 @@ class Game
       @xOffset = +(5/@scale)   
       @player.body.SetPosition(new b2Vec2(40/@scale, position.y), 0)
       
-      
-    gbody = @ground.body.GetBody()
-    gbody.SetPosition(new b2Vec2(gbody.GetPosition().x+@xOffset, gbody.GetPosition().y), 0)
-    ebody = @e1.body
-    ebody.SetPosition(new b2Vec2(ebody.GetPosition().x+@xOffset, ebody.GetPosition().y), 0)
-    ebody = @e2.body
-    ebody.SetPosition(new b2Vec2(ebody.GetPosition().x+@xOffset, ebody.GetPosition().y), 0)
+    
+    for i in [0..@modelList.size()-1]
+      e = @modelList.get(i)
+      e.setPosition(e.getX()+@xOffset, e.getY())
+    
+    #@e1.setPosition(@e1)
+    #ebody.SetPosition(new b2Vec2(ebody.GetPosition().x+@xOffset, ebody.GetPosition().y), 0)
+    #ebody = @e2.body
+    #ebody.SetPosition(new b2Vec2(ebody.GetPosition().x+@xOffset, ebody.GetPosition().y), 0)
     
