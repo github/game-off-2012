@@ -21,8 +21,12 @@ body {
 }
 #view {
 	position: absolute;
-	top: 0px;
-	left: 0px;
+	top: -32768px;
+	left: -32768px;
+	width: 65536px;
+	height: 65536px;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAACJJREFUOMtj3LVr13+GgQK7du36z0SpIaMGjBowagCVDAAAbtEGeH+fJQgAAAAASUVORK5CYII=');
+/* background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wLBBEOI3CaRQkAAAAlSURBVDjLY2CgAOzates/EwOFYNSAUQNGDaCSAYy7du36T4kBACeDBnie5uW8AAAAAElFTkSuQmCC'); */
 }
 #info {
 	position: fixed;
@@ -40,16 +44,17 @@ body {
 	cursor: pointer;
 /* 	background-color: black; */
 /* 	border: 1px solid black; */
-	background-image: url('http://www.useragentman.com/blog/wp-content/uploads/2012/04/asterisk_orange.png');
+/* background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAC1JREFUOMtjZGBg+M9AAWBhYGBg+N9CnmbGGgYGJgYKwagBowaMGgDNUJRmZwAJgAQfhrMqtQAAAABJRU5ErkJggg=='); */
+	background: #0000FF;
 }
 .land {
-	background-image: url('http://harrysd.net16.net/wp-content/themes/Win7/images/land-button.png');
+	background-color: brown;
 }
 .monster {
 	background-image: url('http://icons.iconarchive.com/icons/deleket/green-monster/16/Green-Monster-30-icon.png');
 }
 .tower:hover {
-	background-color: orange;
+	background-color: #9999FF;
 }
 </style>
 </head>
@@ -58,7 +63,7 @@ body {
 <div id="game">
 	<div id="field">
 		<div id="view-wrapper">
-			<div id="view" style="top: 0px; left: 0px">
+			<div id="view">
 				<!-- Towers go here! -->
 			</div>
 		</div>
@@ -179,6 +184,9 @@ $(function() {
 		f.onmouseup = mup;
 		var x = 0;
 		var y = 0;
+		function ss(obj, prop, delta) {
+			obj[prop] = (parseInt(obj[prop]) || -32768) + delta + 'px';
+		}
 		function mdown(ev) {
 			f.onmousemove = mmove;
 			document.onselectstart = function(){return false;}
@@ -194,8 +202,10 @@ $(function() {
 		function mmove(ev) {
 			var dx = ev.screenX - x;
 			var dy = ev.screenY - y;
-			v.style.left = parseInt(v.style.left) + dx + 'px';
-			v.style.top = parseInt(v.style.top) + dy + 'px';
+			ss(v.style, 'left', dx);
+			ss(v.style, 'top', dy);
+// 			var bgpos = f.style.backgroundPosition.split(' ');
+// 			f.style.backgroundPosition = (parseInt(bgpos[0]) + dx + 'px ') + (parseInt(bgpos[1]) + dy + 'px');
 			x = ev.screenX;
 			y = ev.screenY;
 			console.log('mmove', x, y, dx, dy);

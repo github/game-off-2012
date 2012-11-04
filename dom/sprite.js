@@ -11,7 +11,7 @@ function Sprite(el) {
 	this.x = function(newx) {
 		if (newx !== undefined) {
 			x = newx;
-			el.style.left = x+'px';
+			el.style.left = x+32768+'px';
 			return this;
 		}
 		return x;
@@ -20,7 +20,7 @@ function Sprite(el) {
 	this.y = function(newy) {
 		if (newy !== undefined) {
 			y = newy;
-			el.style.top = y+'px';
+			el.style.top = y+32768+'px';
 			return this;
 		}
 		return y;
