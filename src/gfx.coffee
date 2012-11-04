@@ -13,6 +13,9 @@ class Screen
   getContext:->
     @ctx
     
+  getCanvas:->
+    @canvas
+    
   clear:->
     @ctx.fillStyle =  "#FF00FF"
     @ctx.fillRect(0,0,@w, @h)
