@@ -188,14 +188,14 @@ $(function() {
 			obj[prop] = (parseInt(obj[prop]) || -32768) + delta + 'px';
 		}
 		function mdown(ev) {
-			f.onmousemove = mmove;
+			document.onmousemove = mmove;
 			document.onselectstart = function(){return false;}
 			x = ev.screenX;
 			y = ev.screenY;
 			console.log('mdown', x, y);
 		}
 		function mup(ev) {
-			f.onmousemove = null;
+			document.onmousemove = null;
 			document.onselectstart = null;
 			console.log('mup', x, y);
 		}
@@ -212,8 +212,11 @@ $(function() {
 		}
 	})(v);
 	var startts = Date.now();
-	$(document).focus(function() {starttts = Date.now()});
+	window.onblur = function() {startts = -1;};
 	function render(ts) {
+		if (startts == -1) {
+			startts = Date.now();
+		}
 		var dt = ts - startts;
 		startts = ts;
 		for (var i = 0; i < sprites.length; i++) {
