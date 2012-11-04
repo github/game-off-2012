@@ -50,6 +50,7 @@ class PlayerModel extends Model
     @fixDef = @body.CreateFixture(@fixDef)
     @sensor = @body.CreateFixture(@sensor)
 
+
 class GroundModel extends Model
   constructor:(@world, @game) ->
     @width = @game.width
@@ -75,11 +76,17 @@ class GroundModel extends Model
 class TeleporterModel extends Model
   constructor:(@world, @game, @x, @y) ->
     @scale = @game.scale
+    
     @sensor = new b2FixtureDef
     
     @sensor.shape = new b2PolygonShape
     @sensor.shape.SetAsBox((25/@scale)/2, (10/@scale)/2)
     @sensor.isSensor = true
+    
+    @bodyDef = new b2BodyDef;
+    @bodyDef.type = b2Body.b2_staticBody;
+    @bodyDef.position.x = 160/@scale/2
+    @bodyDef.position.y = (300-20)/@scale/2
     
     @body = @world.CreateBody(@bodyDef)
     
