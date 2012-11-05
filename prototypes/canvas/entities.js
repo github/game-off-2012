@@ -69,8 +69,8 @@ function Tower(sprite) {
     this.range = 112;
     this.damage = 16;
     this.nextFire = 0;
-    this.coolDown = 0;
-    this.laserTime = 0;
+    this.coolDown = 200;
+    this.laserTime = 50;
 }
 Tower.prototype.draw = function(pen) {
     var s = this.sprite;

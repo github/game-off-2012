@@ -80,7 +80,7 @@ Engine.prototype.update = function() {
             }
         }
     }
-    while (this.bugs.length < 5000) {
+    while (this.bugs.length < 5) {
         this.bugs.push(new Bug(this.bugTemp.x, this.bugTemp.y + Math.random() * 32 + 16, this.bugTemp.r, this.id++));
     }
     if (this.mY > 0 && this.mY < bH && this.mX > 0 && this.mX < bW) {
