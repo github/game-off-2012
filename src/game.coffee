@@ -120,7 +120,7 @@ class Game
         for i in [0..@teleports.size()-1]    
           e = @teleports.get(i)[0]
           e.setPosition(600/@scale, 60/@scale)
-          @camera.setXoffset(@camera.getXoffset()-700/@scale)
+          @camera.setXoffset(-700/@scale)
           @teleports.del(i--)
       
       @camera.tick()
