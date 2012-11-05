@@ -22,21 +22,37 @@ class Screen
     
 class Camera
   constructor:(@game)->
+    @speed = 5
+    @xOffset = 0
     @player = @game.player
     @modelList = @game.modelList
     @scale = @game.scale
     
+  getXoffset: ->
+    @xOffset
+    
+  setXoffset:(xOffset) ->
+    @processEntities xOffset
+    @xOffset = xOffset
+    
+  processEntities:(xOff) ->
+    for i in [0..@modelList.size()-1]
+      e = @modelList.get(i)
+      e.setPosition(e.getX()+xOff, e.getY())
+    
   tick:=>
-    xOffset =0
+    xOff =0
     
     if (@player.getX()*@scale) > 240
-      xOffset = -(5/@scale)
+      xOff = -(@speed/@scale)
+      @xOffset -= (@speed/@scale)
       @player.setPosition(240/@scale, @player.getY())
       
     if (@player.getX()*@scale) < 40
-      xOffset = +(5/@scale)
+      xOff = (@speed/@scale)
+      @xOffset += (@speed/@scale)
       @player.setPosition(40/@scale, @player.getY())
     
-    for i in [0..@modelList.size()-1]
-      e = @modelList.get(i)
-      e.setPosition(e.getX()+xOffset, e.getY())
+    @processEntities xOff
+    
+    
