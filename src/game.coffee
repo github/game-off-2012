@@ -46,9 +46,10 @@ class Game
     
     @modelList = new List
     
-    
-    
     @player = new PlayerModel @world , this, 40, 40
+
+    @camera = new Camera(@)
+    
 
     @ground = new GroundModel @world , this
     
@@ -122,35 +123,9 @@ class Game
           e.setPosition(600/@scale, 60/@scale)
           @teleports.del(i--)
       
-      @checkCamera()
+      @camera.tick()
       
       @world.DrawDebugData();
       @world.ClearForces();
       window.requestAnimFrame(@render)
       #@e.render(@screen)
-      
-  checkCamera:=>
-    position = @player.body.GetPosition()
-    
-    @xOffset =0
-    
-    
-    if (position.x*@scale) > 240
-      @xOffset = -(5/@scale)
-      @player.body.SetPosition(new b2Vec2(240/@scale, position.y), 0)
-      
-    if (position.x*@scale) < 40
-      @xOffset = +(5/@scale)
-      @player.body.SetPosition(new b2Vec2(40/@scale, position.y), 0)
-      
-    console.log(@xoff)
-    
-    for i in [0..@modelList.size()-1]
-      e = @modelList.get(i)
-      e.setPosition(e.getX()+@xOffset, e.getY())
-    
-    #@e1.setPosition(@e1)
-    #ebody.SetPosition(new b2Vec2(ebody.GetPosition().x+@xOffset, ebody.GetPosition().y), 0)
-    #ebody = @e2.body
-    #ebody.SetPosition(new b2Vec2(ebody.GetPosition().x+@xOffset, ebody.GetPosition().y), 0)
-    
