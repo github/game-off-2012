@@ -54,8 +54,8 @@ class Game
     @ground = new GroundModel @world , this
     
     @modelList.add @ground
-    @modelList.add new PlayerModel @world, this, 100, 80
-    @modelList.add new PlayerModel @world, this, 900, 80
+    @modelList.add new PlayerModel @world, this, 200, 80
+    @modelList.add new PlayerModel @world, this, 920, 80
     
     @tp1 = new TeleporterModel @world, this, 300, 80
     
@@ -120,7 +120,7 @@ class Game
         for i in [0..@teleports.size()-1]    
           e = @teleports.get(i)[0]
           e.setPosition(600/@scale, 60/@scale)
-          @camera.setXoffset(@camera.getXoffset()-600/@scale)
+          @camera.setXoffset(@camera.getXoffset()-700/@scale)
           @teleports.del(i--)
       
       @camera.tick()

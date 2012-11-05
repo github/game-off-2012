@@ -34,8 +34,8 @@ class PlayerModel extends Model
     
     @bodyDef = new b2BodyDef;
     @bodyDef.type = b2Body.b2_dynamicBody;
-    @bodyDef.position.x = @x/@scale/2
-    @bodyDef.position.y = @y/@scale/2
+    @bodyDef.position.x = @x/@scale-10/@scale
+    @bodyDef.position.y = @y/@scale
 
     @fixDef.shape = new b2PolygonShape
     @fixDef.shape.SetAsBox((20/@scale)/2, (20/@scale)/2)
