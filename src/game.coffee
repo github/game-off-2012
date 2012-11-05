@@ -119,8 +119,8 @@ class Game
       if @teleports.size() > 0
         for i in [0..@teleports.size()-1]    
           e = @teleports.get(i)[0]
-          console.log("set")
           e.setPosition(600/@scale, 60/@scale)
+          @camera.setXoffset(@camera.getXoffset()-600/@scale)
           @teleports.del(i--)
       
       @camera.tick()
