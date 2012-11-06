@@ -10,16 +10,45 @@ Branch bob = new Branch(
                 new PVector(250, 300),
                 color(random(100,200)));
                 
+                
 Tree testTree;
 
 void setup(){
   size(500,500);
   noStroke();
   background(255);
-  testTree = new Tree(5, bob);
+  //testTree = new Tree(5, bob);
+  
+  Layer layer = new Layer(16, width, height);
 }
 
 void draw(){}
+
+class Layer{
+  int numSides;
+  int startVertex;
+  Tree tree;
+  int layerWidth, layerHeight;
+  int ringWeight = 6;
+  
+  Layer(int numSidesIn, int w, int h){
+    numSides = numSidesIn;
+    layerWidth = w;
+    layerHeight = h;
+    
+    startVertex = int(random(0, numSides));
+    println(startVertex);
+    
+    tree = new Tree(11, new Branch(
+                new PVector((layerWidth/2) + (layerWidth/2 - ringWeight/2) * cos((TWO_PI/numSides)*startVertex), (layerHeight/2) + (layerHeight/2 - ringWeight/2) * sin((TWO_PI/numSides)*startVertex)),
+                new PVector((layerWidth/2) + (layerWidth/2 - ringWeight/2) * cos((TWO_PI/numSides)*(startVertex-1)), (layerHeight/2) + (layerHeight/2 - ringWeight/2) * sin((TWO_PI/numSides)*(startVertex-1))),
+                new PVector(width/2, height/2),
+                color(random(100,200))
+    ));
+    drawPolygon(width/2, height/2, width/2 - ringWeight/2, 16, ringWeight);
+  }
+
+}
 
 class Tree{
   Branch branches[];
@@ -30,7 +59,6 @@ class Tree{
     branches[index] = trunk;
     index ++;
     trunkLen = dist(lerp(trunk.verticies[0].x, trunk.verticies[1].x, 0.5), lerp(trunk.verticies[0].y, trunk.verticies[1].y, 0.5), trunk.verticies[2].x, trunk.verticies[2].y);
-    println(trunkLen);
     this.populateBranches(branches[0], (random(1)));
     this.render();
   }
@@ -111,6 +139,7 @@ class Branch{
   
   public void render(){
     fill(col);
+    noStroke();
     triangle(verticies[0].x, verticies[0].y,verticies[1].x, verticies[1].y,verticies[2].x, verticies[2].y);
   }
 }
@@ -126,5 +155,18 @@ float myAngleBetween (PVector myPVector1, PVector myPVector2) {
 void mousePressed(){
   println("boop!");
   background(255);
-  testTree = new Tree(7, bob);
+  //testTree = new Tree(15, bob);
+  Layer layer = new Layer(16, width, height);
+}
+
+void drawPolygon(float cX, float cY, float r, int numSides, int weight){
+  float a = TWO_PI / numSides;
+  noFill();
+  stroke(0);
+  strokeWeight(weight);
+  beginShape();
+  for(int i = 0; i < numSides; i++){
+    vertex(cX + r * cos(a*i), cY + r * sin(a*i));
+  }
+  endShape(CLOSE);
 }
