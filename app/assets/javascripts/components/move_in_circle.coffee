@@ -24,11 +24,11 @@ Crafty.c "MoveInCircle",
       @trigger "NewDirection", @_movement
 
   disableControl: ->
-     @unbind("KeyDown", @_keydown).unbind("KeyUp", @_keyup).unbind "EnterFrame", @_enterframe
+     @unbind("KeyDown", @_keydown).unbind "EnterFrame", @_enterframe
      @
 
   enableControl: ->
-    @bind("KeyDown", @_keydown).bind("KeyUp", @_keyup).bind "EnterFrame", @_enterframe
+    @bind("KeyDown", @_keydown).bind "EnterFrame", @_enterframe
     @
 
   _enterframe: ->
@@ -45,7 +45,9 @@ Crafty.c "MoveInCircle",
 
   _setKeys: ->
     newKeys = {}
-    _.each(keys, (v,k) ->
+    _.each(@_keys, (v,k) ->
       newKeys[Crafty.keys[k]] = v
     )
-    _keys = newKeys
+    console.log(@_keys)
+    @_keys = newKeys
+    console.log(@_keys)
