@@ -14,7 +14,7 @@ Crafty.scene("game", ->
     angle = (index * 360 / Config.cycleSegments)
     attributes =
       x: originX + (radius * Math.cos(angle * Math.PI / 180))
-      y: originY + (radius * Math.sin(angle * Math.PI / 180)) 
+      y: originY + (radius * Math.sin(angle * Math.PI / 180))
       w: 30
       h: 5
       origin: 'center'
