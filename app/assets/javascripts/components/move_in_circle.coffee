@@ -57,10 +57,10 @@ Crafty.c "MoveInCircle",
       Crafty.audio.play("faster")
     @_radius += @_movement
     @rotation = @_angle - @_initialAngle
-    degrees = @_angle * Math.PI/180
+    coords = window.Utils.polarCnv(@_radius, @_angle)
     old = {x:@x, y:@y}
-    @x = @_pivot.x + (@_radius * Math.cos(degrees))
-    @y = @_pivot.y  + (@_radius * Math.sin(degrees))
+    @x = @_pivot.x + coords.x
+    @y = @_pivot.y  + coords.y
     @trigger("Moved",
       x: old.x
       y: old.y

@@ -4,8 +4,9 @@ Crafty.c("Obstacle",
 
   attrs: (index, pivot, radius, segments) ->
     angle = (index * 360 / segments)
-    @x = pivot.x + (radius * Math.cos(angle * Math.PI / 180))
-    @y = pivot.y + (radius * Math.sin(angle * Math.PI / 180))
+    coords = window.Utils.polarCnv(radius, angle)
+    @x = pivot.x + coords.x
+    @y = pivot.y + coords.y
     @w =  30
     @h =  5
     @origin = 'center'
