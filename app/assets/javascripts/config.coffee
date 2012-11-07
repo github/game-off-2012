@@ -1,4 +1,3 @@
-RC =
-  config:
-    cycleSegments: 12
-    cycleRadius: 200
+window.Config =
+  cycleSegments: 12
+  cycleRadius: 200
