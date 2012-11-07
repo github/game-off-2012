@@ -2,8 +2,8 @@ Crafty.c("Track",
   prepare: ->
     @_polygons = []
     _.times(@_segments, (index) =>
-      innerSegment = Crafty.e("Obstacle").attrs(index, @_pivot, @_innerRadius, @_segments).color(Utils.increase_brightness(@_color, index))
-      outerSegment = Crafty.e("Obstacle").attrs(index, @_pivot, @_outerRadius, @_segments).color(Utils.increase_brightness(@_color, index))
+      innerSegment = Crafty.e("Obstacle").attrs(index, @_pivot, @_innerRadius, @_segments).paint(@_color, index)
+      outerSegment = Crafty.e("Obstacle").attrs(index, @_pivot, @_outerRadius, @_segments).paint(@_color, index)
       @_polygons.push({inner: innerSegment, outer: outerSegment})
     )
 

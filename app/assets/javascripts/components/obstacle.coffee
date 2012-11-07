@@ -11,4 +11,7 @@ Crafty.c("Obstacle",
     @origin = 'center'
     @rotation = angle
     @
+
+  paint: (baseColor, index) ->
+    @color(Utils.increase_brightness(baseColor, index))
 )
