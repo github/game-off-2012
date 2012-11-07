@@ -17,9 +17,8 @@ Crafty.c "MoveInCircle",
     @_setKeys()
     @disableControl()
     @enableControl()
-    @
 
-  origin: (hsh) ->
+  pivot: (hsh) ->
     @_origin = hsh
     @
 
