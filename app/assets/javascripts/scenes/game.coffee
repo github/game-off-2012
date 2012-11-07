@@ -4,7 +4,7 @@ Crafty.scene("game", ->
   originX = Crafty.viewport.width / 2
   originY = Crafty.viewport.height / 2
 
-  window.player = Crafty.e("2D, DOM, Color, MoveInCircle, Collision").attr(h:10, w:10).color("#Fff").origin(x: originX, y:originY)
+  window.player = Crafty.e("2D, DOM, Color, MoveInCircle, Collision").attr(h:10, w:10).color("#Fff").origin(x: originX, y:originY).onHit("Collision", -> console.log("bomp"))
 
   @polygons = []
 
@@ -14,7 +14,7 @@ Crafty.scene("game", ->
   @attributesFor = (index, radius) ->
     angle = (index * 360 / Config.cycleSegments)
     attributes =
-      x: originX + (radius * Math.cos(angle * Math.PI / 180)) 
+      x: originX + (radius * Math.cos(angle * Math.PI / 180))
       y: originY + (radius * Math.sin(angle * Math.PI / 180))
       w: 30
       h: 5

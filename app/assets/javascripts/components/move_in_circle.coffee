@@ -19,11 +19,10 @@ Crafty.c "MoveInCircle",
 
   origin: (hsh) ->
     @_origin = hsh
+    @
 
   _keydown: (e) ->
-#    console.log("KEYDOWN",e.key)
     if @_keys[e.key]
-#      console.log("radius",@_keys[e.key])
       @_movement = @_keys[e.key]
       @trigger "NewDirection", @_movement
 
