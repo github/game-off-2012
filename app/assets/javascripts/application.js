@@ -1,5 +1,6 @@
 //= require crafty
 //= require underscore
+
 //= require ./config
 //= require ./utils
 //= require_directory ./components
