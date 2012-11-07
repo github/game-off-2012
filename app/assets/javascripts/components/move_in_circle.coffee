@@ -58,6 +58,4 @@ Crafty.c "MoveInCircle",
     _.each(@_keys, (v,k) ->
       newKeys[Crafty.keys[k]] = v
     )
-    console.log(@_keys)
     @_keys = newKeys
-    console.log(@_keys)
