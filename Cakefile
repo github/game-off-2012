@@ -4,7 +4,7 @@ fs = require 'fs'
 {spawn} = require 'child_process'
 
 build = (callback) ->
-  coffee = spawn 'coffee', ['-j','game','-c','-o','js' ,'src']
+  coffee = spawn 'coffee', ['-w', '-j', 'game','-c','-o','js' ,'src']
   coffee.stderr.on 'data', (data) ->
     process.stderr.write data.toString()
   coffee.stdout.on 'data', (data) ->
