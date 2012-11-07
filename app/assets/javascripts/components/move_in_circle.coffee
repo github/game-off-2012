@@ -23,8 +23,6 @@ Crafty.c "MoveInCircle",
     Crafty.audio.add("faster", "sounds/faster.wav")
     Crafty.audio.add("crash", "sounds/die.wav")
 
-    @
-
   reset: ->
     @_angle = @_initialAngle
     @_speed = @_initialSpeed
