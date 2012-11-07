@@ -1,9 +1,36 @@
+/**
+* Main entry point for the game.
+* 
+* TODO:  Get rid of the mvc model below as it doesnt fit into the Crafty Framework
+* TODO:  Move components, entities and game logic to separate files.
+* TODO:  Move scene manager to another class
+*  
+* Author: Fork It, We'll do it live!
+*/
+
 // Initialize the MVC
 var gameBoard = gameBoard || {};
 gameBoard.ui = gameBoard.ui || {};
 gameBoard.data = gameBoard.data || {};
 gameBoard.sceneManager = gameBoard.sceneManager || {};
 gameBoard.controller = gameBoard.controller || {};
+
+// Initialize Components
+Crafty.c('PushableBox', {
+	init: function() {
+		this.requires("pushable, solid")
+			.bind('push', function(args) {
+				var newX = Math.max(0, Math.min(600 - 32, this.x + args.x));
+				var newY = Math.max(0, Math.min(600 - 32, this.y + args.y));
+				this.x = newX;
+				this.y = newY;
+			});
+		},
+
+    PushableBox: function() {
+        return this;
+    }
+});
 
 // UI - Draw Board
 // Draws the game board to the div "renderTo"
@@ -27,15 +54,24 @@ gameBoard.sceneManager = function (scene) {
 	Crafty.scene("main", function () {
 		//black background with some loading text
 		Crafty.background("#AFAFAF");
-		Crafty.e("Player, 2D, DOM, solid, player, Multiway")
+		Crafty.e("Player, 2D, DOM, solid, player, Multiway, Collision")
 			.attr({ x: 20, y: 100, w: 32, h: 32 })
 			.multiway(4, { W: -90, S: 90, D: 0, A: 180 })
 			.bind('Moved', function(from) {
 				var newX = Math.max(0, Math.min(600 - 32, this.attr('x')));
 				var newY = Math.max(0, Math.min(600 - 32, this.attr('y')));
-				
 				this.attr({ x: newX, y: newY });
+
+				pushables = this.hit('pushable');
+				if(pushables){
+					pushables[0].obj.trigger('push', {x: this.x - from.x, y: this.y - from.y});
+					this.attr({x: from.x, y:from.y});
+				}
 			});
+
+		Crafty.e("2D, DOM, PushableBox, Color")
+			.color('rgb(0,0,255)')
+			.attr({ x: 200, y: 200, w: 32, h: 32 });
 	});
 	
 	//the loading screen that will display while our assets load
