@@ -1,6 +1,6 @@
 Crafty.c "MoveInCircle",
   _speed: 5
-  _radius: 50
+  _radius: window.Config.cyclCenterRadius
   _angle: 0
   _origin:
     x: 100
@@ -15,6 +15,9 @@ Crafty.c "MoveInCircle",
     @disableControl()
     @enableControl()
     @
+
+  origin: (hsh) ->
+    @_origin = hsh
 
   _keydown: (e) ->
     console.log("KEYDOWN",e.key)

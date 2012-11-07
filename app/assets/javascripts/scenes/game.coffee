@@ -1,12 +1,14 @@
 Crafty.scene("game", ->
   Crafty.background("#000")
 
-  window.player = Crafty.e("2D, DOM, Color, MoveInCircle, Collision").attr(x: 480/2, y:320/2, h:10, w:10).color("#Fff")
+  originX = Crafty.viewport.width / 2
+  originY = Crafty.viewport.height / 2
+
+  window.player = Crafty.e("2D, DOM, Color, MoveInCircle, Collision").attr(h:10, w:10).color("#Fff").origin(x: originX, y:originY)
 
   @polygons = []
 
-  originX = Crafty.viewport.width / 2
-  originY = Crafty.viewport.height / 2
+
 
   @attributesFor = (index, radius) ->
     angle = (index * 360 / Config.cycleSegments)
