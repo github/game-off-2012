@@ -1,7 +1,8 @@
 Crafty.c "MoveInCircle",
   _speed: 3
+  _speedIncrease: 0.2
   _radius: window.Config.cycleCenterRadius
-  _angle: 0
+  _angle: 270
   _origin:
     x: 0
     y: 0
@@ -12,6 +13,7 @@ Crafty.c "MoveInCircle",
     LEFT_ARROW: +1
 
   init: ->
+    @_initialAngle = @_angle
     @_setKeys()
     @disableControl()
     @enableControl()
@@ -19,16 +21,12 @@ Crafty.c "MoveInCircle",
 
   origin: (hsh) ->
     @_origin = hsh
+    @
 
   _keydown: (e) ->
-#    console.log("KEYDOWN",e.key)
     if @_keys[e.key]
-#      console.log("radius",@_keys[e.key])
       @_movement = @_keys[e.key]
       @trigger "NewDirection", @_movement
-
-    if e.key == Crafty.keys["UP_ARROW"]
-      @_speed += 1
 
   _keyup: (e) ->
     @_movement = 0
@@ -44,11 +42,14 @@ Crafty.c "MoveInCircle",
   _enterframe: ->
     return if @disableControls
     @_angle += @_speed
+    if @_angle > 360 + @_initialAngle
+      @_angle -= 360
+      @_speed += @_speedIncrease
     @_radius += @_movement
     degrees = @_angle * Math.PI/180
     old = {x:@x, y:@y}
-    @x = @_origin.x + (@_radius * Math.cos(degrees))
-    @y = @_origin.y + (@_radius * Math.sin(degrees))
+    @x = @_origin.x - @w/2 + (@_radius * Math.cos(degrees))
+    @y = @_origin.y - @h/2  + (@_radius * Math.sin(degrees))
     @trigger("Moved",
       x: old.x
       y: old.y
@@ -59,6 +60,4 @@ Crafty.c "MoveInCircle",
     _.each(@_keys, (v,k) ->
       newKeys[Crafty.keys[k]] = v
     )
-    console.log(@_keys)
     @_keys = newKeys
-    console.log(@_keys)

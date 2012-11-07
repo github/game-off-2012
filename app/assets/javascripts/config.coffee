@@ -1,7 +1,7 @@
 window.Config =
-  cycleSegments: 50
+  cycleSegments: 48
   cycleOuterRadius: 200
   cycleInnerRadius: 100
-  cycleCenterRadius: 0
+  cycleCenterRadius: null
 
-window.Config.cycleCenterRadius=  (window.Config.cycleOuterRadius + window.Config.cycleInnerRadius) / 2
+window.Config.cycleCenterRadius = (window.Config.cycleOuterRadius + window.Config.cycleInnerRadius) / 2
