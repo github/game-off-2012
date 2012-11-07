@@ -1,31 +1,17 @@
 class Screen
   constructor:(@w, @h, @ctx)->
-    @scale = 10
+    @scale = 2
     #getPixels
-    @pixels = @ctx.getImageData(0,0,@ctx.canvas.width/@scale, @ctx.canvas.height/@scale)
-    
-    #Debug-Shit
-    for y in [0..@pixels.height] 
-       for x in [0..@pixels.width]
-         index = (x + y * @pixels.width) * 4;
-         @pixels.data[index+0] = Math.random()*256
-         @pixels.data[index+1] = Math.random()*256
-         @pixels.data[index+2] = Math.random()*256
-         @pixels.data[index+3] = 256
          
   #Would be the method for entities
-  render:(x, y, tile)->
-    #@ctx.drawImage(@image, 0, 0)
+  render:(x, y, tile, rotate) ->
+    @ctx.fillStyle ='#FF00FF'
+    @ctx.fillRect(x, y, 16, 16)
     
   clear:->
     #Clear to white
-    for y in [0..@pixels.height] 
-       for x in [0..@pixels.width]
-         index = (x + y * @pixels.width) * 4;
-         @pixels.data[index+0] = 256
-         @pixels.data[index+1] = 256
-         @pixels.data[index+2] = 256
-         @pixels.data[index+3] = 256 
+    @ctx.fillStyle ='#FFFFFF'
+    @ctx.fillRect(0, 0, @ctx.canvas.width, @ctx.canvas.height)
          
 class Camera
   constructor:(@game)->

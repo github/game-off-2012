@@ -19,7 +19,7 @@ class Game
   constructor: ->
     @width = 640.0
     @height = 480.0
-    @phScale = 30.0
+    @scale = 30.0
     
     @canvas = document.getElementById("board");
     @canvas.width = 640
@@ -27,7 +27,7 @@ class Game
     
     @ctx = @canvas.getContext('2d');
     #Actual Pixels
-    @pixels = @ctx.getImageData(0, 0, @width, @height)
+    #@pixels = @ctx.getImageData(0, 0, @width, @height)
     #InputHandler
     @inputHandler = new InputHandler
     #Screen for drawings
@@ -37,13 +37,16 @@ class Game
     #debugdraw for physics
     @debugDraw = new b2DebugDraw()
     @debugDraw.SetSprite(document.getElementById("board").getContext("2d"))
-    @debugDraw.SetDrawScale(@phScale)
+    @debugDraw.SetDrawScale(@scale)
     @debugDraw.SetFillAlpha(0.3)
     @debugDraw.SetLineThickness(1.0)
     @debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit)
     @world.SetDebugDraw(@debugDraw)
     
+    new GroundModel(@world, @)
     
+    @ticks = 0
+    @screen.clear()
     #@contactListener = new Box2D.Dynamics.b2ContactListener;
     #@world.SetContactListener(@contactListener);
 
@@ -81,25 +84,10 @@ class Game
       #    @camera.setXoffset(-700/@phScale)
       #   @teleports.del(i--)
      
+     
   render: =>
       #Method with scale functionality
-      pix = @screen.pixels
-      for row in [0..pix.height-1]
-        for col in [0..pix.width-1]
-          index = (col + row * 64);
-          r = pix.data[index*4+0]
-          g = pix.data[index*4+1]
-          b = pix.data[index*4+2]
-          a = pix.data[index*4+3]
-        
-          for y in [0..10]
-            destRow = row * 10 + y
-            for x in [0..10]
-              desCol = col * 10 + x
-              @pixels.data[(destRow * 640 + desCol)*4+0] = r
-              @pixels.data[(destRow * 640 + desCol)*4+1] = g
-              @pixels.data[(destRow * 640 + desCol)*4+2] = b
-              @pixels.data[(destRow * 640 + desCol)*4+3] = a
-      
-       @ctx.putImageData(@pixels, 0, 0)
-       #@world.DrawDebugData();
+      @screen.clear()
+      #render entities
+      @world.DrawDebugData();
+      @screen.render(12, 20, 0)
