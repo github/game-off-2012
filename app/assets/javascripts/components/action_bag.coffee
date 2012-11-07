@@ -11,7 +11,7 @@ Crafty.c("ActionBag",
       actions: actions,
       func: func
     }
-    @timer(name, @_timerFired, delay)
+    @timer(name, (=> @_timerFired(name)), delay)
 
   setActionBagDelay: (name, delay) ->
     @setTimerDelay(name, delay)

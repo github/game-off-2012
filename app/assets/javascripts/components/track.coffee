@@ -1,17 +1,10 @@
 Crafty.c("Track",
   prepare: ->
     @_polygons = []
-
     _.times(@_segments, (index) =>
-      segment = Crafty.e("2D, DOM, Color, Collision").attr(@_attrsFor(index, @_innerRadius))
-      .color(Utils.increase_brightness(@_color, index))
-      @_polygons.push(segment)
-    )
-
-    _.times(@_segments, (index) =>
-      segment = Crafty.e("2D, DOM, Color, Collision").attr(@_attrsFor(index, @_outerRadius))
-      .color(Utils.increase_brightness(@_color, index))
-      @_polygons.push(segment)
+      innerSegment = Crafty.e("2D, DOM, Color, Collision").attr(@_attrsFor(index, @_innerRadius)).color(Utils.increase_brightness(@_color, index))
+      outerSegment = Crafty.e("2D, DOM, Color, Collision").attr(@_attrsFor(index, @_outerRadius)).color(Utils.increase_brightness(@_color, index))
+      @_polygons.push({inner: innerSegment, outer: outerSegment})
     )
 
   attrs: (hash) ->

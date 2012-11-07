@@ -1,7 +1,7 @@
 Crafty.c("Timer",
   init: ->
     @_timers = {};
-    @bind("EnterFrame", =>
+    @bind("EnterFrame", ->
       now = new Date().getTime()
       for name of @_timers
         item = @_timers[name]
