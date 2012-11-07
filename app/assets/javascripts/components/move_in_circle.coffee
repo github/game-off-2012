@@ -1,6 +1,6 @@
 Crafty.c "MoveInCircle",
   _speed: 3
-  _speedIncrease: 0.5
+  _speedIncrease: 0.2
   _radius: window.Config.cycleCenterRadius
   _angle: 270
   _origin:
@@ -27,9 +27,6 @@ Crafty.c "MoveInCircle",
     if @_keys[e.key]
       @_movement = @_keys[e.key]
       @trigger "NewDirection", @_movement
-
-    if e.key == Crafty.keys["UP_ARROW"]
-      @_speed += 1
 
   _keyup: (e) ->
     @_movement = 0
