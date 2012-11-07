@@ -1,0 +1,3 @@
+[submodule "lib/melonjs"]
+	path = lib/melonjs
+	url = git://github.com/obiot/melonJS.git
