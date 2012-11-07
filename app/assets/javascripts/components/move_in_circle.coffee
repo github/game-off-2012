@@ -47,8 +47,8 @@ Crafty.c "MoveInCircle",
     @_radius += @_movement
     degrees = @_angle * Math.PI/180
     old = {x:@x, y:@y}
-    @x = @_origin.x + (@_radius * Math.cos(degrees))
-    @y = @_origin.y + (@_radius * Math.sin(degrees))
+    @x = @_origin.x - @w/2 + (@_radius * Math.cos(degrees))
+    @y = @_origin.y - @h/2  + (@_radius * Math.sin(degrees))
     @trigger("Moved",
       x: old.x
       y: old.y
