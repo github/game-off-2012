@@ -1,5 +1,6 @@
 window.Config =
-  cycleSegments: 48
+#  cycleSegments: 48
+  cycleSegments: 24
   cycleOuterRadius: 200
   cycleInnerRadius: 100
   cycleCenterRadius: null

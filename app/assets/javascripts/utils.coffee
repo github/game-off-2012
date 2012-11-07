@@ -11,3 +11,10 @@ window.Utils =
          ((0|(1<<8) + r + (256 - r) * percent / 100).toString(16)).substr(1) +
          ((0|(1<<8) + g + (256 - g) * percent / 100).toString(16)).substr(1) +
          ((0|(1<<8) + b + (256 - b) * percent / 100).toString(16)).substr(1)
+
+  polarCnv: (rad, ang) ->
+    convertedAngle = ang * Math.PI / 180
+    {
+      x: rad * Math.cos(convertedAngle)
+      y: rad * Math.sin(convertedAngle)
+    }
