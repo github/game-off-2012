@@ -3,7 +3,10 @@ Crafty.scene("game", ->
 
   pivot = {x: Crafty.viewport.width / 2, y: Crafty.viewport.height / 2}
 
-  window.player = Crafty.e("2D, DOM, Color, MoveInCircle, Collision").attr(h:10, w:10).color("#Fff").pivot(pivot)
+
+  window.player = Crafty.e("2D, DOM, Color, MoveInCircle, Collision").attr(h:10, w:10).color("#Fff").pivot(pivot).onHit("Collision",
+      -> @crash()
+  )
   window.track  = Crafty.e("Track").attrs(
                     pivot: pivot
                     innerRadius: Config.cycleInnerRadius
