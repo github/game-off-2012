@@ -1,7 +1,7 @@
 Crafty.scene("game", ->
   Crafty.background("#000")
 
-  originX = Crafty.viewport.width / 2
+  originX = Crafty.viewport.width / 2 - 80
   originY = Crafty.viewport.height / 2
 
   window.player = Crafty.e("2D, DOM, Color, MoveInCircle, Collision").attr(h:10, w:10).color("#Fff").origin(x: originX, y:originY)
@@ -29,5 +29,13 @@ Crafty.scene("game", ->
     segment = Crafty.e("2D, DOM, Color, Collision").attr(@attributesFor(index, Config.cycleOuterRadius)).color("#ffffff")
     @polygons.push(segment)
   )
+
+  window.actionQueue = Crafty.e("2D, DOM, ActionBag, Text").attr({ actions: [], x: 500, y: 0, w: 200, h: 300 }).actionBag("gameModifiers", ["Pull", "Push", "Fork", "Merge"], ((action) ->
+    @actions.push(action)
+    if (@actions.length == 5)
+      topAction = @actions.shift()
+      # dispatch action to other component
+    @text(@actions.join("\r\n"))
+  ), 1000)
 )
 
