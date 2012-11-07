@@ -16,7 +16,6 @@ $ ->
    game.run()
 
 class Game
-  
   constructor: ->
     @width = 640.0
     @height = 480.0
@@ -27,42 +26,28 @@ class Game
     @canvas.height = 480
     
     @ctx = @canvas.getContext('2d');
+    #Actual Pixels
     @pixels = @ctx.getImageData(0, 0, @width, @height)
-    
+    #InputHandler
     @inputHandler = new InputHandler
-    
+    #Screen for drawings
     @screen = new Screen(@width, @height, @ctx)
+    #box2dweb-world for physics
     @world = new b2World(new b2Vec2(0, 10), true)
+    #debugdraw for physics
     @debugDraw = new b2DebugDraw()
     @debugDraw.SetSprite(document.getElementById("board").getContext("2d"))
     @debugDraw.SetDrawScale(@phScale)
     @debugDraw.SetFillAlpha(0.3)
     @debugDraw.SetLineThickness(1.0)
     @debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit)
-    
     @world.SetDebugDraw(@debugDraw)
     
-    @contactListener = new Box2D.Dynamics.b2ContactListener;
-    @contactListener.BeginContact = @beginContacts
-    @world.SetContactListener(@contactListener);
     
-    @modelList = new List
-    
-    @player = new PlayerModel @world , this, 40, 40
+    #@contactListener = new Box2D.Dynamics.b2ContactListener;
+    #@world.SetContactListener(@contactListener);
 
-    @camera = new Camera(this)
-    
-
-    @ground = new GroundModel @world , this
-    
-    @modelList.add @ground
-    @modelList.add new PlayerModel @world, this, 200, 80
-    @modelList.add new PlayerModel @world, this, 200, 60
-    @modelList.add new PlayerModel @world, this, 200, 40
-    @modelList.add new PlayerModel @world, this, 200, 20
-    @modelList.add new PlayerModel @world, this, 200, 0
-    @modelList.add new PlayerModel @world, this, 200, -20
-    @modelList.add new PlayerModel @world, this, 200, -40
+    @camera = new Camera(@)
       
   beginContacts:(begin, manifold)=>
     #console.log("contact")
@@ -77,7 +62,6 @@ class Game
       @world.ClearForces();
       #entities.tick()
       @camera.tick()
-
       
       #if @inputHandler.LEFT.isPressed() is true
       #  @player.getBody().GetLinearVelocity().x  = -5
@@ -98,6 +82,7 @@ class Game
       #   @teleports.del(i--)
      
   render: =>
+      #Method with scale functionality
       pix = @screen.pixels
       for row in [0..pix.height-1]
         for col in [0..pix.width-1]
