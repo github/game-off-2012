@@ -4,6 +4,8 @@ Crafty.scene("game", ->
   pivot = {x: Crafty.viewport.width / 2, y: Crafty.viewport.height / 2}
 
 
+  Crafty.audio.add("music", "sounds/music/04 - Bullcactus.mp3")
+
   window.player = Crafty.e("2D, DOM, Color, MoveInCircle, Player, Collision").attr(h:10, w:10).color("#Fff").pivot(pivot).onHit("Collision",
       -> @crash()
   )
@@ -17,5 +19,7 @@ Crafty.scene("game", ->
 
     @text(@actions.join("\r\n"))
   ), 1000)
+
+  Crafty.audio.play("music")
 )
 
