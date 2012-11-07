@@ -2,8 +2,8 @@ Crafty.c("Track",
   prepare: ->
     @_polygons = []
     _.times(@_segments, (index) =>
-      innerSegment = Crafty.e("Obstacle").attr(@_attrsFor(index, @_innerRadius)).color(Utils.increase_brightness(@_color, index))
-      outerSegment = Crafty.e("Obstacle").attr(@_attrsFor(index, @_outerRadius)).color(Utils.increase_brightness(@_color, index))
+      innerSegment = Crafty.e("Obstacle").attrs(index, @_pivot, @_innerRadius, @_segments).color(Utils.increase_brightness(@_color, index))
+      outerSegment = Crafty.e("Obstacle").attrs(index, @_pivot, @_outerRadius, @_segments).color(Utils.increase_brightness(@_color, index))
       @_polygons.push({inner: innerSegment, outer: outerSegment})
     )
 
@@ -17,15 +17,4 @@ Crafty.c("Track",
   color: (color) ->
     @_color = color
     @
-
-  _attrsFor: (index, radius) ->
-    angle = (index * 360 / Config.cycleSegments)
-    {
-      x: @_pivot.x + (radius * Math.cos(angle * Math.PI / 180))
-      y: @_pivot.y + (radius * Math.sin(angle * Math.PI / 180))
-      w: 30
-      h: 5
-      origin: 'center'
-      rotation: angle + 0
-    }
 )
