@@ -2,7 +2,7 @@ Crafty.c "Obstacle",
   _startRadius: 0
 
   init: ->
-    @requires("2D, DOM, Color, Collision")
+    @requires("2D, DOM, Color,Tween, Collision")
 
   radius: (radius) ->
     @_startRadius = radius
@@ -24,7 +24,8 @@ Crafty.c "Obstacle",
 
   shiftRadius: (radiusChange)->
     @radius += radiusChange
-    @_position()
+    coords = window.Utils.polarCnv(@radius, @angle)
+    @tween({x:@pivot.x + coords.x, y: @pivot.y + coords.y}, 100)
 
   Obstacle: ->
     @_position()
