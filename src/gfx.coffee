@@ -44,22 +44,22 @@ class Camera
     
   processEntities:(xOff) ->
     for i in [0..@modelList.size()-1]
-      e = @modelList.get(i)
+      #e = @modelList.get(i)
       e.setPosition(e.getX()+xOff, e.getY())
     
   tick:=>
     xOff =0
     
-    if (@player.getX()*@scale) > 240
-      xOff = -(@speed/@scale)
-      @xOffset -= (@speed/@scale)
-      @player.setPosition(240/@scale, @player.getY())
+    #if (@player.getX()*@scale) > 240
+    #  xOff = -(@speed/@scale)
+    #  @xOffset -= (@speed/@scale)
+    #  @player.setPosition(240/@scale, @player.getY())
       
-    if (@player.getX()*@scale) < 40
-      xOff = (@speed/@scale)
-      @xOffset += (@speed/@scale)
-      @player.setPosition(40/@scale, @player.getY())
+   # if (@player.getX()*@scale) < 40
+   #   xOff = (@speed/@scale)
+   #   @xOffset += (@speed/@scale)
+   #   @player.setPosition(40/@scale, @player.getY())
     
-    @processEntities xOff
+   # @processEntities xOff
     
     
