@@ -12,11 +12,6 @@ $ ->
    @b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
    @b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
    
-   list = new List()
-   list.add(1)
-   list.add(2)
-   list.add(3)
-   
    game = new Game()
    game.run()
 
