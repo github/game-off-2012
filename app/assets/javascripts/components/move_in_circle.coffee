@@ -1,8 +1,9 @@
 Crafty.c "MoveInCircle",
-  _speed: 3
-  _speedIncrease: 0.2
-  _radius: window.Config.cycleCenterRadius
+  _initialSpeed: 3
   _initialAngle: 270
+  _radius: window.Config.cycleCenterRadius
+  _speed: 2
+  _speedIncrease: 0.1
   _angle: 0
   _pivot:
     x: 0
@@ -14,7 +15,7 @@ Crafty.c "MoveInCircle",
     LEFT_ARROW: +1
 
   init: ->
-    @_angle = @_initialAngle
+    @reset()
     @_setKeys()
     @origin("center")
     @disableControl()
@@ -23,6 +24,11 @@ Crafty.c "MoveInCircle",
     Crafty.audio.add("crash", "sounds/die.wav")
 
     @
+
+  reset: ->
+    @_angle = @_initialAngle
+    @_speed = @_initialSpeed
+    @_radius = window.Config.cycleCenterRadius
 
   pivot: (hsh) ->
     @_pivot = hsh
@@ -50,7 +56,7 @@ Crafty.c "MoveInCircle",
     if @_angle > 360 + @_initialAngle
       @_angle -= 360
       @_speed += @_speedIncrease
-#      Crafty.audio.play("faster")
+      Crafty.audio.play("faster")
     @_radius += @_movement
     @rotation = @_angle - @_initialAngle
     degrees = @_angle * Math.PI/180
@@ -71,6 +77,4 @@ Crafty.c "MoveInCircle",
 
   crash: ->
     Crafty.audio.play("crash")
-    @_angle = @_initialAngle
-    @_speed = 3
-    @_radius = window.Config.cycleCenterRadius
+    @reset()
