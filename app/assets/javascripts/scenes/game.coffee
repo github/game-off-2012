@@ -5,7 +5,11 @@ Crafty.scene("game", ->
     x: Crafty.viewport.width / 2
     y: Crafty.viewport.height / 2
 
-  window.player = Crafty.e("2D, DOM, Color, MoveInCircle, Collision").attr(h:10, w:10).color("#Fff").origin(origin)
+
+
+  window.player = Crafty.e("2D, DOM, Color, MoveInCircle, Collision").attr(h:10, w:10).color("#Fff").pivot(origin).onHit("Collision",
+    -> @crash()
+  )
   window.track  = Crafty.e("2D, DOM, Color, Track")
 
   window.actionQueue = Crafty.e("2D, DOM, ActionBag, Text").attr({ actions: [], x: 500, y: 0, w: 200, h: 300 }).actionBag("gameModifiers", ["Pull", "Push", "Fork", "Merge"], ((action) ->

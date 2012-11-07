@@ -2,8 +2,9 @@ Crafty.c "MoveInCircle",
   _speed: 3
   _speedIncrease: 0.2
   _radius: window.Config.cycleCenterRadius
-  _angle: 270
-  _origin:
+  _initialAngle: 270
+  _angle: 0
+  _pivot:
     x: 0
     y: 0
   _movement: 0
@@ -13,16 +14,18 @@ Crafty.c "MoveInCircle",
     LEFT_ARROW: +1
 
   init: ->
-    @_initialAngle = @_angle
+    @_angle = @_initialAngle
     @_setKeys()
+    @origin("center")
     @disableControl()
     @enableControl()
     Crafty.audio.add("faster", "sounds/faster.wav")
+    Crafty.audio.add("crash", "sounds/die.wav")
 
     @
 
-  origin: (hsh) ->
-    @_origin = hsh
+  pivot: (hsh) ->
+    @_pivot = hsh
     @
 
   _keydown: (e) ->
@@ -47,12 +50,13 @@ Crafty.c "MoveInCircle",
     if @_angle > 360 + @_initialAngle
       @_angle -= 360
       @_speed += @_speedIncrease
-      Crafty.audio.play("faster")
+#      Crafty.audio.play("faster")
     @_radius += @_movement
+    @rotation = @_angle - @_initialAngle
     degrees = @_angle * Math.PI/180
     old = {x:@x, y:@y}
-    @x = @_origin.x - @w/2 + (@_radius * Math.cos(degrees))
-    @y = @_origin.y - @h/2  + (@_radius * Math.sin(degrees))
+    @x = @_pivot.x + (@_radius * Math.cos(degrees))
+    @y = @_pivot.y  + (@_radius * Math.sin(degrees))
     @trigger("Moved",
       x: old.x
       y: old.y
@@ -64,3 +68,9 @@ Crafty.c "MoveInCircle",
       newKeys[Crafty.keys[k]] = v
     )
     @_keys = newKeys
+
+  crash: ->
+    Crafty.audio.play("crash")
+    @_angle = @_initialAngle
+    @_speed = 3
+    @_radius = window.Config.cycleCenterRadius

@@ -4,4 +4,4 @@ window.Config =
   cycleInnerRadius: 100
   cycleCenterRadius: null
 
-window.Config.cycleCenterRadius = (window.Config.cycleOuterRadius + window.Config.cycleInnerRadius) / 2
+window.Config.cycleCenterRadius = (window.Config.cycleOuterRadius + window.Config.cycleInnerRadius) / 2 + 15
