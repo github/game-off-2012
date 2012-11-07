@@ -23,22 +23,29 @@ $ ->
 class Game
   
   constructor: ->
-    @width = 600.0
-    @height = 400.0
-    @scale = 30.0
+    @width = 640.0
+    @height = 480.0
+    @phScale = 30.0
     
-    @screen = new Screen(@width, @height)
+    @canvas = document.getElementById("board");
+    @canvas.width = 640
+    @canvas.height = 480
+    
+    @ctx = @canvas.getContext('2d');
+    @pixels = @ctx.getImageData(0, 0, @width, @height)
+    
+    @inputHandler = new InputHandler
+    
+    @screen = new Screen(@width, @height, @ctx)
     @world = new b2World(new b2Vec2(0, 10), true)
     @debugDraw = new b2DebugDraw()
     @debugDraw.SetSprite(document.getElementById("board").getContext("2d"))
-    @debugDraw.SetDrawScale(@scale)
+    @debugDraw.SetDrawScale(@phScale)
     @debugDraw.SetFillAlpha(0.3)
     @debugDraw.SetLineThickness(1.0)
     @debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit)
     
     @world.SetDebugDraw(@debugDraw)
-    
-    @teleports= new List
     
     @contactListener = new Box2D.Dynamics.b2ContactListener;
     @contactListener.BeginContact = @beginContacts
@@ -48,84 +55,71 @@ class Game
     
     @player = new PlayerModel @world , this, 40, 40
 
-    @camera = new Camera(@)
+    @camera = new Camera(this)
     
 
     @ground = new GroundModel @world , this
     
     @modelList.add @ground
     @modelList.add new PlayerModel @world, this, 200, 80
-    @modelList.add new PlayerModel @world, this, 920, 80
-    
-    @tp1 = new TeleporterModel @world, this, 300, 80
-    
-    @modelList.add @tp1
-    
-    @init()
-  
-  init: ->
-    @xOffset = 0
-    
-    @canvas = @screen.canvas
-    window.addEventListener("keydown", @keys)   
-    window.addEventListener("keyup", @keysup)   
-  
-  keysup:(e)=>
-    console.log(e.keyCode)
-    if e.keyCode is 68
-      body = @player.body
-      console.log(body)
-      body.GetLinearVelocity().x = 0
-      
-    if e.keyCode is 65
-      body = @player.body
-      console.log(body.GetLinearVelocity().x)
-      body.GetLinearVelocity().x = 0  
-    
-  keys:(e)=>
-    console.log(e.keyCode)
-    if e.keyCode is 32 or e.keyCode is 87
-       body = @player.body
-       impulse = body.GetMass()*20
-       body.ApplyImpulse(new b2Vec2(0, impulse), body.GetWorldCenter())
-       
-    if e.keyCode is 68
-      body = @player.body
-      console.log(body)
-      body.GetLinearVelocity().x = 5
-      
-    if e.keyCode is 65
-      body = @player.body
-      console.log(body.GetLinearVelocity().x)
-      body.GetLinearVelocity().x = -5
-      
+    @modelList.add new PlayerModel @world, this, 200, 60
+    @modelList.add new PlayerModel @world, this, 200, 40
+    @modelList.add new PlayerModel @world, this, 200, 20
+    @modelList.add new PlayerModel @world, this, 200, 0
+    @modelList.add new PlayerModel @world, this, 200, -20
+    @modelList.add new PlayerModel @world, this, 200, -40
       
   beginContacts:(begin, manifold)=>
-    if begin.m_fixtureA is @player.sensor
-      if begin.m_fixtureB is @tp1.sensor        
-        @teleports.add([@player,@tp1])
-        #@player.setPosition(400/@scale, @player.getY()) 
-      
-    #console.log(begin)
     #console.log("contact")
     
-  run: ->
-    @e = new TestEntity(10, 10)
+  run: =>
+    @tick()
     @render()
-  
-  render: =>
+    window.requestAnimFrame(@run)
+    
+  tick: ->
       @world.Step(1 / 60, 10, 10);
-      
-      if @teleports.size() > 0
-        for i in [0..@teleports.size()-1]    
-          e = @teleports.get(i)[0]
-          e.setPosition(600/@scale, 60/@scale)
-          @camera.setXoffset(-700/@scale)
-          @teleports.del(i--)
-      
-      @camera.tick()
-      
-      @world.DrawDebugData();
       @world.ClearForces();
-      window.requestAnimFrame(@render)
-      #@e.render(@screen)
+      #entities.tick()
+      @camera.tick()
+
+      
+      #if @inputHandler.LEFT.isPressed() is true
+      #  @player.getBody().GetLinearVelocity().x  = -5
+      #  @player.getBody().SetAwake(true)
+      #  console.log(@player.getBody())
+        
+        
+      #if @inputHandler.RIGHT.isPressed() is true
+      #  @player.getBody().GetLinearVelocity().x  = 5
+      #  @player.getBody().SetAwake(true)
+      
+      
+      #if @teleports.size() > 0
+      #  for i in [0..@teleports.size()-1]    
+      #    e = @teleports.get(i)[0]
+      #    e.setPosition(600/@phScale, 60/@phScale)
+      #    @camera.setXoffset(-700/@phScale)
+      #   @teleports.del(i--)
+     
+  render: =>
+      pix = @screen.pixels
+      for row in [0..pix.height-1]
+        for col in [0..pix.width-1]
+          index = (col + row * 64);
+          r = pix.data[index*4+0]
+          g = pix.data[index*4+1]
+          b = pix.data[index*4+2]
+          a = pix.data[index*4+3]
+        
+          for y in [0..10]
+            destRow = row * 10 + y
+            for x in [0..10]
+              desCol = col * 10 + x
+              @pixels.data[(destRow * 640 + desCol)*4+0] = r
+              @pixels.data[(destRow * 640 + desCol)*4+1] = g
+              @pixels.data[(destRow * 640 + desCol)*4+2] = b
+              @pixels.data[(destRow * 640 + desCol)*4+3] = a
+      
+       @ctx.putImageData(@pixels, 0, 0)
+       #@world.DrawDebugData();
