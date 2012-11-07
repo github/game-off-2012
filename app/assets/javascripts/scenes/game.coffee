@@ -12,7 +12,7 @@ Crafty.scene("game", ->
     attributes =
       x: originX + (radius * Math.cos(angle * Math.PI / 180))
       y: originY + (radius * Math.sin(angle * Math.PI / 180))
-      w: 100
+      w: 20
       h: 5
       origin: 'center'
       rotation: angle + 90
