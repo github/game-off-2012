@@ -22,6 +22,9 @@ class Model
   setPosition:(x, y)->
     @body.SetPosition(new b2Vec2(x, y), 0)
     
+  getBody:->
+    @body
+    
     
 class PlayerModel extends Model
   constructor:(@world, @game, @x, @y) ->
@@ -38,11 +41,11 @@ class PlayerModel extends Model
     @bodyDef.position.y = @y/@scale
 
     @fixDef.shape = new b2PolygonShape
-    @fixDef.shape.SetAsBox((20/@scale)/2, (20/@scale)/2)
+    @fixDef.shape.SetAsBox((16/@scale)/2, (16/@scale)/2)
     
     @sensor = new b2FixtureDef
     @sensor.shape = new b2PolygonShape
-    @sensor.shape.SetAsBox((25/@scale)/2, (25/@scale)/2)
+    @sensor.shape.SetAsBox((20/@scale)/2, (20/@scale)/2)
     @sensor.isSensor = true
     
     @body = @world.CreateBody(@bodyDef)
@@ -65,7 +68,7 @@ class GroundModel extends Model
     @bodyDef = new b2BodyDef;
     @bodyDef.type = b2Body.b2_staticBody;
     @bodyDef.position.x = @width/@scale/2
-    @bodyDef.position.y = 300/@scale/2
+    @bodyDef.position.y = 250/@scale/2
     
     @fixDef.shape = new b2PolygonShape;
     @fixDef.shape.SetAsBox((2000/@scale)/2, (8/@scale)/2)
