@@ -27,6 +27,9 @@ Crafty.c "MoveInCircle",
       @_movement = @_keys[e.key]
       @trigger "NewDirection", @_movement
 
+    if e.key == Crafty.keys["UP_ARROW"]
+      @_speed += 1
+
   _keyup: (e) ->
     @_movement = 0
 
