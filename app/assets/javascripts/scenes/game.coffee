@@ -12,13 +12,14 @@ Crafty.scene("game", ->
                     innerRadius: Config.cycleInnerRadius
                     outerRadius: Config.cycleOuterRadius
                     segments: Config.cycleSegments
+                    player: player
                   ).color("#ff0000").prepare()
 
   window.actionQueue = Crafty.e("2D, DOM, ActionBag, Text").attr({ actions: [], x: 500, y: 0, w: 200, h: 300 }).actionBag("gameModifiers", ["Pull", "Push", "Fork", "Merge"], ((action) ->
     @actions.push(action)
     if (@actions.length == 5)
       topAction = @actions.shift()
-      # dispatch action to other component
+      window.track.currentSegment().color("#0000FF")
     @text(@actions.join("\r\n"))
   ), 1000)
 )

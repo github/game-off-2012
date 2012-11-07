@@ -18,10 +18,10 @@ Crafty.c "MoveInCircle",
     @reset()
     @_setKeys()
     @origin("center")
-    @disableControl()
-    @enableControl()
     Crafty.audio.add("faster", "sounds/faster.wav")
     Crafty.audio.add("crash", "sounds/die.wav")
+    @disableControl()
+    @enableControl()
 
   reset: ->
     @_angle = @_initialAngle
@@ -31,6 +31,9 @@ Crafty.c "MoveInCircle",
   pivot: (hsh) ->
     @_pivot = hsh
     @
+
+  angle: ->
+    @_angle % 360
 
   _keydown: (e) ->
     if @_keys[e.key]
@@ -54,7 +57,7 @@ Crafty.c "MoveInCircle",
     if @_angle > 360 + @_initialAngle
       @_angle -= 360
       @_speed += @_speedIncrease
-      Crafty.audio.play("faster")
+#      Crafty.audio.play("faster")
     @_radius += @_movement
     @rotation = @_angle - @_initialAngle
     degrees = @_angle * Math.PI/180

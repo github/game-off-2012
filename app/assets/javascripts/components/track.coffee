@@ -6,12 +6,14 @@ Crafty.c("Track",
       outerSegment = Crafty.e("Obstacle").attr(@_attrsFor(index, @_outerRadius)).color(Utils.increase_brightness(@_color, index))
       @_polygons.push({inner: innerSegment, outer: outerSegment})
     )
+    @
 
   attrs: (hash) ->
     @_pivot       = hash.pivot
     @_innerRadius = hash.innerRadius
     @_outerRadius = hash.outerRadius
     @_segments    = hash.segments
+    @_player      = hash.player
     @
 
   color: (color) ->
@@ -28,4 +30,10 @@ Crafty.c("Track",
       origin: 'center'
       rotation: angle + 0
     }
+
+  currentSegment: ->
+    a = @_player.angle() + 20
+    x = 360 / @_polygons.length
+    d = Math.round(a/x) % @_polygons.length
+    @_polygons[d].inner
 )
