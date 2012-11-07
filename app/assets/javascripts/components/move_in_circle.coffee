@@ -1,7 +1,8 @@
 Crafty.c "MoveInCircle",
   _speed: 3
+  _speedIncrease: 0.2
   _radius: window.Config.cycleCenterRadius
-  _angle: 0
+  _angle: 270
   _origin:
     x: 0
     y: 0
@@ -12,6 +13,7 @@ Crafty.c "MoveInCircle",
     LEFT_ARROW: +1
 
   init: ->
+    @_initialAngle = @_angle
     @_setKeys()
     @disableControl()
     @enableControl()
@@ -25,9 +27,6 @@ Crafty.c "MoveInCircle",
     if @_keys[e.key]
       @_movement = @_keys[e.key]
       @trigger "NewDirection", @_movement
-
-    if e.key == Crafty.keys["UP_ARROW"]
-      @_speed += 1
 
   _keyup: (e) ->
     @_movement = 0
@@ -43,6 +42,9 @@ Crafty.c "MoveInCircle",
   _enterframe: ->
     return if @disableControls
     @_angle += @_speed
+    if @_angle > 360 + @_initialAngle
+      @_angle -= 360
+      @_speed += @_speedIncrease
     @_radius += @_movement
     degrees = @_angle * Math.PI/180
     old = {x:@x, y:@y}
