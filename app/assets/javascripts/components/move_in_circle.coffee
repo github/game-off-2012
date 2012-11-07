@@ -1,6 +1,6 @@
 Crafty.c "MoveInCircle",
   _speed: 5
-  _radius: window.Config.cyclCenterRadius
+  _radius: window.Config.cycleCenterRadius
   _angle: 0
   _origin:
     x: 100
