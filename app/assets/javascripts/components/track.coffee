@@ -23,9 +23,12 @@ Crafty.c("Track",
     @attr("player", player)
     @
 
-  currentSegment: (foreward = 0 )->
-    a = @player.angle() + foreward
+  currentSegment: (forward = 0 )->
+    a = @player.angle()
     x = 360 / @segments
-    d = Math.round(a/x) % @segments
+    d = (Math.floor(a/x) + forward) % @segments
     @_segments[d]
+
+  reset: ->
+    _.each(@_segments, (segment) -> segment.reset())
 )

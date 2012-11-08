@@ -3,7 +3,7 @@ Crafty.c "MoveInCircle",
   _initialAngle: 270
   _radius: Config.cycleCenterRadius
   _speed: 2
-  _speedIncrease: 0.1
+  _speedIncrease: 0.2
   _angle: 0
   _pivot:
     x: 0
@@ -15,6 +15,7 @@ Crafty.c "MoveInCircle",
     LEFT_ARROW: +1
 
   init: ->
+    @requires('Delay')
     @reset()
     @_setKeys()
     @origin("center")
@@ -24,6 +25,7 @@ Crafty.c "MoveInCircle",
     @enableControl()
 
   reset: ->
+    @disableControls = false
     @_angle = @_initialAngle
     @_speed = @_initialSpeed
     @_radius = window.Config.cycleCenterRadius
@@ -77,5 +79,8 @@ Crafty.c "MoveInCircle",
     @_keys = newKeys
 
   crash: ->
+    return if @disableControls
     Crafty.audio.play("crash")
-    @reset()
+    @disableControls = true
+    @crashed = true
+    @delay((-> Crafty.trigger("GameOver")), 1000)
