@@ -40,6 +40,3 @@ Crafty.c "Obstacle",
   reset: ->
     @radius = @_startRadius
     @_position()
-
-#  paint: (baseColor, index) ->
-#    @color(Utils.increase_brightness(baseColor, index))
