@@ -12,6 +12,16 @@ class Screen
     #Clear to white
     @ctx.fillStyle ='#FFFFFF'
     @ctx.fillRect(0, 0, @ctx.canvas.width, @ctx.canvas.height)
+    
+    
+class LevelLoader
+  constructor:(@path)->
+    @data
+    $.getJSON('js/sheet.json', @load)
+  
+  load:(data)->
+    @data = data
+    console.log(@data)
          
 class Camera
   constructor:(@game)->

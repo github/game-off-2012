@@ -47,6 +47,8 @@ class Game
     
     @ticks = 0
     @screen.clear()
+    
+    new LevelLoader "js/sheet.json"
     #@contactListener = new Box2D.Dynamics.b2ContactListener;
     #@world.SetContactListener(@contactListener);
 
