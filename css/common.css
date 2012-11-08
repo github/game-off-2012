@@ -1,19 +1,18 @@
 body {
-	background-color:#343434;
+  background-color:#343434;
 }
 
 #gameTitle {
-    margin-left: auto;
-    margin-right: auto;
-	font-family: 'Montserrat Alternates', sans-serif;
-	width: 200px;
-	color: #AFAFAF;
+  text-align: center;
+  font-family: 'Montserrat Alternates', sans-serif;
+  width: 100%;
+  color: #AFAFAF;
 }
 
 #cr-stage {
     margin-left: auto;
     margin-right: auto;
-	width: 600px;
-	height: 600px;
-	background-color: #AFAFAF;
+  width: 600px;
+  height: 600px;
+  background-color: #AFAFAF;
 }
