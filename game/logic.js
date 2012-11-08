@@ -22,13 +22,15 @@
     this.map[hTiles / 2 - 1][wTiles - 1].addObject(Base);
     this.map[hTiles / 2][wTiles - 1].addObject(Base);
     this.bugTemp = {x: -32, y: 7 * tileSize, r: 5};
+    
+/***/
     this.run = function() {
         this.update();
         this.draw();
         window.reqAnim(this.run.bind(this));
     };
     
-/** Function */
+/***/
     this.update = function() {
         for (r = 0; r < hTiles; r++) {
             for (c = 0; c < wTiles; c++) {
@@ -91,7 +93,7 @@
         }
     };
     
-/** Function */
+/***/
     this.click = function(e) {
         var cX = e.offsetX;
         var cY = e.offsetY;
@@ -113,7 +115,7 @@
         }
     };
     
-/** Function */
+/***/
     this.draw = function() {
         pen = this.pen;
         pen.fillStyle = "black";
@@ -153,7 +155,7 @@
         }
     };
     
-/** Function */
+/***/
     this.removeId = function(array, id) {
         for (var i = 0; i < array.length; i++) {
             if (array[i].id === id) {

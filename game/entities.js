@@ -5,10 +5,14 @@
     this.dy = 0;
     this.w = w;
     this.h = h;
+    
+/***/
     this.update = function() {
         this.x += this.dx;
         this.y += this.dy;
     };
+    
+/***/
     this.getCenter = function() {
         return {x: this.x + this.w / 2, y: this.y + this.h / 2};
     };
@@ -18,14 +22,20 @@ function Tile(x, y, w, h) {
     this.hover = false;
     this.sprite = new Sprite(x, y, w, h);
     this.object = null;
+    
+/***/
     this.addObject = function(obj) {
         this.object = new obj(this.sprite, this);
     };
+    
+/***/
     this.update = function() {
         if (this.object != null && this.object.update) {
             this.object.update();
         }
     };
+    
+/***/
     this.draw = function(pen) {
         var s = this.sprite;
         if (this.object == null) {
@@ -46,6 +56,8 @@ function Tile(x, y, w, h) {
 
 function Path(sprite) {
     this.sprite = sprite;
+    
+/***/
     this.draw = function(pen) {
         var s = this.sprite;
         pen.fillStyle = "green";
@@ -56,6 +68,8 @@ function Path(sprite) {
 
 function Base(sprite) {
     this.sprite = sprite;
+    
+/***/
     this.draw = function(pen) {
         var s = this.sprite;
         pen.fillStyle = "blue";
@@ -71,12 +85,16 @@ function Tower(sprite) {
     this.nextFire = 0;
     this.coolDown = 200;
     this.laserTime = 50;
+    
+/***/
     this.draw = function(pen) {
         var s = this.sprite;
         pen.fillStyle = "red";
         pen.strokeStyle = "red";
         ink.rect(s.x, s.y, s.w, s.h, pen);
     };
+    
+/***/
     this.overlay = function(pen) {
         var s = this.sprite;
         pen.save();
@@ -95,9 +113,13 @@ function Bug(x, y, r, id) {
     this.value = 15;
     this.speed = 0.2;
     this.sprite.dx = this.speed;
+    
+/***/
     this.update = function() {
         this.sprite.update();
     };
+    
+/***/
     this.draw = function(pen) {
         var s = this.sprite;
         pen.fillStyle = "yellow";
@@ -117,6 +139,8 @@ function Laser(x1, y1, x2, y2, start, dur, id) {
     this.start = start;
     this.dur = dur;
     this.id = id;
+    
+/***/
     this.draw = function(pen) {
         pen.strokeStyle = "purple";
         pen.save();
