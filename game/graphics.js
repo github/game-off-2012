@@ -18,8 +18,8 @@
         pen.beginPath();
         pen.moveTo(x1, y1);
         pen.lineTo(x2, y2);
-        pen.stroke();
         pen.closePath();
+        pen.stroke();
     },
     text : function (x, y, text, pen) {
         pen.beginPath();
