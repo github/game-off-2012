@@ -40,7 +40,7 @@ public class Explode : MonoBehaviour {
                 transform.GetChild(1).gameObject.active = false;
                 executeCollision();
                 StartCoroutine(explode());
-                transform.transform.localScale = new Vector3(0,0,0);
+                transform.localScale = new Vector3(0,0,0);
             }
         }
 	}
@@ -55,8 +55,8 @@ public class Explode : MonoBehaviour {
     void executeCollision()
     {
         explosion.active = true;
-        var explosionPower = 500;
-        var explosionRadius = 3;
+        const int explosionPower = 300;
+        const int explosionRadius = 2;
 
         var colliders = Physics.OverlapSphere( transform.position, explosionRadius );
         foreach (var hit in colliders)
@@ -66,7 +66,11 @@ public class Explode : MonoBehaviour {
                 switch(hit.gameObject.tag)
                 {
                     case "DestructableWall":
-                        Destroy(hit.gameObject);
+                        var wall = (DestructableWalls)hit.gameObject.GetComponent(typeof(DestructableWalls));
+                        if (wall != null)
+                        {
+                            wall.Destruct();
+                        }
                         if (_hasManager) _gameManager.Score += DestructableWallPoints;
                         break;
                     default:

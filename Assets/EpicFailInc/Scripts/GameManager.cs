@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour {
     public bool Sound = true;
     public int SoundEffectsVolume = 11; //out of 11
     public int SoundMusicVolume = 11; //out of 11
+    public float SoundMusicActualVolume = 1f; //out of 1 (percent based)
+    public int SoundMusicMaxVolume = 11;
 
     void Awake()
     {

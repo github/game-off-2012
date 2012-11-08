@@ -51,6 +51,7 @@
      <Compile Include="Assets\EpicFailInc\Scripts\GameManager.cs" />
      <Compile Include="Assets\EpicFailInc\Scripts\LockXAxis.cs" />
      <Compile Include="Assets\EpicFailInc\Scripts\Objects\Bombs\Explode.cs" />
+     <Compile Include="Assets\EpicFailInc\Scripts\Objects\Walls\DestructableWalls.cs" />
      <Compile Include="Assets\EpicFailInc\Scripts\PlayerGui.cs" />
      <Compile Include="Assets\EpicFailInc\Scripts\Scene Specific\Death Scene\LoadScoreLifeSpan.cs" />
      <Compile Include="Assets\EpicFailInc\Scripts\Scene Specific\Death Scene\MainMenuButton.cs" />
