@@ -2,7 +2,7 @@ Crafty.c "Obstacle",
   _startRadius: 0
 
   init: ->
-    @requires("2D, DOM, Color,Tween, Collision")
+    @requires("2D, DOM, Color, Tween, Collision")
 
   radius: (radius) ->
     @_startRadius = radius

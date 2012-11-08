@@ -11,9 +11,22 @@
  *= require_self
  *= require_tree .
  */
-
+body{
+    background: #000;
+}
 #cr-stage {
   color:white;
   border:2px solid black;
   margin:5px auto;
+}
+
+footer{
+    font-size: 11px;
+    color: #555;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid #222;
 }

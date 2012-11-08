@@ -31,9 +31,9 @@ Crafty.c("Segment",
         @_inner.shiftRadius(+30)
         @_outer.shiftRadius(+30)
       when "Fork"
-        @_inner.shiftRadius(-20)
-        @_outer.shiftRadius(+20)
+        @_inner.shiftRadius(-10)
+        @_outer.shiftRadius(+10)
       when "Merge"
-        @_inner.shiftRadius(+20)
-        @_outer.shiftRadius(-20)
+        @_inner.shiftRadius(+15)
+        @_outer.shiftRadius(-15)
 )

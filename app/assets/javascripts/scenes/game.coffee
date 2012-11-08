@@ -1,7 +1,8 @@
 Crafty.scene("game", ->
   Crafty.background("#000")
 
-  Crafty.audio.add("music", "sounds/music/04 - Bullcactus.mp3")
+  Crafty.audio.add("music", Crafty.math.randomElementOfArray(Config.music))
+
 
   player = Crafty.e("2D, DOM, Color, MoveInCircle, Player, Collision").attr(h:10, w:10).color("#Fff").pivot(Config.viewport.center).onHit("Collision",
       -> @crash()
