@@ -18,16 +18,13 @@ Crafty.scene("main", function () {
     for (var j = 0; j < gameBoard.getHeight()/gameBoard.tileSize; j++) {
         fifty = Crafty.math.randomInt(1,4) === 1 ? true : false;
         if (fifty)
-          Crafty.e("2D, DOM, orange1").attr({x: i*gameBoard.tileSize, y: j*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+          Crafty.e("2D, DOM, solid, orange1").attr({x: i*gameBoard.tileSize, y: j*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
           
         fifty = Crafty.math.randomInt(1,4) === 1 ? true : false;
         if (fifty)
-          Crafty.e("2D, DOM, red1").attr({x: i*gameBoard.tileSize, y: j*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+          Crafty.e("2D, DOM, solid, red1").attr({x: i*gameBoard.tileSize, y: j*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
     }
   }
-  
-  Crafty.e("2D, DOM, orange1").attr({x: 2*gameBoard.tileSize, y: 2*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
-  // Crafty.e("2D, DOM, red1").attr({x: 3*gameBoard.tileSize, y: 3*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
   
   // Create the player object.  This is a 2d entity with controls (multiway) and collision handling
   Crafty.e("Player, 2D, DOM, player, Movement, CharacterMove, Collision")
