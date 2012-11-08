@@ -1,3 +1,3 @@
 window.onload = ->
-  Crafty.init(640, 480)
+  Crafty.init(Config.viewport.width, Config.viewport.height)
   Crafty.scene("game")
