@@ -51,6 +51,7 @@ class Game
     @ticks = 0
     @screen.clear()
     
+    #A bundle looks like that {sheet:--, img:--}
     @ll = new LevelLoader {sheet:"js/sheet.json", img:"img/sprites.png"}, @world
     #@contactListener = new Box2D.Dynamics.b2ContactListener;
     #@contactListener.BeginContact = @beginContacts
