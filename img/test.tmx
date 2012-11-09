@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="16" tilewidth="8" tileheight="8">
+ <tileset firstgid="1" name="sprites" tilewidth="8" tileheight="8">
+  <image source="sprites.png" trans="ff00ff" width="64" height="64"/>
+ </tileset>
+ <layer name="Kachelebene 1" width="32" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBh4wArFAyHPioYHWp4Vhxwx+sjRz4BDHh9AN5dS/aNgFIxUwDSK8WJ+KCZGLTOF+rHpZQNidhzmMKOx0e0nRT8ud/MhsZHNYMaDSdEPAOwoA5s=
+  </data>
+ </layer>
+ <objectgroup name="ground" width="32" height="16">
+  <object x="1" y="91">
+   <polygon points="0,0 255,0 255,8 0,6"/>
+  </object>
+ </objectgroup>
+</map>
