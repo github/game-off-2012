@@ -120,7 +120,6 @@ class SpriteSheet
     for iy in [0..7]
       for ix in [0..7]
         if (ix+iy*8) is index
-          console.log(ix*8)
           ctx.drawImage(@image, (ix*8), (iy*8), 8, 8, x*8, y*8, 8, 8)
               
     #if (@player.getX()*@scale) > 240
