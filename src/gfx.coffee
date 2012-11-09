@@ -18,17 +18,16 @@ class LevelLoader
   constructor:(@bundle, @world)->
     @data
     @background = document.createElement("canvas")
-    
+    #AsyncLoading at the moment, maybe sync would be better...
     $.getJSON(@bundle.sheet, @load)
-    
   
+  #load-method -> async
   load:(data)=>
     @data = data
     
     sprites = new SpriteSheet(@bundle.img)
-    
+    #Get graphical-context
     ctx = @background.getContext("2d")
-    ctx.fillStyle = "FF00FF"
     
     d = @data.layers[0].data
     tileheight =@data.tileheight
@@ -37,27 +36,16 @@ class LevelLoader
     @background.width = @data.width*tilewidth
     @background.height = @data.height*tileheight
     
+    #iterate through data(tiles)
     for y in [0..@data.height-1]
       for x in [0..@data.width-1]
-        #console.log(x+y*@data.width)
-        #console.log(d[x+y*@data.width]-1)
         sprites.drawTile(ctx, x, y, d[x+y*@data.width]-1)
-        
+    
+    #getGroundLayer TODO F**cking Refactor !!!
     groundLayer = @data.layers[1].objects[0].polygon
     
-    
-    vertices = new Array(4)
-    
-    for i in [0..groundLayer.length-1]
-      console.log(groundLayer[i])
-      vertices[i] = new b2Vec2(groundLayer[i].x/30*5, groundLayer[i].y/30*3.75)    
-    
-    console.log(vertices)
-    
     b2PolygonShape shape = new b2PolygonShape
-    shape.SetAsArray(vertices, 4) 
-    
-    console.log(shape)
+    shape.SetAsArray(groundLayer) 
     
     fixDef = new b2FixtureDef;
     fixDef.density = 1;
@@ -69,24 +57,10 @@ class LevelLoader
     bodyDef.type = b2Body.b2_staticBody
     bodyDef.position.x = @data.layers[1].objects[0].x/30*5
     bodyDef.position.y = @data.layers[1].objects[0].y/30*3.75
-
     
-    body = @world.CreateBody(bodyDef)
-    body.CreateFixture(fixDef)
+    #Create Ground
+    @world.CreateBody(bodyDef).CreateFixture(fixDef)
     
-    fd = new b2FixtureDef
-    fd.density = 0.3
-    fd.friction = 0.3;
-    fd.restitution = 0.2;
-    fd.shape = new b2PolygonShape
-    fd.shape.SetAsBox(16/30, 16/30)
-    
-    bd = new b2BodyDef
-    bd.type = b2Body.b2_dynamicBody
-    bd.position.x = 390/30
-    bd.position.y = 2/30
-    
-    @world.CreateBody(bd).CreateFixture(fd)
          
 class Camera
   constructor:(@game)->
