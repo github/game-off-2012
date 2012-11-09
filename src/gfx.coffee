@@ -12,7 +12,10 @@ class Screen
     #Clear to white
     @ctx.fillStyle ='#FFFFFF'
     @ctx.fillRect(0, 0, @ctx.canvas.width, @ctx.canvas.height)
-    
+
+#RessourceLoader for syncing the loaded ressources and start rendering
+class RessourceLoader
+  constructor:(@game)->    
     
 class LevelLoader
   constructor:(@bundle, @world, @game)->
