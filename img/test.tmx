@@ -3,14 +3,17 @@
  <tileset firstgid="1" name="sprites" tilewidth="8" tileheight="8">
   <image source="sprites.png" trans="ff00ff" width="64" height="64"/>
  </tileset>
- <layer name="Kachelebene 1" width="32" height="16">
+ <layer name="scene" width="32" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjYBh4wArFAyHPioYHWp4Vhxwx+sjRz4BDHh9AN5dS/aNgFIxUwDjAmGmQY34oJkYtM4X6sellA2J2HOYwo7HR7SdFPy538yGxkc1gxoNJ0Q8Ao+gDew==
+   eJxjYBh4wArFtJInxm5cZlAqz4mGCelnxSFHrh9w2Y+sltywIwZgs59Yf9HKfnqCUftH7cdnP+MAY6ZBjvmhmBi1zBTqx6aXDYjZcZjDjMZGt58U/bjczYfERjaDGQ8mRT8AfsAEbw==
   </data>
  </layer>
- <objectgroup name="ground" width="32" height="16" visible="0">
+ <objectgroup name="static" width="32" height="16">
   <object x="1" y="88">
    <polygon points="0,0 255,0 255,2 0,2"/>
+  </object>
+  <object x="193" y="17">
+   <polygon points="0,0 5,0 5,72 0,72"/>
   </object>
  </objectgroup>
 </map>
