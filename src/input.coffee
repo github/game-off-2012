@@ -14,8 +14,8 @@ class InputHandler
     @LEFT = new Key()
     @RIGHT = new Key()
     
-    window.addEventListener("keydown", @keyDown)   
-    window.addEventListener("keyup", @keyUp)  
+    window.addEventListener("keydown", @keyDown)
+    window.addEventListener("keyup", @keyUp)
     
   keyDown:(e)=>
     keycode = e.keyCode
