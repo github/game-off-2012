@@ -1,8 +1,5 @@
-Untitled Game 2012!
+Fork It, We'll Do It Live Game 2012!
 
-## Developer Installation
+You control Phil, this little dude who is trying to navigate through these silly block mazes. He has inherited a magic fork (like seriously, an actual fork) that he can use once he grabs enough blocks of the same color and moves them together. Once he sticks this fork into the blocks, they turn into food that his buddies quickly devour; this a) feeds his buddies who are starving, and b) clears a path for him through the block maze.
 
-Install your flavor of XAMPP or MAMPP.  http://www.apachefriends.org/en/xampp.html
-Once installed, clone the github project to the htdocs folder.  
-Start the apache webserver from the xampp control panel. 
-Visit http://localhost/index.php and enjoy!
+There are other silly mechanics such as letting Phil change the color of the blocks, or only move certain colored blocks along special tracks, or combining colors. The possibilities are endless. What this game boils down to, however, is getting from Point A to Point B in order to progress/save the princess/feed his people/whatever. I'm still working on the story. :)
