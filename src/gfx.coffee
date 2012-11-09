@@ -123,5 +123,3 @@ class SpriteSheet
       for ix in [0..7]
         if (ix+iy*@tilesize) is index
           ctx.drawImage(@image, (ix*@tilesize), (iy*@tilesize), @tilesize, @tilesize, x*@tilesize, y*@tilesize, @tilesize, @tilesize)
-    
-    
