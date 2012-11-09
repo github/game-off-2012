@@ -51,6 +51,7 @@ class Game
     
     @ticks = 0
     @screen.clear()
+    @xOff = 0
     
     #A bundle looks like that {sheet:--, img:--}
     @ll = new LevelLoader {sheet:"level/sheet.json", img:"img/sprites.png"}, @world
@@ -75,10 +76,13 @@ class Game
       #entities.tick()
       @camera.tick()
       
-      #if @inputHandler.LEFT.isPressed() is true
-      #  @player.getBody().GetLinearVelocity().x  = -5
-      #  @player.getBody().SetAwake(true)
-      #  console.log(@player.getBody())
+      if @inputHandler.RIGHT.isPressed() is true
+        if @xOff != 128
+          @xOff += 1
+        
+      if @inputHandler.LEFT.isPressed() is true
+        if @xOff != 0
+          @xOff -= 1
         
         
       #if @inputHandler.RIGHT.isPressed() is true
@@ -99,4 +103,5 @@ class Game
       @screen.clear()
       #render entities
       @world.DrawDebugData();
-      @ctx.drawImage(@ll.background, 0, 0, 640, 480)
+      console.log(@xOff)
+      @ctx.drawImage(@ll.background,0+@xOff, 0, 128, 128, 0, 0, 640, 480)
