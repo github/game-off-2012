@@ -19,6 +19,8 @@ Crafty.c("Movement", {
 	}, 
 
     init: function() {
+		this.requires('Keyboard, Moveable, CharacterPushAction');
+	
 		// Map the defined keys to the key codes
 		for(var k in this._keys) {
 			var keyCode = Crafty.keys[k] || k;
@@ -29,7 +31,12 @@ Crafty.c("Movement", {
 		this.bind("KeyDown",function(e) {
 			if(this._keys[e.key] && this.movementEnabled) {
 				var direction = this._keys[e.key];
-				this.trigger('CharacterMove',direction);
+				this.trigger('EntityMove',direction);
+			} 
+			// If the action key is down, perform a push in the direction
+			else if (this._keys[e.key] && this.isDown(gameBoard.actionKey)) {
+				var direction = this._keys[e.key];
+				this.trigger('Push',direction);
 			}
 			// Disable movement if the space key is down
 			else if(e.key == gameBoard.actionKey) {
@@ -45,91 +52,23 @@ Crafty.c("Movement", {
 		});
     }
 });
-
-
-// Move the character
-Crafty.c("CharacterMove", {
-	// Init the speed in px per second
-	CharacterMove: function(cSpeed) {
-		this._speed = cSpeed;
-		return this;
-	},
-
+ 
+ // Move the character
+Crafty.c("CharacterPushAction", {
     init: function() {
-		this._destX = 0; this._sourceX = 0;
-		this._destY = 0; this._sourceY = 0;
-		this._speed = 200 || this._speed; 
-		this._lastFrame = 0;
-		this._moving = false;
-
-		this.bind("CharacterMove", function(direction) {
-			// Don't do anything if already in motion
-			if(this._moving) return false;
-
-			// Let's keep our pre-movement location
-			// Hey, Maybe we'll need it later :)
-			this._sourceX = this.x;
-			this._sourceY = this.y;
-
-			// Figure out our destination
+		this.bind("Push", function(direction) {
+			// Figure out what direction we are pushing
 			this._destX = this.x + direction[0] * gameBoard.tileSize;
 			this._destY = this.y + direction[1] * gameBoard.tileSize;
 
-			// If the destination is out of bounds, dont move
-			if(this._destX > gameBoard.getWidth() || this._destX < 0 || this._destY > gameBoard.getHeight() || this._destY < 0) {
-				return false;
-			}
-			
-			// Test to see if the space is filled.  If its filled, dont move
+			// Send the push command to anything in that space
 			var collisionDetector = Crafty.e("2D, Collision").attr({ x: this._destX, y: this._destY, w: 1, h: 1 });
-			if(collisionDetector.hit("solid")) {
-				collisionDetector.destroy();
-				return false;
+			entitiesHit = collisionDetector.hit("pushable");
+			if(entitiesHit.length > 0) {
+				entitiesHit[0].obj.trigger('push', direction);
 			}
 			collisionDetector.destroy();
-			
-			// Start timing frames
-			this._lastFrame = new Date().getTime();
-			
-			// Start moving
-			this._moving = true;
-		})
-		// This is where the magic happens.  On each frame, get the elapsed time
-		// and move the character towards its destination
-		.bind("EnterFrame",function(e) {
-			if(!this._moving) return false;
-
-			var now = new Date().getTime()
-			var dt = (now - (this._lastFrame || now)) / 1000; // Elapsed time in seconds
-			this._lastFrame = now;
-
-			var dirX = this._destX - this.x;
-			var dirY = this._destY - this.y;
-
-			var normalizedVector = this._normalizeDirection(dirX, dirY);
-			
-			this.x += normalizedVector[0] * this._speed * dt;
-			this.y += normalizedVector[1] * this._speed * dt;
-			
-			if((this.x === this._destX && this.y === this._destY)) // If the we're at the destination, stop
-				this._moving = false;
-			// But that rarely happens due to rounding, so if we overshot the destination, set us back at the destination and stop
-			else if(this._length((this.x - this._sourceX), (this.y - this._sourceY)) > this._length((this._destX - this._sourceX), (this._destY - this._sourceY))) {
-				this._moving = false;
-				this.x = this._destX;
-				this.y = this._destY;
-			}
 		});
-    }, 
-
-	// Normalize direction
-	_normalizeDirection: function(x, y) {
-		var length = this._length(x, y);
-		return [(x / length), (y / length)];
-	},
-	
-	// Get the length of a vector
-	_length: function(x, y) {
-		return Math.sqrt((x * x) + (y * y));
-	}
-  });
+    }
+ });
+ 

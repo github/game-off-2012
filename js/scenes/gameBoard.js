@@ -14,8 +14,8 @@ Crafty.scene("main", function () {
   });
   
   var fifty = false;
-  for (var i = 0; i < gameBoard.getWidth()/gameBoard.tileSize; i++) {
-    for (var j = 0; j < gameBoard.getHeight()/gameBoard.tileSize; j++) {
+  for (var i = 0; i < gameBoard.width; i++) {
+    for (var j = 0; j < gameBoard.height; j++) {
         fifty = Crafty.math.randomInt(1,4) === 1 ? true : false;
         if (fifty)
           Crafty.e("2D, DOM, solid, orange1").attr({x: i*gameBoard.tileSize, y: j*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
@@ -27,21 +27,9 @@ Crafty.scene("main", function () {
   }
   
   // Create the player object.  This is a 2d entity with controls (multiway) and collision handling
-  Crafty.e("Player, 2D, DOM, player, Movement, CharacterMove, Collision")
+  Crafty.e("Player, 2D, DOM, player, Movement, Collision")
     .attr({ x: 0, y: 0, w: gameBoard.tileSize, h: gameBoard.tileSize })
-    .CharacterMove(200) // Character speed
-    .bind('Moved', function(from) {
-      // Clamp the user to the edges of the screen
-      var newX = Math.max(0, Math.min(gameBoard.getWidth() - gameBoard.tileSize, this.attr('x')));
-      var newY = Math.max(0, Math.min(gameBoard.getHeight() - gameBoard.tileSize, this.attr('y')));
-      this.attr({ x: newX, y: newY });
-
-      pushables = this.hit('pushable');
-      if(pushables){
-        pushables[0].obj.trigger('push', {x: this.x - from.x, y: this.y - from.y});
-        this.attr({x: from.x, y:from.y});
-      }
-    });
+    .Moveable(200); // Character speed
 
   Crafty.e("2D, DOM, PushableBox, Color")
     .color('rgb(0,0,255)')
