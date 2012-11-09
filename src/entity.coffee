@@ -1,4 +1,4 @@
-class Entity 
+class Entity
   constructor: (@x, @y) ->
   render:(screen)->
   tick:->
@@ -30,13 +30,13 @@ class PlayerModel extends Model
   constructor:(@world, @game, @x, @y) ->
     @scale = @game.scale
     
-    @fixDef = new b2FixtureDef;
-    @fixDef.density = 0.1;
-    @fixDef.friction = 0.3;
-    @fixDef.restitution = 0.2;
+    @fixDef = new b2FixtureDef
+    @fixDef.density = 0.1
+    @fixDef.friction = 0.3
+    @fixDef.restitution = 0.2
     
-    @bodyDef = new b2BodyDef;
-    @bodyDef.type = b2Body.b2_dynamicBody;
+    @bodyDef = new b2BodyDef
+    @bodyDef.type = b2Body.b2_dynamicBody
     @bodyDef.position.x = @x/@scale-10/@scale
     @bodyDef.position.y = @y/@scale
 
@@ -60,17 +60,17 @@ class GroundModel extends Model
     @height = @game.height
     @scale = @game.scale
     
-    @fixDef = new b2FixtureDef;
-    @fixDef.density = 0.1;
-    @fixDef.friction = 0.3;
-    @fixDef.restitution = 0.2;
+    @fixDef = new b2FixtureDef
+    @fixDef.density = 0.1
+    @fixDef.friction = 0.3
+    @fixDef.restitution = 0.2
     
-    @bodyDef = new b2BodyDef;
-    @bodyDef.type = b2Body.b2_staticBody;
+    @bodyDef = new b2BodyDef
+    @bodyDef.type = b2Body.b2_staticBody
     @bodyDef.position.x = @width/@scale/2
     @bodyDef.position.y = 250/@scale/2
     
-    @fixDef.shape = new b2PolygonShape;
+    @fixDef.shape = new b2PolygonShape
     @fixDef.shape.SetAsBox((2000/@scale)/2, (8/@scale)/2)
     @body = @world.CreateBody(@bodyDef)
     @body.CreateFixture(@fixDef)
@@ -86,8 +86,8 @@ class TeleporterModel extends Model
     @sensor.shape.SetAsBox((25/@scale)/2, (10/@scale)/2)
     @sensor.isSensor = true
     
-    @bodyDef = new b2BodyDef;
-    @bodyDef.type = b2Body.b2_staticBody;
+    @bodyDef = new b2BodyDef
+    @bodyDef.type = b2Body.b2_staticBody
     @bodyDef.position.x = 160/@scale/2
     @bodyDef.position.y = (300-20)/@scale/2
     
