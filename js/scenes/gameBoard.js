@@ -9,20 +9,34 @@ Crafty.scene("main", function () {
   Crafty.background("#9F9F9F");
   
   Crafty.sprite(32, "images/testsprite.gif", {
-    orange1: [15, 11],
-    red1: [16,12]
+    wall: [13, 3],
+    blue: [13, 7],
+    green: [16, 9],
+    orange: [15, 11],
+    red: [16,12]
   });
   
-  var fifty = false;
-  for (var i = 0; i < gameBoard.width; i++) {
-    for (var j = 0; j < gameBoard.height; j++) {
-        fifty = Crafty.math.randomInt(1,10) === 1 ? true : false;
-        if (fifty)
-          Crafty.e("2D, DOM, solid, orange1").attr({x: i*gameBoard.tileSize, y: j*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
-          
-        fifty = Crafty.math.randomInt(1,10) === 1 ? true : false;
-        if (fifty)
-          Crafty.e("2D, DOM, solid, red1").attr({x: i*gameBoard.tileSize, y: j*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+  var testTemplate = [['W','W','W','W','W','W','W','W','W','W','W','W','W','W','W','W'],
+                      ['B','B','B','B','B','B','B','B','B','B','B','B','B','B','B','B'],
+                      ['G','G','G','G','G','G','G','G','G','G','G','G','G','G','G','G'],
+                      ['O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'],
+                      ['R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R']];
+  
+  for (var i = 0; i < testTemplate.length; i++) {
+    for (var j = 0; j < testTemplate[0].length; j++) {
+      var curr = testTemplate[i][j];
+      var item = "wall";
+
+      if (curr == 'B')
+        item = "blue";
+      else if (curr == 'G')
+        item = "green";
+      else if (curr == 'O')
+        item = "orange";
+      else if (curr == 'R')
+        item = "red";
+      
+      Crafty.e("2D, DOM, solid, " + item).attr({x: j*gameBoard.tileSize, y: (i+7)*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
     }
   }
   
