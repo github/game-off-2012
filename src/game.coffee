@@ -55,6 +55,8 @@ class Game
     
     #A bundle looks like that {sheet:--, img:--}
     @ll = new LevelLoader {sheet:"level/sheet.json", img:"img/sprites.png"}, @world
+    new PlayerModel @world, @, 500, 0
+    
     
     #Not used at the moment
     @camera = new Camera(@)
