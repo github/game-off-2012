@@ -41,6 +41,14 @@ Crafty.c("Movement", {
 			// Disable movement if the space key is down
 			else if(e.key == gameBoard.actionKey) {
 				this.movementEnabled = false;
+
+				for(var k in this._keys) {
+					if(this.isDown(k)) {
+						var direction = this._keys[k];
+						this.trigger('Push',direction);
+						return;
+					}
+				}
 			}
 		});
 
@@ -58,11 +66,11 @@ Crafty.c("CharacterPushAction", {
     init: function() {
 		this.bind("Push", function(direction) {
 			// Figure out what direction we are pushing
-			this._destX = this.x + direction[0] * gameBoard.tileSize;
-			this._destY = this.y + direction[1] * gameBoard.tileSize;
+			this._pushDestX = this.x + direction[0] * gameBoard.tileSize;
+			this._pushDestY = this.y + direction[1] * gameBoard.tileSize;
 
 			// Send the push command to anything in that space
-			var collisionDetector = Crafty.e("2D, Collision").attr({ x: this._destX, y: this._destY, w: 1, h: 1 });
+			var collisionDetector = Crafty.e("2D, Collision").attr({ x: this._pushDestX, y: this._pushDestY, w: 1, h: 1 });
 			entitiesHit = collisionDetector.hit("pushable");
 			if(entitiesHit.length > 0) {
 				entitiesHit[0].obj.trigger('push', direction);
