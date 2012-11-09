@@ -55,10 +55,6 @@ class Game
     
     #A bundle looks like that {sheet:--, img:--}
     @ll = new LevelLoader {sheet:"level/sheet.json", img:"img/sprites.png"}, @world
-    #@contactListener = new Box2D.Dynamics.b2ContactListener;
-    #@contactListener.BeginContact = @beginContacts
-    #@world.SetContactListener(@contactListener);
-
     
     @camera = new Camera(@)
       
