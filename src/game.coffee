@@ -13,7 +13,6 @@ $ ->
    @b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
    
    game = new Game()
-   game.run()
 
 class Game
   constructor: ->
@@ -54,7 +53,7 @@ class Game
     @xOff = 0
     
     #A bundle looks like that {sheet:--, img:--}
-    @ll = new LevelLoader {sheet:"level/sheet.json", img:"img/sprites.png"}, @world
+    @ll = new LevelLoader {sheet:"level/sheet.json", img:"img/sprites.png"}, @world, @
     new PlayerModel @world, @, 500, 0
     
     
@@ -102,5 +101,4 @@ class Game
       @screen.clear()
       #render entities
       @world.DrawDebugData();
-      console.log(@xOff)
       @ctx.drawImage(@ll.background,0+@xOff, 0, 128, 128, 0, 0, 640, 480)

@@ -15,7 +15,7 @@ class Screen
     
     
 class LevelLoader
-  constructor:(@bundle, @world)->
+  constructor:(@bundle, @world, @game)->
     @data
     @background = document.createElement("canvas")
     #AsyncLoading at the moment, maybe sync would be better...
@@ -60,7 +60,7 @@ class LevelLoader
     
     #Create Ground
     @world.CreateBody(bodyDef).CreateFixture(fixDef)
-    
+    @game.run()
          
 class Camera
   constructor:(@game)->
