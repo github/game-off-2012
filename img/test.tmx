@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="200" height="200" tilewidth="8" tileheight="8">
- <tileset firstgid="1" name="spritesheet_test" tilewidth="8" tileheight="8">
-  <image source="spritesheet_test.png" trans="ff00ff" width="64" height="64"/>
+<map version="1.0" orientation="orthogonal" width="16" height="16" tilewidth="8" tileheight="8">
+ <tileset firstgid="1" name="sprites" tilewidth="8" tileheight="8">
+  <image source="sprites.png" trans="ff00ff" width="64" height="64"/>
  </tileset>
- <layer name="Kachelebene 1" width="200" height="200">
+ <layer name="Kachelebene 1" width="16" height="16">
   <data encoding="base64" compression="zlib">
-   eJzt0zEKwDAMBEG51//fG9KlOZO4CBjPgDqp01YBAAAAuxo/3cCO9AGZPiDTB2T6gEwfkH399V64gV3dv94vd7v0wVn0Admzj1knXfrgPGNx4AT6gHVaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgOwCzV4Awg==
+   eJxjYBgFlAAmCjGyOZS6Y1T/0NSPLT2QoxeGmUnAAHnYAGI=
   </data>
  </layer>
- <objectgroup name="ground" width="200" height="200">
-  <object x="113" y="135">
-   <polyline points="0,0 110,1 110,-17 -1,-18 0,0"/>
+ <objectgroup name="ground" width="16" height="16">
+  <object x="128" y="48">
+   <polygon points="0,0 0,-8 -128,-7 -128,-1"/>
   </object>
  </objectgroup>
 </map>
