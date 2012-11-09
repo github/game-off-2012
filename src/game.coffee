@@ -56,6 +56,7 @@ class Game
     #A bundle looks like that {sheet:--, img:--}
     @ll = new LevelLoader {sheet:"level/sheet.json", img:"img/sprites.png"}, @world
     
+    #Not used at the moment
     @camera = new Camera(@)
       
   beginContacts:(begin, manifold)=>
