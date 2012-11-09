@@ -26,6 +26,9 @@ class Game
     @canvas.height = 480
     
     @ctx = @canvas.getContext('2d');
+    #Webkit no nearest-neighbor
+    @ctx.webkitImageSmoothingEnabled = false
+    
     #Actual Pixels
     #@pixels = @ctx.getImageData(0, 0, @width, @height)
     #InputHandler
@@ -43,19 +46,21 @@ class Game
     @debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit)
     @world.SetDebugDraw(@debugDraw)
     
-    new GroundModel(@world, @)
+#new GroundModel @world, @
     
     @ticks = 0
     @screen.clear()
     
-    new LevelLoader "js/sheet.json"
+    @ll = new LevelLoader {sheet:"js/sheet.json", img:"img/sprites.png"}, @world
     #@contactListener = new Box2D.Dynamics.b2ContactListener;
+    #@contactListener.BeginContact = @beginContacts
     #@world.SetContactListener(@contactListener);
 
+    
     @camera = new Camera(@)
       
   beginContacts:(begin, manifold)=>
-    #console.log("contact")
+    console.log("contact")
     
   run: =>
     @tick()
@@ -92,4 +97,4 @@ class Game
       @screen.clear()
       #render entities
       @world.DrawDebugData();
-      @screen.render(12, 20, 0)
+      @ctx.drawImage(@ll.background, 0, 0, 640, 480)
