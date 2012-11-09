@@ -5,10 +5,10 @@
  </tileset>
  <layer name="Kachelebene 1" width="32" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjYBh4wArFAyHPioYHWp4Vhxwx+sjRz4BDHh9AN5dS/aNgFIxUwDSK8WJ+KCZGLTOF+rHpZQNidhzmMKOx0e0nRT8ud/MhsZHNYMaDSdEPAOwoA5s=
+   eJxjYBh4wArFAyHPioYHWp4Vhxwx+sjRz4BDHh9AN5dS/aNgFIxUwDjAmGmQY34oJkYtM4X6sellA2J2HOYwo7HR7SdFPy538yGxkc1gxoNJ0Q8Ao+gDew==
   </data>
  </layer>
- <objectgroup name="ground" width="32" height="16">
+ <objectgroup name="ground" width="32" height="16" visible="0">
   <object x="1" y="88">
    <polygon points="0,0 255,0 255,2 0,2"/>
   </object>
