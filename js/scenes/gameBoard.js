@@ -16,11 +16,11 @@ Crafty.scene("main", function () {
   var fifty = false;
   for (var i = 0; i < gameBoard.width; i++) {
     for (var j = 0; j < gameBoard.height; j++) {
-        fifty = Crafty.math.randomInt(1,4) === 1 ? true : false;
+        fifty = Crafty.math.randomInt(1,10) === 1 ? true : false;
         if (fifty)
           Crafty.e("2D, DOM, solid, orange1").attr({x: i*gameBoard.tileSize, y: j*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
           
-        fifty = Crafty.math.randomInt(1,4) === 1 ? true : false;
+        fifty = Crafty.math.randomInt(1,10) === 1 ? true : false;
         if (fifty)
           Crafty.e("2D, DOM, solid, red1").attr({x: i*gameBoard.tileSize, y: j*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
     }
