@@ -1,18 +1,18 @@
-$ = Zepto 
+$ = Zepto
 
 $ ->
-   @b2Vec2 = Box2D.Common.Math.b2Vec2;
-   @b2BodyDef = Box2D.Dynamics.b2BodyDef;
-   @b2Body = Box2D.Dynamics.b2Body;
-   @b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
-   @b2Fixture = Box2D.Dynamics.b2Fixture;
-   @b2World = Box2D.Dynamics.b2World;
-   @b2MassData = Box2D.Collision.Shapes.b2MassData;
-   @b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
-   @b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
-   @b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
-   
-   game = new Game()
+  @b2Vec2 = Box2D.Common.Math.b2Vec2
+  @b2BodyDef = Box2D.Dynamics.b2BodyDef
+  @b2Body = Box2D.Dynamics.b2Body
+  @b2FixtureDef = Box2D.Dynamics.b2FixtureDef
+  @b2Fixture = Box2D.Dynamics.b2Fixture
+  @b2World = Box2D.Dynamics.b2World
+  @b2MassData = Box2D.Collision.Shapes.b2MassData
+  @b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape
+  @b2CircleShape = Box2D.Collision.Shapes.b2CircleShape
+  @b2DebugDraw = Box2D.Dynamics.b2DebugDraw
+  
+  game = new Game()
 
 class Game
   constructor: ->
@@ -20,11 +20,11 @@ class Game
     @height = 480.0
     @scale = 30.0
     
-    @canvas = document.getElementById("board");
+    @canvas = document.getElementById("board")
     @canvas.width = 640
     @canvas.height = 480
     
-    @ctx = @canvas.getContext('2d');
+    @ctx = @canvas.getContext('2d')
     #Webkit no nearest-neighbor
     @ctx.webkitImageSmoothingEnabled = false
     @ctx.mozImageSmoothingEnabled= false
@@ -52,7 +52,8 @@ class Game
     @xOff = 0
     
     #A bundle looks like that {sheet:--, img:--}
-    @ll = new LevelLoader {sheet:"level/sheet.json", img:"img/sprites.png"}, @world, @
+    bundle = {sheet:"level/sheet.json", img:"img/sprites.png"}
+    @ll = new LevelLoader bundle, @world, @
     new PlayerModel @world, @, 20, 88
     
     #Not used at the moment
@@ -67,36 +68,22 @@ class Game
     window.requestAnimFrame(@run)
     
   tick: ->
-      @world.Step(1 / 60, 10, 10);
-      @world.ClearForces();
-      #entities.tick()
-      @camera.tick()
-      
-      if @inputHandler.RIGHT.isPressed() is true
-        if @xOff != 128
-          @xOff += 1
+    @world.Step(1 / 60, 10, 10)
+    @world.ClearForces()
+    #entities.tick()
+    @camera.tick()
+    
+    if @inputHandler.RIGHT.isPressed() is true
+      if @xOff != 128
+        @xOff += 1
         
-      if @inputHandler.LEFT.isPressed() is true
-        if @xOff != 0
-          @xOff -= 1
-        
-        
-      #if @inputHandler.RIGHT.isPressed() is true
-      #  @player.getBody().GetLinearVelocity().x  = 5
-      #  @player.getBody().SetAwake(true)
-      
-      
-      #if @teleports.size() > 0
-      #  for i in [0..@teleports.size()-1]    
-      #    e = @teleports.get(i)[0]
-      #    e.setPosition(600/@phScale, 60/@phScale)
-      #    @camera.setXoffset(-700/@phScale)
-      #   @teleports.del(i--)
-     
+    if @inputHandler.LEFT.isPressed() is true
+      if @xOff != 0
+        @xOff -= 1
      
   render: =>
-      #Method with scale functionality
-      @screen.clear()
-      #render entities
-      @world.DrawDebugData();
-      @ctx.drawImage(@ll.background,0+@xOff, 0, 128, 128, 0, 0, 640, 480)
+    #Method with scale functionality
+    @screen.clear()
+    #render entities
+    @world.DrawDebugData()
+    @ctx.drawImage(@ll.background,0+@xOff, 0, 128, 128, 0, 0, 640, 480)
