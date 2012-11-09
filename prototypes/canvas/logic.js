@@ -8,6 +8,7 @@
     this.id = 0;
     this.money = 100;
     this.health = 100;
+    console.log(this.health);
     for (var r = 0; r < hTiles; r++) {
         this.map[r] = [];
         for (var c = 0; c < wTiles; c++) {
