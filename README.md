@@ -1,4 +1,4 @@
-Untitled Game-Off 2012 Entry
+Rock Kickass
 ==========
 
-uh, it's a game that we're making for a contest!
+![Rock Kickass Logo](https://raw.github.com/fragcastle/game-off-2012/master/media/rockkickass-marketing.png)
