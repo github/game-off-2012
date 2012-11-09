@@ -21,6 +21,7 @@ class LevelLoader
   constructor:(@bundle, @world, @game)->
     @data
     @background = document.createElement("canvas")
+    @ctx = @background.getContext("2d")
     #AsyncLoading at the moment, maybe sync would be better...
     $.getJSON(@bundle.sheet, @load)
   
@@ -28,42 +29,66 @@ class LevelLoader
   load:(data)=>
     @data = data
     
-    sprites = new SpriteSheet(@bundle.img)
     #Get graphical-context
-    ctx = @background.getContext("2d")
     
-    d = @data.layers[0].data
-    tileheight =@data.tileheight
-    tilewidth = @data.tilewidth
     
-    @background.width = @data.width*tilewidth
-    @background.height = @data.height*tileheight
+    for i in [0..@data.layers.length-1]
+      name = @data.layers[i].name
+      if name == 'scene'
+        @createScene(@data, @data.layers[i])
+        
+      if name == 'static'
+        @createModel(@world, @data.layers[i], b2Body.b2_staticBody)
     
-    #iterate through data(tiles)
-    for y in [0..@data.height-1]
-      for x in [0..@data.width-1]
-        sprites.drawTile(ctx, x, y, d[x+y*@data.width]-1)
-    
-    #getGroundLayer TODO F**cking Refactor !!!
-    groundLayer = @data.layers[1].objects[0].polygon
-    
-    b2PolygonShape shape = new b2PolygonShape
-    shape.SetAsArray(groundLayer) 
-    
-    fixDef = new b2FixtureDef;
-    fixDef.density = 1;
-    fixDef.friction = 1;
-    fixDef.restitution = 0.2;
-    fixDef.shape = shape
-    
-    bodyDef = new b2BodyDef
-    bodyDef.type = b2Body.b2_staticBody
-    bodyDef.position.x = @data.layers[1].objects[0].x/30*5
-    bodyDef.position.y = @data.layers[1].objects[0].y/30*3.75
-    
-    #Create Ground
-    @world.CreateBody(bodyDef).CreateFixture(fixDef)
     @game.run()
+   
+   #Method creates Scene out of SceneLayer
+   createScene:(data, layer)=>
+      #LoadS the spites
+      sprites = new SpriteSheet(@bundle.img, 8)
+      #RawTileData
+      tiles = layer.data
+      
+      tileheight = data.tileheight
+      tilewidth =  data.tilewidth
+      
+      @background.width = data.width*tilewidth
+      @background.height = data.height*tileheight
+    
+      #iterate through data(tiles)
+      for y in [0..data.height-1]
+       for x in [0..data.width-1]
+          sprites.drawTile(@ctx, x, y, tiles[x+y*data.width]-1)
+
+
+   createModel:(world, layer, type)=>
+     objects = layer.objects
+     
+     #The ratio is how much tiles are in one frame
+     ratio = (8*16)
+     
+     scalew = 640/ratio
+     scaleh = 480/ratio
+     
+     for i in [0..objects.length-1]
+       obj = objects[i]
+       console.log(obj)
+       b2PolygonShape shape = new b2PolygonShape
+       shape.SetAsArray(obj.polygon)
+       #Could be red out of map-->addlater
+       fixDef = new b2FixtureDef;
+       fixDef.density = 1;
+       fixDef.friction = 1;
+       fixDef.restitution = 0.2;
+       fixDef.shape = shape
+
+       bodyDef = new b2BodyDef
+       bodyDef.type = type
+       bodyDef.position.x = obj.x/30*scalew
+       bodyDef.position.y = obj.y/30*scaleh
+       
+       @world.CreateBody(bodyDef).CreateFixture(fixDef)
+       
          
 class Camera
   constructor:(@game)->
@@ -87,7 +112,8 @@ class Camera
     
   tick:=>
     xOff =0
-    
+
+#SpriteSheet-Class for loading and accessing sprites by a atlas-index
 class SpriteSheet
   constructor:(@path, @tilesize)->
     @image = new Image()
@@ -96,19 +122,7 @@ class SpriteSheet
   drawTile:(ctx,x, y,index)->
     for iy in [0..7]
       for ix in [0..7]
-        if (ix+iy*8) is index
-          ctx.drawImage(@image, (ix*8), (iy*8), 8, 8, x*8, y*8, 8, 8)
-              
-    #if (@player.getX()*@scale) > 240
-    #  xOff = -(@speed/@scale)
-    #  @xOffset -= (@speed/@scale)
-    #  @player.setPosition(240/@scale, @player.getY())
-      
-   # if (@player.getX()*@scale) < 40
-   #   xOff = (@speed/@scale)
-   #   @xOffset += (@speed/@scale)
-   #   @player.setPosition(40/@scale, @player.getY())
-    
-   # @processEntities xOff
+        if (ix+iy*@tilesize) is index
+          ctx.drawImage(@image, (ix*@tilesize), (iy*@tilesize), @tilesize, @tilesize, x*@tilesize, y*@tilesize, @tilesize, @tilesize)
     
     
