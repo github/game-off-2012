@@ -27,6 +27,7 @@ class Game
     @ctx = @canvas.getContext('2d');
     #Webkit no nearest-neighbor
     @ctx.webkitImageSmoothingEnabled = false
+    @ctx. mozImageSmoothingEnabled= false
     
     #Actual Pixels
     #@pixels = @ctx.getImageData(0, 0, @width, @height)
