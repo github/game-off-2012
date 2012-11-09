@@ -5,8 +5,10 @@
     this.map = [];
     //this.bugs = [];
 
-    this.lasers = [];
+    //this.lasers = [];
 
+    //This may be migrated into just allObjects
+    this.animations = [];
 
     this.id = 0;
     this.money = 100;
@@ -47,7 +49,7 @@
     
 /** Function */
     this.update = function () {
-        this.curQuadTree = new QuadTree(this.allObjects, 0, 1000, 0, 1000);
+        this.curQuadTree = new QuadTree(this.allObjects, -100, 1000, -100, 1000);
 
         var bugs = this.allObjects.Bug;
 
@@ -55,44 +57,53 @@
             for (c = 0; c < wTiles; c++) {
                 var tile = this.map[r][c];
                 tile.hover = false;
-                tile.update();                
-                if (tile.object instanceof Tower && tile.object.nextFire < new Date().getTime()) {
-                    var searchBug = findClosest(this, "Bug", tile, tile.object.range * tile.object.range + 0.01);
-                    if (searchBug) {
-                        tile.object.nextFire = new Date().getTime() + tile.object.coolDown;
-                        searchBug.hp -= tile.object.damage;
 
-                        var cent1 = tile.sprite.getCenter();
-                        var cent2 = { x: searchBug.sprite.x, y: searchBug.sprite.y };
+                var test = [];
+                test.push(1);
+                test.push(5);
 
-                        this.lasers.push(new Laser(cent1.x, cent1.y, cent2.x, cent2.y,
-                            new Date().getTime(), tile.object.laserTime, this.id++));
-                    }
+                test = test.concat(null);
+                test = test.concat(null);
 
-                    /*
-                    var cent1 = tile.sprite.getCenter();
-                    var cent2 = { x: bugs[i].sprite.x, y: bugs[i].sprite.y };
-                    var dist = Math.sqrt(Math.pow(cent2.x - cent1.x, 2)
-                    + Math.pow(cent2.y - cent1.y, 2)) - bugs[i].sprite.w;
-                    if (dist < tile.object.range) {
-                    tile.object.nextFire = new Date().getTime() + tile.object.coolDown;
-                    bugs[i].hp -= tile.object.damage;
-                    this.lasers.push(new Laser(cent1.x, cent1.y, cent2.x, cent2.y,
-                    new Date().getTime(), tile.object.laserTime, this.id++));
-                    break;
-                    }
-                    */
-                    // }
+                this.animations = merge(this.animations, tile.update());
+
+                /*
+                if (tile.object) {
+                addObjs = tile.object.update();
+
+                if (addObjs)
+                animations = animations.concat(addObjs);
                 }
+                */
+
+                /*
+                if (tile.object instanceof Tower && tile.object.nextFire < new Date().getTime()) {
+                var searchBug = findClosest(this, "Bug", tile.object.sprite.getCenter(), tile.object.range + 0.01);
+
+                if (searchBug) {
+                tile.object.nextFire = new Date().getTime() + tile.object.coolDown;
+                searchBug.hp -= tile.object.damage;
+
+                var cent1 = tile.sprite.getCenter();
+                var cent2 = { x: searchBug.sprite.x, y: searchBug.sprite.y };
+
+                this.animations.push(new Laser(cent1.x, cent1.y, cent2.x, cent2.y,
+                new Date().getTime(), tile.object.laserTime, this.id++));
+                }
+                }
+                */
+
+
             }
         }
 
         var time = new Date().getTime();
-        for (var i = 0; i < this.lasers.length; i++) {
-            var las = this.lasers[i];
+        for (var i = this.animations.length - 1; i >= 0; i--) {
+            var las = this.animations[i];
+            console.log(this.animations);
             if (time > las.start + las.dur) {
-                this.removeId(this.lasers, las.id);
-                i--;
+                //this.removeId(this.animations, las.id);
+                this.animations.splice(i, 1);
             }
         }
 
@@ -121,7 +132,7 @@
                 }
             }
         }
-        while (bugs.length < 50) {
+        while (bugs.length < 500) {
             var newBug = new Bug(this.bugTemp.x, this.bugTemp.y + Math.random() * 32 + 16, this.bugTemp.r, this.id++);
             newBug.engine = this;
             //this.bugs.push(newBug);
@@ -186,9 +197,9 @@
             pen.restore();
         }
 
-        for (var i = 0; i < this.lasers.length; i++) {
+        for (var i = 0; i < this.animations.length; i++) {
             pen.save();
-            this.lasers[i].draw(pen);
+            this.animations[i].draw(pen);
             pen.restore();
         }
 
@@ -207,7 +218,7 @@
 
         this.pen.save();
         this.pen.strokeStyle = "red";
-        //drawTree(this, "Tile", this.pen);
+        drawTree(this, "Bug", this.pen);
         this.pen.restore();
     };
     

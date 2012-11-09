@@ -25,12 +25,16 @@ function Tile(x, y, w, h) {
     this.addObject = function(obj) {
         this.object = new obj(this.sprite, this);
     };
-    this.update = function() {
+    this.update = function () {
+        var animations = [];
+
         if (this.object != null && this.object.update) {
-            this.object.update();
+            animations = merge(animations, this.object.update());
         }
         this.x = this.sprite.x + this.sprite.w / 2;
         this.y = this.sprite.y + this.sprite.h / 2;
+
+        return animations;
     };
     this.draw = function(pen) {
         var s = this.sprite;
@@ -66,6 +70,8 @@ function Path(sprite) {
         pen.strokeStyle = "green";
         ink.rect(s.x, s.y, s.w, s.h, pen);
     };
+    this.update = function () {
+    }
 }
 
 function Base(sprite) {
@@ -76,6 +82,8 @@ function Base(sprite) {
         pen.strokeStyle = "blue";
         ink.rect(s.x, s.y, s.w, s.h, pen);
     };
+    this.update = function () {
+    }
 }
 
 function Tower(sprite) {
@@ -100,6 +108,25 @@ function Tower(sprite) {
         ink.circ(s.x + s.w / 2, s.y + s.h / 2, this.range, pen);
         pen.restore();
     };
+    this.update = function () {
+        var animations = [];
+        
+        if (this.nextFire < new Date().getTime()) {
+            var searchBug = findClosest(eng, "Bug", this.sprite.getCenter(), this.range + 0.01);
+            if (searchBug) {
+                this.nextFire = new Date().getTime() + this.coolDown;
+                searchBug.hp -= this.damage;
+
+                var cent1 = this.sprite.getCenter();
+                var cent2 = { x: searchBug.sprite.x, y: searchBug.sprite.y };
+
+                animations.push(new Laser(cent1.x, cent1.y, cent2.x, cent2.y,
+                            new Date().getTime(), this.laserTime, this.id++));
+            }
+        }
+
+        return animations;
+    }
 }
 
 function Bug(x, y, r, id) {

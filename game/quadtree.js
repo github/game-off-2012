@@ -128,7 +128,69 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
             
     }
 
-    
+    function sortArrayByProperty
+    (
+        arrObj,
+        startIndex,
+        endIndex,
+        property
+    ) {
+        var pivotPoint;
+
+        if (startIndex + 1 == endIndex) {
+            if (arrObj[startIndex][property] > arrObj[endIndex][property])
+                swap(arrObj, startIndex, endIndex);
+            return;
+        }
+
+        //Make the pivot point the median of the first middle and last
+        //(also we do a bit of sorting here too)
+        var middleIndex = Math.floor((startIndex + endIndex) / 2);
+        if (arrObj[middleIndex][property] < arrObj[startIndex][property])
+            swap(arrObj, middleIndex, startIndex);
+
+        if (arrObj[endIndex][property] < arrObj[startIndex][property])
+            swap(arrObj, endIndex, startIndex);
+
+        if (arrObj[endIndex][property] < arrObj[middleIndex][property])
+            swap(arrObj, endIndex, middleIndex);
+
+        var pivotPoint = middleIndex;
+        var pivotValue = arrObj[middleIndex][property];
+
+        //Everything <= pivot is swapper to beginning, everything else is swapped to end
+
+        var curPos = startIndex;
+        var lessEnd = startIndex;
+        var greaterStart = endIndex;
+
+        //To prevent infinite recursion
+
+        //< here instead of <= sorts it, but leaves lessEnd and greaterStart possibly wrong
+        while (curPos <= greaterStart) {
+            if (arrObj[curPos][property] < pivotValue) {
+                if (curPos != lessEnd)
+                    swap(arrObj, curPos, lessEnd);
+
+                curPos++;
+                lessEnd++;
+            }
+            else if (arrObj[curPos][property] > pivotValue) {
+                swap(arrObj, curPos, greaterStart--);
+            }
+            else {
+                curPos++;
+            }
+        }
+
+        greaterStart++;
+
+        if (lessEnd - startIndex > 0)
+            sortArrayByProperty(arrObj, startIndex, lessEnd - 1);
+        if (endIndex - greaterStart > 0)
+            sortArrayByProperty(arrObj, greaterStart, endIndex);
+    }
+
     //Might get a speed benefit in making two of these
     //END INDEX IS INCLUSIVE HERE!
     function sortByXAxis
@@ -483,47 +545,26 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
 
 //Gets distance to the rect, 0 if it is in rect
 //Rect uses xs, xe, ys, ye structure
-function distanceToRect(rect, point) {
-    //This can be expanded more... but then it would be twice as long
-    if (point.x >= rect.xs && point.x <= rect.xe)
-    {
-        if(point.y > rect.ye) //Right
-             return point.y - rect.ye;
+function distanceToRectSqr(rect, point) {
 
-        if(point.y < rect.ys) //Left
-            return rect.ys - point.y;
+    var xDistance;
+    var yDistance;
 
-        //If not Right of Left, then we are inside
-        return 0;
-    }
-    else if (point.y >= rect.ys && point.y <= rect.ye)
-    {
-        if(point.x > rect.xe) //Above (really below)
-             return point.x - rect.xe;
+    if (point.x >= rect.xe)
+        xDistance = point.x - rect.xe;
+    else if (point.x <= rect.xs)
+        xDistance = rect.xs - point.x;
+    else
+        xDistance = 0;
 
-        if(point.x < rect.xs) //Below (really above)
-            return rect.xs - point.x;
+    if (point.y >= rect.ye)
+        yDistance = point.y - rect.ye;
+    else if (point.y <= rect.ys)
+        yDistance = rect.ys - point.y;
+    else
+        yDistance = 0;
 
-        return 0;
-    }
-    else if (point.x > rect.xe && point.y > rect.ye)
-    {
-        return (point.x - rect.xe) * (point.y - rect.ye);
-    }
-    else if (point.x > rect.xe && point.y < rect.ys)
-    {
-        return (point.x - rect.xe) * (rect.ys - point.y);
-    }
-    else if (point.x < rect.xs && point.y > rect.ye)
-    {
-        return (rect.xs - point.x) * (point.y - rect.ye);
-    }
-    else if (point.x < rect.xs && point.y < rect.ys)
-    {
-        return (rect.xs - point.x) * (rect.ys - point.y);
-    }
-
-    return 0;
+    return xDistance * xDistance + yDistance * yDistance;
 }
 
 function sizeToBounds(size) {
@@ -569,31 +610,30 @@ function findClosest(engine, type, target, maxDistance) {
         //(not just because it reduces a function call), but then the code would be way bigger
         //and much more complex
 
-        var minDis = distanceToRect(quadtree.bounds, target);
+        var minDisSqrBounds = distanceToRectSqr(quadtree.bounds, target);
+        minDisSqrBounds = distanceToRectSqr(quadtree.bounds, target);
 
-        if (isNaN(minDis)) {
+        if (isNaN(minDisSqrBounds)) {
             var crapola = true;
-            minDis = distanceToRect(quadtree.bounds, target);
+            minDis = distanceToRectSqr(quadtree.bounds, target);
         }
 
         //Then it is impossible and we will never find a better collision
-        if (minDis * minDis > minDisSquared)
+        if (minDisSqrBounds > minDisSquared)
             return null;
 
         
-            //This is the brute force part of the algorithm
-
         //Find closest and return it
         var closestObj = null;
 
+        //This is the brute force part of the algorithm
         for (var x = quadtree.startIndex; x < quadtree.startIndex + quadtree.indexCount; x++) {
             if (closestDiagnostics) {
                 totalChecks++;
                 placesCheck.push(x);
             }
             var curObj = array[quadtree.startIndex];
-            var disSquared = distanceToRect(sizeToBounds(curObj.boundingBox()), target);
-            disSquared *= disSquared;
+            var disSquared = distanceToRectSqr(sizeToBounds(curObj.boundingBox()), target);
 
             if (disSquared < minDisSquared) {
                 minDisSquared = disSquared;
@@ -619,8 +659,7 @@ function findClosest(engine, type, target, maxDistance) {
 
         if (curClosest) {
             //Not possible, it would have been screened in the function call
-            var newDisSquared = distanceToRect(sizeToBounds(curClosest.boundingBox()), target);
-            newDisSquared *= newDisSquared;
+            var newDisSquared = distanceToRectSqr(sizeToBounds(curClosest.boundingBox()), target);
             if (newDisSquared > minDisSquared)
                 alert("no, impossible. findClosest ignored minDisSquared and returning something too far away.");
             //minDisSquared = distSqr(curClosest, target);
@@ -632,8 +671,7 @@ function findClosest(engine, type, target, maxDistance) {
 
         if (curClosest) {
             //Not possible, it would have been screened in the function call
-            var newDisSquared = distanceToRect(sizeToBounds(curClosest.boundingBox()), target);
-            newDisSquared *= newDisSquared;
+            var newDisSquared = distanceToRectSqr(sizeToBounds(curClosest.boundingBox()), target);
             if (newDisSquared > minDisSquared)
                 alert("no, impossible. findClosest ignored minDisSquared and returning something too far away.");
             //minDisSquared = distSqr(curClosest, target);
