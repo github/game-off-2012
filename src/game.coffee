@@ -27,7 +27,7 @@ class Game
     @ctx = @canvas.getContext('2d');
     #Webkit no nearest-neighbor
     @ctx.webkitImageSmoothingEnabled = false
-    @ctx. mozImageSmoothingEnabled= false
+    @ctx.mozImageSmoothingEnabled= false
     
     #Actual Pixels
     #@pixels = @ctx.getImageData(0, 0, @width, @height)
@@ -47,16 +47,13 @@ class Game
     @debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit)
     @world.SetDebugDraw(@debugDraw)
     
-#new GroundModel @world, @
-    
     @ticks = 0
     @screen.clear()
     @xOff = 0
     
     #A bundle looks like that {sheet:--, img:--}
     @ll = new LevelLoader {sheet:"level/sheet.json", img:"img/sprites.png"}, @world, @
-    new PlayerModel @world, @, 500, 0
-    
+    new PlayerModel @world, @, 20, 88
     
     #Not used at the moment
     @camera = new Camera(@)
