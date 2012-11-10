@@ -1,6 +1,7 @@
 Crafty.c "ActionCenter",
 
   _actions: ["Pull", "Push", "Fork", "Merge"]
+  _images: []
   _bag: "gameModifiers"
   radius: Config.cycle.innerRadius - 20
   actions: []
@@ -8,10 +9,11 @@ Crafty.c "ActionCenter",
   _blinkColor: "#ff5555"
 
   init: ->
-    @requires("Color, Text, Delay, ActionBag")
+    @requires("Color, Image, Delay, ActionBag")
     @color = "#550000"
     @w = @radius * 2
     @h = @radius * 2
+    @_loadImages()
     @
 
   pivot: (hsh)->
@@ -35,9 +37,15 @@ Crafty.c "ActionCenter",
     ctx.closePath()
     ctx.fill()
 
-    ctx.fillStyle = "white"
-    ctx.font = "bold 36px Arial";
-    ctx.fillText(@text(), @x, @y + @radius/2 + 10);
+    action = @actions[0]
+    if !!action
+      img  = Crafty.assets[@_imgForAction(action)];
+      if !!img
+        ctx.drawImage(img,@x - @radius/2 + 8 , @y- @radius/2 + 5 );
+
+#    ctx.fillStyle = "white"
+#    ctx.font = "bold 36px Arial";
+#    ctx.fillText(@text(), @x, @y + @radius/2 + 10);
 
   blink: ->
     @_color = @color
@@ -51,8 +59,8 @@ Crafty.c "ActionCenter",
   onAction: (callback)->
     @actionBag(@_bag, @_actions, ((newAction) =>
       @actions.push(newAction)
-      @text(newAction)
       @blink()
+      @trigger("Change")
       if @actions.length > 1
         callback(@actions.shift())
 
@@ -60,5 +68,9 @@ Crafty.c "ActionCenter",
     @
 
 
+  _imgForAction: (action) ->
+    "/assets/#{action.toLowerCase()}.png"
 
+  _loadImages: ->
+    Crafty.load(_.map(@_actions, (action) => @_imgForAction(action)), -> console.log("YEAH"))
 
