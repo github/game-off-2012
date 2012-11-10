@@ -1,18 +1,18 @@
 MAJOR:
 * Show in the middle only the action that happens now! (No real need for a stack...)
 * Highlight obstacles which moves.
-* Center should have a UI for the actions / score / current level (AKA "release cycle"/"sprint"). !
-* add timer in top left
+* Center should have a UI for the actions / score / timer/ current level (AKA "release cycle"/"sprint"). !
 * Reset in the middle of an obstacle tween is bugged sometimes.
-* Reduce duration of tween as difficulty increases as well.
+* Reduce duration of tween as difficulty increases.
+* Reduce interval between changes as difficulty increases.
 * Sounds for each action.
 * Music should play in loops / tracks.
 * Change color of track according to position of player.
 * Proper UI for game start / about / other stuff.
 * Mute option should be saved to localStorage.
 * Add local high scores
-* Tweak values of actions.
-* make sure that segments don't get double merged.
+* Balance.
+* Make sure that segments don't get double merged.
 
 
 MINOR:

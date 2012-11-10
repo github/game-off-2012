@@ -4,7 +4,7 @@ Crafty.c "ActionCenter",
   _bag: "gameModifiers"
   radius: Config.cycle.innerRadius - 20
   actions: []
-  _delay: 2000
+  _delay: Config.obstacles.interval
   _blinkColor: "#ff5555"
 
   init: ->

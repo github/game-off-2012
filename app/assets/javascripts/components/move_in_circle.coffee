@@ -1,9 +1,9 @@
 Crafty.c "MoveInCircle",
-  _initialSpeed: 1
-  _initialAngle: 270
+  _initialSpeed: Config.player.angularSpeed
+  _initialAngle: Config.player.initialAngle
   _radius: Config.cycleCenterRadius
-  _speed: 2
-  _speedIncrease: 0.2
+  _speed: null
+  _speedIncrease: Config.player.angularSpeedIncrease
   _angle: 0
   _pivot:
     x: 0
@@ -11,8 +11,8 @@ Crafty.c "MoveInCircle",
   _movement: 0
 
   _keys:
-    RIGHT_ARROW: -1
-    LEFT_ARROW: +1
+    RIGHT_ARROW: -Config.player.controlSpeed
+    LEFT_ARROW: +Config.player.controlSpeed
 
   init: ->
     @requires('Delay')
@@ -90,4 +90,4 @@ Crafty.c "MoveInCircle",
     Crafty.audio.play("crash")
     @disableControls = true
     @crashed = true
-    @delay((-> Crafty.trigger("GameOver")), 1000)
+    @delay((-> Crafty.trigger("GameOver")), Config.flow.restartDelay)

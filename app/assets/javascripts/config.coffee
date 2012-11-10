@@ -2,26 +2,31 @@ window.Config =
   viewport:
     width: 640
     height: 480
-    center: null
+    center: null # calculated
 
   player:
     size: 8
     color: "#ffffff"
+    initialAngle: 270
+    controlSpeed: 1.4
+    angularSpeed: 1
+    angularSpeedIncrease: 0.15
 
   cycle:
     segments: 24
     outerRadius: 200
     innerRadius: 100
-    centerRadius: null
+    centerRadius: null # calculated
 
-  obstacleEffects:
-    divisor: 2
-    threshold: 1
+  obstacles:
+    interval: 1500
+    effectDivisor: 2
+    effectThreshold: 1
 
   actionValues:
     Pull: 20
     Push: 20
-    Merge: 5
+    Merge: 8
     Fork: 10
 
   gfx:
@@ -30,6 +35,9 @@ window.Config =
       reductionTo: 0.2
       interval: 5
       color: "#7f7f7f"
+
+  flow:
+    restartDelay: 1000
 
   music: [
     "sounds/music/04 - Bullcactus.mp3"
@@ -41,6 +49,6 @@ window.Config =
   ]
 
 
-# dynamic configurations
+# calculated configurations
 Config.cycle.centerRadius = (Config.cycle.outerRadius + Config.cycle.innerRadius) / 2 + 15
 Config.viewport.center    = {x: Config.viewport.width / 2, y: Config.viewport.height / 2}
