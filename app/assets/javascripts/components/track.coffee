@@ -7,8 +7,11 @@ Crafty.c("Track",
   Track: ->
     @_segments = []
     _.times(@segments, (index) =>
-      @_segments.push(Crafty.e("Segment").pivot(@pivot).angle(index * 360 / @segments).Segment())
+      prevSegment = @_segments[index - 1]
+      segment = Crafty.e("Segment").pivot(@pivot).angle(index * 360 / @segments).preceeding(prevSegment).Segment()
+      @_segments.push(segment)
     )
+    _.first(@_segments).preceeding(_.last(@_segments))
     @
 
   pivot: (pivot)->
