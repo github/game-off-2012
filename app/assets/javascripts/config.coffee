@@ -14,8 +14,8 @@ window.Config =
     threshold: 1
 
   actionValues:
-    Pull: 30
-    Push: 30
+    Pull: 20
+    Push: 20
     Merge: 15
     Fork: 10
 
