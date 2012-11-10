@@ -23,6 +23,7 @@ Crafty.c "MoveInCircle",
     Crafty.audio.add("crash", "sounds/die.wav")
     @disableControl()
     @enableControl()
+    @attr(h:Config.player.size, w:Config.player.size)
 
   reset: ->
     @disableControls = false

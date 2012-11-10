@@ -2,7 +2,10 @@ Crafty.c "Obstacle",
   _startRadius: 0
 
   init: ->
-    @requires("2D, DOM, Color, Tween, Collision")
+    @requires("2D, DOM, Color, Tween")
+    @w =  30
+    @h =  10
+    @requires("Collision")
 
   radius: (radius) ->
     @_startRadius = radius
@@ -29,11 +32,8 @@ Crafty.c "Obstacle",
 
   Obstacle: ->
     @_position()
-    @w =  30
-    @h =  10
-    @origin = 'center'
     @rotation = @angle
-
+    @origin = 'center'
     @color(Utils.increase_brightness("#770000", Math.abs(180 - @angle) / 180 *20))
     @
 

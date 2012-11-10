@@ -4,6 +4,9 @@ window.Config =
     height: 480
     center: null
 
+  player:
+    size: 10
+
   cycle:
     segments: 24
     outerRadius: 200

@@ -4,7 +4,7 @@ Crafty.scene("game", ->
   Crafty.audio.add("music", Crafty.math.randomElementOfArray(Config.music))
 
 
-  player = Crafty.e("2D, DOM, Color, MoveInCircle, Player, Collision").attr(h:10, w:10).color("#Fff").pivot(Config.viewport.center).onHit("Obstacle",
+  player = Crafty.e("2D, DOM, Color, MoveInCircle, Collision").color("#Fff").pivot(Config.viewport.center).onHit("Obstacle",
       -> @crash()
   )
   track  = Crafty.e("Track").pivot(Config.viewport.center).color("#ff0000").player(player).Track()
