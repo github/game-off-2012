@@ -18,22 +18,34 @@ Crafty.c("Segment",
     @attr('angle', angle)
     @
 
+  preceeding: (segment) ->
+    return @ unless segment
+    @prev = segment
+    segment.next = @
+    @
+
   reset: ->
     @_inner.reset()
     @_outer.reset()
 
-  perform: (action) ->
+  perform: (action, value = null) ->
+    value = window.Config.actionValues[action] unless value
+    return if value < Config.obstacleEffects.threshold
+
     switch action
       when "Pull"
-        @_inner.shiftRadius(-30)
-        @_outer.shiftRadius(-30)
+        @_inner.shiftRadius(-value)
+        @_outer.shiftRadius(-value)
       when "Pull"
-        @_inner.shiftRadius(+30)
-        @_outer.shiftRadius(+30)
+        @_inner.shiftRadius(+value)
+        @_outer.shiftRadius(+value)
       when "Fork"
-        @_inner.shiftRadius(-10)
-        @_outer.shiftRadius(+10)
+        @_inner.shiftRadius(-value)
+        @_outer.shiftRadius(+value)
       when "Merge"
-        @_inner.shiftRadius(+15)
-        @_outer.shiftRadius(-15)
+        @_inner.shiftRadius(+value)
+        @_outer.shiftRadius(-value)
+
+    @prev.perform(action, value / window.Config.obstacleEffects.divisor)
+    @next.perform(action, value / window.Config.obstacleEffects.divisor)
 )

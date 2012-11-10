@@ -8,6 +8,7 @@ MAJOR:
 * Highlight an obstacle which moves.
 * Reduce duration of tween as difficulty increases as well.
 * Proper UI for game start / about / other stuff.
+* Mute option should be saved to localStorage.
 
 MINOR:
 * Some particle effects for fun.

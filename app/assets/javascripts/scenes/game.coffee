@@ -16,7 +16,7 @@ Crafty.scene("game", ->
       track.currentSegment(10).perform(topAction)
 
     @text(@actions.join("\r\n"))
-  ), 1000)
+  ), 2000)
 
   Crafty.bind("GameOver", =>
     player.reset()
