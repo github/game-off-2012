@@ -4,10 +4,11 @@ window.Config =
     height: 480
     center: null
 
-  cycleSegments: 24
-  cycleOuterRadius: 200
-  cycleInnerRadius: 100
-  cycleCenterRadius: null
+  cycle:
+    segments: 24
+    outerRadius: 200
+    innerRadius: 100
+    centerRadius: null
 
   obstacleEffects:
     divisor: 2
@@ -27,9 +28,8 @@ window.Config =
     "sounds/music/09 - Rofon.mp3"
     "sounds/music/10 - Datahell beta.mp3"
   ]
-  # circler
 
 
 # dynamic configurations
-window.Config.cycleCenterRadius = (window.Config.cycleOuterRadius + window.Config.cycleInnerRadius) / 2 + 15
-window.Config.viewport.center = {x: window.Config.viewport.width / 2, y: window.Config.viewport.height / 2}
+Config.cycle.centerRadius = (Config.cycle.outerRadius + Config.cycle.innerRadius) / 2 + 15
+Config.viewport.center    = {x: Config.viewport.width / 2, y: Config.viewport.height / 2}

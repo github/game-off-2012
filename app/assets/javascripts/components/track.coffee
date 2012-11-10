@@ -1,6 +1,6 @@
 Crafty.c("Track",
 
-  segments: Config.cycleSegments
+  segments: Config.cycle.segments
   _segments: []
   _player: null
 

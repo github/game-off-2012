@@ -28,7 +28,7 @@ Crafty.c "MoveInCircle",
     @disableControls = false
     @_angle = @_initialAngle
     @_speed = @_initialSpeed
-    @_radius = window.Config.cycleCenterRadius
+    @_radius = Config.cycle.centerRadius
 
   pivot: (hsh) ->
     @_pivot = hsh
@@ -62,7 +62,7 @@ Crafty.c "MoveInCircle",
 #      Crafty.audio.play("faster")
     @_radius += @_movement
     @rotation = @_angle - @_initialAngle
-    coords = window.Utils.polarCnv(@_radius, @_angle)
+    coords = Utils.polarCnv(@_radius, @_angle)
     old = {x:@x, y:@y}
     @x = @_pivot.x + coords.x
     @y = @_pivot.y  + coords.y

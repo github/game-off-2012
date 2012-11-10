@@ -1,7 +1,7 @@
 Crafty.c("Segment",
 
-  innerRadius: Config.cycleInnerRadius
-  outerRadius: Config.cycleOuterRadius
+  innerRadius: Config.cycle.innerRadius
+  outerRadius: Config.cycle.outerRadius
   _inner: null
   _outer: null
 
@@ -29,7 +29,7 @@ Crafty.c("Segment",
     @_outer.reset()
 
   perform: (action, value = null) ->
-    value = window.Config.actionValues[action] unless value
+    value = Config.actionValues[action] unless value
     return if value < Config.obstacleEffects.threshold
 
     switch action
@@ -46,6 +46,6 @@ Crafty.c("Segment",
         @_inner.shiftRadius(+value)
         @_outer.shiftRadius(-value)
 
-    @prev.perform(action, value / window.Config.obstacleEffects.divisor)
-    @next.perform(action, value / window.Config.obstacleEffects.divisor)
+    @prev.perform(action, value / Config.obstacleEffects.divisor)
+    @next.perform(action, value / Config.obstacleEffects.divisor)
 )
