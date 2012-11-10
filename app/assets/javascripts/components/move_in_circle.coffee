@@ -23,6 +23,7 @@ Crafty.c "MoveInCircle",
     Crafty.audio.add("crash", "sounds/die.wav")
     @disableControl()
     @enableControl()
+    @color(Config.player.color)
     @attr(h:Config.player.size, w:Config.player.size)
 
   reset: ->
@@ -71,6 +72,7 @@ Crafty.c "MoveInCircle",
       x: old.x
       y: old.y
     )
+    @_generateTrail()
 
   _setKeys: ->
     newKeys = {}
@@ -78,6 +80,10 @@ Crafty.c "MoveInCircle",
       newKeys[Crafty.keys[k]] = v
     )
     @_keys = newKeys
+
+  _generateTrail: ->
+    return unless Crafty.frame() % Config.gfx.trail.interval == 0
+    Crafty.e("Trail").attr(rotation: @rotation, x: @_x, y: @_y).Trail()
 
   crash: ->
     return if @disableControls

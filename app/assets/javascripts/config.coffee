@@ -6,6 +6,7 @@ window.Config =
 
   player:
     size: 8
+    color: "#ffffff"
 
   cycle:
     segments: 24
@@ -20,8 +21,15 @@ window.Config =
   actionValues:
     Pull: 20
     Push: 20
-    Merge: 15
+    Merge: 5
     Fork: 10
+
+  gfx:
+    trail:
+      duration: 50
+      reductionTo: 0.2
+      interval: 5
+      color: "#7f7f7f"
 
   music: [
     "sounds/music/04 - Bullcactus.mp3"
