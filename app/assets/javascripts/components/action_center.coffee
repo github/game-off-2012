@@ -2,7 +2,7 @@ Crafty.c "ActionCenter",
 
   _actions: ["Pull", "Push", "Fork", "Merge"]
   _bag: "gameModifiers"
-  radius: Config.cycleInnerRadius - 20
+  radius: Config.cycle.innerRadius - 20
   actions: []
   _delay: 2000
   _blinkColor: "#ff5555"
