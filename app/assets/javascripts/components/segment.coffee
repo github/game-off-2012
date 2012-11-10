@@ -27,7 +27,7 @@ Crafty.c("Segment",
       when "Pull"
         @_inner.shiftRadius(-30)
         @_outer.shiftRadius(-30)
-      when "Pull"
+      when "Push"
         @_inner.shiftRadius(+30)
         @_outer.shiftRadius(+30)
       when "Fork"
