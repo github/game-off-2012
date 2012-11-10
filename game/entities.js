@@ -2,46 +2,67 @@
     this.hover = false;
 
     this.tPos = new temporalPos(x, y, w, h, 0, 0);
-    this.base = new baseObj("Tile", -1);
+    this.base = new baseObj("Tile", 2);
 
     this.update = function (dt) {
         this.tPos.update(dt);
-
+        
         if (this.base)
             return this.base.update(dt);
     };
 
     this.draw = function (pen) {        
         var p = this.tPos;
-
+        
         pen.fillStyle = "transparent";
         if (this.hover) {
             pen.strokeStyle = "yellow";
         } else {
-            pen.strokeStyle = "black";
+            pen.strokeStyle = "white";
         }
         ink.rect(p.x, p.y, p.w, p.h, pen);
 
         if(this.base)
             this.base.draw(pen);
+
+        //Strange... but we can't set this during update!
+        this.hover = false;
     };
 }
 
-function Path(x, y, w, h) {
+function Path(x, y, w, h, end) {
     this.tPos = new temporalPos(x, y, w, h, 0, 0);
-    this.base = new baseObj("Path");
+    this.base = new baseObj("Path", 1);
+
+    this.end = end;
 
     this.update = function (dt) {
         this.tPos.update(dt);
 
-        if(this.base)
+        if (end) {
+            //Okay this is kinda a hack, approximating a square with a circle :(
+            var creepsAtBase = findAllWithin(eng, "Bug", this.tPos.getCenter(), this.tPos.w * 0.6);
+
+            for (var i = 0; i < creepsAtBase.length; i++) {
+                creepsAtBase[i].base.destroySelf = true;
+                eng.health -= 50;
+
+                if(eng.health < 0)
+                    window.location.reload();
+            }
+        }
+
+        if (this.base)
             return this.base.update(dt);
     };
 
     this.draw = function (pen) {
         var p = this.tPos;
-        pen.fillStyle = "green";
-        pen.strokeStyle = "green";
+        if (end)
+            pen.fillStyle = "blue";
+        else
+            pen.fillStyle = "green";
+        pen.strokeStyle = "lightgreen";
         ink.rect(p.x, p.y, p.w, p.h, pen);
 
         if(this.base)
@@ -51,7 +72,7 @@ function Path(x, y, w, h) {
 
 function Tower_Range(x, y, w, h) {
     this.tPos = new temporalPos(x, y, w, h, 0, 0);
-    this.base = new baseObj("Tower_Range", 1);
+    this.base = new baseObj("Tower_Range", 11);
 
     this.update = function (dt) {
         this.tPos.update(dt);
@@ -74,7 +95,7 @@ function Tower_Range(x, y, w, h) {
 
 function Tower_Laser(xs, ys, xe, ye, duration) {
     this.tPos = new temporalPos(xs, ys, xe - xs, ye - ys, 0, 0);
-    this.base = new baseObj("Tower_Laser", 2);
+    this.base = new baseObj("Tower_Laser", 12);
 
     this.base.addObject(new lifetime(duration));
 
@@ -101,39 +122,43 @@ function Tower_Laser(xs, ys, xe, ye, duration) {
 
 function Tower(x, y, w, h) {
     this.tPos = new temporalPos(x, y, w, h, 0, 0);
-    this.base = new baseObj("Tower");
+    this.base = new baseObj("Tower", 10);
 
     this.range = 112;
     this.damage = 150;
-    this.nextFire = 0;
-    this.coolDown = 1000;
-    this.laserTime = 50;
+    this.coolDown = 1;
+    this.nextFireIn = this.coolDown;
+    this.laserTime = 0.1;
 
     this.draw = function (pen) {
         var p = this.tPos;
-        pen.fillStyle = "red";
-        pen.strokeStyle = "red";
+        pen.save();
+        pen.fillStyle = "blue";
+        pen.strokeStyle = "lightblue";
         ink.rect(p.x, p.y, p.w, p.h, pen);
+        pen.restore();
 
-        if(this.base)
+        if (this.base)
             this.base.draw(pen);
     };
 
     this.update = function (dt) {
         var newObjs = [];
 
-        if (this.nextFire < new Date().getTime()) {
+        this.nextFireIn -= dt;
+
+        if (this.nextFireIn < 0) {
             var searchBug = findClosest(eng, "Bug", this.tPos.getCenter(), this.range + 0.01);
             if (searchBug) {
-                this.nextFire += this.coolDown;
                 searchBug.hp -= this.damage;
 
                 var cent1 = this.tPos.getCenter();
                 var cent2 = searchBug.tPos.getCenter();
 
-                newObjs.push(new Tower_Laser(cent1.x, cent1.y, cent2.x, cent2.y,
-                            new Date().getTime(), this.laserTime, this.id++));
-            }
+                newObjs.push(new Tower_Laser(cent1.x, cent1.y, cent2.x, cent2.y, this.laserTime));
+
+                this.nextFireIn = this.coolDown;
+            }            
         }
 
         if (this.base)
@@ -146,18 +171,19 @@ function Tower(x, y, w, h) {
 function Bug(x, y, r) {        
     this.hp = 100;
     this.value = 15;
-    this.speed = 10;
+    this.speed = 20;
 
-    this.base = new baseObj("Bug", 1);
+    this.base = new baseObj("Bug", 10);
 
     this.tPos = new temporalPos(x - r, y - r, r * 2, r * 2, this.speed, 0);
 
     this.update = function (dt) {
         this.tPos.update(dt);
 
-        if(this.health < 0)
-        {
-            this.destroySelf = true;
+        if(this.hp < 0)
+        {            
+            this.base.destroySelf = true;
+
             eng.money += this.value;
         }
 
@@ -185,12 +211,12 @@ function lifetime(timeLeft) {
     var currentTimeLeft = timeLeft;
 
     this.update = function (dt) {
-        currentTimeLeft -= timeLeft;
+        currentTimeLeft -= dt;
 
-        if (currentTimeLeft < 0)
-            this.parent.destroySelf = true;
-
-        this.destroySelf = true;
+        if (currentTimeLeft < 0) {
+            this.base.parent.destroySelf = true;
+            this.base.destroySelf = true;
+        }
 
         return 0;
     };

@@ -108,7 +108,7 @@ function sortArrayByPropertyPrivate
     greaterStart++;
 
     if (lessEnd - startIndex > 0)
-        sortArrayByPropertyPrivate(arrObj, startIndex, lessEnd - 1);
+        sortArrayByPropertyPrivate(arrObj, startIndex, lessEnd - 1, property);
     if (endIndex - greaterStart > 0)
-        sortArrayByPropertyPrivate(arrObj, greaterStart, endIndex);
+        sortArrayByPropertyPrivate(arrObj, greaterStart, endIndex, property);
 }

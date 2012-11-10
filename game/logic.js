@@ -25,16 +25,34 @@
             this.base.addObject(new Path(c * tileSize, r * tileSize, tileSize, tileSize))
         }
     }
+
+    this.base.addObject(new Path((wTiles - 1) * tileSize, (hTiles / 2 - 1) * tileSize, tileSize, tileSize, true))
+    this.base.addObject(new Path((wTiles - 1) * tileSize, (hTiles / 2) * tileSize, tileSize, tileSize, true))
+
     //this.map[hTiles / 2 - 1][wTiles - 1].addObject(Base); //OHHH Base means your main base, the place you defend!
     //this.map[hTiles / 2][wTiles - 1].addObject(Base);
 
     //https://developer.mozilla.org/en-US/docs/DOM/window.requestAnimationFrame
     var firstStart = Date.now();
+
+    this.lastFPS = 60;
+
+    var curFrameCounter = 0;
+    var lastFPSUpdate = firstStart;
+
     this.run = function (timestamp) {
         var updateAmount = timestamp - firstStart;
         firstStart = timestamp;
 
         updateAmount = Math.min(updateAmount, 1000); //Cap it at 1000
+
+        curFrameCounter++;
+        if (lastFPSUpdate + 1000 < timestamp) {
+            this.lastFPS = curFrameCounter;
+            curFrameCounter = 0;
+            lastFPSUpdate = timestamp;
+        }
+
 
         gameTimeAccumulated += updateAmount;
 
@@ -52,50 +70,30 @@
 
         var bugs = this.base.children.Bug;
 
-        for (var key in this.base.children.Tile) {
-            this.base.children.Tile[key].hover = false;
-        }
-
-        //You have to do loops which modify an array backwards, so you
-        //don't mess up the indexes.
-        for (var i = bugs.length - 1; i >= 0; i--) {
-            /*
-            bugs[i].update(true);
-            var cen = bugs[i].sprite.getCenter();
-            var c1 = Math.floor(cen.x / tileSize);
-            var r1 = Math.floor(cen.y / tileSize);
-            if (this.map[r1][c1] && this.map[r1][c1].object instanceof Base) {
-            //this.removeId(this.bugs, bugs[i].id);
-
-            bugs.splice(i, 1);
-
-            this.health -= 5;
-            if (this.health <= 0) {
-            window.location.reload();
-            }
-            }
-            */
-        }
-        while (bugs.length < 500) {
+        while (bugs.length < 5) {
             var newBug = new Bug(5, bH / 2 + (Math.random() - 0.5) * tileSize + 2, 4, this.id++);
             bugs.push(newBug);
         }
 
+        this.base.removeAllType("Tower_Range");
         if (this.mY > 0 && this.mY < bH && this.mX > 0 && this.mX < bW) {
 
-            var hovTow = findClosest(this.engine, "Tower", { x: mX, y: mY }, 0);
+            var tower = findClosest(this.engine, "Tower", { x: mX, y: mY }, 0);
 
-            if (hovTow) {
-                this.base.removeAllType("Tower_Range");
-
-                this.base.addObject(new Tower_Range(hovTow.tPos.x - hovTow.range, hovTow.tPos.y - hovTow.range, hovTow.range * 2, hovTow.range * 2));
+            if (tower) {
+                this.base.addObject(new Tower_Range(tower.tPos.x - tower.range + tileSize * 0.5, tower.tPos.y - tower.range + tileSize * 0.5, tower.range * 2, tower.range * 2));
             }
 
             var curTile = findClosest(this.engine, "Tile", { x: this.mX, y: this.mY }, 1000);
             curTile.hover = true;
         }
 
-        this.base.update(dt);
+        var objsToAdd = this.base.update(dt);
+
+        for (var i = 0; i < objsToAdd.length; i++)
+            this.base.addObject(objsToAdd[i]);
+
+        this.base.removeMarked();
     };
     
 /** Function */
@@ -107,10 +105,10 @@
 
             var clickedTile = findClosest(this.engine, "Tile", { x: e.offsetX, y: e.offsetY }, 1000);
 
-            if (clickedTile.object == null) {
+            if (clickedTile) {
                 if (this.money - 50 >= 0) {
                     this.money -= 50;
-                    clickedTile.base.addObject(new Tower(clickedTile.x, clickedTile.y, clickedTile.w, clickedTile.h));
+                    this.base.addObject(new Tower(clickedTile.tPos.x, clickedTile.tPos.y, clickedTile.tPos.w, clickedTile.tPos.h));
                 }
             } else {
                 if (clickedTile.object.click) {
@@ -131,14 +129,15 @@
         ink.text(10, bH + 30, "Health: " + this.health, pen);
         ink.text(10, bH + 60, "Money: $" + this.money, pen);
         ink.text(10, bH + 90, "Time passed: " + gameTimeAccumulated, pen);
+        ink.text(10, bH + 120, "FPS: " + this.lastFPS, pen);
 
+
+        this.base.draw(pen);
 
         this.pen.save();
         this.pen.strokeStyle = "red";
-        drawTree(this, "Tile", this.pen);
-        drawTree(this, "Bug", this.pen);
-        this.pen.restore();
-
-        this.base.draw(pen);
+        //drawTree(this, "Tile", this.pen);
+        drawTree(this, "Tower", this.pen);
+        this.pen.restore();        
     };
 }

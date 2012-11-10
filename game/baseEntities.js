@@ -38,7 +38,7 @@ function baseObj(type, zindex) {
             this.children[obj.base.type] = [];
 
         this.children[obj.base.type].push(obj);
-        this.children[obj.base.type].parent = obj;
+        obj.base.parent = this;
     }
 
     this.removeAllType = function (type) {
@@ -50,13 +50,22 @@ function baseObj(type, zindex) {
         var newObjs = [];
         for (var key in this.children) {
             for (var i = this.children[key].length - 1; i >= 0; i--) {
-                if (this.children[key][i].destroySelf)
-                    this.children[key].splice(i, 1);
-                else
-                    newObjs = merge(newObjs, this.children[key][i].update(dt));
+                newObjs = merge(newObjs, this.children[key][i].update(dt));
             }
         }
         return newObjs;
+    }
+
+    this.removeMarked = function () {
+        //Removes everything marked for deletion (with destroySelf)
+        for (var key in this.children) {
+            for (var i = this.children[key].length - 1; i >= 0; i--) {
+                if (this.children[key][i].base.destroySelf)
+                    this.children[key].splice(i, 1);
+                else
+                    this.children[key][i].base.removeMarked();
+            }
+        }
     }
 
     this.draw = function (pen) {
@@ -72,9 +81,20 @@ function baseObj(type, zindex) {
 
         sortArrayByProperty(childWithZIndex, "zindex");
 
+        var lastZIndex = -1000000;
+        for (var y = 0; y < childWithZIndex.length; y++) {
+            if (childWithZIndex[y].zindex < lastZIndex) {
+                console.log("Z SORTING MESSING UP (CRASH)!");
+                sortArrayByProperty(childWithZIndex, "zindex");
+            }
+            lastZIndex = childWithZIndex[y].zindex;
+        }
+
         for (var y = 0; y < childWithZIndex.length; y++) {
             for (var i = 0; i < childWithZIndex[y].array.length; i++) {
+                pen.save();
                 childWithZIndex[y].array[i].draw(pen);
+                pen.restore();
             }
         }
     }

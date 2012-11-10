@@ -9,30 +9,30 @@
 //3) To also store polygons
 
 //Input
-    //Input is object containing types, which contain arrays of all the objects of that type
-    //This makes say getting closest bug much faster (as we can ignore all non-bugs)!
+//Input is object containing types, which contain arrays of all the objects of that type
+//This makes say getting closest bug much faster (as we can ignore all non-bugs)!
 
-    //Most nested object (bugOne, etc) must have boundingBox, which returns {x, y, w, h}
-    //Ex: {bug:[bugOne, bugTwo, etc], tower:[towerOne, towerTwo]}
+//Most nested object (bugOne, etc) must have boundingBox, which returns {x, y, w, h}
+//Ex: {bug:[bugOne, bugTwo, etc], tower:[towerOne, towerTwo]}
 
-    //We take min/max X/Y parameters are sometimes you will know them and if you do...
-    //it really really helps us. If not we will calculate them (BUT EITHER GIVE ALL OR NONE!)
-    //ALSO min/max are of bounds of boxes! Not coords!
+//We take min/max X/Y parameters are sometimes you will know them and if you do...
+//it really really helps us. If not we will calculate them (BUT EITHER GIVE ALL OR NONE!)
+//ALSO min/max are of bounds of boxes! Not coords!
 
 //Usage
-    //Currently this will be generated every cycle...
-    //theoretically you can generate a quadtree faster if you
-    //use the old one... but im not implementing that unless it
-    //is absolutely needed
+//Currently this will be generated every cycle...
+//theoretically you can generate a quadtree faster if you
+//use the old one... but im not implementing that unless it
+//is absolutely needed
 
 //Side-effects
-    //This WILL reorder arrObjs (like 99% of the time).
+//This WILL reorder arrObjs (like 99% of the time).
 
-    //Currently types with no objects will crash us, so don't pass it!
+//Currently types with no objects will crash us, so don't pass it!
 
 //Speed concerns
-    //If you type things, but do not query based on the types it will be slower.
-    //Only type things if you intendent to query based on those types.
+//If you type things, but do not query based on the types it will be slower.
+//Only type things if you intendent to query based on those types.
 
 
 function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitThreshold) {
@@ -130,86 +130,22 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
             buildDiagnostics(quadtree.splitTree, diagnostics, curDepth + 1);
             buildDiagnostics(quadtree.greaterTree, diagnostics, curDepth + 1);
         }
-            
+
     }
 
     //Might get a speed benefit in making two of these
     //END INDEX IS INCLUSIVE HERE!
-    function sortByXAxis
+    function sortByAxis
     (
         arrObj,
         startIndex,
-        endIndex
-    ) {
-        var pivotPoint;
-        
-        if(startIndex + 1 == endIndex)
-        {
-            if (arrObj[startIndex].x > arrObj[endIndex].x)
-                swap(arrObj, startIndex, endIndex);
-            return;
-        }
-
-        //Make the pivot point the median of the first middle and last
-        //(also we do a bit of sorting here too)
-        var middleIndex = Math.floor((startIndex + endIndex) / 2);
-        if (arrObj[middleIndex].x < arrObj[startIndex].x)
-            swap(arrObj, middleIndex, startIndex);
-
-        if (arrObj[endIndex].x < arrObj[startIndex].x)
-            swap(arrObj, endIndex, startIndex);
-
-        if (arrObj[endIndex].x < arrObj[middleIndex].x)
-            swap(arrObj, endIndex, middleIndex);            
-
-        var pivotPoint = middleIndex;
-        var pivotValue = arrObj[middleIndex].x;
-
-        //Everything <= pivot is swapper to beginning, everything else is swapped to end
-
-        var curPos = startIndex;
-        var lessEnd = startIndex;
-        var greaterStart = endIndex;
-
-        //To prevent infinite recursion
-
-        //< here instead of <= sorts it, but leaves lessEnd and greaterStart possibly wrong
-        while (curPos <= greaterStart) {
-            if (arrObj[curPos].x < pivotValue)
-            {
-                if(curPos != lessEnd)
-                    swap(arrObj, curPos, lessEnd);
-
-                curPos++;
-                lessEnd++;
-            }
-            else if (arrObj[curPos].x > pivotValue)
-            {
-                swap(arrObj, curPos, greaterStart--);
-            }
-            else
-            {
-                curPos++;
-            }
-        }
-
-        greaterStart++;
-
-        if(lessEnd - startIndex > 0)
-            sortByXAxis(arrObj, startIndex, lessEnd - 1);
-        if(endIndex - greaterStart > 0)
-            sortByXAxis(arrObj, greaterStart, endIndex);
-    }
-    function sortByYAxis
-    (
-        arrObj,
-        startIndex,
-        endIndex
+        endIndex,
+        axis
     ) {
         var pivotPoint;
 
         if (startIndex + 1 == endIndex) {
-            if (arrObj[startIndex].y > arrObj[endIndex].y)
+            if (arrObj[startIndex].tPos[axis] > arrObj[endIndex].tPos[axis])
                 swap(arrObj, startIndex, endIndex);
             return;
         }
@@ -217,17 +153,17 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
         //Make the pivot point the median of the first middle and last
         //(also we do a bit of sorting here too)
         var middleIndex = Math.floor((startIndex + endIndex) / 2);
-        if (arrObj[middleIndex].y < arrObj[startIndex].y)
+        if (arrObj[middleIndex].tPos[axis] < arrObj[startIndex].tPos[axis])
             swap(arrObj, middleIndex, startIndex);
 
-        if (arrObj[endIndex].y < arrObj[startIndex].y)
+        if (arrObj[endIndex].tPos[axis] < arrObj[startIndex].tPos[axis])
             swap(arrObj, endIndex, startIndex);
 
-        if (arrObj[endIndex].y < arrObj[middleIndex].y)
+        if (arrObj[endIndex].tPos[axis] < arrObj[middleIndex].tPos[axis])
             swap(arrObj, endIndex, middleIndex);
 
         var pivotPoint = middleIndex;
-        var pivotValue = arrObj[middleIndex].y;
+        var pivotValue = arrObj[middleIndex].tPos[axis];
 
         //Everything <= pivot is swapper to beginning, everything else is swapped to end
 
@@ -239,14 +175,14 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
 
         //< here instead of <= sorts it, but leaves lessEnd and greaterStart possibly wrong
         while (curPos <= greaterStart) {
-            if (arrObj[curPos].y < pivotValue) {
+            if (arrObj[curPos].tPos[axis] < pivotValue) {
                 if (curPos != lessEnd)
                     swap(arrObj, curPos, lessEnd);
 
                 curPos++;
                 lessEnd++;
             }
-            else if (arrObj[curPos].y > pivotValue) {
+            else if (arrObj[curPos].tPos[axis] > pivotValue) {
                 swap(arrObj, curPos, greaterStart--);
             }
             else {
@@ -257,22 +193,22 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
         greaterStart++;
 
         if (lessEnd - startIndex > 0)
-            sortByYAxis(arrObj, startIndex, lessEnd - 1);
+            sortByAxis(arrObj, startIndex, lessEnd - 1, axis);
         if (endIndex - greaterStart > 0)
-            sortByYAxis(arrObj, greaterStart, endIndex);
+            sortByAxis(arrObj, greaterStart, endIndex, axis);
     }
 
     function makeBranch
     (
-//Array of all objects we are working on, we may reorder it, but 
-//will only reorder it within startIndex and endIndex
+    //Array of all objects we are working on, we may reorder it, but 
+    //will only reorder it within startIndex and endIndex
         arrObj,
         startIndex, endIndex,
-//The bounding box we are currently using... this is not really needed for collision (and is not stored and should not be stored unless someone can convince me it is needed)
-//We just use these to quickly determine the split point, and decide when to stop splitting.
+    //The bounding box we are currently using... this is not really needed for collision (and is not stored and should not be stored unless someone can convince me it is needed)
+    //We just use these to quickly determine the split point, and decide when to stop splitting.
         minX, maxX, failedX,
         minY, maxY, failedY,
-//Keeps track of the axis we should split on
+    //Keeps track of the axis we should split on
         splitX,
         oneAxisSplitCount,
         expectedMaxDepth
@@ -299,7 +235,7 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
                 //branch.endIndex = endIndex;                
             }
             else {
-                alert("CRASHED! Have invalid ("+length+") length in tree!");
+                alert("CRASHED! Have invalid (" + length + ") length in tree!");
             }
         }
         //Branch
@@ -320,22 +256,16 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
             var realQuadTree = false;
 
             if (!realQuadTree) {
-                if (splitX) {
-                    sortByXAxis(arrObj, startIndex, endIndex - 1);
+                sortByAxis(arrObj, startIndex, endIndex - 1, curDimen);
 
-                    for (var i = startIndex; i < endIndex - 1; i++)
-                        if (arrObj[i].x > arrObj[i + 1].x) {
-                            var crap = true;
-                            sortByXAxis(arrObj, startIndex, endIndex - 1);
-                        }
+                for (var i = startIndex; i < endIndex - 1; i++) {
+                    if (arrObj[i].tPos[curDimen] > arrObj[i + 1].tPos[curDimen]) {
+                        var crap = true;
+                        console.log("sort failed");
+                        sortByXAxis(arrObj, startIndex, endIndex - 1);
+                    }
                 }
-                else {
-                    sortByYAxis(arrObj, startIndex, endIndex - 1);
-                    for (var i = startIndex; i < endIndex - 1; i++)
-                        if (arrObj[i].y > arrObj[i + 1].y) {
-                            var crap = true;
-                        }
-                }
+
 
                 splitPos = arrObj[(Math.floor((startIndex + endIndex) / 2))][curDimen];
             }
@@ -343,9 +273,9 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
             //Man this code...
             var splitIndex = -1;
             if (oneAxisSplitCount == 0) {
-                splitIndex = Math.floor(startIndex + length * 0.5);                
+                splitIndex = Math.floor(startIndex + length * 0.5 - 0.5);
             } else if (oneAxisSplitCount == 1) {
-                splitIndex = Math.floor(startIndex + length * 0.25);
+                splitIndex = Math.floor(startIndex + length * 0.5 - 0.5);
             } else if (oneAxisSplitCount == 2) {
                 splitIndex = Math.floor(startIndex + length * 0.75);
             } else if (oneAxisSplitCount == 3) {
@@ -358,52 +288,59 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
                 var middleBox = arrObj[splitIndex].tPos.boundingBox();
                 splitPos = splitX ? middleBox.x : middleBox.y;
 
-                //if (oneAxisSplitCount % 2 == 0)
-                  //  splitPos += splitX ? middleBox.w : middleBox.h;
+                //if (oneAxisSplitCount % 2 == 1)
+                splitPos += splitX ? middleBox.w : middleBox.h;
 
-                if (expectedMaxDepth < 0) {
+                if (expectedMaxDepth < -10) {
                     //console.log("nooo");
                     //Then we take the one we split by and add it to this part of the tree
                     //This prevents infinite recursion!
-                    swap(arrObj, splitIndex, greaterStart--);
-                    endIndex--;
 
-                    branch.startIndex = splitIndex;
-                    branch.indexCount = 1;
+                    if (arrObj[startIndex].base.type == "Tile") {
+                        expectedMaxDepth += 10;
+                    }
+                    else {
+
+                        swap(arrObj, splitIndex, greaterStart--);
+                        endIndex--;
+
+                        branch.startIndex = splitIndex;
+                        branch.indexCount = 1;
+                    }
                 }
             }
 
             branch.splitPos = splitPos;
             branch.splitX = splitX;
-            
-            //else {
-                while (curPos <= greaterStart) {
-                    var boundingBox = arrObj[curPos].tPos.boundingBox();
 
-                    if ((boundingBox.x) < minX ||
+            //else {
+            while (curPos <= greaterStart) {
+                var boundingBox = arrObj[curPos].tPos.boundingBox();
+
+                if ((boundingBox.x) < minX ||
                        (boundingBox.y) < minY ||
                        (boundingBox.x + boundingBox.w) > maxX ||
                        (boundingBox.y + boundingBox.h) > maxY) {
-                        console.log("Object in quadtree out of bounds, insure your given range bounds all objects (not just their center point).");
-                        return;
-                    }
-
-                    //Guaranteed to be entirely less than splitPos
-                    if ((boundingBox[curDimen] + boundingBox[curSize]) <= splitPos) {
-                        if(curPos != lessEnd)
-                            swap(arrObj, curPos, lessEnd);
-                        curPos++;lessEnd++;
-                    }
-                    //Guaranteed to be entirely greater than splitPos
-                    else if ((boundingBox[curDimen]) >= splitPos) {
-                        if (curPos != greaterStart)
-                            swap(arrObj, curPos, greaterStart);
-                        greaterStart--;
-                    }
-                    //It crosses the splitting line (likely), so we can't really do anything with it!
-                    else
-                        curPos++;
+                    console.log("Object in quadtree out of bounds, insure your given range bounds all objects (not just their center point).");
+                    return;
                 }
+
+                //Guaranteed to be entirely less than splitPos
+                if ((boundingBox[curDimen] + boundingBox[curSize]) <= splitPos) {
+                    if (curPos != lessEnd)
+                        swap(arrObj, curPos, lessEnd);
+                    curPos++; lessEnd++;
+                }
+                //Guaranteed to be entirely greater than splitPos
+                else if ((boundingBox[curDimen]) >= splitPos) {
+                    if (curPos != greaterStart)
+                        swap(arrObj, curPos, greaterStart);
+                    greaterStart--;
+                }
+                //It crosses the splitting line (likely), so we can't really do anything with it!
+                else
+                    curPos++;
+            }
             //}            
 
             //This is important!
@@ -414,10 +351,10 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
             //different splitting techniques)
             /*
             if ((greaterStart - lessEnd) / (endIndex - startIndex) > splitThreshold) {
-                if (splitX)
-                    failedX = true;
-                else
-                    failedY = true;
+            if (splitX)
+            failedX = true;
+            else
+            failedY = true;
             }
             */
 
@@ -486,7 +423,7 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
 }
 
 //Input
-    //As usually target needs x, y. We don't look at w or h yet so everything is just treated as point data.
+//As usually target needs x, y. We don't look at w or h yet so everything is just treated as point data.
 
 //Notes
 
@@ -513,7 +450,7 @@ function findClosest(engine, type, target, maxDistance) {
         for (var placeChecked in placesCheck) {
             if (relevantArray[placesCheck[placeChecked]].hover)
                 duplicates++;
-            relevantArray[placesCheck[placeChecked]].hover = true;
+            //relevantArray[placesCheck[placeChecked]].hover = true;
         }
     }
 
@@ -539,7 +476,7 @@ function findClosest(engine, type, target, maxDistance) {
         if (minDisSqrBounds > minDisSquared)
             return null;
 
-        
+
         //Find closest and return it
         var closestObj = null;
 
@@ -549,10 +486,15 @@ function findClosest(engine, type, target, maxDistance) {
                 totalChecks++;
                 placesCheck.push(x);
             }
+
             var curObj = array[quadtree.startIndex];
+
+            if (!curObj)
+                console.log("(CRASH) We adding null to our array now?");
+
             var disSquared = distanceToRectSqr(sizeToBounds(curObj.tPos.boundingBox()), target);
 
-            if (disSquared < minDisSquared) {
+            if (disSquared <= minDisSquared) {
                 minDisSquared = disSquared;
                 closestObj = curObj;
             }
@@ -562,7 +504,7 @@ function findClosest(engine, type, target, maxDistance) {
         //it means be have no branches
         if (quadtree.leaf)
             return closestObj;
-        
+
 
         var curD = quadtree.splitX ? "x" : "y";
 
@@ -596,23 +538,131 @@ function findClosest(engine, type, target, maxDistance) {
         }
 
         //If it is possible something in the other side of the split could be better.            
-            //Just opposite of previous exclusion logic
+        //Just opposite of previous exclusion logic
         if (target[curD] > quadtree.splitPos)
             curClosest = findClosestPrivate(quadtree.lessTree, target, array, minDisSquared) || curClosest;
         else
             curClosest = findClosestPrivate(quadtree.greaterTree, target, array, minDisSquared) || curClosest;
-            
+
 
         return curClosest;
     }
 }
 
+
+function findAllWithin(engine, type, target, maxDistance) {
+    if (!engine.curQuadTree.objTrees[type])
+        return;
+
+    var relevantQuadTree = engine.curQuadTree.objTrees[type].tree;
+    var relevantArray = engine.curQuadTree.objTrees[type].array;
+
+    var totalChecks = 0;
+    var placesCheck = [];
+
+    var within = [];
+
+    var closestDiagnostics = true;
+
+    var closest = findWithinPrivate(relevantQuadTree, target, relevantArray, maxDistance * maxDistance, true);
+
+    if (totalChecks > 15)
+        var iJustHidTheProblem = true;
+
+    var duplicates = 0;
+
+    if (closestDiagnostics) {
+        for (var placeChecked in placesCheck) {
+            if (relevantArray[placesCheck[placeChecked]].hover)
+                duplicates++;
+            //relevantArray[placesCheck[placeChecked]].hover = true;
+        }
+    }
+
+    return within;
+
+
+    function findWithinPrivate(quadtree, target, array, minDisSquared) {
+        if (!quadtree)
+            return;
+
+        //We should do this before we are called... and then we can do it much more efficiently
+        //(not just because it reduces a function call), but then the code would be way bigger
+        //and much more complex
+
+        var minDisSqrBounds = distanceToRectSqr(quadtree.bounds, target);
+
+        if (isNaN(minDisSqrBounds)) {
+            var crapola = true;
+            minDis = distanceToRectSqr(quadtree.bounds, target);
+        }
+
+        //Then it is impossible and we will never find a better collision
+        if (minDisSqrBounds > minDisSquared)
+            return null;
+
+        //Find closest and return it
+        var closestObj = null;
+
+        //This is the brute force part of the algorithm
+        for (var x = quadtree.startIndex; x < quadtree.startIndex + quadtree.indexCount; x++) {
+            if (closestDiagnostics) {
+                totalChecks++;
+                placesCheck.push(x);
+            }
+
+            var curObj = array[quadtree.startIndex];
+
+            if (!curObj)
+                console.log("(CRASH) We adding null to our array now?");
+
+            var disSquared = distanceToRectSqr(sizeToBounds(curObj.tPos.boundingBox()), target);
+
+            if (disSquared <= minDisSquared) {
+                within.push(curObj);
+            }
+        }
+
+        //We still might have objects on us if this is false, but if it is true
+        //it means be have no branches
+        if (quadtree.leaf)
+            return closestObj;
+
+
+        var curD = quadtree.splitX ? "x" : "y";
+
+        //The rectangle in which we are in is the best bet... so we recurse down with that,
+        var curClosest = null;
+
+        if (target[curD] <= quadtree.splitPos)
+            findWithinPrivate(quadtree.lessTree, target, array, minDisSquared);
+        else
+            findWithinPrivate(quadtree.greaterTree, target, array, minDisSquared);
+
+        //Splits always must be compared :(
+        findWithinPrivate(quadtree.splitTree, target, array, minDisSquared);
+
+        //If it is possible something in the other side of the split could be better.            
+        //Just opposite of previous exclusion logic
+        if (target[curD] > quadtree.splitPos)
+            findWithinPrivate(quadtree.lessTree, target, array, minDisSquared);
+        else
+            findWithinPrivate(quadtree.greaterTree, target, array, minDisSquared);
+
+
+        return curClosest;
+    }
+}
+
+
+
 function drawTree(engine, type, pen) {
-    drawBranch(engine.curQuadTree.objTrees[type].tree, pen);
+    if(engine.curQuadTree.objTrees[type])
+        drawBranch(engine.curQuadTree.objTrees[type].tree, pen);
 }
 
 function drawBranch(quadtree, pen) {
-    if(!quadtree)
+    if (!quadtree)
         return;
 
     ink.outlineRect(quadtree.bounds.xs, quadtree.bounds.ys,
@@ -628,7 +678,7 @@ function distSqr(one, two) {
         alert("crap");
     }
 
-    return (one.x - two.x) * (one.x - two.x) + (one.y - two.y) * (one.y - two.y);
+    return (one.tPos.x - two.tPos.x) * (one.tPos.x - two.tPos.x) + (one.tPos.y - two.tPos.y) * (one.tPos.y - two.tPos.y);
 }
 
 
