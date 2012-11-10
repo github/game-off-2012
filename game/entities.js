@@ -1,174 +1,168 @@
-﻿function Sprite(x, y, w, h) {
-    this.x = x;
-    this.y = y;
-    this.dx = 0;
-    this.dy = 0;
-    this.w = w;
-    this.h = h;
-    this.update = function() {
-        this.x += this.dx;
-        this.y += this.dy;
-    };
-    this.getCenter = function() {
-        return {x: this.x + this.w / 2, y: this.y + this.h / 2};
-    };
-}
-
-function Tile(x, y, w, h) {
+﻿function Tile(x, y, w, h) {
     this.hover = false;
-    this.sprite = new Sprite(x, y, w, h);
-    this.object = null;
 
-    this.x = this.sprite.x + this.sprite.w / 2;
-    this.y = this.sprite.y + this.sprite.h / 2;
+    this.tPos = new temporalPos(x, y, w, h, 0, 0);
+    this.base = new baseObj("Tile", -1);
 
-    this.addObject = function(obj) {
-        this.object = new obj(this.sprite, this);
+    this.update = function (dt) {
+        this.tPos.update(dt);
+
+        if (this.base)
+            return this.base.update(dt);
     };
-    this.update = function () {
-        var animations = [];
 
-        if (this.object != null && this.object.update) {
-            animations = merge(animations, this.object.update());
+    this.draw = function (pen) {        
+        var p = this.tPos;
+
+        pen.fillStyle = "transparent";
+        if (this.hover) {
+            pen.strokeStyle = "yellow";
+        } else {
+            pen.strokeStyle = "black";
         }
-        this.x = this.sprite.x + this.sprite.w / 2;
-        this.y = this.sprite.y + this.sprite.h / 2;
+        ink.rect(p.x, p.y, p.w, p.h, pen);
 
-        return animations;
+        if(this.base)
+            this.base.draw(pen);
     };
-    this.draw = function(pen) {
-        var s = this.sprite;
-
-        if (this.object && this.object.draw) {
-            this.object.draw(pen);
-        }
-
-        if (true || this.object == null) {
-            pen.fillStyle = "transparent";
-            if (this.hover) {
-                pen.strokeStyle = "yellow";
-            } else {
-                pen.strokeStyle = "black";
-            }
-            ink.rect(s.x, s.y, s.w, s.h, pen);
-        } 
-        //else {
-            
-        //}
-    };
-
-    this.boundingBox = function () {
-        return this.sprite;
-    }
 }
 
-function Path(sprite) {
-    this.sprite = sprite;
-    this.draw = function(pen) {
-        var s = this.sprite;
+function Path(x, y, w, h) {
+    this.tPos = new temporalPos(x, y, w, h, 0, 0);
+    this.base = new baseObj("Path");
+
+    this.update = function (dt) {
+        this.tPos.update(dt);
+
+        if(this.base)
+            return this.base.update(dt);
+    };
+
+    this.draw = function (pen) {
+        var p = this.tPos;
         pen.fillStyle = "green";
         pen.strokeStyle = "green";
-        ink.rect(s.x, s.y, s.w, s.h, pen);
+        ink.rect(p.x, p.y, p.w, p.h, pen);
+
+        if(this.base)
+            this.base.draw(pen);
     };
-    this.update = function () {
-    }
 }
 
-function Base(sprite) {
-    this.sprite = sprite;
-    this.draw = function(pen) {
-        var s = this.sprite;
-        pen.fillStyle = "blue";
+function Tower_Range(x, y, w, h) {
+    this.tPos = new temporalPos(x, y, w, h, 0, 0);
+    this.base = new baseObj("Tower_Range", 1);
+
+    this.update = function (dt) {
+        this.tPos.update(dt);
+
+        if(this.base)
+            return this.base.update(dt);
+    };
+
+    this.draw = function (pen) {
+        var p = this.tPos;
+        pen.lineWidth = 2;
+        pen.fillStyle = "transparent";
         pen.strokeStyle = "blue";
-        ink.rect(s.x, s.y, s.w, s.h, pen);
+        ink.circ(p.x + w / 2, p.y + h / 2, w / 2, pen);
+
+        if(this.base)
+            this.base.draw(pen);
     };
-    this.update = function () {
-    }
 }
 
-function Tower(sprite) {
-    this.sprite = sprite;
+function Tower_Laser(xs, ys, xe, ye, duration) {
+    this.tPos = new temporalPos(xs, ys, xe - xs, ye - ys, 0, 0);
+    this.base = new baseObj("Tower_Laser", 2);
+
+    this.base.addObject(new lifetime(duration));
+
+    this.update = function (dt) {
+        this.tPos.update(dt);
+
+        if (this.base)
+            return this.base.update(dt);
+    };
+
+    this.draw = function (pen) {
+        var p = this.tPos;
+
+        pen.strokeStyle = "purple";
+        pen.save();
+        pen.lineWidth = 5;
+        ink.line(p.x, p.y, p.x + p.w, p.y + p.h, pen);
+        pen.restore();
+
+        if (this.base)
+            this.base.draw(pen);
+    };
+}
+
+function Tower(x, y, w, h) {
+    this.tPos = new temporalPos(x, y, w, h, 0, 0);
+    this.base = new baseObj("Tower");
+
     this.range = 112;
     this.damage = 150;
     this.nextFire = 0;
     this.coolDown = 1000;
     this.laserTime = 50;
-    this.draw = function(pen) {
-        var s = this.sprite;
+
+    this.draw = function (pen) {
+        var p = this.tPos;
         pen.fillStyle = "red";
         pen.strokeStyle = "red";
-        ink.rect(s.x, s.y, s.w, s.h, pen);
+        ink.rect(p.x, p.y, p.w, p.h, pen);
+
+        if(this.base)
+            this.base.draw(pen);
     };
-    this.overlay = function(pen) {
-        var s = this.sprite;
-        pen.save();
-        pen.lineWidth = 2;
-        pen.fillStyle = "transparent";
-        pen.strokeStyle = "blue";
-        ink.circ(s.x + s.w / 2, s.y + s.h / 2, this.range, pen);
-        pen.restore();
-    };
-    this.update = function () {
-        var animations = [];
-        
+
+    this.update = function (dt) {
+        var newObjs = [];
+
         if (this.nextFire < new Date().getTime()) {
             var searchBug = findClosest(eng, "Bug", this.sprite.getCenter(), this.range + 0.01);
             if (searchBug) {
-                this.nextFire = new Date().getTime() + this.coolDown;
+                this.nextFire += this.coolDown;
                 searchBug.hp -= this.damage;
 
-                var cent1 = this.sprite.getCenter();
-                var cent2 = { x: searchBug.sprite.x, y: searchBug.sprite.y };
-
-                animations.push(new Laser(cent1.x, cent1.y, cent2.x, cent2.y,
+                var cent1 = this.tPos.getCenter();
+                var cent2 = searchBug.tPos.getCenter();
+                
+                newObjs.push(new Laser(cent1.x, cent1.y, cent2.x, cent2.y,
                             new Date().getTime(), this.laserTime, this.id++));
             }
         }
 
-        return animations;
+        if (this.base)
+            newObjs = merge(newObjs, this.base.update(dt));
+
+        return newObjs;
     }
 }
 
-function Bug(x, y, r, id) {
-    this.sprite = new Sprite(x, y, r, r);
-    this.id = id;
+function Bug(x, y, r) {        
     this.hp = 100;
     this.value = 15;
     this.speed = 1;
-    this.sprite.dx = this.speed;
 
-    this.x = this.sprite.x + this.sprite.w / 2;
-    this.y = this.sprite.y + this.sprite.h / 2;
+    this.base = new baseObj("Bug");
 
-    //Just to do a test
-    //this.curTile;
+    this.tPos = new temporalPos(x - r, y - r, r * 2, r * 2, this.speed, 0);
 
     this.update = function (qCheck) {
-        this.sprite.update();
-        this.x = this.sprite.x;
-        this.y = this.sprite.y;
+        this.tPos.update(dt);
 
-        var r = Math.floor(this.y / tileSize);
-        var c = Math.floor(this.x / tileSize);
-
-        //console.log(this.engine.curQuadTree.objTrees.Tile.tree);
-        //this.x -= tileSize / 2;
-        //this.y -= tileSize / 2;
-        if (qCheck) {
-            var searchTile = findClosest(this.engine, "Tile", this, 1000);
-            //this.x += tileSize / 2;
-            //this.y += tileSize / 2;
-            //console.log(this.world.map[r][c]);        
-
-            if (this.engine.map[r][c] && !(searchTile === this.engine.map[r][c])) {
-                //crap crash here
-                //console.log("crap, crash");
-                var breakPoint = 0;
-            }
+        if(this.health < 0)
+        {
+            this.destroySelf = true;
+            eng.money += this.value;
         }
 
-
-        this.curTile = this.engine.map[r][c];
+        if (this.base)
+            return this.base.update(dt);
     };
     this.draw = function(pen) {
         var s = this.sprite;
@@ -178,26 +172,30 @@ function Bug(x, y, r, id) {
         pen.lineWidth = 1;
         ink.circ(s.x, s.y, s.w, pen);
         pen.restore();
-    };
 
-    this.boundingBox = function () {
-        return this.sprite;
-    }
+        if(this.base)
+            this.base.draw(pen);
+    };
 }
 
-function Laser(x1, y1, x2, y2, start, dur, id) {
-    this.x1 = x1;
-    this.y1 = y1;
-    this.x2 = x2;
-    this.y2 = y2;
-    this.start = start;
-    this.dur = dur;
-    this.id = id;
-    this.draw = function(pen) {
-        pen.strokeStyle = "purple";
-        pen.save();
-        pen.lineWidth = 5;
-        ink.line(this.x1, this.y1, this.x2, this.y2, pen);
-        pen.restore();
+function lifetime(timeLeft) {
+    //this.tPos = new temporalPos(x, y, w, h, 0, 0);
+    //this.base = new baseObj("Tower");
+
+    var currentTimeLeft = timeLeft;
+
+    this.update = function (dt) {
+        currentTimeLeft -= timeLeft;
+
+        if (currentTimeLeft < 0)
+            this.parent.destroySelf = true;
+
+        this.destroySelf = true;
+
+        return 0;
+    };
+
+    this.draw = function (pen) {
+        return 0;
     };
 }
