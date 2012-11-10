@@ -491,6 +491,9 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
 //Notes
 
 function findClosest(engine, type, target, maxDistance) {
+    if (!engine.curQuadTree.objTrees[type])
+        return;
+
     var relevantQuadTree = engine.curQuadTree.objTrees[type].tree;
     var relevantArray = engine.curQuadTree.objTrees[type].array;
 
@@ -510,7 +513,7 @@ function findClosest(engine, type, target, maxDistance) {
         for (var placeChecked in placesCheck) {
             if (relevantArray[placesCheck[placeChecked]].hover)
                 duplicates++;
-            //relevantArray[placesCheck[placeChecked]].hover = true;
+            relevantArray[placesCheck[placeChecked]].hover = true;
         }
     }
 

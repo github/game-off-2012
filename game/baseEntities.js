@@ -24,15 +24,21 @@ function baseObj(type, zindex) {
     this.children = {};
     this.type = type;
 
+    if (!zindex)
+        zindex = 0;
+
     //Individual objects cannot change their zindex! If they are the same type they must have the same zindex!
     this.zindex = zindex;
 
     this.addObject = function (obj) {
-        if (!this.children[obj.type])
-            this.children[obj.type] = [];
+        if (!obj.base)
+            console.log("BAD! CALLED addObject with an object with no base (we need base for the type)!");
 
-        this.children[obj.type].push(obj);
-        this.children[obj.type].parent = obj;
+        if (!this.children[obj.base.type])
+            this.children[obj.base.type] = [];
+
+        this.children[obj.base.type].push(obj);
+        this.children[obj.base.type].parent = obj;
     }
 
     this.removeAllType = function (type) {
@@ -43,7 +49,7 @@ function baseObj(type, zindex) {
     this.update = function (dt) {
         var newObjs = [];
         for (var key in this.children) {
-            for (var i = this.children[key] - 1; i >= 0; i--) {
+            for (var i = this.children[key].length - 1; i >= 0; i--) {
                 if (this.children[key][i].destroySelf)
                     this.children[key].splice(i, 1);
                 else
@@ -53,22 +59,22 @@ function baseObj(type, zindex) {
         return newObjs;
     }
 
-    this.draw = function () {
+    this.draw = function (pen) {
         //Sort objects by z-index (low to high) and then draw by that order
 
         var childWithZIndex = [];
 
         for (var key in this.children) {
             if (this.children[key].length > 0) {
-                childWithZIndex.push({ zindex: this.children[key][0].zindex, array: this.children[key] });
+                childWithZIndex.push({ zindex: this.children[key][0].base.zindex, array: this.children[key] });
             }
         }
 
-        sortArrayByProperty(childWithZIndex, 0, childWithZIndex.length, "zindex");
+        sortArrayByProperty(childWithZIndex, "zindex");
 
         for (var y = 0; y < childWithZIndex.length; y++) {
-            for (var i = 0; i < childWithZIndex[y].length; i++) {
-                childWithZIndex[y][i].draw();
+            for (var i = 0; i < childWithZIndex[y].array.length; i++) {
+                childWithZIndex[y].array[i].draw(pen);
             }
         }
     }
@@ -92,6 +98,6 @@ function temporalPos(x, y, w, h, dx, dy) {
         return { x: this.x + this.w / 2, y: this.y + this.h / 2 };
     };
     this.boundingBox = function () {
-        return sizeToBounds(this);
+        return this;
     };
 }

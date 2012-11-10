@@ -28,8 +28,17 @@
     //this.map[hTiles / 2 - 1][wTiles - 1].addObject(Base); //OHHH Base means your main base, the place you defend!
     //this.map[hTiles / 2][wTiles - 1].addObject(Base);
 
-    this.run = function(dt) {
-        this.update(dt);
+    //https://developer.mozilla.org/en-US/docs/DOM/window.requestAnimationFrame
+    var firstStart = Date.now();
+    this.run = function (timestamp) {
+        var updateAmount = timestamp - firstStart;
+        firstStart = timestamp;
+
+        updateAmount = Math.min(updateAmount, 1000); //Cap it at 1000
+
+        gameTimeAccumulated += updateAmount;
+
+        this.update(updateAmount / 1000);
         this.draw();
         window.reqAnim(this.run.bind(this));
     };
@@ -68,14 +77,19 @@
             */
         }
         while (bugs.length < 500) {
-            var newBug = new Bug(5, Math.random() * 32 + 16, 4, this.id++);
+            var newBug = new Bug(5, bH / 2 + (Math.random() - 0.5) * tileSize + 2, 4, this.id++);
             bugs.push(newBug);
         }
 
         if (this.mY > 0 && this.mY < bH && this.mX > 0 && this.mX < bW) {
-            this.base.removeAllType("Tower_Range");
 
-            this.base.addObject(new Tower_Range(x, y, tileSize, tileSize));
+            var hovTow = findClosest(this.engine, "Tower", { x: mX, y: mY }, 0);
+
+            if (hovTow) {
+                this.base.removeAllType("Tower_Range");
+
+                this.base.addObject(new Tower_Range(hovTow.tPos.x - hovTow.range, hovTow.tPos.y - hovTow.range, hovTow.range * 2, hovTow.range * 2));
+            }
 
             var curTile = findClosest(this.engine, "Tile", { x: this.mX, y: this.mY }, 1000);
             curTile.hover = true;
@@ -96,7 +110,7 @@
             if (clickedTile.object == null) {
                 if (this.money - 50 >= 0) {
                     this.money -= 50;
-                    clickedTile.addObject(new Tower(clickedTile.x, clickedTile.y, clickedTile.w, clickedTile.h));
+                    clickedTile.base.addObject(new Tower(clickedTile.x, clickedTile.y, clickedTile.w, clickedTile.h));
                 }
             } else {
                 if (clickedTile.object.click) {
@@ -116,10 +130,12 @@
         pen.fillStyle = "#2233FF";
         ink.text(10, bH + 30, "Health: " + this.health, pen);
         ink.text(10, bH + 60, "Money: $" + this.money, pen);
+        ink.text(10, bH + 90, "Time passed: " + gameTimeAccumulated, pen);
 
 
         this.pen.save();
         this.pen.strokeStyle = "red";
+        drawTree(this, "Tile", this.pen);
         drawTree(this, "Bug", this.pen);
         this.pen.restore();
 

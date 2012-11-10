@@ -123,15 +123,15 @@ function Tower(x, y, w, h) {
         var newObjs = [];
 
         if (this.nextFire < new Date().getTime()) {
-            var searchBug = findClosest(eng, "Bug", this.sprite.getCenter(), this.range + 0.01);
+            var searchBug = findClosest(eng, "Bug", this.tPos.getCenter(), this.range + 0.01);
             if (searchBug) {
                 this.nextFire += this.coolDown;
                 searchBug.hp -= this.damage;
 
                 var cent1 = this.tPos.getCenter();
                 var cent2 = searchBug.tPos.getCenter();
-                
-                newObjs.push(new Laser(cent1.x, cent1.y, cent2.x, cent2.y,
+
+                newObjs.push(new Tower_Laser(cent1.x, cent1.y, cent2.x, cent2.y,
                             new Date().getTime(), this.laserTime, this.id++));
             }
         }
@@ -146,13 +146,13 @@ function Tower(x, y, w, h) {
 function Bug(x, y, r) {        
     this.hp = 100;
     this.value = 15;
-    this.speed = 1;
+    this.speed = 10;
 
-    this.base = new baseObj("Bug");
+    this.base = new baseObj("Bug", 1);
 
     this.tPos = new temporalPos(x - r, y - r, r * 2, r * 2, this.speed, 0);
 
-    this.update = function (qCheck) {
+    this.update = function (dt) {
         this.tPos.update(dt);
 
         if(this.health < 0)
@@ -164,23 +164,23 @@ function Bug(x, y, r) {
         if (this.base)
             return this.base.update(dt);
     };
-    this.draw = function(pen) {
-        var s = this.sprite;
+    this.draw = function (pen) {
+        var p = this.tPos;
         pen.fillStyle = "yellow";
         pen.strokeStyle = "orange";
         pen.save();
         pen.lineWidth = 1;
-        ink.circ(s.x, s.y, s.w, pen);
+        ink.circ(p.x, p.y, p.w, pen);
         pen.restore();
 
-        if(this.base)
+        if (this.base)
             this.base.draw(pen);
     };
 }
 
 function lifetime(timeLeft) {
     //this.tPos = new temporalPos(x, y, w, h, 0, 0);
-    //this.base = new baseObj("Tower");
+    this.base = new baseObj("lifetime");
 
     var currentTimeLeft = timeLeft;
 
