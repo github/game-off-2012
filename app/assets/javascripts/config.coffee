@@ -5,7 +5,7 @@ window.Config =
     center: null
 
   player:
-    size: 10
+    size: 8
 
   cycle:
     segments: 24
