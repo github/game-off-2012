@@ -9,6 +9,10 @@ window.Config =
   cycleInnerRadius: 100
   cycleCenterRadius: null
 
+  obstacleEffects:
+    divisor: 2
+    threshold: 1
+
   music: [
     "sounds/music/04 - Bullcactus.mp3"
     "sounds/music/05 - Soft commando.mp3"

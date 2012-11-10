@@ -23,6 +23,8 @@ Crafty.c "Obstacle",
     @y = @pivot.y + coords.y
 
   shiftRadius: (radiusChange)->
+    return if radiusChange < Config.obstacleEffects.threshold
+
     @radius += radiusChange
     coords = window.Utils.polarCnv(@radius, @angle)
     @tween({x:@pivot.x + coords.x, y: @pivot.y + coords.y}, 30)
