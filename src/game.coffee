@@ -18,7 +18,7 @@ class Game
   constructor: ->
     @width = 640.0
     @height = 480.0
-    @scale = 30.0
+    @scale = 30
     
     @canvas = document.getElementById("board")
     @canvas.width = 640
@@ -47,6 +47,8 @@ class Game
     @debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit)
     @world.SetDebugDraw(@debugDraw)
     
+    
+    
     @ticks = 0
     @screen.clear()
     @xOff = 0
@@ -56,8 +58,10 @@ class Game
     @ll = new LevelLoader bundle, @world, @
     new PlayerModel @world, @, 20, 88
     
-    #Not used at the moment
-    @camera = new Camera(@)
+    #640/(8*16)
+    @screenscale =5
+    
+    @camera = new Camera(@world,@scale,@screenscale,@inputHandler)
       
   beginContacts:(begin, manifold)=>
     console.log("contact")
@@ -72,18 +76,10 @@ class Game
     @world.ClearForces()
     #entities.tick()
     @camera.tick()
-    
-    if @inputHandler.RIGHT.isPressed() is true
-      if @xOff != 128
-        @xOff += 1
-        
-    if @inputHandler.LEFT.isPressed() is true
-      if @xOff != 0
-        @xOff -= 1
-     
+  
   render: =>
     #Method with scale functionality
     @screen.clear()
     #render entities
     @world.DrawDebugData()
-    @ctx.drawImage(@ll.background,0+@xOff, 0, 128, 128, 0, 0, 640, 480)
+    @ctx.drawImage(@ll.background,@camera.getXoffset(), 0, 128, 128, 0, 0, 640, 480)
