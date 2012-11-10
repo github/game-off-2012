@@ -90,12 +90,9 @@ class LevelLoader
        
          
 class Camera
-  constructor:(@game)->
-    @speed = 5
+  constructor:(@world,@scale,@screenscale,@inputHandler)->
     @xOffset = 0
-    @player = @game.player
-    @modelList = @game.modelList
-    @scale = @game.scale
+    @modelScale = @scale/@screenscale
     
   getXoffset: ->
     @xOffset
@@ -104,13 +101,31 @@ class Camera
     @processEntities xOffset
     @xOffset = xOffset
     
-  processEntities:(xOff) ->
-    for i in [0..@modelList.size()-1]
-      #e = @modelList.get(i)
-      e.setPosition(e.getX()+xOff, e.getY())
-    
   tick:=>
-    xOff =0
+    xNow = 0
+    
+    if @inputHandler.RIGHT.isPressed() is true
+      if @xOffset != 128
+        xNow = 1
+        
+    if @inputHandler.LEFT.isPressed() is true
+      if @xOffset != 0
+        xNow = -1
+    
+    #Some performance-thing
+    if xNow != 0
+      body = @world.GetBodyList()
+      @setBodyPosition(body, xNow, 0)
+      while (body = body.GetNext()) != null
+        @setBodyPosition(body, xNow, 0)
+      
+      @xOffset += xNow
+  
+  #Set Body-Position easily
+  setBodyPosition:(body,xOffset, yOffset)->
+    newx = body.GetPosition().x - (xOffset/@modelScale)
+    newy = body.GetPosition().y - (yOffset/@modelScale)
+    body.SetPosition(new b2Vec2(newx, newy), 0)
 
 #SpriteSheet-Class for loading and accessing sprites by a atlas-index
 class SpriteSheet
