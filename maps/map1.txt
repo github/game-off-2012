@@ -10,7 +10,7 @@ WWWWWWWWWWWW   W
 WWWWWWWWWWWW   W
 WWWWWWWWWW     W
 WWWWWWW        W
-WWWW          BW
-W           WB W
-W           WBFW
+WWWW           W
+W            BBW
+W            BFW
 WWWWWWWWWWWWWWWW
