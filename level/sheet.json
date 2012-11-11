@@ -17,7 +17,7 @@
          "objects":[
                 {
                  "height":0,
-                 "name":"",
+                 "name":"ground",
                  "polygon":[
                         {
                          "x":0,
@@ -37,16 +37,18 @@
                         }],
                  "properties":
                     {
-
+                     "density":"1",
+                     "friction":"1",
+                     "restitution":"0.2"
                     },
-                 "type":"",
+                 "type":"static",
                  "width":0,
                  "x":1,
                  "y":88
                 }, 
                 {
                  "height":0,
-                 "name":"",
+                 "name":"tower",
                  "polygon":[
                         {
                          "x":0,
@@ -66,9 +68,11 @@
                         }],
                  "properties":
                     {
-
+                     "density":"1",
+                     "friction":"1",
+                     "restitution":"0.2"
                     },
-                 "type":"",
+                 "type":"static",
                  "width":0,
                  "x":193,
                  "y":17
