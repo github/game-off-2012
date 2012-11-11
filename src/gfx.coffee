@@ -18,6 +18,7 @@ class RessourceLoader
   constructor:(@game)->
     
 class LevelLoader
+  
   constructor:(@bundle, @world, @game)->
     @data
     @background = document.createElement("canvas")
@@ -76,9 +77,25 @@ class LevelLoader
       shape.SetAsArray(obj.polygon)
       #Could be red out of map-->addlater
       fixDef = new b2FixtureDef
-      fixDef.density = 1
-      fixDef.friction = 1
-      fixDef.restitution = 0.2
+      
+      if obj.properties?
+        p = obj.properties
+        if p.density?
+          fixDef.density = p.density
+        else
+          fixDef.density = 1
+          
+        if p.friction?
+          fixDef.friction = p.friction
+        else
+          fixDef.friction = 1
+          
+        if p.restitution?
+          fixDef.restitution = p.restitution
+          console.log(p.restitution)
+        else
+          fixDef.restitution = 0
+        
       fixDef.shape = shape
       
       bodyDef = new b2BodyDef
