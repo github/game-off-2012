@@ -1,4 +1,4 @@
-function loadMap(level) {
+function loadMap(level, loadComplete) {
   var map = null;
   $.get('map/load/'+level, function(data) {
     map = jQuery.parseJSON(data);
@@ -18,8 +18,7 @@ function loadMap(level) {
     for (var i = 0; i < map.length; i++) {
       for (var j = 0; j < map[0].length; j++) {
         var curr = map[i][j];
-        var item = "wall";
-  
+        var item = " ";
         if (curr == 'B')
           item = "blue";
         else if (curr == 'G')
@@ -28,9 +27,13 @@ function loadMap(level) {
           item = "orange";
         else if (curr == 'R')
           item = "red";
-    
-        Crafty.e("2D, DOM, solid, " + item).attr({x: j*gameBoard.tileSize, y: (i)*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+        else if (curr == 'W')
+          item = "wall";
+        
+        if (item !== " ")
+          Crafty.e("2D, DOM, solid, " + item).attr({x: j*gameBoard.tileSize, y: (i)*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
       }
     }
+    loadComplete();
   });
 }
