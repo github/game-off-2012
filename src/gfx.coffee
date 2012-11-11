@@ -39,7 +39,7 @@ class LevelLoader
         @createScene(@data, @data.layers[i])
         
       if name == 'static'
-        @createModel(@world, @data.layers[i], b2Body.b2_staticBody)
+        @createModel(@world, @data.layers[i])
     
     @game.run()
    
@@ -61,7 +61,7 @@ class LevelLoader
       for x in [0..data.width-1]
         sprites.drawTile(@ctx, x, y, tiles[x+y*data.width]-1)
 
-   createModel:(world, layer, type)=>
+   createModel:(world, layer)=>
     objects = layer.objects
     
     #The ratio is how much tiles are in one frame
@@ -99,12 +99,19 @@ class LevelLoader
       fixDef.shape = shape
       
       bodyDef = new b2BodyDef
+      
+      type = 0
+      
+      if obj.type? and obj.type is 'static'
+        type = b2Body.b2_staticBody
+      else
+        type = b2Body.b2_dynamicBody
+      
       bodyDef.type = type
       bodyDef.position.x = obj.x/30*scalew
       bodyDef.position.y = obj.y/30*scaleh
       
       @world.CreateBody(bodyDef).CreateFixture(fixDef)
-       
          
 class Camera
   constructor:(@world,@scale,@screenscale,@inputHandler)->
@@ -154,4 +161,4 @@ class SpriteSheet
     for iy in [0..7]
       for ix in [0..7]
         if (ix+iy*@tilesize) is index
-          ctx.drawImage(@image, (ix*@tilesize), (iy*@tilesize), @tilesize, @tilesize, x*@tilesize, y*@tilesize, @tilesize, @tilesize)
+          ctx.drawImage(@image, (ix*@tilesize), (iy*@tilesize), @tilesize,@tilesize, x*@tilesize, y*@tilesize, @tilesize, @tilesize)
