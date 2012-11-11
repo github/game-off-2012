@@ -2,11 +2,11 @@
 <html>
 <head>
 <title>
-Tower Defence by Kevin Nash
+Tower Defence by Justin, Kevin, Quentin and Wesley
 </title>
 <style type="text/css">
 body {
-    background-color : #000000;
+    background-color : #FFFFFF;
 }
 canvas {
     border : 2px solid #FF0000;
@@ -18,15 +18,25 @@ canvas {
 </head>
 <body>
 <canvas id="myCanvas"></canvas>
+<div id="towerinfo">
+	Selected tower things
+</div>
+
 <script src="jquery.min.js"></script><!-- //ajax.googleapis.com/ajax/libs/jquery/1.8.2/ -->
 
 <script src="commonFncs.js"></script>
+<script src="commonGeometry.js"></script>
+
 <script src="baseEntities.js"></script>
+<script src="entities.js"></script>
+
+<script src="quadtree.js"></script>
+
+<script src="graphics.js"></script>
+
+<script src="pathGeneration.js"></script>
 
 <script src="logic.js"></script>
-<script src="graphics.js"></script>
-<script src="entities.js"></script>
-<script src="quadtree.js"></script>
 <script>
     var wTiles = 20;
     var hTiles = 16;
@@ -72,5 +82,6 @@ canvas {
         });
     });
 </script>
+
 </body>
 </html>

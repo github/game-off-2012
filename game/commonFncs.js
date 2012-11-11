@@ -7,35 +7,8 @@ function merge(array, values) {
     return array;
 }
 
-//Gets distance to the rect, 0 if it is in rect
-//Rect uses xs, xe, ys, ye structure
-function distanceToRectSqr(rect, point) {
-    var xDistance;
-    var yDistance;
-
-    if (point.x >= rect.xe)
-        xDistance = point.x - rect.xe;
-    else if (point.x <= rect.xs)
-        xDistance = rect.xs - point.x;
-    else
-        xDistance = 0;
-
-    if (point.y >= rect.ye)
-        yDistance = point.y - rect.ye;
-    else if (point.y <= rect.ys)
-        yDistance = rect.ys - point.y;
-    else
-        yDistance = 0;
-
-    return xDistance * xDistance + yDistance * yDistance;
-}
-
-function sizeToBounds(size) {
-    return { xs: size.x, ys: size.y, xe: size.x + size.w, ye: size.y + size.h };
-}
-
-function boundsToSize(bounds) {
-    return { x: bounds.xs, y: bounds.ys, w: bounds.xe - bounds.xs, h: bounds.xe - bounds.xs };
+function hexPair(num) {
+    return Math.min(Math.max(num, 16), 255).toString(16);
 }
 
 function sortArrayByProperty

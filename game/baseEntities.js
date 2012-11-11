@@ -115,7 +115,7 @@ function temporalPos(x, y, w, h, dx, dy) {
         this.y += this.dy * dt;
     };
     this.getCenter = function () {
-        return { x: this.x + this.w / 2, y: this.y + this.h / 2 };
+        return new Vector(this.x + this.w / 2, this.y + this.h / 2 );
     };
     this.boundingBox = function () {
         return this;

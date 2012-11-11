@@ -464,12 +464,12 @@ function findClosest(engine, type, target, maxDistance) {
         //(not just because it reduces a function call), but then the code would be way bigger
         //and much more complex
 
-        var minDisSqrBounds = distanceToRectSqr(quadtree.bounds, target);
-        minDisSqrBounds = distanceToRectSqr(quadtree.bounds, target);
+        var minDisSqrBounds = distanceToRectSq(quadtree.bounds, target);
+        minDisSqrBounds = distanceToRectSq(quadtree.bounds, target);
 
         if (isNaN(minDisSqrBounds)) {
             var crapola = true;
-            minDis = distanceToRectSqr(quadtree.bounds, target);
+            minDis = distanceToRectSq(quadtree.bounds, target);
         }
 
         //Then it is impossible and we will never find a better collision
@@ -492,7 +492,7 @@ function findClosest(engine, type, target, maxDistance) {
             if (!curObj)
                 console.log("(CRASH) We adding null to our array now?");
 
-            var disSquared = distanceToRectSqr(sizeToBounds(curObj.tPos.boundingBox()), target);
+            var disSquared = distanceToRectSq(sizeToBounds(curObj.tPos.boundingBox()), target);
 
             if (disSquared <= minDisSquared) {
                 minDisSquared = disSquared;
@@ -518,7 +518,7 @@ function findClosest(engine, type, target, maxDistance) {
 
         if (curClosest) {
             //Not possible, it would have been screened in the function call
-            var newDisSquared = distanceToRectSqr(sizeToBounds(curClosest.tPos.boundingBox()), target);
+            var newDisSquared = distanceToRectSq(sizeToBounds(curClosest.tPos.boundingBox()), target);
             if (newDisSquared > minDisSquared)
                 alert("no, impossible. findClosest ignored minDisSquared and returning something too far away.");
             //minDisSquared = distSqr(curClosest, target);
@@ -530,7 +530,7 @@ function findClosest(engine, type, target, maxDistance) {
 
         if (curClosest) {
             //Not possible, it would have been screened in the function call
-            var newDisSquared = distanceToRectSqr(sizeToBounds(curClosest.tPos.boundingBox()), target);
+            var newDisSquared = distanceToRectSq(sizeToBounds(curClosest.tPos.boundingBox()), target);
             if (newDisSquared > minDisSquared)
                 alert("no, impossible. findClosest ignored minDisSquared and returning something too far away.");
             //minDisSquared = distSqr(curClosest, target);
@@ -590,11 +590,11 @@ function findAllWithin(engine, type, target, maxDistance) {
         //(not just because it reduces a function call), but then the code would be way bigger
         //and much more complex
 
-        var minDisSqrBounds = distanceToRectSqr(quadtree.bounds, target);
+        var minDisSqrBounds = distanceToRectSq(quadtree.bounds, target);
 
         if (isNaN(minDisSqrBounds)) {
             var crapola = true;
-            minDis = distanceToRectSqr(quadtree.bounds, target);
+            minDis = distanceToRectSq(quadtree.bounds, target);
         }
 
         //Then it is impossible and we will never find a better collision
@@ -616,7 +616,7 @@ function findAllWithin(engine, type, target, maxDistance) {
             if (!curObj)
                 console.log("(CRASH) We adding null to our array now?");
 
-            var disSquared = distanceToRectSqr(sizeToBounds(curObj.tPos.boundingBox()), target);
+            var disSquared = distanceToRectSq(sizeToBounds(curObj.tPos.boundingBox()), target);
 
             if (disSquared <= minDisSquared) {
                 within.push(curObj);

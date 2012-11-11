@@ -1,0 +1,56 @@
+<html>
+	<head>
+		<title>Github Game Off entry</title>
+		<script type="text/javascript" src="main.js"></script>
+		<script type="text/javascript" src="tower.js"></script>
+		<script type="text/javascript" src="path.js"></script>
+		<script type="text/javascript" src="enemy.js"></script>
+		<style type="text/css">
+			#content {
+				text-align: center;
+				width: 800px;
+				margin: auto;
+			}
+
+			#sidebar {
+				width: 150px;
+				height: 400px;
+				background-color: #123456;
+				float: right;
+			}
+		</style>
+	</head>
+	<body onload="main()">
+		<div id=content>
+			<canvas id="can"></canvas>
+			<div id="sidebar">
+				Tower info can go here!
+			</div>
+			<p>
+			<div id="towerinfo">
+				Selected tower things
+			</div>
+				<input type="submit" value="NewEnemy" onclick="addEnemy()">
+				<input type="submit" value="UpgradeTower" onclick="upgradeTower()">
+				<div id="underbar">
+					Other info goes here!
+				</div>
+				<input type="text" id="money" />
+				<a href='http://github.com/systemtwo/game-off-2012'>Github page </a>
+				<textarea id="output">Output</textarea>
+				<br />
+				<textarea id="outputsec">SecondaryOutput</textarea>
+				<br />
+				<textarea id="outputtri">Tertiary output</textarea>
+				<br />
+				<textarea id="outputquad">Tertiary output</textarea>
+				<br />
+				<input type="submit" value="Generate path" onclick="genPathWrapper()">
+				<input type="submit" value="Generate andDraw path" onclick="drawPath()">
+				<input type="submit" value="ShowDebug" onclick="alertDebug()">
+				<br />
+			</p>
+		</div>
+	</body>
+</html>
+
