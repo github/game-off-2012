@@ -1,3 +1,4 @@
+#TODO May not needed anymore ?!
 class Screen
   constructor:(@w, @h, @ctx)->
     @scale = 2
