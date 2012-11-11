@@ -9,6 +9,7 @@ var gameBoard = {
   width: 16,      // Width in tiles
   tileSize: 32,   // Tile size in px squared
   actionKey: 32,    // Spacebar is the action key
+  removeKey: 70,    // F is the remove key
 
   getHeight: function () {
     return this.height * this.tileSize;

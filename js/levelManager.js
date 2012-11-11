@@ -2,11 +2,10 @@ function loadMap(level, loadComplete) {
   var map = null;
   $.get('map/load/'+level, function(data) {
     map = jQuery.parseJSON(data);
-    console.log(map, map.length);
-  
+    
     // Set the background to light gray
     Crafty.background("#9F9F9F");
-
+    
     Crafty.sprite(32, "images/testsprite.gif", {
       wall: [13, 3],
       blue: [13, 7],
@@ -14,7 +13,7 @@ function loadMap(level, loadComplete) {
       orange: [15, 11],
       red: [16,12]
     });
-
+    
     for (var i = 0; i < map.length; i++) {
       for (var j = 0; j < map[0].length; j++) {
         var curr = map[i][j];
