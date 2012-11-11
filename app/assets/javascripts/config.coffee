@@ -1,7 +1,7 @@
 window.Config =
   viewport:
-    width: 640
-    height: 480
+    width: 960
+    height: 640
     center: null # calculated
 
   player:

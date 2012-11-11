@@ -10,15 +10,16 @@ Crafty.scene("game", ->
   )
   track  = Crafty.e("Track").pivot(Config.viewport.center).color("#ff0000").player(player).Track()
 
-  track._segments[18]._inner.attach(start_line) #Hack for start_line
+  track._segments[Config.cycle.segments * 0.75]._inner.attach(start_line) #Hack for start_line
 
-  Crafty.e("2D, Canvas, ActionCenter").pivot(Config.viewport.center).onAction( (action)->
+  actions = Crafty.e("2D, Canvas, ActionCenter").pivot(Config.viewport.center).onAction( (action)->
     track.currentSegment(10).perform(action)
   )
 
   Crafty.bind("GameOver", =>
     player.reset()
     track.reset()
+    actions.reset()
   )
 
   Crafty.audio.play("music")
