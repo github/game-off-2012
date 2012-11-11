@@ -4,13 +4,31 @@
 		<title>Prototype</title>
 		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 		<script src="lib/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		
 		<script src="lib/animation.js" type="text/javascript" charset="utf-8"></script>
 		<script src="lib/Box2dWeb-2.1.a.3.min.js" type="text/javascript" charset="utf-8"></script>
+		
 	</head>
 	<body>
 		<h1>Hello World</h1>
-		<canvas id="board" style="background-color: #EEE;width: 640px;height: 480px">
-		</canvas>
-		<script src="js/game.js" type="text/javascript" charset="utf-8"></script>
+		<div id="impress">
+			<div class="step" style="background-color: #FF2222; width: 640px; height: 480px;" data-x="0" data-y="0">
+				<a href="#" onclick="click()">Play</a>
+			</div>
+			<div id="b" class="step" data-x="1200" data-y="0" data-scale="1" data-rotate-y="60">
+				<canvas id="board" style="background-color: #EEE;width: 640px;height: 480px">
+				</canvas>
+			</div>
+			
+			<script src="lib/impress.js" type="text/javascript" charset="utf-8"></script>
+			<script type="text/javascript" charset="utf-8">
+				impress().init();
+				$($("a")[0]).bind("click", function(e){
+					console.log(impress().goto("b"));
+					e.preventDefault()
+				});
+			</script>
+			<script src="js/game.js" type="text/javascript" charset="utf-8"></script>
+		</div>
 	</body>
 </html>
