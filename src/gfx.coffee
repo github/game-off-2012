@@ -104,7 +104,7 @@ class LevelLoader
           fixDef.restitution = 0
         
         if p.sensor?
-          fixDef.isSensor = p.sensor 
+          fixDef.isSensor = p.sensor
         
       fixDef.shape = shape
       
