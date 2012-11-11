@@ -41,6 +41,9 @@ class LevelLoader
         
       if name == 'static'
         @createModel(@world, @data.layers[i])
+        
+      if name == 'sensors'
+        @createModel(@world, @data.layers[i])
     
     @game.run()
    
@@ -75,6 +78,9 @@ class LevelLoader
       obj = objects[i]
       console.log(obj)
       b2PolygonShape shape = new b2PolygonShape
+      #Transform right
+      for x in [0..obj.polygon.length-1]
+        obj.polygon[x] = {x:obj.polygon[x].x/30*scalew,y:obj.polygon[x].y/30*scaleh}
       shape.SetAsArray(obj.polygon)
       #Could be red out of map-->addlater
       fixDef = new b2FixtureDef
@@ -96,6 +102,9 @@ class LevelLoader
           console.log(p.restitution)
         else
           fixDef.restitution = 0
+        
+        if p.sensor?
+          fixDef.isSensor = p.sensor 
         
       fixDef.shape = shape
       
