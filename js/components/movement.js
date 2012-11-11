@@ -6,7 +6,7 @@
 
 Crafty.c("Movement", {
 	movementEnabled: true,
-
+	_directions: [],
 	_keys: { 
 		UP_ARROW: [0,-1],
 		DOWN_ARROW: [0,1],
@@ -15,7 +15,7 @@ Crafty.c("Movement", {
 		W: [0,-1],
 		S: [0,1],
 		D: [1,0],
-		A: [-1,0],
+		A: [-1,0]
 	}, 
 
     init: function() {
@@ -31,7 +31,8 @@ Crafty.c("Movement", {
 		this.bind("KeyDown",function(e) {
 			if(this._keys[e.key] && this.movementEnabled) {
 				var direction = this._keys[e.key];
-				this.trigger('EntityMove',direction);
+				// Add the direction to the movement stack
+				this._directions.push(direction);
 			} 
 			// If the action key is down, perform a push in the direction
 			else if (this._keys[e.key] && this.isDown(gameBoard.actionKey)) {
@@ -56,6 +57,20 @@ Crafty.c("Movement", {
 		this.bind("KeyUp",function(e) {
 			if(e.key == gameBoard.actionKey) {
 				this.movementEnabled = true;
+			}
+			else if(this._keys[e.key]) {
+				var that = this;
+				var direction = this._keys[e.key];
+				$.each(this._directions, function(i){
+					if(that._directions[i] === direction) that._directions.splice(i,1);
+				});
+			}
+		});
+
+		// Causes the player to move if their is a direction being pushed
+		this.bind("EnterFrame",function(e) {
+			if(this._directions.length > 0) {
+				this.trigger('EntityMove',this._directions[this._directions.length - 1]);
 			}
 		});
     }
