@@ -61,7 +61,7 @@ Crafty.c "MoveInCircle",
     if @_angle > 360 + @_initialAngle
       @_angle -= 360
       @_speed += @_speedIncrease
-#      Crafty.audio.play("faster")
+      Crafty.trigger('LevelUp')
     @_radius += @_movement
     @rotation = @_angle - @_initialAngle
     coords = Utils.polarCnv(@_radius, @_angle)

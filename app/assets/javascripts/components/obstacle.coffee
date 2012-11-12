@@ -28,15 +28,22 @@ Crafty.c "Obstacle",
   shiftRadius: (radiusChange)->
     @radius += radiusChange
     coords = Utils.polarCnv(@radius, @angle)
-    @tween({x:@pivot.x + coords.x, y: @pivot.y + coords.y}, 30)
+    @tween({x:@pivot.x + coords.x, y: @pivot.y + coords.y}, @_speed)
+
+  upgrade: ->
+    @_speed -= Config.obstacles.tweenDuration.change
+    @_speed = Math.max(@_speed, Config.obstacles.tweenDuration.minimum)
+
+  reset: ->
+    @_speed = Config.obstacles.tweenDuration.inital
+    @radius = @_startRadius
+    @_position()
 
   Obstacle: ->
     @_position()
     @rotation = @angle
     @origin = 'center'
     @color(Utils.increase_brightness("#770000", Math.abs(180 - @angle) / 180 *20))
+    @reset()
     @
 
-  reset: ->
-    @radius = @_startRadius
-    @_position()

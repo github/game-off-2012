@@ -24,6 +24,10 @@ Crafty.c("Segment",
     segment.next = @
     @
 
+  upgrade: ->
+    @_inner.upgrade()
+    @_outer.upgrade()
+
   reset: ->
     @_inner.reset()
     @_outer.reset()

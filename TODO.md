@@ -3,7 +3,6 @@ MAJOR:
 * Highlight obstacles which moves.
 * Center should have a UI for the actions / score / timer/ current level (AKA "release cycle"/"sprint"). !
 * Reset in the middle of an obstacle tween is bugged sometimes.
-* Reduce duration of tween as difficulty increases.
 * Reduce interval between changes as difficulty increases.
 * Sounds for each action.
 * Music should play in loops / tracks.

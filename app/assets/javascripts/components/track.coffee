@@ -12,6 +12,7 @@ Crafty.c("Track",
       @_segments.push(segment)
     )
     _.first(@_segments).preceeding(_.last(@_segments))
+    @bind('LevelUp', => @upgrade())
     @
 
   pivot: (pivot)->
@@ -32,6 +33,12 @@ Crafty.c("Track",
     d = (Math.floor(a/x) + forward) % @segments
     @_segments[d]
 
+  upgrade: ->
+    @each("upgrade")
+
   reset: ->
-    _.each(@_segments, (segment) -> segment.reset())
+    @each("reset")
+
+  each: (funcName) ->
+    _.each(@_segments, (segment) -> segment[funcName]())
 )

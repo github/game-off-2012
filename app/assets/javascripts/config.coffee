@@ -25,6 +25,10 @@ window.Config =
     effectDivisor: 2
     effectThreshold: 1
     changeAhead: 10
+    tweenDuration:
+      inital: 70
+      change: 5
+      minimum: 10
 
   actionValues:
     Pull: 20

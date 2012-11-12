@@ -68,5 +68,5 @@ Crafty.c "ActionCenter",
     "/assets/#{action.toLowerCase()}.png"
 
   _loadImages: ->
-    Crafty.load(_.map(@_actions, (action) => @_imgForAction(action)), -> console.log("YEAH"))
+    Crafty.load(_.map(@_actions, (action) => @_imgForAction(action)))
 
