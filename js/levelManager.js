@@ -29,8 +29,13 @@ function loadMap(level, loadComplete) {
         else if (curr == 'W')
           item = "wall";
         
-        if (item !== " ")
-          Crafty.e("2D, DOM, solid, " + item).attr({x: j*gameBoard.tileSize, y: (i)*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+        if (item !== ' ' && item !== 'S')
+          Crafty.e("2D, DOM, solid, " + item).attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+          
+        if (curr == 'S')
+          Crafty.e("Player, 2D, DOM, player, Movement, Collision")
+            .attr({ x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize })
+            .Moveable(200); // Character speed
       }
     }
     loadComplete();
