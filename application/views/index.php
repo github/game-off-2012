@@ -14,7 +14,7 @@
     <script type="text/javascript" src="js/scenes/gameBoard.js"></script>
     <script type="text/javascript" src="js/game.js"></script>
     <link href="css/common.css" rel="stylesheet" type="text/css">
-    <link href='http://fonts.googleapis.com/css?family=Montserrat+Alternates' rel='stylesheet' type='text/css'>
+   <link href='http://fonts.googleapis.com/css?family=Montserrat+Alternates' rel='stylesheet' type='text/css'>
 </head>
 <body>
     <h1 id="gameTitle">Fork It!</h1>
