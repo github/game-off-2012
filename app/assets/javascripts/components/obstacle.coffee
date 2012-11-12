@@ -3,8 +3,8 @@ Crafty.c "Obstacle",
 
   init: ->
     @requires("2D, DOM, Color, Tween")
-    @w =  30
-    @h =  10
+    @h = Config.obstacles.width
+    @w = Config.obstacles.height
     @requires("Collision")
 
   radius: (radius) ->

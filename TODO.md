@@ -13,6 +13,7 @@ MAJOR:
 * Add local high scores
 * Balance.
 * Make sure that segments don't get double merged.
+* Sound work.
 
 
 MINOR:

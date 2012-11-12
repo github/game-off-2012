@@ -43,10 +43,6 @@ Crafty.c "ActionCenter",
       if !!img
         ctx.drawImage(img,@x - @radius/2 + 8 , @y- @radius/2 + 5 );
 
-#    ctx.fillStyle = "white"
-#    ctx.font = "bold 36px Arial";
-#    ctx.fillText(@text(), @x, @y + @radius/2 + 10);
-
   blink: ->
     @_color = @color
     @color = @_blinkColor

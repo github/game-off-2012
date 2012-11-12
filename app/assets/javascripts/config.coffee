@@ -13,15 +13,18 @@ window.Config =
     angularSpeedIncrease: 0.15
 
   cycle:
-    segments: 24
+    segments: 36
     outerRadius: 200
     innerRadius: 100
     centerRadius: null # calculated
 
   obstacles:
+    width: 10
+    height: 20
     interval: 1500
     effectDivisor: 2
     effectThreshold: 1
+    changeAhead: 10
 
   actionValues:
     Pull: 20

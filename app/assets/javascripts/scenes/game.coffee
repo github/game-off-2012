@@ -10,7 +10,7 @@ Crafty.scene("game", ->
   track  = Crafty.e("Track").pivot(Config.viewport.center).color("#ff0000").player(player).Track()
 
   Crafty.e("2D, Canvas, ActionCenter").pivot(Config.viewport.center).onAction( (action)->
-    track.currentSegment(10).perform(action)
+    track.currentSegment(Config.obstacles.changeAhead).perform(action)
   )
 
   Crafty.bind("GameOver", =>
