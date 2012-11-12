@@ -17,8 +17,6 @@ window.Config =
         initial: 1
         increase: 0.15
         maximum: 3
-    angularSpeed: 1
-    angularSpeedIncrease: 0.15
 
   cycle:
     segments: 36
@@ -30,13 +28,14 @@ window.Config =
     width: 10
     height: 20
     interval: 1500
-    effectDivisor: 2
-    effectThreshold: 1
     changeAhead: 10
     tweenDuration:
       inital: 80
       change: 5
       minimum: 10
+    effect:
+      divisor: 2
+      threshold: 1
 
   actionValues:
     Pull: 20

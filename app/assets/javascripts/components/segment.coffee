@@ -34,7 +34,7 @@ Crafty.c("Segment",
 
   perform: (action, value = null) ->
     value = Config.actionValues[action] unless value
-    return if value < Config.obstacles.effectThreshold
+    return if value < Config.obstacles.effect.threshold
 
     switch action
       when "Pull"
@@ -50,6 +50,6 @@ Crafty.c("Segment",
         @_inner.shiftRadius(+value)
         @_outer.shiftRadius(-value)
 
-    @prev.perform(action, value / Config.obstacles.effectDivisor)
-    @next.perform(action, value / Config.obstacles.effectDivisor)
+    @prev.perform(action, value / Config.obstacles.effect.divisor)
+    @next.perform(action, value / Config.obstacles.effect.divisor)
 )
