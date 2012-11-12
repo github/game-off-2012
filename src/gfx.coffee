@@ -1,18 +1,19 @@
 #TODO May not needed anymore ?!
 class Screen
-  constructor:(@w, @h, @ctx)->
-    @scale = 2
-    #getPixels
-         
+  constructor:(@spritesheet)->
+    @canvas = document.createElement("canvas")
+    @canvas.width = 640/3
+    @canvas.height = 480/3
+    @ctx = @canvas.getContext("2d")
   #Would be the method for entities
-  render:(x, y, tile, rotate) ->
-    @ctx.fillStyle ='#FF00FF'
-    @ctx.fillRect(x, y, 16, 16)
-    
+  render:(x, y, tile) ->
+    @spritesheet.drawTile(@ctx,x/3, y/3,tile)
+  
+  draw:->
+    @canvas
+  
   clear:->
-    #Clear to white
-    @ctx.fillStyle ='#FFFFFF'
-    @ctx.fillRect(0, 0, @ctx.canvas.width, @ctx.canvas.height)
+    @ctx.clearRect(0, 0, 640, 480)
 
 #RessourceLoader for syncing the loaded ressources and start rendering
 class RessourceLoader
@@ -63,12 +64,12 @@ class LevelLoader
     #iterate through data(tiles)
     for y in [0..data.height-1]
       for x in [0..data.width-1]
-        sprites.drawTile(@ctx, x, y, tiles[x+y*data.width]-1)
+        sprites.drawTile(@ctx, x*8, y*8, tiles[x+y*data.width]-1)
 
    createModel:(world, layer)=>
     objects = layer.objects
     
-    #The ratio is how much tiles are in one frame
+    #The ratio is how much tiles are in one window
     ratio = (8*16)
     
     scalew = 640/ratio
@@ -171,4 +172,4 @@ class SpriteSheet
     for iy in [0..7]
       for ix in [0..7]
         if (ix+iy*@tilesize) is index
-          ctx.drawImage(@image, (ix*@tilesize), (iy*@tilesize), @tilesize,@tilesize, x*@tilesize, y*@tilesize, @tilesize, @tilesize)
+          ctx.drawImage(@image, (ix*@tilesize), (iy*@tilesize), @tilesize, @tilesize, x, y, @tilesize, @tilesize)
