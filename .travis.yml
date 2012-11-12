@@ -1,0 +1,2 @@
+before_script:
+  coffee -j game -c -o js src
