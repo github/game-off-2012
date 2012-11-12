@@ -5,41 +5,6 @@
 */
 
 /**
-* Pushable Box
-* Adds a listener to the push trigger.  
-*/
-Crafty.c('PushableBox', {
-  init: function() {
-    this.requires("pushable, solid, Moveable");
-  },
-
-    PushableBox: function() {
-        return this;
-    },
-  
-  push: function (direction) {
-    return this.EntityMove(direction);
-  }
-});
-
-/**
-* Removable Box
-* Adds a listener to the push trigger.  
-*/
-Crafty.c('RemovableBox', {
-    init: function() {
-        this.requires("removable")
-        .bind('remove', function() {
-            this.destroy();
-        });
-    },
-
-    RemovableBox: function() {
-        return this;
-    }
-});
-
-/**
 * Moves an entity by one tile
 * Input is an array of directions to traven ie [-1, 0]
 * Constructor take in a speed which is pixels per second

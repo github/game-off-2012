@@ -9,7 +9,7 @@ Crafty.scene("main", function () {
   loadMap(9001, function(){
     Crafty.e("2D, DOM, PushableBox, Color, RemovableBox")
       .color('rgb(0,0,255)')
-      .attr({ x: 13 * gameBoard.tileSize, y: 5 * gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize });
+      .attr({ x: 4 * gameBoard.tileSize, y: 4 * gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize });
       
       // Crafty.e("2D, DOM, PushableBox, Color, RemovableBox")
       //   .color('rgb(0,0,255)')
