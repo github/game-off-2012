@@ -254,9 +254,9 @@ function Tower(x, y, w, h) {
 
         if (this.mutatecounter < 0) {
             //Mutate
-            this.range += Math.floor(Math.random() * this.mutatestrength * 2) - this.mutatestrength + 1;
-            this.damage += Math.floor(Math.random() * this.mutatestrength * 2) - this.mutatestrength + 1;
-            this.coolDown += Math.floor(Math.random() * this.mutatestrength * 2) - this.mutatestrength + 1;
+            this.range += (Math.random() - 0.5) * this.mutatestrength;
+            this.damage += (Math.random() - 0.5) * this.mutatestrength;
+            this.coolDown += (Math.random() - 0.5) * this.mutatestrength;
 
             //Make sure towers are at least barely functional
             if (this.range <= 20) {
