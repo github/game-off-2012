@@ -208,19 +208,19 @@ function Tower(x, y, w, h) {
     this.laserTime = 0.1;
 
     //Not seperate... as this is not needed
-    this.range = Math.floor(Math.random() * 100) + 50;
-	this.damage = Math.floor(Math.random() * 30) + 1;
-	this.hp = Math.floor(Math.random() * 100) + 10;
-	this.coolDown = (Math.floor(Math.random() * 50) + 50) / 50;
-	this.mutate = Math.floor(Math.random() * 50) + 50, //How often the tower mutates (duration in frames)
-	this.mutatestrength = Math.floor(Math.random() * 3)+1, //How much the tower can mutate at most (Tower can still mutate with less than this value), also note that max change in values will be (this value-1)
+    this.range = Math.floor(Math.random() * 200) + 100;
+	  this.damage = Math.floor(Math.random() * 30) + 1;
+	  this.hp = Math.floor(Math.random() * 100) + 10;
+	  this.coolDown = (Math.floor(Math.random() * 1) + 1);
+	  this.mutate = Math.floor(Math.random() * 1) + 1, //How often the tower mutates (duration in frames)
+	  this.mutatestrength = Math.floor(Math.random() * 3)+1, //How much the tower can mutate at most (Tower can still mutate with less than this value), also note that max change in values will be (this value-1)
 
     this.nextFireIn = this.coolDown;
-	this.mutatecounter = this.mutate;
+	  this.mutatecounter = this.mutate;
 
-	this.getAttributes = function () {
-	    return { range: this.range, damage: this.damage, coolDown: this.coolDown,
-                 mutate: this.mutate, mutateStr: this.mutatestrength, mutatecounter: this.mutatecounter };
+	  this.getAttributes = function () {
+	      return { range: this.range, damage: this.damage, coolDown: this.coolDown,
+                    mutate: this.mutate, mutateStr: this.mutatestrength, mutatecounter: this.mutatecounter };
 	}
 
 	this.draw = function (pen) {
@@ -259,14 +259,14 @@ function Tower(x, y, w, h) {
             this.coolDown += Math.floor(Math.random() * this.mutatestrength * 2) - this.mutatestrength + 1;
 
             //Make sure towers are at least barely functional
-            if (this.range <= 10) {
-                this.range = 10;
+            if (this.range <= 20) {
+                this.range = 20;
             }
             if (this.damage <= 1) {
                 this.damage = 1;
             }
             if (this.coolDown >= 4) {
-                this.range = 4;
+                this.range = 80;
             }
 
             //Reset mutatecounter

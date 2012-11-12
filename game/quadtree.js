@@ -258,6 +258,7 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
             if (!realQuadTree) {
                 sortByAxis(arrObj, startIndex, endIndex - 1, curDimen);
 
+                /*
                 for (var i = startIndex; i < endIndex - 1; i++) {
                     if (arrObj[i].tPos[curDimen] > arrObj[i + 1].tPos[curDimen]) {
                         var crap = true;
@@ -265,6 +266,8 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
                         sortByXAxis(arrObj, startIndex, endIndex - 1);
                     }
                 }
+                */
+                
 
 
                 splitPos = arrObj[(Math.floor((startIndex + endIndex) / 2))][curDimen];

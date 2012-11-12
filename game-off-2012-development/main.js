@@ -107,9 +107,11 @@ var mouse = new (function () {
 	this.move = function move(event) {
 		this.pos = findPos(event);
 		var pos = this.pos;
+    /*
 		document.getElementById("output").innerHTML =
 			pos.xcell + ", " + pos.ycell + "\n"
 			+ pos.x + ", " + pos.y;
+      */
 	}
 
 });
@@ -151,13 +153,13 @@ function gameLoop(can) {
 	}
 	drawSquare(mouse.pos.x, mouse.pos.y, can);
 
-	document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
+	//document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
 	document.getElementById("money").value = "Money: " + money;
 	document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
 	document.getElementById("towerinfo").innerHTML = JSON.stringify(towerarray[selectedtower]);
 	
-	enemyRate *= 1.0005;
-	if (Math.random() > 1 - enemyRate) {
+	//enemyRate *= 1.0005;
+	while (enemylist.length < 3000) {
 		addEnemy();
 	}
 }

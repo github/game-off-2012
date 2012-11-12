@@ -1,9 +1,9 @@
 var enemylist = new Array();
 function Enemy() {
 	//Enemy object
-	this.health = 100;
+	this.health = 10;
 	this.totalhealth = this.health;
-	this.speed = 1;
+	this.speed = 0.01;
 	this.pathcell = 0; //Index of pathlist cell that enemy is on
 	this.x = getPxlFromCell(pathlist[this.pathcell][0], pathlist[this.pathcell][1])[0] ; //Pixel coordinates
 	this.y = getPxlFromCell(pathlist[this.pathcell][0], pathlist[this.pathcell][1])[1] ; //Pixel coordinates
@@ -17,8 +17,8 @@ function Enemy() {
 }	
 
 function enemyUpdate() {
-	document.getElementById("outputquad").innerHTML = this.pathcell;
-	document.getElementById("outputquad").innerHTML += JSON.stringify(this.cell);
+	//document.getElementById("outputquad").innerHTML = this.pathcell;
+	//document.getElementById("outputquad").innerHTML += JSON.stringify(this.cell);
 
 	//Are we on last cell of path?
 	if (this.pathcell == (pathlist.length-1)) {

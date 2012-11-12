@@ -24,7 +24,30 @@
     this.map[hTiles / 2][wTiles - 1].addObject(Base);
     this.bugTemp = {x: -32, y: 7 * tileSize, r: 5};
 }
-Engine.prototype.run = function() {
+
+var firstStart = Date.now();
+var lastFPS = 60;
+
+var curFrameCounter = 0;
+var lastFPSUpdate = firstStart;
+
+Engine.prototype.run = function (timestamp) {
+    var updateAmount = timestamp - firstStart;
+    firstStart = timestamp;
+
+    if (!timestamp)
+        updateAmount = 1000 / 30;
+
+    updateAmount = Math.min(updateAmount, 100); //Cap it at 1000
+
+    curFrameCounter++;
+    if (lastFPSUpdate + 1000 < timestamp) {
+        this.lastFPS = curFrameCounter;
+        curFrameCounter = 0;
+        lastFPSUpdate = timestamp;
+    }
+
+
     this.update();
     this.draw();
     window.reqAnim(this.run.bind(this));
@@ -81,7 +104,7 @@ Engine.prototype.update = function() {
             }
         }
     }
-    while (this.bugs.length < 5) {
+    while (this.bugs.length < 3000) {
         this.bugs.push(new Bug(this.bugTemp.x, this.bugTemp.y + Math.random() * 32 + 16, this.bugTemp.r, this.id++));
     }
     if (this.mY > 0 && this.mY < bH && this.mX > 0 && this.mX < bW) {
@@ -118,6 +141,7 @@ Engine.prototype.draw = function() {
     pen.fillStyle = "#2233FF";
     ink.text(10, bH + 30, "Health: " + this.health, pen);
     ink.text(10, bH + 60, "Money: $" + this.money, pen);
+    ink.text(10, bH + 120, "FPS: " + this.lastFPS, pen);
     for (var r = 0; r < hTiles; r++) {
         for (var c = 0; c < wTiles; c++) {
             pen.save();

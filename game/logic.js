@@ -16,9 +16,9 @@
 
     this.engine = this; //eng also works fine
 
-    this.maxBugs = 2;
-    this.bugIncrease = 1;
-    this.bugIncInc = 0.1;
+    this.maxBugs = 1000;
+    this.bugIncrease = 0;// 1;
+    this.bugIncInc = 0;// 0.1;
 
     this.secondTimer = 1;
 
