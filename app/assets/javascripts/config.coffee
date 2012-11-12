@@ -8,7 +8,15 @@ window.Config =
     size: 8
     color: "#ffffff"
     initialAngle: 270
-    controlSpeed: 1.4
+    speed:
+      sides:
+        initial: 1.4
+        increase: 0.1
+        maximum: 2
+      angular:
+        initial: 1
+        increase: 0.15
+        maximum: 3
     angularSpeed: 1
     angularSpeedIncrease: 0.15
 
@@ -26,7 +34,7 @@ window.Config =
     effectThreshold: 1
     changeAhead: 10
     tweenDuration:
-      inital: 70
+      inital: 80
       change: 5
       minimum: 10
 

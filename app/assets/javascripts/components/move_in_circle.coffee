@@ -1,9 +1,8 @@
 Crafty.c "MoveInCircle",
-  _initialSpeed: Config.player.angularSpeed
-  _initialAngle: Config.player.initialAngle
   _radius: Config.cycleCenterRadius
+  _initialAngle: Config.player.initialAngle
   _speed: null
-  _speedIncrease: Config.player.angularSpeedIncrease
+  _sideSpeed: null
   _angle: 0
   _pivot:
     x: 0
@@ -11,8 +10,8 @@ Crafty.c "MoveInCircle",
   _movement: 0
 
   _keys:
-    RIGHT_ARROW: -Config.player.controlSpeed
-    LEFT_ARROW: +Config.player.controlSpeed
+    RIGHT_ARROW: -1
+    LEFT_ARROW: +1
 
   init: ->
     @requires('Delay')
@@ -29,7 +28,8 @@ Crafty.c "MoveInCircle",
   reset: ->
     @disableControls = false
     @_angle = @_initialAngle
-    @_speed = @_initialSpeed
+    @_speed = Config.player.speed.angular.initial
+    @_sideSpeed = Config.player.speed.sides.initial
     @_radius = Config.cycle.centerRadius
 
   pivot: (hsh) ->
@@ -41,7 +41,7 @@ Crafty.c "MoveInCircle",
 
   _keydown: (e) ->
     if @_keys[e.key]
-      @_movement = @_keys[e.key]
+      @_movement = @_keys[e.key] * @_sideSpeed
       @trigger "NewDirection", @_movement
 
   _keyup: (e) ->
@@ -60,7 +60,7 @@ Crafty.c "MoveInCircle",
     @_angle += @_speed
     if @_angle > 360 + @_initialAngle
       @_angle -= 360
-      @_speed += @_speedIncrease
+      @upgrade()
       Crafty.trigger('LevelUp')
     @_radius += @_movement
     @rotation = @_angle - @_initialAngle
@@ -84,6 +84,12 @@ Crafty.c "MoveInCircle",
   _generateTrail: ->
     return unless Crafty.frame() % Config.gfx.trail.interval == 0
     Crafty.e("Trail").attr(rotation: @rotation, x: @_x, y: @_y).Trail()
+
+  upgrade: ->
+    @_speed += Config.player.speed.angular.increase
+    @_speed = Math.min(@_speed, Config.player.speed.angular.maximum)
+    @_sideSpeed += Config.player.speed.sides.increase
+    @_sideSpeed = Math.min(@_speed, Config.player.speed.sides.maximum)
 
   crash: ->
     return if @disableControls

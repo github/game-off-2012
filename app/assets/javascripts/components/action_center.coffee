@@ -63,6 +63,9 @@ Crafty.c "ActionCenter",
     ), @_delay)
     @
 
+  reset: ->
+    @actions = []
+
 
   _imgForAction: (action) ->
     "/assets/#{action.toLowerCase()}.png"
