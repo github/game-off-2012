@@ -7,26 +7,27 @@
 		
 		<script src="lib/animation.js" type="text/javascript" charset="utf-8"></script>
 		<script src="lib/Box2dWeb-2.1.a.3.min.js" type="text/javascript" charset="utf-8"></script>
-		
+		<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
-		<h1>Hello World</h1>
 		<div id="impress">
-			<div class="step" style="background-color: #FF2222; width: 640px; height: 480px;" data-x="0" data-y="0">
-				<a href="#" onclick="click()">Play</a>
+			<div class="step" id="start" data-x="0" data-y="0">
+					<a href="#/game" class="bigbtn">Play</a>
+					<center><a href="#/credits">Credits</a></center>
 			</div>
-			<div id="b" class="step" data-x="1200" data-y="0" data-rotate-y="60" data-scale="2">
+
+			<div class="step" id="game" data-x="1200" data-y="0" data-rotate-y="60" data-scale="2">
 				<canvas id="board" style="background-color: #EEE;width: 640px;height: 480px">
 				</canvas>
+			</div>
+			
+			<div class="step" id="credits" data-x="2400" data-y="-1000" data-rotate-y="120" data-scale="4">
+				<h1>Here would be the some credits like: "Thanks to our contributor et cetera."	</h1>
 			</div>
 			
 			<script src="lib/impress.js" type="text/javascript" charset="utf-8"></script>
 			<script type="text/javascript" charset="utf-8">
 				impress().init();
-				$($("a")[0]).bind("click", function(e){
-					console.log(impress().goto("b"));
-					e.preventDefault()
-				});
 			</script>
 			<script src="js/game.js" type="text/javascript" charset="utf-8"></script>
 		</div>
