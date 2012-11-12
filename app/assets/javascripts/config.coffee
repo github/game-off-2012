@@ -4,6 +4,12 @@ window.Config =
     height: 480
     center: null # calculated
 
+  cycle:
+    segments: 144
+    outerRadius: 200
+    innerRadius: 100
+    centerRadius: null # calculated
+
   player:
     size: 8
     color: "#ffffff"
@@ -18,29 +24,23 @@ window.Config =
         increase: 0.15
         maximum: 3
 
-  cycle:
-    segments: 36
-    outerRadius: 200
-    innerRadius: 100
-    centerRadius: null # calculated
-
   obstacles:
     width: 10
-    height: 20
+    height: 10
     interval: 1500
-    changeAhead: 10
+    changeAhead: 30
     tweenDuration:
       inital: 80
       change: 5
       minimum: 10
     effect:
-      divisor: 2
-      threshold: 1
+      divisor: 1.2
+      threshold: 0.1
 
   actionValues:
-    Pull: 20
-    Push: 20
-    Merge: 8
+    Pull: 30
+    Push: 30
+    Merge: 20
     Fork: 10
 
   gfx:

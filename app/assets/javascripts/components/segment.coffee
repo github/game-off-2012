@@ -32,7 +32,7 @@ Crafty.c("Segment",
     @_inner.reset()
     @_outer.reset()
 
-  perform: (action, value = null) ->
+  perform: (action, value = null, cameFrom = null) ->
     value = Config.actionValues[action] unless value
     return if value < Config.obstacles.effect.threshold
 
@@ -50,6 +50,6 @@ Crafty.c("Segment",
         @_inner.shiftRadius(+value)
         @_outer.shiftRadius(-value)
 
-    @prev.perform(action, value / Config.obstacles.effect.divisor)
-    @next.perform(action, value / Config.obstacles.effect.divisor)
+    @prev.perform(action, value / Config.obstacles.effect.divisor, 'next') unless cameFrom == 'prev'
+    @next.perform(action, value / Config.obstacles.effect.divisor, 'prev') unless cameFrom == 'next'
 )
