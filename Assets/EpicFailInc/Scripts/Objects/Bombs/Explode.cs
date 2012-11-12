@@ -2,11 +2,12 @@ using UnityEngine;
 using System.Collections;
 
 public class Explode : MonoBehaviour {
-    public bool isLit = true;
-    public int timeToExplodeInSeconds = 3;
+    public bool IsLit = true;
+    public int TimeToExplodeInSeconds = 3;
+    public int NumberOfBombs = 1;
 
-    private float time;
-    private GameObject explosion;
+    private float _time;
+    private GameObject _explosion;
 
     //Explosion scores
     public int DestructableWallPoints = 10;
@@ -19,7 +20,7 @@ public class Explode : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-	    explosion = transform.GetChild(0).gameObject;
+	    _explosion = transform.GetChild(0).gameObject;
 	    GameObject manager = GameObject.FindGameObjectWithTag("Manager");
 	    if (manager != null)
 	    {
@@ -31,12 +32,12 @@ public class Explode : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-        if (isLit)
+        if (IsLit)
         {
-            time += Time.deltaTime;
-            if (time >= timeToExplodeInSeconds)
+            _time += Time.deltaTime;
+            if (_time >= TimeToExplodeInSeconds)
             {
-                isLit = false;
+                IsLit = false;
                 transform.GetChild(1).gameObject.active = false;
                 executeCollision();
                 StartCoroutine(explode());
@@ -54,9 +55,11 @@ public class Explode : MonoBehaviour {
 
     void executeCollision()
     {
-        explosion.active = true;
-        const int explosionPower = 300;
-        const int explosionRadius = 2;
+        _explosion.active = true;
+        var explosionPower = 300 * NumberOfBombs;
+        var explosionRadius = 2 * NumberOfBombs;
+
+        Debug.Log(NumberOfBombs);
 
         var colliders = Physics.OverlapSphere( transform.position, explosionRadius );
         foreach (var hit in colliders)
