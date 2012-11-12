@@ -5,28 +5,28 @@
 */
 
 Crafty.c("Movement", {
-	movementEnabled: true,
-	_facing: [],
-	_directions: [],
-	_keys: { 
-		UP_ARROW: [0,-1],
-		DOWN_ARROW: [0,1],
-		RIGHT_ARROW: [1,0],
-		LEFT_ARROW: [-1,0],
-		W: [0,-1],
-		S: [0,1],
-		D: [1,0],
-		A: [-1,0]
-	}, 
+  movementEnabled: true,
+  _facing: [],
+  _directions: [],
+  _keys: { 
+    UP_ARROW: [0,-1],
+    DOWN_ARROW: [0,1],
+    RIGHT_ARROW: [1,0],
+    LEFT_ARROW: [-1,0],
+    W: [0,-1],
+    S: [0,1],
+    D: [1,0],
+    A: [-1,0]
+  }, 
 
     init: function() {
-		this.requires('Keyboard, Moveable, CharacterPushPullAction');
-	
-		// Map the defined keys to the key codes
-		for(var k in this._keys) {
-			var keyCode = Crafty.keys[k] || k;
-			this._keys[keyCode] = this._keys[k];
-		}
+    this.requires('Keyboard, Moveable, CharacterPushPullAction');
+  
+    // Map the defined keys to the key codes
+    for(var k in this._keys) {
+      var keyCode = Crafty.keys[k] || k;
+      this._keys[keyCode] = this._keys[k];
+    }
 
         // Trigger a movement in the direction
         this.bind("KeyDown",function(e) {
@@ -87,45 +87,45 @@ Crafty.c("Movement", {
  // Move the character
 Crafty.c("CharacterPushPullAction", {
     init: function() {
-		this.bind("Push", function(direction) {
-			if(direction != this._facing) {
-				var moveDestX = this.x + direction[0] * gameBoard.tileSize;
-				var moveDestY = this.y + direction[1] * gameBoard.tileSize;
-				var canMove = this.canMoveToCoordinates(moveDestX, moveDestY);
-				if(!canMove) return false;
-			}
-			
-			// Figure out what direction we are pushing
-			this._pushDestX = this.x + this._facing[0] * gameBoard.tileSize;
-			this._pushDestY = this.y + this._facing[1] * gameBoard.tileSize;
+    this.bind("Push", function(direction) {
+      if(direction != this._facing) {
+        var moveDestX = this.x + direction[0] * gameBoard.tileSize;
+        var moveDestY = this.y + direction[1] * gameBoard.tileSize;
+        var canMove = this.canMoveToCoordinates(moveDestX, moveDestY);
+        if(!canMove) return false;
+      }
+      
+      // Figure out what direction we are pushing
+      this._pushDestX = this.x + this._facing[0] * gameBoard.tileSize;
+      this._pushDestY = this.y + this._facing[1] * gameBoard.tileSize;
 
-			// Send the push command to anything in that space
-			var collisionDetector = Crafty.e("2D, Collision").attr({ x: this._pushDestX, y: this._pushDestY, w: 1, h: 1 });
-			entitiesHit = collisionDetector.hit("pushable");
-			if(entitiesHit.length > 0) {
-				var pushablePushed = entitiesHit[0].obj.push(direction);
-				// Also move the player
-				if(pushablePushed) {
-					this.EntityMove([direction[0], direction[1], true]);
-				}
-				//this.trigger('EntityMove', direction);
-			}
-			collisionDetector.destroy();
-		});
+      // Send the push command to anything in that space
+      var collisionDetector = Crafty.e("2D, Collision").attr({ x: this._pushDestX, y: this._pushDestY, w: 1, h: 1 });
+      entitiesHit = collisionDetector.hit("pushable");
+      if(entitiesHit.length > 0) {
+        var pushablePushed = entitiesHit[0].obj.push(direction);
+        // Also move the player
+        if(pushablePushed) {
+          this.EntityMove([direction[0], direction[1], true]);
+        }
+        //this.trigger('EntityMove', direction);
+      }
+      collisionDetector.destroy();
+    });
         
-        this.bind("RemoveBox", function(direction) {
-            // Figure out what direction we are pushing
-            this._pushDestX = this.x + direction[0] * gameBoard.tileSize;
-            this._pushDestY = this.y + direction[1] * gameBoard.tileSize;
-          
-            // Send the push command to anything in that space
-            var collisionDetector = Crafty.e("2D, Collision").attr({ x: this._pushDestX, y: this._pushDestY, w: 1, h: 1 });
-            entitiesHit = collisionDetector.hit("removable");
-            if(entitiesHit.length > 0) {
-              entitiesHit[0].obj.trigger('remove');
-            }
-            collisionDetector.destroy();
-        });
+    this.bind("RemoveBox", function(direction) {
+        // Figure out what direction we are pushing
+        this._pushDestX = this.x + direction[0] * gameBoard.tileSize;
+        this._pushDestY = this.y + direction[1] * gameBoard.tileSize;
+      
+        // Send the push command to anything in that space
+        var collisionDetector = Crafty.e("2D, Collision").attr({ x: this._pushDestX, y: this._pushDestY, w: 1, h: 1 });
+        entitiesHit = collisionDetector.hit("removable");
+        if(entitiesHit.length > 0) {
+          entitiesHit[0].obj.trigger('remove');
+        }
+        collisionDetector.destroy();
+    });
     }
  });
  

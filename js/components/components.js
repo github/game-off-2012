@@ -9,17 +9,17 @@
 * Adds a listener to the push trigger.  
 */
 Crafty.c('PushableBox', {
-	init: function() {
-		this.requires("pushable, solid, Moveable");
-	},
+  init: function() {
+    this.requires("pushable, solid, Moveable");
+  },
 
     PushableBox: function() {
         return this;
     },
-	
-	push: function (direction) {
-		return this.EntityMove(direction);
-	}
+  
+  push: function (direction) {
+    return this.EntityMove(direction);
+  }
 });
 
 /**
@@ -60,8 +60,8 @@ Crafty.c("Moveable", {
         this._moving = false;
 
         // This is where the magic happens.  On each frame, get the elapsed time
-		// and move the character towards its destination
-		this.bind("EnterFrame",function(e) {
+    // and move the character towards its destination
+    this.bind("EnterFrame",function(e) {
             if(!this._moving) return false;
 
             var now = new Date().getTime()
@@ -75,7 +75,7 @@ Crafty.c("Moveable", {
 
             this.x += normalizedVector[0] * this._speed * dt;
             this.y += normalizedVector[1] * this._speed * dt;
-		  
+      
             if((this.x === this._destX && this.y === this._destY)) // If the we're at the destination, stop
             this._moving = false;
             // But that rarely happens due to rounding, so if we overshot the destination, set us back at the destination and stop
@@ -86,10 +86,10 @@ Crafty.c("Moveable", {
             }
         });
     },
-	
+  
     EntityMove: function (direction) {
         var force = direction[2] ? direction[2] : false;
-	
+  
         // Can only move one tile
         if(this._length(direction[0], direction[1]) > 1)
             return false;
@@ -122,19 +122,19 @@ Crafty.c("Moveable", {
         // Start moving
         this._moving = true;
         return true;
-	},
+    },
 
-    // Detects if an entity can move to a location on the board
-    // Hitting a solid will cause this to return false
-	canMoveToCoordinates: function (xLoc, yLoc) {
-		var collisionDetector = Crafty.e("2D, Collision").attr({ x: xLoc, y: yLoc, w: 1, h: 1 });
-		if(collisionDetector.hit("solid")) {
-			collisionDetector.destroy();
-			return false;
-		}
-		collisionDetector.destroy();
-		return true;
-	},
+      // Detects if an entity can move to a location on the board
+      // Hitting a solid will cause this to return false
+    canMoveToCoordinates: function (xLoc, yLoc) {
+      var collisionDetector = Crafty.e("2D, Collision").attr({ x: xLoc, y: yLoc, w: 1, h: 1 });
+      if(collisionDetector.hit("solid")) {
+        collisionDetector.destroy();
+        return false;
+      }
+      collisionDetector.destroy();
+      return true;
+    },
 
     // Normalize direction
     _normalizeDirection: function(x, y) {
@@ -146,5 +146,5 @@ Crafty.c("Moveable", {
     _length: function(x, y) {
         return Math.sqrt((x * x) + (y * y));
     }
- });
+});
  
