@@ -1,10 +1,10 @@
 MAJOR:
+* Start line.
 * Show in the middle only the action that happens now! (No real need for a stack...)
 * Highlight obstacles which moves.
 * Center should have a UI for the actions / score / timer/ current level (AKA "release cycle"/"sprint"). !
 * Reset in the middle of an obstacle tween is bugged sometimes (reset interval in action bag).
 * Reduce interval between changes as difficulty increases.
-* Sounds for each action.
 * Music should play in loops / tracks.
 * Change color of track according to position of player.
 * Proper UI for game start / about / other stuff.
@@ -12,7 +12,7 @@ MAJOR:
 * Add local high scores
 * Balance.
 * Make sure that segments don't get double merged.
-* Sound work.
+* Sound work (sound for each action, faster/upgrade).
 
 
 MINOR:
@@ -22,4 +22,4 @@ MINOR:
 * add basic analytics to see if people play - consider testing a smart service
 * Add smart levels - 10 cycles - beta, 15 - RC - 18 GOLD - 20 1.0 - 22 - 1.0.1 - 25 - 1.1 - 40 - 2.0
 * Add cloning?
-* add Global high scores
+* add Global high scores.
