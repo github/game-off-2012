@@ -34,7 +34,7 @@ class Game
     #InputHandler
     @inputHandler = new InputHandler
     #Screen for drawings
-    @screen = new Screen(@width, @height, @ctx)
+    @screen = new Screen(new SpriteSheet("img/sprites.png", 8))
     #box2dweb-world for physics
     @world = new b2World(new b2Vec2(0, 10), true)
     #debugdraw for physics
@@ -47,19 +47,19 @@ class Game
     @debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit)
     @world.SetDebugDraw(@debugDraw)
     
-    
+    @e = new TestEntity(50, 0)
     
     @ticks = 0
-    @screen.clear()
+    
     @xOff = 0
     
     #A bundle looks like that {sheet:--, img:--}
     bundle = {sheet:"level/sheet.json", img:"img/sprites.png"}
     @ll = new LevelLoader bundle, @world, @
-    new PlayerModel @world, @, 20, 88
+    @model = new PlayerModel @world, @, 200, 88
     
     #640/(8*16)
-    @screenscale =5
+    @screenscale = 5
     
     @camera = new Camera(@world,@scale,@screenscale,@inputHandler)
       
@@ -74,12 +74,17 @@ class Game
   tick: ->
     @world.Step(1 / 60, 10, 10)
     @world.ClearForces()
+    
     #entities.tick()
+    @e.setX(@model.getScreenX())
+    @e.setY(@model.getScreenY())
     @camera.tick()
   
   render: =>
-    #Method with scale functionality
-    @screen.clear()
     #render entities
+    @ctx.clearRect(0, 0, 640, 480)
     @world.DrawDebugData()
     @ctx.drawImage(@ll.background,@camera.getXoffset(), 0, 128, 128, 0, 0, 640, 480)
+    @screen.clear()
+    @e.render(@screen)
+    @ctx.drawImage(@screen.draw(),0, 0, 640, 480)
