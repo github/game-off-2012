@@ -1,11 +1,24 @@
 class Entity
   constructor: (@x, @y) ->
+  
   render:(screen)->
+  
   tick:->
+  
+  setX:(x)->
+    @x = x
+    
+  setY:(y)->
+    @y = y
     
 class TestEntity extends Entity
+  constructor:(@x, @y)->
+    super(@x, @y)
+    @tile = 16
+    
   render:(screen)->
-    screen.render @x, @y, 2
+    screen.render @x, @y, @tile
+    
   tick:->
   
   
@@ -30,10 +43,13 @@ class PlayerModel extends Model
   constructor:(@world, @game, @x, @y) ->
     @scale = @game.scale
     
+    @height = 12/@scale
+    @width = 12/@scale
+    
     @fixDef = new b2FixtureDef
     @fixDef.density = 0.1
     @fixDef.friction = 0.3
-    @fixDef.restitution = 0.2
+    @fixDef.restitution = 0.4
     
     @bodyDef = new b2BodyDef
     @bodyDef.type = b2Body.b2_dynamicBody
@@ -41,17 +57,17 @@ class PlayerModel extends Model
     @bodyDef.position.y = @y/@scale
 
     @fixDef.shape = new b2PolygonShape
-    @fixDef.shape.SetAsBox((16/@scale)/2, (16/@scale)/2)
-    
-    @sensor = new b2FixtureDef
-    @sensor.shape = new b2PolygonShape
-    @sensor.shape.SetAsBox((20/@scale)/2, (20/@scale)/2)
-    @sensor.isSensor = true
+    @fixDef.shape.SetAsBox(@width, @height)
     
     @body = @world.CreateBody(@bodyDef)
     
     @fixDef = @body.CreateFixture(@fixDef)
-    @sensor = @body.CreateFixture(@sensor)
+    
+  getScreenX:->
+    (@body.GetPosition().x-@width)*@scale
+    
+  getScreenY:->
+    (@body.GetPosition().y-@height)*@scale
 
 
 class GroundModel extends Model
@@ -63,7 +79,7 @@ class GroundModel extends Model
     @fixDef = new b2FixtureDef
     @fixDef.density = 0.1
     @fixDef.friction = 0.3
-    @fixDef.restitution = 0.2
+    @fixDef.restitution = 0.4
     
     @bodyDef = new b2BodyDef
     @bodyDef.type = b2Body.b2_staticBody
