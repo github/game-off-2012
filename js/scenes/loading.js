@@ -6,10 +6,10 @@
 
 Crafty.scene("loading", function () {
   //load takes an array of assets and a callback when complete
-  Crafty.load(["/images/example.png"], function () {
+  Crafty.load(["/images/sprite_sheet.png"], function () {
     // Creates the sprite for the player
-    Crafty.sprite(32, "/images/example.png", {
-      player: [0, 0]
+    Crafty.sprite(32, "/images/sprite_sheet.png", {
+      player: [0, 2]
     });
     
     // Simulate a load time for now to make sure this works

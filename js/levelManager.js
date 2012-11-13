@@ -33,7 +33,7 @@ function loadMap(level, loadComplete) {
           Crafty.e("2D, DOM, solid, " + item).attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
           
         if (curr == 'S')
-          Crafty.e("Player, 2D, DOM, player, Movement, Collision")
+          Crafty.e("Player, 2D, DOM, player, Movement, Collision, Phil")
             .attr({ x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize })
             .Moveable(200); // Character speed
       }

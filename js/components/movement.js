@@ -34,6 +34,7 @@ Crafty.c("Movement", {
                 var direction = this._keys[e.key];
                 // Add the direction to the movement stack
                 this._directions.push(direction);
+                this.trigger('NewDirection',direction);
             } 
             // If the action key is down, perform a push in the direction
             else if (this._keys[e.key] && this.isDown(gameBoard.actionKey)) {
@@ -44,6 +45,7 @@ Crafty.c("Movement", {
             else if(e.key == gameBoard.actionKey) {
                 this.movementEnabled = false;
                 this.applyTrigger('Push');
+                this.trigger('GrabDirection',this._facing);
             }
             else if(e.key == gameBoard.removeKey) {
                 this.applyTrigger('RemoveBox');
@@ -54,6 +56,7 @@ Crafty.c("Movement", {
         this.bind("KeyUp",function(e) {
             if(e.key == gameBoard.actionKey) {
                 this.movementEnabled = true;
+                this.trigger('NewDirection',this._facing);
             }
             else if(this._keys[e.key]) {
                 var that = this;
