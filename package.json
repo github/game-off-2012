@@ -1,3 +1,14 @@
 {
-	"devDependencies":{"coffee-script":"latest"}
+    "name": "game-off-2012"
+  , "description": "inverse tower defense"
+  , "version": "0.0.1"
+  , "keywords": ["inverse tower", "game"]
+  , "author": "devNil"
+  , "repository": {
+      "type": "git"
+    , "url": "https://github.com/devNil/game-off-2012.git"
+  }
+  , "devDependencies": {
+      "uglify-js": "1.4.0"
+  }
 }
