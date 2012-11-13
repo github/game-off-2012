@@ -9,6 +9,6 @@
     , "url": "https://github.com/devNil/game-off-2012.git"
   }
   , "devDependencies": {
-      "uglify-js": "1.4.0"
+      "coffee-script": "1.4.0"
   }
 }
