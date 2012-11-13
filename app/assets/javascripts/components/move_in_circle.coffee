@@ -96,4 +96,5 @@ Crafty.c "MoveInCircle",
     Crafty.audio.play("crash")
     @disableControls = true
     @crashed = true
-    @delay((-> Crafty.trigger("GameOver")), Config.flow.restartDelay)
+    Crafty.trigger("GameOver")
+    @delay((-> Crafty.trigger("Restart")), Config.flow.restartDelay)

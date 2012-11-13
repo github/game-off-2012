@@ -14,9 +14,9 @@ Crafty.scene("game", ->
 
   actions = Crafty.e("2D, Canvas, ActionCenter").pivot(Config.viewport.center).onAction( (action)->
     track.currentSegment(Config.obstacles.changeAhead).perform(action)
-  )
+  ).start()
 
-  Crafty.bind("GameOver", =>
+  Crafty.bind("Restart", =>
     player.reset()
     track.reset()
     actions.reset()

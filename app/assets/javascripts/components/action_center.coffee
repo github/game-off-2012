@@ -1,20 +1,24 @@
 Crafty.c "ActionCenter",
 
-  _actions: ["Pull", "Push", "Fork", "Merge"]
   _images: []
-  _bag: "gameModifiers"
   radius: Config.cycle.innerRadius - 20
-  actions: []
-  _delay: Config.obstacles.interval
-  _blinkColor: "#ff5555"
+  _blinkColor: "#ff0000"
 
   init: ->
-    @requires("Color, Image, Delay, ActionBag")
+    @requires("Color, Image, Delay")
     @color = "#75BEEB"
     @w = @radius * 2
     @h = @radius * 2
     @_loadImages()
+    @reset()
+    @bind("GameOver", => @stop())
+    @bind("Restart", => @start())
     @
+
+  reset: ->
+    @_currentAction = null
+    @_actions = Config.actions
+    @_delay = Config.obstacles.intervals.initial
 
   pivot: (hsh)->
     @_pivot = hsh
@@ -22,26 +26,38 @@ Crafty.c "ActionCenter",
     @y = @_pivot.y - @radius/2
     @
 
+  start: ->
+    @_on = true
+    console.log('start', @_on)
+    @setTimeout(Config.obstacles.intervals.atStart)
+    @
+
+  stop: ->
+    @_on = false
+    console.log('stop', @_on)
+    @reset()
+    @draw()
+    @
+
   draw: ->
-    ctx = Crafty.canvas.context
-    ctx.save()
-    ctx.fillStyle = @color
-    ctx.beginPath()
-    ctx.arc(
+    @ctx ||= Crafty.canvas.context
+    @ctx.save()
+    @ctx.fillStyle = @color
+    @ctx.beginPath()
+    @ctx.arc(
        @x + @radius / 2,
        @y + @radius / 2,
        @radius,
        0,
        Math.PI * 2
     )
-    ctx.closePath()
-    ctx.fill()
+    @ctx.closePath()
+    @ctx.fill()
 
-    action = @actions[0]
-    if !!action
-      img  = Crafty.assets[@_imgForAction(action)];
-      if !!img
-        ctx.drawImage(img,@x - @radius/2 + 8 , @y- @radius/2 + 5 );
+  drawAction: ->
+    img  = Crafty.assets[@_imgForAction(@_currentAction)];
+    if !!img
+      @ctx.drawImage(img,@x - @radius/2 + 8 , @y- @radius/2 + 5 );
 
   blink: ->
     @_color = @color
@@ -52,24 +68,24 @@ Crafty.c "ActionCenter",
     @color = @_color
     @trigger("Change");
 
+  setTimeout: (delayOverride = null) ->
+    @delay((=> @rollAction()), delayOverride || @_delay)
+
+  rollAction: ->
+    console.log('roll', @_on)
+    return unless @_on
+    @_currentAction = _.shuffle(@_actions)[0]
+    @_callback(@_currentAction)
+    @drawAction()
+    @setTimeout()
+
   onAction: (callback)->
-    @actionBag(@_bag, @_actions, ((newAction) =>
-      @actions.push(newAction)
-      @blink()
-      @trigger("Change")
-      if @actions.length > 1
-        callback(@actions.shift())
-
-    ), @_delay)
+    @_callback = callback
     @
-
-  reset: ->
-    @actions = []
-
 
   _imgForAction: (action) ->
     "/assets/#{action.toLowerCase()}.png"
 
   _loadImages: ->
-    Crafty.load(_.map(@_actions, (action) => @_imgForAction(action)))
+    Crafty.load(_.map(Config.actions, (action) => @_imgForAction(action)))
 

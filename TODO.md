@@ -1,11 +1,10 @@
 * Effect of tween (Value) should change with difficulty.
 * Need to set min and max distance between obstacles.
 * Start line.
+* Fix tween after restart.
 * Increase trail frequency with speed.
-* Show in the middle only the action that happens now! (No real need for a stack...)
 * Highlight obstacles which moves.
 * Center should have a UI for the actions / score / timer/ current level (AKA "release cycle"/"sprint"). !
-* Reset in the middle of an obstacle tween is bugged sometimes (reset interval in action bag).
 * Reduce interval between changes as difficulty increases.
 * Music should play in loops / tracks.
 * Change color of track according to position of player.

@@ -28,10 +28,14 @@ window.Config =
         maximum: 3
 
   obstacles:
-    width: 10
+    width: 20
     height: 10
-    interval: 1500
     changeAhead: 30
+    intervals:
+      atStart: 2000
+      initial: 1500
+      reduceBy: 250
+      minimum: 500
     tweenDuration:
       inital: 80
       change: 5
@@ -39,6 +43,8 @@ window.Config =
     effect:
       divisor: 1.1
       threshold: 1
+
+  actions: ["Pull", "Push", "Fork", "Merge"]
 
   actionValues:
     Pull: 35
@@ -55,7 +61,7 @@ window.Config =
       color: "#7f7f7f"
 
   flow:
-    restartDelay: 1000
+    restartDelay: 1500
 
   music: [
     "sounds/music/04 - Bullcactus.mp3"
