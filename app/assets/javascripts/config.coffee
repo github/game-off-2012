@@ -9,6 +9,9 @@ window.Config =
     outerRadius: 200
     innerRadius: 100
     centerRadius: null # calculated
+    colors:
+      base: "#2A678C"
+      action: "#75BEEB"
 
   player:
     size: 8
@@ -42,6 +45,7 @@ window.Config =
     Push: 35
     Merge: 20
     Fork: 20
+    max: 20
 
   gfx:
     trail:
@@ -61,7 +65,6 @@ window.Config =
     "sounds/music/09 - Rofon.mp3"
     "sounds/music/10 - Datahell beta.mp3"
   ]
-
 
 # calculated configurations
 Config.cycle.centerRadius = (Config.cycle.outerRadius + Config.cycle.innerRadius) / 2 + 15

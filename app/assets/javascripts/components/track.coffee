@@ -21,6 +21,7 @@ Crafty.c("Track",
 
   color: (color) ->
     @_color = color
+    @each("color", @_color)
     @
 
   player: (player)->
@@ -39,6 +40,6 @@ Crafty.c("Track",
   reset: ->
     @each("reset")
 
-  each: (funcName) ->
-    _.each(@_segments, (segment) -> segment[funcName]())
+  each: (funcName, argument = null) ->
+    _.each(@_segments, (segment) -> segment[funcName](argument))
 )

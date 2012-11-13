@@ -1,6 +1,7 @@
 * Effect of tween (Value) should change with difficulty.
 * Need to set min and max distance between obstacles.
 * Start line.
+* Increase trail frequency with speed.
 * Show in the middle only the action that happens now! (No real need for a stack...)
 * Highlight obstacles which moves.
 * Center should have a UI for the actions / score / timer/ current level (AKA "release cycle"/"sprint"). !

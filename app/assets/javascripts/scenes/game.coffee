@@ -8,7 +8,7 @@ Crafty.scene("game", ->
   player = Crafty.e("2D, DOM, Color, MoveInCircle, Collision").pivot(Config.viewport.center).onHit("Obstacle",
       -> @crash()
   )
-  track  = Crafty.e("Track").pivot(Config.viewport.center).color("#ff0000").player(player).Track()
+  track  = Crafty.e("Track").pivot(Config.viewport.center).player(player).Track().color(Config.cycle.colors.base)
 
   track._segments[Config.cycle.segments * 0.75]._inner.attach(start_line) #Hack for start_line
 

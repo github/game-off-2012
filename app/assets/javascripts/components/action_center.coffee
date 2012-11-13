@@ -10,7 +10,7 @@ Crafty.c "ActionCenter",
 
   init: ->
     @requires("Color, Image, Delay, ActionBag")
-    @color = "#550000"
+    @color = "#75BEEB"
     @w = @radius * 2
     @h = @radius * 2
     @_loadImages()

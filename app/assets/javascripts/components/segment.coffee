@@ -24,6 +24,10 @@ Crafty.c("Segment",
     segment.next = @
     @
 
+  color: (color) ->
+    @_inner.color(color)
+    @_outer.color(color)
+
   upgrade: ->
     @_inner.upgrade()
     @_outer.upgrade()

@@ -43,7 +43,6 @@ Crafty.c "Obstacle",
     @_position()
     @rotation = @angle
     @origin = 'center'
-    @color(Utils.increase_brightness("#770000", Math.abs(180 - @angle) / 180 *20))
     @reset()
     @
 
