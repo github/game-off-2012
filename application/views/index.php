@@ -17,6 +17,7 @@
     <script type="text/javascript" src="js/game.js"></script>
     <link href="css/common.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Montserrat+Alternates' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Scada' rel='stylesheet' type='text/css'>
 </head>
 <body>
     <h1 id="gameTitle">Fork It!</h1>
@@ -24,6 +25,8 @@
     <div id="container">
         <div id="cr-stage">
         </div>
+        <div id="levelTitle">Level 1: The Journey Begins</div>
     </div>
+    <div id="backgroundContainer"></div>
 </body>
 </html>
