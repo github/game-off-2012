@@ -10,11 +10,12 @@ html, body {
 }
 
 body {
-  padding: 100px 100px 50px;
+  padding: 50px 100px 50px;
   background: #171717;
 }
 
 canvas {
   display: block;
   background: whiteSmoke;
+  margin: 0 auto;
 }

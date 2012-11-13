@@ -1,6 +1,6 @@
 (function() {
 
-  window.forks = window.forks || {};
+  window.mit = window.mit || {};
 
   // Array of random forks
   var forks = [];
@@ -62,7 +62,7 @@
     return pos;
   };
   
-  var createRandomForks = function(ctx, count) {
+  var drawForks = function(ctx, count) {
 
     if (forks.length < count) {
       
@@ -105,8 +105,8 @@
     });
   };
 
-  window.forks = {
-    createRandomForks: createRandomForks
+  window.mit.forks = {
+    drawForks: drawForks
   };
 
 }());

@@ -32,6 +32,14 @@
   var W = canvas.width = ui.body.width();
   var H = canvas.height = ui.body.height();
 
+  // Width x Height capped to 1000 x 500
+  if (canvas.width > 1000) {
+    W = canvas.width = 1000;
+  }
+  if (canvas.height > 500) {
+    H = canvas.height = 500;
+  }
+
   // Set Canvas Width/Height in Config
   mit.config.canvas_width = W;
   mit.config.canvas_height = H;
@@ -121,22 +129,68 @@
     }
   };
 
+  // Draw Awesome Backgrounds
+  // Backgrounds have been made for 1000x500 dimensions
+  var drawBackgrounds = function(ctx) {
+    // Draw Linear Gradient for real/pure BG (sky/water)
+    // -webkit-linear-gradient(top, #06c4f4, #7bd4f6)
+    var gradient = ctx.createLinearGradient(0, 0, 0, H);  
+    gradient.addColorStop(0, "#06c4f4");
+    gradient.addColorStop(1, "#7bd4f6");
+    // Push to Stack
+    ctx.save();
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+
+    // Clouds
+    var clouds = new Image();
+    clouds.src = 'img/clouds.png';
+    clouds.width = W;
+    clouds.height = W;
+    ctx.drawImage(clouds, 0, 0, W, H);
+    
+    // Back Trees
+    var back_trees = new Image();
+    back_trees.src = 'img/back_trees.png';
+    back_trees.width = W;
+    back_trees.height = W;
+    ctx.drawImage(back_trees, 0, 0, W, H);
+
+    // Front Trees
+    var front_trees = new Image();
+    front_trees.src = 'img/front_trees.png';
+    front_trees.width = W;
+    front_trees.height = W;
+    ctx.drawImage(front_trees, 0, 0, W, H);
+
+    // Ground
+    var ground = new Image();
+    ground.src = 'img/ground.png';
+    ground.width = W;
+    ground.height = H;
+    ctx.drawImage(ground, 0, 0, W, H);
+  };
+
 
   (function renderGame() {
     window.requestAnimationFrame(renderGame);
 
     ctx.clearRect(0, 0, W, H);
+    drawBackgrounds(ctx);
 
     // Draw Forks
-    window.forks.createRandomForks(ctx, 6);
-
+    //window.mit.forks.drawForks(ctx, 6);
+    // Draw Branches
+    //window.mit.branches.drawBranches(ctx, 4);
+    
     // Game over on reaching any boundary
     if (pappu.hasReachedBoundary(W, H)) {
       return;
     }
     
     // Acceleration + Gravity
-    //ay = ay + gravity;
+    // ay = ay + gravity;
 
     // Velocity
     if (
