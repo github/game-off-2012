@@ -129,55 +129,12 @@
     }
   };
 
-  // Draw Awesome Backgrounds
-  // Backgrounds have been made for 1000x500 dimensions
-  var drawBackgrounds = function(ctx) {
-    // Draw Linear Gradient for real/pure BG (sky/water)
-    // -webkit-linear-gradient(top, #06c4f4, #7bd4f6)
-    var gradient = ctx.createLinearGradient(0, 0, 0, H);  
-    gradient.addColorStop(0, "#06c4f4");
-    gradient.addColorStop(1, "#7bd4f6");
-    // Push to Stack
-    ctx.save();
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, W, H);
-    ctx.restore();
-
-    // Clouds
-    var clouds = new Image();
-    clouds.src = 'img/clouds.png';
-    clouds.width = W;
-    clouds.height = W;
-    ctx.drawImage(clouds, 0, 0, W, H);
-    
-    // Back Trees
-    var back_trees = new Image();
-    back_trees.src = 'img/back_trees.png';
-    back_trees.width = W;
-    back_trees.height = W;
-    ctx.drawImage(back_trees, 0, 0, W, H);
-
-    // Front Trees
-    var front_trees = new Image();
-    front_trees.src = 'img/front_trees.png';
-    front_trees.width = W;
-    front_trees.height = W;
-    ctx.drawImage(front_trees, 0, 0, W, H);
-
-    // Ground
-    var ground = new Image();
-    ground.src = 'img/ground.png';
-    ground.width = W;
-    ground.height = H;
-    ctx.drawImage(ground, 0, 0, W, H);
-  };
-
 
   (function renderGame() {
     window.requestAnimationFrame(renderGame);
 
     ctx.clearRect(0, 0, W, H);
-    drawBackgrounds(ctx);
+    window.mit.backgrounds.draw(ctx);
 
     // Draw Forks
     //window.mit.forks.drawForks(ctx, 6);
