@@ -2,7 +2,7 @@ Crafty.c "ActionCenter",
 
   _images: []
   radius: Config.cycle.innerRadius - 20
-  _blinkColor: "#ff0000"
+  _blinkColor: "#ffffff"
 
   init: ->
     @requires("Color, Image, Delay")
@@ -41,7 +41,6 @@ Crafty.c "ActionCenter",
 
   draw: ->
     @ctx ||= Crafty.canvas.context
-    @ctx.save()
     @ctx.fillStyle = @color
     @ctx.beginPath()
     @ctx.arc(
@@ -62,11 +61,13 @@ Crafty.c "ActionCenter",
   blink: ->
     @_color = @color
     @color = @_blinkColor
+    @draw()
     @delay( (-> @back()), 100)
 
   back: ->
     @color = @_color
-    @trigger("Change");
+    @draw()
+    @drawAction()
 
   setTimeout: (delayOverride = null) ->
     @delay((=> @rollAction()), delayOverride || @_delay)
@@ -76,6 +77,7 @@ Crafty.c "ActionCenter",
     return unless @_on
     @_currentAction = _.shuffle(@_actions)[0]
     @_callback(@_currentAction)
+    @blink()
     @drawAction()
     @setTimeout()
 
