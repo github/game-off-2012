@@ -42,6 +42,8 @@ function HUD(game) {
 		ctx.font = "16px sans-serif"
 		ctx.fillText("Score: " + this.score, 10, 20)
 		ctx.fillText("Multiplier: " + this.multiplier, 10, 40)
+		if(this.game.objects['spawner'])
+			ctx.fillText("Level: " + this.game.objects['spawner'].level, 10, 60)
 		if (this.gameOver) {
 			this.game.play = false
 			var b = {
@@ -58,8 +60,42 @@ function HUD(game) {
 			ctx.fillText("Score: "+this.score, x, y+80)
 			ctx.fillText("[Enter] for new game", x, y+180)
 		}
+		else if (this.game.paused){
+			var b = {
+				w : 400,
+				h : 400
+			}
+			ctx.fillRect(canvas.width / 2 - b.w / 2, canvas.height / 2 - b.h / 2, b.w, b.h)
+			ctx.fillStyle = "#FFF"
+			var fontSize = 30
+			ctx.font = fontSize + "px bold sans-serif"
+			var x = Math.floor(canvas.width / 2 - 150)
+			var y = Math.floor(canvas.height / 2 - fontSize / 2)-50
+			ctx.fillText("Paused", x, y)
+			ctx.fillText("[p] to resume", x, y+80)
+		}
 	}
 	keyListeners.push(['enter', function() {
 		init()
 	}.bind(this)])
+	keyListeners.push(['p', function() {
+		if(!this.game.paused && this.game.play){
+			this.game.paused=true
+			this.game.play=false
+			this.game.draw()
+		}
+		else if(this.game.paused && !this.game.play){
+			this.game.paused=false
+			this.game.play=true
+			this.game.update()
+		}
+	}.bind(this)])
+	this.suspend=function(){
+		if(document.webkitHidden && !this.game.paused && this.game.play){
+			this.game.paused=true
+			this.game.play=false
+			this.game.draw()
+		}
+	}
+	document.addEventListener("webkitvisibilitychange", this.suspend.bind(this), false);
 }

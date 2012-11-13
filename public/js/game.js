@@ -4,7 +4,10 @@ function Game(canvas) {
 	this.objects = []
 	this.prevTime = Date.now()
 	this.speed = 4
+	this.paused = false
 	this.play = true
+	this.timeTillLevel = 10000
+	this.timer = 0
 	this.update = function(time) {
 		if (!this.play)
 			return;
@@ -20,6 +23,13 @@ function Game(canvas) {
 		requestAnimFrame(this.update.bind(this))
 	}
 	this.physics = function(timeDelta) {
+		this.timer+=timeDelta
+		if(this.timer>this.timeTillLevel){
+			this.timer=0
+			if(this.objects["spawner"]){
+				this.objects["spawner"].level+=1
+			}
+		}
 		for (var i = 0; i < this.objects.length; i++) {
 			this.objects[i].physics(timeDelta)
 		}

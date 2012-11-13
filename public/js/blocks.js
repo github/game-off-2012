@@ -1,9 +1,9 @@
-function BlockSpawner(game, speed) {
+function BlockSpawner(game, speed, level) {
 	this.game = game
-	this.name = "BlockSpawner"
 	this.blocks = []
 	this.speed = speed || 4
 	this.clearCount = 200
+	this.level = level || 1
 	this.draw = function(ctx) {
 		for (var i = 0; i < this.blocks.length; i++) {
 			this.blocks[i].draw(ctx)
@@ -18,13 +18,20 @@ function BlockSpawner(game, speed) {
 				}
 			}
 		}
-		if (Math.random() * 100 > 97) {
-			var x = Math.random() * 600
-			var w = Math.random() * 100
-			var h = Math.random() * 100
+		/* spawning algo
+		 * level 1 block spawn chance = 1/100
+		 * level increases by .25/100 chance for each level
+		 * block size is random between 5x100 and 100x5
+		 *
+		 */
+		if (Math.random() * 100 > 100 - this.level/2) {
+			var x = Math.random() * canvas.width
+			var w = Math.random() * 95 + 5
+			var h = Math.random() * 95 + 5
 			var y = -h
 			this.blocks.push(new Block(x, y, w, h, this.speed))
 		}
+
 		for (var i = 0; i < this.blocks.length; i++) {
 			this.blocks[i].physics(timeDelta)
 		}

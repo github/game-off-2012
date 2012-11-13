@@ -16,7 +16,7 @@ function init() {
 	canvas.height = 600
 	game = new Game(canvas)
 	var player = new Player(game, null, null, game.speed)
-	var spawner = new BlockSpawner(game, game.speed / 2)
+	var spawner = new BlockSpawner(game, game.speed)
 	var hud = new HUD(game)
 	game.addObject("spawner",spawner)
 	game.addObject("player",player)

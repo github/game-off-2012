@@ -6,7 +6,7 @@ function Line(game, color, x, y, r, keys, xSpeed, ySpeed) {
 	this.color = color || "#E67373"
 	this.points = []
 	this.keys = keys || ['A', 'S']
-	this.clearCount = 1000
+	this.clearCount = 200
 	this.tarX = -1
 	this.tarXRate = -1
 	this.tarXTime = 0
@@ -16,7 +16,7 @@ function Line(game, color, x, y, r, keys, xSpeed, ySpeed) {
 	this.physics = function(timeDelta) {
 		if (this.points.length >= this.clearCount) {
 			for (var i = this.points.length - 1; i >= 0; i--) {
-				if (this.points[i].y > canvas.height) {
+				if (this.points[i].y > canvas.height+this.r*2) {
 					this.points.splice(0, i)
 					break
 				}
@@ -53,6 +53,8 @@ function Line(game, color, x, y, r, keys, xSpeed, ySpeed) {
 				color : this.color
 			})
 		}
+		
+		
 
 		//check collision
 		if (game.objects["spawner"] && !this.isDead) {
@@ -81,13 +83,27 @@ function Line(game, color, x, y, r, keys, xSpeed, ySpeed) {
 
 	}
 	this.draw = function(ctx) {
-		for (var i = 0; i < this.points.length; i++) {
+		var tail = this.points[0]
+		if(!tail)
+			return
+			
+		
+		ctx.beginPath();
+		ctx.lineWidth=tail.r*2
+		ctx.lineCap='round'
+		ctx.moveTo(tail.x,tail.y);
+		ctx.strokeStyle = tail.color
+		
+		
+		for (var i = 1; i < this.points.length; i++) {
 			var point = this.points[i]
-			ctx.fillStyle = point.color
-			ctx.beginPath();
-			ctx.arc(point.x, point.y, point.r, 0, Math.PI * 2, true);
-			ctx.closePath();
-			ctx.fill();
+			ctx.lineTo(point.x,point.y)
+			//ctx.beginPath();
+			//ctx.arc(point.x, point.y, point.r, 0, Math.PI * 2, true);
+			//ctx.closePath();
 		}
+		ctx.stroke();
+		ctx.closePath()
+		
 	}
 }
