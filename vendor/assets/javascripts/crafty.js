@@ -6028,6 +6028,7 @@ Crafty.extend({
 			}
 			ent = Crafty(parseInt(tar.id.replace('ent', '')))
 			if (ent.has('Mouse') && ent.isAt(x, y))
+//                console.log(ent);
 				closest = ent;
 		}
 		//else we search for an entity with Mouse component
