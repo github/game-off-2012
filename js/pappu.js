@@ -11,12 +11,41 @@
 
     sprite: {},
 
+    fly_frame_count: 0,
+    max_fly_frame_count: 10,
+
     draw: function(ctx) {
-      ctx.drawImage(this.sprite, this.x, this.y, this.w, this.h);
+      var source_x = this.fly_frame_count * 43;
+      console.log(source_x);
+      ctx.drawImage(
+        this.sprite,
+        source_x,
+        0,
+        43,
+        this.h,
+        this.x,
+        this.y,
+        43,
+        this.h
+      );
 
       // During Testing Phase
       // ctx.fillStyle = 'red';
       // ctx.fillRect(this.x, this.y, this.w, this.h);
+    },
+
+    updateFlyFrameCount: function(count) {
+      if (typeof count !== 'number') {
+        this.fly_frame_count++;
+
+        if (this.fly_frame_count > this.max_fly_frame_count) {
+          this.fly_frame_count = 0;
+        }
+
+        return;
+      }
+
+      this.fly_frame_count = count;
     },
 
     hasReachedBoundary: function(canvas_width, canvas_height) {
@@ -47,6 +76,9 @@
   pappu.sprite.onload = function() {
     pappu.w = pappu.sprite.width;
     pappu.h = pappu.sprite.height;
+
+    pappu.max_fly_frame_count = 6;
+    pappu.max_fly_frame_count--;
   };
 
   window.mit.pappu = pappu;

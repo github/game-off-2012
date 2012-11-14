@@ -70,6 +70,9 @@
   var ax = 0;
   var ay = 0;
 
+  // Flying up ?
+  var flying_up = 0;
+
 
   // Key Events
   window.addEventListener('keydown', function(e) {
@@ -106,10 +109,12 @@
   // Game play on mouse clicks too!
   window.addEventListener('mousedown', function(e) {
     ay = -0.4;
+    flying_up = 1;
   });
 
   window.addEventListener('mouseup', function(e) {
     ay = 0;
+    flying_up = 0;
   });
 
 
@@ -118,6 +123,9 @@
 
     ctx.clearRect(0, 0, W, H);
     mit.backgrounds.draw(ctx);
+
+    if (flying_up)
+      mit.pappu.updateFlyFrameCount();
 
     // Draw Forks
     //window.mit.forks.drawForks(ctx, 6);
