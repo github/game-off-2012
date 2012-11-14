@@ -24,6 +24,8 @@
   * Some particle effects for fun (game over, start, when track moves, level up).
   * Add smart levels - 10 cycles - beta, 15 - RC - 18 GOLD - 20 1.0 - 22 - 1.0.1 - 25 - 1.1 - 40 - 2.0
 
+* Pause screen
+
 * Game Over
   * Local High scores
   * Global High scores

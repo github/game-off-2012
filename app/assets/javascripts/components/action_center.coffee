@@ -5,8 +5,8 @@ Crafty.c "ActionCenter",
   _blinkColor: "#ffffff"
 
   init: ->
-    @requires("Color, Image, Delay")
-    @color = "#75BEEB"
+    @requires("Color, Image, Delay, Text")
+    @color = "#000"
     @w = @radius * 2
     @h = @radius * 2
     @_loadImages()
@@ -41,22 +41,11 @@ Crafty.c "ActionCenter",
 
   draw: ->
     @ctx ||= Crafty.canvas.context
-    @ctx.fillStyle = @color
-    @ctx.beginPath()
-    @ctx.arc(
-       @x + @radius / 2,
-       @y + @radius / 2,
-       @radius,
-       0,
-       Math.PI * 2
-    )
-    @ctx.closePath()
-    @ctx.fill()
 
   drawAction: ->
-    img  = Crafty.assets[@_imgForAction(@_currentAction)];
-    if !!img
-      @ctx.drawImage(img,@x - @radius/2 + 8 , @y- @radius/2 + 5 );
+#    img  = Crafty.assets[@_imgForAction(@_currentAction)];
+#    if !!img
+#      @ctx.drawImage(img,@x - @radius/2 + 8 , @y- @radius/2 + 5 );
 
   blink: ->
     @_color = @color
