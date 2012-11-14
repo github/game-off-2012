@@ -39,11 +39,42 @@ class LoaderObservator
     
 #Base-Loader-Class for using a loader with an LoaderObserator
 class Loader
+  @sheetCache = new Array()
+  
   constructor:->
     @callback = ->
   
   setCallback:(callback)->
     @callback = callback 
+    
+class LayerLoader extends Loader
+  constructor:(@bundle, @sprites)->
+    @bg = document.createElement("canvas")
+    $.getJSON(@bundle.sheet, @load)
+  
+  load:(data)=>
+    @data = data
+    
+    if typeof Loader.sheetCache[data.properties.sheet] == 'undefined'
+      Loader.sheetCache[data.properties.sheet] = new SpriteSheet(data.properties.sheet, 8)
+    
+    @sprites = Loader.sheetCache[data.properties.sheet]
+      
+    layer = @data.layers[0]
+    
+    props = layer.properties
+    
+    @bg.width = data.width*8
+    @bg.height = data.height*8
+    
+    @ctx = @bg.getContext("2d")
+    #@ctx.fillStyle="FF00FF"
+    @ctx.fillRect(0, 0, @ctx.canvas.width , @ctx.canvas.height)
+    
+    tiles = layer.data
+    for y in [0..data.height-1]
+      for x in [0..data.width-1]
+        @sprites.drawTile(@ctx, x*8, y*8, tiles[x+y*data.width]-1)
 
 #The  momentary LevelLoader 
 class LevelLoader extends Loader
@@ -77,7 +108,12 @@ class LevelLoader extends Loader
    #Method creates Scene out of SceneLayer
       #LoadS the spites
    createScene:(data, layer)->
-    sprites = new SpriteSheet(@bundle.img, 8)
+    img = @bundle.img
+    console.log(Loader.sheetCache[img])
+    if typeof Loader.sheetCache[img] == 'undefined'
+       Loader.sheetCache[@bundle.img] = new SpriteSheet(@bundle.img, 8)
+    
+    @sprites = Loader.sheetCache[@bundle.img]
     #RawTileData
     tiles = layer.data
      
@@ -90,7 +126,7 @@ class LevelLoader extends Loader
     #iterate through data(tiles)
     for y in [0..data.height-1]
       for x in [0..data.width-1]
-        sprites.drawTile(@ctx, x*8, y*8, tiles[x+y*data.width]-1)
+        @sprites.drawTile(@ctx, x*8, y*8, tiles[x+y*data.width]-1)
 
    createModel:(world, layer)->
     objects = layer.objects
@@ -111,7 +147,7 @@ class LevelLoader extends Loader
       shape.SetAsArray(obj.polygon)
       #Could be red out of map-->addlater
       fixDef = new b2FixtureDef
-      
+
       if obj.properties?
         p = obj.properties
         if p.density?
