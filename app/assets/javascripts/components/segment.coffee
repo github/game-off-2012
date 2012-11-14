@@ -53,16 +53,16 @@ Crafty.c("Segment",
     @_outer.shiftRadius(+value)
 
   Fork: (value) ->
-    newDist = @distance + value * 2
+    newDist = @_distance + value * 2
     if newDist >= Config.cycle.distance.maximum
-      value = (Config.cycle.distance.maximum - @distance) / 2
+      value = (Config.cycle.distance.maximum - @_distance) / 2
     @_inner.shiftRadius(-value)
     @_outer.shiftRadius(+value)
 
   Merge: (value) ->
-    newDist = @distance - value * 2
+    newDist = @_distance - value * 2
     if newDist <= Config.cycle.distance.minimum
-      value = (@distance - Config.cycle.distance.minimum) / 2
+      value = (@_distance - Config.cycle.distance.minimum) / 2
     @_inner.shiftRadius(+value)
     @_outer.shiftRadius(-value)
 )
