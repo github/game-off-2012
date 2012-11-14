@@ -11,16 +11,25 @@
 
     sprite: {},
 
+    // Rate of sprite frame change
+    // per animation frame.
+    change_per_frame: 10,
+
     fly_frame_count: 0,
     max_fly_frame_count: 10,
 
     draw: function(ctx) {
-      if (parseFloat(this.fly_frame_count%11) === this.fly_frame_count%11) {
-        var source_x = this.fly_frame_count%11 * 48;
+      var cur_sprite_frame = this.fly_frame_count / this.change_per_frame;
+      console.log(utils.isInt(cur_sprite_frame));
+      if (utils.isInt(cur_sprite_frame)) {
+        var source_x = cur_sprite_frame * 48;
       }
       else {
-        var source_x = parseInt(this.fly_frame_count/11)%11 * 48;
+        var old_sprite_frame = parseInt(this.fly_frame_count/this.change_per_frame)%this.change_per_frame;
+        var source_x = old_sprite_frame * 48;
       }
+
+      console.log(cur_sprite_frame, source_x);
       
       ctx.drawImage(
         this.sprite,
@@ -43,7 +52,7 @@
       if (typeof count !== 'number') {
         this.fly_frame_count++;
 
-        if (this.fly_frame_count%11 > this.max_fly_frame_count) {
+        if (parseInt(this.fly_frame_count/this.change_per_frame) > this.max_fly_frame_count) {
           this.fly_frame_count = 0;
         }
 
@@ -82,8 +91,13 @@
     pappu.w = pappu.sprite.width;
     pappu.h = pappu.sprite.height;
 
+    // Sprite Frame Count
     pappu.max_fly_frame_count = 6;
     pappu.max_fly_frame_count--;
+
+    // Sprite Frame Change Speed.
+    // This will affect the flap speed.
+    pappu.change_per_frame = 10;
   };
 
   window.mit.pappu = pappu;

@@ -12,4 +12,8 @@
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
+  utils.isInt = function(number) {
+    return parseFloat(number) === parseInt(number);
+  }
+
 }());
