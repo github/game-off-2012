@@ -58,8 +58,8 @@ window.Config =
   actionValues:
     Pull:  30
     Push:  30
-    Merge: 30
-    Fork:  30
+    Merge: 20
+    Fork:  20
 
   gfx:
     trail:
