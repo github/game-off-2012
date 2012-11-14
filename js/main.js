@@ -96,45 +96,11 @@
   });
 
 
-  // There will be only 1 Pappu
-  var pappu = {
-    x: 50,
-    y: 10,
-    w: 50,
-    h: 50,
-
-    draw: function(ctx) {
-      ctx.fillStyle = 'red';
-      ctx.fillRect(this.x, this.y, this.w, this.h);
-    },
-
-    hasReachedBoundary: function(canvas_width, canvas_height) {
-      var W = canvas_width;
-      var H = canvas_height;
-
-      // Crossed Sides ?
-      // `c` stands for crossed
-
-      var ctop = (this.y < 0);
-      var cbtm = (this.y > H);
-      var cleft = (this.x < 0);
-      var crgt = (this.x > W);
-
-      // return true if crossed any sides
-      if (ctop || cbtm || cleft || crgt) {
-        return true;
-      }
-
-      return false;
-    }
-  };
-
-
   (function renderGame() {
     window.requestAnimationFrame(renderGame);
 
     ctx.clearRect(0, 0, W, H);
-    window.mit.backgrounds.draw(ctx);
+    mit.backgrounds.draw(ctx);
 
     // Draw Forks
     //window.mit.forks.drawForks(ctx, 6);
@@ -142,7 +108,7 @@
     //window.mit.branches.drawBranches(ctx, 4);
     
     // Game over on reaching any boundary
-    if (pappu.hasReachedBoundary(W, H)) {
+    if (mit.pappu.hasReachedBoundary(W, H)) {
       return;
     }
     
@@ -161,10 +127,10 @@
 
     // console.log(vy, ay)
 
-    pappu.x += vx;
-    pappu.y += vy;
+    mit.pappu.x += vx;
+    mit.pappu.y += vy;
 
-    pappu.draw(ctx);
+    mit.pappu.draw(ctx);
 
   }());
 
