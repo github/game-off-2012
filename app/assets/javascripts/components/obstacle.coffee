@@ -6,8 +6,6 @@ Crafty.c "Obstacle",
 
   radius: (radius, type) ->
     @_startRadius = radius
-    @_min = Config.cycle[type].minimum
-    @_max = Config.cycle[type].maximum
     @h = Config.obstacles.width[type]
     @w = Config.obstacles.height[type]
     @radius = radius
@@ -29,7 +27,6 @@ Crafty.c "Obstacle",
 
   shiftRadius: (radiusChange)->
     @radius += radiusChange
-    @radius = Math.min(@_max, Math.max(@_min, @radius))
 
     coords = Utils.polarCnv(@radius, @angle)
     @tween({x:@pivot.x + coords.x, y: @pivot.y + coords.y}, @_speed)

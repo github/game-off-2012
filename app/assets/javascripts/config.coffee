@@ -12,12 +12,11 @@ window.Config =
     centerRadius: null # calculated
     outerRadius:
       base: 200
-      minimum: 160
-      maximum: 230
     innerRadius:
       base: 100
-      minimum: 70
-      maximum: 140
+    distance:
+      minimum: 20
+      maximum: 180
 
   player:
     size: 8
