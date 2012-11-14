@@ -48,6 +48,10 @@
     canvas.height = canvas.width * 500/1000;
   }
 
+  var start_screen = document.querySelector('#start_screen');
+  start_screen.style.width = canvas.width + 'px';
+  start_screen.style.height = canvas.height + 'px';
+
   // Set Canvas Width/Height in Config
   mit.config.canvas_width = W;
   mit.config.canvas_height = H;
