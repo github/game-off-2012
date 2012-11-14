@@ -20,7 +20,7 @@ Crafty.c("Movement", {
   }, 
 
     init: function() {
-    this.requires('Keyboard, Moveable, CharacterPushPullAction');
+    this.requires('Keyboard, Moveable, CharacterInteractions');
   
     // Map the defined keys to the key codes
     for(var k in this._keys) {
@@ -34,6 +34,7 @@ Crafty.c("Movement", {
                 var direction = this._keys[e.key];
                 // Add the direction to the movement stack
                 this._directions.push(direction);
+                // Tell the player to face a new direction
                 this.trigger('NewDirection',direction);
             } 
             // If the action key is down, perform a push in the direction
@@ -45,6 +46,7 @@ Crafty.c("Movement", {
             else if(e.key == gameBoard.actionKey) {
                 this.movementEnabled = false;
                 this.applyTrigger('Push');
+                // Tell the player to play the grab animation
                 this.trigger('GrabDirection',this._facing);
             }
             else if(e.key == gameBoard.removeKey) {
@@ -87,9 +89,10 @@ Crafty.c("Movement", {
   }
 });
  
- // Move the character
-Crafty.c("CharacterPushPullAction", {
+// This component contains the functions required for Phil to interact with the environment
+Crafty.c("CharacterInteractions", {
     init: function() {
+        // Push performs pushing (and pulling which is just a push in the opposite direction, but dont tell anyone)
         this.bind("Push", function(direction) {
             if(direction != this._facing) {
                 var moveDestX = this.x + direction[0] * gameBoard.tileSize;
@@ -97,10 +100,10 @@ Crafty.c("CharacterPushPullAction", {
                 var canMove = this.canMoveToCoordinates(moveDestX, moveDestY);
                 if(!canMove) return false;
           }
-          
+
           // Figure out what direction we are pushing
-          this._pushDestX = this.x + this._facing[0] * gameBoard.tileSize;
-          this._pushDestY = this.y + this._facing[1] * gameBoard.tileSize;
+          this._pushDestX = this.x + (this._facing[0] < 0 ? this._facing[0] : this._facing[0] * gameBoard.tileSize);
+          this._pushDestY = this.y + (this._facing[1] < 0 ? this._facing[1] : this._facing[1] * gameBoard.tileSize);
 
           // Send the push command to anything in that space
           var collisionDetector = Crafty.e("2D, Collision").attr({ x: this._pushDestX, y: this._pushDestY, w: 1, h: 1 });
@@ -111,7 +114,6 @@ Crafty.c("CharacterPushPullAction", {
             if(pushablePushed) {
                 this.EntityMove([direction[0], direction[1], true]);
             }
-            //this.trigger('EntityMove', direction);
           }
           collisionDetector.destroy();
         });
