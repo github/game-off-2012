@@ -15,7 +15,12 @@
     max_fly_frame_count: 10,
 
     draw: function(ctx) {
-      var source_x = this.fly_frame_count * 48;
+      if (parseFloat(this.fly_frame_count%11) === this.fly_frame_count%11) {
+        var source_x = this.fly_frame_count%11 * 48;
+      }
+      else {
+        var source_x = parseInt(this.fly_frame_count/11)%11 * 48;
+      }
       
       ctx.drawImage(
         this.sprite,
@@ -38,7 +43,7 @@
       if (typeof count !== 'number') {
         this.fly_frame_count++;
 
-        if (this.fly_frame_count > this.max_fly_frame_count) {
+        if (this.fly_frame_count%11 > this.max_fly_frame_count) {
           this.fly_frame_count = 0;
         }
 
