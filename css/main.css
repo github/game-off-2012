@@ -74,7 +74,7 @@ canvas {
 	color: white;
 	padding: 0;
 	text-align: center;
-	margin: -20px 0 0;
+	margin: -10px 0 0;
 }
 #credits a {
 	color: #FFEEAA;
@@ -136,4 +136,11 @@ canvas {
 	background: url(../img/plank_bot.png) no-repeat top center;
 	height: 75px;
 	line-height: 75px;
+}
+
+.controls {
+	width: 73px;
+	height: 47px;
+	background: url(../img/controls.png) no-repeat top center;
+	margin: 10px auto;
 }
