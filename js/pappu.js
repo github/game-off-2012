@@ -97,7 +97,7 @@
 
     // Sprite Frame Change Speed.
     // This will affect the flap speed.
-    pappu.change_per_frame = 3;
+    pappu.change_per_frame = 5;
   };
 
   window.mit.pappu = pappu;
