@@ -31,7 +31,7 @@ Crafty.c "MoveInCircle",
     @_speed = Config.player.speed.angular.initial
     @_sideSpeed = Config.player.speed.sides.initial
     @_trailInterval = Config.gfx.trail.interval.initial
-    @_radius = Config.cycle.centerRadius
+    @_radius = Config.cycle.centerRadius + Config.player.radiusModification
 
   pivot: (hsh) ->
     @_pivot = hsh

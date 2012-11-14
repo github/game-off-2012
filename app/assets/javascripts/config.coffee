@@ -26,6 +26,7 @@ window.Config =
     size: 8
     color: "#ffffff"
     initialAngle: 270
+    radiusModification: -15
     speed:
       sides:
         initial: 1.4
