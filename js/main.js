@@ -22,7 +22,9 @@
     body: $('body'),
     score_board: $('#score_board'),
     start_screen: $('#start_screen'),
-    start_game: $('#start_game')
+    start_game: $('#start_game'),
+    tweet: $('#tweet'),
+    fb: $('#fb')
   };
 
   /*
@@ -140,6 +142,16 @@
   }, false);
 
 
+  /*
+    Performing some game over tasks
+  */
+  var gameOver = function() {
+    ui.start_screen.fadeIn();
+    ui.tweet.html('tweet score');
+    ui.fb.html('post on fb');
+  };
+
+
   (function renderGame() {
     window.requestAnimationFrame(renderGame);
 
@@ -158,6 +170,8 @@
     
     // Game over on reaching any boundary
     if (mit.pappu.hasReachedBoundary(W, H)) {
+      // Performing some game over tasks
+      gameOver();
       return;
     }
 
