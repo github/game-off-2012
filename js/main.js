@@ -58,13 +58,16 @@
   ui.start_screen.css('width', canvas.width + 'px');
   ui.start_screen.css('height', canvas.height + 'px');
 
-  ui.score_board.css('width', canvas.width + 'px');
-  ui.score_board.css('height', canvas.height + 'px');
-
   // Start Button
   ui.start_game.on('click', function() {
     ui.start_screen.fadeOut();
   });
+
+
+  var score = 0;
+
+  ui.score_board.css('width', canvas.width + 'px');
+  ui.score_board.css('height', canvas.height + 'px');
 
 
   // Set Canvas Width/Height in Config
@@ -157,6 +160,10 @@
     if (mit.pappu.hasReachedBoundary(W, H)) {
       return;
     }
+
+    // Update score
+    score = score + 0.2;
+    ui.score_board.text(parseInt(score));
     
     // Acceleration + Gravity
     // ay = ay + gravity;
