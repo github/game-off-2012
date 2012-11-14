@@ -8,7 +8,6 @@ window.Config =
     segments: 144
     colors:
       base: "#2A678C"
-      action: "#75BEEB"
     centerRadius: null # calculated
     outerRadius:
       base: 200
@@ -19,7 +18,7 @@ window.Config =
       minimum : 30
       maximum: 235
     distance:
-      minimum: 20
+      minimum: 40
       maximum: 180
 
   player:
@@ -55,8 +54,8 @@ window.Config =
       change: 5
       minimum: 10
     effect:
-      divisor: 1.09
-      threshold: 0.01
+      divisor: 1.08
+      threshold: 1
 
   actions: ["Pull", "Push", "Fork", "Merge"]
 

@@ -56,6 +56,7 @@ Crafty.c("Segment",
     newDist = @_distance + value * 2
     if newDist >= Config.cycle.distance.maximum
       value = (Config.cycle.distance.maximum - @_distance) / 2
+    @_distance = @_distance + value * 2
     @_inner.shiftRadius(-value)
     @_outer.shiftRadius(+value)
 
@@ -63,6 +64,7 @@ Crafty.c("Segment",
     newDist = @_distance - value * 2
     if newDist <= Config.cycle.distance.minimum
       value = (@_distance - Config.cycle.distance.minimum) / 2
+    @_distance = @_distance - value * 2
     @_inner.shiftRadius(+value)
     @_outer.shiftRadius(-value)
 )
