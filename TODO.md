@@ -12,7 +12,8 @@
   * Need to set min and max distance between obstacles.
   * Better start line
   * Highlight obstacles which moves.
-  * Center should have UI for actions / score / time / current level
+  * Center should have UI for actions / score / time ms / current level
+  * Mouse controlls
   * Reduce interval between changes as difficulty increases.
   * Music should play in loops / tracks.
   * Change color of track according to position of player. (?)
@@ -29,7 +30,8 @@
 
 * Global
   * add basic analytics to see if people play - consider testing a smart service
-
+  * Mobile Support
+  * Less music
 
 
 
