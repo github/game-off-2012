@@ -26,12 +26,25 @@ html, body {
 body {
   padding: 50px 100px;
   background: #171717;
+  font-family: 'Happy Sans', cursive;
 }
 
 canvas {
   display: block;
   background: whiteSmoke;
   margin: 0 auto;
+}
+
+
+/* Score Board */
+#score_board {
+	position: absolute;
+	top: 0; left: 0; right: 0;
+	padding: 10px;
+	height: 10%;
+	text-align: right;
+	font-size: 30px;
+	font-weight: normal;
 }
 
 
@@ -46,7 +59,9 @@ canvas {
 }
 
 #title {
-	font: 67px/100px 'Happy Sans', cursive;
+	font-size: 67px;
+	line-height: 100px;
+	font-weight: normal;
 	color: #945430;
 	text-align: center;
   text-shadow: 3px 3px 0px white;

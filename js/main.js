@@ -19,7 +19,10 @@
   };
 
   var ui = mit.ui = {
-    body: $('body')
+    body: $('body'),
+    score_board: $('#score_board'),
+    start_screen: $('#start_screen'),
+    start_game: $('#start_game')
   };
 
   /*
@@ -48,9 +51,21 @@
     canvas.height = canvas.width * 500/1000;
   }
 
-  var start_screen = document.querySelector('#start_screen');
-  start_screen.style.width = canvas.width + 'px';
-  start_screen.style.height = canvas.height + 'px';
+
+  /*
+    Game Start Screen and Lolz
+  */
+  ui.start_screen.css('width', canvas.width + 'px');
+  ui.start_screen.css('height', canvas.height + 'px');
+
+  ui.score_board.css('width', canvas.width + 'px');
+  ui.score_board.css('height', canvas.height + 'px');
+
+  // Start Button
+  ui.start_game.on('click', function() {
+    ui.start_screen.fadeOut();
+  });
+
 
   // Set Canvas Width/Height in Config
   mit.config.canvas_width = W;
