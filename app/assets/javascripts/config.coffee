@@ -6,8 +6,14 @@ window.Config =
 
   cycle:
     segments: 144
-    outerRadius: 200
-    innerRadius: 100
+    outerRadius:
+      base: 200
+      minimum: 180
+      maximum: 250
+    innerRadius:
+      base: 100
+      minimum: 80
+      maximum: 160
     centerRadius: null # calculated
     colors:
       base: "#2A678C"
@@ -51,7 +57,6 @@ window.Config =
     Push: 35
     Merge: 20
     Fork: 20
-    max: 20
 
   gfx:
     trail:
@@ -77,5 +82,5 @@ window.Config =
   ]
 
 # calculated configurations
-Config.cycle.centerRadius = (Config.cycle.outerRadius + Config.cycle.innerRadius) / 2 + 15
+Config.cycle.centerRadius = (Config.cycle.outerRadius.base + Config.cycle.innerRadius.base) / 2 + 15
 Config.viewport.center    = {x: Config.viewport.width / 2, y: Config.viewport.height / 2}

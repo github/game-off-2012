@@ -7,7 +7,7 @@ Crafty.c "Obstacle",
     @w = Config.obstacles.height
     @requires("Collision")
 
-  radius: (radius) ->
+  radius: (radius, type) ->
     @_startRadius = radius
     @radius = radius
     @

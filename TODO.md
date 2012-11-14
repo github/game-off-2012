@@ -9,7 +9,6 @@
   * Arrows on segments changes.
   * Dubbing ( conflict = g/over, push)
   * Effect of tween (Value) should change with difficulty.
-  * Need to set min and max distance between obstacles.
   * Better start line
   * Highlight obstacles which moves.
   * Center should have UI for actions / score / time ms / current level

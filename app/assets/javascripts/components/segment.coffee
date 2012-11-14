@@ -1,13 +1,13 @@
 Crafty.c("Segment",
 
-  innerRadius: Config.cycle.innerRadius
-  outerRadius: Config.cycle.outerRadius
+  innerRadius: Config.cycle.innerRadius.base
+  outerRadius: Config.cycle.outerRadius.base
   _inner: null
   _outer: null
 
   Segment: () ->
-    @_inner = Crafty.e("Obstacle").radius(@innerRadius).pivot(@pivot).angle(@angle).Obstacle()
-    @_outer = Crafty.e("Obstacle").radius(@outerRadius).pivot(@pivot).angle(@angle).Obstacle()
+    @_inner = Crafty.e("Obstacle").radius(@innerRadius, 'inner').pivot(@pivot).angle(@angle).Obstacle()
+    @_outer = Crafty.e("Obstacle").radius(@outerRadius, 'outer').pivot(@pivot).angle(@angle).Obstacle()
     @
 
   pivot: (pivot)->
