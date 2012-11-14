@@ -1,3 +1,7 @@
+* Arrows on segments changes.
+* Dubbing (conflict = game over, push, pull, merge, fork etc).
+* Menu with mute options.
+* Loading screen with LOADING made of blocks and the move_in_circle guy in the background.
 * Effect of tween (Value) should change with difficulty.
 * Need to set min and max distance between obstacles.
 * Start line.
