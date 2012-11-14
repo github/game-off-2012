@@ -32,6 +32,7 @@
   * add basic analytics to see if people play - consider testing a smart service
   * Mobile Support
   * Less music
+  * add Readme
 
 
 
