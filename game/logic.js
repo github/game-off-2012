@@ -16,7 +16,7 @@
 
     this.engine = this; //eng also works fine
 
-    this.maxBugs = 12;
+    this.maxBugs = 2;
     this.bugIncrease = 1;
     this.bugIncInc = 0.1;
 
@@ -80,7 +80,7 @@
                 this.base.addObject(new Tower_Range(tower.tPos.x - tower.range + tileSize * 0.5, tower.tPos.y - tower.range + tileSize * 0.5, tower.range * 2, tower.range * 2));
 
                 if (tower != this.lastTowerHover)
-                    document.getElementById("towerinfo").innerHTML = JSON.stringify(tower.getAttributes());
+                    document.getElementById("towerinfo").innerHTML = JSON.stringify(tower.attr);
                 //this.lastTowerHover = tower;
             }
 
