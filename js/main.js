@@ -126,18 +126,18 @@
   window.addEventListener('keyup', function(e) {
     ax = 0;
     ay = 0;
-  });
+  }, false);
 
   // Game play on mouse clicks too!
   window.addEventListener('mousedown', function(e) {
     ay = -0.4;
     flying_up = 1;
-  });
+  }, false);
 
   window.addEventListener('mouseup', function(e) {
     ay = 0;
     flying_up = 0;
-  });
+  }, false);
 
 
   (function renderGame() {
