@@ -6,17 +6,26 @@ window.Config =
 
   cycle:
     segments: 144
-    outerRadius: 200
-    innerRadius: 100
-    centerRadius: null # calculated
     colors:
       base: "#2A678C"
-      action: "#75BEEB"
+    centerRadius: null # calculated
+    outerRadius:
+      base: 200
+      minimum: 0
+      maximum: 235
+    innerRadius:
+      base: 100
+      minimum : 30
+      maximum: 235
+    distance:
+      minimum: 40
+      maximum: 180
 
   player:
     size: 8
     color: "#ffffff"
     initialAngle: 270
+    radiusModification: -15
     speed:
       sides:
         initial: 1.4
@@ -28,8 +37,12 @@ window.Config =
         maximum: 3
 
   obstacles:
-    width: 20
-    height: 10
+    width:
+      innerRadius: 20
+      outerRadius: 20
+    height:
+      innerRadius: 20
+      outerRadius: 600
     changeAhead: 30
     intervals:
       atStart: 2000
@@ -41,24 +54,26 @@ window.Config =
       change: 5
       minimum: 10
     effect:
-      divisor: 1.1
+      divisor: 1.08
       threshold: 1
 
   actions: ["Pull", "Push", "Fork", "Merge"]
 
   actionValues:
-    Pull: 35
-    Push: 35
+    Pull:  40
+    Push:  40
     Merge: 20
-    Fork: 20
-    max: 20
+    Fork:  20
 
   gfx:
     trail:
       duration: 50
-      reductionTo: 0.2
-      interval: 5
+      reduceBy: 0.2
       color: "#7f7f7f"
+      interval:
+        initial: 12
+        reduceBy: 1
+        minimum: 2
 
   flow:
     restartDelay: 1500
@@ -73,5 +88,5 @@ window.Config =
   ]
 
 # calculated configurations
-Config.cycle.centerRadius = (Config.cycle.outerRadius + Config.cycle.innerRadius) / 2 + 15
+Config.cycle.centerRadius = (Config.cycle.outerRadius.base + Config.cycle.innerRadius.base) / 2 + 15
 Config.viewport.center    = {x: Config.viewport.width / 2, y: Config.viewport.height / 2}

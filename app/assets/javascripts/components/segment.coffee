@@ -1,13 +1,14 @@
 Crafty.c("Segment",
 
-  innerRadius: Config.cycle.innerRadius
-  outerRadius: Config.cycle.outerRadius
+  innerRadius: Config.cycle.innerRadius.base
+  outerRadius: Config.cycle.outerRadius.base
   _inner: null
   _outer: null
 
   Segment: () ->
-    @_inner = Crafty.e("Obstacle").radius(@innerRadius).pivot(@pivot).angle(@angle).Obstacle()
-    @_outer = Crafty.e("Obstacle").radius(@outerRadius).pivot(@pivot).angle(@angle).Obstacle()
+    @_inner = Crafty.e("Obstacle").radius(@innerRadius, 'innerRadius').pivot(@pivot).angle(@angle).Obstacle()
+    @_outer = Crafty.e("Obstacle").radius(@outerRadius, 'outerRadius').pivot(@pivot).angle(@angle).Obstacle()
+    @_distance = @outerRadius - @innerRadius
     @
 
   pivot: (pivot)->
@@ -39,21 +40,31 @@ Crafty.c("Segment",
   perform: (action, value = null, cameFrom = null) ->
     value = Config.actionValues[action] unless value
     return if value < Config.obstacles.effect.threshold
-
-    switch action
-      when "Pull"
-        @_inner.shiftRadius(-value)
-        @_outer.shiftRadius(-value)
-      when "Push"
-        @_inner.shiftRadius(+value)
-        @_outer.shiftRadius(+value)
-      when "Fork"
-        @_inner.shiftRadius(-value)
-        @_outer.shiftRadius(+value)
-      when "Merge"
-        @_inner.shiftRadius(+value)
-        @_outer.shiftRadius(-value)
-
+    @[action](value)
     @prev.perform(action, value / Config.obstacles.effect.divisor, 'next') unless cameFrom == 'prev'
     @next.perform(action, value / Config.obstacles.effect.divisor, 'prev') unless cameFrom == 'next'
+
+  Pull: (value) ->
+    @_inner.shiftRadius(-value)
+    @_outer.shiftRadius(-value)
+
+  Push: (value) ->
+    @_inner.shiftRadius(+value)
+    @_outer.shiftRadius(+value)
+
+  Fork: (value) ->
+    newDist = @_distance + value * 2
+    if newDist >= Config.cycle.distance.maximum
+      value = (Config.cycle.distance.maximum - @_distance) / 2
+    @_distance = @_distance + value * 2
+    @_inner.shiftRadius(-value)
+    @_outer.shiftRadius(+value)
+
+  Merge: (value) ->
+    newDist = @_distance - value * 2
+    if newDist <= Config.cycle.distance.minimum
+      value = (@_distance - Config.cycle.distance.minimum) / 2
+    @_distance = @_distance - value * 2
+    @_inner.shiftRadius(+value)
+    @_outer.shiftRadius(-value)
 )

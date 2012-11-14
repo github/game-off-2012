@@ -2,14 +2,16 @@ Crafty.c "Obstacle",
   _startRadius: 0
 
   init: ->
-    @requires("2D, DOM, Color, Tween")
-    @h = Config.obstacles.width
-    @w = Config.obstacles.height
-    @requires("Collision")
+    @requires("2D, DOM, Color, Tweener")
 
-  radius: (radius) ->
+  radius: (radius, type) ->
     @_startRadius = radius
+    @h = Config.obstacles.width[type]
+    @w = Config.obstacles.height[type]
+    @_min = Config.cycle[type].minimum
+    @_max = Config.cycle[type].maximum
     @radius = radius
+    @requires("Collision")
     @
 
   pivot: (pivot)->
@@ -27,8 +29,10 @@ Crafty.c "Obstacle",
 
   shiftRadius: (radiusChange)->
     @radius += radiusChange
+    @radius = Math.min(@_max, Math.max(@_min, @radius))
+
     coords = Utils.polarCnv(@radius, @angle)
-    @tween({x:@pivot.x + coords.x, y: @pivot.y + coords.y}, @_speed)
+    @addTween({x:@pivot.x + coords.x, y: @pivot.y + coords.y}, 'easeInOutCubic', @_speed)
 
   upgrade: ->
     @_speed -= Config.obstacles.tweenDuration.change
