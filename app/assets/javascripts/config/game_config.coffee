@@ -9,10 +9,10 @@ Config.cycle =
     maximum: 235
   innerRadius:
     base: 100
-    minimum : 30
+    minimum : 50
     maximum: 235
   distance:
-    minimum: 40
+    minimum: 55
     maximum: 180
 
 Config.player =
