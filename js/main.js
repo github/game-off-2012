@@ -126,6 +126,8 @@
 
     if (flying_up)
       mit.pappu.updateFlyFrameCount();
+    else
+      mit.pappu.updateFlyFrameCount(0);
 
     // Draw Forks
     //window.mit.forks.drawForks(ctx, 6);

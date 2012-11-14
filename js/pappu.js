@@ -15,17 +15,17 @@
     max_fly_frame_count: 10,
 
     draw: function(ctx) {
-      var source_x = this.fly_frame_count * 43;
-      console.log(source_x);
+      var source_x = this.fly_frame_count * 48;
+      
       ctx.drawImage(
         this.sprite,
         source_x,
         0,
-        43,
+        48,
         this.h,
         this.x,
         this.y,
-        43,
+        48,
         this.h
       );
 
