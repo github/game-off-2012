@@ -1,5 +1,6 @@
 //= require crafty
 //= require underscore
+//= require store
 
 //= require crafty_modules/crafty.tweener
 

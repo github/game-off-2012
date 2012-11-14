@@ -10,7 +10,9 @@
  *
  *= require_self
  *= require_tree .
+ *= require typicons
  */
+
 body{
     background: #000;
 }
@@ -67,4 +69,21 @@ footer{
 .Button:active{
     box-shadow: 0 5px #444 inset;
     padding-top: 5px;
+}
+
+.mute{
+    font-size: 40px;
+    cursor: pointer;
+}
+
+.mute:hover{
+    color: #bbb;
+}
+
+.mute:active{
+    color: #999;
+}
+
+.mute.muted{
+    color: #555;
 }

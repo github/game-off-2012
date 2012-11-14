@@ -17,6 +17,8 @@ Crafty.scene("in_game", ->
   )
   track  = Crafty.e("Track").player(player).Track().color(Config.cycle.colors.base)
 
+  Crafty.e("Mute")
+
   player.bind("LevelUp", ->
     game.levelUp()
   )

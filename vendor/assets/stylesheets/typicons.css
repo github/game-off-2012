@@ -1,0 +1,106 @@
+@font-face {
+	font-family: 'Typicons';
+	src: url('/fonts/typicons-regular-webfont.eot');
+	src: url('/fonts/typicons-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		url('/fonts/typicons-regular-webfont.woff') format('woff'),
+		url('/fonts/typicons-regular-webfont.ttf') format('truetype'),
+		url('/fonts/typicons-regular-webfont.svg#TypiconsRegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.typicn {
+	font-family: "Typicons", sans-serif;
+	/* Reduce blur on icons in chrome, opera, safari and ios. */
+	/* This is hacky & bad. Maybe possible for firefox, not sure yet. */
+	-webkit-font-smoothing: antialiased;	-o-transform: scale(1); 
+}
+
+.location:before {content: "A";}
+.phone:before {content: "B";}
+.home:before {content: "C";}
+.camera:before {content: "D";}
+.left:before {content: "E";}
+.right:before {content: "F";}
+.up:before {content: "G";}
+.down:before {content: "H";}
+.refresh:before {content: "I";}
+.sync:before {content: "J";}
+.loop:before {content: "K";}
+.repeat:before {content: "L";}
+.shuffle:before {content: "M";}
+.rss:before {content: "N";}
+.cog:before {content: "O";}
+.spanner:before {content: "P";}
+.barChart:before {content: "Q";}
+.pieChart:before {content: "R";}
+.lineChart:before {content: "S";}
+.views:before {content: "T";}
+.zoomIn:before {content: "V";}
+.zoomOut:before {content: "U";}
+.export:before {content: "W";}
+.user:before {content: "X";}
+.group:before {content: "Y";}
+.microphone:before {content: "Z";}
+.globe:before {content: "a";}
+.thumbsUp:before {content: "b";}
+.thumbsDown:before {content: "c";}
+.tag:before {content: "d";}
+.tab:before {content: "e";}
+.warning:before {content: "f";}
+.tick:before {content: "g";}
+.beta:before {content: "h";}
+.unlock:before {content: "i";}
+.lock:before {content: "j";}
+.eject:before {content: "k";}
+.move:before {content: "l";}
+.expand:before {content: "m";}
+.cancel:before {content: "n";}
+.power:before {content: "o";}
+.compass:before {content: "p";}
+.radar:before {content: "q";}
+.directions:before {content: "r";}
+.pin:before {content: "s";}
+.mute:before {content: "t";}
+.volume:before {content: "u";}
+.world:before {content: "v";}
+.write:before {content: "w";}
+.minus:before {content: "x";}
+.equals:before {content: "y";}
+.feed:before {content: "z";}
+.batteryNone:before {content: "0";}
+.batteryLow:before {content: "1";}
+.batteryMid:before {content: "2";}
+.batteryHigh:before {content: "3";}
+.batteryPower:before {content: "4";}
+.plus:before {content: "5";}
+.times:before {content: "6";}
+.next:before {content: "7";}
+.previous:before {content: "8";}
+.edit:before {content: "9";}
+.cut:before {content: "'";}
+.anchor:before {content: "(";}
+.bookmark:before {content: ")";}
+.music:before {content: "*";}
+.puzzle:before {content: "+";}
+.archive:before {content: ",";}
+.mobile:before {content: "-";}
+.contrast:before {content: ".";}
+.brightness:before {content: "/";}
+.flag:before {content: "{";}
+.info:before {content: "|";}
+.unknown:before {content: "}";}
+.chat:before {content: "~";}
+.mail:before {content: "[";}
+.message:before {content: "\005C";}
+.delete:before {content: "]";}
+.backspace:before {content: "^";}
+.infinity:before {content: "_";}
+.key:before {content: "$";}
+.time:before {content: "%";}
+.grid:before {content: "\0022";}
+.list:before {content: "\0023";}
+.heart:before {content: ";";}
+.star:before {content: "=";}
+.back:before {content: "?";}
+.forward:before {content: "@";}
