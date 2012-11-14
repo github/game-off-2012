@@ -12,8 +12,12 @@ window.Config =
     centerRadius: null # calculated
     outerRadius:
       base: 200
+      minimum: 0
+      maximum: 235
     innerRadius:
       base: 100
+      minimum : 30
+      maximum: 235
     distance:
       minimum: 20
       maximum: 180
