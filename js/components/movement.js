@@ -5,28 +5,28 @@
 */
 
 Crafty.c("Movement", {
-  movementEnabled: true,
-  _facing: [],
-  _directions: [],
-  _keys: { 
-    UP_ARROW: [0,-1],
-    DOWN_ARROW: [0,1],
-    RIGHT_ARROW: [1,0],
-    LEFT_ARROW: [-1,0],
-    W: [0,-1],
-    S: [0,1],
-    D: [1,0],
-    A: [-1,0]
-  }, 
+    movementEnabled: true,
+    _facing: [],
+    _directions: [],
+    _keys: {
+        UP_ARROW: [0,-1],
+        DOWN_ARROW: [0,1],
+        RIGHT_ARROW: [1,0],
+        LEFT_ARROW: [-1,0],
+        W: [0,-1],
+        S: [0,1],
+        D: [1,0],
+        A: [-1,0]
+    },
 
     init: function() {
-    this.requires('Keyboard, Moveable, CharacterInteractions');
-  
-    // Map the defined keys to the key codes
-    for(var k in this._keys) {
-      var keyCode = Crafty.keys[k] || k;
-      this._keys[keyCode] = this._keys[k];
-    }
+        this.requires('Keyboard, Moveable, CharacterInteractions');
+
+        // Map the defined keys to the key codes
+        for(var k in this._keys) {
+          var keyCode = Crafty.keys[k] || k;
+          this._keys[keyCode] = this._keys[k];
+        }
 
         // Trigger a movement in the direction
         this.bind("KeyDown",function(e) {
@@ -50,7 +50,7 @@ Crafty.c("Movement", {
                 this.trigger('GrabDirection',this._facing);
             }
             else if(e.key == gameBoard.removeKey) {
-                this.applyTrigger('RemoveBox');
+                this.trigger('RemoveBox',this._facing);
             }
         });
 
@@ -60,6 +60,7 @@ Crafty.c("Movement", {
                 this.movementEnabled = true;
                 this.trigger('NewDirection',this._facing);
             }
+            // Remove a direction key from the movement stack if necessary
             else if(this._keys[e.key]) {
                 var that = this;
                 var direction = this._keys[e.key];
@@ -79,14 +80,14 @@ Crafty.c("Movement", {
     },
   
     applyTrigger: function(action) {
-    for(var k in this._keys) {
-      if(this.isDown(k)) {
-        var direction = this._keys[k];
-        this.trigger(action, direction);
-        return;
-      }
+        for(var k in this._keys) {
+            if(this.isDown(k)) {
+                var direction = this._keys[k];
+                this.trigger(action, direction);
+                return;
+            }
+        }
     }
-  }
 });
  
 // This component contains the functions required for Phil to interact with the environment
