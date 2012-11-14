@@ -13,12 +13,28 @@ $ ->
   @b2DebugDraw = Box2D.Dynamics.b2DebugDraw
   
   game = new Game()
+  game.run()
+
+class Map
+  constructor: ->
+    @ctx = document.getElementById('map').getContext('2d')
+    @ctx.canvas.width = 640
+    @ctx.canvas.height = 480
+    @ctx.webkitImageSmoothingEnabled = false
+    @ctx.mozImageSmoothingEnabled= false
+    @ll = new LayerLoader({sheet:"img/map.json", img:"img/sprites.png"})
+    @loaded = false
+    
+  render:=>
+    @ctx.drawImage(@ll.bg, 0, 0, 640, 480)
 
 class Game
   constructor: ->
     @width = 640.0
     @height = 480.0
     @scale = 30
+    
+    @map = new Map()
     
     @canvas = document.getElementById("board")
     @canvas.width = 640
@@ -55,7 +71,7 @@ class Game
     
     #A bundle looks like that {sheet:--, img:--}
     @rL = new LoaderObservator
-    @rL.setTodo(@.run)
+    @rL.setTodo(@run)
     bundle = {sheet:"level/sheet.json", img:"img/sprites.png"}
     @ll = new LevelLoader(bundle, @world, @)
     @rL.register(@ll)
@@ -91,3 +107,5 @@ class Game
     @screen.clear()
     @e.render(@screen)
     @ctx.drawImage(@screen.draw(),0, 0, 640, 480)
+    @map.render()
+
