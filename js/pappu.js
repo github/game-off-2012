@@ -9,9 +9,14 @@
     w: 50,
     h: 50,
 
+    sprite: {},
+
     draw: function(ctx) {
-      ctx.fillStyle = 'red';
-      ctx.fillRect(this.x, this.y, this.w, this.h);
+      ctx.drawImage(this.sprite, this.x, this.y, this.w, this.h);
+
+      // During Testing Phase
+      // ctx.fillStyle = 'red';
+      // ctx.fillRect(this.x, this.y, this.w, this.h);
     },
 
     hasReachedBoundary: function(canvas_width, canvas_height) {
@@ -35,6 +40,14 @@
     }
   };
 
+  // Initializing Pappu Sprite, lolzzz..!
+  pappu.sprite = new Image();
+  pappu.sprite.src = 'img/pappu.png';
+
+  pappu.sprite.onload = function() {
+    pappu.w = pappu.sprite.width;
+    pappu.h = pappu.sprite.height;
+  };
 
   window.mit.pappu = pappu;
 
