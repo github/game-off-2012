@@ -40,6 +40,14 @@
     H = canvas.height = 500;
   }
 
+  // Resizing Width/Height
+  if (canvas.height < 500) {
+    canvas.width = canvas.height * 1000/500;
+  }
+  if (canvas.width < 1000) {
+    canvas.height = canvas.width * 500/1000;
+  }
+
   // Set Canvas Width/Height in Config
   mit.config.canvas_width = W;
   mit.config.canvas_height = H;
@@ -92,6 +100,15 @@
 
   window.addEventListener('keyup', function(e) {
     ax = 0;
+    ay = 0;
+  });
+
+  // Game play on mouse clicks too!
+  window.addEventListener('mousedown', function(e) {
+    ay = -0.4;
+  });
+
+  window.addEventListener('mouseup', function(e) {
     ay = 0;
   });
 
