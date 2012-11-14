@@ -7,16 +7,14 @@
 
 * Game
   * Arrows on segments changes.
-  * Dubbing ( conflict = g/over, push)
-  * Effect of tween (Value) should change with difficulty.
-  * Better start line
+  * Dubbing ( conflict = g/over, push).
   * Highlight obstacles which moves.
   * Center should have UI for actions / score / time ms / current level
-  * Mouse controlls
+  * Mouse controls.
   * Reduce interval between changes as difficulty increases.
   * Music should play in loops / tracks.
-  * Change color of track according to position of player. (?)
-  * Balance
+  * Change color of track somehow.
+  * Balance.
   * Sound work (sound for each action, faster/upgrade).
   * A background (with gradient following player) like a beam thingie.
   * Add a little delay before start (quick countdown).

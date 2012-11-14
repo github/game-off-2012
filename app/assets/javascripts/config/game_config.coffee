@@ -37,7 +37,9 @@ Config.obstacles =
   height:
     innerRadius: 20
     outerRadius: 600
-  changeAhead: 30
+  changeWhere:
+    initial: 30
+    increaseBy: 5
   intervals:
     atStart: 2000
     initial: 1500

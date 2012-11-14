@@ -11,10 +11,9 @@ Crafty.scene("in_game", ->
 
   center = Crafty.e("ActionCenter").game(game)
 
-  player = Crafty.e("2D, DOM, Color, MoveInCircle, Player, Collision").onHit("Obstacle",
-      ->
-        @crash()
-        game.stop()
+  player = Crafty.e("2D, DOM, Color, MoveInCircle, Player, Collision").onHit("Obstacle", ->
+    @crash()
+    game.stop()
   )
   track  = Crafty.e("Track").player(player).Track().color(Config.cycle.colors.base)
 
@@ -30,8 +29,8 @@ Crafty.scene("in_game", ->
 
   Crafty.audio.play("music")
 
-  game.onAction( (action)->
-    track.currentSegment(Config.obstacles.changeAhead).perform(action)
+  game.onAction( (action) =>
+    track.currentSegment(Config.obstacles.changeWhere.initial + Config.obstacles.changeWhere.increaseBy * game.cycles).perform(action)
   ).start()
 )
 
