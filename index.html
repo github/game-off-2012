@@ -12,11 +12,16 @@
 	<body>
 		<div id="impress">
 			<div class="step" id="start" data-x="0" data-y="0">
-					<a href="#/game" class="bigbtn">Play</a>
+					<a href="#/map" class="bigbtn">Play</a>
 					<center><a href="#/credits">Credits</a></center>
 			</div>
-
-			<div class="step" id="game" data-x="1200" data-y="0" data-rotate-y="60" data-scale="2">
+			
+			<div class="step" id="map" data-x="1200" data-y="0" data-rotate-y="60" data-scale="2">
+					<a href="#/game">Game</a>
+					<canvas id="map" style="width: 640; height: 480;background-color: #FF00FF;"></canvas>
+			</div>
+			
+			<div class="step" id="game" data-x="3000" data-y="0" data-scale="1">
 				<canvas id="board" style="background-color: #EEE;width: 640px;height: 480px">
 				</canvas>
 			</div>
