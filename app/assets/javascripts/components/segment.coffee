@@ -6,13 +6,9 @@ Crafty.c("Segment",
   _outer: null
 
   Segment: () ->
-    @_inner = Crafty.e("Obstacle").radius(@innerRadius, 'innerRadius').pivot(@pivot).angle(@angle).Obstacle()
-    @_outer = Crafty.e("Obstacle").radius(@outerRadius, 'outerRadius').pivot(@pivot).angle(@angle).Obstacle()
+    @_inner = Crafty.e("Obstacle").radius(@innerRadius, 'innerRadius').angle(@angle).Obstacle()
+    @_outer = Crafty.e("Obstacle").radius(@outerRadius, 'outerRadius').angle(@angle).Obstacle()
     @_distance = @outerRadius - @innerRadius
-    @
-
-  pivot: (pivot)->
-    @attr('pivot', pivot)
     @
 
   angle: (angle)->

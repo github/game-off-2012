@@ -3,7 +3,7 @@
 
 //= require crafty_modules/crafty.tweener
 
-//= require ./config
+//= require config
 //= require ./utils
 //= require_directory ./components
 //= require_directory ./scenes

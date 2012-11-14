@@ -4,9 +4,6 @@ Crafty.c "MoveInCircle",
   _speed: null
   _sideSpeed: null
   _angle: 0
-  _pivot:
-    x: 0
-    y: 0
   _movement: 0
 
   _keys:
@@ -32,10 +29,6 @@ Crafty.c "MoveInCircle",
     @_sideSpeed = Config.player.speed.sides.initial
     @_trailInterval = Config.gfx.trail.interval.initial
     @_radius = Config.cycle.centerRadius + Config.player.radiusModification
-
-  pivot: (hsh) ->
-    @_pivot = hsh
-    @
 
   angle: ->
     @_angle % 360
@@ -67,8 +60,8 @@ Crafty.c "MoveInCircle",
     @rotation = @_angle - @_initialAngle
     coords = Utils.polarCnv(@_radius, @_angle)
     old = {x:@x, y:@y}
-    @x = @_pivot.x + coords.x
-    @y = @_pivot.y  + coords.y
+    @x = coords.x
+    @y = coords.y
     @trigger("Moved",
       x: old.x
       y: old.y

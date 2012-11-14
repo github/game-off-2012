@@ -14,25 +14,21 @@ Crafty.c "Obstacle",
     @requires("Collision")
     @
 
-  pivot: (pivot)->
-    @attr('pivot', pivot)
-    @
-
   angle: (angle)->
     @attr('angle', angle)
     @
 
   _position: ->
     coords = Utils.polarCnv(@radius, @angle)
-    @x = @pivot.x + coords.x
-    @y = @pivot.y + coords.y
+    @x = coords.x
+    @y = coords.y
 
   shiftRadius: (radiusChange)->
     @radius += radiusChange
     @radius = Math.min(@_max, Math.max(@_min, @radius))
 
     coords = Utils.polarCnv(@radius, @angle)
-    @addTween({x:@pivot.x + coords.x, y: @pivot.y + coords.y}, 'easeInOutCubic', @_speed)
+    @addTween({x:coords.x, y:coords.y}, 'easeInOutCubic', @_speed)
 
   upgrade: ->
     @_speed -= Config.obstacles.tweenDuration.change

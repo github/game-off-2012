@@ -38,6 +38,7 @@
 * Mutations
   * Change direction.
   * Shake screen.
+  * Zoom / scale.
 
 
 

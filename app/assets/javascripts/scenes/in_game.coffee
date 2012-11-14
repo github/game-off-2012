@@ -1,18 +1,22 @@
 Crafty.scene("in_game", ->
+
+  Crafty.viewport.x = Config.viewport.center.x
+  Crafty.viewport.y = Config.viewport.center.y
+
   Crafty.background("#000")
 
   Crafty.audio.add("music", Crafty.math.randomElementOfArray(Config.music))
 
   game = Crafty.e("Game")
-  center = Crafty.e("ActionCenter").pivot(Config.viewport.center).game(game)
 
+  center = Crafty.e("ActionCenter").game(game)
 
-  player = Crafty.e("2D, DOM, Color, MoveInCircle, Player, Collision").pivot(Config.viewport.center).onHit("Obstacle",
+  player = Crafty.e("2D, DOM, Color, MoveInCircle, Player, Collision").onHit("Obstacle",
       ->
         @crash()
         game.stop()
   )
-  track  = Crafty.e("Track").pivot(Config.viewport.center).player(player).Track().color(Config.cycle.colors.base)
+  track  = Crafty.e("Track").player(player).Track().color(Config.cycle.colors.base)
 
   player.bind("LevelUp", ->
     game.levelUp()
@@ -29,7 +33,5 @@ Crafty.scene("in_game", ->
   game.onAction( (action)->
     track.currentSegment(Config.obstacles.changeAhead).perform(action)
   ).start()
-
-
 )
 

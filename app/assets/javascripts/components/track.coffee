@@ -8,15 +8,11 @@ Crafty.c("Track",
     @_segments = []
     _.times(@segments, (index) =>
       prevSegment = @_segments[index - 1]
-      segment = Crafty.e("Segment").pivot(@pivot).angle(index * 360 / @segments).preceeding(prevSegment).Segment()
+      segment = Crafty.e("Segment").angle(index * 360 / @segments).preceeding(prevSegment).Segment()
       @_segments.push(segment)
     )
     _.first(@_segments).preceeding(_.last(@_segments))
     @bind('LevelUp', => @upgrade())
-    @
-
-  pivot: (pivot)->
-    @attr("pivot", pivot)
     @
 
   color: (color) ->
