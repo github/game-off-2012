@@ -54,8 +54,11 @@ class Game
     @xOff = 0
     
     #A bundle looks like that {sheet:--, img:--}
+    @rL = new LoaderObservator
+    @rL.setTodo(@.run)
     bundle = {sheet:"level/sheet.json", img:"img/sprites.png"}
-    @ll = new LevelLoader bundle, @world, @
+    @ll = new LevelLoader(bundle, @world, @)
+    @rL.register(@ll)
     @model = new PlayerModel @world, @, 200, 88
     
     #640/(8*16)

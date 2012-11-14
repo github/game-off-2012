@@ -15,26 +15,52 @@ class Screen
   clear:->
     @ctx.clearRect(0, 0, 640, 480)
 
-#RessourceLoader for syncing the loaded ressources and start rendering
-class RessourceLoader
-  constructor:(@game)->
-    
-class LevelLoader
+#LoaderObservator is watching all registered Loaders, but doesn't know them
+class LoaderObservator
+  constructor:->
+    @idLoader = new Array
+    @counter = 0
+    @todo =->
   
+  register:(loader)->
+    loader.setCallback(@callback)
+    @counter++
+  
+  setTodo:(todo)->
+    @todo = todo
+  
+  callback:=>
+    @counter--
+    ###
+    mom-complexity O(n!)
+    ###
+    if @counter == 0
+      @todo()
+    
+#Base-Loader-Class for using a loader with an LoaderObserator
+class Loader
+  constructor:->
+    @callback = ->
+  
+  setCallback:(callback)->
+    @callback = callback 
+
+#The  momentary LevelLoader 
+class LevelLoader extends Loader
   constructor:(@bundle, @world, @game)->
+    super()
     @data
     @background = document.createElement("canvas")
     @ctx = @background.getContext("2d")
+    
     #AsyncLoading at the moment, maybe sync would be better...
-    $.getJSON(@bundle.sheet, @load)
+    $.getJSON(@bundle.sheet, @load)  
   
   #load-method -> async
   load:(data)=>
     @data = data
     
     #Get graphical-context
-    
-    
     for i in [0..@data.layers.length-1]
       name = @data.layers[i].name
       if name == 'scene'
@@ -46,11 +72,11 @@ class LevelLoader
       if name == 'sensors'
         @createModel(@world, @data.layers[i])
     
-    @game.run()
+    @callback()
    
    #Method creates Scene out of SceneLayer
       #LoadS the spites
-   createScene:(data, layer)=>
+   createScene:(data, layer)->
     sprites = new SpriteSheet(@bundle.img, 8)
     #RawTileData
     tiles = layer.data
@@ -66,7 +92,7 @@ class LevelLoader
       for x in [0..data.width-1]
         sprites.drawTile(@ctx, x*8, y*8, tiles[x+y*data.width]-1)
 
-   createModel:(world, layer)=>
+   createModel:(world, layer)->
     objects = layer.objects
     
     #The ratio is how much tiles are in one window
