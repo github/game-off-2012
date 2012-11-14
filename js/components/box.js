@@ -47,27 +47,48 @@ Crafty.c('PushableBox', {
 
 /**
 * Removable Box
-* Adds a listener to the push trigger.  
+* This is a box that can remove itself and its neighbors
 */
 Crafty.c('RemovableBox', {
-  init: function() {
-    this.requires("removable, Box")
-      .bind('remove', function() {
-        this.removeNeighbors(this, []);
-      });
-  },
-  removeNeighbors:function(block, touched) {
-    var neighbors = block.getNeighbors('removable');
-    for(var i = 0; i < neighbors.length; i++) {
-      if (-1 === (jQuery.inArray(neighbors[i].x + "," + neighbors[i].y, touched))) {
-        touched.push(neighbors[i].x + "," + neighbors[i].y);
-        this.removeNeighbors(neighbors[i], touched);
-      }
-    }
-    block.destroy();
-  },
+    init: function() {
+        this.requires("removable, Box")
+        .bind('remove', function() {
+            this.removeNeighbors();
+        });
+    },
+
+    // Removes the itself and its neighbors if TWO or more are touching
+    // TODO: The number of blocks touching should be configurable, probably as
+    // an input ot the constructor
+    removeNeighbors:function() {
+        var neighborsToCheck = [];    // Stack of neighbors to check
+        var removableNeighbors = {};  // Blocks that are confirmed for removal
+        // First add itself to the confirmed blocks for removal
+        removableNeighbors[this.x + "," + this.y] = this;
+        // Then add the immediate neighbors to the ones to check
+        neighborsToCheck = neighborsToCheck.concat(this.getNeighbors('removable'));
+        
+        // While there are still blocks to check, check to see if we already checked it.
+        // If not, add the neighbor of that block to the list to check
+        while(neighborsToCheck.length > 0) {
+            var neighbor = neighborsToCheck.pop();
+            if(removableNeighbors[neighbor.x + "," + neighbor.y])
+                continue;
+            else {
+                removableNeighbors[neighbor.x + "," + neighbor.y] = neighbor;
+                neighborsToCheck = neighborsToCheck.concat(neighbor.getNeighbors('removable'));
+            }
+        }
+
+        // If the number of removable blocks is >= 2 then remove them
+        if(_.size(removableNeighbors) > 1) {
+            _.each(removableNeighbors, function(neighborToDestroy, key){ 
+                neighborToDestroy.destroy();
+            });
+        }
+    },
   
-  RemovableBox: function() {
-      return this;
-  }
+    RemovableBox: function() {
+        return this;
+    }
 });

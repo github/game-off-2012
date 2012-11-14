@@ -6,6 +6,7 @@
     
     <!-- Resources -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/utilities/underscore-min.js"></script>
     <script type="text/javascript" src="js/crafty.js"></script>
     <script type="text/javascript" src="js/components/components.js"></script>
     <script type="text/javascript" src="js/components/box.js"></script>
