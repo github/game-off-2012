@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="20" height="15" tilewidth="8" tileheight="8">
+ <properties>
+  <property name="sheet" value="img/sprites.png"/>
+ </properties>
+ <tileset firstgid="1" name="sprites" tilewidth="8" tileheight="8">
+  <image source="sprites.png" width="64" height="64"/>
+ </tileset>
+ <layer name="background" width="20" height="15">
+  <properties>
+   <property name="scale" value="4"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJyTZGBgkBzFo3gUj+IhgAHtZB1N
+  </data>
+ </layer>
+</map>

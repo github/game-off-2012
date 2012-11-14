@@ -5,7 +5,7 @@
  </tileset>
  <layer name="scene" width="32" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjYBh4wArFtJInxm5cZlAqz4mGCelnxSFHrh9w2Y+sltywIwZgs59Yf9HKfnqCUftH7cdnP+MAY6ZBjvmhmBi1zBTqx6aXDYjZcZjDjMZGt58U/bjczYfERjaDGQ8mRT8AfsAEbw==
+   eJxjYBh4wArFtJInxm5cZlAqz4mGCelnxSFHrh9w2Y+sltywIwZgs59Yf9HKfnqCUftH7cdnP+MAY6ZRPKIxAMghAxk=
   </data>
  </layer>
  <objectgroup name="static" width="32" height="16">
