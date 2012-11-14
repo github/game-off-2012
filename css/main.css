@@ -46,10 +46,10 @@ canvas {
 }
 
 #title {
-	font: 77px/100px 'Happy Sans', cursive;
+	font: 67px/100px 'Happy Sans', cursive;
 	color: #945430;
 	text-align: center;
-	_text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+  text-shadow: 3px 3px 0px white;
 	margin: 0;
 	padding: 0;
 }
@@ -60,6 +60,9 @@ canvas {
 	padding: 0;
 	text-align: center;
 	margin: -20px 0 0;
+}
+#credits a {
+	color: white;
 }
 
 .options {
