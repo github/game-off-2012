@@ -68,6 +68,7 @@
   */
   mit.game_started = 0;
   mit.game_over = 0;
+  mit.start_btn_clicked = 0;
 
   ui.start_screen.css('width', canvas.width + 'px');
   ui.start_screen.css('height', canvas.height + 'px');
@@ -75,6 +76,8 @@
   // Start Button
   ui.start_game.on('mousedown', function() {
     ui.start_screen.fadeOut();
+
+    mit.start_btn_clicked = 1;
 
     return false;
   });
@@ -114,6 +117,8 @@
 
   // Key Events
   window.addEventListener('keydown', function(e) {
+    if (!mit.start_btn_clicked)
+      return;
 
     switch (e.keyCode) {
       // Left
@@ -140,12 +145,18 @@
   }, false);
 
   window.addEventListener('keyup', function(e) {
+    if (!mit.start_btn_clicked)
+      return;
+
     ax = 0;
     ay = 0;
   }, false);
 
   // Game play on mouse clicks too!
   window.addEventListener('mousedown', function(e) {
+    if (!mit.start_btn_clicked)
+      return;
+
     if (!mit.game_started)
       mit.game_started = 1;
 
@@ -154,6 +165,9 @@
   }, false);
 
   window.addEventListener('mouseup', function(e) {
+    if (!mit.start_btn_clicked)
+      return;
+
     ay = 0;
     flying_up = 0;
   }, false);
@@ -169,6 +183,7 @@
     ui.fb.html('post on fb');
 
     mit.game_over = 1;
+    mit.start_btn_clicked = 0;
   };
 
 
@@ -199,11 +214,12 @@
       return;
     }
 
-    // Update score
-    score = score + 0.2;
-    ui.score_board.text(parseInt(score));
-
     if (mit.game_started) {
+
+      // Update score
+      score = score + 0.2;
+      ui.score_board.text(parseInt(score));
+
       // Acceleration + Gravity
       // ay = ay + gravity;
 

@@ -119,7 +119,7 @@
     ctx.drawImage(log, mit.backgrounds.logX, mit.backgrounds.logY);
 
     if (mit.game_started) {
-      mit.backgrounds.logX -= 2;
+      mit.backgrounds.logX -= grass_bg_move_speed;
     }
   };
 
