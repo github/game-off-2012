@@ -137,3 +137,10 @@ canvas {
 	height: 75px;
 	line-height: 75px;
 }
+
+.controls {
+	width: 73px;
+	height: 47px;
+	background: url(../img/controls.png) no-repeat top center;
+	margin: 10px auto;
+}
