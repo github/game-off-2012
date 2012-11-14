@@ -20,7 +20,7 @@
 
     draw: function(ctx) {
       var cur_sprite_frame = this.fly_frame_count / this.change_per_frame;
-      console.log(utils.isInt(cur_sprite_frame));
+      
       if (utils.isInt(cur_sprite_frame)) {
         var source_x = cur_sprite_frame * 48;
       }
@@ -97,7 +97,7 @@
 
     // Sprite Frame Change Speed.
     // This will affect the flap speed.
-    pappu.change_per_frame = 10;
+    pappu.change_per_frame = 2;
   };
 
   window.mit.pappu = pappu;
