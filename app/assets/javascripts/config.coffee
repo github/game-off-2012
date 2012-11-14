@@ -6,18 +6,18 @@ window.Config =
 
   cycle:
     segments: 144
-    outerRadius:
-      base: 200
-      minimum: 180
-      maximum: 250
-    innerRadius:
-      base: 100
-      minimum: 80
-      maximum: 160
-    centerRadius: null # calculated
     colors:
       base: "#2A678C"
       action: "#75BEEB"
+    centerRadius: null # calculated
+    outerRadius:
+      base: 200
+      minimum: 160
+      maximum: 230
+    innerRadius:
+      base: 100
+      minimum: 70
+      maximum: 140
 
   player:
     size: 8
@@ -34,8 +34,12 @@ window.Config =
         maximum: 3
 
   obstacles:
-    width: 20
-    height: 10
+    width:
+      innerRadius: 20
+      outerRadius: 20
+    height:
+      innerRadius: 20
+      outerRadius: 600
     changeAhead: 30
     intervals:
       atStart: 2000
@@ -53,10 +57,10 @@ window.Config =
   actions: ["Pull", "Push", "Fork", "Merge"]
 
   actionValues:
-    Pull: 35
-    Push: 35
-    Merge: 20
-    Fork: 20
+    Pull:  30
+    Push:  30
+    Merge: 30
+    Fork:  30
 
   gfx:
     trail:
@@ -67,7 +71,6 @@ window.Config =
         initial: 12
         reduceBy: 1
         minimum: 2
-
 
   flow:
     restartDelay: 1500
