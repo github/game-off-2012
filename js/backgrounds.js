@@ -21,7 +21,8 @@
       cloud_bg_vx = 0;
     }
 
-    cloud_bg_vx -= cloud_bg_move_speed;
+    if (mit.game_started)
+      cloud_bg_vx -= cloud_bg_move_speed;
   };
 
 
@@ -41,7 +42,8 @@
       backtree_bg_vx = 0;
     }
 
-    backtree_bg_vx -= backtree_bg_move_speed;
+    if (mit.game_started)
+      backtree_bg_vx -= backtree_bg_move_speed;
   };
 
 
@@ -61,7 +63,8 @@
       fronttree_bg_vx = 0;
     }
 
-    fronttree_bg_vx -= fronttree_bg_move_speed;
+    if (mit.game_started)
+      fronttree_bg_vx -= fronttree_bg_move_speed;
   };
 
 
@@ -81,8 +84,45 @@
       ground_bg_vx = 0;
     }
 
-    ground_bg_vx -= ground_bg_move_speed;
+    if (mit.game_started)
+      ground_bg_vx -= ground_bg_move_speed;
   };
+
+
+  var grass_bg_move_speed = 4;
+  var grass_bg_vx = 0;
+
+  var drawGrass = function(ctx) {
+    // Grass
+    var grass = new Image();
+    grass.src = 'img/grass.png';
+    grass.width = W;
+    grass.height = H;
+    ctx.drawImage(grass, grass_bg_vx, 0, W, H);
+    ctx.drawImage(grass, W + grass_bg_vx, 0, W, H);
+
+    if (-grass_bg_vx >= W) {
+      grass_bg_vx = 0;
+    }
+
+    if (mit.game_started)
+      grass_bg_vx -= grass_bg_move_speed;
+  };
+
+
+  var drawInitLog = function(ctx) {
+    var log = new Image();
+    log.src = 'img/log.png';
+
+    mit.backgrounds.logY = H-(log.height+45);
+
+    ctx.drawImage(log, mit.backgrounds.logX, mit.backgrounds.logY);
+
+    if (mit.game_started) {
+      mit.backgrounds.logX -= 2;
+    }
+  };
+
 
   // Draw Awesome Backgrounds
   // Backgrounds have been made for 1000x500 dimensions
@@ -107,12 +147,22 @@
 
     drawFrontTrees(ctx);
 
+    // Drawing the initial wood log on which
+    // Pappu gonna sit and bask in the cool and cozy
+    // environment.
+    if (mit.backgrounds.logX+100 > 0) {
+      drawInitLog(ctx);
+    }
+
     drawGround(ctx);
   };
 
 
   window.mit.backgrounds = {
-    draw: draw
+    draw: draw,
+    drawGrass: drawGrass,
+    logY: 0,
+    logX: 30
   };
 
 }());

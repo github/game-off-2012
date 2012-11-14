@@ -29,10 +29,16 @@ body {
   font-family: 'Happy Sans', cursive;
 }
 
-canvas {
+
+canvas#game_main {
   display: block;
-  background: whiteSmoke;
   margin: 0 auto;
+  position: absolute;
+}
+canvas#game_bg {
+	display: block;
+	margin: 0 auto;
+	position: absolute;
 }
 
 

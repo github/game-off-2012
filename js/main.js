@@ -31,7 +31,9 @@
   Basic Canvas Inits
   */
 
-  var canvas = document.querySelector('#mindd_it');
+  // Main Canvas
+
+  var canvas = document.querySelector('#game_main');
   var ctx = canvas.getContext('2d');
 
   var W = canvas.width = ui.body.width();
@@ -53,16 +55,28 @@
     canvas.height = canvas.width * 500/1000;
   }
 
+  // BG Canvas
+  var bg_canvas = document.querySelector('#game_bg');
+  var bg_ctx = bg_canvas.getContext('2d');
+
+  bg_canvas.width = canvas.width;
+  bg_canvas.height = canvas.height;
+
 
   /*
     Game Start Screen and Lolz
   */
+  mit.game_started = 0;
+  mit.game_over = 0;
+
   ui.start_screen.css('width', canvas.width + 'px');
   ui.start_screen.css('height', canvas.height + 'px');
 
   // Start Button
-  ui.start_game.on('click', function() {
+  ui.start_game.on('mousedown', function() {
     ui.start_screen.fadeOut();
+
+    return false;
   });
 
 
@@ -132,6 +146,9 @@
 
   // Game play on mouse clicks too!
   window.addEventListener('mousedown', function(e) {
+    if (!mit.game_started)
+      mit.game_started = 1;
+
     ay = -0.4;
     flying_up = 1;
   }, false);
@@ -147,16 +164,23 @@
   */
   var gameOver = function() {
     ui.start_screen.fadeIn();
+    ui.start_game.html('re-start');
     ui.tweet.html('tweet score');
     ui.fb.html('post on fb');
+
+    mit.game_over = 1;
   };
 
 
   (function renderGame() {
     window.requestAnimationFrame(renderGame);
 
+    // Draw Backgrounds on BG Canvas
+    mit.backgrounds.draw(bg_ctx);
+
     ctx.clearRect(0, 0, W, H);
-    mit.backgrounds.draw(ctx);
+
+    mit.backgrounds.drawGrass(ctx);
 
     if (flying_up)
       mit.pappu.updateFlyFrameCount();
@@ -178,26 +202,31 @@
     // Update score
     score = score + 0.2;
     ui.score_board.text(parseInt(score));
+
+    if (mit.game_started) {
+      // Acceleration + Gravity
+      // ay = ay + gravity;
+
+      // Velocity
+      if (
+        (vy < v_cap && ay+gravity > 0) ||
+        (vy > -v_cap && ay+gravity < 0)
+        ) {
+
+        vy += ay;
+        vy += gravity;
+      }
+
+      // console.log(vy, ay)
+
+      mit.pappu.x += vx;
+      mit.pappu.y += vy;
     
-    // Acceleration + Gravity
-    // ay = ay + gravity;
-
-    // Velocity
-    if (
-      (vy < v_cap && ay+gravity > 0) ||
-      (vy > -v_cap && ay+gravity < 0)
-      ) {
-
-      vy += ay;
-      vy += gravity;
+      mit.pappu.draw(ctx);
     }
-
-    // console.log(vy, ay)
-
-    mit.pappu.x += vx;
-    mit.pappu.y += vy;
-
-    mit.pappu.draw(ctx);
+    else {
+      mit.pappu.drawStatic(ctx);
+    }
 
   }());
 

@@ -2,6 +2,9 @@
 
   window.mit = window.mit || {};
 
+  // Main Canvas Height/Width
+  var W, H;
+
   // There will be only 1 Pappu
   var pappu = {
     x: 50,
@@ -29,7 +32,7 @@
         var source_x = old_sprite_frame * 48;
       }
 
-      console.log(cur_sprite_frame, source_x);
+      // console.log(cur_sprite_frame, source_x);
       
       ctx.drawImage(
         this.sprite,
@@ -46,6 +49,22 @@
       // During Testing Phase
       // ctx.fillStyle = 'red';
       // ctx.fillRect(this.x, this.y, this.w, this.h);
+    },
+
+    drawStatic: function(ctx) {
+      this.y = mit.backgrounds.logY-52;
+
+      ctx.drawImage(
+        this.sprite,
+        0,
+        0,
+        48,
+        this.h,
+        this.x,
+        mit.backgrounds.logY-52,
+        48,
+        this.h
+      );
     },
 
     updateFlyFrameCount: function(count) {
@@ -98,6 +117,9 @@
     // Sprite Frame Change Speed.
     // This will affect the flap speed.
     pappu.change_per_frame = 5;
+
+    // X Pos
+    pappu.x = 35;
   };
 
   window.mit.pappu = pappu;
