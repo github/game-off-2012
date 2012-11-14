@@ -78,6 +78,11 @@
     ui.start_screen.fadeOut();
 
     mit.start_btn_clicked = 1;
+    mit.game_started = 0;
+
+    mit.pappu.drawStatic(ctx);
+    ax = 0; ay = 0;
+    vx = 0; vy = 0;
 
     return false;
   });

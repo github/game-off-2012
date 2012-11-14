@@ -153,6 +153,9 @@
     if (mit.backgrounds.logX+100 > 0) {
       drawInitLog(ctx);
     }
+    else if (!mit.game_started) {
+      mit.backgrounds.logX = 30;
+    }
 
     drawGround(ctx);
   };
