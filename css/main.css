@@ -63,7 +63,6 @@ canvas {
 }
 
 .options {
-	background-image: url(../img/stand.png);
 	height: 400px;
 	background-position: bottom center;
 	width: 225px;
@@ -78,7 +77,6 @@ canvas {
 	position: absolute;
 	width: 47px;
 	height: 49px;
-	background-image: url(../img/dig.png);
 	bottom: 0;
 	left: 50%;
 	margin-left: -29px;
