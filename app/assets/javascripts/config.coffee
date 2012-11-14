@@ -56,9 +56,13 @@ window.Config =
   gfx:
     trail:
       duration: 50
-      reductionTo: 0.2
-      interval: 5
+      reduceBy: 0.2
       color: "#7f7f7f"
+      interval:
+        initial: 12
+        reduceBy: 1
+        minimum: 2
+
 
   flow:
     restartDelay: 1500

@@ -28,13 +28,11 @@ Crafty.c "ActionCenter",
 
   start: ->
     @_on = true
-    console.log('start', @_on)
     @setTimeout(Config.obstacles.intervals.atStart)
     @
 
   stop: ->
     @_on = false
-    console.log('stop', @_on)
     @reset()
     @draw()
     @
@@ -73,7 +71,6 @@ Crafty.c "ActionCenter",
     @delay((=> @rollAction()), delayOverride || @_delay)
 
   rollAction: ->
-    console.log('roll', @_on)
     return unless @_on
     @_currentAction = _.shuffle(@_actions)[0]
     @_callback(@_currentAction)

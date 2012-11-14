@@ -30,6 +30,7 @@ Crafty.c "MoveInCircle",
     @_angle = @_initialAngle
     @_speed = Config.player.speed.angular.initial
     @_sideSpeed = Config.player.speed.sides.initial
+    @_trailInterval = Config.gfx.trail.interval.initial
     @_radius = Config.cycle.centerRadius
 
   pivot: (hsh) ->
@@ -82,14 +83,18 @@ Crafty.c "MoveInCircle",
     @_keys = newKeys
 
   _generateTrail: ->
-    return unless Crafty.frame() % Config.gfx.trail.interval == 0
+    return unless Crafty.frame() % @_trailInterval == 0
     Crafty.e("Trail").attr(rotation: @rotation, x: @_x, y: @_y).Trail()
 
   upgrade: ->
     @_speed += Config.player.speed.angular.increase
     @_speed = Math.min(@_speed, Config.player.speed.angular.maximum)
+
     @_sideSpeed += Config.player.speed.sides.increase
     @_sideSpeed = Math.min(@_speed, Config.player.speed.sides.maximum)
+
+    @_trailInterval -= Config.gfx.trail.interval.reduceBy
+    @_trailInterval = Math.max(@_trailInterval, Config.gfx.trail.interval.minimum)
 
   crash: ->
     return if @disableControls
