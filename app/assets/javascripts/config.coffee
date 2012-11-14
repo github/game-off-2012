@@ -55,14 +55,14 @@ window.Config =
       change: 5
       minimum: 10
     effect:
-      divisor: 1.1
-      threshold: 1
+      divisor: 1.09
+      threshold: 0.01
 
   actions: ["Pull", "Push", "Fork", "Merge"]
 
   actionValues:
-    Pull:  30
-    Push:  30
+    Pull:  40
+    Push:  40
     Merge: 20
     Fork:  20
 

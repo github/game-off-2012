@@ -6,7 +6,6 @@
   * Should be saved into local configuration
 
 * Game
-  * Easing for segment transform.
   * Arrows on segments changes.
   * Dubbing ( conflict = g/over, push)
   * Effect of tween (Value) should change with difficulty.
@@ -34,6 +33,9 @@
   * Less music
   * add Readme
 
+* Mutations
+  * Change direction.
+  * Shake screen.
 
 
 
