@@ -77,7 +77,8 @@ canvas {
 	margin: -20px 0 0;
 }
 #credits a {
-	color: white;
+	color: #FFEEAA;
+	text-decoration: none;
 }
 
 .options {
