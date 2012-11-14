@@ -8,7 +8,7 @@ Crafty.scene("game", ->
   player = Crafty.e("2D, DOM, Color, MoveInCircle,Player, Collision").pivot(Config.viewport.center).onHit("Obstacle",
       -> @crash()
   )
-  track  = Crafty.e("Track").pivot(Config.viewport.center).color("#ff0000").player(player).Track()
+  track  = Crafty.e("Track").pivot(Config.viewport.center).player(player).Track().color(Config.cycle.colors.base)
 
   track._segments[Config.cycle.segments * 0.75]._inner.attach(start_line) #Hack for start_line
 
@@ -22,9 +22,9 @@ Crafty.scene("game", ->
 
   actions = Crafty.e("2D, Canvas, ActionCenter").pivot(Config.viewport.center).onAction( (action)->
     track.currentSegment(Config.obstacles.changeAhead).perform(action)
-  )
+  ).start()
 
-  Crafty.bind("GameOver", =>
+  Crafty.bind("Restart", =>
     player.reset()
     track.reset()
     actions.reset()
