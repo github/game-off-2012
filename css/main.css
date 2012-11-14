@@ -1,3 +1,12 @@
+@font-face{ 
+	font-family: 'Happy Sans';
+	src: url('../fonts/happy_sans-webfont.eot');
+	src: url('../fonts/happy_sans-webfont.eot?#iefix') format('embedded-opentype'),
+	     url('../fonts/happy_sans-webfont.woff') format('woff'),
+	     url('../fonts/happy_sans-webfont.ttf') format('truetype'),
+	     url('../fonts/happy_sans-webfont.svg#webfont') format('svg');
+}
+
 * {
   margin: 0; padding: 0;
 
@@ -5,12 +14,17 @@
   box-sizing: border-box;
 }
 
+.container {
+	position: relative;
+	margin: 50px 100px;
+}
+
 html, body {
   width: 100%; height: 100%;
 }
 
 body {
-  padding: 50px 100px 50px;
+  padding: 50px 100px;
   background: #171717;
 }
 
@@ -22,3 +36,87 @@ canvas {
 
 
 /* Start Screen */
+#start_screen {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	z-index: 1;
+	width: 100%;
+}
+
+#title {
+	font: 77px/100px 'Happy Sans', cursive;
+	color: #945430;
+	text-align: center;
+	_text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+	margin: 0;
+	padding: 0;
+}
+
+#credits {
+	font: 36px 'Happy Sans', cursive;
+	color: white;
+	padding: 0;
+	text-align: center;
+	margin: -20px 0 0;
+}
+
+.options {
+	background-image: url(../img/stand.png);
+	height: 400px;
+	background-position: bottom center;
+	width: 225px;
+	background-repeat: no-repeat;
+	position: absolute;
+	bottom: 0;
+	right: 50px;
+}
+
+.options:before {
+	content: '';
+	position: absolute;
+	width: 47px;
+	height: 49px;
+	background-image: url(../img/dig.png);
+	bottom: 0;
+	left: 50%;
+	margin-left: -29px;
+	z-index: -1;
+}
+
+.options ul {
+	margin: 0;
+	padding: 50px 0 0;
+	list-style: none;
+}
+
+.options ul li {
+	display: block;
+	font: 40px 'Happy Sans', cursive;
+	text-align: center;
+	margin: 0 0 20px;
+}
+
+.options ul li a {
+	color: white;
+	text-decoration: none;
+}
+
+.options ul li:first-child {
+	background: url(../img/plank_top.png) no-repeat top center;
+	height: 70px;
+	line-height: 70px;
+}
+
+.options ul li:nth-child(2) {
+	background: url(../img/plank_mid.png) no-repeat top center;
+	height: 63px;
+	line-height: 63px;
+}
+
+.options ul li:last-child {
+	background: url(../img/plank_bot.png) no-repeat top center;
+	height: 75px;
+	line-height: 75px;
+}
