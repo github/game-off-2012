@@ -40,21 +40,23 @@ Crafty.c("Segment",
   perform: (action, value = null, cameFrom = null) ->
     value = Config.actionValues[action] unless value
     return if value < Config.obstacles.effect.threshold
-
-    switch action
-      when "Pull"
-        @_inner.shiftRadius(-value)
-        @_outer.shiftRadius(-value)
-      when "Push"
-        @_inner.shiftRadius(+value)
-        @_outer.shiftRadius(+value)
-      when "Fork"
-        @_inner.shiftRadius(-value)
-        @_outer.shiftRadius(+value)
-      when "Merge"
-        @_inner.shiftRadius(+value)
-        @_outer.shiftRadius(-value)
-
+    @[action](value)
     @prev.perform(action, value / Config.obstacles.effect.divisor, 'next') unless cameFrom == 'prev'
     @next.perform(action, value / Config.obstacles.effect.divisor, 'prev') unless cameFrom == 'next'
+
+  Pull: (value) ->
+    @_inner.shiftRadius(-value)
+    @_outer.shiftRadius(-value)
+
+  Push: (value) ->
+    @_inner.shiftRadius(+value)
+    @_outer.shiftRadius(+value)
+
+  Fork: (value) ->
+    @_inner.shiftRadius(-value)
+    @_outer.shiftRadius(+value)
+
+  Merge: (value) ->
+    @_inner.shiftRadius(+value)
+    @_outer.shiftRadius(-value)
 )
