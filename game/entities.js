@@ -299,10 +299,11 @@ function Tower(x, y, w, h) {
 }
 
 function Bug(startPath, r) {
-	this.maxHP = 20;	  
+	this.maxHP = 20;
 	this.hp = this.maxHP;
 	this.value = 15;
 	this.speed = 20;
+	this.color = "yellow";
 
 	this.base = new baseObj("Bug", 10);
 
@@ -344,21 +345,20 @@ function Bug(startPath, r) {
 
 		if (this.hp < 0) {
 			this.base.destroySelf = true;
-
 			eng.money += this.value;
 		}
+		
+		this.color = "#" + hexPair(255 - this.hp / this.maxHP * 255) + "0000";
 
 		if (this.base)
 			return this.base.update(dt);
 	};
 	this.draw = function (pen) {
 		var p = this.tPos;
-		pen.fillStyle = "#F0F0" + hexPair(255 - this.hp / this.maxHP * 255);
+		pen.fillStyle = this.color;
 		pen.strokeStyle = "orange";
-		pen.save();
 		pen.lineWidth = 1;
 		ink.circ(p.x + p.w / 2, p.y + p.h / 2, p.w / 2, pen);
-		pen.restore();
 
 		if (this.base)
 			this.base.draw(pen);
