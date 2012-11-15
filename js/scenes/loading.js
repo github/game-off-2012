@@ -9,7 +9,11 @@ Crafty.scene("loading", function () {
   Crafty.load(["images/sprite_sheet.png"], function () {
     // Creates the sprite for the player
     Crafty.sprite(32, "images/sprite_sheet.png", {
-      player: [0, 2]
+      player: [0, 2],
+      redBox: [0, 10],
+      blueBox: [0 , 9],
+      whiteBox: [0, 8],
+      purpleBox: [0, 11]
     });
     
     // Simulate a load time for now to make sure this works

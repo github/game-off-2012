@@ -92,3 +92,24 @@ Crafty.c('RemovableBox', {
         return this;
     }
 });
+
+/**
+* Box
+* Applies a sprite for the colored boxes
+*/
+Crafty.c('ColorBox', {
+    _colorString: "whiteBox", // Default is white
+
+    init: function() {
+        this.requires("Box, " + this._colorString);
+    },
+
+    // Constructer takes a string that represents a color and applies the sprite
+    // Choices so far are "white", "red", "blue", "purple"
+    ColorBox: function(color) {
+        this.removeComponent(this._colorString, false);
+        this.addComponent(color + "Box");
+        this._colorString = color;
+        return this;
+    }
+});
