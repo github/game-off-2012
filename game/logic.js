@@ -20,9 +20,9 @@
     this.bugIncrease = 1;
     this.bugIncInc = 0.1;
 
-    this.maxBugs = 3000;
-    this.bugIncrease = 0;
-    this.bugIncInc = 0;
+    //this.maxBugs = 3000;
+    //this.bugIncrease = 0;
+    //this.bugIncInc = 0;
 
     this.secondTimer = 1;
 
