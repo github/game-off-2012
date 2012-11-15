@@ -171,8 +171,6 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
         var lessEnd = startIndex;
         var greaterStart = endIndex;
 
-        //To prevent infinite recursion
-
         //< here instead of <= sorts it, but leaves lessEnd and greaterStart possibly wrong
         while (curPos <= greaterStart) {
             if (arrObj[curPos].tPos[axis] < pivotValue) {
@@ -257,6 +255,12 @@ function QuadTree(arrObjs, minX, maxX, minY, maxY, splitThreshold, oneAxisSplitT
 
             if (!realQuadTree) {
                 sortByAxis(arrObj, startIndex, endIndex - 1, curDimen);
+                /*
+                if (splitX)
+                    arrObj.sort(function (a, b) { return a.tPos.x - b.tPos.x; });
+                else
+                    arrObj.sort(function (a, b) { return a.tPos.y - b.tPos.y; });
+                    */
 
                 /*
                 for (var i = startIndex; i < endIndex - 1; i++) {
