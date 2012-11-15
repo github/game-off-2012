@@ -47,11 +47,12 @@ Crafty.c('PushableBox', {
 
 /**
 * Removable Box
-* This is a box that can remove itself and its neighbors
+* This is a box that can remove itself and its neighbors of the same color
+* Requires ColorBox as it depends on the colors to determine what to remove
 */
 Crafty.c('RemovableBox', {
     init: function() {
-        this.requires("removable, Box")
+        this.requires("removable, Box, ColorBox")
         .bind('remove', function() {
             this.removeNeighbors();
         });
@@ -72,7 +73,10 @@ Crafty.c('RemovableBox', {
         // If not, add the neighbor of that block to the list to check
         while(neighborsToCheck.length > 0) {
             var neighbor = neighborsToCheck.pop();
-            if(removableNeighbors[neighbor.x + "," + neighbor.y])
+            // Skip it if we've already checked it, if its not a color, or its not the same color
+            if(removableNeighbors[neighbor.x + "," + neighbor.y] 
+                || !neighbor.has("ColorBox") 
+                || neighbor.colorComponentString() != this.colorComponentString())
                 continue;
             else {
                 removableNeighbors[neighbor.x + "," + neighbor.y] = neighbor;
@@ -108,8 +112,12 @@ Crafty.c('ColorBox', {
     // Choices so far are "white", "red", "blue", "purple"
     ColorBox: function(color) {
         this.removeComponent(this._colorString, false);
-        this.addComponent(color + "Box");
-        this._colorString = color;
+        this._colorString = color + "Box";
+        this.addComponent(this._colorString);
         return this;
+    },
+
+    colorComponentString: function() {
+        return this._colorString;
     }
 });
