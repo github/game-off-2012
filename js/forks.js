@@ -2,11 +2,17 @@
 
   window.mit = window.mit || {};
 
+  var W, H;
+
   // Array of random forks
   var forks = [];
 
   // Edges at which forks stand
-  var edges = ['top', 'bottom'];
+  var edges = ['top', 'btm'];
+
+  // Dig Image
+  var dig_img = new Image();
+  dig_img.src = 'img/dig.png';
 
   var Fork = function() {
     this.x = 0;
@@ -18,7 +24,7 @@
     this.h = 0;
 
     // Edge on which the fork will stand on
-    this.edge = 'bottom';
+    this.edge = 'btm';
   };
 
   /*
@@ -50,7 +56,7 @@
 
     if (forks[forks.length-1]) {
       pos.x = forks[forks.length-1].x;
-      pos.x += 200;
+      pos.x += 300;
 
       pos.y = forks[forks.length-1].y;
     }
@@ -62,7 +68,7 @@
     return pos;
   };
   
-  var drawForks = function(ctx, count) {
+  var draw = function(ctx, count) {
 
     if (forks.length < count) {
       
@@ -77,6 +83,15 @@
         // Setting a Random Edge
         fork.edge = edges[utils.randomNumber(0,1)];
 
+        // Setting the Dig Position
+        if (fork.edge === 'btm') {
+          var dig_rand = utils.randomNumber(3,5);
+
+          fork.dig_x = dig_img.width / dig_rand;
+          fork.dig_y = H - dig_img.height;
+          // console.log(dig_img.width);
+        }
+
         forks.push(fork);
       }
     }
@@ -86,7 +101,7 @@
       if (fork.x < 0) {
         forks.splice(index, 1);
       }
-      fork.x -= 3;
+      fork.x -= mit.backgrounds.ground_bg_move_speed;
 
       // ctx.beginPath();
       // ctx.strokeStyle = 'blue';
@@ -100,7 +115,7 @@
         fork_img.src = 'img/fork_handle.png';
         ctx.drawImage(fork_img, fork.x, 0);
       }
-      else if (fork.edge === 'bottom') {
+      else if (fork.edge === 'btm') {
         // ctx.lineTo(fork.x, mit.config.canvas_height);
 
         var fork_img = new Image();
@@ -113,8 +128,28 @@
     });
   };
 
+  // Forks have black digs in grounds
+  // This function will draw those
+
+  var drawDigs = function(ctx) {
+    W = mit.config.canvas_width;
+    H = mit.config.canvas_height;
+
+    // Loop over forks and draw digs for each of them
+
+    forks.forEach(function(fork, index) {
+
+      if (fork.edge === 'btm') {
+        ctx.drawImage(dig_img, fork.x - fork.dig_x, fork.dig_y);
+      }
+
+    });
+  };
+
+
   window.mit.forks = {
-    drawForks: drawForks
+    draw: draw,
+    drawDigs: drawDigs
   };
 
 }());

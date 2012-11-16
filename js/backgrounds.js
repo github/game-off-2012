@@ -165,7 +165,8 @@
     draw: draw,
     drawGrass: drawGrass,
     logY: 0,
-    logX: 30
+    logX: 30,
+    ground_bg_move_speed: ground_bg_move_speed
   };
 
 }());

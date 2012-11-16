@@ -19,6 +19,9 @@
   // If it collides at some part other than
   // the hole, he'll decease.
 
+  var branch_img = new Image();
+  branch_img.src = 'img/branch.png';
+
   function Branch() {
     this.x = 0;
     this.y = 0;
@@ -43,19 +46,19 @@
 
     if (branches[branches.length-1]) {
       pos.x = branches[branches.length-1].x;
-      pos.x += 250;
+      pos.x += 500;
 
       pos.y = branches[branches.length-1].y;
     }
     else {
       pos.x = 1*200;
-      pos.y = 200;
+      pos.y = 0;
     }
 
     return pos;
   };
 
-  var drawBranches = function(ctx, count) {
+  var draw = function(ctx, count) {
 
     if (branches.length < count) {
       
@@ -78,22 +81,14 @@
       if (branch.x < 0) {
         branches.splice(index, 1);
       }
-      branch.x -= 3;
+      branch.x -= mit.backgrounds.ground_bg_move_speed;
 
-      ctx.beginPath();
-      ctx.strokeStyle = 'green';
-      ctx.lineWidth = 5;
-      ctx.moveTo(branch.x, branch.y);
-
-      ctx.lineTo(branch.x, 0);
-
-      ctx.stroke();
-      ctx.closePath();
+      ctx.drawImage(branch_img, branch.x, branch.y);
     });
   };
 
   window.mit.branches = {
-    drawBranches: drawBranches
+    draw: draw
   };
 
 }());

@@ -200,6 +200,12 @@
 
     ctx.clearRect(0, 0, W, H);
 
+    // Draw Digs (holds forks)
+    // I am fine without Digs, but Kushagra
+    // just WANTS me to do this extra work :/
+    mit.forks.drawDigs(ctx);
+
+    // Draw Grass on Main Canvas
     mit.backgrounds.drawGrass(ctx);
 
     if (flying_up)
@@ -208,9 +214,9 @@
       mit.pappu.updateFlyFrameCount(0);
 
     // Draw Forks
-    window.mit.forks.drawForks(ctx, 6);
+    mit.forks.draw(ctx, 6);
     // Draw Branches
-    //window.mit.branches.drawBranches(ctx, 4);
+    mit.branches.draw(ctx, 4);
     
     // Game over on reaching any boundary
     if (mit.pappu.hasReachedBoundary(W, H)) {
