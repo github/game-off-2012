@@ -82,6 +82,7 @@ Crafty.c "MoveInCircle",
     Crafty.e("Trail").attr(rotation: @rotation, x: @_x, y: @_y).Trail()
 
   upgrade: ->
+#    Crafty.audio.play("faster")
     @_speed += Config.player.speed.angular.increase
     @_speed = Math.min(@_speed, Config.player.speed.angular.maximum)
 

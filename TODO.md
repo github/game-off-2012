@@ -6,9 +6,7 @@
   * Balance.
   * Add a little delay before start (quick countdown).
   * SFX:
-    * Music should play in loops / tracks.
-    * Sound work (sound for each action, faster/upgrade).
-    * Dubbing (conflict = g/over, push).
+    * Start countdown
   * GFX:
     * Some particle effects for fun (game over, start, when track moves, level up).
   * Mutations:
