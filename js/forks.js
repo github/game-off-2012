@@ -57,12 +57,9 @@
     if (forks[forks.length-1]) {
       pos.x = forks[forks.length-1].x;
       pos.x += 300;
-
-      pos.y = forks[forks.length-1].y;
     }
     else {
       pos.x = 1*200;
-      pos.y = 200;
     }
 
     return pos;
@@ -75,11 +72,6 @@
       for (var i = 0; i < count - forks.length; i++) {
         var fork = new Fork();
 
-        var pos = getRandomForkPos();
-
-        fork.x = pos.x;
-        fork.y = pos.y;
-
         // Setting a Random Edge
         fork.edge = edges[utils.randomNumber(0,1)];
 
@@ -90,7 +82,16 @@
           fork.dig_x = dig_img.width / dig_rand;
           fork.dig_y = H - dig_img.height;
           // console.log(dig_img.width);
+
+          fork.y = 200 + utils.randomNumber(0,100);
         }
+
+        if (fork.edge === 'top') {
+          fork.y = 0 - utils.randomNumber(0,100);
+        }
+
+        var pos = getRandomForkPos();
+        fork.x = pos.x;
 
         forks.push(fork);
       }
@@ -113,7 +114,7 @@
 
         var fork_img = new Image();
         fork_img.src = 'img/fork_handle.png';
-        ctx.drawImage(fork_img, fork.x, 0);
+        ctx.drawImage(fork_img, fork.x, fork.y);
       }
       else if (fork.edge === 'btm') {
         // ctx.lineTo(fork.x, mit.config.canvas_height);

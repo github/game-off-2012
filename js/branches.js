@@ -46,13 +46,11 @@
 
     if (branches[branches.length-1]) {
       pos.x = branches[branches.length-1].x;
-      pos.x += 500;
-
-      pos.y = branches[branches.length-1].y;
+      pos.x += utils.randomNumber(500, 2000);
     }
     else {
-      pos.x = 1*200;
-      pos.y = 0;
+      // First
+      pos.x = utils.randomNumber(2000, 2500);
     }
 
     return pos;
@@ -66,9 +64,8 @@
         var branch = new Branch();
 
         var pos = getRandomBranchPos();
-
         branch.x = pos.x;
-        branch.y = pos.y;
+        branch.y = 0;
 
         branches.push(branch);
       }
