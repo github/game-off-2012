@@ -27,6 +27,7 @@
 
 * Polish:
   * CSS compatability.
+  * Sound files compatability.
   * Some code cleanup.
   * Balance.
   * General graphic polishing.
