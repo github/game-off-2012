@@ -1,15 +1,17 @@
 class Screen
-  constructor:(@id,@spritesheet)->
+  constructor:(@id,img)->
+    @context = document.getElementById(@id).getContext("2d")
     @canvas = document.createElement("canvas")
     @canvas.width = 640/3
     @canvas.height = 480/3
     @ctx = @canvas.getContext("2d")
+    @spritesheet = new SpriteSheet(img, 8)
   #Would be the method for entities
   render:(x, y, tile) ->
     @spritesheet.drawTile(@ctx,x/3, y/3,tile)
   
   draw:->
-    @canvas
+    @context.drawImage(@canvas, 0, 0, 640, 480)
   
   clear:->
     @ctx.clearRect(0, 0, 640, 480)
@@ -106,7 +108,7 @@ class MapGenerator
 
     
 class Level
-  constructor:(@id, world, json, sheet)->
+  constructor:(@id, world, @screen,json, sheet)->
     console.log("INIT Level")
     @canvas = document.getElementById(@id)
     @ctx = @canvas.getContext("2d")
@@ -117,11 +119,20 @@ class Level
     @ctx.mozImageSmoothingEnabled= false
     
     @level = new LevelGenerator(json, sheet, world)
+    
+    @teste = new TestEntity(0, 0)
+    @e = new PlayerModel(world, 50, 30)
   
+  tick:->
+    @teste.setX(@e.getScreenX())
+    @teste.setY(@e.getScreenY())
   
   draw:(xOffset, yOffset)->
     @ctx.clearRect(0, 0, WIDTH, HEIGHT)
     @ctx.drawImage(@level.background,xOffset, yOffset, 128, 128, 0, 0, 640, 480)
+    
+    @teste.render(@screen)
+
 #The  momentary LevelLoader
 class LevelGenerator
   constructor:(@data,@img,@world)->
