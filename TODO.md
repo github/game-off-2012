@@ -1,5 +1,4 @@
 * Menu
-  * Sound options should be saved into local configuration.
 
 * Game
   * Add levels in center - 10 cycles - beta, 15 - RC - 18 GOLD - 20 1.0 - 22 - 1.0.1 - 25 - 1.1 - 40 - 2.0
@@ -11,8 +10,6 @@
     * Sound work (sound for each action, faster/upgrade).
     * Dubbing (conflict = g/over, push).
   * GFX:
-    * Change color of track somehow.
-    * Some sort of background.
     * Some particle effects for fun (game over, start, when track moves, level up).
   * Mutations:
     * Change direction.

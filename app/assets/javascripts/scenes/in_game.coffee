@@ -5,9 +5,9 @@ Crafty.scene("in_game", ->
 
   Crafty.background("#000")
 
-  Crafty.audio.add("music", Crafty.math.randomElementOfArray(Config.music))
 
   game = Crafty.e("Game")
+  music = new Music()
 
   center = Crafty.e("ActionCenter").game(game)
 
@@ -29,9 +29,11 @@ Crafty.scene("in_game", ->
     game.reset().start()
   )
 
-  Crafty.audio.play("music")
+
+  music.play()
 
   game.onAction( (action) =>
+    Crafty.audio.play("#{action.toLowerCase()}.mp3")
     track.currentSegment(Config.obstacles.changeWhere.initial + Config.obstacles.changeWhere.increaseBy * game.cycles).perform(action)
   ).start()
 )

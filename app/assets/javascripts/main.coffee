@@ -4,4 +4,7 @@ window.onload = ->
 
   Crafty.storage.open('ReleaseCycles')
 
+  Settings.load()
+
+
   Crafty.scene('menu')

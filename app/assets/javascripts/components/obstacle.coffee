@@ -1,5 +1,6 @@
 Crafty.c "Obstacle",
   _startRadius: 0
+  _baseColor: Config.cycle.colors.base
 
   init: ->
     @requires("2D, DOM, Color, Delay, Tweener")
@@ -28,10 +29,10 @@ Crafty.c "Obstacle",
     @radius = Math.min(@_max, Math.max(@_min, @radius))
 
     coords = Utils.polarCnv(@radius, @angle)
-    @color(Utils.increase_brightness(Config.cycle.colors.base, Math.abs(radiusChange)))
+    @color(Utils.increase_brightness(@_baseColor, Math.abs(radiusChange)))
     @addTween({x:coords.x, y:coords.y}, 'easeInOutCubic', @_speed)
     clearTimeout(@timeout) if @timeout
-    @timeout = setTimeout((-> @color(Config.cycle.colors.base)), @_speed * 20)
+    @timeout = setTimeout((=> @color(@_baseColor)), @_speed * 20)
 
   upgrade: ->
     @_speed -= Config.obstacles.tweenDuration.change
@@ -41,6 +42,7 @@ Crafty.c "Obstacle",
     @_speed = Config.obstacles.tweenDuration.inital
     @radius = @_startRadius
     @_position()
+    @color(@_baseColor)
 
   Obstacle: ->
     @_position()
