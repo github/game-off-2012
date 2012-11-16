@@ -29,6 +29,7 @@ Crafty.scene "menu", ->
   loading = Crafty.e("2D, DOM, Text").text("Loading...").attr(x: -30, y: 50)
 
   Crafty.e("Mute")
+
   Crafty.load(_.flatten(Config.sounds), =>
     loaded()
   )
