@@ -54,11 +54,13 @@ class Game
     debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit)
     @world.SetDebugDraw(debugDraw)
     
-    #TestMap
-    @map = new Map("map")
-    
     #InputHandler
     @inputHandler = new InputHandler
+    
+    #TestMap
+    @map = new Map("map", @inputHandler)
+    
+    
       
     @level = new Level("board", @world, @inputHandler)
     #The Camera
@@ -78,6 +80,7 @@ class Game
     @world.Step(1 / 60, 10, 10)
     @world.ClearForces()
     
+    @map.tick()
     @camera.tick()
   
   render: ->
