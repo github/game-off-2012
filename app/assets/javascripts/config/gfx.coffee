@@ -7,3 +7,6 @@ Config.gfx =
       initial: 12
       reduceBy: 1
       minimum: 2
+
+  text:
+    duration: 5000

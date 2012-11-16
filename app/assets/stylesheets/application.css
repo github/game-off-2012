@@ -48,6 +48,22 @@ footer{
     text-shadow: 0 5px #444;
 }
 
+.GFXText{
+    text-align: center;
+    font-size: 26px;
+    font-family: "Courier New", monospace;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 100%;
+    -webkit-transition: all 5s ease-in;
+    -webkit-transform: scale(1);
+}
+
+.StartGFXTitle{
+    -webkit-transform: scale(4);
+    opacity: 0;
+}
+
 .Button{
     text-align: center;
     font-size: 28px;

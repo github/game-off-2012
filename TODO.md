@@ -1,24 +1,19 @@
-* Menu
-  * Sound options should be saved into local configuration.
+* Add levels in center - 10 cycles - beta, 15 - RC - 18 GOLD - 20 1.0 - 22 - 1.0.1 - 25 - 1.1 - 40 - 2.0
+* Add a little delay before start (quick countdown).
 
-* Game
-  * Add levels in center - 10 cycles - beta, 15 - RC - 18 GOLD - 20 1.0 - 22 - 1.0.1 - 25 - 1.1 - 40 - 2.0
-  * Arrows on segments changes.
-  * Balance.
-  * Add a little delay before start (quick countdown).
-  * SFX:
-    * Music should play in loops / tracks.
-    * Sound work (sound for each action, faster/upgrade).
-    * Dubbing (conflict = g/over, push).
-  * GFX:
-    * Change color of track somehow.
-    * Some sort of background.
-    * Some particle effects for fun (game over, start, when track moves, level up).
-  * Mutations:
-    * Change direction.
-    * Shake screen.
-    * Zoom / scale.
-    * Change width/height of segments.
+* SFX:
+  * Music should play in loops / tracks.
+  * Sound work (sound for each action, faster/upgrade).
+
+* GFX:
+  * Some particle effects for fun (game over, start, when track moves, level up).
+  * Blocky font.
+
+* Mutations:
+  * Change direction (revert).
+  * Shake screen (
+  * Zoom / scale (pull request).
+  * Change width/height of segments (rebase).
 
 * Game Over
   * Local High scores
@@ -29,5 +24,11 @@
   * Mobile support.
   * Less music files.
   * Add README.
+
+* Polish:
+  * CSS compatability.
+  * Some code cleanup.
+  * Balance.
+  * General graphic polishing.
 
 
