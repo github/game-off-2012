@@ -6,9 +6,18 @@ Crafty.scene "menu", ->
 
   showButton = ->
     Crafty.e("2D, Mouse, DOM, Text, Button").text("Start Game").attr(x: -130, y: 50, w: 260, h:42).bind('Click', ->
-      console.log("C")
-      Crafty.scene "in_game"
+      start()
     )
+
+  start = =>
+    @unbind('KeyDown', startWithEnter)
+    Crafty.scene "in_game"
+
+  startWithEnter = (e) =>
+    return if e.key == Crafty.keys['ENTER'] and not e == null
+    start()
+
+  @bind('KeyDown', startWithEnter)
 
   Crafty.audio.play(Crafty.math.randomElementOfArray(Config.music))
   Crafty.e("2D, DOM, Color, MoveInCircle, Player, Collision").attr(_speed: 1, _radius: 200)
