@@ -3,15 +3,35 @@
 	font-weight : bold;
 	font-family: helvetica;
 	vertical-align: middle;
+	display: inline-block;
+	position: absolute;
 }
 
 .keys {
 	line-height : 30px;
+	width: 640px;
+	height: 30px;
 }
 
 .pressed {
 	color : red;
 	font-size: 28px !important;
+}
+
+#f {
+	left: 130px;
+}
+
+#g {
+	left: 250px;
+}
+
+#h {
+	left: 370px;
+}
+
+#j {
+	left: 490px;
 }
 
 .go {
