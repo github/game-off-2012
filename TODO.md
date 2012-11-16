@@ -1,9 +1,24 @@
 * SFX:
-  * Sound work (sound for each action, faster/upgrade).
+  * Countdown sound.
+  * Upgrade sound.
+  * Menu music.
+  * Powerup spawn.
+  * Powerup collect.
+  * Powerup use.
 
 * GFX:
-  * Some particle effects for fun (game over, start, when track moves, level up).
+  * Countdown.
+  * Flashing action text.
+  * Particle effect for crash.
+  * Particle effect for upgrade.
+  * Particle effect for Powerup spawn.
+  * Particle effect for Powerup collect.
+  * Particle effect for Powerup use.
   * Blocky font.
+
+* Game:
+  * Slow powerup spawn.
+  * Slow powerup with SPACE.
 
 * Mutations:
   * Change direction (revert).
@@ -24,7 +39,9 @@
   * CSS compatability.
   * Sound files compatability.
   * Some code cleanup.
-  * Balance.
   * General graphic polishing.
+  * Balance.
+  * Fix merge bug (merges too much).
+  * Performance?
 
 

@@ -18,7 +18,7 @@ Crafty.c "MoveInCircle",
     @_setKeys()
     @origin("center")
     Crafty.audio.add("faster", "sounds/faster.wav")
-    Crafty.audio.add("crash", "sounds/die.wav")
+    Crafty.audio.add("crash", "sounds/crash.wav")
     @disableControl()
     @enableControl()
     @color(Config.player.color)
@@ -95,6 +95,7 @@ Crafty.c "MoveInCircle",
   crash: ->
     return if @disableControls
     Crafty.audio.play("crash")
+    Crafty.audio.play("conflict.mp3")
     @disableControls = true
     @crashed = true
     Crafty.trigger("GameOver")

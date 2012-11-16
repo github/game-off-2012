@@ -14,7 +14,7 @@ Crafty.scene "menu", ->
     Crafty.scene "in_game"
 
   startWithEnter = (e) =>
-    return if e.key == Crafty.keys['ENTER'] and not e == null
+    return unless e.key == Crafty.keys['ENTER']
     start()
 
   loaded = =>
@@ -29,6 +29,7 @@ Crafty.scene "menu", ->
   loading = Crafty.e("2D, DOM, Text").text("Loading...").attr(x: -30, y: 50)
 
   Crafty.e("Mute")
+
   Crafty.load(_.flatten(Config.sounds), =>
     loaded()
   )

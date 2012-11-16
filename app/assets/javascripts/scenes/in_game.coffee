@@ -29,7 +29,6 @@ Crafty.scene("in_game", ->
     game.reset().start()
   )
 
-
   music.play()
 
   game.onAction( (action) =>
