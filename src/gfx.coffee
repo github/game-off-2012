@@ -1,10 +1,10 @@
-#TODO May not needed anymore ?!
 class Screen
-  constructor:(@spritesheet)->
+  constructor:(@id,@spritesheet)->
     @canvas = document.createElement("canvas")
     @canvas.width = 640/3
     @canvas.height = 480/3
     @ctx = @canvas.getContext("2d")
+    
   #Would be the method for entities
   render:(x, y, tile) ->
     @spritesheet.drawTile(@ctx,x/3, y/3,tile)
@@ -15,81 +15,72 @@ class Screen
   clear:->
     @ctx.clearRect(0, 0, 640, 480)
 
-#LoaderObservator is watching all registered Loaders, but doesn't know them
-class LoaderObservator
-  constructor:->
-    @idLoader = new Array
-    @counter = 0
-    @todo =->
-  
-  register:(loader)->
-    loader.setCallback(@callback)
-    @counter++
-  
-  setTodo:(todo)->
-    @todo = todo
-  
-  callback:=>
-    @counter--
-    ###
-    mom-complexity O(n!)
-    ###
-    if @counter == 0
-      @todo()
+class Map
+  constructor:(@id)->
+    console.log("INIT Map")
+    @canvas = document.getElementById(@id)
+    @canvas.width = WIDTH
+    @canvas.height = HEIGHT
+    @ctx = @canvas.getContext("2d")
     
-#Base-Loader-Class for using a loader with an LoaderObserator
-class Loader
-  @sheetCache = new Array()
-  
-  constructor:->
-    @callback = ->
-  
-  setCallback:(callback)->
-    @callback = callback 
+    @ctx.webkitImageSmoothingEnabled = false
+    @ctx.mozImageSmoothingEnabled= false
     
-class LayerLoader extends Loader
-  constructor:(@bundle, @sprites)->
-    @bg = document.createElement("canvas")
-    $.getJSON(@bundle.sheet, @load)
+    @mapgen = new MapGenerator(STORAGE.getRessource("map"), STORAGE.getRessource("spritesheet"))
+    
+  draw:->
+    @ctx.drawImage(@mapgen.background, 0, 0, 640, 480)
+    
+class MapGenerator
+  constructor:(@data, @img)->
+    console.log("INIT MapGenerator")
+    @spritesheet = new SpriteSheet(@img, 8)
+    @load()
   
-  load:(data)=>
-    @data = data
-    
-    if typeof Loader.sheetCache[data.properties.sheet] == 'undefined'
-      Loader.sheetCache[data.properties.sheet] = new SpriteSheet(data.properties.sheet, 8)
-    
-    @sprites = Loader.sheetCache[data.properties.sheet]
-      
+  load:()->
     layer = @data.layers[0]
-    
     props = layer.properties
+
+    @background = document.createElement("canvas")
     
-    @bg.width = data.width*8
-    @bg.height = data.height*8
+    @background.width = @data.width*8
+    @background.height = @data.height*8
     
-    @ctx = @bg.getContext("2d")
-    #@ctx.fillStyle="FF00FF"
-    @ctx.fillRect(0, 0, @ctx.canvas.width , @ctx.canvas.height)
+    @ctx = @background.getContext("2d") 
     
     tiles = layer.data
-    for y in [0..data.height-1]
-      for x in [0..data.width-1]
-        @sprites.drawTile(@ctx, x*8, y*8, tiles[x+y*data.width]-1)
+    
+    for y in [0..15-1]
+      for x in [0..20-1]
+        @spritesheet.drawTile(@ctx, x*8, y*8, tiles[x+y*@data.width]-1)    
 
+    
+class Level
+  constructor:(@id, world)->
+    console.log("INIT Level")
+    @canvas = document.getElementById(@id)
+    @ctx = @canvas.getContext("2d")
+    @ctx.canvas.width = WIDTH
+    @ctx.canvas.height = HEIGHT
+    
+    @ctx.webkitImageSmoothingEnabled = false
+    @ctx.mozImageSmoothingEnabled= false
+    
+    @level = new LevelGenerator(STORAGE.getRessource("level"), STORAGE.getRessource("spritesheet"), world)
+  
+  
+  draw:(xOffset, yOffset)->
+    @ctx.clearRect(0, 0, WIDTH, HEIGHT)
+    @ctx.drawImage(@level.background,xOffset, yOffset, 128, 128, 0, 0, 640, 480)
 #The  momentary LevelLoader 
-class LevelLoader extends Loader
-  constructor:(@bundle, @world, @game)->
-    super()
-    @data
+class LevelGenerator
+  constructor:(@data,@img,@world)->
+    @sprites = new SpriteSheet(@img, 8)
+    @load()  
+  
+  load:->
     @background = document.createElement("canvas")
     @ctx = @background.getContext("2d")
-    
-    #AsyncLoading at the moment, maybe sync would be better...
-    $.getJSON(@bundle.sheet, @load)  
-  
-  #load-method -> async
-  load:(data)=>
-    @data = data
     
     #Get graphical-context
     for i in [0..@data.layers.length-1]
@@ -102,18 +93,10 @@ class LevelLoader extends Loader
         
       if name == 'sensors'
         @createModel(@world, @data.layers[i])
-    
-    @callback()
-   
+        
    #Method creates Scene out of SceneLayer
       #LoadS the spites
    createScene:(data, layer)->
-    img = @bundle.img
-    console.log(Loader.sheetCache[img])
-    if typeof Loader.sheetCache[img] == 'undefined'
-       Loader.sheetCache[@bundle.img] = new SpriteSheet(@bundle.img, 8)
-    
-    @sprites = Loader.sheetCache[@bundle.img]
     #RawTileData
     tiles = layer.data
      
@@ -208,7 +191,7 @@ class Camera
     if @inputHandler.LEFT.isPressed() is true
       if @xOffset != 0
         xNow = -1
-    
+
     #Some performance-thing
     if xNow != 0
       body = @world.GetBodyList()
@@ -224,14 +207,13 @@ class Camera
     newy = body.GetPosition().y - (yOffset/@modelScale)
     body.SetPosition(new b2Vec2(newx, newy), 0)
 
-#SpriteSheet-Class for loading and accessing sprites by a atlas-index
+#SpriteSheet-Class for accessing sprites by a atlas-index
 class SpriteSheet
-  constructor:(@path, @tilesize)->
-    @image = new Image()
-    @image.src = @path
+  constructor:(@image, @tilesize)->
+    console.log("CREATED SpriteSheet")
   
-  drawTile:(ctx,x, y,index)->
-    for iy in [0..7]
-      for ix in [0..7]
-        if (ix+iy*@tilesize) is index
-          ctx.drawImage(@image, (ix*@tilesize), (iy*@tilesize), @tilesize, @tilesize, x, y, @tilesize, @tilesize)
+  drawTile:(ctx,posx, posy,index)->
+    for y in [0..7]
+      for x in [0..7]
+        if (x+y*@tilesize) is index
+          ctx.drawImage(@image, x*@tilesize, y*@tilesize, @tilesize, @tilesize, posx, posy, @tilesize, @tilesize)
