@@ -23,16 +23,17 @@ $ ->
   
   l1 = new SimpleImageLoader("img/sprites.png", "spritesheet")
   l2 = new SimpleJSONLoader("img/map.json", "map")
-  l3 = new SimpleJSONLoader("level/sheet.json", "level")
+  l3 = new SimpleJSONLoader("level/test.json", "test")
+  l4 = new SimpleJSONLoader("level/level2.json", "test2")
   STORAGE.register(l1)
   STORAGE.register(l2)
   STORAGE.register(l3)
+  STORAGE.register(l4)
   l1.start()
   l2.start()
   l3.start()
+  l4.start()
   
-  #game = new Game()
-  #game.run()
 class Game
   constructor: ->
     console.log("CREATE Game")
@@ -58,15 +59,23 @@ class Game
     @inputHandler = new InputHandler
     
     #TestMap
-    @map = new Map("map", @inputHandler)
+    @map = new Map("map", @, @inputHandler)
     
-    
-      
-    @level = new Level("board", @world, @inputHandler)
     #The Camera
     @camera = new Camera(@world,30 ,5,@inputHandler)
     
+    @level = null
+    
+    @levels = [
+      new Level("board", @world, STORAGE.getRessource("test"), STORAGE.getRessource("spritesheet")),
+      new Level("board", @world, STORAGE.getRessource("test2"), STORAGE.getRessource("spritesheet"))
+    ]
+    
     @run()
+ 
+  loadLevel:(index)->
+    @level = @levels[index]
+    impress().goto("game")
  
   beginContacts:(begin, manifold)=>
     console.log("contact")
@@ -85,6 +94,6 @@ class Game
   
   render: ->
     #@world.DrawDebugData()
-    @level.draw(@camera.getXoffset(), 0)
+    @level.draw(@camera.getXoffset(), 0) if @level?
     @map.draw()
 
