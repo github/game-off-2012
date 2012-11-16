@@ -32,7 +32,7 @@ class Map
     @actualText = 0
     @do = 0
     
-    @texts =[ 
+    @texts =[
       new Text("Level 1", 16*4, (16*4)-4, true),
       new Text("Level 2", 6*8*4, (8*13*4)+4, false),
       new Text("Level 3", 11*8*4, (8*2*4)-4, false),
@@ -47,7 +47,7 @@ class Map
     @ctx.webkitImageSmoothingEnabled = false
     @ctx.mozImageSmoothingEnabled= false
     
-    @ctx.font="normal 36px Arial";
+    @ctx.font="normal 36px Arial"
     @ctx.fillStyle="#FFF"
     
     @mapgen = new MapGenerator(STORAGE.getRessource("map"), STORAGE.getRessource("spritesheet"))
@@ -96,13 +96,13 @@ class MapGenerator
     @background.width = @data.width*8
     @background.height = @data.height*8
     
-    @ctx = @background.getContext("2d") 
+    @ctx = @background.getContext("2d")
     
     tiles = layer.data
     
     for y in [0..15-1]
       for x in [0..20-1]
-        @spritesheet.drawTile(@ctx, x*8, y*8, tiles[x+y*@data.width]-1)    
+        @spritesheet.drawTile(@ctx, x*8, y*8, tiles[x+y*@data.width]-1)
 
     
 class Level
@@ -122,11 +122,11 @@ class Level
   draw:(xOffset, yOffset)->
     @ctx.clearRect(0, 0, WIDTH, HEIGHT)
     @ctx.drawImage(@level.background,xOffset, yOffset, 128, 128, 0, 0, 640, 480)
-#The  momentary LevelLoader 
+#The  momentary LevelLoader
 class LevelGenerator
   constructor:(@data,@img,@world)->
     @sprites = new SpriteSheet(@img, 8)
-    @load()  
+    @load()
   
   load:->
     @background = document.createElement("canvas")

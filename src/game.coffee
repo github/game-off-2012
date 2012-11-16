@@ -40,7 +40,7 @@ class Game
     @scale = 30
   
   init:=>
-    console.log("INIT Game") 
+    console.log("INIT Game")
     
     #box2dweb-world for physics
     @world = new b2World(new b2Vec2(0, 10), true)

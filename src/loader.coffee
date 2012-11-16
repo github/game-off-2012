@@ -6,14 +6,14 @@ class Storage
     @finshed = ->
     
   register:(loader)->
-     ++@counter
-     loader.setCallback(@callback)
+    ++@counter
+    loader.setCallback(@callback)
      
   callback:(loader)=>
-     --@counter
-     @store[loader.getName()] = loader.getRessource()
-     if @counter == 0
-       @finshed()
+    --@counter
+    @store[loader.getName()] = loader.getRessource()
+    if @counter == 0
+      @finshed()
      
   setFinished:(finished)->
     @finshed = finished
