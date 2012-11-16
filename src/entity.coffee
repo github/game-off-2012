@@ -12,7 +12,7 @@ class Entity
     @y = y
     
 class TestEntity extends Entity
-  constructor:(@x, @y)->
+  constructor:(@x, @y)->  
     super(@x, @y)
     @tile = 16
     
@@ -40,11 +40,13 @@ class Model
     
     
 class PlayerModel extends Model
-  constructor:(@world, @game, @x, @y) ->
-    @scale = @game.scale
+  constructor:(@world, @x, @y) ->
+    @scale = SCALE
     
     @height = 12/@scale
     @width = 12/@scale
+    
+    console.log(@width ,@height)
     
     @fixDef = new b2FixtureDef
     @fixDef.density = 0.1
@@ -53,7 +55,7 @@ class PlayerModel extends Model
     
     @bodyDef = new b2BodyDef
     @bodyDef.type = b2Body.b2_dynamicBody
-    @bodyDef.position.x = @x/@scale-10/@scale
+    @bodyDef.position.x = @x/@scale-6/@scale
     @bodyDef.position.y = @y/@scale
 
     @fixDef.shape = new b2PolygonShape
