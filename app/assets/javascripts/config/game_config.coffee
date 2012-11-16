@@ -53,7 +53,7 @@ Config.obstacles =
     divisor: 1.08
     threshold: 1
 
-Config.actions      =  ["Pull", "Push", "Fork", "Merge"]
+Config.actions      =  ["Pull", "Push", "Fork", "Merge", "Pull", "Push", "Merge", "Pull", "Push"]
 Config.actionValues =
   Pull:  40
   Push:  40
