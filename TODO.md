@@ -4,7 +4,6 @@
 * Game
   * Add levels in center - 10 cycles - beta, 15 - RC - 18 GOLD - 20 1.0 - 22 - 1.0.1 - 25 - 1.1 - 40 - 2.0
   * Arrows on segments changes.
-  * Mouse and WSAD controls.
   * Balance.
   * Add a little delay before start (quick countdown).
   * SFX:

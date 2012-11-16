@@ -9,6 +9,8 @@ Crafty.c "MoveInCircle",
   _keys:
     RIGHT_ARROW: -1
     LEFT_ARROW: +1
+    A: +1
+    D: -1
 
   init: ->
     @requires('Delay')
