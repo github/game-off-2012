@@ -87,3 +87,7 @@ footer{
 .mute.muted{
     color: #555;
 }
+
+.Obstacle{
+    -webkit-transition: background-color 200ms;
+}
