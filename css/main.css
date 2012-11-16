@@ -14,19 +14,30 @@
   box-sizing: border-box;
 }
 
-.container {
-	position: relative;
-	margin: 50px 100px;
-}
-
 html, body {
   width: 100%; height: 100%;
 }
 
 body {
-  padding: 50px 100px;
   background: #171717;
   font-family: 'Happy Sans', cursive;
+}
+
+.container {
+	position: relative;
+	margin: 50px auto;
+	width: auto;
+	max-width: 1000px;
+	height: 500px;
+}
+
+footer {
+	color: #E6E6E6;
+	margin: 50px auto;
+	max-width: 1000px;
+}
+footer a {
+	color: #FF6767;
 }
 
 
