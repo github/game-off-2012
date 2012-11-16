@@ -12,76 +12,60 @@ $ ->
   @b2CircleShape = Box2D.Collision.Shapes.b2CircleShape
   @b2DebugDraw = Box2D.Dynamics.b2DebugDraw
   
+  @WIDTH = 640.0
+  @HEIGHT = 480.0
+  #GLOABAL Storage
+  @STORAGE = new Storage()
+  
   game = new Game()
-  game.run()
-
-class Map
-  constructor: ->
-    @ctx = document.getElementById('map').getContext('2d')
-    @ctx.canvas.width = 640
-    @ctx.canvas.height = 480
-    @ctx.webkitImageSmoothingEnabled = false
-    @ctx.mozImageSmoothingEnabled= false
-    @ll = new LayerLoader({sheet:"img/map.json", img:"img/sprites.png"})
-    @loaded = false
-    
-  render:=>
-    @ctx.drawImage(@ll.bg, 0, 0, 640, 480)
-
+  
+  @STORAGE.setFinished(game.init)
+  
+  l1 = new SimpleImageLoader("img/sprites.png", "spritesheet")
+  l2 = new SimpleJSONLoader("img/map.json", "map")
+  l3 = new SimpleJSONLoader("level/sheet.json", "level")
+  STORAGE.register(l1)
+  STORAGE.register(l2)
+  STORAGE.register(l3)
+  l1.start()
+  l2.start()
+  l3.start()
+  
+  #game = new Game()
+  #game.run()
 class Game
   constructor: ->
-    @width = 640.0
-    @height = 480.0
+    console.log("CREATE Game")
     @scale = 30
+  
+  init:=>
+    console.log("INIT Game") 
     
-    @map = new Map()
-    
-    @canvas = document.getElementById("board")
-    @canvas.width = 640
-    @canvas.height = 480
-    
-    @ctx = @canvas.getContext('2d')
-    #Webkit no nearest-neighbor
-    @ctx.webkitImageSmoothingEnabled = false
-    @ctx.mozImageSmoothingEnabled= false
-    
-    #Actual Pixels
-    #@pixels = @ctx.getImageData(0, 0, @width, @height)
-    #InputHandler
-    @inputHandler = new InputHandler
-    #Screen for drawings
-    @screen = new Screen(new SpriteSheet("img/sprites.png", 8))
     #box2dweb-world for physics
     @world = new b2World(new b2Vec2(0, 10), true)
-    #debugdraw for physics
-    @debugDraw = new b2DebugDraw()
-    @debugDraw.SetSprite(document.getElementById("board").getContext("2d"))
-    @debugDraw.SetDrawScale(@scale)
-    @debugDraw.SetFillAlpha(0.8)
-    @debugDraw.SetAlpha(1)
-    @debugDraw.SetLineThickness(1.0)
-    @debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit)
-    @world.SetDebugDraw(@debugDraw)
     
-    @e = new TestEntity(50, 0)
+    #Init DebugDraw
+    debugDraw = new b2DebugDraw()
+    debugDraw.SetSprite(document.getElementById("board").getContext("2d"))
+    debugDraw.SetDrawScale(@scale)
+    debugDraw.SetFillAlpha(0.8)
+    debugDraw.SetAlpha(1)
+    debugDraw.SetLineThickness(1.0)
+    debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit)
+    @world.SetDebugDraw(debugDraw)
     
-    @ticks = 0
+    #TestMap
+    @map = new Map("map")
     
-    @xOff = 0
-    
-    #A bundle looks like that {sheet:--, img:--}
-    @rL = new LoaderObservator
-    @rL.setTodo(@run)
-    bundle = {sheet:"level/sheet.json", img:"img/sprites.png"}
-    @ll = new LevelLoader(bundle, @world, @)
-    @rL.register(@ll)
-    @model = new PlayerModel @world, @, 200, 88
-    
-    #640/(8*16)
-    @screenscale = 5
-    
-    @camera = new Camera(@world,@scale,@screenscale,@inputHandler)
+    #InputHandler
+    @inputHandler = new InputHandler
       
+    @level = new Level("board", @world, @inputHandler)
+    #The Camera
+    @camera = new Camera(@world,30 ,5,@inputHandler)
+    
+    @run()
+ 
   beginContacts:(begin, manifold)=>
     console.log("contact")
     
@@ -94,18 +78,10 @@ class Game
     @world.Step(1 / 60, 10, 10)
     @world.ClearForces()
     
-    #entities.tick()
-    @e.setX(@model.getScreenX())
-    @e.setY(@model.getScreenY())
     @camera.tick()
   
-  render: =>
-    #render entities
-    @ctx.clearRect(0, 0, 640, 480)
-    @world.DrawDebugData()
-    @ctx.drawImage(@ll.background,@camera.getXoffset(), 0, 128, 128, 0, 0, 640, 480)
-    @screen.clear()
-    @e.render(@screen)
-    @ctx.drawImage(@screen.draw(),0, 0, 640, 480)
-    @map.render()
+  render: ->
+    #@world.DrawDebugData()
+    @level.draw(@camera.getXoffset(), 0)
+    @map.draw()
 
