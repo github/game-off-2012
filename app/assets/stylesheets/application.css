@@ -48,6 +48,27 @@ footer{
     text-shadow: 0 5px #444;
 }
 
+.GFXText{
+    width: 640px;
+    text-align: center;
+    font-size: 26px;
+    margin-top: -13px;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    line-height: 100%;
+    display: none;
+}
+
+.WithTransition{
+    -webkit-transition: all 300ms ease-out;
+    display: block;
+}
+
+.StartGFXTitle{
+    margin-top: -50px;
+    font-size: 100px;
+}
+
 .Button{
     text-align: center;
     font-size: 28px;
