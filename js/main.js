@@ -127,14 +127,14 @@
 
     switch (e.keyCode) {
       // Left
-      case 37:
-        ax = -0.1;
-        break;
+      //case 37:
+      //  ax = -0.4;
+      //  break;
 
       // Right
-      case 39:
-        ax = 0.1;
-        break;
+      //case 39:
+      //  ax = 0.4;
+      //  break;
 
       // Up
       case 38:
@@ -143,7 +143,7 @@
 
       // Down
       case 40:
-        ay = 0.1;
+        ay = 0.4;
         break;
     }
 
@@ -208,7 +208,7 @@
       mit.pappu.updateFlyFrameCount(0);
 
     // Draw Forks
-    //window.mit.forks.drawForks(ctx, 6);
+    window.mit.forks.drawForks(ctx, 6);
     // Draw Branches
     //window.mit.branches.drawBranches(ctx, 4);
     

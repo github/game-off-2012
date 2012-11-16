@@ -88,20 +88,28 @@
       }
       fork.x -= 3;
 
-      ctx.beginPath();
-      ctx.strokeStyle = 'blue';
-      ctx.lineWidth = 5;
-      ctx.moveTo(fork.x, fork.y);
+      // ctx.beginPath();
+      // ctx.strokeStyle = 'blue';
+      // ctx.lineWidth = 5;
+      // ctx.moveTo(fork.x, fork.y);
 
       if (fork.edge === 'top') {
-        ctx.lineTo(fork.x, 0);
+        // ctx.lineTo(fork.x, 0);
+
+        var fork_img = new Image();
+        fork_img.src = 'img/fork_handle.png';
+        ctx.drawImage(fork_img, fork.x, 0);
       }
       else if (fork.edge === 'bottom') {
-        ctx.lineTo(fork.x, mit.config.canvas_height);
+        // ctx.lineTo(fork.x, mit.config.canvas_height);
+
+        var fork_img = new Image();
+        fork_img.src = 'img/fork_handle.png';
+        ctx.drawImage(fork_img, fork.x, fork.y);
       }
 
-      ctx.stroke();
-      ctx.closePath();
+      // ctx.stroke();
+      // ctx.closePath();
     });
   };
 
