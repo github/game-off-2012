@@ -4,7 +4,6 @@ class Screen
     @canvas.width = 640/3
     @canvas.height = 480/3
     @ctx = @canvas.getContext("2d")
-    
   #Would be the method for entities
   render:(x, y, tile) ->
     @spritesheet.drawTile(@ctx,x/3, y/3,tile)
@@ -27,7 +26,7 @@ class Text
     ctx.fillText(@value, @x, @y)
 
 class Map
-  constructor:(@id, @inputHandler)->
+  constructor:(@id,@game,@inputHandler)->
     console.log("INIT Map")
     
     @actualText = 0
@@ -52,10 +51,11 @@ class Map
     @ctx.fillStyle="#FFF"
     
     @mapgen = new MapGenerator(STORAGE.getRessource("map"), STORAGE.getRessource("spritesheet"))
-  
+    
   tick:->
     if @inputHandler.RIGHT.isPressed()
-      @do = 1
+      if @actualText < 3
+        @do = 1
     else
       if @do is 1
         @texts[@actualText].actual = false
@@ -64,13 +64,17 @@ class Map
         @do = 0
       
     if @inputHandler.LEFT.isPressed()
-      @do = -1
+      if @actualText > 0
+        @do = -1
     else
       if @do is -1
         @texts[@actualText].actual = false
         @actualText += @do
         @texts[@actualText].actual = true
         @do = 0
+        
+    if @inputHandler.ENTER.isPressed()
+      @game.loadLevel(@actualText)
   
   draw:->
     @ctx.drawImage(@mapgen.background, 0, 0, 640, 480)
@@ -102,7 +106,7 @@ class MapGenerator
 
     
 class Level
-  constructor:(@id, world)->
+  constructor:(@id, world, json, sheet)->
     console.log("INIT Level")
     @canvas = document.getElementById(@id)
     @ctx = @canvas.getContext("2d")
@@ -112,7 +116,7 @@ class Level
     @ctx.webkitImageSmoothingEnabled = false
     @ctx.mozImageSmoothingEnabled= false
     
-    @level = new LevelGenerator(STORAGE.getRessource("level"), STORAGE.getRessource("spritesheet"), world)
+    @level = new LevelGenerator(json, sheet, world)
   
   
   draw:(xOffset, yOffset)->
@@ -129,6 +133,7 @@ class LevelGenerator
     @ctx = @background.getContext("2d")
     
     #Get graphical-context
+    console.log(@data)
     for i in [0..@data.layers.length-1]
       name = @data.layers[i].name
       if name == 'scene'
