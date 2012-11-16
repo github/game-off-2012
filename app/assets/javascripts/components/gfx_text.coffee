@@ -2,7 +2,7 @@ Crafty.c "GFXText",
 
   init: ->
     @requires("2D, DOM, Text, Delay")
-    @attr(x: -Config.viewport.center.x)
+    @attr(x: -Config.viewport.center.x, y: -50)
 
   Start: ->
     @delay((=> @addComponent("WithTransition")), 100)

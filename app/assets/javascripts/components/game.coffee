@@ -25,6 +25,7 @@ Crafty.c "Game",
     @delay((-> @tick()), @_delay) unless @stopped
 
   levelUp: ->
+    Utils.showText(Config.gfx.cyclesTitles[@cycles])
     @attr(cycles: @cycles + 1)
 
   crash: ->

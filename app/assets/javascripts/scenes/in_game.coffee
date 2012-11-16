@@ -34,7 +34,5 @@ Crafty.scene("in_game", ->
   game.onAction( (action) =>
     track.currentSegment(Config.obstacles.changeWhere.initial + Config.obstacles.changeWhere.increaseBy * game.cycles).perform(action)
   ).start()
-
-#  Crafty.e("GFXText").text("Release 1!").Start()
 )
 

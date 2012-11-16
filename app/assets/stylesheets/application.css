@@ -54,13 +54,14 @@ footer{
     font-size: 26px;
     margin-top: -13px;
     font-family: "Courier New", monospace;
-    text-transform: uppercase;
     font-weight: bold;
     line-height: 100%;
+    display: none;
 }
 
 .WithTransition{
-    -webkit-transition: all 300ms ease-out
+    -webkit-transition: all 300ms ease-out;
+    display: block;
 }
 
 .StartGFXTitle{
