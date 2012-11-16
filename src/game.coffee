@@ -14,6 +14,7 @@ $ ->
   
   @WIDTH = 640.0
   @HEIGHT = 480.0
+  @SCALE = 30
   #GLOABAL Storage
   @STORAGE = new Storage()
   
@@ -55,6 +56,8 @@ class Game
     debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit)
     @world.SetDebugDraw(debugDraw)
     
+    @screen = new Screen("board", STORAGE.getRessource("spritesheet"))
+    
     #InputHandler
     @inputHandler = new InputHandler
     
@@ -67,8 +70,8 @@ class Game
     @level = null
     
     @levels = [
-      new Level("board", @world, STORAGE.getRessource("test"), STORAGE.getRessource("spritesheet")),
-      new Level("board", @world, STORAGE.getRessource("test2"), STORAGE.getRessource("spritesheet"))
+      new Level("board", @world, @screen,STORAGE.getRessource("test"), STORAGE.getRessource("spritesheet")),
+      new Level("board", @world, @screen,STORAGE.getRessource("test2"), STORAGE.getRessource("spritesheet"))
     ]
     
     @run()
@@ -88,12 +91,15 @@ class Game
   tick: ->
     @world.Step(1 / 60, 10, 10)
     @world.ClearForces()
-    
+   
     @map.tick()
     @camera.tick()
+    @level.tick() if @level?
   
   render: ->
-    #@world.DrawDebugData()
+    @screen.clear()
+    @world.DrawDebugData()
     @level.draw(@camera.getXoffset(), 0) if @level?
+    @screen.draw()
     @map.draw()
 
