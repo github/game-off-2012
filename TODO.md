@@ -1,7 +1,6 @@
 * SFX:
   * Countdown sound.
   * Upgrade sound.
-  * Conflict dub.
   * Menu music.
   * Powerup spawn.
   * Powerup collect.

@@ -15,10 +15,11 @@ Config.sounds =
       "sounds/push.mp3"
       "sounds/merge.mp3"
       "sounds/fork.mp3"
+      "sounds/conflict.mp3"
     ]
 
   sfx:
     [
-      "sounds/die.wav"
+      "sounds/crash.wav"
       "sounds/faster.wav"
     ]
