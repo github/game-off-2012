@@ -25,10 +25,11 @@ var context = canvas.getContext('2d');
 var blockHeight = 20;
 var blockTop = -blockHeight;
 
-var queue0 = [2000,2300,2600,2700,3000,4000,5000,10000,60000];
-var queue1 = [5000];
-var queue2 = [4000];
-var queue3 = [7000];
+var queue0 = [1500, 3000,7000, 8250, 9250, 11750, 12750, 15250, 16250, 17500, 
+20250];
+var queue1 = [5250, 7250, 10000, 11000, 13500, 14500, 18000, 20750];
+var queue2 = [5750, 7500, 10500, 11000, 14000, 14500, 18500, 20750];
+var queue3 = [3750, 8750, 9250, 12250, 12750, 15750, 16250, 19000, 20250];
 
 var queues = [queue0, queue1, queue2, queue3];
 var active = [[],[],[],[]];
