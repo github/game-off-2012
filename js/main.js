@@ -213,10 +213,6 @@
     else
       mit.pappu.updateFlyFrameCount(0);
 
-    // Draw Forks
-    mit.forks.draw(ctx, 6);
-    // Draw Branches
-    mit.branches.draw(ctx, 4);
     
     // Game over on reaching any boundary
     if (mit.pappu.hasReachedBoundary(W, H)) {
@@ -226,6 +222,11 @@
     }
 
     if (mit.game_started) {
+
+      // Draw Forks
+      mit.forks.draw(ctx, 6);
+      // Draw Branches
+      mit.branches.draw(ctx, 4);
 
       // Update score
       score = score + 0.2;
