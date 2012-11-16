@@ -1,2 +1,2 @@
 Config.flow =
-  restartDelay: 1500
+  restartDelay: 2000

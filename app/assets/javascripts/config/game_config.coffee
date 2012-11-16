@@ -24,10 +24,10 @@ Config.player =
     sides:
       initial: 1.4
       increase: 0.1
-      maximum: 2
+      maximum: 2.2
     angular:
       initial: 1
-      increase: 0.15
+      increase: 0.1
       maximum: 3
 
 Config.obstacles =
@@ -46,8 +46,8 @@ Config.obstacles =
     reduceBy: 250
     minimum: 500
   tweenDuration:
-    inital: 80
-    change: 5
+    inital: 100
+    change: 3
     minimum: 10
   effect:
     divisor: 1.08

@@ -7,6 +7,7 @@
   * Powerup use.
 
 * GFX:
+  * Game over title (Conflict).
   * Countdown.
   * Flashing action text.
   * Particle effect for crash.
