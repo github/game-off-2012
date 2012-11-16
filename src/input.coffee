@@ -13,6 +13,7 @@ class InputHandler
   constructor:->
     @LEFT = new Key()
     @RIGHT = new Key()
+    @ENTER = new Key()
     
     window.addEventListener("keydown", @keyDown)
     window.addEventListener("keyup", @keyUp)
@@ -25,6 +26,9 @@ class InputHandler
     
     if keycode is 39
       @RIGHT.toggle(true)
+      
+    if keycode is 13
+      @ENTER.toggle(true)
     
     
   keyUp:(e)=>
@@ -35,5 +39,8 @@ class InputHandler
       
     if keycode is 39
       @RIGHT.toggle(false)
+      
+    if keycode is 13
+      @ENTER.toggle(false)
     
   
