@@ -9,4 +9,4 @@ Config.gfx =
       minimum: 2
 
   text:
-    duration: 5000
+    duration: 401

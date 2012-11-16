@@ -2,8 +2,12 @@ Crafty.c "GFXText",
 
   init: ->
     @requires("2D, DOM, Text, Delay")
-    @attr(w: Config.viewport.width, h: Config.viewport.height, x: -Config.viewport.center.x)
+    @attr(x: -Config.viewport.center.x)
 
   Start: ->
-    @addComponent("StartGFXTitle")
+    @delay((=> @addComponent("WithTransition")), 100)
+    @delay((=> @addComponent("StartGFXTitle")), 150)
     @delay((=> @destroy()), Config.gfx.text.duration)
+
+Utils.showText = (text) ->
+    Crafty.e("GFXText").text(text).Start()
