@@ -381,6 +381,7 @@ Crafty.c("Tweener", {
 
 function tweenerEnterFrame(e) {
     if (this._tw_numProps <= 0) {
+        this.trigger("EndTween");
         if(typeof this._tw_onComplete === 'function') {
             if(this._tw_onCompleteParams) {
                 this._tw_onComplete.apply(this, this._tw_onCompleteParams);
