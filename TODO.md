@@ -41,5 +41,7 @@
   * Some code cleanup.
   * General graphic polishing.
   * Balance.
+  * Fix merge bug (merges too much).
+  * Performance?
 
 
