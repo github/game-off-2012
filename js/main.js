@@ -99,7 +99,7 @@
   mit.config.canvas_height = H;
 
   // Gravity
-  var gravity = mit.gravity = 0.2;
+  var gravity = mit.gravity = 0.5;
 
   // Velocity x,y
   var vx = 0;
@@ -165,7 +165,7 @@
     if (!mit.game_started)
       mit.game_started = 1;
 
-    ay = -0.4;
+    ay = -1.2;
     flying_up = 1;
   }, false);
 

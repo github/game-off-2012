@@ -5,7 +5,7 @@
   var W, H;
 
   // Background Moving Speed in pixels
-  var cloud_bg_move_speed = 1;
+  var cloud_bg_move_speed = 2;
   var cloud_bg_vx = 0;
 
   var drawClouds = function(ctx) {
@@ -26,7 +26,7 @@
   };
 
 
-  var backtree_bg_move_speed = 2;
+  var backtree_bg_move_speed = 3;
   var backtree_bg_vx = 0;
 
   var drawBackTrees = function(ctx) {
@@ -47,7 +47,7 @@
   };
 
 
-  var fronttree_bg_move_speed = 3;
+  var fronttree_bg_move_speed = 4;
   var fronttree_bg_vx = 0;
 
   var drawFrontTrees = function(ctx) {
@@ -68,7 +68,7 @@
   };
 
 
-  var ground_bg_move_speed = 4;
+  var ground_bg_move_speed = 5;
   var ground_bg_vx = 0;
 
   var drawGround = function(ctx) {
@@ -89,7 +89,7 @@
   };
 
 
-  var grass_bg_move_speed = 4;
+  var grass_bg_move_speed = 5;
   var grass_bg_vx = 0;
 
   var drawGrass = function(ctx) {
