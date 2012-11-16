@@ -18,6 +18,14 @@ stats.domElement.style.top = '0px';
 document.body.appendChild( stats.domElement );
 */
 
+var track = document.createElement('audio');
+track.setAttribute('src', 'songs/PokeStar.mp3');
+track.load()
+track.addEventListener("load", function() {
+  $(".duration span").html(audioElement.duration);
+  $(".filename span").html(audioElement.src);
+}, true);
+
 var canvas = document.getElementById('canvas');
 canvas.width  = 640;
 canvas.height = 480;
@@ -38,9 +46,10 @@ var missed = [[],[],[],[]];
 
 var start = new Date().getTime();
 var score = 0;
+var paused = true;
 
 var getTime = function() {
-  return new Date().getTime() - start;
+  return Math.floor(track.currentTime*1000);
 }
 
 var check = function(queue) {
@@ -59,46 +68,61 @@ var check = function(queue) {
   }
 }
 
+var pause = function() {
+  paused = !paused;
+  if(paused){
+    track.pause();
+    $('#status').html('PAUSED');
+  }else{
+    track.play();
+    $('#status').empty();
+  }
+}
+
 window.setInterval(function(){
-  queues.forEach(function(queue, i) {
-    if (queue[0] <= (getTime() + 1000)){
-      queue.shift();
-      var type = i + 1;
-      active[i].push({top:0, type:type});
-    }
-  });
+  if(!paused){
+    queues.forEach(function(queue, i) {
+      if (queue[0] <= (getTime() + 1000)){
+        queue.shift();
+        var type = i + 1;
+        active[i].push({top:0, type:type});
+      }
+    });
+  }
 },10);
 
 window.setInterval(function(){
-  active.forEach(function(array){
-    array.forEach(function(target, i) {
-      if(target.top > 420){
-        missed.push(array.splice(i, 1));
-        console.log('missed');
-        score -= 500;
-      }else{
-        target.top +=2;
-      }
+  if(!paused){
+    active.forEach(function(array){
+      array.forEach(function(target, i) {
+        if(target.top > 420){
+          missed.push(array.splice(i, 1));
+          console.log('missed');
+          score -= 500;
+        }else{
+          target.top +=2;
+        }
+      });
     });
-  });
-  inactive.forEach(function(array){
-    array.forEach(function(target, i) {
-      if(target.top > canvas.height){
-        array.splice(i, 1);
-      }else{
-        target.top +=2;
-      }
+    inactive.forEach(function(array){
+      array.forEach(function(target, i) {
+        if(target.top > canvas.height){
+          array.splice(i, 1);
+        }else{
+          target.top +=2;
+        }
+      });
     });
-  });
-  missed.forEach(function(array){
-    array.forEach(function(target, i) {
-      if(target.top > canvas.height){
-        array.splice(i, 1);
-      }else{
-        target.top +=2;
-      }
+    missed.forEach(function(array){
+      array.forEach(function(target, i) {
+        if(target.top > canvas.height){
+          array.splice(i, 1);
+        }else{
+          target.top +=2;
+        }
+      });
     });
-  });
+  }
 }, 1000/170);
 
 window.setInterval(function(){
@@ -170,6 +194,8 @@ window.addEventListener('keydown', function (event) {
     $('#j').addClass('pressed');
     check(3);
     break;
+  case 80:
+    pause();
   }
 }, false);
 
