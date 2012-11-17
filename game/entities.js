@@ -300,7 +300,7 @@ function Bug(startPath, r) {
 	this.maxHP = 20;
 	this.hp = this.maxHP;
 	this.value = 15;
-	this.speed = 0.1;
+	this.speed = 20;
 	this.color = "yellow";
 
 	this.base = new baseObj("Bug", 10);

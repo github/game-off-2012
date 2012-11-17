@@ -56,9 +56,9 @@ function baseObj(type, zindex) {
 
     this.setRootNode = function (rootNode) {
         this.rootNode = rootNode;
-        for (var key in children)
-            if (children[key].base)
-                children[key].setRootNode(rootNode);
+        for (var key in this.children)
+            if (this.children[key].base)
+                this.children[key].setRootNode(rootNode);
     }
 
     this.removeAllType = function (type) {
