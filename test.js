@@ -8,7 +8,7 @@ document.body.appendChild( stats.domElement );
 */
 
 var track = document.createElement('audio');
-track.setAttribute('src', 'songs/PokeStar.mp3');
+track.setAttribute('src', 'audio/PokeStar.mp3');
 track.load()
 track.addEventListener("load", function() {
   $(".duration span").html(audioElement.duration);
