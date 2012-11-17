@@ -1,13 +1,6 @@
 //KEEP THIS SHORT!
 //IF THIS IS OVER 250 LINES THEN SPLIT IT INTO LOGICAL SECTIONS!
 
-//REMOVE THIS FUNCTION AND ALL USES OF IT!
-function merge(array, values) {
-    if (values && values.length > 0)
-        array = array.concat(values);
-    return array;
-}
-
 function hexPair(num) {
     return Math.min(Math.max(num, 16), 255).toString(16);
 }

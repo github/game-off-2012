@@ -9,7 +9,7 @@
 
     this.lastTowerHover = null;
 
-    this.base = new baseObj("Engine");
+    this.base = new baseObj(this);
 
     this.base.children.Tile = [];
     this.base.children.Bug = [];
@@ -54,7 +54,11 @@
 
         gameTimeAccumulated += updateAmount;
 
-        this.update(updateAmount / 1000);
+        var newObjects = this.base.update(updateAmount / 1000);
+
+        for (var key in newObjects)
+            this.base.addObject(newObjects[key]);
+
         this.draw();
         window.reqAnim(this.run.bind(this));
     };
@@ -100,12 +104,7 @@
             this.maxBugs += this.bugIncrease;
             this.bugIncrease += this.bugIncInc;
         }
-
-        var objsToAdd = this.base.update(dt);
-
-        for (var i = 0; i < objsToAdd.length; i++)
-            this.base.addObject(objsToAdd[i]);
-
+        
         this.base.removeMarked();
     };
     

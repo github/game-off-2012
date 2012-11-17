@@ -1,28 +1,15 @@
-//If you add baseObj, also add:
-/*
-this.update = function (dt) {
-        this.tPos.update(dt);
-
-        if (this.base)
-            return this.base.update(dt);
-    };
-
-this.draw = function (pen) {
-    //Add your draw code here
-
-    if(this.base)
-        this.base.draw(pen);
-};
-*/
-
 //If an object has destroySelf == true, then it is removed from
 //the object on the next update call.
 
-function baseObj(type, zindex) {
+function baseObj(holder, zindex) {
+    if (!assertDefined("baseObj", holder))
+        return;
+
     //Organized by type, and then arrays of objects
     //this.parent
     this.children = {};
-    this.type = type;
+    this.type = holder.constructor.name;
+    this.holder = holder;
 
     //This can be used to greatly increase the speed of spatial based queries
     this.quadNode = {};
@@ -43,7 +30,7 @@ function baseObj(type, zindex) {
 
     this.addObject = function (obj) {
         if (!obj.base)
-            console.log("BAD! CALLED addObject with an object with no base (we need base for the type)!");
+            fail("BAD! CALLED addObject with an object with no base (we need base for the type)!");
 
         if (!this.children[obj.base.type])
             this.children[obj.base.type] = [];
@@ -66,7 +53,8 @@ function baseObj(type, zindex) {
             this.children[type].length = 0;
     }
 
-    this.update = function (dt) {
+    /*
+    this.raiseEvent = function (eventName, parameters) {
         var newObjs = [];
         for (var key in this.children) {
             for (var i = this.children[key].length - 1; i >= 0; i--) {
@@ -74,6 +62,35 @@ function baseObj(type, zindex) {
             }
         }
         return newObjs;
+    }
+    */
+
+    this.update = function (dt) {
+        var returnedValues = [];
+        function addToReturned(result) {
+            if (result) {
+                if (result.constructor.name == "Array") {
+                    if(result.length > 0)
+                        returnedValues = returnedValues.concat(result);
+                }
+                else if (typeof result !== "undefined" &&
+                    (result || typeof result === "number"))
+                    returnedValues.push(result);
+            }
+        }
+
+        if (holder.update)
+            addToReturned(holder.update(dt));
+
+        for (var key in this.children) {
+            for (var i = this.children[key].length - 1; i >= 0; i--) {
+                if (this.children[key][i].base) {
+                    addToReturned(this.children[key][i].base.update(dt));
+                }
+            }
+        }
+
+        return returnedValues;
     }
 
     this.removeMarked = function () {
@@ -101,13 +118,15 @@ function baseObj(type, zindex) {
 
         sortArrayByProperty(childWithZIndex, "zindex");
 
-        var lastZIndex = -1000000;
-        for (var y = 0; y < childWithZIndex.length; y++) {
-            if (childWithZIndex[y].zindex < lastZIndex) {
-                console.log("Z SORTING MESSING UP (CRASH)!");
-                sortArrayByProperty(childWithZIndex, "zindex");
+        if (DFlag.zindexCheck) {
+            var lastZIndex = -1000000;
+            for (var y = 0; y < childWithZIndex.length; y++) {
+                if (childWithZIndex[y].zindex < lastZIndex) {
+                    fail("Z SORTING MESSING UP (CRASH)!");
+                    //sortArrayByProperty(childWithZIndex, "zindex");
+                }
+                lastZIndex = childWithZIndex[y].zindex;
             }
-            lastZIndex = childWithZIndex[y].zindex;
         }
 
         for (var y = 0; y < childWithZIndex.length; y++) {

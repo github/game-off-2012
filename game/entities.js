@@ -2,13 +2,10 @@
 	this.hover = false;
 
 	this.tPos = new temporalPos(x, y, w, h, 0, 0);
-	this.base = new baseObj("Tile", 1);
+	this.base = new baseObj(this, 1);
 
 	this.update = function (dt) {
 		this.tPos.update(dt);
-		
-		if (this.base)
-			return this.base.update(dt);
 	};
 
 	this.draw = function (pen) {
@@ -32,13 +29,10 @@
 
 function Path_End(x, y, w, h) {
 	this.tPos = new temporalPos(x, y, w, h, 0, 0);
-	this.base = new baseObj("Path_End", 1);
+	this.base = new baseObj(this, 1);
 
 	this.update = function (dt) {
 		this.tPos.update(dt);
-
-		if (this.base)
-			return this.base.update(dt);
 	};
 
 	this.draw = function (pen) {
@@ -54,16 +48,13 @@ function Path_End(x, y, w, h) {
 
 function Path_Start(x, y, w, h) {
 	this.tPos = new temporalPos(x, y, w, h, 0, 0);
-	this.base = new baseObj("Path_Start", 1);
+	this.base = new baseObj(this, 1);
 
 	//This is set after we are made
 	//this.nextPath
 
 	this.update = function (dt) {
 		this.tPos.update(dt);
-
-		if (this.base)
-			return this.base.update(dt);
 	};
 
 	this.draw = function (pen) {
@@ -83,13 +74,10 @@ function Path_Line(pathBase) {
 
 	//Our shape is a lie! (its off, not that it really matters)
 	this.tPos = new temporalPos(pathBase.tPos.x, pathBase.tPosy, pathBase.tPosw, pathBase.tPosh, 0, 0);
-	this.base = new baseObj("Path_Line", 2);
+	this.base = new baseObj(this, 2);
 
 	this.update = function (dt) {
 		this.tPos.update(dt);
-
-		if (this.base)
-			return this.base.update(dt);
 	};
 
 	this.draw = function (pen) {
@@ -114,7 +102,7 @@ function Path_Line(pathBase) {
 }
 function Path(x, y, w, h) {
 	this.tPos = new temporalPos(x, y, w, h, 0, 0);
-	this.base = new baseObj("Path", 1);
+	this.base = new baseObj(this, 1);
 	this.pathLine = null;
 
 	this.update = function (dt) {
@@ -126,10 +114,7 @@ function Path(x, y, w, h) {
 			this.pathLine = new Path_Line(this);
 			newObjs.push(this.pathLine);
 		}
-
-		if (this.base)
-			newObjs = merge(newObjs, this.base.update(dt));
-
+		
 		return newObjs;
 	};
 
@@ -146,13 +131,10 @@ function Path(x, y, w, h) {
 
 function Tower_Range(x, y, w, h) {
 	this.tPos = new temporalPos(x, y, w, h, 0, 0);
-	this.base = new baseObj("Tower_Range", 11);
+	this.base = new baseObj(this, 11);
 
 	this.update = function (dt) {
 		this.tPos.update(dt);
-
-		if(this.base)
-			return this.base.update(dt);
 	};
 
 	this.draw = function (pen) {
@@ -169,15 +151,12 @@ function Tower_Range(x, y, w, h) {
 
 function Tower_Laser(xs, ys, xe, ye, duration) {
 	this.tPos = new temporalPos(xs, ys, xe - xs, ye - ys, 0, 0);
-	this.base = new baseObj("Tower_Laser", 12);
+	this.base = new baseObj(this, 12);
 
 	this.base.addObject(new lifetime(duration));
 
 	this.update = function (dt) {
 		this.tPos.update(dt);
-
-		if (this.base)
-			return this.base.update(dt);
 	};
 
 	this.draw = function (pen) {
@@ -197,7 +176,7 @@ function Tower_Laser(xs, ys, xe, ye, duration) {
 //All mutate stuff is copy-pasta from our mother project (for now)
 function Tower(x, y, w, h) {
 	this.tPos = new temporalPos(x, y, w, h, 0, 0);
-	this.base = new baseObj("Tower", 10);
+	this.base = new baseObj(this, 10);
 	this.attr = {
 		range:          Math.random() * 200 + 100,
 		damage:         Math.random() * 30  + 1,
@@ -286,10 +265,7 @@ function Tower(x, y, w, h) {
 				newObjs.push(newObj);
 			}
 			nextFireIn = this.attr.coolDown;
-		}
-
-		if (this.base)
-			newObjs = merge(newObjs, this.base.update(dt));
+		}		
 
 		return newObjs;
 	}
@@ -303,7 +279,7 @@ function Bug(startPath, r) {
 	this.speed = 20;
 	this.color = "yellow";
 
-	this.base = new baseObj("Bug", 10);
+	this.base = new baseObj(this, 10);
 
 	var cen = { x: startPath.tPos.x, y: startPath.tPos.y };
 	cen.x += Math.floor((startPath.tPos.w - 2*r) * Math.random()) + r;
@@ -340,9 +316,6 @@ function Bug(startPath, r) {
 		}
 		
 		this.color = "#" + hexPair(255 - this.hp / this.maxHP * 255) + "0000";
-
-		if (this.base)
-			return this.base.update(dt);
 	};
 	this.draw = function (pen) {
 		var p = this.tPos;
@@ -366,7 +339,7 @@ function Bug(startPath, r) {
 
 function lifetime(timeLeft) {
 	//this.tPos = new temporalPos(x, y, w, h, 0, 0);
-	this.base = new baseObj("lifetime");
+	this.base = new baseObj(this);
 
 	var currentTimeLeft = timeLeft;
 
