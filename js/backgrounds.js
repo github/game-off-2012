@@ -21,8 +21,7 @@
       cloud_bg_vx = 0;
     }
 
-    if (mit.game_started)
-      cloud_bg_vx -= cloud_bg_move_speed;
+    cloud_bg_vx -= cloud_bg_move_speed;
   };
 
 

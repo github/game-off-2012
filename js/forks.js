@@ -4,6 +4,10 @@
 
   var W, H;
 
+  // Images
+  var fork_head_img = new Image();
+  fork_head_img.src = 'img/fork_head.png';
+
   // Array of random forks
   var forks = [];
 
@@ -84,10 +88,12 @@
           // console.log(dig_img.width);
 
           fork.y = 200 + utils.randomNumber(0,100);
+          fork.y += fork_head_img.height;
         }
 
         if (fork.edge === 'top') {
           fork.y = 0 - utils.randomNumber(0,100);
+          fork.y -= fork_head_img.height
         }
 
         var pos = getRandomForkPos();
@@ -115,6 +121,14 @@
         var fork_img = new Image();
         fork_img.src = 'img/fork_handle.png';
         ctx.drawImage(fork_img, fork.x, fork.y);
+
+        // Draw Fork Head
+        ctx.save();
+        ctx.translate(fork.x, fork.y+fork_img.height);
+        ctx.translate(fork_head_img.width/2, fork_head_img.height/2);
+        ctx.rotate( utils.toRadian(180) );
+        ctx.drawImage(fork_head_img, -fork_head_img.width/2, -fork_head_img.height/2);
+        ctx.restore();
       }
       else if (fork.edge === 'btm') {
         // ctx.lineTo(fork.x, mit.config.canvas_height);
@@ -122,6 +136,18 @@
         var fork_img = new Image();
         fork_img.src = 'img/fork_handle.png';
         ctx.drawImage(fork_img, fork.x, fork.y);
+
+        // Draw Fork Head
+        ctx.save();
+        ctx.translate(fork.x-fork_head_img.width/5, fork.y-fork_head_img.height);
+        ctx.translate(1* fork_head_img.width/2, 1* fork_head_img.height/2);
+        ctx.scale(-1,1);
+        ctx.drawImage(
+          fork_head_img,
+          1* -fork_head_img.width/2,
+          1* -fork_head_img.height/2
+        );
+        ctx.restore();
       }
 
       // ctx.stroke();

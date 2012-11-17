@@ -110,7 +110,7 @@
   // 
   // You can console.log velocities in drawing methods
   // and from there decide what to set as the cap.
-  var v_cap = 4;
+  var v_cap = 5;
 
   // Accelaration x,y
   var ax = 0;
@@ -220,7 +220,7 @@
       gameOver();
       return;
     }
-
+//mit.forks.draw(ctx, 6);
     if (mit.game_started) {
 
       // Draw Forks

@@ -14,6 +14,14 @@
 
   utils.isInt = function(number) {
     return parseFloat(number) === parseInt(number);
-  }
+  };
+
+  utils.toRadian = function(degree) {
+    return (degree * Math.PI/180);
+  };
+
+  utils.toDegree = function(radian) {
+    return (radian * 180/Math.PI);
+  };
 
 }());
