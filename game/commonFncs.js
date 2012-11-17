@@ -11,6 +11,30 @@ function swap(obj, one, two) {
     obj[two] = temp;
 }
 
+function mergeToArray(value, array) {
+    if (nullOrUndefined(value))
+        return array;
+
+    if ((value.length === undefined || value.length !== 0)) {
+        if (typeof value === "number") {
+            array.push(value);
+        }
+        else if(value) {
+            //This is probably the fastest way to check if it is probably an array, if it isn't and it has length... well then:
+            //http://stackoverflow.com/questions/332422/how-do-i-get-the-name-of-an-objects-type-in-javascript
+            if (value.length !== undefined) {
+                if (value.length > 0)
+                    for (var key in value) //concat would mean when you call this you have to do arr = merg(val, arr)
+                        array.push(value[key]);
+            }
+            else if (value)
+                array.push(value);
+        }
+    }
+    return array;
+}
+
+//This should really not be in here.
 //Sorts arr by the given property (uses quickSort)
 function sortArrayByProperty
 (

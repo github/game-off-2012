@@ -1,6 +1,19 @@
-﻿function Engine(pen) {
+﻿//Calls the following functions on its children:
+
+//update
+//draw
+//click
+//mouseover
+//mouseout
+
+/********************************* CODE START *********************************/
+
+function Engine(pen) {    
     this.mX = -1;
-    this.mY = -1;
+    this.mY = -1;    
+    this.cX = -1; //These are set on click, its your job to consume them when you have used them
+    this.cY = -1;
+
     this.pen = pen;
 
     this.id = 0;
@@ -55,11 +68,12 @@
         gameTimeAccumulated += updateAmount;
 
         var newObjects = this.base.update(updateAmount / 1000);
+        //var newObjects = this.base.raiseEvent("update", updateAmount / 1000);
 
         for (var key in newObjects)
             this.base.addObject(newObjects[key]);
 
-        this.draw();
+        this.base.draw(pen);
         window.reqAnim(this.run.bind(this));
     };
     
@@ -70,30 +84,67 @@
 
         this.curQuadTree = new QuadTree(this.base.children);
 
+        //We got a click event
+        if (this.cX > 0) {
+            this.click();
+            this.cX = -1;
+            this.cY = -1;
+        }
+
         var bugs = this.base.children.Bug;
 
-        while (bugs.length < this.maxBugs) {
-            var bugStart = eng.base.children["Path_Start"][0];
-            var newBug = new Bug(bugStart, 4);
-            this.base.addObject(newBug);
+        if (eng.base.children["Path_Start"] && eng.base.children["Path_Start"].length > 0) {
+            while (bugs.length < this.maxBugs) {
+                var bugStart = eng.base.children["Path_Start"][0];
+                var newBug = new Bug(bugStart, 4);
+                this.base.addObject(newBug);
+            }
         }
 
         this.base.removeAllType("Tower_Range");
+
         if (this.mY > 0 && this.mY < bH && this.mX > 0 && this.mX < bW) {
+            var allUnderMouse = [];
+
+            for (var type in this.base.children)
+                mergeToArray(findAllWithin(eng, type, { x: mX, y: mY }, 0), allUnderMouse);
+
+            if (allUnderMouse.length > 0) {
+                var topMost = allUnderMouse[0];
+
+                //*sigh* so inefficient... but for now its fine
+                for (var key in allUnderMouse)
+                    if (allUnderMouse[key].base.zindex > topMost.base.zindex ||
+                       (allUnderMouse[key].base.zindex == topMost.base.zindex &&
+                       allUnderMouse[key].base.zoffset > topMost.base.zoffset))
+                        topMost = allUnderMouse[key];
+
+                allUnderMouse.splice(key, 1);
+
+                for (var key in allUnderMouse)
+                    allUnderMouse[key].base.raiseEvent("mouseover", { x: mX, y: mY, topMost: false });
+
+                topMost.base.raiseEvent("mouseover", { x: mX, y: mY, topMost: true });
+            }
+
+            //Can actually find mouseout more efficiently... as we have previous and current mouseover...            
+            if (this.prevMouseOver && this.prevMouseOver.length > 0) {
+                for (var i = 0; i < this.prevMouseOver.length; i++) {
+                    if (vecToRect({ x: mX, y: mY }, this.prevMouseOver[i].tPos).magSq() != 0) {
+                        this.prevMouseOver[i].base.raiseEvent("mouseout");
+                    }
+                }
+            }
+
+            this.prevMouseOver = allUnderMouse;
 
             var tower = findClosest(this.engine, "Tower", { x: mX, y: mY }, 0);
 
             if (tower) {
                 tower = findClosest(this.engine, "Tower", { x: mX, y: mY }, 0);
                 this.base.addObject(new Tower_Range(tower.tPos.x - tower.range + tileSize * 0.5, tower.tPos.y - tower.range + tileSize * 0.5, tower.range * 2, tower.range * 2));
-
-                if (tower != this.lastTowerHover)
-                    document.getElementById("towerinfo").innerHTML = JSON.stringify(tower.attr);
             }
 
-            var curTile = findClosest(this.engine, "Tile", { x: this.mX, y: this.mY }, 1000);
-            if(curTile)
-                curTile.hover = true;
         }
 
         this.secondTimer -= dt;
@@ -104,22 +155,45 @@
             this.maxBugs += this.bugIncrease;
             this.bugIncrease += this.bugIncInc;
         }
-        
+
         this.base.removeMarked();
     };
     
 /** Function */
-    this.click = function (e) {
-        var cX = e.offsetX;
-        var cY = e.offsetY;
+    this.click = function () {
+        var cX = this.cX;
+        var cY = this.cY;
 
         if (cY > 0 && cY < bH && cX > 0 && cX < bW) {
 
-            var clickedTile = findClosest(this.engine, "Tile", { x: e.offsetX, y: e.offsetY }, 0);
+            var allUnderClick = [];
+
+            for (var type in this.children)
+                mergeToArray(findAllWithin(eng, type, { x: cX, y: cY }, 0), allUnderClick);
+
+            if (allUnderClick.length > 0) {
+                var topMost = allUnderClick[0];
+
+                //*sigh* so inefficient... but for now its fine
+                for (var key in allUnderClick)
+                    if (allUnderClick[key].base.zindex > topMost.base.zindex ||
+                       (allUnderClick[key].base.zindex == topMost.base.zindex &&
+                       allUnderClick[key].base.zoffset > topMost.base.zoffset))
+                        topMost = allUnderMouse[key];
+
+                allUnderClick.splice(key, 1);
+
+                for (var key in allUnderClick)
+                    allUnderClick[key].base.raiseEvent("click", { x: cX, y: cY, topMost: false });
+
+                topMost.base.raiseEvent("click", { x: cX, y: cY, topMost: true });
+            }
+
+            var clickedTile = findClosest(this.engine, "Tile", { x: cX, y: cY }, 0);
 
             if (clickedTile) {
-                var towerOnTile = findClosest(this.engine, "Tower", { x: e.offsetX, y: e.offsetY }, 0);
-                var pathOnTile = findClosest(this.engine, "Path", { x: e.offsetX, y: e.offsetY }, 0);
+                var towerOnTile = findClosest(this.engine, "Tower", { x: cX, y: cY }, 0);
+                var pathOnTile = findClosest(this.engine, "Path", { x: cX, y: cY }, 0);
 
                 if (!towerOnTile && !pathOnTile && this.money - 50 >= 0) {
                     this.money -= 50;
@@ -145,13 +219,12 @@
         ink.text(10, bH + 90, "Time passed: " + gameTimeAccumulated, pen);
         ink.text(10, bH + 120, "FPS: " + this.lastFPS, pen);
         ink.text(10, bH + 150, "Bugs: " + eng.base.children.Bug.length, pen);
-
-        this.base.draw(pen);
-
+        
         this.pen.save();
         this.pen.strokeStyle = "red";
         //drawTree(this, "Tile", this.pen);
         //drawTree(this, "Tower", this.pen);
+        //drawTree(this, "Bug", this.pen);
         this.pen.restore();        
     };
 }
