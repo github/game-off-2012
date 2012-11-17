@@ -93,10 +93,12 @@ function Engine(pen) {
 
         var bugs = this.base.children.Bug;
 
-        while (bugs.length < this.maxBugs) {
-            var bugStart = eng.base.children["Path_Start"][0];
-            var newBug = new Bug(bugStart, 4);
-            this.base.addObject(newBug);
+        if (eng.base.children["Path_Start"] && eng.base.children["Path_Start"].length > 0) {
+            while (bugs.length < this.maxBugs) {
+                var bugStart = eng.base.children["Path_Start"][0];
+                var newBug = new Bug(bugStart, 4);
+                this.base.addObject(newBug);
+            }
         }
 
         this.base.removeAllType("Tower_Range");

@@ -22,7 +22,7 @@ function baseObj(holder, zindex) {
     //Organized by type, and then arrays of objects
     //this.parent
     this.children = {};
-    this.type = holder.constructor.name;
+    this.type = getRealType(holder); //.constructor.name;
     this.holder = holder;
 
     //This can be used to greatly increase the speed of spatial based queries
