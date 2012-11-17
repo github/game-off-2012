@@ -39,6 +39,15 @@ footer {
 footer a {
 	color: #FF6767;
 }
+footer a:hover {
+	color: #67DBFF;
+}
+footer a:active {
+	color: #F3FF67;
+}
+footer a:focus {
+	color: #FF67ED;
+}
 
 
 canvas#game_main {
