@@ -99,6 +99,17 @@
       }
 
       return false;
+    },
+
+    getBounds: function() {
+      var bounds = {};
+
+      bounds.start_x = this.x;
+      bounds.start_y = this.y;
+      bounds.end_x = this.x + this.w;
+      bounds.end_y = this.y + this.h;
+
+      return bounds;
     }
   };
 
@@ -107,7 +118,8 @@
   pappu.sprite.src = 'img/pappu.png';
 
   pappu.sprite.onload = function() {
-    pappu.w = pappu.sprite.width;
+    //pappu.w = pappu.sprite.width;
+    pappu.w = 48;
     pappu.h = pappu.sprite.height;
 
     // Sprite Frame Count

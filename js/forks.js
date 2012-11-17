@@ -5,6 +5,12 @@
   var W, H;
 
   // Images
+
+  // Fork handle
+  var fork_img = new Image();
+  fork_img.src = 'img/fork_handle.png';
+
+  // Fork Head
   var fork_head_img = new Image();
   fork_head_img.src = 'img/fork_head.png';
 
@@ -29,6 +35,26 @@
 
     // Edge on which the fork will stand on
     this.edge = 'btm';
+
+    // Get Handle Bounds
+    this.getHandleBounds =  function() {
+      var bounds = {};
+
+      bounds.start_x = this.x;
+      bounds.start_y = this.y;
+      bounds.end_x = this.x + this.w;
+      bounds.end_y = this.y + this.h;
+
+      //console.log(bounds);
+      return bounds;
+    };
+
+    // Get Head Bounds
+    this.getHeadBounds = function() {
+      var bounds = {};
+
+      return bounds;
+    };
   };
 
   /*
@@ -93,11 +119,15 @@
 
         if (fork.edge === 'top') {
           fork.y = 0 - utils.randomNumber(0,100);
-          fork.y -= fork_head_img.height
+          fork.y -= fork_head_img.height;
         }
 
         var pos = getRandomForkPos();
         fork.x = pos.x;
+
+        // Height and Width
+        fork.w = fork_img.width;
+        fork.h = fork_img.height;
 
         forks.push(fork);
       }
@@ -110,6 +140,9 @@
       }
       fork.x -= mit.backgrounds.ground_bg_move_speed;
 
+      // Check Collisions with pappu
+      // mit.forks.checkCollision();
+
       // ctx.beginPath();
       // ctx.strokeStyle = 'blue';
       // ctx.lineWidth = 5;
@@ -118,13 +151,17 @@
       if (fork.edge === 'top') {
         // ctx.lineTo(fork.x, 0);
 
-        var fork_img = new Image();
-        fork_img.src = 'img/fork_handle.png';
-        ctx.drawImage(fork_img, fork.x, fork.y);
+        // Top forks need flippin
+        ctx.save();
+        ctx.translate(fork.x, fork.y);
+        ctx.translate(fork_img.width/2, fork_img.height/2);
+        ctx.rotate( utils.toRadian(180) );
+        ctx.drawImage(fork_img, -fork_img.width/2, -fork_img.height/2);
+        ctx.restore();
 
         // Draw Fork Head
         ctx.save();
-        ctx.translate(fork.x, fork.y+fork_img.height);
+        ctx.translate(fork.x-fork_head_img.width/8, fork.y+fork_img.height);
         ctx.translate(fork_head_img.width/2, fork_head_img.height/2);
         ctx.rotate( utils.toRadian(180) );
         ctx.drawImage(fork_head_img, -fork_head_img.width/2, -fork_head_img.height/2);
@@ -133,8 +170,6 @@
       else if (fork.edge === 'btm') {
         // ctx.lineTo(fork.x, mit.config.canvas_height);
 
-        var fork_img = new Image();
-        fork_img.src = 'img/fork_handle.png';
         ctx.drawImage(fork_img, fork.x, fork.y);
 
         // Draw Fork Head
@@ -174,9 +209,32 @@
   };
 
 
+  // Check Fork Collision
+  var checkCollision = function() {
+    // Get Pappu Bounds
+    var pappu_bounds = mit.pappu.getBounds();
+
+    // Get Nearest Fork's Handle's Bounds
+    var fork_bounds = forks[0].getHandleBounds();
+    console.log(pappu_bounds, fork_bounds);
+    // Check whether pappu collided with the
+    // fork handle or not.
+    if (
+      pappu_bounds.end_x > fork_bounds.start_x &&
+      pappu_bounds.end_x < fork_bounds.end_x &&
+      pappu_bounds.start_y > fork_bounds.start_y &&
+      pappu_bounds.end_y < fork_bounds.end_y
+    ) {
+      console.log(pappu_bounds, fork_bounds);
+      mit.gameOver();
+    }
+  };
+
+
   window.mit.forks = {
     draw: draw,
-    drawDigs: drawDigs
+    drawDigs: drawDigs,
+    checkCollision: checkCollision
   };
 
 }());

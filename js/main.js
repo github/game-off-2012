@@ -181,7 +181,7 @@
   /*
     Performing some game over tasks
   */
-  var gameOver = function() {
+  mit.gameOver = function() {
     ui.start_screen.fadeIn();
     ui.start_game.html('re-start');
     ui.tweet.html('tweet score');
@@ -217,12 +217,14 @@
     // Game over on reaching any boundary
     if (mit.pappu.hasReachedBoundary(W, H)) {
       // Performing some game over tasks
-      gameOver();
+      mit.gameOver();
       return;
     }
 
     //mit.forks.draw(ctx, 6);
     //mit.branches.draw(ctx, 4);
+
+    //mit.forks.checkCollision();
 
     if (mit.game_started) {
 
@@ -230,6 +232,9 @@
       mit.forks.draw(ctx, 6);
       // Draw Branches
       mit.branches.draw(ctx, 4);
+
+      // Check Collisions with pappu
+      mit.forks.checkCollision();
 
       // Update score
       score = score + 0.2;
