@@ -18,9 +18,8 @@ $ ->
   #GLOABAL Storage
   @STORAGE = new Storage()
   
-  game = new Game()
   
-  @STORAGE.setFinished(game.init)
+  
   
   l1 = new SimpleImageLoader("img/sprites.png", "spritesheet")
   l2 = new SimpleJSONLoader("img/map.json", "map")
@@ -34,6 +33,9 @@ $ ->
   l2.start()
   l3.start()
   l4.start()
+  
+  game = new Game()
+  @STORAGE.setFinished(game.init)
   
 class Game
   constructor: ->
