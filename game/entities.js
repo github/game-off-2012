@@ -280,6 +280,7 @@ function Bug(startPath, r) {
 	this.speed = 20;
 	this.color = "yellow";
 
+
 	this.base = new baseObj(this, 10);
 
 	var cen = { x: startPath.tPos.x, y: startPath.tPos.y };
