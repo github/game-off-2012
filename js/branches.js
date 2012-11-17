@@ -67,6 +67,10 @@
         branch.x = pos.x;
         branch.y = 0;
 
+        // Escape Positions
+        branch.escape_x = branch.x;
+        branch.escape_y = branch.y + utils.randomNumber(0, branch_img.height-150);
+
         branches.push(branch);
       }
     }
@@ -80,7 +84,22 @@
       }
       branch.x -= mit.backgrounds.ground_bg_move_speed;
 
+      // Escape Positions
+      branch.escape_x = branch.x;
+
       ctx.drawImage(branch_img, branch.x, branch.y);
+
+      // Draw Escapes
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = 'white';
+      ctx.fillRect(
+        branch.escape_x,
+        branch.escape_y,
+        branch_img.width,
+        150
+      );
+      ctx.restore();
     });
   };
 

@@ -220,7 +220,10 @@
       gameOver();
       return;
     }
-//mit.forks.draw(ctx, 6);
+
+    //mit.forks.draw(ctx, 6);
+    //mit.branches.draw(ctx, 4);
+
     if (mit.game_started) {
 
       // Draw Forks
