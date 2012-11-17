@@ -1,3 +1,4 @@
+
 function generatePath(eng) {
     var curPos = { x: 0, y: 0 };
 

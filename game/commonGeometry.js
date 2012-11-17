@@ -1,87 +1,71 @@
-function Vector(x, y) {
-    this.x = x;
-    this.y = y;
+//For all functions:
+    //rect in x, y, w, h format
+    //point in x, y format
+    //circle is in bounding rect format
 
-    this.magSq = function () {
-        return this.x * this.x + this.y * this.y;
-    };
+//getCircleCenter
+    //function getCircleCenter(circle)
+    //Returns the vector of the center of a circle
 
-    this.setMag = function (mag) {
-        var curMag = Math.sqrt(this.x * this.x + this.y * this.y);
-        if (curMag) {
-            this.x /= curMag;
-            this.y /= curMag;
-        }
+//vectorToRect
+    //function vecToRect(rect, point, vector) 
+    //Gets the Vector from the a rect to a point.    
+    //Caveats
+        //If point is in rect then it returns Vector(0, 0).
+        //If vector is given, then it will fill in vector and return that)
 
-        this.x *= mag;
-        this.y *= mag;
-    }
+//minimumVectorBetweenRects
+    //function minVecBetweenRects(rectOne, rectTwo) 
+    //Gets the minimum vector from rectOne to rectTwo
 
-    this.subtract = function (otherVec) {
-        this.x -= otherVec.x;
-        this.y -= otherVec.y;
-    }
-    this.add = function (otherVec) {
-        this.x += otherVec.x;
-        this.y += otherVec.y;
-    }
+//minimumVectorUntilFullOverlapRects
+    //function minVecFullOverlapRects(rectOne, rectTwo)
+    //Gets the minimum vector for rectOne to be fully overlapped by rectTwo
+    //Caveats
+        //Its behaviour is undefined if rectOne cannot be fully overlapped by rectTwo
+
+//vectorBetweenRectAndCircle
+    //function vecBetweenRectAndCircle(rect, circle)
+    //Circle is defined as the bounding rect of circle
+
+
+/********************************* CODE START *********************************/
+
+//Returns the vector of the center of a circle
+function getCircleCenter(circle) {
+    return new Vector(circle.x + circle.w / 2, circle.y + circle.h / 2);
 }
 
-function sizeToBounds(size) {
-    return { xs: size.x, ys: size.y, xe: size.x + size.w, ye: size.y + size.h };
+//Gets the Vector from the a rect to a point.    
+    //Caveats
+        //If point is in rect then it returns Vector(0, 0).
+        //If vector is given, then it will fill in vector and return that)
+function vecToRect(rect, point, vector) {
+    if (!assertDefined("vecToRect", rect, point, vector))
+        return new Vector(0, 0);
+
+    if(!vector)
+        vector = new Vector(0, 0);
+    
+    if (point.x > rect.xe)
+        vector.x = point.x - (rect.x + rect.w);
+    else if (point.x < rect.xs)
+        vector.x = rect.x - point.x;    
+
+    if (point.y > rect.ye)
+        vector.y = point.y - (rect.y + rect.h);
+    else if (point.y < rect.ys)
+        vector.y = rect.y - point.y;
+
+    return vector;
 }
 
-function boundsToSize(bounds) {
-    return { x: bounds.xs, y: bounds.ys, w: bounds.xe - bounds.xs, h: bounds.xe - bounds.xs };
-}
-
-//Gets distance to the rect, 0 if it is in rect
-//Rect uses xs, xe, ys, ye structure
-function distanceToRectSq(rect, point) {
-    var xDistance;
-    var yDistance;
-
-    if (point.x >= rect.xe)
-        xDistance = point.x - rect.xe;
-    else if (point.x <= rect.xs)
-        xDistance = rect.xs - point.x;
-    else
-        xDistance = 0;
-
-    if (point.y >= rect.ye)
-        yDistance = point.y - rect.ye;
-    else if (point.y <= rect.ys)
-        yDistance = rect.ys - point.y;
-    else
-        yDistance = 0;
-
-    return xDistance * xDistance + yDistance * yDistance;
-}
-
-function vecToRect(rect, point) {
-    var distance = new Vector(0, 0);
-
-    rect = sizeToBounds(rect);
-
-    if (point.x >= rect.xe)
-        distance.x = rect.xe - point.x;
-    else if (point.x <= rect.xs)
-        distance.x = rect.xs - point.x;
-    else
-        distance.x = 0;
-
-    if (point.y >= rect.ye)
-        distance.y = rect.ye - point.y;
-    else if (point.y <= rect.ys)
-        distance.y = rect.ys - point.y;
-    else
-        distance.y = 0;
-
-    return distance;
-}
-
+//Gets the minimum vector from rectOne to rectTwo
 //Basically just the minimum vec between the vertices of one and two
-function vecBetweenRects(rectOne, rectTwo) {
+function minVecBetweenRects(rectOne, rectTwo) {
+    if (!assertDefined("minVecBetweenRects", rectOne, rectTwo))
+        return new Vector(0, 0);
+
     var distance1 = vecToRect(rectOne, new Vector(rectTwo.x, rectTwo.y));
     var distance2 = vecToRect(rectOne, new Vector(rectTwo.x + rectTwo.w, rectTwo.y));
     var distance3 = vecToRect(rectOne, new Vector(rectTwo.x, rectTwo.y + rectTwo.h));
@@ -101,8 +85,12 @@ function vecBetweenRects(rectOne, rectTwo) {
     return minimum;
 }
 
-//Basically just the maximum vec between the vertices of one and two
-function distBetweenRectsFullOverlap(rectOne, rectTwo) {
+//Gets the minimum vector for rectOne to be fully overlapped by rectTwo
+//Its behaviour is undefined if rectOne cannot be fully overlapped by rectTwo
+function minVecFullOverlapRects(rectOne, rectTwo) {
+    if (!assertDefined("minVecFullOverlapRects", rectOne, rectTwo))
+        return new Vector(0, 0);
+
     var distance1 = vecToRect(rectOne, new Vector(rectTwo.x, rectTwo.y));
     var distance2 = vecToRect(rectOne, new Vector(rectTwo.x + rectTwo.w, rectTwo.y));
     var distance3 = vecToRect(rectOne, new Vector(rectTwo.x, rectTwo.y + rectTwo.h));
@@ -122,16 +110,15 @@ function distBetweenRectsFullOverlap(rectOne, rectTwo) {
     return maximum;
 }
 
-//Circle is defined as the bounds on the circle
-function distBetweenRectAndCircle(rect, circleCenter, r) {
-    if (!r)
-        console.log("vecBetweenRectAndCircle called with r==0, you don't want this.");
-    var vec = vecToRect(rect, circleCenter);
+//Circle is defined as the bounding rect of circle
+function vecBetweenRectAndCircle(rect, circle) {
+    if (!assertDefined("vecBetweenRectAndCircle", rect, circle))
+        return new Vector(0, 0);
 
-    var dist = Math.sqrt(vec.magSq()) - r;
+    var vec = vecToRect(rect, getCircleCenter(circle));
 
-    if (dist < 0)
-        dist = 0;
-
-    return dist;
+    if (vec.magSq() < circle.w * circle.w)
+        return new Vector(0, 0);
+    else
+        return dist;
 }

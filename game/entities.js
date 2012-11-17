@@ -99,9 +99,7 @@ function Path_Line(pathBase) {
 			direction.subtract(pathBase.tPos.getCenter());
 
 			var start = pathBase.tPos.getCenter();
-			//direction.setMag(pathBase.tPos.w / 2);
-			//start.subtract(direction);
-
+			
 			var end = new Vector(start.x, start.y);
 			direction.setMag(pathBase.tPos.w);
 			end.add(direction);
@@ -207,7 +205,7 @@ function Tower(x, y, w, h) {
 		coolDown:       Math.random() * 1   + 1,
 		mutate:         Math.random() * 1   + 1,
 		mutatestrength: Math.random() * 3   + 1,
-	}
+	};
 	
 	var laserTime = 0.1;
 	var nextFireIn = this.attr.coolDown;
@@ -225,7 +223,7 @@ function Tower(x, y, w, h) {
 			this.base.draw(pen);
 	};
 
-	// WTF
+	// WTF - yeah man, this code is the bomb
 	this.tryUpgrade = function () {
 		if (eng.money >= 100 && this.attr.coolDown >= (2 / 50)) {
 			this.damage *= 2;
@@ -321,26 +319,23 @@ function Bug(startPath, r) {
 		var cur = this.curPath;
 		var next = this.curPath.nextPath;
 
-		var vecToNext = distBetweenRectsFullOverlap(next.tPos, this.tPos);
-
+    //Move towards the next rectangle.
+		var vecToNext = minVecFullOverlapRects(next.tPos, this.tPos);
 		vecToNext.setMag(this.speed);
 		this.tPos.dx = vecToNext.x;
 		this.tPos.dy = vecToNext.y;
+		
+    //If we are off the current rectangle and we are touching the next rectangle, then
+    //we move to the next tile (as in our current tile representation changes).
+    var vecToTouchNext = minVecBetweenRects(next.tPos, this.tPos);
+		var vecToCurrent = minVecBetweenRects(cur.tPos, this.tPos).magSq();
+    
+		if (outOfPath > 0 && vecToTouchNext.magSq() == 0) {			
+		    this.curPath = next;
 
-		//Move the next path
-		var outOfPath = vecBetweenRects(cur.tPos, this.tPos).magSq();
-		if (outOfPath > 0 || vecToNext.magSq() == 0) {
-			var vecToTouchNext = vecBetweenRects(next.tPos, this.tPos);
-			if (vecToTouchNext.magSq() == 0) {
-				this.curPath = next;
-				if (next instanceof Path_End) {
-					this.base.destroySelf = true;
-					eng.health -= 50;
-
-					if (eng.health < 0)
-						window.location.reload();
-				}
-			}
+		    if (next instanceof Path_End) {
+				    this.destroyAtBase();
+		    }
 		}
 
 		if (this.hp < 0) {
@@ -363,6 +358,14 @@ function Bug(startPath, r) {
 		if (this.base)
 			this.base.draw(pen);
 	};
+  this.destroyAtBase = function()
+  {
+      this.base.destroySelf = true;
+				eng.health -= 50;
+
+				if (eng.health < 0)
+				window.location.reload();
+  };
 }
 
 function lifetime(timeLeft) {

@@ -24,6 +24,19 @@ canvas {
 
 <script src="jquery.min.js"></script><!-- //ajax.googleapis.com/ajax/libs/jquery/1.8.2/ -->
 
+<!-- MUST BE FIRST OR ELSE THINGS WILL CRASH! -->
+<script>
+    //Set DFlag.flagName to set debug flags.
+    //Try to only do this in debug.js
+    var DFlag = {};
+</script>
+
+<script src="debug.js"></script>
+<script src="fail.js"></script>
+<script src="type.js"></script>
+
+<script src="baseGeometry.js"></script>
+
 <script src="commonFncs.js"></script>
 <script src="commonGeometry.js"></script>
 

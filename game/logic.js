@@ -64,7 +64,7 @@
         mX = this.mX;
         mY = this.mY;
 
-        this.curQuadTree = new QuadTree(this.base.children, -100, 1000, -100, 1000);
+        this.curQuadTree = new QuadTree(this.base.children);
 
         var bugs = this.base.children.Bug;
 

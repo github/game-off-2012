@@ -99,25 +99,3 @@ function baseObj(type, zindex) {
         }
     }
 }
-
-function temporalPos(x, y, w, h, dx, dy) {
-    this.x = x;
-    this.y = y;
-
-    this.dx = dx;
-    this.dy = dy;
-
-    this.w = w;
-    this.h = h;
-
-    this.update = function (dt) {
-        this.x += this.dx * dt;
-        this.y += this.dy * dt;
-    };
-    this.getCenter = function () {
-        return new Vector(this.x + this.w / 2, this.y + this.h / 2 );
-    };
-    this.boundingBox = function () {
-        return this;
-    };
-}
