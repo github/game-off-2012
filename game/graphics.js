@@ -8,7 +8,7 @@
     },
     rect: function (x, y, width, height, pen) {
         pen.beginPath();
-        pen.fillRect(x, y, width, height);
+        //pen.fillRect(x, y, width, height);
         pen.rect(x + 1, y + 1, width - 2, height - 2);
         pen.closePath();
         pen.fill();
