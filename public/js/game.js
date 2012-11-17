@@ -23,11 +23,11 @@ function Game(canvas) {
 		requestAnimFrame(this.update.bind(this))
 	}
 	this.physics = function(timeDelta) {
-		this.timer+=timeDelta
-		if(this.timer>this.timeTillLevel){
-			this.timer=0
-			if(this.objects["spawner"]){
-				this.objects["spawner"].level+=1
+		this.timer += timeDelta
+		if (this.timer > this.timeTillLevel) {
+			this.timer = 0
+			if (this.objects["spawner"]) {
+				this.objects["spawner"].level += 1
 			}
 		}
 		for (var i = 0; i < this.objects.length; i++) {

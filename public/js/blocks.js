@@ -19,15 +19,15 @@ function BlockSpawner(game, speed, level) {
 			}
 		}
 		/* spawning algo
-		 * level 1 block spawn chance = 1/100
-		 * level increases by .25/100 chance for each level
-		 * block size is random between 5x100 and 100x5
+		 * level 1 block spawn chance = 1.5/100
+		 * level increases by .5/100 chance for each level
+		 * block size is random between 10x100 and 100x10
 		 *
 		 */
-		if (Math.random() * 100 > 100 - this.level/2) {
+		if (Math.random() * 100 > 100 - this.level/2-1) {
 			var x = Math.random() * canvas.width
-			var w = Math.random() * 95 + 5
-			var h = Math.random() * 95 + 5
+			var w = Math.random() * 90 + 10
+			var h = Math.random() * 90 + 10
 			var y = -h
 			this.blocks.push(new Block(x, y, w, h, this.speed))
 		}
@@ -45,10 +45,10 @@ function Block(x, y, w, h, speed) {
 	this.h = h || 20
 	this.speed = speed || 4
 	this.draw = function(ctx) {
-		ctx.fillStyle = "#222"
+		ctx.fillStyle = "#323232"
 		ctx.fillRect(this.x, this.y, this.w, this.h)
 	}
 	this.physics = function(timeDelta) {
-		this.y += this.speed
+		this.y += this.speed*timeDelta*.05
 	}
 }

@@ -86,18 +86,42 @@ function Line(game, color, x, y, r, keys, xSpeed, ySpeed) {
 		var tail = this.points[0]
 		if(!tail)
 			return
-			
-		
+
 		ctx.beginPath();
 		ctx.lineWidth=tail.r*2
 		ctx.lineCap='round'
 		ctx.moveTo(tail.x,tail.y);
 		ctx.strokeStyle = tail.color
 		
-		
+		var lastPoint=[tail.x,tail.y]
+		var lastSlope=undefined
 		for (var i = 1; i < this.points.length; i++) {
 			var point = this.points[i]
 			ctx.lineTo(point.x,point.y)
+			/*if(!lastSlope){
+				lastSlope = (lastPoint[1]-point.y)/(lastPoint[0]-point.x)
+				ctx.lineTo(point.x,point.y)
+			}
+			else{
+				var slope = (lastPoint[1]-point.y)/(lastPoint[0]-point.x)
+				if (slope>lastSlope+.2 || slope<lastSlope-.2){
+					ctx.stroke();
+					ctx.closePath()
+					
+					ctx.beginPath();
+					ctx.lineWidth=tail.r*2
+					ctx.lineCap='round'
+					ctx.moveTo(point.x,point.y);
+					ctx.strokeStyle = tail.color
+					lastSlope=slope
+					
+				}else{
+					lastSlope = slope
+					ctx.lineTo(point.x,point.y)
+				}
+			}*/
+			
+			
 			//ctx.beginPath();
 			//ctx.arc(point.x, point.y, point.r, 0, Math.PI * 2, true);
 			//ctx.closePath();

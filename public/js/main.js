@@ -15,7 +15,16 @@ function init() {
 	canvas.width = 800
 	canvas.height = 600
 	game = new Game(canvas)
-	var player = new Player(game, null, null, game.speed)
+	var hud = new HUD(game, true)
+	game.addObject("hud", hud)
+	hud.draw(game.ctx)
+}
+
+function startGame(){
+	keyListeners = []
+	game.play=false
+	game = new Game(canvas)
+	var player = new Player(game, null, null, null, game.speed)
 	var spawner = new BlockSpawner(game, game.speed)
 	var hud = new HUD(game)
 	game.addObject("spawner",spawner)
@@ -48,10 +57,12 @@ window.onkeyup = function(e) {
 window.onkeypress = function(e) {
 	for (var i = 0; i < keyListeners.length; i++) {
 		var k = keyMap[e.which] || String.fromCharCode(e.which)
-		if (keyListeners[i][0] == k) {
+		if (keyListeners[i][0] === k) {
 			e.preventDefault()
 			keyListeners[i][1]();
 		}
 	}
 }
-init(); 
+init();
+//debug
+startGame()
