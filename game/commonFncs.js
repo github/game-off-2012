@@ -11,6 +11,20 @@ function swap(obj, one, two) {
     obj[two] = temp;
 }
 
+function mergeToArray(value, array) {
+    if (typeof value !== "undefined") {
+        if (value && value.constructor.name == "Array") {
+            if (value.length > 0)
+                for (var key in value) //concat would mean when you call this you have to do arr = merg(val, arr)
+                    array.push(value[key]);
+        }
+        else if (value || typeof value === "number")
+            array.push(value);
+    }
+    return array;
+}
+
+//This should really not be in here.
 //Sorts arr by the given property (uses quickSort)
 function sortArrayByProperty
 (

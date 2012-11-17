@@ -15,3 +15,12 @@ function assertDefined(functionName) {
 
     return allDefined;
 }
+
+function defined() {
+    for (var i = 0; i < arguments.length; i++) {
+        if (typeof arguments[i] === "undefined") {
+            return false;
+        }
+    }
+    return true;
+}

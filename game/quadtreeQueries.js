@@ -67,18 +67,21 @@ function findClosest(engine, type, target, maxDistance) {
         var closestObj = null;
 
         if (DFlag.logn.findClosest) {
-            DFlag.logn.findClosest.total += quadtree.indexCount;
+            if(quadtree.startIndex)
+                DFlag.logn.findClosest.total += quadtree.indexCount;
         }
 
-        //This is the brute force part of the algorithm
-        for (var x = quadtree.startIndex; x < quadtree.startIndex + quadtree.indexCount; x++) {            
-            var curObj = array[x];
+        if (quadtree.indexCount) {
+            //This is the brute force part of the algorithm
+            for (var x = quadtree.startIndex; x < quadtree.startIndex + quadtree.indexCount; x++) {
+                var curObj = array[x];
 
-            var disSquared = vecToRect(target, curObj.tPos).magSq();
+                var disSquared = vecToRect(target, curObj.tPos).magSq();
 
-            if (disSquared <= minDisSquared) {
-                minDisSquared = disSquared;
-                closestObj = curObj;
+                if (disSquared <= minDisSquared) {
+                    minDisSquared = disSquared;
+                    closestObj = curObj;
+                }
             }
         }
 
@@ -90,12 +93,12 @@ function findClosest(engine, type, target, maxDistance) {
         var curD = quadtree.splitX ? "x" : "y";
 
         //The rectangle in which we are in is the best bet... so we recurse down with that,
-        var curClosest = null;
+        var curClosest = closestObj;
 
         if (target[curD] <= quadtree.splitPos)
-            curClosest = findClosestPrivate(quadtree.lessTree, target, array, minDisSquared);
+            curClosest = curClosest || findClosestPrivate(quadtree.lessTree, target, array, minDisSquared);
         else
-            curClosest = findClosestPrivate(quadtree.greaterTree, target, array, minDisSquared);
+            curClosest = curClosest || findClosestPrivate(quadtree.greaterTree, target, array, minDisSquared);
 
         if (curClosest) {
             //Not possible, it would have been screened in the function call
@@ -106,7 +109,7 @@ function findClosest(engine, type, target, maxDistance) {
         }
 
         //Splits always must be compared :(
-        curClosest = findClosestPrivate(quadtree.splitTree, target, array, minDisSquared) || curClosest;
+        curClosest = curClosest || findClosestPrivate(quadtree.splitTree, target, array, minDisSquared);
 
         if (curClosest) {
             //Not possible, it would have been screened in the function call
@@ -119,9 +122,9 @@ function findClosest(engine, type, target, maxDistance) {
         //If it is possible something in the other side of the split could be better.            
         //Just opposite of previous exclusion logic
         if (target[curD] > quadtree.splitPos)
-            curClosest = findClosestPrivate(quadtree.lessTree, target, array, minDisSquared) || curClosest;
+            curClosest = curClosest || findClosestPrivate(quadtree.lessTree, target, array, minDisSquared);
         else
-            curClosest = findClosestPrivate(quadtree.greaterTree, target, array, minDisSquared) || curClosest;
+            curClosest = curClosest || findClosestPrivate(quadtree.greaterTree, target, array, minDisSquared);
 
 
         return curClosest;
@@ -174,7 +177,7 @@ function findAllWithin(engine, type, target, maxDistance) {
         for (var x = quadtree.startIndex; x < quadtree.startIndex + quadtree.indexCount; x++) {
             var curObj = array[x];
 
-            var disSquared = vecToRect(target, curObj.tPos);
+            var disSquared = vecToRect(target, curObj.tPos).magSq();
 
             if (disSquared <= minDisSquared) {
                 within.push(curObj);
@@ -187,9 +190,6 @@ function findAllWithin(engine, type, target, maxDistance) {
             return;
 
         var curD = quadtree.splitX ? "x" : "y";
-
-        //The rectangle in which we are in is the best bet... so we recurse down with that,
-        var curClosest = null;
 
         if (target[curD] <= quadtree.splitPos)
             findWithinPrivate(quadtree.lessTree, target, array, minDisSquared);
@@ -205,9 +205,6 @@ function findAllWithin(engine, type, target, maxDistance) {
             findWithinPrivate(quadtree.lessTree, target, array, minDisSquared);
         else
             findWithinPrivate(quadtree.greaterTree, target, array, minDisSquared);
-
-
-        return curClosest;
     }
 }
 

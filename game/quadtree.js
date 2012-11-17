@@ -180,6 +180,9 @@ function QuadTree(arrObjs, splitThreshold) {
         expectedMaxDepth,
         curDepth
     ) {
+        if (curDepth > 1000)
+            fail("WTF, stack overflow now");
+
         var branch = {};
         branch.leaf = false;
         branch.bounds = { x: minX, w: maxX - minX, y: minY, h: maxY - minY };
@@ -223,9 +226,12 @@ function QuadTree(arrObjs, splitThreshold) {
             var curSize = splitX ? "w" : "h";
 
             //First sort by the axis, in order to find the best split pos            
-            sortByAxis(arrObj, startIndex, endIndex - 1, curDimen);
+            //Uncomment out this time to guarentee good results, now we kinda just take random stuff.
+            //sortByAxis(arrObj, startIndex, endIndex - 1, curDimen);
 
-            splitPos = arrObj[(Math.floor((startIndex + endIndex) / 2))][curDimen];
+            var splitIndex = (Math.floor((startIndex + endIndex) / 2));            
+
+            splitPos = arrObj[splitIndex].tPos[curDimen];
 
             if(DFlag.quadtreeDiagnostics)
             {
@@ -238,7 +244,13 @@ function QuadTree(arrObjs, splitThreshold) {
 
             branch.splitPos = splitPos;
             branch.splitX = splitX;
-            
+
+            //Take the item at splitIndex and put it at the current level (prevents stack overflow)
+            swap(splitIndex, greaterStart);
+            branch.startIndex = greaterStart;
+            branch.indexCount = 1;
+            greaterStart--;endIndex--;
+
             while (curPos <= greaterStart) {
                 var boundingBox = arrObj[curPos].tPos.boundingBox();
 

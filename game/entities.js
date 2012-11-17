@@ -19,13 +19,16 @@
 		}
 		ink.rect(p.x, p.y, p.w, p.h, pen);
 
-		if (this.base)
-			this.base.draw(pen);
-
 		//Strange... but we can't set this during update!
 		this.hover = false;
 	};
+
+  this.mouseover = function()
+  {
+    this.hover = true;
+  };
 }
+
 
 function Path_End(x, y, w, h) {
 	this.tPos = new temporalPos(x, y, w, h, 0, 0);
@@ -40,9 +43,6 @@ function Path_End(x, y, w, h) {
 		pen.fillStyle = "grey";
 		pen.strokeStyle = "lightgreen";
 		ink.rect(p.x, p.y, p.w, p.h, pen);
-
-		if(this.base)
-			this.base.draw(pen);
 	};
 }
 
@@ -62,9 +62,6 @@ function Path_Start(x, y, w, h) {
 		pen.fillStyle = "yellow";
 		pen.strokeStyle = "lightgreen";
 		ink.rect(p.x, p.y, p.w, p.h, pen);
-
-		if (this.base)
-			this.base.draw(pen);
 	};
 }
 
@@ -95,9 +92,6 @@ function Path_Line(pathBase) {
 			pen.strokeStyle = "blue";
 			ink.arrow(start.x, start.y, end.x, end.y, pen);
 		}
-
-		if (this.base)
-			this.base.draw(pen);
 	};
 }
 function Path(x, y, w, h) {
@@ -123,9 +117,6 @@ function Path(x, y, w, h) {
 		pen.fillStyle = "green";
 		pen.strokeStyle = "lightgreen";
 		ink.rect(p.x, p.y, p.w, p.h, pen);
-
-		if (this.base)
-			this.base.draw(pen);
 	};
 }
 
@@ -143,9 +134,6 @@ function Tower_Range(x, y, w, h) {
 		pen.fillStyle = "transparent";
 		pen.strokeStyle = "blue";
 		ink.circ(p.x + w / 2, p.y + h / 2, w / 2, pen);
-
-		if(this.base)
-			this.base.draw(pen);
 	};
 }
 
@@ -167,10 +155,7 @@ function Tower_Laser(xs, ys, xe, ye, duration) {
 		pen.lineWidth = 2;
 		ink.line(p.x, p.y, p.x + p.w, p.y + p.h, pen);
 		pen.restore();
-
-		if (this.base)
-			this.base.draw(pen);
-	};
+	};  
 }
 
 //All mutate stuff is copy-pasta from our mother project (for now)
@@ -197,9 +182,6 @@ function Tower(x, y, w, h) {
 		pen.strokeStyle = "lightblue";
 		ink.rect(p.x, p.y, p.w, p.h, pen);
 		pen.restore();
-
-		if (this.base)
-			this.base.draw(pen);
 	};
 
 	// WTF - yeah man, this code is the bomb
@@ -231,13 +213,12 @@ function Tower(x, y, w, h) {
 		}
 		if (a.coolDown >= 4) {
 			a.range = 80;
-		}
-		
+		}		
 		this.color = "#" + hexPair(255 - a.hp) + hexPair(a.range) + hexPair(a.damage);
 	}
+
 	this.attack = function() {
-		var target = findClosest(eng, "Bug", this.tPos.getCenter(), this.attr.range + 0.01);
-		console.log("Found target:", target); 
+		var target = findClosest(eng, "Bug", this.tPos.getCenter(), this.attr.range + 0.01);		
 		if (!target) {
 			return;
 		}
@@ -247,9 +228,9 @@ function Tower(x, y, w, h) {
 		var cent1 = this.tPos.getCenter();
 		var cent2 = target.tPos.getCenter();
 		
-		return new Tower_Laser(cent1.x, cent1.y, cent2.x, cent2.y, laserTime);
-		
+		return new Tower_Laser(cent1.x, cent1.y, cent2.x, cent2.y, laserTime);		
 	}
+
 	this.update = function (dt) {
 		mutateCounter -= dt;
 		if (mutateCounter < 0) {
@@ -260,15 +241,18 @@ function Tower(x, y, w, h) {
 		var newObjs = [];
 		nextFireIn -= dt;
 		if (nextFireIn < 0) {
-			var newObj = this.attack();
-			if (newObj) {
-				newObjs.push(newObj);
-			}
+			mergeToArray(this.attack(), newObjs);
 			nextFireIn = this.attr.coolDown;
 		}		
 
 		return newObjs;
 	}
+
+  this.mouseover = function() {
+    document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
+  }  
+
+  //Is this supposed to be out of a function?
 	this.mutate();
 }
 
@@ -323,9 +307,6 @@ function Bug(startPath, r) {
 		pen.strokeStyle = "orange";
 		pen.lineWidth = 1;
 		ink.circ(p.x + p.w / 2, p.y + p.h / 2, p.w / 2, pen);
-
-		if (this.base)
-			this.base.draw(pen);
 	};
   this.destroyAtBase = function()
   {
@@ -350,8 +331,6 @@ function lifetime(timeLeft) {
 			this.base.parent.destroySelf = true;
 			this.base.destroySelf = true;
 		}
-
-		return 0;
 	};
 
 	this.draw = function (pen) {

@@ -64,35 +64,42 @@ canvas {
 
     var gameTimeAccumulated = 0;
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("#myCanvas").attr("width", width);
         $("#myCanvas").attr("height", height);
-        window.reqAnim = (function(){
-            return  window.requestAnimationFrame || 
-            window.webkitRequestAnimationFrame   || 
-            window.mozRequestAnimationFrame      || 
-            window.oRequestAnimationFrame        || 
-            window.msRequestAnimationFrame       || 
-            function( callback ){
+        window.reqAnim = (function () {
+            return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function (callback) {
                 window.setTimeout(callback, 1000 / 60);
             };
         })();
-        
+
         canvas = document.getElementById("myCanvas");
         var pen = canvas.getContext("2d");
-        eng = new Engine(pen);
+        eng = new Engine(pen); //this.base.rootNode.holder will also get eng... but... yeah...
         window.reqAnim(eng.run.bind(eng));
-        
-        $("#myCanvas").mousemove(function(e) {
-            eng.mX = e.offsetX;
-            eng.mY = e.offsetY;
+
+        $("#myCanvas").mousemove(function (e) {
+            var mX = defined(e.offsetX) ? e.offsetX : e.pageX - document.getElementById("myCanvas").offsetLeft;
+            var mY = defined(e.offsetY) ? e.offsetY : e.pageY - document.getElementById("myCanvas").offsetTop;
+
+            eng.mX = mX;
+            eng.mY = mY;
         });
-        $("#myCanvas").mouseout(function() {
+        $("#myCanvas").mouseout(function () {
             eng.mX = -1;
             eng.mY = -1;
         });
-        $("#myCanvas").click(function(e) {
-            eng.click(e);
+        $("#myCanvas").click(function (e) {
+            var cX = defined(e.offsetX) ? e.offsetX : e.pageX - document.getElementById("myCanvas").offsetLeft;
+            var cY = defined(e.offsetY) ? e.offsetY : e.pageY - document.getElementById("myCanvas").offsetTop;
+
+            eng.cX = cX;
+            eng.cY = cY;
         });
     });
 </script>
