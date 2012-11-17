@@ -96,24 +96,24 @@ function findClosest(engine, type, target, maxDistance) {
         var curClosest = closestObj;
 
         if (target[curD] <= quadtree.splitPos)
-            curClosest = curClosest || findClosestPrivate(quadtree.lessTree, target, array, minDisSquared);
+            curClosest = findClosestPrivate(quadtree.lessTree, target, array, minDisSquared) || curClosest;
         else
-            curClosest = curClosest || findClosestPrivate(quadtree.greaterTree, target, array, minDisSquared);
+            curClosest = findClosestPrivate(quadtree.greaterTree, target, array, minDisSquared) || curClosest;
 
         if (curClosest) {
             //Not possible, it would have been screened in the function call
-            var newDisSquared = vecToRect(target, curClosest.tPos);
+            var newDisSquared = vecToRect(target, curClosest.tPos).magSq();
             if (newDisSquared > minDisSquared)
                 fail("no, impossible. findClosest ignored minDisSquared and returning something too far away.");
             minDisSquared = newDisSquared;
         }
 
         //Splits always must be compared :(
-        curClosest = curClosest || findClosestPrivate(quadtree.splitTree, target, array, minDisSquared);
+        curClosest = findClosestPrivate(quadtree.splitTree, target, array, minDisSquared) || curClosest;
 
         if (curClosest) {
             //Not possible, it would have been screened in the function call
-            var newDisSquared = vecToRect(target, curClosest.tPos);
+            var newDisSquared = vecToRect(target, curClosest.tPos).magSq();
             if (newDisSquared > minDisSquared)
                 fail("no, impossible. findClosest ignored minDisSquared and returning something too far away.");
             minDisSquared = newDisSquared;
@@ -122,9 +122,9 @@ function findClosest(engine, type, target, maxDistance) {
         //If it is possible something in the other side of the split could be better.            
         //Just opposite of previous exclusion logic
         if (target[curD] > quadtree.splitPos)
-            curClosest = curClosest || findClosestPrivate(quadtree.lessTree, target, array, minDisSquared);
+            curClosest = findClosestPrivate(quadtree.lessTree, target, array, minDisSquared) || curClosest;
         else
-            curClosest = curClosest || findClosestPrivate(quadtree.greaterTree, target, array, minDisSquared);
+            curClosest = findClosestPrivate(quadtree.greaterTree, target, array, minDisSquared) || curClosest;
 
 
         return curClosest;
