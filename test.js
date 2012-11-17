@@ -36,8 +36,8 @@ var missed = [[],[],[],[]];
 var score = 0;
 var paused = true;
 
-var fork = new Image();
-fork.src = 'fork.gif';
+var forkSprite = new Image();
+forkSprite.src = 'img/fork.png';
 
 var getTime = function() {
   return Math.floor(track.currentTime*1000);
@@ -140,7 +140,7 @@ function animate() {
 
   active.forEach(function(array) {
     array.forEach(function(target) {
-      context.drawImage(fork, (target.type * 120), target.top);
+      context.drawImage(forkSprite, (target.type * 120), target.top);
     });
   });
 
@@ -148,7 +148,7 @@ function animate() {
 
   inactive.forEach(function(array) {
     array.forEach(function(target) {
-      context.drawImage(fork, (target.type * 120), target.top);
+      context.drawImage(forkSprite, (target.type * 120), target.top);
     });
   });
 
@@ -156,7 +156,7 @@ function animate() {
 
   missed.forEach(function(array) {
     array.forEach(function(target) {
-      context.drawImage(fork, (target.type * 120), target.top);
+      context.drawImage(forkSprite, (target.type * 120), target.top);
     });
   });
 
