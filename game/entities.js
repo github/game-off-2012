@@ -15,7 +15,8 @@
 		if (this.hover) {
 			pen.strokeStyle = "yellow";
 		} else {
-			pen.strokeStyle = "white";
+			pen.strokeStyle = "#123456";
+			pen.lineWidth = 2;
 		}
 		ink.rect(p.x, p.y, p.w, p.h, pen);
 

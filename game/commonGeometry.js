@@ -36,6 +36,12 @@ function getCircleCenter(circle) {
     return new Vector(circle.x + circle.w / 2, circle.y + circle.h / 2);
 }
 
+//Returns the vector of the center of a rect
+//Should merge this and getCircleCenter into one function. This is here for clarity only
+function getRectCenter(rect) {
+    return new Vector(rect.x + rect.w / 2, rect.y + rect.h / 2);
+}
+
 //Gets the Vector from the a rect to a point.    
     //Caveats
         //If point is in rect then it returns Vector(0, 0).
