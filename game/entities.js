@@ -120,7 +120,7 @@ function Path(x, y, w, h) {
 	this.update = function (dt) {
 		this.tPos.update(dt);
 
-		var newObjs = []
+		var newObjs = [];
 
 		if (this.nextPath && !this.pathLine) {
 			this.pathLine = new Path_Line(this);
@@ -300,7 +300,7 @@ function Bug(startPath, r) {
 	this.maxHP = 20;
 	this.hp = this.maxHP;
 	this.value = 15;
-	this.speed = 20;
+	this.speed = 0.1;
 	this.color = "yellow";
 
 	this.base = new baseObj("Bug", 10);

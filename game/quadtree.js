@@ -43,7 +43,13 @@ function QuadTree(arrObjs, splitThreshold) {
     for (var type in arrObjs) {
         this.objTrees[type] = this.objTrees[type] || {};
 
-        if (arrObjs[type].length == 0) {
+        var arrayCopy = [];
+        for (var key in arrObjs[type]) {
+            arrObjs[type][key].zoffset = key;
+            arrayCopy.push(arrObjs[type][key]);
+        }
+
+        if (arrayCopy.length == 0) {
             this.objTrees[type].tree = {};
             this.objTrees[type].tree.leaf = true;
             this.objTrees[type].tree.length = 0;
@@ -55,19 +61,19 @@ function QuadTree(arrObjs, splitThreshold) {
             this.objTrees[type].tree.bounds.w = 0;
             this.objTrees[type].tree.bounds.h = 0;
 
-            this.objTrees[type].array = arrObjs[type];
+            this.objTrees[type].array = arrayCopy;
             continue;
         }
 
 
-        minX = arrObjs[type][0].tPos.boundingBox().x;
-        maxX = arrObjs[type][0].tPos.boundingBox().x;
-        minY = arrObjs[type][0].tPos.boundingBox().y;
-        maxY = arrObjs[type][0].tPos.boundingBox().y;
-        for (var index in arrObjs[type]) {
+        minX = arrayCopy[0].tPos.boundingBox().x;
+        maxX = arrayCopy[0].tPos.boundingBox().x;
+        minY = arrayCopy[0].tPos.boundingBox().y;
+        maxY = arrayCopy[0].tPos.boundingBox().y;
+        for (var index in arrayCopy) {
             {
                 //Ughh... I don't want to find min and max
-                var boundingBox = arrObjs[type][index].tPos.boundingBox();
+                var boundingBox = arrayCopy[index].tPos.boundingBox();
                 if (boundingBox.x < minX)
                     minX = boundingBox.x;
                 if (boundingBox.y < minY)
@@ -78,23 +84,22 @@ function QuadTree(arrObjs, splitThreshold) {
                 if ((boundingBox.y + boundingBox.h) > maxY)
                     maxY = boundingBox.y + boundingBox.h;
             }
-        }
-        
+        }        
 
         this.objTrees[type].tree = makeBranch
                                    (
-                                       arrObjs[type],
-                                       0, arrObjs[type].length,
+                                       arrayCopy,
+                                       0, arrayCopy.length,
                                        minX, maxX, false,
                                        minY, maxY, false,
                                        true,
                                        0,
                                        splitThreshold,
-                                       Math.ceil(Math.log(arrObjs[type].length) / Math.log(2) + 2),
+                                       Math.ceil(Math.log(arrayCopy.length) / Math.log(2) + 2),
                                        1
                                    );
 
-        this.objTrees[type].array = arrObjs[type];
+        this.objTrees[type].array = arrayCopy;
     }
 
     //END INDEX IS INCLUSIVE HERE!
@@ -196,6 +201,9 @@ function QuadTree(arrObjs, splitThreshold) {
                 branch.leaf = true;
                 branch.startIndex = startIndex;
                 branch.indexCount = endIndex - startIndex;
+
+                for (var i = startIndex; i < endIndex; i++)
+                    arrObj[i].quadNode = branch;
             }
             else {
                 fail("CRASHED! Have invalid (" + length + ") length in tree!");

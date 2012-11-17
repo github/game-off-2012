@@ -24,11 +24,22 @@ function baseObj(type, zindex) {
     this.children = {};
     this.type = type;
 
+    //This can be used to greatly increase the speed of spatial based queries
+    this.quadNode = {};
+
+    //Will be set to the position in the array it is in,
+    //and so will be used to determine order when zindex is equal.
+    this.zoffset = 0;
+
     if (!zindex)
         zindex = 0;
 
     //Individual objects cannot change their zindex! If they are the same type they must have the same zindex!
     this.zindex = zindex;
+
+    //If this is not set it means the object has not been added to anything yet
+    //(and so IT IS THE ROOT NODE).
+    this.rootNode = null;
 
     this.addObject = function (obj) {
         if (!obj.base)
@@ -39,6 +50,15 @@ function baseObj(type, zindex) {
 
         this.children[obj.base.type].push(obj);
         obj.base.parent = this;
+
+        obj.base.setRootNode(this.rootNode || this);
+    }
+
+    this.setRootNode = function (rootNode) {
+        this.rootNode = rootNode;
+        for (var key in children)
+            if (children[key].base)
+                children[key].setRootNode(rootNode);
     }
 
     this.removeAllType = function (type) {

@@ -16,8 +16,8 @@
 
     this.engine = this; //eng also works fine
 
-    this.maxBugs = 200;
-    this.bugIncrease = 1;
+    this.maxBugs = 2;
+    this.bugIncrease = 5;
     this.bugIncInc = 0.1;
 
     //this.maxBugs = 1;
@@ -85,9 +85,7 @@
 
                 if (tower != this.lastTowerHover)
                     document.getElementById("towerinfo").innerHTML = JSON.stringify(tower.attr);
-                //this.lastTowerHover = tower;
             }
-
 
             var curTile = findClosest(this.engine, "Tile", { x: this.mX, y: this.mY }, 1000);
             if(curTile)
