@@ -1,14 +1,3 @@
-window.requestAnimFrame = (function(callback) {
-  return window.requestAnimationFrame || 
-  window.webkitRequestAnimationFrame || 
-  window.mozRequestAnimationFrame || 
-  window.oRequestAnimationFrame || 
-  window.msRequestAnimationFrame ||
-  function(callback) {
-    window.setTimeout(callback, 1000 / 60);
-  };
-})();
-
 /*
 var stats = new Stats();
 stats.setMode(0); //fps
@@ -33,7 +22,7 @@ var context = canvas.getContext('2d');
 var blockHeight = 20;
 var blockTop = -blockHeight;
 
-var queue0 = [1500, 3000,7000, 8250, 9250, 11750, 12750, 15250, 16250, 17500, 
+var queue0 = [1400, 3000,7000, 6250, 9250, 11750, 12750, 15250, 16250, 17500, 
 20250];
 var queue1 = [5250, 7250, 10000, 11000, 13500, 14500, 18000, 20750];
 var queue2 = [5750, 7500, 10500, 11000, 14000, 14500, 18500, 20750];
@@ -44,9 +33,11 @@ var active = [[],[],[],[]];
 var inactive = [[],[],[],[]];
 var missed = [[],[],[],[]];
 
-var start = new Date().getTime();
 var score = 0;
 var paused = true;
+
+var fork = new Image();
+fork.src = 'fork.gif';
 
 var getTime = function() {
   return Math.floor(track.currentTime*1000);
@@ -131,7 +122,7 @@ window.setInterval(function(){
 }, 10);
 
 function animate() {
-  requestAnimFrame(function () {
+  requestAnimationFrame(function () {
     animate();
   });
 
@@ -149,7 +140,7 @@ function animate() {
 
   active.forEach(function(array) {
     array.forEach(function(target) {
-      context.fillRect((target.type * 120), target.top, blockHeight, blockHeight);
+      context.drawImage(fork, (target.type * 120), target.top);
     });
   });
 
@@ -157,7 +148,7 @@ function animate() {
 
   inactive.forEach(function(array) {
     array.forEach(function(target) {
-      context.fillRect((target.type * 120), target.top, blockHeight, blockHeight);
+      context.drawImage(fork, (target.type * 120), target.top);
     });
   });
 
@@ -165,7 +156,7 @@ function animate() {
 
   missed.forEach(function(array) {
     array.forEach(function(target) {
-      context.fillRect((target.type * 120), target.top, blockHeight, blockHeight);
+      context.drawImage(fork, (target.type * 120), target.top);
     });
   });
 
