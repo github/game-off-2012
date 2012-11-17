@@ -35,7 +35,7 @@
 /********************************* CODE START *********************************/
 
 function findClosest(engine, type, target, maxDistance) {
-    if (assertDefined("findClosest", engine, type, target))
+    if (!assertDefined("findClosest", engine, type, target))
         return null;
 
     if (!engine.curQuadTree.objTrees[type])
@@ -57,8 +57,7 @@ function findClosest(engine, type, target, maxDistance) {
         //(not just because it reduces a function call), but then the code would be way bigger
         //and much more complex
 
-        var minDisSqrBounds = distanceToRectSq(quadtree.bounds, target);
-        minDisSqrBounds = distanceToRectSq(quadtree.bounds, target);
+        var minDisSqrBounds = vecToRect(target, quadtree.bounds).magSq();        
 
         //Then it is impossible and we will never find a better collision
         if (minDisSqrBounds > minDisSquared)
@@ -73,9 +72,9 @@ function findClosest(engine, type, target, maxDistance) {
 
         //This is the brute force part of the algorithm
         for (var x = quadtree.startIndex; x < quadtree.startIndex + quadtree.indexCount; x++) {            
-            var curObj = array[quadtree.startIndex];
+            var curObj = array[x];
 
-            var disSquared = distanceToRectSq(sizeToBounds(curObj.tPos.boundingBox()), target);
+            var disSquared = vecToRect(target, curObj.tPos).magSq();
 
             if (disSquared <= minDisSquared) {
                 minDisSquared = disSquared;
@@ -100,7 +99,7 @@ function findClosest(engine, type, target, maxDistance) {
 
         if (curClosest) {
             //Not possible, it would have been screened in the function call
-            var newDisSquared = distanceToRectSq(sizeToBounds(curClosest.tPos.boundingBox()), target);
+            var newDisSquared = vecToRect(target, curClosest.tPos);
             if (newDisSquared > minDisSquared)
                 fail("no, impossible. findClosest ignored minDisSquared and returning something too far away.");
             minDisSquared = newDisSquared;
@@ -111,7 +110,7 @@ function findClosest(engine, type, target, maxDistance) {
 
         if (curClosest) {
             //Not possible, it would have been screened in the function call
-            var newDisSquared = distanceToRectSq(sizeToBounds(curClosest.tPos.boundingBox()), target);
+            var newDisSquared = vecToRect(target, curClosest.tPos);
             if (newDisSquared > minDisSquared)
                 fail("no, impossible. findClosest ignored minDisSquared and returning something too far away.");
             minDisSquared = newDisSquared;
@@ -131,7 +130,7 @@ function findClosest(engine, type, target, maxDistance) {
 
 
 function findAllWithin(engine, type, target, maxDistance) {
-    if (assertDefined("findAllWithin", engine, type, target))
+    if (!assertDefined("findAllWithin", engine, type, target))
         return null;
 
     if (!engine.curQuadTree.objTrees[type])
@@ -158,13 +157,8 @@ function findAllWithin(engine, type, target, maxDistance) {
         //(not just because it reduces a function call), but then the code would be way bigger
         //and much more complex
 
-        var minDisSqrBounds = distanceToRectSq(quadtree.bounds, target);
-
-        if (isNaN(minDisSqrBounds)) {
-            var crapola = true;
-            minDis = distanceToRectSq(quadtree.bounds, target);
-        }
-
+        var minDisSqrBounds = vecToRect(target, quadtree.bounds).magSq();
+        
         //Then it is impossible and we will never find a better collision
         if (minDisSqrBounds > minDisSquared)
             return null;
@@ -178,9 +172,9 @@ function findAllWithin(engine, type, target, maxDistance) {
 
         //This is the brute force part of the algorithm
         for (var x = quadtree.startIndex; x < quadtree.startIndex + quadtree.indexCount; x++) {
-            var curObj = array[quadtree.startIndex];
-            
-            var disSquared = distanceToRectSq(sizeToBounds(curObj.tPos.boundingBox()), target);
+            var curObj = array[x];
+
+            var disSquared = vecToRect(target, curObj.tPos);
 
             if (disSquared <= minDisSquared) {
                 within.push(curObj);
@@ -225,8 +219,8 @@ function drawTree(engine, type, pen) {
         if (!quadtree)
             return;
 
-        ink.outlineRect(quadtree.bounds.xs, quadtree.bounds.ys,
-        quadtree.bounds.xe - quadtree.bounds.xs, quadtree.bounds.ye - quadtree.bounds.ys, pen);
+        ink.outlineRect(quadtree.bounds.x, quadtree.bounds.y,
+            quadtree.bounds.w, quadtree.bounds.h, pen);
 
         drawBranch(quadtree.lessTree, pen);
         drawBranch(quadtree.splitTree, pen);

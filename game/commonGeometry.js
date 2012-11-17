@@ -40,22 +40,26 @@ function getCircleCenter(circle) {
     //Caveats
         //If point is in rect then it returns Vector(0, 0).
         //If vector is given, then it will fill in vector and return that)
-function vecToRect(rect, point, vector) {
-    if (!assertDefined("vecToRect", rect, point, vector))
+function vecToRect(point, rect, vector) {
+    if (!assertDefined("vecToRect", rect, point))
         return new Vector(0, 0);
 
     if(!vector)
         vector = new Vector(0, 0);
-    
-    if (point.x > rect.xe)
-        vector.x = point.x - (rect.x + rect.w);
-    else if (point.x < rect.xs)
-        vector.x = rect.x - point.x;    
 
-    if (point.y > rect.ye)
-        vector.y = point.y - (rect.y + rect.h);
-    else if (point.y < rect.ys)
+    if (point.x > (rect.x + rect.w))
+        vector.x = (rect.x + rect.w) - point.x;
+    else if (point.x < rect.x)
+        vector.x = rect.x - point.x;
+    else
+        vector.x = 0;
+
+    if (point.y > (rect.y + rect.h))
+        vector.y = (rect.y + rect.h) - point.y;
+    else if (point.y < rect.y)
         vector.y = rect.y - point.y;
+    else
+        vector.y = 0;
 
     return vector;
 }
@@ -66,10 +70,10 @@ function minVecBetweenRects(rectOne, rectTwo) {
     if (!assertDefined("minVecBetweenRects", rectOne, rectTwo))
         return new Vector(0, 0);
 
-    var distance1 = vecToRect(rectOne, new Vector(rectTwo.x, rectTwo.y));
-    var distance2 = vecToRect(rectOne, new Vector(rectTwo.x + rectTwo.w, rectTwo.y));
-    var distance3 = vecToRect(rectOne, new Vector(rectTwo.x, rectTwo.y + rectTwo.h));
-    var distance4 = vecToRect(rectOne, new Vector(rectTwo.x + rectTwo.w, rectTwo.y + rectTwo.h));
+    var distance1 = vecToRect(new Vector(rectOne.x, rectOne.y), rectTwo);
+    var distance2 = vecToRect(new Vector(rectOne.x + rectOne.w, rectOne.y), rectTwo);
+    var distance3 = vecToRect(new Vector(rectOne.x, rectOne.y + rectOne.h), rectTwo);
+    var distance4 = vecToRect(new Vector(rectOne.x + rectOne.w, rectOne.y + rectOne.h), rectTwo);
 
     var minimum = distance1;
 
@@ -91,10 +95,10 @@ function minVecFullOverlapRects(rectOne, rectTwo) {
     if (!assertDefined("minVecFullOverlapRects", rectOne, rectTwo))
         return new Vector(0, 0);
 
-    var distance1 = vecToRect(rectOne, new Vector(rectTwo.x, rectTwo.y));
-    var distance2 = vecToRect(rectOne, new Vector(rectTwo.x + rectTwo.w, rectTwo.y));
-    var distance3 = vecToRect(rectOne, new Vector(rectTwo.x, rectTwo.y + rectTwo.h));
-    var distance4 = vecToRect(rectOne, new Vector(rectTwo.x + rectTwo.w, rectTwo.y + rectTwo.h));
+    var distance1 = vecToRect(new Vector(rectOne.x, rectOne.y), rectTwo);
+    var distance2 = vecToRect(new Vector(rectOne.x + rectOne.w, rectOne.y), rectTwo);
+    var distance3 = vecToRect(new Vector(rectOne.x, rectOne.y + rectOne.h), rectTwo);
+    var distance4 = vecToRect(new Vector(rectOne.x + rectOne.w, rectOne.y + rectOne.h), rectTwo);
 
     var maximum = distance1;
 
@@ -111,11 +115,11 @@ function minVecFullOverlapRects(rectOne, rectTwo) {
 }
 
 //Circle is defined as the bounding rect of circle
-function vecBetweenRectAndCircle(rect, circle) {
+function vecBetweenRectAndCircle(circle, circle) {
     if (!assertDefined("vecBetweenRectAndCircle", rect, circle))
         return new Vector(0, 0);
 
-    var vec = vecToRect(rect, getCircleCenter(circle));
+    var vec = vecToRect(getCircleCenter(circle), rect);
 
     if (vec.magSq() < circle.w * circle.w)
         return new Vector(0, 0);

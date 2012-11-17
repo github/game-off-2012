@@ -97,12 +97,6 @@ function QuadTree(arrObjs, splitThreshold) {
         this.objTrees[type].array = arrObjs[type];
     }
 
-    function swap(obj, one, two) {
-        var temp = obj[one];
-        obj[one] = obj[two];
-        obj[two] = temp;
-    }
-
     //END INDEX IS INCLUSIVE HERE!
     function sortByAxis
     (

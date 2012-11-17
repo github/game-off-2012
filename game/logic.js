@@ -16,11 +16,11 @@
 
     this.engine = this; //eng also works fine
 
-    this.maxBugs = 2;
+    this.maxBugs = 200;
     this.bugIncrease = 1;
     this.bugIncInc = 0.1;
 
-    //this.maxBugs = 3000;
+    //this.maxBugs = 1;
     //this.bugIncrease = 0;
     //this.bugIncInc = 0;
 
@@ -90,7 +90,8 @@
 
 
             var curTile = findClosest(this.engine, "Tile", { x: this.mX, y: this.mY }, 1000);
-            curTile.hover = true;
+            if(curTile)
+                curTile.hover = true;
         }
 
         this.secondTimer -= dt;
@@ -130,10 +131,6 @@
                 else if (towerOnTile) {
                     towerOnTile.tryUpgrade();
                 }
-            } else {
-                if (clickedTile.object.click) {
-                    clickedTile.object.click();
-                }
             }
         }
     };
@@ -157,7 +154,7 @@
         this.pen.save();
         this.pen.strokeStyle = "red";
         //drawTree(this, "Tile", this.pen);
-        drawTree(this, "Tower", this.pen);
+        //drawTree(this, "Tower", this.pen);
         this.pen.restore();        
     };
 }

@@ -2,7 +2,7 @@
 	this.hover = false;
 
 	this.tPos = new temporalPos(x, y, w, h, 0, 0);
-	this.base = new baseObj("Tile", 2);
+	this.base = new baseObj("Tile", 1);
 
 	this.update = function (dt) {
 		this.tPos.update(dt);
@@ -320,17 +320,13 @@ function Bug(startPath, r) {
 		var next = this.curPath.nextPath;
 
     //Move towards the next rectangle.
-		var vecToNext = minVecFullOverlapRects(next.tPos, this.tPos);
+		var vecToNext = minVecFullOverlapRects(this.tPos, next.tPos);
 		vecToNext.setMag(this.speed);
 		this.tPos.dx = vecToNext.x;
-		this.tPos.dy = vecToNext.y;
-		
-    //If we are off the current rectangle and we are touching the next rectangle, then
-    //we move to the next tile (as in our current tile representation changes).
-    var vecToTouchNext = minVecBetweenRects(next.tPos, this.tPos);
-		var vecToCurrent = minVecBetweenRects(cur.tPos, this.tPos).magSq();
-    
-		if (outOfPath > 0 && vecToTouchNext.magSq() == 0) {			
+		this.tPos.dy = vecToNext.y;		    
+
+    //Once we reach our destination.
+		if (vecToNext.magSq() == 0) {			
 		    this.curPath = next;
 
 		    if (next instanceof Path_End) {
