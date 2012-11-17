@@ -44,7 +44,7 @@ function findClosest(engine, type, target, maxDistance) {
     var relevantQuadTree = engine.curQuadTree.objTrees[type].tree;
     var relevantArray = engine.curQuadTree.objTrees[type].array;
 
-    if (DFlag.logn.findClosest)
+    if (DFlag.logn && DFlag.logn.findClosest)
         DFlag.logn.findClosest.max += relevantArray.length;
     
     return findClosestPrivate(relevantQuadTree, target, relevantArray, maxDistance * maxDistance, true);
@@ -66,7 +66,7 @@ function findClosest(engine, type, target, maxDistance) {
         //Find closest and return it
         var closestObj = null;
 
-        if (DFlag.logn.findClosest) {
+        if (DFlag.logn && DFlag.logn.findClosest) {
             if(quadtree.startIndex)
                 DFlag.logn.findClosest.total += quadtree.indexCount;
         }
@@ -144,7 +144,7 @@ function findAllWithin(engine, type, target, maxDistance) {
     
     var within = [];
 
-    if (DFlag.logn.findAllWithin)
+    if (DFlag.logn && DFlag.logn.findAllWithin)
         DFlag.logn.findAllWithin.max += relevantArray.length;
 
     findWithinPrivate(relevantQuadTree, target, relevantArray, maxDistance * maxDistance, true);    
@@ -169,7 +169,7 @@ function findAllWithin(engine, type, target, maxDistance) {
         //Find closest and return it
         var closestObj = null;
 
-        if (DFlag.logn.findAllWithin) {
+        if (DFlag.logn && DFlag.logn.findAllWithin) {
             DFlag.logn.findAllWithin.total += quadtree.indexCount;
         }
 
