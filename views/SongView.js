@@ -18,12 +18,29 @@ SongView = Backbone.View.extend({
     this.context = this.canvas.getContext('2d');
     _.bindAll(this, 'handleKey', 'animate');
     $(document).bind('keydown', this.handleKey);
+    window.setInterval(this.scanQueues, 10);
     this.animate();
   },
 
   render: function () { 
     $(this.el).html(this.template(this.model.toJSON()));
     return this;
+  },
+
+  getTime: function () {
+
+  },
+
+  scanQueues: function () {
+    if(!this.paused){
+      _.each(this.queues, function(queue, i){
+          if (queue[0] <= (this.getTime() + 1000)){
+          queue.shift();
+          var type = i + 1;
+          this.active[i].push({top:0, type:type});
+        }
+      }, this);
+    }
   },
 
   check: function (queue) {
