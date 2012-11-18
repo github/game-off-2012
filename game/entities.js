@@ -152,6 +152,10 @@ function Tower_Range(baseTower) {
         pen.strokeStyle = this.baseTower.color;
         ink.circ(p.x, p.y, range, pen);
     };
+
+    this.destroy = function() {
+	this.base.destroySelf();
+    }
 }
 
 function Tower_Laser(xs, ys, xe, ye, duration) {
@@ -181,7 +185,6 @@ function Tower_Laser(xs, ys, xe, ye, duration) {
 }
 
 //All mutate stuff is copy-pasta from our mother project (for now)
-
 function Tower(baseTile) {
     var p = baseTile.tPos;
     this.baseTile = baseTile;
@@ -279,10 +282,10 @@ function Tower(baseTile) {
         return newObjs;
     }
 
-    this.curTowerRange = null;
 
     this.mouseover = function(e) {
         document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
+	this.hover = true;
     };
 
     this.dragged = function(e){
@@ -297,12 +300,16 @@ function Tower(baseTile) {
                 var p = curTile.tPos;
                 this.baseTile = curTile;
                 this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0); //maybe I shouldn't new it
+
+		this.curTowerRange.destroy();
+		this.curTowerRange = new Tower_Range(this);
+		this.base.addObject(this.curTowerRange);
             }
-        }
+	}
+	    
     };
     
     this.mutate();
-
 }
 
 function Bug(startPath, r) {
