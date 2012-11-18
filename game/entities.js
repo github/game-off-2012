@@ -295,7 +295,7 @@ function Bug(startPath, r) {
 
     //Once we reach our destination.
 		if (vecToNext.magSq() == 0) {			
-		    this.delay += 1;
+		    this.delay += 50*dt;
 		    if (this.delay > this.bugRelPathPos) {
 			    this.curPath = next;
 		    }
