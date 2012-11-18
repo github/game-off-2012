@@ -275,6 +275,9 @@ function Bug(startPath, r) {
 
 	this.curPath = startPath;
 
+	this.bugRelPathPos = Math.floor(Math.random()* tileSize) +1;
+	this.delay = this.bugRelPathPos+1;
+
 	this.update = function (dt) {
 		this.tPos.update(dt);
 
@@ -283,13 +286,20 @@ function Bug(startPath, r) {
 
     //Move towards the next rectangle.
 		var vecToNext = minVecFullOverlapRects(this.tPos, next.tPos);
-		vecToNext.setMag(this.speed);
-		this.tPos.dx = vecToNext.x;
-		this.tPos.dy = vecToNext.y;		    
+		if (this.delay > this.bugRelPathPos) {
+			vecToNext.setMag(this.speed);
+			this.tPos.dx = vecToNext.x;
+			this.tPos.dy = vecToNext.y;		    
+			this.delay = 0;
+		}
 
     //Once we reach our destination.
 		if (vecToNext.magSq() == 0) {			
-		    this.curPath = next;
+		    this.delay += 1;
+		    if (this.delay > this.bugRelPathPos) {
+			    this.curPath = next;
+		    }
+
 
 		    if (next instanceof Path_End) {
 				    this.destroyAtBase();
