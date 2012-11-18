@@ -42,7 +42,7 @@ function Tower(baseTile) {
     this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0);
     this.base = new baseObj(this, 10);
     this.attr = {
-        range:          100,//Math.random() * 200 + 100,
+        range:          Math.random() * 200 + 100,
         damage:         Math.random() * 30  + 1,
         hp:             Math.random() * 100 + 10,
         coolDown:       Math.random() * 1   + 1,
@@ -57,10 +57,7 @@ function Tower(baseTile) {
     var mutateCounter = this.attr.mutate;
     var towerRange = new Tower_Range(this);
     var added = false;
-
-    this.base.addObject(towerRange);
-    added = true;
-
+    
     this.draw = function (pen) {
         var p = this.tPos;
         pen.save();
@@ -148,7 +145,7 @@ function Tower(baseTile) {
     this.mouseout = function(e) {
         if(added)
         {
-            //this.base.removeObject(towerRange);
+            this.base.removeObject(towerRange);
             added = false;
         }
     }

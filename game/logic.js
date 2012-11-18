@@ -36,9 +36,9 @@ function Engine(pen) {
     this.bugIncrease = 5;
     this.bugIncInc = 0.1;
 
-    this.maxBugs = 0;
-    this.bugIncrease = 0;
-    this.bugIncInc = 0;
+    //this.maxBugs = 0;
+    //this.bugIncrease = 0;
+    //this.bugIncInc = 0;
 
     this.secondTimer = 1;
 
