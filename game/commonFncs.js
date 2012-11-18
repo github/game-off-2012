@@ -2,6 +2,7 @@
 //IF THIS IS OVER 250 LINES THEN SPLIT IT INTO LOGICAL SECTIONS!
 
 function hexPair(num) {
+    num = Math.floor(num);
     return Math.min(Math.max(num, 16), 255).toString(16);
 }
 
@@ -34,6 +35,7 @@ function mergeToArray(value, array) {
     return array;
 }
 
+
 //Gets an element from object, or returns null if there are no objects
 function getAnElement(object) {
     for (var key in object)
@@ -41,9 +43,27 @@ function getAnElement(object) {
     return null;
 }
 
+function sortArrayByProperty(a, prop) {
+    a.sort(cmp)
+    function cmp(a, b) {
+        // Avoid multiple object dereferences in 
+        // tight inner loop.
+        var ap = a[prop];
+        var bp = b[prop];
+        if (ap < bp) {
+            return -1;
+        } else if (ap > bp) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+//This is reference code for Quentin, don't touch this code.
 //This should really not be in here.
 //Sorts arr by the given property (uses quickSort)
-function sortArrayByProperty
+function sortArrayByPropertyCustom
 (
     arrObj,
     property

@@ -103,12 +103,12 @@ function Path_Line(pathBase) {
 		if (pathBase.nextPath) {
 			var t = pathBase.nextPath.tPos.getCenter();
 			var direction = new Vector(t.x, t.y);
-			direction.subtract(pathBase.tPos.getCenter());
+			direction.sub(pathBase.tPos.getCenter());
 
 			var start = pathBase.tPos.getCenter();
 			
 			var end = new Vector(start.x, start.y);
-			direction.setMag(pathBase.tPos.w);
+			direction.norm().mult(pathBase.tPos.w);
 			end.add(direction);
 
 			pen.strokeStyle = "blue";
@@ -197,6 +197,8 @@ function Tower(baseTile) {
 		mutate:         Math.random() * 1   + 1,
 		mutatestrength: Math.random() * 3   + 1,
 	};
+
+	this.hover = false;
 	
 	var laserTime = 0.1;
 	var nextFireIn = this.attr.coolDown;
@@ -208,7 +210,9 @@ function Tower(baseTile) {
 		pen.fillStyle = this.color;
 		pen.strokeStyle = "lightblue";
 		ink.rect(p.x, p.y, p.w, p.h, pen);
+		ink.outlineCirc(p.x + p.w/2, p.y + p.h/2, this.attr.range, pen);
 		pen.restore();
+		this.hover = false;
 	};
 
 	// WTF - yeah man, this code is the bomb
@@ -275,7 +279,7 @@ function Tower(baseTile) {
 		return newObjs;
 	}
 
-    this.curTowerRange = null
+    this.curTowerRange = null;
 
     this.mouseover = function(e) {
         document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
@@ -312,10 +316,10 @@ function Tower(baseTile) {
         }
     };
 
-    this.mousedown = function()
-    {
-        this.selected = true;
-    };    
+    this.mouseover = function() {
+        document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
+        this.hover = true;
+    }  
 
   //Is this supposed to be out of a function?
 	this.mutate();
@@ -327,7 +331,7 @@ function Bug(startPath, r) {
 	this.value = 15;
 	this.speed = 20;
 	this.color = "yellow";
-	
+
 	var cen = { x: startPath.tPos.x, y: startPath.tPos.y };
 	cen.x += Math.floor((startPath.tPos.w - 2*r) * Math.random()) + r;
 	cen.y += Math.floor((startPath.tPos.h - 2*r) * Math.random()) + r;
@@ -337,6 +341,9 @@ function Bug(startPath, r) {
 
 	this.curPath = startPath;
 
+	this.bugRelPathPos = Math.floor(Math.random()* tileSize) +1;
+	this.delay = this.bugRelPathPos+1;
+
 	this.update = function (dt) {
 		this.tPos.update(dt);
 
@@ -345,13 +352,20 @@ function Bug(startPath, r) {
 
         //Move towards the next rectangle.
 		var vecToNext = minVecFullOverlapRects(this.tPos, next.tPos);
-		vecToNext.setMag(this.speed);
-		this.tPos.dx = vecToNext.x;
-		this.tPos.dy = vecToNext.y;		    
+		if (this.delay > this.bugRelPathPos) {
+			vecToNext.norm().mult(this.speed);
+			this.tPos.dx = vecToNext.x;
+			this.tPos.dy = vecToNext.y;		    
+			this.delay = 0;
+		}
 
         //Once we reach our destination.
 		if (vecToNext.magSq() == 0) {			
-		    this.curPath = next;
+		    this.delay += 50*dt;
+		    if (this.delay > this.bugRelPathPos) {
+			    this.curPath = next;
+		    }
+
 
 		    if (next instanceof Path_End) {
 			    this.destroyAtBase();
@@ -361,8 +375,8 @@ function Bug(startPath, r) {
 		if (this.hp < 0) {
 			this.base.destroySelf();
 			eng.money += this.value;
-		}		
-		this.color = "#" + hexPair(255 - this.hp / this.maxHP * 255) + "0000";
+		}						
+		this.color = "#" + hexPair(Math.floor(255 -((this.hp / this.maxHP) * 255))) +  "0000";
 	};
 
 	this.draw = function (pen) {
@@ -376,6 +390,7 @@ function Bug(startPath, r) {
     this.destroyAtBase = function()
     {
         this.base.destroySelf();        
+
         eng.health -= 50;
 
         if (eng.health < 0)
