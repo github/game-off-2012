@@ -212,22 +212,3 @@ function Bug(startPath, r) {
         window.location.reload();
     };
 }
-
-function lifetime(timeLeft) {
-    //this.tPos = new temporalPos(x, y, w, h, 0, 0);
-    this.base = new baseObj(this);
-
-    this.currentTimeLeft = timeLeft;
-
-    this.update = function (dt) {
-        this.currentTimeLeft -= dt;
-
-        if (this.currentTimeLeft < 0) {
-            this.base.parent.base.destroySelf();            
-        }
-    };
-
-    this.draw = function (pen) {
-        return 0;
-    };
-}
