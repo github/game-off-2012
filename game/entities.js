@@ -135,6 +135,7 @@ function Path(x, y, w, h) {
         var p = this.tPos;
         pen.fillStyle = "green";
         pen.strokeStyle = "lightgreen";
+	pen.lineWidth = 1.5;
         ink.rect(p.x, p.y, p.w, p.h, pen);
     };
 }
