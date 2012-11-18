@@ -82,12 +82,12 @@ function Path_Line(pathBase) {
 		if (pathBase.nextPath) {
 			var t = pathBase.nextPath.tPos.getCenter();
 			var direction = new Vector(t.x, t.y);
-			direction.subtract(pathBase.tPos.getCenter());
+			direction.sub(pathBase.tPos.getCenter());
 
 			var start = pathBase.tPos.getCenter();
 			
 			var end = new Vector(start.x, start.y);
-			direction.setMag(pathBase.tPos.w);
+			direction.norm().mult(pathBase.tPos.w);
 			end.add(direction);
 
 			pen.strokeStyle = "blue";
@@ -282,7 +282,7 @@ function Bug(startPath, r) {
 
     //Move towards the next rectangle.
 		var vecToNext = minVecFullOverlapRects(this.tPos, next.tPos);
-		vecToNext.setMag(this.speed);
+		vecToNext.norm().mult(this.speed);
 		this.tPos.dx = vecToNext.x;
 		this.tPos.dy = vecToNext.y;		    
 
