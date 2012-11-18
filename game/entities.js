@@ -182,6 +182,7 @@ function Tower(x, y, w, h) {
 		pen.fillStyle = this.color;
 		pen.strokeStyle = "lightblue";
 		ink.rect(p.x, p.y, p.w, p.h, pen);
+		ink.outlineCirc(p.x + p.w/2, p.y + p.h/2, this.attr.range, pen);
 		pen.restore();
 	};
 
