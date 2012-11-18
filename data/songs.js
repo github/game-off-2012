@@ -2,7 +2,7 @@ var songs = new Songs([
   new Song({
     name:     'Test',
     artist:   'Someone',
-    filename: 'test',
+    filename: 'PokeStar',
     queues: [
       [1400, 3000,7000, 6250, 9250, 11750, 12750, 15250, 16250, 17500, 20250],
       [5250, 7250, 10000, 11000, 13500, 14500, 18000, 20750],
