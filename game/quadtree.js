@@ -200,129 +200,127 @@ function QuadTree(arrObjs, splitThreshold) {
                     arrObj[idKey[i]].quadNode = branch;
                     branch.ids[idKey[i]] = true; //Could be set to false even
                 }
-            }
-            else {
+            } else {
                 fail("CRASHED! Have invalid (" + length + ") length in tree!");
             }
+            return branch;
         }
-        //Branch
-        else {
-            var lessEnd = startIndex;
-            var greaterStart = endIndex - 1;
+    
+        var lessEnd = startIndex;
+        var greaterStart = endIndex - 1;
 
-            var curPos = startIndex;
+        var curPos = startIndex;
 
-            var splitPos = splitX ? minX + (maxX - minX) * 0.5 : minY + (maxY - minY) * 0.5;
+        var splitPos = splitX ? minX + (maxX - minX) * 0.5 : minY + (maxY - minY) * 0.5;
 
-            //Cur dimension and size
-            var curDimen = splitX ? "x" : "y";
-            var curSize = splitX ? "w" : "h";
+        //Cur dimension and size
+        var curDimen = splitX ? "x" : "y";
+        var curSize = splitX ? "w" : "h";
 
-            //First sort by the axis, in order to find the best split pos            
-            //Uncomment out this time to guarentee good results, now we kinda just take random stuff.
-            //sortByAxis(arrObj, startIndex, endIndex - 1, curDimen);
+        //First sort by the axis, in order to find the best split pos            
+        //Uncomment out this time to guarentee good results, now we kinda just take random stuff.
+        //sortByAxis(arrObj, startIndex, endIndex - 1, curDimen);
 
-            var splitIndex = (Math.floor((startIndex + endIndex) / 2));            
+        var splitIndex = (Math.floor((startIndex + endIndex) / 2));            
 
-            splitPos = arrObj[idKey[splitIndex]].tPos[curDimen];
+        splitPos = arrObj[idKey[splitIndex]].tPos[curDimen];
 
-            if(DFlag.quadtreeDiagnostics)
-            {
-                for (var i = startIndex; i < endIndex - 1; i++) {
-                    if (arrObj[idKey[i]].tPos[curDimen] > arrObj[idKey[i + 1]].tPos[curDimen]) {
-                        fail("sort failed");
-                    }
+        if(DFlag.quadtreeDiagnostics)
+        {
+            for (var i = startIndex; i < endIndex - 1; i++) {
+                if (arrObj[idKey[i]].tPos[curDimen] > arrObj[idKey[i + 1]].tPos[curDimen]) {
+                    fail("sort failed");
                 }
-            }           
+            }
+        }           
 
-            branch.splitPos = splitPos;
-            branch.splitX = splitX;
+        branch.splitPos = splitPos;
+        branch.splitX = splitX;
 
-            //Take the item at splitIndex and put it at the current level (prevents stack overflow)
-            swap(idKey, splitIndex, greaterStart);
-            branch.ids = {};
-            branch.ids[idKey[greaterStart]] = true;            
-            greaterStart--;endIndex--;
+        //Take the item at splitIndex and put it at the current level (prevents stack overflow)
+        swap(idKey, splitIndex, greaterStart);
+        branch.ids = {};
+        branch.ids[idKey[greaterStart]] = true;            
+        greaterStart--;endIndex--;
 
-            while (curPos <= greaterStart) {
-                var boundingBox = arrObj[idKey[curPos]].tPos;
+        while (curPos <= greaterStart) {
+            var boundingBox = arrObj[idKey[curPos]].tPos;
 
-                if ((boundingBox.x) < minX ||
-                       (boundingBox.y) < minY ||
-                       (boundingBox.x + boundingBox.w) > maxX ||
-                       (boundingBox.y + boundingBox.h) > maxY) {
-                    console.log("Object in quadtree out of bounds, insure your given range bounds all objects (not just their center point).");
-                    return;
-                }
-
-                //Guaranteed to be entirely less than splitPos
-                if ((boundingBox[curDimen] + boundingBox[curSize]) <= splitPos) {
-                    if (curPos != lessEnd)
-                        swap(idKey, curPos, lessEnd);
-                    curPos++; lessEnd++;
-                }
-                //Guaranteed to be entirely greater than splitPos
-                else if ((boundingBox[curDimen]) >= splitPos) {
-                    if (curPos != greaterStart)
-                        swap(idKey, curPos, greaterStart);
-                    greaterStart--;
-                }
-                //It crosses the splitting line (likely), so we can't really do anything with it!
-                else
-                    curPos++;
+            if ((boundingBox.x) < minX ||
+                    (boundingBox.y) < minY ||
+                    (boundingBox.x + boundingBox.w) > maxX ||
+                    (boundingBox.y + boundingBox.h) > maxY) {
+                console.log("Object in quadtree out of bounds, insure your given range bounds all objects (not just their center point).");
+                return;
             }
 
-            //This is important!
-            greaterStart++;
-
-
-            //If too much is in a split... then this is not good, and if this happens
-            //twice in a row (arbitrary quantity) then we stop splitting (in the future we will just do
-            //different splitting techniques)            
-            if ((greaterStart - lessEnd) / (endIndex - startIndex) > splitThreshold) {
-                if (splitX)
-                    failedX = true;
-                else
-                    failedY = true;
+            //Guaranteed to be entirely less than splitPos
+            if ((boundingBox[curDimen] + boundingBox[curSize]) <= splitPos) {
+                if (curPos != lessEnd)
+                    swap(idKey, curPos, lessEnd);
+                curPos++; lessEnd++;
             }
-                        
-            //How the ranges are now
-            //startIndex <= less < lessEnd
-            //lessEnd <= mixed < greaterStart
-            //greaterStart <= greater < endIndex
+            //Guaranteed to be entirely greater than splitPos
+            else if ((boundingBox[curDimen]) >= splitPos) {
+                if (curPos != greaterStart)
+                    swap(idKey, curPos, greaterStart);
+                greaterStart--;
+            }
+            //It crosses the splitting line (likely), so we can't really do anything with it!
+            else
+                curPos++;
+        }
 
-            //Less branch
-            if (startIndex != lessEnd)
-                branch.lessTree = makeBranch(
-                    arrObj, idKey, startIndex, lessEnd,
-                    minX, splitX ? splitPos : maxX, false,
-                    minY, !splitX ? splitPos : maxY, false,
-                    !splitX,
-                    splitThreshold, expectedMaxDepth, curDepth + 1);
+        //This is important!
+        greaterStart++;
+
+
+        //If too much is in a split... then this is not good, and if this happens
+        //twice in a row (arbitrary quantity) then we stop splitting (in the future we will just do
+        //different splitting techniques)            
+        if ((greaterStart - lessEnd) / (endIndex - startIndex) > splitThreshold) {
+            if (splitX)
+                failedX = true;
+            else
+                failedY = true;
+        }
+                    
+        //How the ranges are now
+        //startIndex <= less < lessEnd
+        //lessEnd <= mixed < greaterStart
+        //greaterStart <= greater < endIndex
+
+        //Less branch
+        if (startIndex != lessEnd)
+            branch.lessTree = makeBranch(
+                arrObj, idKey, startIndex, lessEnd,
+                minX, splitX ? splitPos : maxX, false,
+                minY, !splitX ? splitPos : maxY, false,
+                !splitX,
+                splitThreshold, expectedMaxDepth, curDepth + 1);
+    
+        //Split branch
+        if (lessEnd != greaterStart) {
+            if (splitX)
+                failedX = true;
+            else
+                failedY = true;
+            branch.splitTree = makeBranch(
+                arrObj, idKey, lessEnd, greaterStart,
+                minX, maxX, failedX,
+                minY, maxY, failedY,
+                !splitX,
+                splitThreshold, expectedMaxDepth, curDepth + 1);
+        }
         
-            //Split branch
-            if (lessEnd != greaterStart) {
-                if (splitX)
-                    failedX = true;
-                else
-                    failedY = true;
-                branch.splitTree = makeBranch(
-                    arrObj, idKey, lessEnd, greaterStart,
-                    minX, maxX, failedX,
-                    minY, maxY, failedY,
-                    !splitX,
-                    splitThreshold, expectedMaxDepth, curDepth + 1);
-            }
-            
-            //Greater branch
-            if (greaterStart != endIndex)
-                branch.greaterTree = makeBranch(
-                    arrObj, idKey, greaterStart, endIndex,
-                    splitX ? splitPos : minX, maxX, false,
-                    !splitX ? splitPos : minY, maxY, false,
-                    !splitX,
-                    splitThreshold, expectedMaxDepth, curDepth + 1);
-        }
+        //Greater branch
+        if (greaterStart != endIndex)
+            branch.greaterTree = makeBranch(
+                arrObj, idKey, greaterStart, endIndex,
+                splitX ? splitPos : minX, maxX, false,
+                !splitX ? splitPos : minY, maxY, false,
+                !splitX,
+                splitThreshold, expectedMaxDepth, curDepth + 1);
 
         return branch;
     }
