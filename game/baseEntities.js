@@ -199,9 +199,9 @@ function baseObj(holder, zindex) {
         //Sort objects by z-index (low to high) and then draw by that order
         var childWithZIndex = [];
 
-        for (var key in this.children) {
-            if (getAnElement(this.children[key])) {
-                childWithZIndex.push({ zindex: getAnElement(this.children[key]).base.zindex, array: this.children[key] });
+        for (var key in this.allChildren) {
+            if (getAnElement(this.allChildren[key])) {
+                childWithZIndex.push({ zindex: getAnElement(this.allChildren[key]).base.zindex, array: this.allChildren[key] });
             }
         }
 
