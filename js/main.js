@@ -110,7 +110,7 @@
   // 
   // You can console.log velocities in drawing methods
   // and from there decide what to set as the cap.
-  var v_cap = 5;
+  var v_cap = 7;
 
   // Accelaration x,y
   var ax = 0;
@@ -165,7 +165,7 @@
     if (!mit.game_started)
       mit.game_started = 1;
 
-    ay = -1.2;
+    ay = -1.0;
     flying_up = 1;
   }, false);
 
