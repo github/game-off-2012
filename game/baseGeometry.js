@@ -8,15 +8,21 @@ function temporalPos(x, y, w, h, dx, dy) {
     this.w = w;
     this.h = h;
 
+    if (w < 0) {
+        this.x += w;
+        this.w = -w;
+    }
+    if (h < 0) {
+        this.y += h;
+        this.h = -h;
+    }
+
     this.update = function (dt) {
         this.x += this.dx * dt;
         this.y += this.dy * dt;
     };
     this.getCenter = function () {
         return new Vector(this.x + this.w / 2, this.y + this.h / 2 );
-    };
-    this.boundingBox = function () {
-        return this;
     };
 }
 

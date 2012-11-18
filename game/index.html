@@ -94,7 +94,14 @@ canvas {
             eng.mX = -1;
             eng.mY = -1;
         });
-        $("#myCanvas").click(function (e) {
+        $("#myCanvas").mousedown(function (e) {
+            var cX = defined(e.offsetX) ? e.offsetX : e.pageX - document.getElementById("myCanvas").offsetLeft;
+            var cY = defined(e.offsetY) ? e.offsetY : e.pageY - document.getElementById("myCanvas").offsetTop;
+
+            eng.cX = cX;
+            eng.cY = cY;
+        });
+        $("#myCanvas").mouseup(function (e) {
             var cX = defined(e.offsetX) ? e.offsetX : e.pageX - document.getElementById("myCanvas").offsetLeft;
             var cY = defined(e.offsetY) ? e.offsetY : e.pageY - document.getElementById("myCanvas").offsetTop;
 

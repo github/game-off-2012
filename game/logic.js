@@ -24,8 +24,8 @@ function Engine(pen) {
 
     this.base = new baseObj(this);
 
-    this.base.children.Tile = [];
-    this.base.children.Bug = [];
+    //this.base.children.Tile = [];
+    //this.base.children.Bug = [];
 
     this.engine = this; //eng also works fine
 
@@ -33,7 +33,7 @@ function Engine(pen) {
     this.bugIncrease = 5;
     this.bugIncInc = 0.1;
 
-    //this.maxBugs = 1;
+    //this.maxBugs = 10;
     //this.bugIncrease = 0;
     //this.bugIncInc = 0;
 
@@ -82,7 +82,15 @@ function Engine(pen) {
         mX = this.mX;
         mY = this.mY;
 
-        this.curQuadTree = new QuadTree(this.base.children);
+        this.curQuadTree = new QuadTree(this.base.allChildren);
+                
+        if (eng.base.lengths["Path_Start"] > 0) {
+            while (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] < this.maxBugs) {
+                var bugStart = getAnElement(eng.base.children["Path_Start"]);
+                var newBug = new Bug(bugStart, 4);
+                this.base.addObject(newBug);
+            }
+        }        
 
         //We got a click event
         if (this.cX > 0) {
@@ -91,23 +99,14 @@ function Engine(pen) {
             this.cY = -1;
         }
 
-        var bugs = this.base.children.Bug;
-
-        if (eng.base.children["Path_Start"] && eng.base.children["Path_Start"].length > 0) {
-            while (bugs.length < this.maxBugs) {
-                var bugStart = eng.base.children["Path_Start"][0];
-                var newBug = new Bug(bugStart, 4);
-                this.base.addObject(newBug);
-            }
-        }
-
         this.base.removeAllType("Tower_Range");
 
         if (this.mY > 0 && this.mY < bH && this.mX > 0 && this.mX < bW) {
             var allUnderMouse = [];
 
-            for (var type in this.base.children)
+            for (var type in this.base.children) {
                 mergeToArray(findAllWithin(eng, type, { x: mX, y: mY }, 0), allUnderMouse);
+            }
 
             if (allUnderMouse.length > 0) {
                 var topMost = allUnderMouse[0];
@@ -155,8 +154,6 @@ function Engine(pen) {
             this.maxBugs += this.bugIncrease;
             this.bugIncrease += this.bugIncInc;
         }
-
-        this.base.removeMarked();
     };
     
 /** Function */
@@ -218,7 +215,7 @@ function Engine(pen) {
         ink.text(10, bH + 60, "Money: $" + this.money, pen);
         ink.text(10, bH + 90, "Time passed: " + gameTimeAccumulated, pen);
         ink.text(10, bH + 120, "FPS: " + this.lastFPS, pen);
-        ink.text(10, bH + 150, "Bugs: " + eng.base.children.Bug.length, pen);
+        ink.text(10, bH + 150, "Bugs: " + eng.base.lengths.Bug, pen);
         
         this.pen.save();
         this.pen.strokeStyle = "red";

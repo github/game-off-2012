@@ -42,12 +42,16 @@ function getRectCenter(rect) {
     return new Vector(rect.x + rect.w / 2, rect.y + rect.h / 2);
 }
 
+function assertRectangle(rect) {
+    return assertDefined("assertRectangle", rect, rect.x, rect.y, rect.w, rect.h);
+}
+
 //Gets the Vector from the a rect to a point.    
     //Caveats
         //If point is in rect then it returns Vector(0, 0).
         //If vector is given, then it will fill in vector and return that)
 function vecToRect(point, rect, vector) {
-    if (!assertDefined("vecToRect", rect, point))
+    if (!assertDefined("vecToRect", rect, point) || !assertRectangle(rect))
         return new Vector(0, 0);
 
     if(!vector)
@@ -73,7 +77,8 @@ function vecToRect(point, rect, vector) {
 //Gets the minimum vector from rectOne to rectTwo
 //Basically just the minimum vec between the vertices of one and two
 function minVecBetweenRects(rectOne, rectTwo) {
-    if (!assertDefined("minVecBetweenRects", rectOne, rectTwo))
+    if (!assertDefined("minVecBetweenRects", rectOne, rectTwo) ||
+        !assertRectangle(rectOne) || !assertRectangle(rectTwo))
         return new Vector(0, 0);
 
     var distance1 = vecToRect(new Vector(rectOne.x, rectOne.y), rectTwo);
@@ -98,7 +103,8 @@ function minVecBetweenRects(rectOne, rectTwo) {
 //Gets the minimum vector for rectOne to be fully overlapped by rectTwo
 //Its behaviour is undefined if rectOne cannot be fully overlapped by rectTwo
 function minVecFullOverlapRects(rectOne, rectTwo) {
-    if (!assertDefined("minVecFullOverlapRects", rectOne, rectTwo))
+    if (!assertDefined("minVecFullOverlapRects", rectOne, rectTwo) ||
+        !assertRectangle(rectOne) || !assertRectangle(rectTwo))
         return new Vector(0, 0);
 
     var distance1 = vecToRect(new Vector(rectOne.x, rectOne.y), rectTwo);
@@ -122,7 +128,8 @@ function minVecFullOverlapRects(rectOne, rectTwo) {
 
 //Circle is defined as the bounding rect of circle
 function vecBetweenRectAndCircle(circle, circle) {
-    if (!assertDefined("vecBetweenRectAndCircle", rect, circle))
+    if (!assertDefined("vecBetweenRectAndCircle", rect, circle) ||
+        !assertRectangle(rect) || !assertRectangle(circle))
         return new Vector(0, 0);
 
     var vec = vecToRect(getCircleCenter(circle), rect);

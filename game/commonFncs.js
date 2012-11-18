@@ -34,6 +34,13 @@ function mergeToArray(value, array) {
     return array;
 }
 
+//Gets an element from object, or returns null if there are no objects
+function getAnElement(object) {
+    for (var key in object)
+        return object[key];
+    return null;
+}
+
 //This should really not be in here.
 //Sorts arr by the given property (uses quickSort)
 function sortArrayByProperty
