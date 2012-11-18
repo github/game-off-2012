@@ -223,7 +223,7 @@ function lifetime(timeLeft) {
         currentTimeLeft -= dt;
 
         if (currentTimeLeft < 0) {
-            this.base.parent.base.destroySelf();            
+            this.base.parent.base.destroySelf();
         }
     };
 
