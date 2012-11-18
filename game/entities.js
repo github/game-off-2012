@@ -171,6 +171,8 @@ function Tower(x, y, w, h) {
 		mutate:         Math.random() * 1   + 1,
 		mutatestrength: Math.random() * 3   + 1,
 	};
+
+	this.hover = false;
 	
 	var laserTime = 0.1;
 	var nextFireIn = this.attr.coolDown;
@@ -184,6 +186,7 @@ function Tower(x, y, w, h) {
 		ink.rect(p.x, p.y, p.w, p.h, pen);
 		ink.outlineCirc(p.x + p.w/2, p.y + p.h/2, this.attr.range, pen);
 		pen.restore();
+		this.hover = false;
 	};
 
 	// WTF - yeah man, this code is the bomb
@@ -252,7 +255,9 @@ function Tower(x, y, w, h) {
 
   this.mouseover = function() {
     document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
+    this.hover = true;
   }  
+
 
   //Is this supposed to be out of a function?
 	this.mutate();
