@@ -153,7 +153,7 @@ function Engine(pen) {
             this.secondTimer = 1;
 
             this.maxBugs += this.bugIncrease;
-            this.bugIncrease += this.bugIncInc;
+            //this.bugIncrease += this.bugIncInc;
         }
 
         this.base.removeMarked();

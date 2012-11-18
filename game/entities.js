@@ -311,7 +311,7 @@ function Bug(startPath, r) {
 			eng.money += this.value;
 		}
 		
-		this.color = "#" + hexPair(255 - this.hp / this.maxHP * 255) + "0000";
+		this.color = "#" + hexPair(Math.floor(255 -((this.hp / this.maxHP) * 255))) +  "0000";
 	};
 	this.draw = function (pen) {
 		var p = this.tPos;
