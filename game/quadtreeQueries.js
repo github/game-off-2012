@@ -66,18 +66,18 @@ function findClosest(engine, type, target, maxDistance) {
     var closest = findClosestGeneric(relevantQuadTree, relevantArray,
         function (splitX, axisPos) {
             if (splitX) {
-                if (axisPos > (target.x + target.w))
-                    return 1;
-                else if (axisPos < target.x)
+                if ((target.x + (target.w ? target.w : 0)) < axisPos)
                     return -1;
+                else if (target.x > axisPos)
+                    return 1;
                 else
                     return 0;
             }
             else {
-                if (axisPos > (target.y + target.h))
-                    return 1;
-                else if (axisPos < target.y)
+                if ((target.y + (target.h ? target.h : 0)) < axisPos)
                     return -1;
+                else if (target.y > axisPos)
+                    return 1;
                 else
                     return 0;
             }
@@ -111,19 +111,19 @@ function findAllWithin(engine, type, target, maxDistance) {
         {
             if(splitX)
             {
-                if(axisPos > (target.x + target.w))
-                    return 1;
-                else if(axisPos < target.x)
+                if((target.x + (target.w ? target.w : 0)) < axisPos)
                     return -1;
+                else if (target.x > axisPos)
+                    return 1;
                 else
                     return 0;
             }
             else
             {
-                if(axisPos > (target.y + target.h))
-                    return 1;
-                else if(axisPos < target.y)
+                if( (target.y + (target.h ? target.h : 0)) < axisPos)
                     return -1;
+                else if (target.y > axisPos)
+                    return 1;
                 else
                     return 0;
             }

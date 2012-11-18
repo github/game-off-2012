@@ -24,10 +24,31 @@
 		this.hover = false;
 	};
 
-  this.mouseover = function()
-  {
-    this.hover = true;
-  };
+    this.mouseover = function()
+    {
+        this.hover = true;
+    };
+
+    this.mouseout = function()
+    {
+        this.hover = false;
+    };
+
+    this.click = function(e)
+    {
+        var eng = this.base.rootNode;
+        var towerOnTile = findClosest(eng, "Tower", e, 0);
+        var pathOnTile = findClosest(eng, "Path", e, 0);
+
+        if (!towerOnTile && !pathOnTile && eng.money - 50 >= 0) {
+            eng.money -= 50;
+            eng.base.addObject(new Tower(this));
+        }
+        else if(towerOnTile)
+        {
+            towerOnTile.tryUpgrade();
+        }
+    };
 }
 
 
@@ -121,20 +142,18 @@ function Path(x, y, w, h) {
 	};
 }
 
-function Tower_Range(x, y, w, h) {
-	this.tPos = new temporalPos(x, y, w, h, 0, 0);
+function Tower_Range(baseTower) {
+    this.baseTower = baseTower;
+	this.tPos = baseTower.tPos;
 	this.base = new baseObj(this, 11);
 
-	this.update = function (dt) {
-		this.tPos.update(dt);
-	};
-
 	this.draw = function (pen) {
-		var p = this.tPos;
+		var p = this.baseTower.tPos.getCenter();
+        var range = this.baseTower.attr.range;
 		pen.lineWidth = 2;
 		pen.fillStyle = "transparent";
 		pen.strokeStyle = "blue";
-		ink.circ(p.x + w / 2, p.y + h / 2, w / 2, pen);
+		ink.circ(p.x, p.y, range, pen);
 	};
 }
 
@@ -165,8 +184,10 @@ function Tower_Laser(xs, ys, xe, ye, duration) {
 }
 
 //All mutate stuff is copy-pasta from our mother project (for now)
-function Tower(x, y, w, h) {
-	this.tPos = new temporalPos(x, y, w, h, 0, 0);
+function Tower(baseTile) {
+    var p = baseTile.tPos;
+    this.baseTile = baseTile;
+	this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0);
 	this.base = new baseObj(this, 10);
 	this.attr = {
 		range:          Math.random() * 200 + 100,
@@ -254,9 +275,47 @@ function Tower(x, y, w, h) {
 		return newObjs;
 	}
 
-  this.mouseover = function() {
-    document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
-  }  
+    this.curTowerRange = null
+
+    this.mouseover = function(e) {
+        document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
+        if(!this.curTowerRange)
+        {
+            this.curTowerRange = new Tower_Range(this);
+
+            this.base.addObject(this.curTowerRange);
+        }        
+    };
+
+    this.dragged = function(e){
+        var eng = this.base.rootNode;
+        var curTile = findClosest(eng, "Tile", e, 0);
+        console.log("dragged");
+        if(curTile !== this.baseTile)
+        {
+            var towerOnCurTile = findClosest(eng, "Tower", e, 0);
+            var pathOnCurTile = findClosest(eng, "Path", e, 0);
+            if(!towerOnCurTile && !pathOnCurTile)
+            {
+                var p = curTile.tPos;
+                this.baseTile = curTile;
+                this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0); //maybe I shouldn't new it
+            }
+        }
+    };
+
+    this.mouseout = function(){
+        if(this.curTowerRange)
+        {
+            this.base.removeObject(this.curTowerRange);
+            this.curTowerRange = null;
+        }
+    };
+
+    this.mousedown = function()
+    {
+        this.selected = true;
+    };    
 
   //Is this supposed to be out of a function?
 	this.mutate();

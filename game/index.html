@@ -98,15 +98,15 @@ canvas {
             var cX = defined(e.offsetX) ? e.offsetX : e.pageX - document.getElementById("myCanvas").offsetLeft;
             var cY = defined(e.offsetY) ? e.offsetY : e.pageY - document.getElementById("myCanvas").offsetTop;
 
-            eng.cX = cX;
-            eng.cY = cY;
+            eng.mdX = cX;
+            eng.mdY = cY;
         });
         $("#myCanvas").mouseup(function (e) {
             var cX = defined(e.offsetX) ? e.offsetX : e.pageX - document.getElementById("myCanvas").offsetLeft;
             var cY = defined(e.offsetY) ? e.offsetY : e.pageY - document.getElementById("myCanvas").offsetTop;
 
-            eng.cX = cX;
-            eng.cY = cY;
+            eng.muX = cX;
+            eng.muY = cY;
         });
     });
 </script>
