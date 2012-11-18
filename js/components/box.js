@@ -52,9 +52,18 @@ Crafty.c('PushableBox', {
 */
 Crafty.c('RemovableBox', {
     init: function() {
-        this.requires("removable, Box, ColorBox")
+        this.requires("removable, Box, ColorBox, FancyText")
         .bind('remove', function() {
             this.removeNeighbors();
+        });
+
+        // Initiate inner text to display the number
+        // of blocks needed for removable.  Not sure if we want this?
+        this.FancyText("2");
+        this.trigger('setTextCSS', {
+            "text-align": "center",
+            "font-size": "2em",
+            top: "-2px"
         });
     },
 
@@ -102,6 +111,13 @@ Crafty.c('RemovableBox', {
 * Applies a sprite for the colored boxes
 */
 Crafty.c('ColorBox', {
+    _colorTextMap: {
+        white: "#DFDFDF",
+        blue: "#4D45E6",
+        red: "#DD0000",
+        purple: "DFDFDF"
+    },
+    
     _colorString: "whiteBox", // Default is white
 
     init: function() {
@@ -114,6 +130,11 @@ Crafty.c('ColorBox', {
         this.removeComponent(this._colorString, false);
         this._colorString = color + "Box";
         this.addComponent(this._colorString);
+        
+        // Change the color of any attached fancy text
+        this.trigger('setTextCSS', {
+            color: this._colorTextMap[color]
+        });
         return this;
     },
 

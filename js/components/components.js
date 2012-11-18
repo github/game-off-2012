@@ -112,4 +112,31 @@ Crafty.c("Moveable", {
         return Math.sqrt((x * x) + (y * y));
     }
 });
+
+/**
+* Adds stylable text to the entity.
+* Displays text on the entity
+*/
+Crafty.c('FancyText', {
+    _displayText: "",
+    _textElement: null,
+
+    init: function() {
+        this.requires("DOM")
+        .bind("setTextCSS", function(cssValues) {
+            if(!this._textElement) return;
+            that = this;
+            _.each(cssValues, function(cssVal, key) { 
+                that._textElement.css(key, cssVal);
+            });
+        });
+    },
+
+    FancyText: function(displayText) {
+        this._displayText = displayText;
+        this._textElement = $('<div style="position: relative;">' + displayText + '</div>');
+        $(this._element).append(this._textElement);
+        return this;
+    }
+});
  

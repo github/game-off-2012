@@ -7,7 +7,7 @@
 Crafty.scene("main", function () {
   
   loadMap(9001, function(){
-    Crafty.e("2D, DOM, PushableBox, Color, RemovableBox, ColorBox")
+    Crafty.e("2D, DOM, PushableBox, RemovableBox, ColorBox")
       .ColorBox("blue")
       .attr({ x: 4 * gameBoard.tileSize, y: 4 * gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize });
 
