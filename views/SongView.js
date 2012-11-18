@@ -45,6 +45,15 @@ SongView = Backbone.View.extend({
       this.canvas.width, this.canvas.height);
   },
 
+  renderMarker: function (type, color) {
+    this.context.fillStyle = color;
+    _.each(type, function(queues){
+      _.each(queues, function(marker){
+        this.context.drawImage(this.sprites['marker'], (marker.type * 120), marker.top);
+      }, this)
+    }, this);
+  },
+
   animate: function() {
 
     requestAnimationFrame(this.animate);
@@ -58,29 +67,10 @@ SongView = Backbone.View.extend({
     this.context.fillRect(480, 0, 20, this.canvas.height);
     this.context.fillRect(0, 335, this.canvas.width, 5);
     this.context.fillRect(0, 360, this.canvas.width, 5);
-    this.context.fillStyle = 'green';
-
-    _.each(this.active, function(array){
-      _.each(array, function(target){
-        this.context.drawImage(this.sprites['marker'], (target.type * 120), target.top);
-      }, this)
-    }, this);
-
-    this.context.fillStyle = 'darkgray';
-
-    _.each(this.inactive, function(array){
-      _.each(array, function(target){
-        this.context.drawImage(this.sprites['marker'], (target.type * 120), target.top);
-      }, this)
-    }, this);
-
-    this.context.fillStyle = 'red';
-
-    _.each(this.missed, function(array){
-      _.each(array, function(target){
-        this.context.drawImage(this.sprites['marker'], (target.type * 120), target.top);
-      }, this)
-    }, this);
+    
+    this.renderMarker(this.active, 'green');
+    this.renderMarker(this.inactive, 'darkgray');
+    this.renderMarker(this.missed, 'red');
 
   },
 
