@@ -194,24 +194,17 @@ function Tower(baseTile) {
         mutate:         Math.random() * 1   + 1,
         mutatestrength: Math.random() * 3   + 1,
     };
-
-    this.hover = false;
     
     var laserTime = 0.1;
     var nextFireIn = this.attr.coolDown;
     var mutateCounter = this.attr.mutate;
-
-    this.curTowerRange = new Tower_Range(this);
-    this.base.addObject(this.curTowerRange);
+    var towerRange = new Tower_Range(this);
 
     this.draw = function (pen) {
-        var p = this.tPos;
-        pen.save();
         pen.fillStyle = this.color;
         pen.strokeStyle = "lightblue";
-        ink.rect(p.x, p.y, p.w, p.h, pen);        
-        pen.restore();
-        this.hover = false;
+        var p = this.tPos;
+        ink.rect(p.x, p.y, p.w, p.h, pen);
     };
 
     // WTF - yeah man, this code is the bomb
@@ -278,11 +271,14 @@ function Tower(baseTile) {
         return newObjs;
     }
 
-    this.curTowerRange = null;
-
     this.mouseover = function(e) {
         document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
+        this.base.addObject(towerRange);
     };
+    
+    this.mouseout = function(e) {
+        this.base.removeObject(towerRange);
+    }
 
     this.dragged = function(e){
         var eng = this.base.rootNode;
@@ -300,6 +296,7 @@ function Tower(baseTile) {
         }
     };
     
+    // Yes, this is supposed to be here.
     this.mutate();
 }
 
