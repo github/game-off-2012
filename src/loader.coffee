@@ -44,9 +44,12 @@ class SimpleImageLoader extends Loader
     
   start:->
     @res = new Image()
-    @res.onLoad = @callback(@)
+    @res.onLoad = @load()
     @res.src = @path
-
+    
+  load:->
+    console.log("SimpleImageLoader Loaded")
+    @callback(@)
 
 class SimpleJSONLoader extends Loader
   constructor:(@path,@name)->
