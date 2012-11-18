@@ -6,6 +6,12 @@
         pen.fill();
         pen.stroke();
     },
+    outlineCirc: function(x, y, r, pen) {
+	pen.beginPath();
+        pen.arc(x, y, r, 0, 2 * Math.PI, false);
+        pen.closePath();
+        pen.stroke();
+    },
     rect: function (x, y, width, height, pen) {
         pen.beginPath();
         //pen.fillRect(x, y, width, height);

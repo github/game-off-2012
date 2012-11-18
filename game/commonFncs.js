@@ -2,6 +2,7 @@
 //IF THIS IS OVER 250 LINES THEN SPLIT IT INTO LOGICAL SECTIONS!
 
 function hexPair(num) {
+    num = Math.floor(num);
     return Math.min(Math.max(num, 16), 255).toString(16);
 }
 
