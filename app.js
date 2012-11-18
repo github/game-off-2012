@@ -1,5 +1,5 @@
 var song = new SongView({
-  model: new Song()
+  model: songs.first()
 });
 
 $('body').append(song.el);

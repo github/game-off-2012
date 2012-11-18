@@ -22,16 +22,15 @@ var context = canvas.getContext('2d');
 var blockHeight = 20;
 var blockTop = -blockHeight;
 
-var queue0 = [1400, 3000,7000, 6250, 9250, 11750, 12750, 15250, 16250, 17500, 
-20250];
+var queue0 = [1400, 3000,7000, 6250, 9250, 11750, 12750, 15250, 16250, 17500, 20250];
 var queue1 = [5250, 7250, 10000, 11000, 13500, 14500, 18000, 20750];
 var queue2 = [5750, 7500, 10500, 11000, 14000, 14500, 18500, 20750];
 var queue3 = [3750, 8750, 9250, 12250, 12750, 15750, 16250, 19000, 20250];
 
-var queues = [queue0, queue1, queue2, queue3];
-var active = [[],[],[],[]];
+var queues   = [queue0, queue1, queue2, queue3];
+var active   = [[],[],[],[]];
 var inactive = [[],[],[],[]];
-var missed = [[],[],[],[]];
+var missed   = [[],[],[],[]];
 
 var score = 0;
 var paused = true;
