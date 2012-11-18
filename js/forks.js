@@ -135,9 +135,13 @@
 
     // Loop over forks and draw each of them
     forks.forEach(function(fork, index) {
-      if (fork.x < 0) {
+      if (fork.x + fork.w < 0) {
+        // forks.splice is causing the forks to flash when 
+        // a fork is removed from the array. We can use an
+        // alternative maybe.
         forks.splice(index, 1);
       }
+
       fork.x -= mit.backgrounds.ground_bg_move_speed;
 
       // Check Collisions with pappu
