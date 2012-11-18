@@ -9,28 +9,27 @@
     //Notes
         //Update is basically just raiseEvent("update", dt)
 
-//If an object has destroySelf == true, then it is removed from
-//the object on the next update call.
-
 /********************************* CODE START *********************************/
 
-
+var uniqueBaseObjNumber = 1;
 function baseObj(holder, zindex) {
     if (!assertDefined("baseObj", holder))
         return;
 
-    //Organized by type, and then arrays of objects
-    //this.parent
-    this.children = {};
+    //Strange... but needed
+    holder.base = this;
+
+//Identifier properties    
     this.type = getRealType(holder); //.constructor.name;
-    this.holder = holder;
 
-    //This can be used to greatly increase the speed of spatial based queries
-    this.quadNode = {};
+    //If its not a string then the object degenerates to an array.
+    this.id = 'q' + uniqueBaseObjNumber++;
 
+   
+//Drawing properties
     //Will be set to the position in the array it is in,
     //and so will be used to determine order when zindex is equal.
-    this.zoffset = 0;
+    this.zoffset = 0; //<--------- THIS IS ALSO QUADTREE MAINTAINED
 
     if (!zindex)
         zindex = 0;
@@ -38,34 +37,122 @@ function baseObj(holder, zindex) {
     //Individual objects cannot change their zindex! If they are the same type they must have the same zindex!
     this.zindex = zindex;
 
-    //If this is not set it means the object has not been added to anything yet
-    //(and so IT IS THE ROOT NODE).
-    this.rootNode = null;
+
+//Hierarchical properties
+    this.rootNode = holder; //Be default we are our own rootNode    
+    this.holder = holder;
+    this.parent = null;
+
+    //Organized by type, and then objects of objects (with the index the id)
+    //so this.children['Tower']['q53'] could be a tower (depending on the unique id of the tower)
+    //this.parent
+    this.children = {};
+    this.lengths = {}; //type to length, must be maintained manually (naturally)
+
+    //Flattened structure of children, so grandchildren are in here, etc
+    this.allChildren = {};
+    this.allLengths = {};
+
+
+    if (holder.tPos) {
+        //Quadtree maintained properties
+        //We default the quadtree to something, that way every object always has one
+        var tempArrObjs = {};
+        tempArrObjs[this.type] = {};
+        tempArrObjs[this.type][this.id] = holder;
+        this.curQuadTree = new QuadTree(tempArrObjs);
+        //QuadTree will then set quadNode in us.
+    }
+
+    //This just makes easier to maintain our arrays. It doesn't really create them,
+    //so array and arrayLengths must still be members initialized in our constructor
+    function addToArray(baseObj, obj, array, arrayLengths) {
+        if (!assertDefined("addToArray", baseObj, baseObj[array], baseObj[arrayLengths], obj, obj.base))
+            return;
+
+        if (!baseObj[array][obj.base.type]) {
+            baseObj[array][obj.base.type] = {};
+            baseObj[arrayLengths][obj.base.type] = 0;
+        }
+
+        if (!baseObj[array][obj.base.type][obj.base.id]) {
+            baseObj[array][obj.base.type][obj.base.id] = obj;
+            baseObj[arrayLengths][obj.base.type]++;
+        }
+    };
 
     this.addObject = function (obj) {
-        if (!obj.base)
-            fail("BAD! CALLED addObject with an object with no base (we need base for the type)!");
+        if (!assertDefined("addObject", obj, obj.base))
+            return;
 
-        if (!this.children[obj.base.type])
-            this.children[obj.base.type] = [];
+        obj.base.parent = this.holder;
+        obj.base.setRootNode(this.rootNode);
 
-        this.children[obj.base.type].push(obj);
-        obj.base.parent = this;
+        addToArray(this, obj, "children", "lengths");        
+    };
 
-        obj.base.setRootNode(this.rootNode || this);
+    function removeFromArray(baseObj, obj, array, arrayLengths) {
+        if (!assertDefined(baseObj) || 
+            !assertDefined("removeFromArray", baseObj, baseObj[array], baseObj[arrayLengths], obj, obj.base))
+            return;
+
+        if (!baseObj[array][obj.base.type])
+            return;
+
+        if (baseObj[array][obj.base.type][obj.base.id]) {
+            delete baseObj[array][obj.base.type][obj.base.id];
+            baseObj[arrayLengths][obj.base.type]--;
+        }
+    }
+
+    this.removeObject = function (obj) {
+        if (!assertDefined("removeObject", obj, obj.base))
+            return;
+
+        //Set its root node to itself to let it know we are no longer its parent
+        obj.base.parent = obj;
+        obj.base.setRootNode(obj);        
+
+        removeFromArray(this, obj, "children", "lengths");
+    };
+
+    this.destroySelf = function () {
+        if (this.parent && this.parent) { //Else there is no way to destroy ourself
+            this.parent.base.removeObject(this.holder);
+
+            //Also destroy our children (keeps allChildren working properly)
+            for (var key in this.children)
+                if (this.children[key].base)
+                    this.children[key].base.destroySelf();
+        }
     }
 
     this.setRootNode = function (rootNode) {
+        if (!assertDefined("setRootNode", rootNode))
+            return;
+
+        //Remove stuff from old rootNode
+        if (this.rootNode) {
+            removeFromArray(this.rootNode.base, this.holder, "allChildren", "allLengths");
+            if(this.rootNode.curQuadTree)
+                this.rootNode.curQuadTree.removeFromTree(this.holder);
+        }
+
         this.rootNode = rootNode;
+
+        addToArray(this.rootNode.base, this.holder, "allChildren", "allLengths");
+        if(this.rootNode.curQuadTree)
+            this.rootNode.curQuadTree.addToTree(this.holder);
+
         for (var key in this.children)
             if (this.children[key].base)
                 this.children[key].setRootNode(rootNode);
-    }
+    };
 
     this.removeAllType = function (type) {
         if (this.children[type])
-            this.children[type].length = 0;
-    }
+            this.children[type] = {};
+    };
 
     this.raiseEvent = function (name, arguments) {
         var returnedValues = [];
@@ -77,10 +164,10 @@ function baseObj(holder, zindex) {
         if (holder[name])
             mergeToArray(holder[name](arguments), returnedValues);
 
-        for (var key in this.children) {
-            for (var i = this.children[key].length - 1; i >= 0; i--) {
-                if (this.children[key][i].base) {
-                    mergeToArray(this.children[key][i].base.raiseEvent(name, arguments), returnedValues);
+        for (var type in this.children) {
+            for (var key in this.children[type]) {
+                if (this.children[type][key].base) {
+                    mergeToArray(this.children[type][key].base.raiseEvent(name, arguments), returnedValues);
                 }
             }
         }
@@ -90,44 +177,31 @@ function baseObj(holder, zindex) {
 
     this.update = function (dt) {
         var returnedValues = [];
-        
+
         if (holder.update)
             mergeToArray(holder.update(dt), returnedValues);
 
-        for (var key in this.children) {
-            for (var i = this.children[key].length - 1; i >= 0; i--) {
-                if (this.children[key][i].base) {
-                    mergeToArray(this.children[key][i].base.update(dt), returnedValues);
+        for (var type in this.children) {
+            for (var key in this.children[type]) {
+                if (this.children[type][key].base) {
+                    mergeToArray(this.children[type][key].base.update(dt), returnedValues);
                 }
             }
         }
 
         return returnedValues;
-    }
-
-    this.removeMarked = function () {
-        //Removes everything marked for deletion (with destroySelf)
-        for (var key in this.children) {
-            for (var i = this.children[key].length - 1; i >= 0; i--) {
-                if (this.children[key][i].base.destroySelf)
-                    this.children[key].splice(i, 1);
-                else
-                    this.children[key][i].base.removeMarked();
-            }
-        }
-    }
+    };
 
     this.draw = function (pen) {
-
         if (holder.draw)
             holder.draw(pen);
 
         //Sort objects by z-index (low to high) and then draw by that order
         var childWithZIndex = [];
 
-        for (var key in this.children) {
-            if (this.children[key].length > 0) {
-                childWithZIndex.push({ zindex: this.children[key][0].base.zindex, array: this.children[key] });
+        for (var key in this.allChildren) {
+            if (getAnElement(this.allChildren[key])) {
+                childWithZIndex.push({ zindex: getAnElement(this.allChildren[key]).base.zindex, array: this.allChildren[key] });
             }
         }
 
@@ -145,12 +219,19 @@ function baseObj(holder, zindex) {
         }
 
         for (var y = 0; y < childWithZIndex.length; y++) {
-            for (var i = 0; i < childWithZIndex[y].array.length; i++) {
+            for (var key in childWithZIndex[y].array) {
                 pen.save();
-                if(childWithZIndex[y].array[i].base)
-                    childWithZIndex[y].array[i].base.draw(pen);
+                if (childWithZIndex[y].array[key].base)
+                    childWithZIndex[y].array[key].base.draw(pen);
                 pen.restore();
             }
         }
-    }
+
+        //if (holder.draw)
+          //  holder.draw(pen);
+    };
+
+
+
+
 }

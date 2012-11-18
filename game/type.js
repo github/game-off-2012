@@ -1,14 +1,14 @@
 function assertDefined(functionName) {
     var allDefined = true;
 
-    if (typeof functionName !== "string") {
-        fail("First argument to assertDefined must be the name of the function");
-    }
+    //if (typeof functionName !== "string") {
+      //  fail("First argument to assertDefined must be the name of the function");
+    //}
 
-    for(var i = 1; i < arguments.length; i++)
+    for(var i = 0; i < arguments.length; i++)
     {
         if (typeof arguments[i] === "undefined") {
-            fail("Variable is required but is undefined");
+            fail("Variable is required but is undefined in " + functionName);
             allDefined = false;
         }
     }
