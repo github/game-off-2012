@@ -29,6 +29,9 @@ function Game(canvas) {
 			if (this.objects["spawner"]) {
 				this.objects["spawner"].level += 1
 			}
+			if (this.objects["power_spawn"]) {
+				this.objects["power_spawn"].spawn()
+			}
 		}
 		for (var i = 0; i < this.objects.length; i++) {
 			this.objects[i].physics(timeDelta)

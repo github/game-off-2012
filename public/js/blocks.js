@@ -24,7 +24,7 @@ function BlockSpawner(game, speed, level) {
 		 * block size is random between 10x100 and 100x10
 		 *
 		 */
-		if (Math.random() * 100 > 100 - this.level/2-1) {
+		if (Math.random() * 100 > 100 - this.level / 2 - 1) {
 			var x = Math.random() * canvas.width
 			var w = Math.random() * 90 + 10
 			var h = Math.random() * 90 + 10
@@ -49,6 +49,6 @@ function Block(x, y, w, h, speed) {
 		ctx.fillRect(this.x, this.y, this.w, this.h)
 	}
 	this.physics = function(timeDelta) {
-		this.y += this.speed*timeDelta*.05
+		this.y += this.speed * timeDelta * .05
 	}
 }

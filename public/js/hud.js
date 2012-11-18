@@ -29,7 +29,7 @@ function HUD(game, pre) {
 		ctx.fillText("Score: " + this.score, 10, 24)
 		ctx.fillText("Multiplier: " + this.multiplier, 10, 48)
 		if (this.game.objects['spawner'])
-			ctx.fillText("Level: " + this.game.objects['spawner'].level, this.game.canvas.width-100, 24)
+			ctx.fillText("Level: " + this.game.objects['spawner'].level, this.game.canvas.width - 100, 24)
 
 		if (this.pre) {
 			var b = {
@@ -83,81 +83,66 @@ function HUD(game, pre) {
 			var y = Math.floor(canvas.height / 2 - fontSize / 2) - 50
 			ctx.fillText("Paused", x, y)
 			ctx.fillText("[p] to resume", x, y + 80)
-		}
-		else if(this.game.objects['player']){
+		} else if (this.game.objects['player']) {
 			var player = this.game.objects['player']
-			var sX=10
-			var sY=this.game.canvas.height-50
+			var sX = 10
+			var sY = this.game.canvas.height - 50
 			ctx.fillText("controls ", sX, sY)
-			sY+=10
+			sY += 10
 			//need list of lines of diff controls, same controls are in list w/color
-			var keys={}
-			for(var i =0;i<player.lines.length;i++){
+			var keys = {}
+			for (var i = 0; i < player.lines.length; i++) {
 				var line = player.lines[i]
 				if (line.isDead)
 					continue
-				var k=line.keys[0]
-				if(keys[k]){
+				var k = line.keys[0]
+				if (keys[k]) {
 					keys[k].colors.push(line.color)
-				}
-				else{
-					keys[k]={
-						controls: line.keys,
-						colors: [line.color]
+				} else {
+					keys[k] = {
+						controls : line.keys,
+						colors : [line.color]
 					}
 				}
 			}
-			
+
 			var keyAccess = Object.keys(keys)
-			for(var i=0;i<keyAccess.length;i++){
-				var k = keyAccess[i]	
-					
-				this.drawKey(ctx,keys[k].controls[0],keys[k].colors,sX,sY)
-				sX+=30
-				this.drawKey(ctx,keys[k].controls[1],keys[k].colors,sX,sY)
-				sX+=30
-			}				
+			for (var i = 0; i < keyAccess.length; i++) {
+				var k = keyAccess[i]
+
+				this.drawKey(ctx, keys[k].controls[0], keys[k].colors, sX, sY)
+				sX += 30
+				this.drawKey(ctx, keys[k].controls[1], keys[k].colors, sX, sY)
+				sX += 30
+			}
 		}
 	}
-	this.drawKey=function(ctx,key,colors,x,y){
-		var oldFill=ctx.fillStyle
-		for(var i =0;i<colors.length;i++){
-			ctx.fillStyle=colors[i]
-			this.coolBlock(ctx,x+i*26/colors.length,y,26/colors.length,36)
-			//ctx.fillRect(x+i*26/colors.length,y,26/colors.length,36)
+
+	this.drawKey = function(ctx, key, colors, x, y) {
+		var oldFill = ctx.fillStyle
+		for (var i = 0; i < colors.length; i++) {
+			ctx.fillStyle = colors[i]
+			this.coolBlock(ctx, x + i * 26 / colors.length, y, 26 / colors.length, 36)
 		}
-		//ctx.fillStyle=color
-		//ctx.fillRect(x,y,26,36)
-		ctx.fillStyle=oldFill
-		ctx.fillText(key, x+6+(key===';'?2:0), y+23)
+		ctx.fillStyle = oldFill
+		ctx.fillText(key, x + 6 + (key === ';' ? 2 : 0), y + 23)
 	}
-	this.coolBlock=function(ctx, x, y, width, height){
-		
-		//function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
-		 // if (typeof stroke == "undefined" ) {
-		  //  stroke = true;
-		//  }
-		 // if (typeof radius === "undefined") {
-		    var radius = 5;
-		 // }
-		  ctx.beginPath();
-		  ctx.moveTo(x + radius, y);
-		  ctx.lineTo(x + width - radius, y);
-		  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-		  ctx.lineTo(x + width, y + height - radius);
-		  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-		  ctx.lineTo(x + radius, y + height);
-		  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-		  ctx.lineTo(x, y + radius);
-		  ctx.quadraticCurveTo(x, y, x + radius, y);
-		  ctx.closePath();
-		 // if (stroke) {
-		   // ctx.stroke();
-		  //}
-		  //if (fill) {
-		    ctx.fill();
-		  //}        
-		//}
+
+	this.coolBlock = function(ctx, x, y, width, height) {
+		var radius = 5;
+		ctx.beginPath();
+		ctx.moveTo(x + radius, y);
+		ctx.lineTo(x + width - radius, y);
+		ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+		ctx.lineTo(x + width, y + height - radius);
+		ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+		ctx.lineTo(x + radius, y + height);
+		ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+		ctx.lineTo(x, y + radius);
+		ctx.quadraticCurveTo(x, y, x + radius, y);
+		ctx.closePath();
+		ctx.fill();
+
 	}
 	keyListeners.push(['enter', function() {
 		startGame()
@@ -170,17 +155,17 @@ function HUD(game, pre) {
 		}
 	}
 	if (!this.pre) {
-			keyListeners.push(['p', function() {
-				if (!this.game.paused && this.game.play) {
-					this.game.paused = true
-					this.game.play = false
-					this.game.draw()
-				} else if (this.game.paused && !this.game.play) {
-					this.game.paused = false
-					this.game.play = true
-					this.game.update()
-				}
-			}.bind(this)])
-			document.addEventListener("webkitvisibilitychange", this.suspend.bind(this), false);
-		}
+		keyListeners.push(['p', function() {
+			if (!this.game.paused && this.game.play) {
+				this.game.paused = true
+				this.game.play = false
+				this.game.draw()
+			} else if (this.game.paused && !this.game.play) {
+				this.game.paused = false
+				this.game.play = true
+				this.game.update()
+			}
+		}.bind(this)])
+		document.addEventListener("webkitvisibilitychange", this.suspend.bind(this), false);
+	}
 }

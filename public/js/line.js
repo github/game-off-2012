@@ -13,14 +13,20 @@ function Line(game, color, x, y, r, keys, xSpeed, ySpeed) {
 	this.speed = xSpeed || 4
 	this.ySpeed = ySpeed || 4
 	this.isDead = false
-	this.physics = function(timeDelta) {
-		if (this.points.length >= this.clearCount) {
-			for (var i = this.points.length - 1; i >= 0; i--) {
+	this.clearGone = function(){
+		for (var i = this.points.length - 1; i >= 0; i--) {
 				if (this.points[i].y > canvas.height+this.r*2) {
 					this.points.splice(0, i)
 					break
 				}
 			}
+	}
+	this.revive=function(){
+		this.isDead=false
+	}
+	this.physics = function(timeDelta) {
+		if (this.points.length >= this.clearCount) {
+			this.clearGone()
 		}
 		for (var i = 0; i < this.points.length; i++) {
 			this.points[i].y += .05 * timeDelta * this.ySpeed
@@ -53,8 +59,6 @@ function Line(game, color, x, y, r, keys, xSpeed, ySpeed) {
 				color : this.color
 			})
 		}
-		
-		
 
 		//check collision
 		if (game.objects["spawner"] && !this.isDead) {
@@ -64,67 +68,38 @@ function Line(game, color, x, y, r, keys, xSpeed, ySpeed) {
 			}
 			var blocks = game.objects["spawner"].blocks
 			for (var i = 0; i < blocks.length; i++) {
-				var o = this
-				var b = blocks[i]
-				var y1 = o.y - o.r
-				var h1 = o.r * 2
-				var y2 = b.y
-				var h2 = b.h
-				var x1 = o.x - o.r
-				var w1 = o.r * 2
-				var x2 = b.x
-				var w2 = b.w
-				if (y1 + h1 < y2 || y1 > y2 + h2 || x1 + w1 < x2 || x1 > x2 + w2)
-					continue;
-				this.isDead = true
-				break
+				if(collideRoundSquare(this,blocks[i])){
+					this.isDead = true
+					break
+				}
+			}
+			var powerups = game.objects['power_spawn'].powerups
+			for(var i =0;i<powerups.length;i++){
+				if(!powerups[i].isDead && collideRoundRound(this,powerups[i])){
+					powerups[i].act()
+					powerups[i].isDead=true
+					break
+				}
 			}
 		}
 
 	}
 	this.draw = function(ctx) {
 		var tail = this.points[0]
-		if(!tail)
+		var head = this.points[this.points.length-1]
+		if(!tail || !head)
 			return
 
 		ctx.beginPath();
-		ctx.lineWidth=tail.r*2
+		ctx.lineWidth=head.r*2
 		ctx.lineCap='round'
+		ctx.lineJoin='round'
 		ctx.moveTo(tail.x,tail.y);
 		ctx.strokeStyle = tail.color
 		
-		var lastPoint=[tail.x,tail.y]
-		var lastSlope=undefined
 		for (var i = 1; i < this.points.length; i++) {
 			var point = this.points[i]
 			ctx.lineTo(point.x,point.y)
-			/*if(!lastSlope){
-				lastSlope = (lastPoint[1]-point.y)/(lastPoint[0]-point.x)
-				ctx.lineTo(point.x,point.y)
-			}
-			else{
-				var slope = (lastPoint[1]-point.y)/(lastPoint[0]-point.x)
-				if (slope>lastSlope+.2 || slope<lastSlope-.2){
-					ctx.stroke();
-					ctx.closePath()
-					
-					ctx.beginPath();
-					ctx.lineWidth=tail.r*2
-					ctx.lineCap='round'
-					ctx.moveTo(point.x,point.y);
-					ctx.strokeStyle = tail.color
-					lastSlope=slope
-					
-				}else{
-					lastSlope = slope
-					ctx.lineTo(point.x,point.y)
-				}
-			}*/
-			
-			
-			//ctx.beginPath();
-			//ctx.arc(point.x, point.y, point.r, 0, Math.PI * 2, true);
-			//ctx.closePath();
 		}
 		ctx.stroke();
 		ctx.closePath()
