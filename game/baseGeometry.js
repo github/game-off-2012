@@ -25,6 +25,11 @@ var Vector = (function() {
         this.x = x;
         this.y = y;
     }
+    // We use prototype here because assigning
+    // all of these functions in the constructor
+    // is (realatively) extremely slow, given the
+    // massive number of Vectors that are constructed
+    // all over the code.
     var p = Vector.prototype;
     p.magSq = function () {
         return this.x * this.x + this.y * this.y;
