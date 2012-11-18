@@ -13,7 +13,7 @@ class Storage
     --@counter
     @store[loader.getName()] = loader.getRessource()
     if @counter == 0
-      @finshed()
+      setTimeout(@finshed(), 20)
      
   setFinished:(finished)->
     @finshed = finished
