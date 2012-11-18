@@ -204,13 +204,15 @@ function Tower(baseTile) {
 	var nextFireIn = this.attr.coolDown;
 	var mutateCounter = this.attr.mutate;
 
+    this.curTowerRange = new Tower_Range(this);
+    this.base.addObject(this.curTowerRange);
+
 	this.draw = function (pen) {
 		var p = this.tPos;
 		pen.save();
 		pen.fillStyle = this.color;
 		pen.strokeStyle = "lightblue";
-		ink.rect(p.x, p.y, p.w, p.h, pen);
-		ink.outlineCirc(p.x + p.w/2, p.y + p.h/2, this.attr.range, pen);
+		ink.rect(p.x, p.y, p.w, p.h, pen);		
 		pen.restore();
 		this.hover = false;
 	};
@@ -283,18 +285,11 @@ function Tower(baseTile) {
 
     this.mouseover = function(e) {
         document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
-        if(!this.curTowerRange)
-        {
-            this.curTowerRange = new Tower_Range(this);
-
-            this.base.addObject(this.curTowerRange);
-        }        
     };
 
     this.dragged = function(e){
         var eng = this.base.rootNode;
         var curTile = findClosest(eng, "Tile", e, 0);
-        console.log("dragged");
         if(curTile !== this.baseTile)
         {
             var towerOnCurTile = findClosest(eng, "Tower", e, 0);
@@ -307,21 +302,7 @@ function Tower(baseTile) {
             }
         }
     };
-
-    this.mouseout = function(){
-        if(this.curTowerRange)
-        {
-            this.base.removeObject(this.curTowerRange);
-            this.curTowerRange = null;
-        }
-    };
-
-    this.mouseover = function() {
-        document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
-        this.hover = true;
-    }  
-
-  //Is this supposed to be out of a function?
+    
 	this.mutate();
 }
 
