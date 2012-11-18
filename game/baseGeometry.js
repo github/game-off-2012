@@ -27,24 +27,29 @@ function Vector(x, y) {
     this.magSq = function () {
         return this.x * this.x + this.y * this.y;
     };
-
-    this.setMag = function (mag) {
-        var curMag = Math.sqrt(this.x * this.x + this.y * this.y);
-        if (curMag) {
-            this.x /= curMag;
-            this.y /= curMag;
-        }
-
+    this.mag = function() {
+        return Math.sqrt(this.magSq());
+    }
+    this.norm = function() {
+        var mag = this.mag();
+        if (!mag) return this;
+        this.x /= mag;
+        this.y /= mag;
+        return this;
+    }
+    this.mult = function(mag) {
         this.x *= mag;
         this.y *= mag;
+        return this;
     }
-
-    this.subtract = function (otherVec) {
+    this.sub = function (otherVec) {
         this.x -= otherVec.x;
         this.y -= otherVec.y;
+        return this;
     }
     this.add = function (otherVec) {
         this.x += otherVec.x;
         this.y += otherVec.y;
+        return this;
     }
 }
