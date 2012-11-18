@@ -309,13 +309,12 @@ function Bug(startPath, r) {
 		pen.lineWidth = 1;
 		ink.circ(p.x + p.w / 2, p.y + p.h / 2, p.w / 2, pen);
 	};
-  this.destroyAtBase = function()
-  {
-      this.base.destroySelf = true;
-				eng.health -= 50;
+    this.destroyAtBase = function() {
+        this.base.destroySelf = true;
+        eng.health -= 50;
 
-				if (eng.health < 0)
-				window.location.reload();
+        if (eng.health < 0)
+        window.location.reload();
   };
 }
 

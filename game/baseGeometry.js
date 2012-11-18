@@ -20,36 +20,39 @@ function temporalPos(x, y, w, h, dx, dy) {
     };
 }
 
-function Vector(x, y) {
-    this.x = x;
-    this.y = y;
-
-    this.magSq = function () {
+var Vector = (function() {
+    function Vector(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+    var p = Vector.prototype;
+    p.magSq = function () {
         return this.x * this.x + this.y * this.y;
     };
-    this.mag = function() {
+    p.mag = function() {
         return Math.sqrt(this.magSq());
     }
-    this.norm = function() {
+    p.norm = function() {
         var mag = this.mag();
         if (!mag) return this;
         this.x /= mag;
         this.y /= mag;
         return this;
     }
-    this.mult = function(mag) {
+    p.mult = function(mag) {
         this.x *= mag;
         this.y *= mag;
         return this;
     }
-    this.sub = function (otherVec) {
+    p.sub = function (otherVec) {
         this.x -= otherVec.x;
         this.y -= otherVec.y;
         return this;
     }
-    this.add = function (otherVec) {
+    p.add = function (otherVec) {
         this.x += otherVec.x;
         this.y += otherVec.y;
         return this;
     }
-}
+    return Vector;
+}());

@@ -34,9 +34,25 @@ function mergeToArray(value, array) {
     return array;
 }
 
+function sortArrayByProperty(a, prop) {
+    a.sort(cmp)
+    function cmp(a, b) {
+        // Avoid multiple object dereferences in 
+        // tight inner loop.
+        var ap = a[prop];
+        var bp = b[prop];
+        if (ap < bp) {
+            return -1;
+        } else if (ap > bp) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
 //This should really not be in here.
 //Sorts arr by the given property (uses quickSort)
-function sortArrayByProperty
+function sortArrayByPropertyCustom
 (
     arrObj,
     property
