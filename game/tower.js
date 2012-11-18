@@ -23,13 +23,16 @@ function Tower_Laser(xs, ys, xe, ye, duration) {
     this.base = new baseObj(this, 12);
 
     this.base.addObject(new lifetime(duration));
+    this.base.children.lifetime;
 
     this.update = function (dt) {
         this.tPos.update(dt);
     };
 
+    var dist = Math.pow(ye-ys, 2) + Math.pow(xe-xs, 2);
+
     this.draw = function (pen) {
-        pen.strokeStyle = "purple";
+        pen.strokeStyle = "rgba(255,0,255," + getAnElement(this.base.children.lifetime).currentTimeLeft/duration + ")";
         pen.lineWidth = 2;
         ink.line(this.xs, this.ys, this.xe, this.ye, pen);
     };  
@@ -52,7 +55,7 @@ function Tower(baseTile) {
 
     this.hover = false;
     
-    var laserTime = 0.1;
+    var laserTime = 0.5;
     var nextFireIn = this.attr.coolDown;
     var mutateCounter = this.attr.mutate;
     var towerRange = new Tower_Range(this);

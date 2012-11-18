@@ -217,13 +217,13 @@ function lifetime(timeLeft) {
     //this.tPos = new temporalPos(x, y, w, h, 0, 0);
     this.base = new baseObj(this);
 
-    var currentTimeLeft = timeLeft;
+    this.currentTimeLeft = timeLeft;
 
     this.update = function (dt) {
-        currentTimeLeft -= dt;
+        this.currentTimeLeft -= dt;
 
-        if (currentTimeLeft < 0) {
-            this.base.parent.base.destroySelf();
+        if (this.currentTimeLeft < 0) {
+            this.base.parent.base.destroySelf();            
         }
     };
 
