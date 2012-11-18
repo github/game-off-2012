@@ -41,11 +41,17 @@ function QuadTree(arrObjs, splitThreshold) {
         if (!assertDefined("removeFromTree", obj, obj.base))
             return;
 
+        if (!obj.tPos)
+            return;
+
         delete obj.base.quadNode.ids[obj.base.id];
     };
 
     this.addToTree = function (obj) {
         if (!assertDefined("addToTree", obj, obj.base))
+            return;
+
+        if (!obj.tPos)
             return;
 
         var type = obj.base.type;
@@ -107,7 +113,8 @@ function QuadTree(arrObjs, splitThreshold) {
             idKey.push(arrObjs[type][key].base.id);
         }
 
-        if (idKey.length == 0) {
+        //We can't index stuff without tPos
+        if (idKey.length == 0 || !arrObjs[type][idKey[0]].tPos) {
             this.objTrees[type].tree = {};
             this.objTrees[type].tree.leaf = true;
             this.objTrees[type].tree.numberContained = 0;
@@ -115,8 +122,7 @@ function QuadTree(arrObjs, splitThreshold) {
             this.objTrees[type].tree.bounds = {x: 0, y:0, w:0, h:0};
             continue;
         }
-
-
+        
         minX = arrObjs[type][idKey[0]].tPos.x;
         maxX = arrObjs[type][idKey[0]].tPos.x;
         minY = arrObjs[type][idKey[0]].tPos.y;

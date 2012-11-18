@@ -27,7 +27,10 @@ function Tower_Laser(xs, ys, xe, ye, duration) {
 
     this.update = function (dt) {
         timeleft -= dt;
-        if (timeleft < 0) this.base.destroySelf();
+        if (timeleft <= 0.00001) {
+            this.base.destroySelf();
+            return;
+        }
         color = "rgba(255,0,255," + timeleft/duration + ")";
     };
 
@@ -55,11 +58,12 @@ function Tower(baseTile) {
 
     this.hover = false;
     
-    var laserTime = 0.3;
+    var laserTime = 0.5;
     var nextFireIn = this.attr.coolDown;
     var mutateCounter = this.attr.mutate;
     var towerRange = new Tower_Range(this);
-
+    var added = false;
+    
     this.draw = function (pen) {
         var p = this.tPos;
         pen.save();
@@ -77,7 +81,7 @@ function Tower(baseTile) {
             this.attr.coolDown /= 2;
             eng.money -= 100;
         }
-    }
+    };
 
     this.mutate = function() {
         var a = this.attr;
@@ -101,7 +105,7 @@ function Tower(baseTile) {
             a.range = 80;
         }        
         this.color = "#" + hexPair(255 - a.hp) + hexPair(a.range) + hexPair(a.damage);
-    }
+    };
 
     this.attack = function() {
         var target = findClosest(eng, "Bug", this.tPos.getCenter(), this.attr.range + 0.01);        
@@ -114,8 +118,8 @@ function Tower(baseTile) {
         var cent1 = this.tPos.getCenter();
         var cent2 = target.tPos.getCenter();
         
-        return new Tower_Laser(cent1.x, cent1.y, cent2.x, cent2.y, laserTime);        
-    }
+        return new Tower_Laser(cent1.x, cent1.y, cent2.x, cent2.y, laserTime);
+    };
 
     this.update = function (dt) {
         mutateCounter -= dt;
@@ -132,27 +136,31 @@ function Tower(baseTile) {
         }        
 
         return newObjs;
-    }
-
+    };
 
     this.mouseover = function(e) {
-        document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
-        this.base.addObject(towerRange);
+        // Only required because of issue #29
+        if (!added) {
+            document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
+            this.base.addObject(towerRange);
+            added = true;
+        }
     };
     
     this.mouseout = function(e) {
-        this.base.removeObject(towerRange);
-    }
+        if (added) {
+            this.base.removeObject(towerRange);
+            added = false;
+        }
+    };
 
     this.dragged = function(e){
         var eng = this.base.rootNode;
         var curTile = findClosest(eng, "Tile", e, 0);
-        if(curTile !== this.baseTile)
-        {
+        if (curTile !== this.baseTile) {
             var towerOnCurTile = findClosest(eng, "Tower", e, 0);
             var pathOnCurTile = findClosest(eng, "Path", e, 0);
-            if(!towerOnCurTile && !pathOnCurTile)
-            {
+            if (!towerOnCurTile && !pathOnCurTile) {
                 var p = curTile.tPos;
                 this.baseTile = curTile;
                 this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0); //maybe I shouldn't new it

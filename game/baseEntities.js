@@ -105,6 +105,12 @@ function baseObj(holder, zindex) {
         }
     }
 
+    this.loopThroughAllTypes = function (funcToExecute) {
+        for (var type in this.children)
+            for (var id in this.children[type])
+                funcToExecute(this.children[type][id]);
+    };
+
     this.removeObject = function (obj) {
         if (!assertDefined("removeObject", obj, obj.base))
             return;
@@ -121,9 +127,10 @@ function baseObj(holder, zindex) {
             this.parent.base.removeObject(this.holder);
 
             //Also destroy our children (keeps allChildren working properly)
-            for (var key in this.children)
-                if (this.children[key].base)
-                    this.children[key].base.destroySelf();
+            this.loopThroughAllTypes(function (child) {
+                if (child.base)
+                    child.base.destroySelf();
+            });
         }
     }
 
@@ -134,19 +141,21 @@ function baseObj(holder, zindex) {
         //Remove stuff from old rootNode
         if (this.rootNode) {
             removeFromArray(this.rootNode.base, this.holder, "allChildren", "allLengths");
-            if(this.rootNode.curQuadTree)
+            if (this.rootNode.curQuadTree)
                 this.rootNode.curQuadTree.removeFromTree(this.holder);
         }
 
         this.rootNode = rootNode;
 
         addToArray(this.rootNode.base, this.holder, "allChildren", "allLengths");
-        if(this.rootNode.curQuadTree)
+        if (this.rootNode.curQuadTree)
             this.rootNode.curQuadTree.addToTree(this.holder);
 
-        for (var key in this.children)
-            if (this.children[key].base)
-                this.children[key].setRootNode(rootNode);
+        this.loopThroughAllTypes(function (child) {
+            if (child.base) {
+                child.base.setRootNode(rootNode);
+            }
+        });
     };
 
     this.removeAllType = function (type) {
@@ -164,13 +173,11 @@ function baseObj(holder, zindex) {
         if (holder[name])
             mergeToArray(holder[name](arguments), returnedValues);
 
-        for (var type in this.children) {
-            for (var key in this.children[type]) {
-                if (this.children[type][key].base) {
-                    mergeToArray(this.children[type][key].base.raiseEvent(name, arguments), returnedValues);
-                }
+        this.loopThroughAllTypes(function (child) {
+            if (child.base) {
+                mergeToArray(child.base.raiseEvent(name, arguments), returnedValues);
             }
-        }
+        });
 
         return returnedValues;
     };
@@ -181,13 +188,11 @@ function baseObj(holder, zindex) {
         if (holder.update)
             mergeToArray(holder.update(dt), returnedValues);
 
-        for (var type in this.children) {
-            for (var key in this.children[type]) {
-                if (this.children[type][key].base) {
-                    mergeToArray(this.children[type][key].base.update(dt), returnedValues);
-                }
+        this.loopThroughAllTypes(function (child) {
+            if (child.base) {
+                mergeToArray(child.base.update(dt), returnedValues);
             }
-        }
+        });
 
         return returnedValues;
     };
@@ -221,8 +226,8 @@ function baseObj(holder, zindex) {
         for (var y = 0; y < childWithZIndex.length; y++) {
             for (var key in childWithZIndex[y].array) {
                 pen.save();
-                if (childWithZIndex[y].array[key].base)
-                    childWithZIndex[y].array[key].base.draw(pen);
+                if (childWithZIndex[y].array[key].draw)
+                    childWithZIndex[y].array[key].draw(pen);
                 pen.restore();
             }
         }
