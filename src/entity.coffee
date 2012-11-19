@@ -20,6 +20,7 @@ class TestEntity extends Entity
     screen.render @x, @y, @tile
     
   tick:->
+    
   
   
 class Model
@@ -40,18 +41,21 @@ class Model
     
     
 class PlayerModel extends Model
+  
   constructor:(@world, @x, @y) ->
     @scale = SCALE
     
     @height = 12/@scale
     @width = 12/@scale
     
-    console.log(@width ,@height)
-    
     @fixDef = new b2FixtureDef
     @fixDef.density = 0.1
     @fixDef.friction = 0.3
     @fixDef.restitution = 0.4
+    
+    #Collision-Filtering == AWESOME
+    @fixDef.filter.categoryBits = 0x02
+    @fixDef.filter.maskBits = 0x01
     
     @bodyDef = new b2BodyDef
     @bodyDef.type = b2Body.b2_dynamicBody
@@ -61,7 +65,11 @@ class PlayerModel extends Model
     @fixDef.shape = new b2PolygonShape
     @fixDef.shape.SetAsBox(@width, @height)
     
+    
     @body = @world.CreateBody(@bodyDef)
+    @body.SetFixedRotation(true)
+    @body.ShouldCollide(false)
+    
     
     @fixDef = @body.CreateFixture(@fixDef)
     
@@ -70,6 +78,9 @@ class PlayerModel extends Model
     
   getScreenY:->
     (@body.GetPosition().y-@height)*@scale
+    
+  tick:->
+    @body.SetLinearVelocity(new b2Vec2(5, @body.GetLinearVelocity().y));
 
 
 class GroundModel extends Model
@@ -83,6 +94,8 @@ class GroundModel extends Model
     @fixDef.friction = 0.3
     @fixDef.restitution = 0.4
     
+    
+    
     @bodyDef = new b2BodyDef
     @bodyDef.type = b2Body.b2_staticBody
     @bodyDef.position.x = @width/@scale/2
@@ -92,23 +105,3 @@ class GroundModel extends Model
     @fixDef.shape.SetAsBox((2000/@scale)/2, (8/@scale)/2)
     @body = @world.CreateBody(@bodyDef)
     @body.CreateFixture(@fixDef)
-    
-    
-class TeleporterModel extends Model
-  constructor:(@world, @game, @x, @y) ->
-    @scale = @game.scale
-    
-    @sensor = new b2FixtureDef
-    
-    @sensor.shape = new b2PolygonShape
-    @sensor.shape.SetAsBox((25/@scale)/2, (10/@scale)/2)
-    @sensor.isSensor = true
-    
-    @bodyDef = new b2BodyDef
-    @bodyDef.type = b2Body.b2_staticBody
-    @bodyDef.position.x = 160/@scale/2
-    @bodyDef.position.y = (300-20)/@scale/2
-    
-    @body = @world.CreateBody(@bodyDef)
-    
-    @sensor = @body.CreateFixture(@sensor)
