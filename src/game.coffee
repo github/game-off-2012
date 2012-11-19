@@ -18,9 +18,6 @@ $ ->
   #GLOABAL Storage
   @STORAGE = new Storage()
   
-  
-  
-  
   l1 = new SimpleImageLoader("img/sprites.png", "spritesheet")
   l2 = new SimpleJSONLoader("img/map.json", "map")
   l3 = new SimpleJSONLoader("level/test.json", "test")
