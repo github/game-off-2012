@@ -10,7 +10,6 @@ SongView = Backbone.View.extend({
     this.audio = this.$el.find('audio')[0];
     this.audio.setAttribute('src', 'audio/' + this.model.get('filename') + '.mp3');
     this.audio.load();
-    this.paused = true;
     this.score = 0;
     this.sprites = new Array();
     this.sprites['marker'] = new Image();
@@ -38,7 +37,7 @@ SongView = Backbone.View.extend({
 
   getNext: function () {
     $('#time').html(this.getTime());
-    if(!this.paused){
+    if(!this.audio.paused){
       _.each(this.queues, function(queue, i){
           if (queue[0] <= (this.getTime() + 1000)){
             queue.shift();
@@ -49,7 +48,7 @@ SongView = Backbone.View.extend({
   },
 
   moveMarkers: function () {
-    if(!this.paused){
+    if(!this.audio.paused){
       _.each(this.active, function(queue){
         _.each(queue, function(marker, i){
           if(marker.top > 420){
@@ -88,12 +87,10 @@ SongView = Backbone.View.extend({
   },
 
   pause: function () {
-    this.paused = !this.paused;
-    console.log(this.paused);
-    if(this.paused){
-      this.audio.pause();
-    }else{
+    if(this.audio.paused){
       this.audio.play();
+    }else{
+      this.audio.pause();
     }
   },
 
