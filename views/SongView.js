@@ -11,6 +11,7 @@ SongView = Backbone.View.extend({
     this.audio.setAttribute('src', 'audio/' + this.model.get('filename') + '.mp3');
     this.audio.load();
     this.paused = true;
+    this.score = 0;
     this.sprites = new Array();
     this.sprites['marker'] = new Image();
     this.sprites['marker'].src = 'img/marker.png';
@@ -19,9 +20,10 @@ SongView = Backbone.View.extend({
     this.inactive = [[],[],[],[]];
     this.missed   = [[],[],[],[]];
     this.context = this.canvas.getContext('2d');
-    _.bindAll(this, 'handleKey', 'animate');
+    _.bindAll(this, 'handleKey', 'animate', 'getNext', 'moveMarkers');
     $(document).bind('keydown', this.handleKey);
-    window.setInterval(this.scanQueues, 10);
+    window.setInterval(this.getNext, 10);
+    window.setInterval(this.moveMarkers, 1000/170);
     this.animate();
   },
 
@@ -34,14 +36,49 @@ SongView = Backbone.View.extend({
     return Math.floor(this.audio.currentTime * 1000);
   },
 
-  scanQueues: function () {
+  getNext: function () {
+    $('#time').html(this.getTime());
     if(!this.paused){
       _.each(this.queues, function(queue, i){
           if (queue[0] <= (this.getTime() + 1000)){
             queue.shift();
-            //var type = i + 1;
-            .active[i].push({top:0, type:(i+1)});
-        }
+            this.active[i].push({top:0, type:(i+1)});
+          }
+      }, this);
+    }
+  },
+
+  moveMarkers: function () {
+    if(!this.paused){
+      _.each(this.active, function(queue){
+        _.each(queue, function(marker, i){
+          if(marker.top > 420){
+            this.missed.push(queue.splice(i, 1));
+            this.score -= 500;
+          }else{
+            marker.top += 2;
+          }
+        }, this);
+      }, this);
+
+      _.each(this.inactive, function(queue){
+        _.each(queue, function(marker, i){
+          if(marker.top > this.canvas.height){
+            queue.splice(i, 1);
+          }else{
+            marker.top += 2;
+          }
+        }, this);
+      }, this);
+
+      _.each(this.missed, function(queue){
+        _.each(queue, function(marker, i){
+          if(marker.top > this.canvas.height){
+            queue.splice(i, 1);
+          }else{
+            marker.top += 2;
+          }
+        }, this);
       }, this);
     }
   },
@@ -54,9 +91,9 @@ SongView = Backbone.View.extend({
     this.paused = !this.paused;
     console.log(this.paused);
     if(this.paused){
-
+      this.audio.pause();
     }else{
-
+      this.audio.play();
     }
   },
 
@@ -69,7 +106,8 @@ SongView = Backbone.View.extend({
     this.context.fillStyle = color;
     _.each(type, function(queues){
       _.each(queues, function(marker){
-        this.context.drawImage(this.sprites['marker'], (marker.type * 120), marker.top);
+        this.context.drawImage(this.sprites['marker'],
+          (marker.type * 120), marker.top);
       }, this)
     }, this);
   },
@@ -77,7 +115,6 @@ SongView = Backbone.View.extend({
   animate: function() {
 
     requestAnimationFrame(this.animate);
-
     this.clear();
 
     this.context.fillStyle = 'gray';
