@@ -83,7 +83,19 @@ SongView = Backbone.View.extend({
   },
 
   check: function (queue) {
-    console.log(queue);
+    if(this.active[queue][0].top < 310 && this.active[queue][0].top > 280){
+      this.inactive[queue].push(this.active[queue].shift());
+      console.log('ok');
+      this.score += 500;
+    }else if(this.active[queue][0].top > 310 && this.active[queue][0].top < 390){
+      this.inactive[queue].push(this.active[queue].shift());
+      console.log('Perfect!');
+      this.score += 1000;
+    }else if(this.active[queue][0].top > 390 && this.active[queue][0].top < 420){
+      this.inactive[queue].push(this.active[queue].shift());
+      console.log('ok');
+      this.score += 500;
+    }
   },
 
   pause: function () {
