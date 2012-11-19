@@ -11,6 +11,7 @@ SongView = Backbone.View.extend({
     this.audio.setAttribute('src', 'audio/' + this.model.get('filename') + '.mp3');
     this.audio.load();
     this.score = 0;
+    this.combo = 0;
     this.sprites = new Array();
     this.sprites['marker'] = new Image();
     this.sprites['marker'].src = 'img/marker.png';
@@ -38,6 +39,7 @@ SongView = Backbone.View.extend({
   getNext: function () {
     $('#time').html(this.getTime());
     $('#score').html(this.score);
+    $('#combo').html(this.combo);
     if(!this.audio.paused){
       _.each(this.queues, function(queue, i){
           if (queue[0] <= (this.getTime() + 1000)){
@@ -55,6 +57,7 @@ SongView = Backbone.View.extend({
           if(marker.top > 400){
             this.missed.push(queue.splice(i, 1));
             this.score -= 500;
+            this.combo = 0;
           }else{
             marker.top += 2;
           }
@@ -85,28 +88,31 @@ SongView = Backbone.View.extend({
 
   check: function (queue) {
     if(this.active[queue].length > 0 && 
-       this.active[queue][0].top < 260){
+      this.active[queue][0].top < 260){
       console.log('early');
       this.score -= 500;
-    }
-    else if(this.active[queue].length > 0 && 
+      this.combo = 0;
+    }else if(this.active[queue].length > 0 && 
       this.active[queue][0].top < 330 &&
       this.active[queue][0].top > 260){
       this.inactive[queue].push(this.active[queue].shift());
       console.log('ok');
       this.score += 500;
+      this.combo += 1;
     }else if(this.active[queue].length > 0 &&
       this.active[queue][0].top > 330 &&
       this.active[queue][0].top < 370){
       this.inactive[queue].push(this.active[queue].shift());
       console.log('Perfect!');
       this.score += 1000;
+      this.combo += 1;
     }else if(this.active[queue].length > 0 &&
       this.active[queue][0].top > 370 && 
       this.active[queue][0].top < 400){
       this.inactive[queue].push(this.active[queue].shift());
       console.log('ok');
       this.score += 500;
+      this.combo += 1;
     }
   },
 
