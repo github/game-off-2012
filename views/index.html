@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
+		<link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/css/style.css">
         
         <script src="/js/jquery-1.8.2.min.js"></script>
@@ -24,6 +24,11 @@
         <!-- Add your site or application content here -->
         <h1>Avabranch</h1>
         <canvas id="canv" style="background-color: #6D6D6D"></canvas>
+        <i id="mute" class="icon icon-volume-up" onclick=toggleSound()></i><a class="attribution" href="http://soundcloud.com/chrissij/background-music">Background Music - ChrissiJ</a>
+        <audio autoplay loop id="bgaudio">
+        	<source src="/audio/background.ogg"></source>
+        	<source src="/audio/background.mp3"></source>
+        </audio>
         <script src="/js/util.js"></script>
         <script src="/js/hud.js"></script>
         <script src="/js/powerups.js"></script>

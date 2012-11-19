@@ -35,6 +35,19 @@ function startGame() {
 	game.update()
 }
 
+function toggleSound(){
+	var button = document.getElementById("mute")
+	var audio = document.getElementById("bgaudio")
+	if(button.className.indexOf("up")!=-1){//need to mute
+		button.className = button.className.replace("up","off")
+		audio.pause()
+	}
+	else{//turn back on
+		button.className = button.className.replace("off","up")
+		audio.play()
+	}
+}
+
 window.requestAnimFrame = (function() {
 	return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
 	function(/* function */callback, /* DOMElement */element) {
