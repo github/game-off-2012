@@ -37,6 +37,7 @@ SongView = Backbone.View.extend({
 
   getNext: function () {
     $('#time').html(this.getTime());
+    $('#score').html(this.score);
     if(!this.audio.paused){
       _.each(this.queues, function(queue, i){
           if (queue[0] <= (this.getTime() + 1000)){
@@ -51,7 +52,7 @@ SongView = Backbone.View.extend({
     if(!this.audio.paused){
       _.each(this.active, function(queue){
         _.each(queue, function(marker, i){
-          if(marker.top > 420){
+          if(marker.top > 400){
             this.missed.push(queue.splice(i, 1));
             this.score -= 500;
           }else{
@@ -83,15 +84,26 @@ SongView = Backbone.View.extend({
   },
 
   check: function (queue) {
-    if(this.active[queue][0].top < 310 && this.active[queue][0].top > 280){
+    if(this.active[queue].length > 0 && 
+       this.active[queue][0].top < 260){
+      console.log('early');
+      this.score -= 500;
+    }
+    else if(this.active[queue].length > 0 && 
+      this.active[queue][0].top < 330 &&
+      this.active[queue][0].top > 260){
       this.inactive[queue].push(this.active[queue].shift());
       console.log('ok');
       this.score += 500;
-    }else if(this.active[queue][0].top > 310 && this.active[queue][0].top < 390){
+    }else if(this.active[queue].length > 0 &&
+      this.active[queue][0].top > 330 &&
+      this.active[queue][0].top < 370){
       this.inactive[queue].push(this.active[queue].shift());
       console.log('Perfect!');
       this.score += 1000;
-    }else if(this.active[queue][0].top > 390 && this.active[queue][0].top < 420){
+    }else if(this.active[queue].length > 0 &&
+      this.active[queue][0].top > 370 && 
+      this.active[queue][0].top < 400){
       this.inactive[queue].push(this.active[queue].shift());
       console.log('ok');
       this.score += 500;
