@@ -141,6 +141,7 @@ class Camera
   constructor:(@world,@scale,@screenscale,@inputHandler)->
     @xOffset = 0
     @modelScale = @scale/@screenscale
+    @xBound = 128
     
   getXoffset: ->
     @xOffset
@@ -148,12 +149,15 @@ class Camera
   setXoffset:(xOffset) ->
     @processEntities xOffset
     @xOffset = xOffset
+  
+  setXboundary:(xbound)->
+    @xBound = xbound
     
   tick:=>
     xNow = 0
     
     if @inputHandler.RIGHT.isPressed() is true
-      if @xOffset != 128
+      if @xOffset != @xBound
         xNow = 1
         
     if @inputHandler.LEFT.isPressed() is true
