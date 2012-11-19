@@ -81,8 +81,8 @@
     mit.game_started = 0;
 
     mit.pappu.drawStatic(ctx);
-    ax = 0; ay = 0;
-    vx = 0; vy = 0;
+    mit.ax = 0; mit.ay = 0;
+    mit.vx = 0; mit.vy = 0;
 
     return false;
   });
@@ -99,11 +99,11 @@
   mit.config.canvas_height = H;
 
   // Gravity
-  var gravity = mit.gravity = 0.5;
+  mit.gravity = 0.5;
 
   // Velocity x,y
-  var vx = 0;
-  var vy = 0;
+  mit.vx = 0;
+  mit.vy = 0;
 
   // Velocity cap on either sides of the
   // number system.
@@ -113,8 +113,8 @@
   var v_cap = 7;
 
   // Accelaration x,y
-  var ax = 0;
-  var ay = 0;
+  mit.ax = 0;
+  mit.ay = 0;
 
   // Flying up ?
   var flying_up = 0;
@@ -128,22 +128,22 @@
     switch (e.keyCode) {
       // Left
       //case 37:
-      //  ax = -0.4;
+      //  mit.ax = -0.4;
       //  break;
 
       // Right
       //case 39:
-      //  ax = 0.4;
+      //  mit.ax = 0.4;
       //  break;
 
       // Up
       case 38:
-        ay = -0.4;
+        mit.ay = -1.0;
         break;
 
       // Down
       case 40:
-        ay = 0.4;
+        mit.ay = 1.0;
         break;
     }
 
@@ -153,8 +153,8 @@
     if (!mit.start_btn_clicked)
       return;
 
-    ax = 0;
-    ay = 0;
+    mit.ax = 0;
+    mit.ay = 0;
   }, false);
 
   // Game play on mouse clicks too!
@@ -165,7 +165,7 @@
     if (!mit.game_started)
       mit.game_started = 1;
 
-    ay = -1.0;
+    mit.ay = -1.0;
     flying_up = 1;
   }, false);
 
@@ -173,7 +173,7 @@
     if (!mit.start_btn_clicked)
       return;
 
-    ay = 0;
+    mit.ay = 0;
     flying_up = 0;
   }, false);
 
@@ -241,22 +241,23 @@
       ui.score_board.text(parseInt(score));
 
       // Acceleration + Gravity
-      // ay = ay + gravity;
-
+      // mit.ay = mit.ay + mit.gravity;
+      
       // Velocity
       if (
-        (vy < v_cap && ay+gravity > 0) ||
-        (vy > -v_cap && ay+gravity < 0)
+        (mit.vy < v_cap && mit.ay+mit.gravity > 0) ||
+        (mit.vy > -v_cap && mit.ay+mit.gravity < 0)
         ) {
 
-        vy += ay;
-        vy += gravity;
+        //console.log(mit.ay);
+        mit.vy += mit.ay;
+        mit.vy += mit.gravity;
       }
 
       // console.log(vy, ay)
 
-      mit.pappu.x += vx;
-      mit.pappu.y += vy;
+      mit.pappu.x += mit.vx;
+      mit.pappu.y += mit.vy;
     
       mit.pappu.draw(ctx);
     }

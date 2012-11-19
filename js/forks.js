@@ -25,6 +25,7 @@
   dig_img.src = 'img/dig.png';
 
   var Fork = function() {
+    // Handle Details
     this.x = 0;
     this.y = 0;
 
@@ -32,6 +33,15 @@
     this.w = 0;
     // Height
     this.h = 0;
+
+
+    // Head Details
+    this.head_x = 0;
+    this.head_y = 0;
+
+    this.head_w = 0;
+    this.head_h = 0;
+
 
     // Edge on which the fork will stand on
     this.edge = 'btm';
@@ -52,6 +62,11 @@
     // Get Head Bounds
     this.getHeadBounds = function() {
       var bounds = {};
+
+      bounds.start_x = this.head_x;
+      bounds.start_y = this.head_y;
+      bounds.end_x = this.head_x + this.head_w;
+      bounds.end_y = this.head_y + this.head_h;
 
       return bounds;
     };
@@ -135,13 +150,9 @@
 
     // Loop over forks and draw each of them
     forks.forEach(function(fork, index) {
-      if (fork.x + fork.w < 0) {
-        // forks.splice is causing the forks to flash when 
-        // a fork is removed from the array. We can use an
-        // alternative maybe.
+      if (fork.x < 0) {
         forks.splice(index, 1);
       }
-
       fork.x -= mit.backgrounds.ground_bg_move_speed;
 
       // Check Collisions with pappu
@@ -163,9 +174,16 @@
         ctx.drawImage(fork_img, -fork_img.width/2, -fork_img.height/2);
         ctx.restore();
 
+
+        fork.head_x = fork.x-fork_head_img.width/8;
+        fork.head_y = fork.y+fork_img.height;
+
+        fork.head_w = fork_head_img.width;
+        fork.head_h = fork_head_img.height;
+
         // Draw Fork Head
         ctx.save();
-        ctx.translate(fork.x-fork_head_img.width/8, fork.y+fork_img.height);
+        ctx.translate(fork.head_x, fork.head_y);
         ctx.translate(fork_head_img.width/2, fork_head_img.height/2);
         ctx.rotate( utils.toRadian(180) );
         ctx.drawImage(fork_head_img, -fork_head_img.width/2, -fork_head_img.height/2);
@@ -176,9 +194,16 @@
 
         ctx.drawImage(fork_img, fork.x, fork.y);
 
+
+        fork.head_x = fork.x-fork_head_img.width/5;
+        fork.head_y = fork.y-fork_head_img.height;
+
+        fork.head_w = fork_head_img.width;
+        fork.head_h = fork_head_img.height;
+
         // Draw Fork Head
         ctx.save();
-        ctx.translate(fork.x-fork_head_img.width/5, fork.y-fork_head_img.height);
+        ctx.translate(fork.head_x, fork.head_y);
         ctx.translate(1* fork_head_img.width/2, 1* fork_head_img.height/2);
         ctx.scale(-1,1);
         ctx.drawImage(
@@ -220,7 +245,7 @@
 
     // Get Nearest Fork's Handle's Bounds
     var fork_bounds = forks[0].getHandleBounds();
-    console.log(pappu_bounds, fork_bounds);
+    
     // Check whether pappu collided with the
     // fork handle or not.
     if (
@@ -229,8 +254,36 @@
       pappu_bounds.start_y > fork_bounds.start_y &&
       pappu_bounds.end_y < fork_bounds.end_y
     ) {
-      console.log(pappu_bounds, fork_bounds);
+      // console.log(pappu_bounds, fork_bounds);
       mit.gameOver();
+    }
+
+
+    // We'll have to check for collision with forks
+    // If there's a collision pappu will be pushed!
+    var fork_head_bounds = forks[0].getHeadBounds();
+
+    if (mit.forks.had_head_collision) {
+      mit.forks.had_head_collision = false;
+
+      mit.vy += -mit.forks.last_push;
+    }
+
+    // Check whether pappu collided with the
+    // fork head or not.
+    if (utils.intersect(pappu_bounds, fork_head_bounds)) {
+      mit.forks.had_head_collision = true;
+
+      if (forks[0].edge === 'top') {
+        mit.forks.last_push = +forks[0].head_h;
+      }
+      else {
+        mit.forks.last_push = -forks[0].head_h;
+      }
+
+      mit.vy += mit.forks.last_push;
+      // console.log(pappu_bounds, fork_head_bounds);
+      console.log(mit.vy);
     }
   };
 
@@ -238,7 +291,8 @@
   window.mit.forks = {
     draw: draw,
     drawDigs: drawDigs,
-    checkCollision: checkCollision
+    checkCollision: checkCollision,
+    had_head_collision: false
   };
 
 }());
