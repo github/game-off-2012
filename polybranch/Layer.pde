@@ -5,13 +5,15 @@ class Layer{
   int layerWidth, layerHeight;
   int ringWeight = 6;
   PGraphics pg;
+  float distance;
   
   Layer(int numSidesIn, int w, int h){
     numSides = numSidesIn;
     layerWidth = w;
     layerHeight = h;
+    distance = 1;
     pg = createGraphics(layerWidth, layerHeight);
-    
+
     startVertex = int(random(0, numSides));
     println(startVertex);
     
@@ -27,11 +29,17 @@ class Layer{
                 new PVector(aX, aY),
                 new PVector(bX, bY),
                 new PVector(lerp(aX,layerWidth/2,0.7), lerp(aY,layerHeight/2,0.7)),
-                color(random(100,200))),
+                color(random(50,100))),
                 this.pg);
     drawPolygon(layerWidth/2, layerHeight/2, layerWidth/2 - ringWeight/2, 16, ringWeight,pg);
     pg.endDraw();
-    image(pg, width/2, height/2);
+    
+  }
+  
+  public void render(){
+    fill(255,100);
+    rect(width/2,height/2, layerWidth*distance, layerHeight*distance);
+    image(pg, width/2, height/2, layerWidth*distance, layerHeight*distance);
   }
 
 }

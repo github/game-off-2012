@@ -13,20 +13,38 @@ PVector[] tris = {
                 
 Tree testTree;
 
+Game g;
+
 PVector focalPoint;
 
 void setup(){
-  size(500,500);
+  size(800,800);
   imageMode(CENTER);
+  rectMode(CENTER);
   focalPoint = new PVector(width/2,height/2);
   noStroke();
   background(255);
   //testTree = new Tree(5, bob);
-  
+  g = new Game();
+  g.display();
   Layer layer = new Layer(16, width, height);
 }
 
 void draw(){}
+
+//testtesttest
+void mousePressed(){
+  println("boop!");
+  background(255);
+  //testTree = new Tree(15, bob);
+  //Layer layer = new Layer(16, width, height);
+  //Layer layer2 = new Layer(16, int(width*0.8), int(height*0.8));
+  //layer2.render();
+  //layer.render();
+  
+  g = new Game();
+  g.display();
+}
 
 
 //utility functions!
@@ -36,13 +54,6 @@ float myAngleBetween (PVector myPVector1, PVector myPVector2) {
   return a;
 }
 
-void mousePressed(){
-  println("boop!");
-  background(255);
-  //testTree = new Tree(15, bob);
-  Layer layer = new Layer(16, width, height);
-  Layer layer2 = new Layer(16, int(width*0.8), int(height*0.8));
-}
 
 void drawPolygon(float cX, float cY, float r, int numSides, int weight, PGraphics context){
   float a = TWO_PI / numSides;
