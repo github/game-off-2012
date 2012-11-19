@@ -248,12 +248,7 @@
     
     // Check whether pappu collided with the
     // fork handle or not.
-    if (
-      pappu_bounds.end_x > fork_bounds.start_x &&
-      pappu_bounds.end_x < fork_bounds.end_x &&
-      pappu_bounds.start_y > fork_bounds.start_y &&
-      pappu_bounds.end_y < fork_bounds.end_y
-    ) {
+    if (utils.intersect(pappu_bounds, fork_bounds)) {
       // console.log(pappu_bounds, fork_bounds);
       mit.gameOver();
     }
@@ -283,7 +278,7 @@
 
       mit.vy += mit.forks.last_push;
       // console.log(pappu_bounds, fork_head_bounds);
-      console.log(mit.vy);
+      // console.log(mit.vy);
     }
   };
 

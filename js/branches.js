@@ -26,8 +26,36 @@
     this.x = 0;
     this.y = 0;
 
-    this.draw = function(ctx) {
+    // Width
+    this.w;
+    // Height
+    this.h;
 
+    this.escape_x;
+    this.escape_y;
+    this.escape_w;
+    this.escape_h;
+
+    this.getBounds = function() {
+      var bounds = {};
+
+      bounds.start_x = this.x;
+      bounds.start_y = this.y;
+      bounds.end_x = this.x + this.w;
+      bounds.end_y = this.y + this.h;
+
+      return bounds;
+    };
+
+    this.getEscapeBounds = function() {
+      var bounds = {};
+
+      bounds.start_x = this.escape_x;
+      bounds.start_y = this.escape_y;
+      bounds.end_x = this.escape_x + this.escape_w;
+      bounds.end_y = this.escape_y + this.escape_h;
+
+      return bounds;
     };
   }
 
@@ -67,9 +95,16 @@
         branch.x = pos.x;
         branch.y = 0;
 
+        branch.w = branch_img.width;
+        branch.h = branch_img.height;
+
         // Escape Positions
         branch.escape_x = branch.x;
         branch.escape_y = branch.y + utils.randomNumber(0, branch_img.height-150);
+
+        // Escape Area's Width/Height
+        branch.escape_w = branch_img.width;
+        branch.escape_h = 150;
 
         branches.push(branch);
       }
@@ -96,15 +131,40 @@
       ctx.fillRect(
         branch.escape_x,
         branch.escape_y,
-        branch_img.width,
-        150
+        branch.escape_w,
+        branch.escape_h
       );
       ctx.restore();
     });
   };
 
+
+  // Check collisions with branches
+  var checkCollision = function() {
+    // Get Pappu Bounds
+    var pappu_bounds = mit.pappu.getBounds();
+
+    // Get Nearest Branch's Top Part's Bounds
+    var branch_bounds = branches[0].getBounds();
+
+    if (utils.intersect(pappu_bounds, branch_bounds)) {
+      // console.log(pappu_bounds, branch_bounds);
+
+      // If the Escape Area intersects then pappu
+      // can escape, else game over matey!
+      var escape_bounds = branches[0].getEscapeBounds();
+
+      if (!utils.intersect(pappu_bounds, escape_bounds)) {
+        mit.gameOver();
+      }
+
+    }
+  };
+
+
   window.mit.branches = {
-    draw: draw
+    draw: draw,
+    checkCollision: checkCollision
   };
 
 }());

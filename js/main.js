@@ -235,6 +235,7 @@
 
       // Check Collisions with pappu
       mit.forks.checkCollision();
+      mit.branches.checkCollision();
 
       // Update score
       score = score + 0.2;
