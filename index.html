@@ -1,0 +1,49 @@
+<html>
+<head>
+  <title>Test</title>
+  <link href='http://fonts.googleapis.com/css?family=Russo+One' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+  <body>
+
+    <div class="container">
+    </div>
+
+    <script type="text/template" id="menu-template">
+      <img src="img/logo.png"/>
+      <ul class="menu">
+        <li id="start" class="selected">Start</li>
+        <li id="howto">How to Play</li>
+        <li id="highscores">High Scores</li>
+        <li id="credits">Credits</li>
+      </ul>
+    </script>
+
+    <script type="text/template" id="song-template">
+      <div>Time: <span id="time"></span></div>
+      <div>Score: <span id="score"></span></div>
+      <div>Combo: <span id="combo"></span></div>
+      <canvas></canvas>
+      <audio></audio>
+    </script>
+
+    <script type="text/template" id="credits-template">
+      <h2>Choctopus Games</h2>
+      <p>Programming: Graham Conzett</p>
+      <p>Design and animation: Stephanie Owens</p>
+      <small>Press esc to return to main menu</small>
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <script src="src/requestAnimationFrame.js"></script>
+    <script src="vendor/documentcloud/underscore/underscore-min.js"></script>
+    <script src="vendor/documentcloud/backbone/backbone-min.js"></script>
+    <script src="models/Song.js"></script>
+    <script src="collections/Songs.js"></script>
+    <script src="views/MenuView.js"></script>
+    <script src="views/SongView.js"></script>
+    <script src="views/CreditsView.js"></script>
+    <script src="data/songs.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
