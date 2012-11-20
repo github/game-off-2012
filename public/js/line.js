@@ -22,6 +22,14 @@ function Line(game, color, x, y, r, keys, xSpeed, ySpeed) {
 			}
 	}
 	this.revive=function(){
+		var lines = this.game.objects['player'].lines
+		for(var i=0;i<lines.length;i++){
+			if(!lines[i].isDead){
+				this.x=lines[i].x
+				break
+			}
+		}
+		
 		this.isDead=false
 	}
 	this.physics = function(timeDelta) {
