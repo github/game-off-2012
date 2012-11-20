@@ -62,7 +62,7 @@ Crafty.c("Movement", {
         this.bind("KeyUp",function(e) {
             if(e.key == gameBoard.actionKey || e.key == gameBoard.colorKey) {
                 if(e.key == gameBoard.actionKey) this.movementEnabled = true;
-                this.trigger('NewDirection',this._facing);
+                if(!this.isDown(gameBoard.actionKey)) this.trigger('NewDirection',this._facing);
             }
             // Remove a direction key from the movement stack if necessary
             else if(this._keys[e.key]) {
