@@ -4,7 +4,11 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
   <body>
-    
+
+    <script type="text/template" id="menu-template">
+      <img src="img/logo.png"/>
+    </script>
+
     <script type="text/template" id="song-template">
       <div id="time"></div>
       <div id="score"></div>
@@ -19,6 +23,7 @@
     <script src="vendor/documentcloud/backbone/backbone-min.js"></script>
     <script src="models/Song.js"></script>
     <script src="collections/Songs.js"></script>
+    <script src="views/MenuView.js"></script>
     <script src="views/SongView.js"></script>
     <script src="data/songs.js"></script>
     <script src="app.js"></script>

@@ -2,4 +2,8 @@ var song = new SongView({
   model: songs.first()
 });
 
-$('body').append(song.el);
+var menu = new MenuView();
+
+//$('body').append(song.el);
+
+$('body').append(menu.el);
