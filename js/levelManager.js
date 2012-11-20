@@ -6,12 +6,12 @@ function loadMap(level, loadComplete) {
     // Set the background to light gray
     Crafty.background("#9F9F9F");
     
-    Crafty.sprite(32, "images/testsprite.gif", {
-      wall: [13, 3],
-      blue: [13, 7],
-      green: [16, 9],
-      orange: [15, 11],
-      red: [16,12]
+    Crafty.sprite(32, "images/sprite_sheet.png", {
+      wall: [0, 13],
+      white: [0, 9],
+      blue: [0, 10],
+      red: [0, 11],
+      purple: [0, 12]
     });
     
     for (var i = 0; i < map.length; i++) {
@@ -20,10 +20,10 @@ function loadMap(level, loadComplete) {
         var item = " ";
         if (curr == 'B')
           item = "blue";
-        else if (curr == 'G')
-          item = "green";
-        else if (curr == 'O')
-          item = "orange";
+        else if (curr == 'H')
+          item = "white";
+        else if (curr == 'P')
+          item = "purple";
         else if (curr == 'R')
           item = "red";
         else if (curr == 'W')
