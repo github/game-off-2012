@@ -2,6 +2,8 @@ SongView = Backbone.View.extend({
 
   template: _.template($('#song-template').html()),
 
+  className: 'song',
+
   initialize: function(){
     this.render();
     this.canvas = this.$el.find('canvas')[0];

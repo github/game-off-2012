@@ -4,10 +4,6 @@
 	padding: 0;
 }
 
-canvas {
-	border: 1px solid black;
-}
-
 .container {
 	background-color: darkgray;
 	width: 640px;
@@ -41,4 +37,13 @@ canvas {
 .menu .selected {
 	color :red;
 	font-size: 120%;
+}
+
+.song canvas{
+	position: absolute;
+	top: 0;
+}
+
+.song .paused {
+	font-family: 'Russo One', sans-serif;
 }
