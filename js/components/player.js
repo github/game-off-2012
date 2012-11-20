@@ -7,14 +7,14 @@
 Crafty.c("Phil", {
     init: function() {
         this.requires("SpriteAnimation")
-            .animate("walk_left", 0, 3, 0)
-            .animate("walk_right", 0, 1, 0)
-            .animate("walk_up", 0, 0, 0)
-            .animate("walk_down", 0, 2, 0)
-            .animate("grab_left", 0, 7, 0)
-            .animate("grab_right", 0, 5, 0)
-            .animate("grab_up", 0, 4, 0)
-            .animate("grab_down", 0, 6, 0)
+            .animate("walk_left", 0, 3, 3)
+            .animate("walk_right", 0, 1, 3)
+            .animate("walk_up", 0, 0, 3)
+            .animate("walk_down", 0, 2, 3)
+            .animate("grab_left", 0, 7, 3)
+            .animate("grab_right", 0, 5, 3)
+            .animate("grab_up", 0, 4, 3)
+            .animate("grab_down", 0, 6, 3)
             .bind("NewDirection", function (direction) {
                 if (direction[0] < 0) {
                     if (!this.isPlaying("walk_left"))
