@@ -3,6 +3,10 @@ game.events = _.clone(Backbone.Events);
 
 game.events.on("start", function() {
   console.log('insert song select view');
+  var song = new SongView({
+    model: songs.first()
+  });
+  $('.container').html(song.el);
 });
 
 game.events.on("howto", function() {
@@ -17,12 +21,6 @@ game.events.on("credits", function() {
   console.log('insert credits view');
 });
 
-var song = new SongView({
-  model: songs.first()
-});
-
 var menu = new MenuView();
-
-//$('body').append(song.el);
 
 $('.container').append(menu.el);
