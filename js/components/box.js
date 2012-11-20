@@ -115,30 +115,85 @@ Crafty.c('ColorBox', {
         white: "#DFDFDF",
         blue: "#4D45E6",
         red: "#DD0000",
-        purple: "DFDFDF"
+        purple: "#DFDFDF"
     },
     
     _colorString: "whiteBox", // Default is white
 
     init: function() {
-        this.requires("Box, " + this._colorString);
+        this.requires("Box, " + this._colorString)
+        // Sets the color of the box
+        .bind('setBoxColor', function(color) {
+            this.removeComponent(this._colorString, false);
+            this._colorString = color;
+            this.addComponent(this.colorComponentString());
+
+            // Change the color of any attached fancy text
+            this.trigger('setTextCSS', {
+                color: this._colorTextMap[color]
+            });
+        });
     },
 
     // Constructer takes a string that represents a color and applies the sprite
     // Choices so far are "white", "red", "blue", "purple"
     ColorBox: function(color) {
-        this.removeComponent(this._colorString, false);
-        this._colorString = color + "Box";
-        this.addComponent(this._colorString);
-        
         // Change the color of any attached fancy text
-        this.trigger('setTextCSS', {
-            color: this._colorTextMap[color]
-        });
+        this.trigger('setBoxColor', color);
         return this;
     },
 
-    colorComponentString: function() {
+    colorString: function() {
         return this._colorString;
+    },
+
+    colorComponentString: function() {
+        return this._colorString + "Box";
+    }
+});
+
+
+/**
+* ColorableBox
+* This is a box that can have color taken or given to it
+*/
+Crafty.c('ColorableBox', {
+    _transferableColor: null,
+
+    init: function() {
+        this.requires("ColorBox");
+        this.trigger('setBoxColor', "white");
+    },
+
+    // Constructor takes a color
+    ColorableBox: function(color) {
+        this._transferableColor = color;
+        this.trigger('setBoxColor', color);
+        return this;
+    },
+
+    // Take a color from the box.  This will set the box to white
+    // Returns the color taken, or false if no color
+    takeColor: function() {
+        if(this._transferableColor) {
+            var oldColor = this.colorString();
+            this.trigger('setBoxColor', "white");
+            this.trigger('removeText');
+            this.removeComponent("RemovableBox");
+            this._transferableColor = null;
+            return oldColor;
+        }
+        else
+            return false;
+    },
+
+    // Give a color to the box
+    // Returns the old color of the box (null if none)
+    giveColor: function(color) {
+        var oldColor = this._transferableColor;
+        if(!this.has("RemovableBox")) this.addComponent("RemovableBox");
+        this.trigger('setBoxColor', color);
+        this._transferableColor = color;
+        return oldColor;
     }
 });

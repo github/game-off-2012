@@ -19,8 +19,12 @@ Crafty.scene("main", function () {
       .attr({ x: 5 * gameBoard.tileSize, y: 4 * gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize })
       .ColorBox("red");
 
-    Crafty.e("2D, DOM, PushableBox, RemovableBox, ColorBox")
+    Crafty.e("2D, DOM, PushableBox, RemovableBox, ColorableBox")
       .attr({ x: 7 * gameBoard.tileSize, y: 5 * gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize })
-      .ColorBox("purple");
+      .ColorableBox("purple");
+      
+    Crafty.e("2D, DOM, PushableBox, RemovableBox, ColorableBox")
+      .attr({ x: 8 * gameBoard.tileSize, y: 5 * gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize })
+      .ColorableBox("red");
   });
 });
