@@ -139,6 +139,7 @@ class LevelGenerator
          
 class Camera
   constructor:(@world,@scale,@screenscale,@inputHandler)->
+    @active = false
     @xOffset = 0
     @modelScale = @scale/@screenscale
     @xBound = 128
@@ -156,11 +157,11 @@ class Camera
   tick:=>
     xNow = 0
     
-    if @inputHandler.RIGHT.isPressed() is true
+    if @inputHandler.RIGHT.isPressed() is true and @active
       if @xOffset != @xBound
         xNow = 1
         
-    if @inputHandler.LEFT.isPressed() is true
+    if @inputHandler.LEFT.isPressed() is true and @active
       if @xOffset != 0
         xNow = -1
 
@@ -178,6 +179,12 @@ class Camera
     newx = body.GetPosition().x - (xOffset/@modelScale)
     newy = body.GetPosition().y - (yOffset/@modelScale)
     body.SetPosition(new b2Vec2(newx, newy), 0)
+    
+  isActive:->
+    @active  
+  
+  setActive:(active)->
+    @active = active
 
 #SpriteSheet-Class for accessing sprites by a atlas-index
 class SpriteSheet

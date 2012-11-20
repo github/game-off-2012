@@ -62,6 +62,7 @@ class Game
     
     #TestMap
     @map = new Map("map", @, @inputHandler)
+    @map.setActive(true)
     
     #The Camera
     @camera = new Camera(@world,30 ,5,@inputHandler)
@@ -76,6 +77,8 @@ class Game
     @run()
  
   loadLevel:(index)->
+    @map.setActive(false)
+    @camera.setActive(true)
     @level = @levels[index]
     impress().goto("game")
  
@@ -90,9 +93,9 @@ class Game
   tick: ->
     @world.Step(1 / 60, 10, 10)
     @world.ClearForces()
-   
-    @map.tick()
-    @camera.tick()
+    
+    @map.tick() if @map.isActive()
+    @camera.tick() if @camera.isActive()
     @level.tick() if @level?
   
   render: ->
@@ -100,5 +103,5 @@ class Game
     @world.DrawDebugData()
     @level.draw(@camera.getXoffset(), 0) if @level?
     @screen.draw()
-    @map.draw()
+    @map.draw() if @map.isActive()
 

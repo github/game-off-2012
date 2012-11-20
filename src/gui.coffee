@@ -1,6 +1,6 @@
 class Text
   
-  chooseColor = "#FF00FF"
+  chooseColor = "#FF0F0F"
   color = "#FFF"
   
   constructor:(@value, @x, @y, @actual)->
@@ -12,6 +12,8 @@ class Text
 class Map
   constructor:(@id,@game,@inputHandler)->
     console.log("INIT Map")
+    
+    @active = false
     
     @actualText = 0
     @do = 0
@@ -37,28 +39,35 @@ class Map
     @mapgen = new MapGenerator(STORAGE.getRessource("map"), STORAGE.getRessource("spritesheet"))
     
   tick:->
-    if @inputHandler.RIGHT.isPressed()
-      if @actualText < 3
-        @do = 1
-    else
-      if @do is 1
-        @texts[@actualText].actual = false
-        @actualText += @do
-        @texts[@actualText].actual = true
-        @do = 0
+    if @active is true
+      if @inputHandler.RIGHT.isPressed()
+        if @actualText < 3
+          @do = 1
+      else
+        if @do is 1
+          @texts[@actualText].actual = false
+          @actualText += @do
+          @texts[@actualText].actual = true
+          @do = 0
       
-    if @inputHandler.LEFT.isPressed()
-      if @actualText > 0
-        @do = -1
-    else
-      if @do is -1
-        @texts[@actualText].actual = false
-        @actualText += @do
-        @texts[@actualText].actual = true
-        @do = 0
+      if @inputHandler.LEFT.isPressed()
+        if @actualText > 0
+          @do = -1
+      else
+        if @do is -1
+          @texts[@actualText].actual = false
+          @actualText += @do
+          @texts[@actualText].actual = true
+          @do = 0
         
-    if @inputHandler.ENTER.isPressed()
-      @game.loadLevel(@actualText)
+      if @inputHandler.ENTER.isPressed()
+        @game.loadLevel(@actualText)
+        
+  isActive:->
+    @active
+      
+  setActive:(active)->
+    @active = active
   
   draw:->
     @ctx.drawImage(@mapgen.background, 0, 0, 640, 480)
