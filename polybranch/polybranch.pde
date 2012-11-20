@@ -9,7 +9,9 @@ PVector[] tris = {
 //                new PVector(300, 500),
 //                new PVector(250, 300),
 //                color(random(100,200)));
-                
+      
+int originX;
+int originY;          
                 
 Tree testTree;
 
@@ -19,8 +21,11 @@ PVector focalPoint;
 
 void setup(){
   size(800,800);
+  originX = width/2;
+  originY = height/2;
   imageMode(CENTER);
   rectMode(CENTER);
+  ellipseMode(CENTER);
   focalPoint = new PVector(width/2,height/2);
   noStroke();
   background(255);
@@ -65,4 +70,8 @@ void drawPolygon(float cX, float cY, float r, int numSides, int weight, PGraphic
     context.vertex(cX + r * cos(a*i), cY + r * sin(a*i));
   }
   context.endShape(CLOSE);
+}
+
+float easeInExpo(float x, float t, float b, float c, float d) {
+  return (t==0) ? b : c * pow(2, 10 * (t/d - 1)) + b;
 }

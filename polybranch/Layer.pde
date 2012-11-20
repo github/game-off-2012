@@ -6,6 +6,7 @@ class Layer{
   int ringWeight = 6;
   PGraphics pg;
   float distance;
+  float easedDistance;
   
   Layer(int numSidesIn, int w, int h){
     numSides = numSidesIn;
@@ -36,10 +37,15 @@ class Layer{
     
   }
   
+  public void updateDist(float increment){
+    distance += increment;
+    
+  }
+  
   public void render(){
     fill(255,100);
-    rect(width/2,height/2, layerWidth*distance, layerHeight*distance);
-    image(pg, width/2, height/2, layerWidth*distance, layerHeight*distance);
+    rect(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
+    image(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
   }
 
 }
