@@ -41,8 +41,8 @@
     };
 
     this.generateRandomVelocity = function() {
-      this.vx = -6;
-      this.vy = Math.random() * -8 -12;
+      this.vx = -8;
+      this.vy = Math.random() * utils.randomNumber(-20,-10) -15;
     };
   };
 
