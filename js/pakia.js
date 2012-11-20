@@ -42,7 +42,7 @@
 
     this.generateRandomVelocity = function() {
       this.vx = -8;
-      this.vy = Math.random() * utils.randomNumber(-20,-10) -15;
+      this.vy = utils.randomNumber(-25,-18);
     };
   };
 
@@ -91,6 +91,7 @@
 
       cur_pakia.generateRandomVelocity();
 
+console.log(cur_pakia.vy);
       cur_pakia = false;
     }
   };
