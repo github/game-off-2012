@@ -88,7 +88,7 @@
   });
 
 
-  var score = 0;
+  mit.score = 0;
 
   ui.score_board.css('width', canvas.width + 'px');
   ui.score_board.css('height', canvas.height + 'px');
@@ -227,8 +227,7 @@
     //mit.forks.checkCollision();
 
     // Send over Pakias (Enemies)
-    mit.pakia.reflow(ctx);
-    mit.pakia.repaint(ctx);
+    mit.pakia.render(ctx);
 
     if (mit.game_started) {
 
@@ -242,12 +241,11 @@
       mit.branches.checkCollision();
 
       // Send over Pakias (Enemies)
-      mit.pakia.reflow(ctx);
-      mit.pakia.repaint(ctx);
+      mit.pakia.render(ctx);
 
       // Update score
-      score = score + 0.2;
-      ui.score_board.text(parseInt(score));
+      mit.score = mit.score + 0.2;
+      ui.score_board.text(parseInt(mit.score));
 
       // Acceleration + Gravity
       // mit.ay = mit.ay + mit.gravity;
