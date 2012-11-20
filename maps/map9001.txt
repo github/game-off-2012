@@ -2,8 +2,8 @@ WWWWWWWWWWWWWWWW
 WS             W
 W              W
 W              W
-W              W
-W              W
+W   BR         W
+W    B PR      W
 W              W
 W              W
 W              W
@@ -14,3 +14,6 @@ W              W
 W              W
 W             FW
 WWWWWWWWWWWWWWWW
+----------------
+title: Level 1: The Journey Begins
+nextMap: map1.txt

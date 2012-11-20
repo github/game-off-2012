@@ -8,8 +8,8 @@ function loadMap(level, loadComplete) {
     
     Crafty.sprite(32, "images/sprite_sheet.png", {
       wall: [0, 13],
-      white: [0, 9],
-      blue: [0, 10],
+      white: [0, 10],
+      blue: [0, 11],
       red: [0, 11],
       purple: [0, 12]
     });
@@ -28,8 +28,15 @@ function loadMap(level, loadComplete) {
           item = "red";
         else if (curr == 'W')
           item = "wall";
+        else if (curr == 'F')
+          item = "portal";
+          
+        if (curr !== ' ' && curr !== 'S' && curr !== 'F' && curr !== 'W')
+          Crafty.e("2D, DOM, PushableBox, RemovableBox, ColorBox")
+          .ColorBox(item)
+          .attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
         
-        if (item !== ' ' && item !== 'S')
+        if (curr == 'F' || curr == 'W')
           Crafty.e("2D, DOM, solid, " + item).attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
           
         if (curr == 'S')
@@ -37,7 +44,23 @@ function loadMap(level, loadComplete) {
             .attr({ x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize })
             .Moveable(200); // Character speed
       }
+      // get and update title
+      var title = getMetadata(map[i], 'title');
+      if (title)
+        $('#levelTitle').text(title.substring(7,title.length));
+      // get next map
+      var nextMap = getMetadata(map[i], 'nextMap');
+      if (nextMap)
+        console.log('nextMap: ', nextMap.substring(9,nextMap.length));
     }
     loadComplete();
   });
+}
+
+function getMetadata(arrLine, attribute) {
+  var stringForm = arrLine.join('');
+  if (stringForm.match(new RegExp(attribute)))
+    return stringForm;
+  else
+    return null;
 }
