@@ -4,16 +4,30 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
   <body>
-    <div>Time: <span id="time">0</span> Score: <span id="score">0</span> <span id="status"></span></div>
+    <!--<div>Time: <span id="time">0</span> Score: <span id="score">0</span> <span id="status"></span></div>
     <div class="keys">
       <span id="f">F</span>
       <span id="g">G</span>
       <span id="h">H</span>
       <span id="j">J</span>
-    </div>
-    <canvas id="canvas"></canvas>
+    </div>-->
+
+    <script type="text/template" id="song-template">
+      <div id="time"></div>
+      <div id="score"></div>
+      <div id="combo"></div>
+      <canvas></canvas>
+      <audio></audio>
+    </script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-    <script src="Stats.js"></script>
-    <script src="test.js"></script>
+    <script src="src/requestAnimationFrame.js"></script>
+    <script src="vendor/documentcloud/underscore/underscore-min.js"></script>
+    <script src="vendor/documentcloud/backbone/backbone-min.js"></script>
+    <script src="models/Song.js"></script>
+    <script src="collections/Songs.js"></script>
+    <script src="views/SongView.js"></script>
+    <script src="data/songs.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
