@@ -1,44 +1,44 @@
-#f, #g, #h, #j {
-	font-size : 20px;
-	font-weight : bold;
-	font-family: helvetica;
-	vertical-align: middle;
-	display: inline-block;
-	position: absolute;
-}
-
-.keys {
-	line-height : 30px;
-	width: 640px;
-	height: 30px;
-}
-
-.pressed {
-	color : red;
-	font-size: 28px !important;
-}
-
-#f {
-	left: 130px;
-}
-
-#g {
-	left: 250px;
-}
-
-#h {
-	left: 370px;
-}
-
-#j {
-	left: 490px;
-}
-
-.go {
-	color : green;
-	font-size: 24px;
+* {
+	margin: 0;
+	border: 0;
+	padding: 0;
 }
 
 canvas {
 	border: 1px solid black;
+}
+
+.container {
+	background-color: darkgray;
+	width: 640px;
+	height: 480px;
+	position: relative;
+}
+
+.menu img {
+	position: absolute;
+	left: 95px;
+	top: 30px;
+	-webkit-transition:all 1s ease;
+    -moz-transition:all 1s ease;
+}
+
+.menu ul {
+	position: absolute;
+	margin-top: 220px;
+	width : 300px;
+	left: 170px;
+	font-family: 'Russo One', sans-serif;
+	font-size: 30px;
+}
+
+.menu li {
+	list-style: none;
+	text-align: center;
+	color: black;
+}
+
+.menu .selected {
+	color :red;
+	font-size: 120%;
 }
