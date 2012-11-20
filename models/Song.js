@@ -4,7 +4,7 @@ Song = Backbone.Model.extend({
     filename: 'untitled',
     artist:   'Unknown',
     website: '',
-    difficulty 'Easy',
-    license:  'Creative Commons',
+    difficulty: 'Easy',
+    license:  'Creative Commons'
   }
 });

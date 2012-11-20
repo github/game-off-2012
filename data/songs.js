@@ -4,7 +4,7 @@ var songs = new Songs([
     artist:   'Unknown',
     filename: '8-bit-detective',
     website: '',
-    difficulty '',
+    difficulty: '',
     license:  '',
     queues: [
       [1400, 3000, 7000, 8250, 9250, 11750, 12750, 15250, 16250, 17500, 20250],
@@ -18,7 +18,7 @@ var songs = new Songs([
     artist:   'Unknown',
     filename: 'bass-assassin',
     website: '',
-    difficulty '',
+    difficulty: '',
     license:  '',
     queues: [
       [],
@@ -32,7 +32,7 @@ var songs = new Songs([
     artist:   'Unknown',
     filename: 'night-rave',
     website: '',
-    difficulty '',
+    difficulty: '',
     license:  '',
     queues: [
       [],
@@ -47,7 +47,7 @@ var songs = new Songs([
     filename: 'tech-talk',
     license:  '',
     website: '',
-    difficulty '',
+    difficulty: '',
     queues: [
       [],
       [],
@@ -61,7 +61,7 @@ var songs = new Songs([
     filename: 'trick-and-or-treat',
     license:  '',
     website: '',
-    difficulty '',
+    difficulty: '',
     queues: [
       [],
       [],
