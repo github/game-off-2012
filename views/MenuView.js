@@ -54,6 +54,10 @@ MenuView = Backbone.View.extend({
       case 13: this.choose();
         break;
     }
+  },
+
+  destroy: function() {
+    $(document).unbind('keydown');
   }
 
 });

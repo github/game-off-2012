@@ -1,5 +1,6 @@
 window.game = {};
 game.events = _.clone(Backbone.Events);
+var activeView;
 
 game.events.on("start", function() {
   console.log('insert song select view');
@@ -19,8 +20,20 @@ game.events.on("highscores", function() {
 
 game.events.on("credits", function() {
   console.log('insert credits view');
+  activeView.destroy();
+  var credits = new CreditsView();
+  activeView = credits;
+  $('.container').html(credits.el);
 });
 
-var menu = new MenuView();
+game.events.on("menu", function() {
+  console.log('menu view');
+  if(activeView) {
+    activeView.destroy();
+  }
+  var menu = new MenuView();
+  activeView = menu;
+  $('.container').html(menu.el);
+});
 
-$('.container').append(menu.el);
+game.events.trigger('menu');
