@@ -1,0 +1,49 @@
+* {
+	margin: 0;
+	border: 0;
+	padding: 0;
+}
+
+.container {
+	background-color: darkgray;
+	width: 640px;
+	height: 480px;
+	position: relative;
+}
+
+.menu img {
+	position: absolute;
+	left: 95px;
+	top: 30px;
+	-webkit-transition:all 1s ease;
+    -moz-transition:all 1s ease;
+}
+
+.menu ul {
+	position: absolute;
+	margin-top: 220px;
+	width : 300px;
+	left: 170px;
+	font-family: 'Russo One', sans-serif;
+	font-size: 30px;
+}
+
+.menu li {
+	list-style: none;
+	text-align: center;
+	color: black;
+}
+
+.menu .selected {
+	color :red;
+	font-size: 120%;
+}
+
+.song canvas{
+	position: absolute;
+	top: 0;
+}
+
+.song .paused {
+	font-family: 'Russo One', sans-serif;
+}

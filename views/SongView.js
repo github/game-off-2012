@@ -2,13 +2,15 @@ SongView = Backbone.View.extend({
 
   template: _.template($('#song-template').html()),
 
+  className: 'song',
+
   initialize: function(){
     this.render();
     this.canvas = this.$el.find('canvas')[0];
     this.canvas.width  = 640;
     this.canvas.height = 480;
     this.audio = this.$el.find('audio')[0];
-    this.audio.setAttribute('src', 'audio/' + this.model.get('filename') + '.mp3');
+    this.audio.setAttribute('src', 'audio/songs/' + this.model.get('filename') + '.mp3');
     this.audio.load();
     this.score = 0;
     this.combo = 0;
