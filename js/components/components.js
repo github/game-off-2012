@@ -129,6 +129,10 @@ Crafty.c('FancyText', {
             _.each(cssValues, function(cssVal, key) { 
                 that._textElement.css(key, cssVal);
             });
+        })
+        .bind("removeText", function(cssValues) {
+            if(!this._textElement) return;
+            this._textElement.remove();
         });
     },
 

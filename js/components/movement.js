@@ -52,13 +52,17 @@ Crafty.c("Movement", {
             else if(e.key == gameBoard.removeKey) {
                 this.trigger('RemoveBox',this._facing);
             }
+            else if(e.key == gameBoard.colorKey) {
+                this.trigger('TakeGiveColor',this._facing);
+                this.trigger('GrabDirection',this._facing);
+            }
         });
 
         // Reenable movement if space is up
         this.bind("KeyUp",function(e) {
-            if(e.key == gameBoard.actionKey) {
-                this.movementEnabled = true;
-                this.trigger('NewDirection',this._facing);
+            if(e.key == gameBoard.actionKey || e.key == gameBoard.colorKey) {
+                if(e.key == gameBoard.actionKey) this.movementEnabled = true;
+                if(!this.isDown(gameBoard.actionKey)) this.trigger('NewDirection',this._facing);
             }
             // Remove a direction key from the movement stack if necessary
             else if(this._keys[e.key]) {
@@ -92,6 +96,8 @@ Crafty.c("Movement", {
  
 // This component contains the functions required for Phil to interact with the environment
 Crafty.c("CharacterInteractions", {
+    _holdingColor: null, // The color the player is holding
+
     init: function() {
         // Push performs pushing (and pulling which is just a push in the opposite direction, but dont tell anyone)
         this.bind("Push", function(direction) {
@@ -118,7 +124,7 @@ Crafty.c("CharacterInteractions", {
           }
           collisionDetector.destroy();
         });
-            
+
         this.bind("RemoveBox", function(direction) {
             // Figure out what direction we are pushing
             this._pushDestX = this.x + direction[0] * gameBoard.tileSize;
@@ -129,6 +135,30 @@ Crafty.c("CharacterInteractions", {
             entitiesHit = collisionDetector.hit("removable");
             if(entitiesHit.length > 0) {
               entitiesHit[0].obj.trigger('remove');
+            }
+            collisionDetector.destroy();
+        });
+
+        this.bind("TakeGiveColor", function(direction) {
+            // Figure out what direction we are taking from
+            this._pushDestX = this.x + direction[0] * gameBoard.tileSize;
+            this._pushDestY = this.y + direction[1] * gameBoard.tileSize;
+
+            // Send the take command to anything in that space
+            var collisionDetector = Crafty.e("2D, Collision").attr({ x: this._pushDestX, y: this._pushDestY, w: 1, h: 1 });
+            entitiesHit = collisionDetector.hit("ColorableBox");
+            if(entitiesHit.length > 0) {
+                // Give a color if Phil is holding one
+                if(this._holdingColor) {
+                    var colorTaken = entitiesHit[0].obj.giveColor(this._holdingColor);
+                    this._holdingColor = colorTaken;
+                }
+                // Otherwise take the color
+                else {
+                    var colorTaken = entitiesHit[0].obj.takeColor();
+                    if(colorTaken)
+                        this._holdingColor = colorTaken;
+                }
             }
             collisionDetector.destroy();
         });
