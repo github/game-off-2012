@@ -29,6 +29,8 @@ class InputHandler
       
     if keycode is 13
       @ENTER.toggle(true)
+      
+    e.preventDefault()
     
     
   keyUp:(e)=>
@@ -42,5 +44,7 @@ class InputHandler
       
     if keycode is 13
       @ENTER.toggle(false)
+      
+    e.preventDefault()
     
   
