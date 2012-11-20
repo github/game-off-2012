@@ -29,7 +29,7 @@ class InputHandler
       
     if keycode is 13
       @ENTER.toggle(true)
-      
+    
     e.preventDefault()
     
     
