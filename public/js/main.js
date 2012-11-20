@@ -11,6 +11,8 @@ var keyMap = {
 };
 
 function init() {
+	if(localStorage.soundSettings && localStorage.soundSettings=="off")
+		turnOffSound()
 	keyListeners = []
 	canvas.width = 800
 	canvas.height = 600
@@ -41,10 +43,25 @@ function toggleSound(){
 	if(button.className.indexOf("up")!=-1){//need to mute
 		button.className = button.className.replace("up","off")
 		audio.pause()
+		localStorage.soundSettings="off"
 	}
 	else{//turn back on
 		button.className = button.className.replace("off","up")
 		audio.play()
+		localStorage.soundSettings="on"
+	}
+}
+
+function turnOffSound(){
+	var button = document.getElementById("mute")
+	if(button.className.indexOf("up")!=-1){//need to mute
+		toggleSound()
+	}
+}
+function turnOnSound(){
+	var button = document.getElementById("mute")
+	if(button.className.indexOf("off")!=-1){//need to start
+		toggleSound()
 	}
 }
 
@@ -79,5 +96,3 @@ window.onkeypress = function(e) {
 	}
 }
 init();
-//debug
-startGame()
