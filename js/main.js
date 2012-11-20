@@ -226,6 +226,10 @@
 
     //mit.forks.checkCollision();
 
+    // Send over Pakias (Enemies)
+    mit.pakia.reflow(ctx);
+    mit.pakia.repaint(ctx);
+
     if (mit.game_started) {
 
       // Draw Forks
@@ -236,6 +240,10 @@
       // Check Collisions with pappu
       mit.forks.checkCollision();
       mit.branches.checkCollision();
+
+      // Send over Pakias (Enemies)
+      mit.pakia.reflow(ctx);
+      mit.pakia.repaint(ctx);
 
       // Update score
       score = score + 0.2;
