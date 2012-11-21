@@ -1,5 +1,5 @@
 Config.cycle =
-  segments: 144
+  segments: 72
   colors:
     base: "#2A678C"
   centerRadius: null # calculated
@@ -12,7 +12,7 @@ Config.cycle =
     minimum : 50
     maximum: 235
   distance:
-    minimum: 55
+    minimum: 60
     maximum: 180
 
 Config.player =
@@ -33,13 +33,13 @@ Config.player =
 Config.obstacles =
   width:
     innerRadius: 20
-    outerRadius: 20
+    outerRadius: 40
   height:
     innerRadius: 20
-    outerRadius: 600
+    outerRadius: 350
   changeWhere:
-    initial: 30
-    increaseBy: 5
+    initial: 40
+    increaseBy: 3
   intervals:
     atStart: 2000
     initial: 1500
@@ -50,15 +50,15 @@ Config.obstacles =
     change: 3
     minimum: 10
   effect:
-    divisor: 1.08
+    divisor: 1.2
     threshold: 1
 
 Config.actions      =  ["Pull", "Push", "Fork", "Merge", "Pull", "Push", "Merge", "Pull", "Push"]
 Config.actionValues =
-  Pull:  40
-  Push:  40
-  Merge: 20
-  Fork:  20
+  Pull:  30
+  Push:  30
+  Merge: 15
+  Fork:  15
 
 # calculated configurations
 Config.cycle.centerRadius = (Config.cycle.outerRadius.base + Config.cycle.innerRadius.base) / 2 + 15
