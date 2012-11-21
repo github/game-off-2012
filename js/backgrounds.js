@@ -19,8 +19,8 @@
     grass_bg_move_speed: 8,
     grass_bg_vx: 0,
 
-    log_x: 0,
-    log_y: 30,
+    log_x: 40,
+    log_y: 0,
 
     init: function() {
       // Lets LOLZ
@@ -163,7 +163,7 @@
         this.drawInitLog(ctx);
       }
       else if (!mit.game_started) {
-        this.log_x = 30;
+        this.log_x = 40;
       }
 
       // Draw Ground now!

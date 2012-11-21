@@ -24,11 +24,11 @@
 
       this.sprite.onload = function() {
         //pappu.w = pappu.sprite.width;
-        mit.Pappu.w = 48;
-        mit.Pappu.h = mit.Pappu.sprite.height;
+        mit.Pappu.w = mit.Pappu.sprite.width;
+        mit.Pappu.h = 60;
 
         // Sprite Frame Count
-        mit.Pappu.max_fly_frame_count = 6;
+        mit.Pappu.max_fly_frame_count = 8;
         mit.Pappu.max_fly_frame_count--;
 
         // Sprite Frame Change Speed.
@@ -36,7 +36,7 @@
         mit.Pappu.change_per_frame = 5;
 
         // X Pos
-        mit.Pappu.x = 35;
+        mit.Pappu.x = 33;
       };
     },
 
@@ -44,25 +44,25 @@
       var cur_sprite_frame = this.fly_frame_count / this.change_per_frame;
       
       if (utils.isInt(cur_sprite_frame)) {
-        var source_x = cur_sprite_frame * 48;
+        var source_y = cur_sprite_frame * 60;
       }
       else {
         var old_sprite_frame = parseInt(this.fly_frame_count/this.change_per_frame)%this.change_per_frame;
-        var source_x = old_sprite_frame * 48;
+        var source_y = old_sprite_frame * 60;
       }
 
       // console.log(cur_sprite_frame, source_x);
       
       ctx.drawImage(
         this.sprite,
-        source_x,
         0,
-        48,
-        this.h,
+        source_y,
+        this.w,
+        60,
         this.x,
         this.y,
-        48,
-        this.h
+        this.w,
+        60
       );
 
       // During Testing Phase
@@ -71,18 +71,18 @@
     },
 
     drawStatic: function(ctx) {
-      this.y = mit.Backgrounds.log_y-52;
+      this.y = mit.Backgrounds.log_y-42;
 
       ctx.drawImage(
         this.sprite,
         0,
         0,
-        48,
-        this.h,
+        this.w,
+        60,
         this.x,
-        mit.Backgrounds.log_y-52,
-        48,
-        this.h
+        this.y,
+        this.w,
+        60
       );
     },
 
