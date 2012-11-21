@@ -80,7 +80,7 @@
     mit.start_btn_clicked = 1;
     mit.game_started = 0;
 
-    mit.pappu.drawStatic(ctx);
+    mit.Pappu.drawStatic(ctx);
     mit.ax = 0; mit.ay = 0;
     mit.vx = 0; mit.vy = 0;
 
@@ -212,13 +212,13 @@
     mit.Backgrounds.drawGrass(ctx);
 
     if (flying_up)
-      mit.pappu.updateFlyFrameCount();
+      mit.Pappu.updateFlyFrameCount();
     else
-      mit.pappu.updateFlyFrameCount(0);
+      mit.Pappu.updateFlyFrameCount(0);
 
     
     // Game over on reaching any boundary
-    if (mit.pappu.hasReachedBoundary(W, H)) {
+    if (mit.Pappu.hasReachedBoundary(W, H)) {
       // Performing some game over tasks
       mit.gameOver();
       return;
@@ -267,13 +267,13 @@
 
       // console.log(vy, ay)
 
-      mit.pappu.x += mit.vx;
-      mit.pappu.y += mit.vy;
+      mit.Pappu.x += mit.vx;
+      mit.Pappu.y += mit.vy;
     
-      mit.pappu.draw(ctx);
+      mit.Pappu.draw(ctx);
     }
     else {
-      mit.pappu.drawStatic(ctx);
+      mit.Pappu.drawStatic(ctx);
     }
 
   }());

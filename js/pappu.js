@@ -19,24 +19,24 @@
 
     init: function() {
       // Initializing Pappu Sprite, lolzzz..!
-      pappu.sprite = new Image();
-      pappu.sprite.src = 'img/pappu.png';
+      this.sprite = new Image();
+      this.sprite.src = 'img/pappu.png';
 
-      pappu.sprite.onload = function() {
+      this.sprite.onload = function() {
         //pappu.w = pappu.sprite.width;
-        pappu.w = 48;
-        pappu.h = pappu.sprite.height;
+        mit.Pappu.w = 48;
+        mit.Pappu.h = mit.Pappu.sprite.height;
 
         // Sprite Frame Count
-        pappu.max_fly_frame_count = 6;
-        pappu.max_fly_frame_count--;
+        mit.Pappu.max_fly_frame_count = 6;
+        mit.Pappu.max_fly_frame_count--;
 
         // Sprite Frame Change Speed.
         // This will affect the flap speed.
-        pappu.change_per_frame = 5;
+        mit.Pappu.change_per_frame = 5;
 
         // X Pos
-        pappu.x = 35;
+        mit.Pappu.x = 35;
       };
     },
 
@@ -71,7 +71,7 @@
     },
 
     drawStatic: function(ctx) {
-      this.y = mit.backgrounds.logY-52;
+      this.y = mit.Backgrounds.log_y-52;
 
       ctx.drawImage(
         this.sprite,
@@ -80,7 +80,7 @@
         48,
         this.h,
         this.x,
-        mit.backgrounds.logY-52,
+        mit.Backgrounds.log_y-52,
         48,
         this.h
       );

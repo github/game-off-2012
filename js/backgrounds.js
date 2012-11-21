@@ -1,11 +1,11 @@
 (function() {
 
-  mit.Backgrounds = function() {
+  mit.Backgrounds = {
 
     // Speeds and Velocities of Backgrounds
 
     cloud_bg_move_speed: 2,
-    cloud_bg_vx = 0;
+    cloud_bg_vx: 0,
 
     backtree_bg_move_speed: 3,
     backtree_bg_vx: 0,
@@ -91,7 +91,7 @@
       ground.height = mit.H;
 
       ctx.drawImage(ground, this.ground_bg_vx, 0, mit.W, mit.H);
-      ctx.drawImage(ground, W + this.ground_bg_vx, 0, mit.W, mit.H);
+      ctx.drawImage(ground, mit.W + this.ground_bg_vx, 0, mit.W, mit.H);
 
       if (-this.ground_bg_vx >= mit.W) {
         this.ground_bg_vx = 0;
@@ -136,15 +136,15 @@
 
     // Draw Awesome Backgrounds
     // Backgrounds have been made for 1000x500 dimensions
-    var draw = function(ctx) {
+    draw: function(ctx) {
 
       // Draw Linear Gradient for real/pure BG (sky/water)
-      var gradient = ctx.createLinearGradient(0, 0, 0, H);  
+      var gradient = ctx.createLinearGradient(0, 0, 0, mit.H);  
       gradient.addColorStop(0, '#06c4f4');
       gradient.addColorStop(1, '#7bd4f6');
       ctx.save();
       ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, W, H);
+      ctx.fillRect(0, 0, mit.W, mit.H);
       ctx.restore();
 
       // Clouds
@@ -173,6 +173,6 @@
   };
 
   // Initializations
-  Backgrounds.init();
+  mit.Backgrounds.init();
 
 }());

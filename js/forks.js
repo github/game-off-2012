@@ -273,7 +273,7 @@
     checkCollision: function() {
       var first_fork = this.forks[0],
           // Get Pappu Bounds
-          pappu_bounds = mit.pappu.getBounds(),
+          pappu_bounds = mit.Pappu.getBounds(),
           // Get Nearest Fork's Handle's Bounds
           fork_bounds = first_fork.getHandleBounds();
       
