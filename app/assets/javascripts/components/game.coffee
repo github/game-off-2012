@@ -31,6 +31,7 @@ Crafty.c "Game",
   crash: ->
 
   rollActionIn: (delayOverride = @_actionDelay) ->
+    @delay((=> @currentAction = null), delayOverride * 3/4)
     @delay((=> @rollAction()), delayOverride)
 
   rollAction: ->

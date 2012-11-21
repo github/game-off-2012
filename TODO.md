@@ -1,6 +1,5 @@
 MUST:
-    * Countdown with SFX.
-    * Flashing action text.
+    * Pause.
     * Game over (conflict) with local highscore.
     * Add README + change name of repo.
 
