@@ -4,6 +4,7 @@ Crafty.scene("in_game", ->
   Crafty.viewport.y = Config.viewport.center.y
 
   Crafty.background("#000")
+  Crafty.pause()
 
 
   game = Crafty.e("Game")
@@ -29,11 +30,21 @@ Crafty.scene("in_game", ->
     game.reset().start()
   )
 
-  music.play()
 
-  game.onAction( (action) =>
-    Crafty.audio.play("#{action.toLowerCase()}.mp3", 1, Settings.get("narratorVolume"))
-    track.currentSegment(Config.obstacles.changeWhere.initial + Config.obstacles.changeWhere.increaseBy * game.cycles).perform(action)
-  ).start()
+  start = ->
+    music.play()
+    Crafty.pause()
+
+    game.onAction( (action) =>
+      Narrator.play(action)
+      track.currentSegment(Config.obstacles.changeWhere.initial + Config.obstacles.changeWhere.increaseBy * game.cycles).perform(action)
+    ).start()
+
+  Utils.showText("Ready?")
+  Narrator.play "ready", ->
+    Utils.showText("Code!")
+    Narrator.play "code", ->
+      start()
+
 )
 
