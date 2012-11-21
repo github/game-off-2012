@@ -14,6 +14,7 @@ class InputHandler
     @LEFT = new Key()
     @RIGHT = new Key()
     @ENTER = new Key()
+    @ESC = new Key()
     
     window.addEventListener("keydown", @keyDown)
     window.addEventListener("keyup", @keyUp)
@@ -32,6 +33,10 @@ class InputHandler
     if keycode is 13
       @ENTER.toggle(true)
       e.preventDefault()
+      
+    if keycode is 27
+      @ESC.toggle(true)
+      e.preventDefault()
     
     
     
@@ -49,7 +54,10 @@ class InputHandler
     if keycode is 13
       @ENTER.toggle(false)
       e.preventDefault()
-    e.preventDefault()
+    
+    if keycode is 27
+      @ESC.toggle(false)
+      e.preventDefault()
       
     
     

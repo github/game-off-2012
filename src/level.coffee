@@ -1,5 +1,5 @@
 class Level
-  constructor:(@id, world, @screen,json, sheet)->
+  constructor:(@id, world, @screen,json, sheet, @inputHandler, @game)->
     console.log("INIT Level")
     
     @entities = new List()
@@ -18,6 +18,11 @@ class Level
       @entities.add({e:new TestEntity(0, 0), m:new PlayerModel(world, (Math.random()*200)+50, 30)})
 
   tick:->
+    
+    if @inputHandler.ESC.isPressed()
+      impress().goto("map_screen")
+      @game.loadMap()
+    
     for i in [0...@entities.size()]
       e = @entities.get(i).e
       m = @entities.get(i).m

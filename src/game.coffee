@@ -67,11 +67,16 @@ class Game
     @level = null
     
     @levels = [
-      new Level("board", @world, @screen,STORAGE.getRessource("test"), STORAGE.getRessource("spritesheet")),
-      new Level("board", @world, @screen,STORAGE.getRessource("test2"), STORAGE.getRessource("spritesheet"))
+      new Level("board", @world, @screen,STORAGE.getRessource("test"), STORAGE.getRessource("spritesheet"), @inputHandler, @),
+      new Level("board", @world, @screen,STORAGE.getRessource("test2"), STORAGE.getRessource("spritesheet"), @inputHandler, @)
     ]
     
     @run()
+    
+  loadMap:->
+    @map.setActive(true)
+    @camera.setActive(false)
+    @level = null
  
   loadLevel:(index)->
     @map.setActive(false)
