@@ -4,3 +4,4 @@ Config.settings =
   sfxVolume: 0.5
   narratorVolume: 0.5
   firstTrack: true
+  score: 0

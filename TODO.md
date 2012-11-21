@@ -1,7 +1,5 @@
 MUST:
-    * Pause.
-    * Game over (conflict) with local highscore.
-    * Add README + change name of repo.
+  * Add README + change name of repo.
 
 LAST (BUT MUST):
   * CSS compatability.
