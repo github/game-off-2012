@@ -1,8 +1,8 @@
 MUST:
     * Countdown with SFX.
-    * Game over (conflict) with local highscore.
     * Flashing action text.
-    * Add README.
+    * Game over (conflict) with local highscore.
+    * Add README + change name of repo.
 
 LAST (BUT MUST):
   * CSS compatability.

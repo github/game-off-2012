@@ -9,7 +9,7 @@ Config.gfx =
       minimum: 2
 
   text:
-    duration: 401
+    duration: 600
 
   cyclesTitles:
     [
