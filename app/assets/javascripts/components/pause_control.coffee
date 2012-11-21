@@ -1,7 +1,7 @@
 Crafty.c "Pause",
   init: ->
     @requires("2D, DOM, Text, Pause, Mouse")
-    @attr(x: - Config.viewport.width / 2 + 5 , y: - Config.viewport.height / 2 , h: 30, w: 30)
+    @attr(x: - Config.viewport.width / 2 + 5 , y: - Config.viewport.height / 2 , h: 30, w: 30,z: 1000)
     @text("❚❚")
 
     @bind('Click', (e) -> @pauseToggle())

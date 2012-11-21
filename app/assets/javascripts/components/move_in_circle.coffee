@@ -22,6 +22,7 @@ Crafty.c "MoveInCircle",
     @color(Config.player.color)
     @attr(h:Config.player.size, w:Config.player.size)
 
+
   reset: ->
     @disableControls = false
     @_angle = @_initialAngle
@@ -29,6 +30,11 @@ Crafty.c "MoveInCircle",
     @_sideSpeed = Config.player.speed.sides.initial
     @_trailInterval = Config.gfx.trail.interval.initial
     @_radius = Config.cycle.centerRadius + Config.player.radiusModification
+    @attr(
+      x: 0
+      y: 0
+    )
+    @
 
   angle: ->
     @_angle % 360
@@ -41,12 +47,19 @@ Crafty.c "MoveInCircle",
   _keyup: (e) ->
     @_movement = 0
 
+  hide: ->
+    @visible = false
+    @
+  show: ->
+    @visible = true
+    @
+
   disableControl: ->
-     @unbind("KeyDown", @_keydown).unbind("KeyDown", @_keydown).unbind "EnterFrame", @_enterframe
+     @hide().unbind("KeyDown", @_keydown).unbind("KeyDown", @_keydown).unbind "EnterFrame", @_enterframe
      @
 
   enableControl: ->
-    @bind("KeyDown", @_keydown).bind("KeyUp", @_keyup).bind "EnterFrame", @_enterframe
+    @show().bind("KeyDown", @_keydown).bind("KeyUp", @_keyup).bind "EnterFrame", @_enterframe
     @
 
   _enterframe: ->
@@ -88,12 +101,3 @@ Crafty.c "MoveInCircle",
 
     @_trailInterval -= Config.gfx.trail.interval.reduceBy
     @_trailInterval = Math.max(@_trailInterval, Config.gfx.trail.interval.minimum)
-
-  crash: ->
-    return if @disableControls
-    SFX.play("crash")
-    Narrator.play("conflict")
-    @disableControls = true
-    @crashed = true
-    Crafty.trigger("GameOver")
-    @delay((-> Crafty.trigger("Restart")), Config.flow.restartDelay)

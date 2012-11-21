@@ -132,3 +132,18 @@ footer{
 .Pause.paused{
     color: #555;
 }
+
+
+.GameOver{
+    border-radius: 50px;
+    box-shadow: 0 5px #444;
+    background-color: rgba(255,255,255,0.5);
+    color: black;
+    text-align: center;
+    font-size: 28px;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+}
+.GameOver h1, .GameOver h2{
+    margin: 5px 0;
+}

@@ -11,6 +11,9 @@ Crafty.c "Game",
 
   start: ->
     @tick()
+    @attr(
+      stopped: false
+    )
     @rollActionIn(Config.obstacles.intervals.atStart)
     @
 
@@ -48,6 +51,6 @@ Crafty.c "Game",
       time: 0
       cycles: 0
       currentAction: ""
-      stopped: false
     )
+    @
 

@@ -35,6 +35,7 @@ Crafty.c("Track",
 
   reset: ->
     @each("reset")
+    @
 
   each: (funcName, argument = null) ->
     _.each(@_segments, (segment) -> segment[funcName](argument))

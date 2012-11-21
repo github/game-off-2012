@@ -18,3 +18,9 @@ Crafty.c "ActionCenter",
     text += "<br><strong class='current-action'>#{@game.currentAction}!<br>" if @game.currentAction
 
     @text(text)
+
+  hide: ->
+    @visible = false
+
+  show: ->
+    @visible = true

@@ -1,7 +1,13 @@
 Crafty.c "Mute",
   init: ->
     @requires("2D, DOM, Text, typicn, mute, Mouse")
-    @attr(x: Config.viewport.width / 2 - 40, y: - Config.viewport.height / 2, h: 40, w: 40)
+    @attr(
+      x: Config.viewport.width / 2 - 40,
+      y: - Config.viewport.height / 2,
+      h: 40,
+      w: 40
+      z: 10000
+    )
 
     if Settings.get('mute')
       @mute()
