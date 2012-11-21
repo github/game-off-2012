@@ -235,13 +235,13 @@
     if (mit.game_started) {
 
       // Draw Forks
-      mit.ForkUtils.draw(ctx, 6);
+      mit.ForkUtils.draw(ctx);
       // Draw Branches
       mit.branches.draw(ctx, 4);
 
       // Check Collisions with pappu
       mit.ForkUtils.checkCollision();
-      mit.branches.checkCollision();
+      //mit.branches.checkCollision();
 
       // Send over Pakias (Enemies)
       if (mit.score > 199)
@@ -260,7 +260,7 @@
         (mit.vy > -v_cap && mit.ay+mit.gravity < 0)
         ) {
 
-        //console.log(mit.ay);
+        // console.log(mit.ay);
         mit.vy += mit.ay;
         mit.vy += mit.gravity;
       }

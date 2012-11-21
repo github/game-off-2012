@@ -1,6 +1,9 @@
 (function() {
 
   // The Fork Class
+  // We'll have lots of forks.
+  // Each fork will be on object of this
+  // constructor.
 
   mit.Fork = function() {
     // Handle x/y
@@ -54,9 +57,12 @@
 
   mit.ForkUtils = {
 
+    // Master array of all existing forks in memory
     forks: [],
+    // Forks can be placed on top/bottom edges
     edges: ['top', 'btm'],
 
+    // Images for fork handle, fork head and the digged part
     fork_img: {},
     fork_head_img: {},
     dig_img: {},
@@ -64,8 +70,11 @@
     had_head_collision: false,
     last_push: 0,
 
+    // How many forks to have in memory ?
+    count: 6,
+
     init: function() {
-      // Images
+      // Loading Images
 
       // Fork handle
       this.fork_img = new Image();
@@ -119,13 +128,14 @@
       return pos;
     },
 
-    draw: function(ctx, count) {
+    create: function() {
       var fork_img = this.fork_img,
           dig_img = this.dig_img,
           fork_head_img = this.fork_head_img,
-          forks = this.forks;
+          forks = this.forks,
+          count = this.count;
 
-      if (forks.length < count) {
+      if (forks.length < count && mit.start_btn_clicked) {
         
         for (var i = 0; i < count - forks.length; i++) {
           var fork = new mit.Fork();
@@ -161,21 +171,24 @@
         }
         
       }
+    },
+
+    draw: function(ctx) {
+      var fork_img = this.fork_img,
+          dig_img = this.dig_img,
+          fork_head_img = this.fork_head_img,
+          forks = this.forks;
+
+      this.create();
       
       // Loop over forks and draw each of them
       forks.forEach(function(fork, index) {
+
         if (fork.x < 0) {
           forks.splice(index, 1);
         }
+
         fork.x -= mit.backgrounds.ground_bg_move_speed;
-
-        // Check Collisions with pappu
-        // mit.forks.checkCollision();
-
-        // ctx.beginPath();
-        // ctx.strokeStyle = 'blue';
-        // ctx.lineWidth = 5;
-        // ctx.moveTo(fork.x, fork.y);
 
         if (fork.edge === 'top') {
           // ctx.lineTo(fork.x, 0);
@@ -204,10 +217,8 @@
           ctx.restore();
         }
         else if (fork.edge === 'btm') {
-          // ctx.lineTo(fork.x, mit.config.canvas_height);
 
           ctx.drawImage(fork_img, fork.x, fork.y);
-
 
           fork.head_x = fork.x-fork_head_img.width/5;
           fork.head_y = fork.y-fork_head_img.height;
@@ -228,8 +239,6 @@
           ctx.restore();
         }
 
-        // ctx.stroke();
-        // ctx.closePath();
       });
     },
 
@@ -250,11 +259,11 @@
 
     // Check Fork Collision
     checkCollision: function() {
-      var forks = this.forks,
+      var first_fork = this.forks[0],
           // Get Pappu Bounds
           pappu_bounds = mit.pappu.getBounds(),
           // Get Nearest Fork's Handle's Bounds
-          fork_bounds = forks[0].getHandleBounds();
+          fork_bounds = first_fork.getHandleBounds();
       
       // Check whether pappu collided with the
       // fork handle or not.
@@ -263,10 +272,9 @@
         mit.gameOver();
       }
 
-
-      // We'll have to check for collision with forks
+      // We'll have to check for collision with fork heads.
       // If there's a collision pappu will be pushed!
-      var fork_head_bounds = forks[0].getHeadBounds();
+      var fork_head_bounds = first_fork.getHeadBounds();
 
       if (this.had_head_collision) {
         this.had_head_collision = false;
@@ -279,14 +287,15 @@
       if (utils.intersect(pappu_bounds, fork_head_bounds)) {
         this.had_head_collision = true;
 
-        if (forks[0].edge === 'top') {
-          this.last_push = +forks[0].head_h;
+        if (first_fork.edge === 'top') {
+          this.last_push = +first_fork.head_h;
         }
         else {
-          this.last_push = -forks[0].head_h;
+          this.last_push = -first_fork.head_h;
         }
 
         mit.vy += this.last_push;
+        mit.ay = 0;
         // console.log(pappu_bounds, fork_head_bounds);
         // console.log(mit.vy);
       }
