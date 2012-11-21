@@ -1,7 +1,7 @@
 class Text
   
-  chooseColor = "#FF0F0F"
-  color = "#FFF"
+  chooseColor = "#DDD"
+  color = "#722714"
   
   constructor:(@value, @x, @y, @actual)->
     
@@ -33,7 +33,7 @@ class Map
     @ctx.webkitImageSmoothingEnabled = false
     @ctx.mozImageSmoothingEnabled= false
     
-    @ctx.font="normal 36px Arial"
+    @ctx.font="bold 36px Arial"
     @ctx.fillStyle="#FFF"
     
     @mapgen = new MapGenerator(STORAGE.getRessource("map"), STORAGE.getRessource("spritesheet"))
