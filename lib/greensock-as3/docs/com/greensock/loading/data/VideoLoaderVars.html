@@ -1,0 +1,1681 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
+<meta content="VideoLoaderVars,com.greensock.loading.data.VideoLoaderVars,vars,allowMalformedURL,alpha,alternateURL,autoAdjustBuffer,autoDetachNetStream,autoDispose,autoPlay,bgAlpha,bgColor,blendMode,bufferMode,bufferTime,centerRegistration,checkPolicyFile,container,crop,deblocking,estimatedBytes,estimatedDuration,hAlign,height,name,noCache,onCancel,onComplete,onError,onFail,onHTTPStatus,onIOError,onInit,onOpen,onProgress,onSecurityError,prop,repeat,requireWithRoot,rotation,rotationX,rotationY,rotationZ,scaleMode,scaleX,scaleY,smoothing,vAlign,visible,volume,width,x,y,z" name="keywords">
+<title>com.greensock.loading.data.VideoLoaderVars</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'VideoLoaderVars - API Documentation';
+				var baseRef = '../../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../index-list.html')" href="../../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../../index.html?com/greensock/loading/data/VideoLoaderVars.html&amp;com/greensock/loading/data/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;VideoLoaderVars</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class VideoLoaderVars"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock.loading.data</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class VideoLoaderVars</td>
+</tr>
+</table>
+<p></p>
+ Can be used instead of a generic Object to define the <code>vars</code> parameter of a VideoLoader's constructor. <br /><br /> 
+ 
+ There are 2 primary benefits of using a VideoLoaderVars instance to define your VideoLoader variables:
+  <ol>
+  <li> In most code editors, code hinting will be activated which helps remind you which special properties are available in VideoLoader</li>
+  <li> It enables strict data typing for improved debugging (ensuring, for example, that you don't define a Boolean value for <code>onComplete</code> where a Function is expected).</li>
+  </ol><br />
+ 
+ The down side, of course, is that the code is more verbose and the VideoLoaderVars class adds slightly more kb to your swf.
+  <b>USAGE:</b><br /><br />
+ Note that each method returns the VideoLoaderVars instance, so you can reduce the lines of code by method chaining (see example below).<br /><br />
+ 
+ <b>Without VideoLoaderVars:</b><br /><code>
+ new VideoLoader("video.flv", {name:"video", estimatedBytes:111500, container:this, width:200, height:100, onComplete:completeHandler, onProgress:progressHandler})</code><br /><br />
+ 
+ <b>With VideoLoaderVars</b><br /><code>
+ new VideoLoader("video.flv", new VideoLoaderVars().name("video").estimatedBytes(111500).container(this).width(200).height(100).onComplete(completeHandler).onProgress(progressHandler))</code><br /><br />
+ 
+ <b>NOTES:</b><br />
+ <ul>
+ <li> To get the generic vars object that VideoLoaderVars builds internally, simply access its "vars" property.
+    In fact, if you want maximum backwards compatibility, you can tack ".vars" onto the end of your chain like this:<br /><code>
+    new VideoLoader("video.flv", new VideoLoaderVars().name("video").estimatedBytes(111500).vars);</code></li>
+ <li> Using VideoLoaderVars is completely optional. If you prefer the shorter synatax with the generic Object, feel
+    free to use it. The purpose of this class is simply to enable code hinting and to allow for strict data typing.</li>
+ </ul>
+ 
+ <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#vars">vars</a> : Object<div class="summaryTableDescription">[read-only] The generic Object populated by all of the method calls in the VideoLoaderVars instance.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#VideoLoaderVars()">VideoLoaderVars</a>(vars:Object = null)</div>
+<div class="summaryTableDescription">
+   Constructor 
+   </div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#allowMalformedURL()">allowMalformedURL</a>(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Normally, the URL will be parsed and any variables in the query string (like "?name=test&amp;state=il&amp;gender=m") will be placed into a URLVariables object which is added to the URLRequest.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#alpha()">alpha</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>alpha</code> property.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#alternateURL()">alternateURL</a>(value:String):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> If you define an <code>alternateURL</code>, the loader will initially try to load from its original <code>url</code> and if it fails, it will automatically (and permanently) change the loader's <code>url</code> to the <code>alternateURL</code> and try again.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#autoAdjustBuffer()">autoAdjustBuffer</a>(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> If the buffer becomes empty during playback and <code>autoAdjustBuffer</code> is <code>true</code> (the default), it will automatically attempt to adjust the NetStream's <code>bufferTime</code> based on the rate at which the video has been loading, estimating what it needs to be in order to play the rest of the video without emptying the buffer again.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#autoDetachNetStream()">autoDetachNetStream</a>(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> If <code>true</code>, the NetStream will only be attached to the Video object (the <code>rawContent</code>) when it is in the display list (on the stage).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#autoDispose()">autoDispose</a>(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> When <code>autoDispose</code> is <code>true</code>, the loader will be disposed immediately after it completes (it calls the <code>dispose()</code> method internally after dispatching its <code>COMPLETE</code> event).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#autoPlay()">autoPlay</a>(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> By default, the video will begin playing as soon as it has been adequately buffered, but to prevent it from playing initially, set <code>autoPlay</code> to <code>false</code>.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#bgAlpha()">bgAlpha</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Controls the alpha of the rectangle that is drawn when a <code>width</code> and <code>height</code> are defined.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#bgColor()">bgColor</a>(value:uint):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> When a <code>width</code> and <code>height</code> are defined, a rectangle will be drawn inside the <code>ContentDisplay</code> Sprite immediately in order to ease the development process.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#blendMode()">blendMode</a>(value:String):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>blendMode</code> property.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#bufferMode()">bufferMode</a>(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> When <code>true</code>, the loader will report its progress only in terms of the video's buffer which can be very convenient if, for example, you want to display loading progress for the video's buffer or tuck it into a LoaderMax with other loaders and allow the LoaderMax to dispatch its <code>COMPLETE</code> event when the buffer is full instead of waiting for the whole file to download.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#bufferTime()">bufferTime</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> The amount of time (in seconds) that should be buffered before the video can begin playing (set <code>autoPlay</code> to <code>false</code> to pause the video initially).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#centerRegistration()">centerRegistration</a>(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> If <code>true</code>, the registration point will be placed in the center of the ContentDisplay which can be useful if, for example, you want to animate its scale and have it grow/shrink from its center.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#checkPolicyFile()">checkPolicyFile</a>(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> If <code>true</code>, the VideoLoader will check for a crossdomain.xml file on the remote host (only useful when loading videos from other domains - see Adobe's docs for details about NetStream's <code>checkPolicyFile</code> property).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#container()">container</a>(value:DisplayObjectContainer):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> A DisplayObjectContainer into which the <code>ContentDisplay</code> Sprite should be added immediately.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#crop()">crop</a>(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> When a <code>width</code> and <code>height</code> are defined, setting <code>crop</code> to <code>true</code> will cause the image to be cropped within that area (by applying a <code>scrollRect</code> for maximum performance).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#deblocking()">deblocking</a>(value:int):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Indicates the type of filter applied to decoded video as part of post-processing.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#estimatedBytes()">estimatedBytes</a>(value:uint):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Initially, the loader's <code>bytesTotal</code> is set to the <code>estimatedBytes</code> value (or <code>LoaderMax.defaultEstimatedBytes</code> if one isn't defined).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#estimatedDuration()">estimatedDuration</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Estimated duration of the video in seconds.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#hAlign()">hAlign</a>(value:String):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> 
+   When a <code>width</code> and <code>height</code> is defined, the <code>hAlign</code> determines how the image is horizontally aligned within that area.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#height()">height</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>height</code> property (applied before rotation, scaleX, and scaleY).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#name()">name</a>(value:String):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> A name that is used to identify the loader instance.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#noCache()">noCache</a>(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> If <code>true</code>, a "gsCacheBusterID" parameter will be appended to the url with a random set of numbers to prevent caching (don't worry, this info is ignored when you <code>LoaderMax.getLoader()</code> or <code>LoaderMax.getContent()</code> by <code>url</code> or when you're running locally).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onCancel()">onCancel</a>(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> A handler function for <code>LoaderEvent.CANCEL</code> events which are dispatched when loading is aborted due to either a failure or because another loader was prioritized or <code>cancel()</code> was manually called.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onComplete()">onComplete</a>(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> A handler function for <code>LoaderEvent.COMPLETE</code> events which are dispatched when the loader has finished loading successfully.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onError()">onError</a>(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> A handler function for <code>LoaderEvent.ERROR</code> events which are dispatched whenever the loader experiences an error (typically an IO_ERROR or SECURITY_ERROR).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onFail()">onFail</a>(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> A handler function for <code>LoaderEvent.FAIL</code> events which are dispatched whenever the loader fails and its <code>status</code> changes to <code>LoaderStatus.FAILED</code>.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onHTTPStatus()">onHTTPStatus</a>(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> A handler function for <code>LoaderEvent.HTTP_STATUS</code> events.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onInit()">onInit</a>(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> A handler function for <code>LoaderEvent.INIT</code> events which will be called when the video's metaData has been received and the video is placed into the <code>ContentDisplay</code>.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onIOError()">onIOError</a>(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> A handler function for <code>LoaderEvent.IO_ERROR</code> events which will also call the onError handler, so you can use that as more of a catch-all whereas <code>onIOError</code> is specifically for LoaderEvent.IO_ERROR events.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onOpen()">onOpen</a>(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> A handler function for <code>LoaderEvent.OPEN</code> events which are dispatched when the loader begins loading.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onProgress()">onProgress</a>(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> A handler function for <code>LoaderEvent.PROGRESS</code> events which are dispatched whenever the <code>bytesLoaded</code> changes.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onSecurityError()">onSecurityError</a>(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> A handler function for <code>LoaderEvent.SECURITY_ERROR</code> events which onError handles as well, so you can use that as more of a catch-all whereas onSecurityError is specifically for SECURITY_ERROR events.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#prop()">prop</a>(property:String, value:*):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription">
+   Adds a dynamic property to the vars object containing any value you want.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#repeat()">repeat</a>(value:int):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Number of times that the video should repeat.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#requireWithRoot()">requireWithRoot</a>(value:DisplayObject):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> LoaderMax supports <i>subloading</i>, where an object can be factored into a parent's loading progress.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#rotation()">rotation</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>rotation</code> property.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#rotationX()">rotationX</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>rotationX</code> property.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#rotationY()">rotationY</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>rotationY</code> property.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#rotationZ()">rotationZ</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>rotationZ</code> property.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#scaleMode()">scaleMode</a>(value:String):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> 
+   When a <code>width</code> and <code>height</code> are defined, the <code>scaleMode</code> controls how the loaded image will be scaled to fit the area.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#scaleX()">scaleX</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>scaleX</code> property.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#scaleY()">scaleY</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>scaleY</code> property.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#smoothing()">smoothing</a>(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> When <code>smoothing</code> is <code>true</code> (the default), smoothing will be enabled for the video which typically leads to better scaling results.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#vAlign()">vAlign</a>(value:String):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> 
+   When a <code>width</code> and <code>height</code> is defined, the <code>vAlign</code> determines how the image is vertically aligned within that area.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#visible()">visible</a>(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>visible</code> property.</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#volume()">volume</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> A value between 0 and 1 indicating the volume at which the video should play (default is 1).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#width()">width</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>width</code> property (applied before rotation, scaleX, and scaleY).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#x()">x</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>x</code> property (for positioning on the stage).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#y()">y</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>y</code> property (for positioning on the stage).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#z()">z</a>(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a>
+</div>
+<div class="summaryTableDescription"> Sets the <code>ContentDisplay</code>'s <code>z</code> property (for positioning on the stage).</div>
+</td><td class="summaryTableOwnerCol">VideoLoaderVars</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="vars"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">vars</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>vars:Object</code>&nbsp;&nbsp;[read-only]<p> The generic Object populated by all of the method calls in the VideoLoaderVars instance. This is the raw data that gets passed to the loader. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get vars():Object</code>
+<br>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="VideoLoaderVars()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">VideoLoaderVars</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function VideoLoaderVars(vars:Object = null)</code><p>
+   Constructor 
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; A generic Object containing properties that you'd like to add to this VideoLoaderVars instance.
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="allowMalformedURL()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">allowMalformedURL</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function allowMalformedURL(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Normally, the URL will be parsed and any variables in the query string (like "?name=test&amp;state=il&amp;gender=m") will be placed into a URLVariables object which is added to the URLRequest. This avoids a few bugs in Flash, but if you need to keep the entire URL intact (no parsing into URLVariables), set <code>allowMalformedURL:true</code>. For example, if your URL has duplicate variables in the query string like <code>http://www.greensock.com/?c=S&amp;c=SE&amp;c=SW</code>, it is technically considered a malformed URL and a URLVariables object can't properly contain all the duplicates, so in this case you'd want to set <code>allowMalformedURL</code> to <code>true</code>. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Boolean</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="alpha()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">alpha</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function alpha(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>alpha</code> property. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="alternateURL()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">alternateURL</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function alternateURL(value:String):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> If you define an <code>alternateURL</code>, the loader will initially try to load from its original <code>url</code> and if it fails, it will automatically (and permanently) change the loader's <code>url</code> to the <code>alternateURL</code> and try again. Think of it as a fallback or backup <code>url</code>. It is perfectly acceptable to use the same <code>alternateURL</code> for multiple loaders (maybe a default image for various ImageLoaders for example). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:String</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="autoAdjustBuffer()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">autoAdjustBuffer</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function autoAdjustBuffer(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> If the buffer becomes empty during playback and <code>autoAdjustBuffer</code> is <code>true</code> (the default), it will automatically attempt to adjust the NetStream's <code>bufferTime</code> based on the rate at which the video has been loading, estimating what it needs to be in order to play the rest of the video without emptying the buffer again. This can prevent the annoying problem of video playback start/stopping/starting/stopping on a system tht doesn't have enough bandwidth to adequately buffer the video. You may also set the <code>bufferTime</code> in the constructor's <code>vars</code> parameter to set the initial value. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Boolean</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="autoDetachNetStream()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">autoDetachNetStream</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function autoDetachNetStream(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> If <code>true</code>, the NetStream will only be attached to the Video object (the <code>rawContent</code>) when it is in the display list (on the stage). This conserves memory but it can cause a very brief rendering delay when the content is initially added to the stage (often imperceptible). Also, if you add it to the stage when the <code>videoTime</code> is <i>after</i> its last encoded keyframe, it will render at that last keyframe. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Boolean</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="autoDispose()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">autoDispose</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function autoDispose(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> When <code>autoDispose</code> is <code>true</code>, the loader will be disposed immediately after it completes (it calls the <code>dispose()</code> method internally after dispatching its <code>COMPLETE</code> event). This will remove any listeners that were defined in the vars object (like onComplete, onProgress, onError, onInit). Once a loader is disposed, it can no longer be found with <code>LoaderMax.getLoader()</code> or <code>LoaderMax.getContent()</code> - it is essentially destroyed but its content is not unloaded (you must call <code>unload()</code> or <code>dispose(true)</code> to unload its content). The default <code>autoDispose</code> value is <code>false</code>.</p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Boolean</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="autoPlay()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">autoPlay</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function autoPlay(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> By default, the video will begin playing as soon as it has been adequately buffered, but to prevent it from playing initially, set <code>autoPlay</code> to <code>false</code>. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Boolean</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="bgAlpha()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bgAlpha</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function bgAlpha(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Controls the alpha of the rectangle that is drawn when a <code>width</code> and <code>height</code> are defined. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="bgColor()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bgColor</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function bgColor(value:uint):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> When a <code>width</code> and <code>height</code> are defined, a rectangle will be drawn inside the <code>ContentDisplay</code> Sprite immediately in order to ease the development process. It is transparent by default, but you may define a <code>bgColor</code> if you prefer. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:uint</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="blendMode()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">blendMode</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function blendMode(value:String):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>blendMode</code> property. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:String</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="bufferMode()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bufferMode</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function bufferMode(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> When <code>true</code>, the loader will report its progress only in terms of the video's buffer which can be very convenient if, for example, you want to display loading progress for the video's buffer or tuck it into a LoaderMax with other loaders and allow the LoaderMax to dispatch its <code>COMPLETE</code> event when the buffer is full instead of waiting for the whole file to download. When <code>bufferMode</code> is <code>true</code>, the VideoLoader will dispatch its <code>COMPLETE</code> event when the buffer is full as opposed to waiting for the entire video to load. You can toggle the <code>bufferMode</code> anytime. Please read the full <code>bufferMode</code> property ASDoc description below for details about how it affects things like <code>bytesTotal</code>.</p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Boolean</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="bufferTime()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bufferTime</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function bufferTime(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> The amount of time (in seconds) that should be buffered before the video can begin playing (set <code>autoPlay</code> to <code>false</code> to pause the video initially).</p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="centerRegistration()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">centerRegistration</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function centerRegistration(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> If <code>true</code>, the registration point will be placed in the center of the ContentDisplay which can be useful if, for example, you want to animate its scale and have it grow/shrink from its center. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Boolean</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="checkPolicyFile()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">checkPolicyFile</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function checkPolicyFile(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> If <code>true</code>, the VideoLoader will check for a crossdomain.xml file on the remote host (only useful when loading videos from other domains - see Adobe's docs for details about NetStream's <code>checkPolicyFile</code> property). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Boolean</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="container()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">container</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function container(value:DisplayObjectContainer):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> A DisplayObjectContainer into which the <code>ContentDisplay</code> Sprite should be added immediately. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:DisplayObjectContainer</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="crop()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">crop</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function crop(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> When a <code>width</code> and <code>height</code> are defined, setting <code>crop</code> to <code>true</code> will cause the image to be cropped within that area (by applying a <code>scrollRect</code> for maximum performance). This is typically useful when the <code>scaleMode</code> is <code>"proportionalOutside"</code> or <code>"none"</code> so that any parts of the image that exceed the dimensions defined by <code>width</code> and <code>height</code> are visually chopped off. Use the <code>hAlign</code> and <code>vAlign</code> special properties to control the vertical and horizontal alignment within the cropped area. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Boolean</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="deblocking()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">deblocking</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function deblocking(value:int):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Indicates the type of filter applied to decoded video as part of post-processing. The default value is 0, which lets the video compressor apply a deblocking filter as needed. See Adobe's <code>flash.media.Video</code> class docs for details. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:int</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="estimatedBytes()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">estimatedBytes</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function estimatedBytes(value:uint):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Initially, the loader's <code>bytesTotal</code> is set to the <code>estimatedBytes</code> value (or <code>LoaderMax.defaultEstimatedBytes</code> if one isn't defined). Then, when the loader begins loading and it can accurately determine the bytesTotal, it will do so. Setting <code>estimatedBytes</code> is optional, but the more accurate the value, the more accurate your loaders' overall progress will be initially. If the loader is inserted into a LoaderMax instance (for queue management), its <code>auditSize</code> feature can attempt to automatically determine the <code>bytesTotal</code> at runtime (there is a slight performance penalty for this, however - see LoaderMax's documentation for details). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:uint</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="estimatedDuration()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">estimatedDuration</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function estimatedDuration(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Estimated duration of the video in seconds. VideoLoader will only use this value until it receives the necessary metaData from the video in order to accurately determine the video's duration. You do not need to specify an <code>estimatedDuration</code>, but doing so can help make the playProgress and some other values more accurate (until the metaData has loaded). It can also make the <code>progress/bytesLoaded/bytesTotal</code> more accurate when a <code>estimatedDuration</code> is defined, particularly in <code>bufferMode</code>.</p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="hAlign()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">hAlign</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function hAlign(value:String):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> 
+   When a <code>width</code> and <code>height</code> is defined, the <code>hAlign</code> determines how the image is horizontally aligned within that area. The following values are recognized (you may use the <code>com.greensock.layout.AlignMode</code> constants if you prefer):
+   <ul>
+     <li><code>"center"</code> (the default) - The image will be centered horizontally in the area</li>
+     <li><code>"left"</code> - The image will be aligned with the left side of the area</li>
+     <li><code>"right"</code> - The image will be aligned with the right side of the area</li>
+   </ul>
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:String</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="height()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">height</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function height(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>height</code> property (applied before rotation, scaleX, and scaleY). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="name()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">name</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function name(value:String):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> A name that is used to identify the loader instance. This name can be fed to the <code>LoaderMax.getLoader()</code> or <code>LoaderMax.getContent()</code> methods or traced at any time. Each loader's name should be unique. If you don't define one, a unique name will be created automatically, like "loader21". </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:String</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="noCache()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">noCache</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function noCache(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> If <code>true</code>, a "gsCacheBusterID" parameter will be appended to the url with a random set of numbers to prevent caching (don't worry, this info is ignored when you <code>LoaderMax.getLoader()</code> or <code>LoaderMax.getContent()</code> by <code>url</code> or when you're running locally). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Boolean</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="onCancel()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onCancel</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onCancel(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> A handler function for <code>LoaderEvent.CANCEL</code> events which are dispatched when loading is aborted due to either a failure or because another loader was prioritized or <code>cancel()</code> was manually called. Make sure your onCancel function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Function</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="onComplete()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onComplete</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onComplete(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> A handler function for <code>LoaderEvent.COMPLETE</code> events which are dispatched when the loader has finished loading successfully. Make sure your onComplete function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Function</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="onError()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onError</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onError(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> A handler function for <code>LoaderEvent.ERROR</code> events which are dispatched whenever the loader experiences an error (typically an IO_ERROR or SECURITY_ERROR). An error doesn't necessarily mean the loader failed, however - to listen for when a loader fails, use the <code>onFail</code> special property. Make sure your onError function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Function</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="onFail()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onFail</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onFail(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> A handler function for <code>LoaderEvent.FAIL</code> events which are dispatched whenever the loader fails and its <code>status</code> changes to <code>LoaderStatus.FAILED</code>. Make sure your onFail function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Function</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="onHTTPStatus()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onHTTPStatus</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onHTTPStatus(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> A handler function for <code>LoaderEvent.HTTP_STATUS</code> events. Make sure your onHTTPStatus function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>). You can determine the httpStatus code using the LoaderEvent's <code>target.httpStatus</code> (LoaderItems keep track of their <code>httpStatus</code> when possible, although certain environments prevent Flash from getting httpStatus information).</p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Function</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="onInit()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onInit</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onInit(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> A handler function for <code>LoaderEvent.INIT</code> events which will be called when the video's metaData has been received and the video is placed into the <code>ContentDisplay</code>. Make sure your onInit function accepts a single parameter of type <code>LoaderEvent</code> (com.greensock.events.LoaderEvent). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Function</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="onIOError()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onIOError</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onIOError(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> A handler function for <code>LoaderEvent.IO_ERROR</code> events which will also call the onError handler, so you can use that as more of a catch-all whereas <code>onIOError</code> is specifically for LoaderEvent.IO_ERROR events. Make sure your onIOError function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Function</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="onOpen()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onOpen</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onOpen(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> A handler function for <code>LoaderEvent.OPEN</code> events which are dispatched when the loader begins loading. Make sure your onOpen function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Function</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="onProgress()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onProgress</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onProgress(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> A handler function for <code>LoaderEvent.PROGRESS</code> events which are dispatched whenever the <code>bytesLoaded</code> changes. Make sure your onProgress function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>). You can use the LoaderEvent's <code>target.progress</code> to get the loader's progress value or use its <code>target.bytesLoaded</code> and <code>target.bytesTotal</code>.</p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Function</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="onSecurityError()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onSecurityError</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onSecurityError(value:Function):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> A handler function for <code>LoaderEvent.SECURITY_ERROR</code> events which onError handles as well, so you can use that as more of a catch-all whereas onSecurityError is specifically for SECURITY_ERROR events. Make sure your onSecurityError function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Function</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="prop()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">prop</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function prop(property:String, value:*):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p>
+   Adds a dynamic property to the vars object containing any value you want. This can be useful 
+   in situations where you need to associate certain data with a particular loader. Just make sure
+   that the property name is a valid variable name (starts with a letter or underscore, no special characters, etc.)
+   and that it doesn't use a reserved property name like "name" or "onComplete", etc. 
+   
+   For example, to set an "index" property to 5, do:
+   
+   <code>prop("index", 5);</code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">property</span>:String</code> &mdash; Property name
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:*</code> &mdash; Value
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="repeat()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">repeat</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function repeat(value:int):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Number of times that the video should repeat. To repeat indefinitely, use -1. Default is 0. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:int</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="requireWithRoot()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">requireWithRoot</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function requireWithRoot(value:DisplayObject):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> LoaderMax supports <i>subloading</i>, where an object can be factored into a parent's loading progress. If you want LoaderMax to require this loader as part of its parent SWFLoader's progress, you must set the <code>requireWithRoot</code> property to your swf's <code>root</code>. For example, <code>vars.requireWithRoot = this.root;</code>. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:DisplayObject</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="rotation()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">rotation</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function rotation(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>rotation</code> property. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="rotationX()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">rotationX</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function rotationX(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>rotationX</code> property. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="rotationY()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">rotationY</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function rotationY(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>rotationY</code> property. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="rotationZ()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">rotationZ</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function rotationZ(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>rotationZ</code> property. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="scaleMode()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">scaleMode</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function scaleMode(value:String):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> 
+   When a <code>width</code> and <code>height</code> are defined, the <code>scaleMode</code> controls how the loaded image will be scaled to fit the area. The following values are recognized (you may use the <code>com.greensock.layout.ScaleMode</code> constants if you prefer):
+   <ul>
+     <li><code>"stretch"</code> (the default) - The image will fill the width/height exactly. </li>
+     <li><code>"proportionalInside"</code> - The image will be scaled proportionally to fit inside the area defined by the width/height</li>
+     <li><code>"proportionalOutside"</code> - The image will be scaled proportionally to completely fill the area, allowing portions of it to exceed the bounds defined by the width/height. </li>
+     <li><code>"widthOnly"</code> - Only the width of the image will be adjusted to fit.</li>
+     <li><code>"heightOnly"</code> - Only the height of the image will be adjusted to fit.</li>
+     <li><code>"none"</code> - No scaling of the image will occur. </li>
+   </ul> 
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:String</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="scaleX()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">scaleX</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function scaleX(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>scaleX</code> property. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="scaleY()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">scaleY</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function scaleY(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>scaleY</code> property. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="smoothing()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">smoothing</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function smoothing(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> When <code>smoothing</code> is <code>true</code> (the default), smoothing will be enabled for the video which typically leads to better scaling results. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Boolean</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="vAlign()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">vAlign</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function vAlign(value:String):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> 
+   When a <code>width</code> and <code>height</code> is defined, the <code>vAlign</code> determines how the image is vertically aligned within that area. The following values are recognized (you may use the <code>com.greensock.layout.AlignMode</code> constants if you prefer):
+   <ul>
+     <li><code>"center"</code> (the default) - The image will be centered vertically in the area</li>
+     <li><code>"top"</code> - The image will be aligned with the top of the area</li>
+     <li><code>"bottom"</code> - The image will be aligned with the bottom of the area</li>
+   </ul> 
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:String</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="visible()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">visible</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function visible(value:Boolean):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>visible</code> property. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Boolean</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="volume()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">volume</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function volume(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> A value between 0 and 1 indicating the volume at which the video should play (default is 1).</p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="width()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">width</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function width(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>width</code> property (applied before rotation, scaleX, and scaleY). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="x()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">x</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function x(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>x</code> property (for positioning on the stage). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="y()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">y</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function y(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>y</code> property (for positioning on the stage). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<a name="z()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">z</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function z(value:Number):<a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code><p> Sets the <code>ContentDisplay</code>'s <code>z</code> property (for positioning on the stage). </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Number</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/VideoLoaderVars.html">VideoLoaderVars</a></code></td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

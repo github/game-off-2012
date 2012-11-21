@@ -1,0 +1,466 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="SplitTextField,com.greensock.text.SplitTextField,TYPE_CHARACTERS,TYPE_LINES,TYPE_WORDS,textFields,activated,regOffsetX,regOffsetY,source,splitType,activate,deactivate,destroy,split" name="keywords">
+<title>com.greensock.text.SplitTextField</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'SplitTextField - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?com/greensock/text/SplitTextField.html&amp;com/greensock/text/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;SplitTextField</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#constantSummary">Constants</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class SplitTextField"); titleBar_setSubNav(true,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock.text</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class SplitTextField</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">SplitTextField <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> flash.display.Sprite</td>
+</tr>
+</table>
+<p></p>
+ SplitTextField makes it easy to break apart a TextField so that each character, word, or line 
+ is in its own TextField, making complex animation simple. When you create a SplitTextField, it 
+ seamlessly replaces the source TextField with itself (a Sprite) containing these multiple TextFields, 
+ all conveniently stored in a <b><code>textFields</code></b> array that you can, for example, 
+ feed to a <code>TweenMax.allFrom()</code> or loop through to create unique tweens for each character, 
+ word or line. The SplitTextField keeps the same scale/rotation/position as the source TextField, 
+ and you can optionally offset the registration point by a certain number of pixels on its local 
+ x- or y-axis, which can be useful if, for example, you want to be able to scale the whole 
+ SplitTextField from its center instead of its upper left corner. Use an onComplete in your
+ tween to call the SplitTextField's <code>deactivate()</code> or <code>destroy()</code> method 
+ which will swap the original TextField back into place. <br /><br />
+ 
+ <p></p>
+<br>
+<span class="label">Example</span>
+<br>Example AS3 code:<div class='listing'><pre>
+import com.greensock.text.SplitTextField;
+import com.greensock.TweenMax;
+import com.greensock.easing.Elastic;
+import com.greensock.plugins.*;
+import flash.geom.Point;
+
+//split myTextField1 by characters (the default type of split)
+var stf1:SplitTextField = new SplitTextField(myTextField1);
+
+//tween each character down from 100 pixels above while fading in, and offset the start times by 0.05 seconds
+TweenMax.allFrom(stf1.textFields, 1, {y:"-100", autoAlpha:0, ease:Elastic.easeOut}, 0.05);
+
+//split myTextField2 by words
+var stf2:SplitTextField = new SplitTextField(myTextField2, SplitTextField.TYPE_WORDS);
+
+//explode the words outward using the physics2D feature of TweenLite/Max
+TweenPlugin.activate([Physics2DPlugin]);
+var i:int = stf2.textFields.length;
+var explodeOrigin:Point = new Point(stf2.width * 0.4, stf2.height + 100);
+while (i--) {
+ var angle:Number = Math.atan2(stf2.textFields[i].y - explodeOrigin.y, stf2.textFields[i].x - explodeOrigin.x) * 180 / Math.PI;
+ TweenMax.to(stf2.textFields[i], 2, {physics2D:{angle:angle, velocity:Math.random() * 200 + 150, gravity:400}, scaleX:Math.random() * 4 - 2, scaleY:Math.random() * 4 - 2, rotation:Math.random() * 100 - 50, autoAlpha:0, delay:1 + Math.random()});
+}
+
+//split myTextField3 by lines
+var stf3:SplitTextField = new SplitTextField(myTextField3, SplitTextField.TYPE_LINES);
+
+//slide each line in from the right, fading it in over 1 second and staggering the start times by 0.5 seconds. Then swap the original TextField back in.
+TweenMax.allFrom(stf3.textFields, 1, {x:"200", autoAlpha:0, onComplete:stf3.deactivate}, 0.5);
+
+</pre></div>
+ 
+ <b>NOTES / LIMITATIONS</b><br />
+ <ul>
+   <li>Does not recognize "Auto kern" feature in Flash.</li>
+   <li>Positioning may be incorrect when non-standard anti-aliasing is used (like "anti-alias for readability"). Even with standard anti-aliasing, depending on the specific font you use positioning may be <i>slightly</i> off.</li>
+   <li>Does not work with htmlText</li>
+   <li>To improve performance, mouseChildren is set to false by default (you're welcome to set it to true if you need the TextFields to receive MouseEvents)</li>
+   <li>To avoid some bugs in the way Flash renders TextFields, when creating TextField instances
+    dynamically make sure you set the various properties of the TextField <b>BEFORE</b> adding
+    the actual text. For example, set the <code>width, height, embedFonts, autoSize, multiline,</code> and 
+    other properties before setting the <code>text</code> property.</li>
+   <li>Not intended for use in Flex (use FlexSplitTextField instead)</li>
+ </ul><br />
+ 
+ SplitTextField is a <a href="http://www.greensock.com/club/">Club GreenSock</a> membership benefit. 
+ You must have a valid membership to use this class without violating the terms of use. Visit 
+ <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a> to sign up or get more details. <br /><br />
+ 
+ <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#activated">activated</a> : Boolean<div class="summaryTableDescription"> When a SplitTextField is activated, it replaces the source TextField in the display list.</div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#regOffsetX">regOffsetX</a> : Number<div class="summaryTableDescription"> To offset the registration point by a certain number of pixels along its x-axis (according to the SplitTextField's internal coordinate system), use regOffsetX.</div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#regOffsetY">regOffsetY</a> : Number<div class="summaryTableDescription"> To offset the registration point by a certain number of pixels along its y-axis (according to the SplitTextField's internal coordinate system), use regOffsetY.</div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#source">source</a> : TextField<div class="summaryTableDescription"> The source TextField that gets split apart.</div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#splitType">splitType</a> : String<div class="summaryTableDescription"> Determines the way in which the source TextField is split apart - either by characters, words, or lines.</div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#textFields">textFields</a> : Array<div class="summaryTableDescription"> Array of TextFields resulting from the split (one for each character, word, or line based on the splitType) </div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#SplitTextField()">SplitTextField</a>(source:TextField = null, splitType:String = "characters", regOffsetX:Number = 0, regOffsetY:Number = 0)</div>
+<div class="summaryTableDescription">
+   Constructor.</div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#activate()">activate</a>():void</div>
+<div class="summaryTableDescription"> When a SplitTextField is activated, it takes the place of the source TextField in the display list.</div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#deactivate()">deactivate</a>():void</div>
+<div class="summaryTableDescription"> 
+   When a SplitTextField is deactivated, it swaps the source TextField back into the display list.</div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#destroy()">destroy</a>():void</div>
+<div class="summaryTableDescription"> 
+   Deactivates the SplitTextField (swapping the original TextField back into place) and 
+   deletes all child TextFields that resulted from the split operation, and nulls references to 
+   the source so that it's eligible for garbage collection.</div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#split()">split</a>(source:TextField, spitType:String = "characters", container:DisplayObjectContainer = null, offset:Point = null):Array</div>
+<div class="summaryTableDescription">[static]
+   This static method can be used to split apart any TextField and place the resulting
+   TextFields into any DisplayObjectContainer.</div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+</table>
+</div>
+<a name="constantSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Constants</div>
+<table id="summaryTableConstant" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Constant</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#TYPE_CHARACTERS">TYPE_CHARACTERS</a> : String = "characters"<div class="summaryTableDescription">[static] Split type: characters </div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#TYPE_LINES">TYPE_LINES</a> : String = "lines"<div class="summaryTableDescription">[static] Split type: lines </div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#TYPE_WORDS">TYPE_WORDS</a> : String = "words"<div class="summaryTableDescription">[static] Split type: words </div>
+</td><td class="summaryTableOwnerCol">SplitTextField</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="activated"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">activated</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>activated:Boolean</code>&nbsp;&nbsp;[read-write]<p> When a SplitTextField is activated, it replaces the source TextField in the display list. When it is deactivated, it swaps the source TextField back into place </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get activated():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set activated(value:Boolean):void</code>
+<br>
+</div>
+<a name="regOffsetX"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">regOffsetX</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>regOffsetX:Number</code>&nbsp;&nbsp;[read-write]<p> To offset the registration point by a certain number of pixels along its x-axis (according to the SplitTextField's internal coordinate system), use regOffsetX. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get regOffsetX():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set regOffsetX(value:Number):void</code>
+<br>
+</div>
+<a name="regOffsetY"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">regOffsetY</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>regOffsetY:Number</code>&nbsp;&nbsp;[read-write]<p> To offset the registration point by a certain number of pixels along its y-axis (according to the SplitTextField's internal coordinate system), use regOffsetY. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get regOffsetY():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set regOffsetY(value:Number):void</code>
+<br>
+</div>
+<a name="source"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">source</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>source:TextField</code>&nbsp;&nbsp;[read-write]<p> The source TextField that gets split apart. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get source():TextField</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set source(value:TextField):void</code>
+<br>
+</div>
+<a name="splitType"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">splitType</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>splitType:String</code>&nbsp;&nbsp;[read-write]<p> Determines the way in which the source TextField is split apart - either by characters, words, or lines. Use the <code>TYPE_CHARACTERS, TYPE_WORDS,</code> and <code>TYPE_LINES</code> constants. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get splitType():String</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set splitType(value:String):void</code>
+<br>
+</div>
+<a name="textFields"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">textFields</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var textFields:Array</code><p> Array of TextFields resulting from the split (one for each character, word, or line based on the splitType) </p></div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="SplitTextField()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">SplitTextField</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function SplitTextField(source:TextField = null, splitType:String = "characters", regOffsetX:Number = 0, regOffsetY:Number = 0)</code><p>
+   Constructor.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">source</span>:TextField</code> (default = <code>null</code>)<code></code> &mdash; The source TextField that should be split apart. Remember, this TextField will be replaced in the display list with the SplitTextField (which is essentially a Sprite containing the various resulting TextFields).
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">splitType</span>:String</code> (default = "<code>characters</code>")<code></code> &mdash; Determines the way in which the TextField is split apart - either by characters, words, or lines. Use the <code>TYPE_CHARACTERS, TYPE_WORDS,</code> and <code>TYPE_LINES</code> constants.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">regOffsetX</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; To offset the registration point by a certain number of pixels along its x-axis (according to the SplitTextField's internal coordinate system), use regOffsetX.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">regOffsetY</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; To offset the registration point by a certain number of pixels along its y-axis (according to the SplitTextField's internal coordinate system), use regOffsetY.
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="activate()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">activate</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function activate():void</code><p> When a SplitTextField is activated, it takes the place of the source TextField in the display list. </p></div>
+<a name="deactivate()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">deactivate</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function deactivate():void</code><p> 
+   When a SplitTextField is deactivated, it swaps the source TextField back into the display list. 
+   This makes it simple to animate the SplitTextField's contents with TweenLite/Max and then use 
+   an onComplete to call deactivate() which will swap the original (source) TextField back into place.
+   </p></div>
+<a name="destroy()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">destroy</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function destroy():void</code><p> 
+   Deactivates the SplitTextField (swapping the original TextField back into place) and 
+   deletes all child TextFields that resulted from the split operation, and nulls references to 
+   the source so that it's eligible for garbage collection. 
+   </p></div>
+<a name="split()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">split</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function split(source:TextField, spitType:String = "characters", container:DisplayObjectContainer = null, offset:Point = null):Array</code><p>
+   This static method can be used to split apart any TextField and place the resulting
+   TextFields into any DisplayObjectContainer. It provides the core functionality of the 
+   SplitTextField class, but can be used apart from any instance thereof as well. 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">source</span>:TextField</code> &mdash; The source TextField that should be split apart. Remember, this TextField will be replaced in the display list with the SplitTextField (which is essentially a Sprite containing the various resulting TextFields).
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">spitType</span>:String</code> (default = "<code>characters</code>")<code></code> &mdash; Determines the way in which the TextField is split apart - either by characters, words, or lines. Use the <code>TYPE_CHARACTERS, TYPE_WORDS,</code> and <code>TYPE_LINES</code> constants.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">container</span>:DisplayObjectContainer</code> (default = <code>null</code>)<code></code> &mdash; The DisplayObjectContainer into which the new TextFields should be placed.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">offset</span>:Point</code> (default = <code>null</code>)<code></code> &mdash; Determines the offset x/y of the new TextFields. By default, the TextFields will be positioned in the container as though the container's registration point was aligned perfectly with the source TextField's. The source TextField's scale, rotation, and x/y coordinates will have no effect whatsoever. 
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; Array of TextFields resulting from the split.
+   </td>
+</tr>
+</table>
+</div>
+<a name="constantDetail"></a>
+<div class="detailSectionHeader">Constant detail</div>
+<a name="TYPE_CHARACTERS"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">TYPE_CHARACTERS</td><td class="detailHeaderType">constant</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static const TYPE_CHARACTERS:String = "characters"</code><p> Split type: characters </p></div>
+<a name="TYPE_LINES"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">TYPE_LINES</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static const TYPE_LINES:String = "lines"</code><p> Split type: lines </p></div>
+<a name="TYPE_WORDS"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">TYPE_WORDS</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static const TYPE_WORDS:String = "words"</code><p> Split type: words </p></div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

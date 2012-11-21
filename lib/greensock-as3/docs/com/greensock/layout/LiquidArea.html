@@ -1,0 +1,623 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="LiquidArea,com.greensock.layout.LiquidArea,maxHeight,maxWidth,minHeight,minWidth,createAround,destroy,dynamicTween,pinCorners" name="keywords">
+<title>com.greensock.layout.LiquidArea</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'LiquidArea - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?com/greensock/layout/LiquidArea.html&amp;com/greensock/layout/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;LiquidArea</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class LiquidArea"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock.layout</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class LiquidArea</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">LiquidArea <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> <a href="AutoFitArea.html">AutoFitArea</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> flash.display.Shape</td>
+</tr>
+</table>
+<p></p>
+ <code>LiquidArea</code> is an <code>AutoFitArea</code> that integrates with <code>LiquidStage</code>,
+ automatically adjusting its size whenever the stage is resized. Like AutoFitArea, it allows you to define a 
+ rectangular area and then <code>attach()</code> DisplayObjects so that they automatically fill 
+ the area, scaling/stretching in any of the following modes: <code>STRETCH, PROPORTIONAL_INSIDE, 
+ PROPORTIONAL_OUTSIDE, NONE, WIDTH_ONLY,</code> or <code>HEIGHT_ONLY</code>. Horizontally align
+ the attached DisplayObjects left, center, or right. Vertically align them top, center, or bottom.
+ Since LiquidArea inherits from the <code>Shape</code> class, so you can alter its <code>width, 
+ height, scaleX, scaleY, x,</code>, or <code>y</code> properties and then all of the attached 
+ objects will automatically be adjusted accordingly. Attach as many DisplayObjects as you want. 
+ To make visualization easy, you can choose a <code>previewColor</code>
+ and set the <code>preview</code> property to <code>true</code> in order to see the area on the stage
+ (or simply use it like a regular Shape by adding it to the display list with <code>addChild()</code>, but the 
+ <code>preview</code> property makes it simpler because it automatically ensures that it is behind 
+ all of its attached DisplayObjects in the stacking order).<br /><br />
+ 
+ You can set minimum and maximum width/height constraints on a LiquidArea so that stage
+ resizes don't expand or contract it beyond certain values.<br /><br />
+ 
+ With LiquidArea, it's simple to create things like a background that proportionally 
+ fills the stage or a bar that always stretches horizontally to fill the stage but stays stuck 
+ to the bottom, etc.<br /><br />
+ 
+ <p></p>
+<br>
+<span class="label">Example</span>
+<br>Example AS3 code:<div class='listing'><pre>
+import com.greensock.layout.*;
+
+//create a LiquidStage instance for the current stage which was built at an original size of 550x400
+//don't allow the stage to collapse smaller than 550x400 either.
+var ls:LiquidStage = new LiquidStage(this.stage, 550, 400, 550, 400);
+
+//create a 300x100 rectangular area at x:50, y:70 that stretches when the stage resizes (as though its top left and bottom right corners are pinned to their corresponding PinPoints on the stage)
+var area:LiquidArea = new LiquidArea(this, 50, 70, 300, 100);
+
+//attach a "myImage" Sprite to the area and set its ScaleMode to PROPORTIONAL_OUTSIDE and crops the extra content that spills over the edges
+area.attach(myImage, {scaleMode:ScaleMode.PROPORTIONAL_OUTSIDE, crop:true});
+
+//if you'd like to preview the area visually (by default previewColor is red), set preview to true
+area.preview = true;
+ 
+//attach a CHANGE event listener to the LiquidArea instance
+ls.addEventListener(Event.CHANGE, onAreaUpdate);
+function onAreaUpdate(event:Event):void {
+ trace("updated LiquidArea");
+}
+</pre></div>
+ 
+ LiquidArea is a <a href="http://www.greensock.com/club/">Club GreenSock</a> membership benefit. 
+ You must have a valid membership to use this class without violating the terms of use. Visit 
+ <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a> to sign up or get more details.<br /><br />
+ 
+ <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the license that came with your Club GreenSock membership and is <b>ONLY</b> to be used by corporate or "Shockingly Green" Club GreenSock members. To learn more about Club GreenSock, visit <a href="http://blog.greensock.com/club/">http://blog.greensock.com/club/</a>.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<div class="showHideLinks">
+<div class="hideInheritedProperty" id="hideInheritedProperty">
+<a onclick="javascript:setInheritedVisible(false,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Properties</a>
+</div>
+<div class="showInheritedProperty" id="showInheritedProperty">
+<a onclick="javascript:setInheritedVisible(true,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Properties</a>
+</div>
+</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="AutoFitArea.html#height">height</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#maxHeight">maxHeight</a> : Number<div class="summaryTableDescription"> Maximum height that a LiquidStage resize is allowed to make the LiquidArea (only affects stage resizes, not when you manually set the height property) </div>
+</td><td class="summaryTableOwnerCol">LiquidArea</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#maxWidth">maxWidth</a> : Number<div class="summaryTableDescription"> Maximum width that a LiquidStage resize is allowed to make the LiquidArea (only affects stage resizes, not when you manually set the width property) </div>
+</td><td class="summaryTableOwnerCol">LiquidArea</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#minHeight">minHeight</a> : Number<div class="summaryTableDescription"> Minimum height that a LiquidStage resize is allowed to make the LiquidArea (only affects stage resizes, not when you manually set the height property) </div>
+</td><td class="summaryTableOwnerCol">LiquidArea</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#minWidth">minWidth</a> : Number<div class="summaryTableDescription"> Minimum width that a LiquidStage resize is allowed to make the LiquidArea (only affects stage resizes, not when you manually set the width property) </div>
+</td><td class="summaryTableOwnerCol">LiquidArea</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="AutoFitArea.html#preview">preview</a> : Boolean<div class="summaryTableDescription"> To see a visual representation of the area on the screen, set <code>preview</code> to <code>true</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="AutoFitArea.html#previewColor">previewColor</a> : uint<div class="summaryTableDescription"> The preview color with which the area should be filled, making it easy to visualize on the stage.</div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="AutoFitArea.html#rotation">rotation</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="AutoFitArea.html#scaleX">scaleX</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="AutoFitArea.html#scaleY">scaleY</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="AutoFitArea.html#width">width</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="AutoFitArea.html#x">x</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="AutoFitArea.html#y">y</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<div class="showHideLinks">
+<div class="hideInheritedMethod" id="hideInheritedMethod">
+<a onclick="javascript:setInheritedVisible(false,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Methods</a>
+</div>
+<div class="showInheritedMethod" id="showInheritedMethod">
+<a onclick="javascript:setInheritedVisible(true,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Methods</a>
+</div>
+</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#LiquidArea()">LiquidArea</a>(parent:DisplayObjectContainer, x:Number, y:Number, width:Number, height:Number, previewColor:uint = 0xFF0000, minWidth:Number = 0, minHeight:Number = 0, maxWidth:Number = 99999999, maxHeight:Number = 99999999, autoPinCorners:Boolean = true, liquidStage:<a href="LiquidStage.html">LiquidStage</a> = null, strict:Boolean = false)</div>
+<div class="summaryTableDescription">
+   Constructor
+   
+   </div>
+</td><td class="summaryTableOwnerCol">LiquidArea</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="AutoFitArea.html#addEventListener()">addEventListener</a>(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Allows you to add an <code>Event.CHANGE</code> event listener.</div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="AutoFitArea.html#attach()">attach</a>(target:DisplayObject, vars:Object = null, ... args):void</div>
+<div class="summaryTableDescription">
+   Attaches a DisplayObject, causing it to automatically scale to fit the area in one of the
+   following ScaleModes: <code>STRETCH, PROPORTIONAL_INSIDE, PROPORTIONAL_OUTSIDE, NONE, WIDTH_ONLY,</code> 
+   or <code>HEIGHT_ONLY</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#createAround()">createAround</a>(target:DisplayObject, vars:Object = null, ... args):<a href="../layout/LiquidArea.html">LiquidArea</a>
+</div>
+<div class="summaryTableDescription">[static]
+   Creates an LiquidArea with its initial dimensions fit precisely around a target DisplayObject.</div>
+</td><td class="summaryTableOwnerCol">LiquidArea</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#destroy()">destroy</a>():void</div>
+<div class="summaryTableDescription">  Destroys the instance by releasing all DisplayObjects, setting preview to false, and nulling references to the parent, ensuring that garbage collection isn't hindered.</div>
+</td><td class="summaryTableOwnerCol">LiquidArea</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="AutoFitArea.html#disableTweenMode()">disableTweenMode</a>():void</div>
+<div class="summaryTableDescription"> 
+   Disables the area's tween mode; normally, any changes to the area's transform properties like 
+   <code>x, y, scaleX, scaleY, width,</code> or <code>height</code> will force an immediate 
+   <code>update()</code> call but when the area is in tween mode, that automatic <code>update()</code> 
+   is suspended.</div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#dynamicTween()">dynamicTween</a>(duration:Number, vars:Object):<a href="../../greensock/TweenLite.html">TweenLite</a>
+</div>
+<div class="summaryTableDescription">
+   If you want to tween a LiquidArea's transform properties (like <code>x, y, width, height, 
+   scaleX,</code> or <code>scaleY</code>), you may want the destination values to be 
+   dynamically affected by LiquidStage resizes and that's exactly what <code>dynamicTween()</code>
+   allows.</div>
+</td><td class="summaryTableOwnerCol">LiquidArea</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="AutoFitArea.html#enableTweenMode()">enableTweenMode</a>():void</div>
+<div class="summaryTableDescription"> 
+   Enables the area's tween mode; normally, any changes to the area's transform properties like 
+   <code>x, y, scaleX, scaleY, width,</code> or <code>height</code> will force an immediate 
+   <code>update()</code> call but when the area is in tween mode, that automatic <code>update()</code> 
+   is suspended.</div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="AutoFitArea.html#getAttachedObjects()">getAttachedObjects</a>():Array</div>
+<div class="summaryTableDescription">
+   Returns an Array of all attached DisplayObjects.</div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#pinCorners()">pinCorners</a>(topLeft:<a href="PinPoint.html">PinPoint</a>, bottomRight:<a href="PinPoint.html">PinPoint</a>, reconcile:Boolean = true, tweenDuration:Number = 0, tweenVars:Object = null, strict:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   By default, a LiquidArea pins itself to the <code>TOP_LEFT</code> and <code>BOTTOM_RIGHT</code> PinPoints of the LiquidStage, but
+   this method allows you to pin the corners to different PinPoints if you prefer.</div>
+</td><td class="summaryTableOwnerCol">LiquidArea</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="AutoFitArea.html#release()">release</a>(target:DisplayObject):Boolean</div>
+<div class="summaryTableDescription">
+   Releases control of an attached DisplayObject.</div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="AutoFitArea.html#update()">update</a>(event:Event = null):void</div>
+<div class="summaryTableDescription"> 
+   Forces the area to update, making any necessary adjustments to the scale/position of attached objects.</div>
+</td><td class="summaryTableOwnerCol"><a href="AutoFitArea.html">AutoFitArea</a></td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="maxHeight"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">maxHeight</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var maxHeight:Number</code><p> Maximum height that a LiquidStage resize is allowed to make the LiquidArea (only affects stage resizes, not when you manually set the height property) </p></div>
+<a name="maxWidth"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">maxWidth</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var maxWidth:Number</code><p> Maximum width that a LiquidStage resize is allowed to make the LiquidArea (only affects stage resizes, not when you manually set the width property) </p></div>
+<a name="minHeight"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">minHeight</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var minHeight:Number</code><p> Minimum height that a LiquidStage resize is allowed to make the LiquidArea (only affects stage resizes, not when you manually set the height property) </p></div>
+<a name="minWidth"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">minWidth</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var minWidth:Number</code><p> Minimum width that a LiquidStage resize is allowed to make the LiquidArea (only affects stage resizes, not when you manually set the width property) </p></div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="LiquidArea()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">LiquidArea</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function LiquidArea(parent:DisplayObjectContainer, x:Number, y:Number, width:Number, height:Number, previewColor:uint = 0xFF0000, minWidth:Number = 0, minHeight:Number = 0, maxWidth:Number = 99999999, maxHeight:Number = 99999999, autoPinCorners:Boolean = true, liquidStage:<a href="LiquidStage.html">LiquidStage</a> = null, strict:Boolean = false)</code><p>
+   Constructor
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">parent</span>:DisplayObjectContainer</code> &mdash; The parent DisplayObjectContainer in which the LiquidArea should be created. All objects that get attached must share the same parent.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">x</span>:Number</code> &mdash; x coordinate of the LiquidArea's upper left corner
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">y</span>:Number</code> &mdash; y coordinate of the LiquidArea's upper left corner
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">width</span>:Number</code> &mdash; width of the LiquidArea
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">height</span>:Number</code> &mdash; height of the LiquidArea
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">previewColor</span>:uint</code> (default = <code>0xFF0000</code>)<code></code> &mdash; color of the LiquidArea (which won't be seen unless you set preview to true or manually add it to the display list with addChild())
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">minWidth</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; Minimum width that a LiquidStage resize is allowed to make the LiquidArea (only affects stage resizes, not when you manually set the width property)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">minHeight</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; Minimum height that a LiquidStage resize is allowed to make the LiquidArea (only affects stage resizes, not when you manually set the height property)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">maxWidth</span>:Number</code> (default = <code>99999999</code>)<code></code> &mdash; Maximum width that a LiquidStage resize is allowed to make the LiquidArea (only affects stage resizes, not when you manually set the width property)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">maxHeight</span>:Number</code> (default = <code>99999999</code>)<code></code> &mdash; Maximum height that a LiquidStage resize is allowed to make the LiquidArea (only affects stage resizes, not when you manually set the height property)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">autoPinCorners</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; By default, the LiquidArea's upper left corner is pinned to the LiquidStage's <code>TOP_LEFT</code> PinPoint, and its lower right corner is pinned to the LiquidStage's <code>BOTTOM_RIGHT</code> PinPoint, but to skip the pinning, set autoPinCorners to false.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">liquidStage</span>:<a href="LiquidStage.html">LiquidStage</a></code> (default = <code>null</code>)<code></code> &mdash; Optionally declare the LiquidStage instance to which this LiquidArea should be associated. If none is defined, the class will try to determine the LiquidStage instance based on the parent's <code>stage</code> property (<code>LiquidStage.getByStage()</code>). The only time it is useful to specifically declare the LiquidStage instance is when you plan to subload a swf that uses LiquidStage into another swf that also has a LiquidStage instance (thus they share the same stage).
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">strict</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If <code>strict</code> is <code>true</code>, the top left and bottom right corners will always retain their absolute distance from the PinPoints that are used in <code>pinCorners()</code> (the LiquidStage's <code>TOP_LEFT</code> and <code>BOTTOM_RIGHT</code> by default) instead of adjusting themselves in a relative fashion. If they are <strong>not</strong> strict, you could alter the position/size of the LiquidArea independently and then when the stage is resized, the corners would only move by however much the stage changed (more flexible). 
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="createAround()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">createAround</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function createAround(target:DisplayObject, vars:Object = null, ... args):<a href="../layout/LiquidArea.html">LiquidArea</a></code><p>
+   Creates an LiquidArea with its initial dimensions fit precisely around a target DisplayObject. 
+   It also attaches the target DisplayObject immediately.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:DisplayObject</code> &mdash; The target DisplayObject whose position and dimensions the LiquidArea should match initially.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; An object used for defining various optional parameters (see below for list) - this is more readable and concise than defining 11 or more normal arguments. 
+         For example, <code>createAround(mc, {scaleMode:"proportionalOutside", crop:true});</code> instead of <code>createAround(mc, "proportionalOutside", "center", "center", true, 0, 99999999, 0, 99999999, false, NaN, false);</code>.
+         The following optional parameters are recognized:
+       <ul>
+        <li><b>scaleMode : String</b> - Determines how the target should be scaled to fit the area. Use the ScaleMode class constants: <code>STRETCH, PROPORTIONAL_INSIDE, PROPORTIONAL_OUTSIDE, NONE, WIDTH_ONLY,</code> or <code>HEIGHT_ONLY</code></li>
+        <li><b>hAlign : String</b> - Horizontal alignment of the target inside the area. Use the AlignMode class constants: <code>LEFT</code>, <code>CENTER</code>, and <code>RIGHT</code>.</li>
+        <li><b>vAlign : String</b> - Vertical alignment of the target inside the area. Use the AlignMode class constants: <code>TOP</code>, <code>CENTER</code>, and <code>BOTTOM</code>.</li>
+        <li><b>crop : Boolean</b> - If true, a mask will be created and added to the display list so that the target will be cropped wherever it exceeds the bounds of the AutoFitArea.</li>
+        <li><b>roundPosition : Boolean</b> - To force the target's x/y position to snap to whole pixel values, set <code>roundPosition</code> to <code>true</code> (it is <code>false</code> by default).</li>
+        <li><b>customBoundsTarget : DisplayObject</b> - A DisplayObject that AutoFitArea/LiquidArea should use when measuring bounds instead of the <code>target</code>. For example, maybe the target contains 3 boxes arranged next to each other, left-to-right and instead of fitting ALL of those boxes into the area, you only want the center one fit into the area. In this case, you can define the customBoundsTarget as that center box so that the AutoFitArea/LiquidArea only uses it when calculating bounds. Make sure that the object is in the display list (its <code>visible</code> property can be set to false if you want to use an invisible object to define custom bounds).</li>
+        <li><b>minWidth : Number</b> - Minimum width to which the target is allowed to scale</li>
+        <li><b>maxWidth : Number</b> - Maximum width to which the target is allowed to scale</li>
+        <li><b>minHeight : Number</b> - Minimum height to which the target is allowed to scale</li>
+        <li><b>maxHeight : Number</b> - Maximum height to which the target is allowed to scale</li>
+        <li><b>calculateVisible : Boolean</b> - If true, only the visible portions of the target will be taken into account when determining its position and scale which can be useful for objects that have masks applied (otherwise, Flash reports their width/height and getBounds() values including the masked portions). Setting <code>calculateVisible</code> to <code>true</code> degrades performance, so only use it when absolutely necessary.</li>
+        <li><b>customAspectRatio : Number</b> - Normally if you set the <code>scaleMode</code> to <code>PROPORTIONAL_INSIDE</code> or <code>PROPORTIONAL_OUTSIDE</code>, its native (unscaled) dimensions will be used to determine the proportions (aspect ratio), but if you prefer to define a custom width-to-height ratio, use <code>customAspectRatio</code>. For example, if an item is 100 pixels wide and 50 pixels tall at its native size, the aspect ratio would be 100/50 or 2. If, however, you want it to be square (a 1-to-1 ratio), the <code>customAspectRatio</code> would be 1. </li>
+        <li><b>previewColor : uint</b> - The preview color of the AutoFitArea (default is 0xFF0000). To preview, you must set the AutoFitArea's <code>visible</code> property to true (it is false by default).</li>
+        <li><b>reconcile : Boolean</b> - If true, LiquidStage will be reverted to <code>retroMode</code> (briefly forcing the stage to the base width/height) before creating the LiquidArea. This effectively acts as though the target was attached BEFORE the stage was scaled. If you create the LiquidArea after the stage has been scaled and you don't want it to reconcile with the initial base stage size initially, set <code>reconcile</code> to <code>false</code>.</li>
+        <li><b>autoPinCorners : Boolean</b> - By default, the LiquidArea's upper left corner is pinned to the LiquidStage's <code>TOP_LEFT</code> PinPoint, and its lower right corner is pinned to the LiquidStage's <code>BOTTOM_RIGHT</code> PinPoint, but to skip the pinning, set autoPinCorners to false.</li>
+        <li><b>strict : Boolean</b> - If <code>strict</code> is <code>true</code>, the top left and bottom right corners will always retain their absolute distance from the PinPoints that are used in <code>pinCorners()</code> (the LiquidStage's <code>TOP_LEFT</code> and <code>BOTTOM_RIGHT</code> by default) instead of adjusting themselves in a relative fashion. If they are <strong>not</strong> strict, you could alter the position/size of the LiquidArea independently and then when the stage is resized, the corners would only move by however much the stage changed (more flexible). </li>
+        <li><b>liquidStage : LiquidStage</b> - Optionally declare the LiquidStage instance to which this LiquidArea should be associated. If none is defined, the class will try to determine the LiquidStage instance based on the parent's <code>stage</code> property (<code>LiquidStage.getByStage()</code>). The only time it is useful to specifically declare the LiquidStage instance is when you plan to subload a swf that uses LiquidStage into another swf that also has a LiquidStage instance (thus they share the same stage). </li>
+       </ul>
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code>... <span class="label">args</span></code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../layout/LiquidArea.html">LiquidArea</a></code> &mdash; 
+                        An LiquidArea instance
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="destroy()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">destroy</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function destroy():void</code><p>  Destroys the instance by releasing all DisplayObjects, setting preview to false, and nulling references to the parent, ensuring that garbage collection isn't hindered. </p></div>
+<a name="dynamicTween()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">dynamicTween</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function dynamicTween(duration:Number, vars:Object):<a href="../../greensock/TweenLite.html">TweenLite</a></code><p>
+   If you want to tween a LiquidArea's transform properties (like <code>x, y, width, height, 
+   scaleX,</code> or <code>scaleY</code>), you may want the destination values to be 
+   dynamically affected by LiquidStage resizes and that's exactly what <code>dynamicTween()</code>
+   allows. For example, maybe you start tweening to a width of 100 but in the middle of the 
+   tween, the user widens the stage by 50 pixels - with a tween generated by 
+   <code>dynamicTween()</code>, the width will end up being 150 instead of 100. Only one
+   dynamic tween can be in effect at any given time. 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; The duration of the tween in seconds (unless useFrames:true is passed in through the vars object in which case the duration is described in terms of frames)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; The tween vars object that defines the destination values, ease, etc. For example <code>{width:100, height:200, ease:Elastic.easeOut}</code>
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../../greensock/TweenLite.html">TweenLite</a></code> &mdash; 
+                        A TweenLite instance
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="pinCorners()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">pinCorners</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function pinCorners(topLeft:<a href="PinPoint.html">PinPoint</a>, bottomRight:<a href="PinPoint.html">PinPoint</a>, reconcile:Boolean = true, tweenDuration:Number = 0, tweenVars:Object = null, strict:Boolean = false):void</code><p>
+   By default, a LiquidArea pins itself to the <code>TOP_LEFT</code> and <code>BOTTOM_RIGHT</code> PinPoints of the LiquidStage, but
+   this method allows you to pin the corners to different PinPoints if you prefer. 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">topLeft</span>:<a href="PinPoint.html">PinPoint</a></code> &mdash; The PinPoint to which the top left corner of the LiquidArea should be pinned.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">bottomRight</span>:<a href="PinPoint.html">PinPoint</a></code> &mdash; The PinPoint to which the bottom right corner of the LiquidArea should be pinned.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">reconcile</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, the LiquidArea's position and dimensions will immediately be adjusted as though it was attached BEFORE the stage was scaled. If you create the LiquidArea after the stage has been scaled and you don't want it to reconcile with the PinPoint initially, set <code>reconcile</code> to <code>false</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">tweenDuration</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; To make the LiquidArea tween to its new position and dimensions instead of immediately moving/resizing, set the tween duration (in seconds) to a non-zero value. A <code>TweenLite</code> instance will be used for the tween.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">tweenVars</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; To control other aspects of the tween (like ease, onComplete, delay, etc.), use an object just like the one you'd pass into a <code>TweenLite</code> instance as the 3rd parameter (like <code>{ease:Elastic.easeOut, delay:0.2}</code>)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">strict</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If <code>strict</code> is <code>true</code>, the top left and bottom right corners will always retain their absolute distance from the PinPoints that are used in <code>pinCorners()</code> (the LiquidStage's <code>TOP_LEFT</code> and <code>BOTTOM_RIGHT</code> by default) instead of adjusting themselves in a relative fashion. If they are <strong>not</strong> strict, you could alter the position/size of the LiquidArea independently and then when the stage is resized, the corners would only move by however much the stage changed (more flexible). 
+   </td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

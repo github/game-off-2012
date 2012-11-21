@@ -1,0 +1,1349 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../print.css" type="text/css" media="print">
+<meta content="TimelineLite,com.greensock.TimelineLite,currentProgress,duration,timeScale,totalDuration,useFrames,addLabel,append,appendMultiple,clear,getChildren,getLabelTime,getTweensOf,goto,gotoAndPlay,gotoAndStop,insert,insertMultiple,invalidate,killTweensOf,prepend,prependMultiple,remove,removeLabel,shiftChildren,stop" name="keywords">
+<title>com.greensock.TimelineLite</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'TimelineLite - API Documentation';
+				var baseRef = '../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../all-classes.html')" href="../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../all-classes.html')" href="../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../index-list.html')" href="../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../index.html?com/greensock/TimelineLite.html&amp;com/greensock/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;TimelineLite</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class TimelineLite"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class TimelineLite</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">TimelineLite <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../images/inherit-arrow.gif"> <a href="core/SimpleTimeline.html">SimpleTimeline</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../images/inherit-arrow.gif"> <a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Subclasses</td><td><a href="../greensock/TimelineMax.html">TimelineMax</a></td>
+</tr>
+</table>
+<p></p>
+  TimelineLite is a lightweight, intuitive timeline class for building and managing sequences of 
+  TweenLite, TweenMax, TimelineLite, and/or TimelineMax instances. You can think of a TimelineLite instance 
+  like a virtual MovieClip timeline or a container where you place tweens (or other timelines) over the 
+  course of time. You can:
+  <ul>
+   <li> build sequences easily by adding tweens with the append(), prepend(), insert(), appendMultiple(), prependMultiple(),
+    and insertMultiple() methods. Tweens can overlap as much as you want and you have complete control over where 
+    they get placed on the timeline.</li>
+ 
+   <li> add labels, play(), stop(), gotoAndPlay(), gotoAndStop(), restart(), and even reverse() smoothly anytime. </li>
+   
+   <li> nest timelines within timelines as deeply as you want.</li>
+   
+   <li> set the progress of the timeline using its <code>currentProgress</code> property. For example, to skip to
+     the halfway point, set <code>myTimeline.currentProgress = 0.5</code>. </li>
+     
+   <li> tween the <code>currentTime</code> or <code>currentProgress</code> property to fastforward/rewind 
+    the timeline. You could even attach a slider to one of these properties to give the user the ability 
+    to drag forwards/backwards through the timeline.</li>
+   
+   <li> speed up or slow down the entire timeline with its timeScale property. You can even tween
+     this property to gradually speed up or slow down.</li>
+     
+   <li> add onComplete, onStart, onUpdate, and/or onReverseComplete callbacks using the constructor's <code>vars</code> object.</li>
+     
+   <li> use the <code>insertMultiple()</code> or <code>appendMultiple()</code> methods to create complex sequences including 
+    various alignment modes and staggering capabilities.</li>
+     
+   <li> base the timing on frames instead of seconds if you prefer. Please note, however, that
+     the timeline's timing mode dictates its childrens' timing mode as well. </li>
+   
+   <li> kill the tweens of a particular object with <code>killTweensOf()</code> or get the tweens of an object
+     with <code>getTweensOf()</code> or get all the tweens/timelines in the timeline with <code>getChildren()</code></li>
+     
+   <li> If you need even more features like AS3 event listeners, <code>repeat, repeatDelay, yoyo, currentLabel, 
+    getLabelAfter(), getLabelBefore(), addCallback(), removeCallback(), getActive()</code> and more, check out 
+    TimelineMax which extends TimelineLite.</li>
+  </ul>
+  
+ <b>EXAMPLE:</b><br /><br /><code>
+  
+   import com.greensock.*;<br /><br />
+   
+   //create the timeline and add an onComplete callback that will call myFunction() when the timeline completes<br />
+   var myTimeline:TimelineLite = new TimelineLite({onComplete:myFunction});<br /><br />
+   
+   //add a tween<br />
+   myTimeline.append(new TweenLite(mc, 1, {x:200, y:100}));<br /><br />
+   
+   //add another tween at the end of the timeline (makes sequencing easy)<br />
+   myTimeline.append(new TweenLite(mc, 0.5, {alpha:0}));<br /><br />
+   
+   //reverse anytime<br />
+   myTimeline.reverse();<br /><br />
+   
+   //Add a "spin" label 3-seconds into the timeline<br />
+   myTimeline.addLabel("spin", 3);<br /><br />
+   
+   //insert a rotation tween at the "spin" label (you could also define the insert point as the time instead of a label)<br />
+   myTimeline.insert(new TweenLite(mc, 2, {rotation:"360"}), "spin"); <br /><br />
+   
+   //go to the "spin" label and play the timeline from there<br />
+   myTimeline.gotoAndPlay("spin");<br /><br />
+   
+   //add a tween to the beginning of the timeline, pushing all the other existing tweens back in time<br />
+   myTimeline.prepend(new TweenMax(mc, 1, {tint:0xFF0000}));<br /><br />
+   
+   //nest another TimelineLite inside your timeline...<br />
+   var nestedTimeline:TimelineLite = new TimelineLite();<br />
+   nestedTimeline.append(new TweenLite(mc2, 1, {x:200}));<br />
+   myTimeline.append(nestedTimeline);<br /><br /></code>
+   
+   
+  insertMultiple() and appendMultiple() provide some very powerful sequencing tools, allowing you to add an Array of 
+  tweens or timelines and optionally align them with SEQUENCE or START modes, and even stagger them if you want. 
+  For example, to insert 3 tweens into the timeline, aligning their start times but staggering them by 0.2 seconds, <br /><br /><code>
+  
+   myTimeline.insertMultiple([new TweenLite(mc, 1, {y:"100"}),
+            new TweenLite(mc2, 1, {x:20}),
+            new TweenLite(mc3, 1, {alpha:0.5})], 
+            0, 
+            TweenAlign.START, 
+            0.2);</code><br /><br />
+            
+  You can use the constructor's "vars" object to do virtually all the setup too, like this sequence:<br /><br /><code>
+  
+   var myTimeline:TimelineLite = new TimelineLite({tweens:[new TweenLite(mc1, 1, {y:"100"}), TweenMax.to(mc2, 1, {tint:0xFF0000})], align:TweenAlign.SEQUENCE, onComplete:myFunction});</code><br /><br />
+  
+  If that confuses you, don't worry. Just use the <code>append(), insert()</code>, and <code>prepend()</code> methods to build your
+  sequence. But power users will likely appreciate the quick, compact way they can set up sequences now. <br /><br />
+  
+  
+ <b>NOTES:</b>
+ <ul>
+  <li> TimelineLite automatically inits the OverwriteManager class to prevent unexpected overwriting behavior in sequences.
+    The default mode is <code>AUTO</code>, but you can set it to whatever you want with <code>OverwriteManager.init()</code>
+   (see <a href="http://www.greensock.com/overwritemanager/">http://www.greensock.com/overwritemanager/</a>)</li>
+  <li> TimelineLite adds about 2.6k to your SWF (3.3kb including OverwriteManager).</li>
+ </ul>
+ 
+ <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<div class="showHideLinks">
+<div class="hideInheritedProperty" id="hideInheritedProperty">
+<a onclick="javascript:setInheritedVisible(false,'Property');" href="#propertySummary" class="showHideLink"><img src="../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Properties</a>
+</div>
+<div class="showInheritedProperty" id="showInheritedProperty">
+<a onclick="javascript:setInheritedVisible(true,'Property');" href="#propertySummary" class="showHideLink"><img src="../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Properties</a>
+</div>
+</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/SimpleTimeline.html#autoRemoveChildren">autoRemoveChildren</a> : Boolean<div class="summaryTableDescription"> If a timeline's autoRemoveChildren is true, its children will be removed and made eligible for garbage collection as soon as they complete.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/SimpleTimeline.html">SimpleTimeline</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#currentProgress">currentProgress</a> : Number<div class="summaryTableDescription"> 
+   Value between 0 and 1 indicating the progress of the timeline according to its duration 
+    where 0 is at the beginning, 0.5 is halfway finished, and 1 is finished.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#currentTime">currentTime</a> : Number<div class="summaryTableDescription">
+   Most recently rendered time (or frame for frames-based tweens/timelines) according to its 
+   <code>duration</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#data">data</a> : *<div class="summaryTableDescription"> Place to store any data you want.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#delay">delay</a> : Number<div class="summaryTableDescription"> 
+   Length of time in seconds (or frames for frames-based tweens/timelines) before the tween should begin.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#duration">duration</a> : Number<div class="summaryTableDescription">
+   Duration of the timeline in seconds (or frames for frames-based timelines) not including any repeats
+   or repeatDelays.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#paused">paused</a> : Boolean<div class="summaryTableDescription"> Indicates the paused state of the tween/timeline.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#reversed">reversed</a> : Boolean<div class="summaryTableDescription"> Indicates the reversed state of the tween/timeline.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#startTime">startTime</a> : Number<div class="summaryTableDescription"> Start time in seconds (or frames for frames-based tweens/timelines), according to its position on its parent timeline </div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#timeline">timeline</a> : <a href="core/SimpleTimeline.html">SimpleTimeline</a>
+<div class="summaryTableDescription"> The parent timeline on which the tween/timeline is placed.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#timeScale">timeScale</a> : Number<div class="summaryTableDescription"> Multiplier describing the speed of the timeline where 1 is normal speed, 0.5 is half-speed, 2 is double speed, etc.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#totalDuration">totalDuration</a> : Number<div class="summaryTableDescription">
+   Duration of the timeline in seconds (or frames for frames-based timelines) including any repeats
+   or repeatDelays.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#totalTime">totalTime</a> : Number<div class="summaryTableDescription">
+   Most recently rendered time (or frame for frames-based tweens/timelines) according to its 
+   <code>totalDuration</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#useFrames">useFrames</a> : Boolean<div class="summaryTableDescription">[read-only] 
+   Indicates whether or not the timeline's timing mode is frames-based as opposed to time-based.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#vars">vars</a> : Object<div class="summaryTableDescription"> Stores variables (things like alpha, y or whatever we're tweening as well as special properties like "onComplete").</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<div class="showHideLinks">
+<div class="hideInheritedMethod" id="hideInheritedMethod">
+<a onclick="javascript:setInheritedVisible(false,'Method');" href="#methodSummary" class="showHideLink"><img src="../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Methods</a>
+</div>
+<div class="showInheritedMethod" id="showInheritedMethod">
+<a onclick="javascript:setInheritedVisible(true,'Method');" href="#methodSummary" class="showHideLink"><img src="../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Methods</a>
+</div>
+</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#TimelineLite()">TimelineLite</a>(vars:Object = null)</div>
+<div class="summaryTableDescription">
+   Constructor.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addLabel()">addLabel</a>(label:String, time:Number):void</div>
+<div class="summaryTableDescription">
+   Adds a label to the timeline, making it easy to mark important positions/times.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#append()">append</a>(tween:<a href="core/TweenCore.html">TweenCore</a>, offset:Number = 0):<a href="core/TweenCore.html">TweenCore</a>
+</div>
+<div class="summaryTableDescription">
+   Inserts a TweenLite, TweenMax, TimelineLite, or TimelineMax instance at the <strong>end</strong> of the timeline,
+   optionally offsetting its insertion point by a certain amount (to make it overlap with the end of 
+   the timeline or leave a gap before its insertion point).</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#appendMultiple()">appendMultiple</a>(tweens:Array, offset:Number = 0, align:String = "normal", stagger:Number = 0):Array</div>
+<div class="summaryTableDescription">
+   Appends multiple tweens/timelines at the end of the timeline at once, optionally offsetting the insertion point by a certain amount, 
+   aligning them (as a sequence for example), and/or staggering their relative timing.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#clear()">clear</a>(tweens:Array = null):void</div>
+<div class="summaryTableDescription">
+   Empties the timeline of all child tweens/timelines, or you can optionally pass an Array containing specific 
+   tweens/timelines to remove.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#complete()">complete</a>(skipRender:Boolean = false, suppressEvents:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Forces the tween/timeline to completion.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getChildren()">getChildren</a>(nested:Boolean = true, tweens:Boolean = true, timelines:Boolean = true, ignoreBeforeTime:Number = -9999999999):Array</div>
+<div class="summaryTableDescription">
+   Provides an easy way to get all of the tweens and/or timelines nested in this timeline (as an Array).</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getLabelTime()">getLabelTime</a>(label:String):Number</div>
+<div class="summaryTableDescription">
+   Returns the time associated with a particular label.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getTweensOf()">getTweensOf</a>(target:Object, nested:Boolean = true):Array</div>
+<div class="summaryTableDescription">
+   Returns the tweens of a particular object that are inside this timeline.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#goto()">goto</a>(timeOrLabel:*, suppressEvents:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Skips to a particular time, frame, or label without changing the paused state of the timeline
+   
+   </div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#gotoAndPlay()">gotoAndPlay</a>(timeOrLabel:*, suppressEvents:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Skips to a particular time, frame, or label and plays the timeline forwards from there (unpausing it)
+   
+   </div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#gotoAndStop()">gotoAndStop</a>(timeOrLabel:*, suppressEvents:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Skips to a particular time, frame, or label and stops the timeline (pausing it)
+   
+   </div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#insert()">insert</a>(tween:<a href="core/TweenCore.html">TweenCore</a>, timeOrLabel:* = 0):<a href="core/TweenCore.html">TweenCore</a>
+</div>
+<div class="summaryTableDescription">
+   Inserts a TweenLite, TweenMax, TimelineLite, or TimelineMax instance into the timeline at a specific time, frame, or label.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#insertMultiple()">insertMultiple</a>(tweens:Array, timeOrLabel:String = "0", align:Number = normal, stagger:* = 0):Array</div>
+<div class="summaryTableDescription">
+   Inserts multiple tweens/timelines into the timeline at once, optionally aligning them (as a sequence for example)
+   and/or staggering the timing.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#invalidate()">invalidate</a>():void</div>
+<div class="summaryTableDescription">  
+   Clears any initialization data (like starting values in tweens) which can be useful if, for example, 
+   you want to restart it without reverting to any previously recorded starting values.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#kill()">kill</a>():void</div>
+<div class="summaryTableDescription"> Kills the tween/timeline, stopping it immediately.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#killTweensOf()">killTweensOf</a>(target:Object, nested:Boolean = true, vars:Object = null):Boolean</div>
+<div class="summaryTableDescription">
+   Kills all the tweens (or certain tweening properties) of a particular object inside this TimelineLite, 
+   optionally completing them first.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#pause()">pause</a>():void</div>
+<div class="summaryTableDescription"> Pauses the tween/timeline </div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#play()">play</a>():void</div>
+<div class="summaryTableDescription"> Starts playing forward from the current position.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#prepend()">prepend</a>(tween:<a href="core/TweenCore.html">TweenCore</a>, adjustLabels:Boolean = false):<a href="core/TweenCore.html">TweenCore</a>
+</div>
+<div class="summaryTableDescription">
+   Inserts a TweenLite, TweenMax, TimelineLite, or TimelineMax instance at the beginning of the timeline,
+   pushing all existing tweens back in time to make room for the newly inserted one.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#prependMultiple()">prependMultiple</a>(tweens:Array, align:String = "normal", stagger:Number = 0, adjustLabels:Boolean = false):Array</div>
+<div class="summaryTableDescription">
+   Prepends multiple tweens/timelines to the beginning of the timeline at once, moving all existing children back to make
+   room, and optionally aligning the new children (as a sequence for example) and/or staggering the timing.<br /><br />
+    
+   </div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#remove()">remove</a>(tween:<a href="core/TweenCore.html">TweenCore</a>, skipDisable:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Removes a TweenLite, TweenMax, TimelineLite, or TimelineMax instance from the timeline.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#removeLabel()">removeLabel</a>(label:String):Number</div>
+<div class="summaryTableDescription">
+   Removes a label from the timeline and returns the time of that label.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#restart()">restart</a>(includeDelay:Boolean = false, suppressEvents:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Restarts and begins playing forward.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#resume()">resume</a>():void</div>
+<div class="summaryTableDescription"> Starts playing from the current position without altering direction (forward or reversed).</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#reverse()">reverse</a>(forceResume:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Reverses smoothly, adjusting the startTime to avoid any skipping.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#shiftChildren()">shiftChildren</a>(amount:Number, adjustLabels:Boolean = false, ignoreBeforeTime:Number = 0):void</div>
+<div class="summaryTableDescription">
+   Shifts the startTime of the timeline's children by a certain amount and optionally adjusts labels too.</div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#stop()">stop</a>():void</div>
+<div class="summaryTableDescription"> Pauses the timeline (same as pause() - added stop() for consistency with Flash's MovieClip.stop() functionality) </div>
+</td><td class="summaryTableOwnerCol">TimelineLite</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="currentProgress"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">currentProgress</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>currentProgress:Number</code>&nbsp;&nbsp;[read-write]<p> 
+   Value between 0 and 1 indicating the progress of the timeline according to its duration 
+    where 0 is at the beginning, 0.5 is halfway finished, and 1 is finished. <code>totalProgress</code>, 
+    by contrast, describes the overall progress according to the timeline's <code>totalDuration</code> 
+    which includes repeats and repeatDelays (if there are any). Since TimelineLite doesn't offer 
+    "repeat" and "repeatDelay" functionality, <code>currentProgress</code> and <code>totalProgress</code> are always the same
+    but in TimelineMax, they could be different. For example, if a TimelineMax instance 
+   is set to repeat once, at the end of the first cycle <code>totalProgress</code> would only be 0.5 
+   whereas <code>currentProgress</code> would be 1. If you tracked both properties over the course of the 
+   tween, you'd see <code>currentProgress</code> go from 0 to 1 twice (once for each cycle) in the same
+   time it takes the <code>totalProgress</code> property to go from 0 to 1 once.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get currentProgress():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set currentProgress(value:Number):void</code>
+<br>
+</div>
+<a name="duration"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">duration</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>duration:Number</code>&nbsp;&nbsp;[read-write]<p>
+   Duration of the timeline in seconds (or frames for frames-based timelines) not including any repeats
+   or repeatDelays. <code>totalDuration</code>, by contrast, does include repeats and repeatDelays but since TimelineLite
+   doesn't offer "repeat" and "repeatDelay" functionality, <code>duration</code> and <code>totalDuration</code> will always be the same. 
+   In TimelineMax, however, they could be different. 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get duration():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set duration(value:Number):void</code>
+<br>
+</div>
+<a name="timeScale"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">timeScale</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>timeScale:Number</code>&nbsp;&nbsp;[read-write]<p> Multiplier describing the speed of the timeline where 1 is normal speed, 0.5 is half-speed, 2 is double speed, etc. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get timeScale():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set timeScale(value:Number):void</code>
+<br>
+</div>
+<a name="totalDuration"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">totalDuration</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>totalDuration:Number</code>&nbsp;&nbsp;[read-write]<p>
+   Duration of the timeline in seconds (or frames for frames-based timelines) including any repeats
+   or repeatDelays. <code>duration</code>, by contrast, does NOT include repeats and repeatDelays. Since TimelineLite
+   doesn't offer "repeat" and "repeatDelay" functionality, <code>duration</code> and <code>totalDuration</code> will always be the same. 
+   In TimelineMax, however, they could be different. 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get totalDuration():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set totalDuration(value:Number):void</code>
+<br>
+</div>
+<a name="useFrames"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">useFrames</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>useFrames:Boolean</code>&nbsp;&nbsp;[read-only]<p> 
+   Indicates whether or not the timeline's timing mode is frames-based as opposed to time-based. 
+   This can only be set via the vars object in the constructor, or by attaching it to a timeline with the desired
+   timing mode (a timeline's timing mode is always determined by its parent timeline) 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get useFrames():Boolean</code>
+<br>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="TimelineLite()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">TimelineLite</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function TimelineLite(vars:Object = null)</code><p>
+   Constructor. <br /><br />
+   
+   <b>SPECIAL PROPERTIES</b><br />
+   The following special properties may be passed in via the constructor's vars parameter, like
+   <code>new TimelineLite({paused:true, onComplete:myFunction})</code>
+   
+   <ul>
+    <li><b> delay : Number</b>   Amount of delay in seconds (or frames for frames-based timelines) before the timeline should begin.</li>
+   
+    <li><b> paused : Boolean</b>   Sets the initial paused state of the timeline (by default, timelines automatically begin playing immediately)</li>
+           
+    <li><b> useFrames : Boolean</b>  If useFrames is set to true, the timeline's timing mode will be based on frames. 
+             Otherwise, it will be based on seconds/time. NOTE: a TimelineLite's timing mode is 
+             always determined by its parent timeline. </li>
+   
+    <li><b> reversed : Boolean</b>  If true, the timeline will be reversed initially. This does NOT force it to the very end and start 
+             playing backwards. It simply affects the orientation of the timeline, so if reversed is set to 
+             true initially, it will appear not to play because it is already at the beginning. To cause it to
+             play backwards from the end, set reversed to true and then set the <code>currentProgress</code> property to 1 immediately
+             after creating the timeline.</li>
+            
+    <li><b> tweens : Array</b>   To immediately insert several tweens into the timeline, use the <code>tweens</code> special property
+             to pass in an Array of TweenLite/TweenMax/TimelineLite/TimelineMax instances. You can use this in conjunction
+             with the align and stagger special properties to set up complex sequences with minimal code.
+             These values simply get passed to the insertMultiple() method.</li>
+    
+    <li><b> align : String</b>   Only used in conjunction with the <code>tweens</code> special property when multiple tweens are
+             to be inserted immediately. The value simply gets passed to the 
+             <code>insertMultiple()</code> method. The default is <code>TweenAlign.NORMAL</code>. Options are:
+             <ul>
+              <li><b> TweenAlign.SEQUENCE:</b> aligns the tweens one-after-the-other in a sequence</li>
+              <li><b> TweenAlign.START:</b> aligns the start times of all of the tweens (ignores delays)</li>
+              <li><b> TweenAlign.NORMAL:</b> aligns the start times of all the tweens (honors delays)</li>
+             </ul>The <code>align</code> special property does <b>not</b> force all child tweens/timelines to maintain
+             relative positioning, so for example, if you use TweenAlign.SEQUENCE and then later change the duration
+             of one of the nested tweens, it does <b>not</b> force all subsequent timelines to change their position
+             on the timeline. The <code>align</code> special property only affects the alignment of the tweens that are
+             initially placed into the timeline through the <code>tweens</code> special property of the <code>vars</code> object.</li>
+             
+    <li><b> stagger : Number</b>  Only used in conjunction with the <code>tweens</code> special property when multiple tweens are
+             to be inserted immediately. It staggers the tweens by a set amount of time (in seconds) (or
+             in frames if "useFrames" is true). For example, if the stagger value is 0.5 and the "align" 
+             property is set to TweenAlign.START, the second tween will start 0.5 seconds after the first one 
+             starts, then 0.5 seconds later the third one will start, etc. If the align property is 
+             TweenAlign.SEQUENCE, there would be 0.5 seconds added between each tween. This value simply gets 
+             passed to the insertMultiple() method. Default is 0.</li>
+    
+    <li><b> onStart : Function</b>  A function that should be called when the timeline begins (the <code>currentProgress</code> won't necessarily
+             be zero when <code>onStart</code> is called. For example, if the timeline is created and then its <code>currentProgress</code>
+             property is immediately set to 0.5 or if its <code>currentTime</code> property is set to something other than zero,
+             <code>onStart</code> will still get fired because it is the first time the timeline is getting rendered.)</li>
+    
+    <li><b> onStartParams : Array</b> An Array of parameters to pass the onStart function.</li>
+    
+    <li><b> onUpdate : Function</b>  A function that should be called every time the timeline's time/position is updated 
+             (on every frame while the timeline is active)</li>
+    
+    <li><b> onUpdateParams : Array</b> An Array of parameters to pass the onUpdate function</li>
+    
+    <li><b> onComplete : Function</b> A function that should be called when the timeline has finished </li>
+    
+    <li><b> onCompleteParams : Array</b> An Array of parameters to pass the onComplete function</li>
+    
+    <li><b> onReverseComplete : Function</b> A function that should be called when the timeline has reached its starting point again after having been reversed </li>
+    
+    <li><b> onReverseCompleteParams : Array</b> An Array of parameters to pass the onReverseComplete functions</li>
+    
+    <li><b> autoRemoveChildren : Boolean</b> If autoRemoveChildren is set to true, as soon as child tweens/timelines complete,
+             they will automatically get killed/removed. This is normally undesireable because
+             it prevents going backwards in time (like if you want to <code>reverse()</code> or set the 
+             <code>currentProgress</code> value to a lower value, etc.). It can, however, improve speed and memory
+             management. TweenLite's root timelines use <code>autoRemoveChildren:true</code>.</li>
+    </ul>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; optionally pass in special properties like <code>useFrames, onComplete, onCompleteParams, onUpdate, onUpdateParams, onStart, onStartParams, tweens, align, stagger, delay, reversed,</code> and/or <code>autoRemoveChildren</code>.
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="addLabel()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addLabel</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function addLabel(label:String, time:Number):void</code><p>
+   Adds a label to the timeline, making it easy to mark important positions/times. gotoAndStop() and gotoAndPlay()
+   allow you to skip directly to any label. This works just like timeline labels in the Flash IDE.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">label</span>:String</code> &mdash; The name of the label
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">time</span>:Number</code> &mdash; The time in seconds (or frames for frames-based timelines) at which the label should be added. For example, myTimeline.addLabel("myLabel", 3) adds the label "myLabel" at 3 seconds into the timeline.
+   </td>
+</tr>
+</table>
+</div>
+<a name="append()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">append</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function append(tween:<a href="core/TweenCore.html">TweenCore</a>, offset:Number = 0):<a href="core/TweenCore.html">TweenCore</a></code><p>
+   Inserts a TweenLite, TweenMax, TimelineLite, or TimelineMax instance at the <strong>end</strong> of the timeline,
+   optionally offsetting its insertion point by a certain amount (to make it overlap with the end of 
+   the timeline or leave a gap before its insertion point). 
+   This makes it easy to build sequences by continuing to append() tweens or timelines.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">tween</span>:<a href="core/TweenCore.html">TweenCore</a></code> &mdash; TweenLite, TweenMax, TimelineLite, or TimelineMax instance to append.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">offset</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; Amount of seconds (or frames for frames-based timelines) to offset the insertion point of the tween from the end of the timeline. For example, to append a tween 3 seconds after the end of the timeline (leaving a 3-second gap), set the offset to 3. Or to have the tween appended so that it overlaps with the last 2 seconds of the timeline, set the offset to -2. The default is 0 so that the insertion point is exactly at the end of the timeline.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="core/TweenCore.html">TweenCore</a></code> &mdash; 
+                        TweenLite, TweenMax, TimelineLite, or TimelineMax instance that was appended 
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="appendMultiple()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">appendMultiple</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function appendMultiple(tweens:Array, offset:Number = 0, align:String = "normal", stagger:Number = 0):Array</code><p>
+   Appends multiple tweens/timelines at the end of the timeline at once, optionally offsetting the insertion point by a certain amount, 
+   aligning them (as a sequence for example), and/or staggering their relative timing. This is one of the most powerful methods in 
+   TimelineLite because it accommodates advanced timing effects and builds complex sequences with relatively little code.<br /><br />
+    
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">tweens</span>:Array</code> &mdash; an Array containing any or all of the following: TweenLite, TweenMax, TimelineLite, and/or TimelineMax instances  
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">offset</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; Amount of seconds (or frames for frames-based timelines) to offset the insertion point of the tweens from the end of the timeline. For example, to start appending the tweens 3 seconds after the end of the timeline (leaving a 3-second gap), set the offset to 3. Or to have the tweens appended so that the insertion point overlaps with the last 2 seconds of the timeline, set the offset to -2. The default is 0 so that the insertion point is exactly at the end of the timeline. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">align</span>:String</code> (default = "<code>normal</code>")<code></code> &mdash; determines how the tweens will be aligned in relation to each other before getting appended. Options are: TweenAlign.SEQUENCE (aligns the tweens one-after-the-other in a sequence), TweenAlign.START (aligns the start times of all of the tweens (ignores delays)), and TweenAlign.NORMAL (aligns the start times of all the tweens (honors delays)). The default is NORMAL.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">stagger</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; staggers the tweens by a set amount of time (in seconds) (or in frames for frames-based timelines). For example, if the stagger value is 0.5 and the "align" property is set to TweenAlign.START, the second tween will start 0.5 seconds after the first one starts, then 0.5 seconds later the third one will start, etc. If the align property is TweenAlign.SEQUENCE, there would be 0.5 seconds added between each tween. Default is 0.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; The array of tweens that were appended
+   </td>
+</tr>
+</table>
+</div>
+<a name="clear()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">clear</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function clear(tweens:Array = null):void</code><p>
+   Empties the timeline of all child tweens/timelines, or you can optionally pass an Array containing specific 
+   tweens/timelines to remove. So <code>myTimeline.clear()</code> would remove all children whereas 
+   <code>myTimeline.clear([tween1, tween2])</code> would only remove tween1 and tween2. You could even clear only 
+   the tweens of a particular object with <code>myTimeline.clear(myTimeline.getTweensOf(myObject));</code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">tweens</span>:Array</code> (default = <code>null</code>)<code></code> &mdash; (optional) An Array containing specific children to remove.
+   </td>
+</tr>
+</table>
+</div>
+<a name="getChildren()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getChildren</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getChildren(nested:Boolean = true, tweens:Boolean = true, timelines:Boolean = true, ignoreBeforeTime:Number = -9999999999):Array</code><p>
+   Provides an easy way to get all of the tweens and/or timelines nested in this timeline (as an Array). 
+    
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">nested</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; determines whether or not tweens and/or timelines that are inside nested timelines should be returned. If you only want the "top level" tweens/timelines, set this to false.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">tweens</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; determines whether or not tweens (TweenLite and TweenMax instances) should be included in the results
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">timelines</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; determines whether or not timelines (TimelineLite and TimelineMax instances) should be included in the results
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">ignoreBeforeTime</span>:Number</code> (default = <code>-9999999999</code>)<code></code> &mdash; All children with start times that are less than this value will be ignored.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; an Array containing the child tweens/timelines.
+   </td>
+</tr>
+</table>
+</div>
+<a name="getLabelTime()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getLabelTime</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getLabelTime(label:String):Number</code><p>
+   Returns the time associated with a particular label. If the label isn't found, -1 is returned.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">label</span>:String</code> &mdash; Label name
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Number</code> &mdash; Time associated with the label (or -1 if there is no such label)
+   </td>
+</tr>
+</table>
+</div>
+<a name="getTweensOf()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getTweensOf</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getTweensOf(target:Object, nested:Boolean = true):Array</code><p>
+   Returns the tweens of a particular object that are inside this timeline.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; the target object of the tweens
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">nested</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; determines whether or not tweens that are inside nested timelines should be returned. If you only want the "top level" tweens/timelines, set this to false.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; an Array of TweenLite and TweenMax instances
+   </td>
+</tr>
+</table>
+</div>
+<a name="goto()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">goto</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function goto(timeOrLabel:*, suppressEvents:Boolean = true):void</code><p>
+   Skips to a particular time, frame, or label without changing the paused state of the timeline
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">timeOrLabel</span>:*</code> &mdash; time in seconds (or frame if the timeline is frames-based) or label to skip to. For example, myTimeline.goto(2) will skip to 2-seconds into a timeline, and myTimeline.goto("myLabel") will skip to wherever "myLabel" is. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">suppressEvents</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, no events or callbacks will be triggered as the "virtual playhead" moves to the new position (onComplete, onUpdate, onReverseComplete, etc. of this timeline and any of its child tweens/timelines won't be triggered, nor will any of the associated events be dispatched) 
+   </td>
+</tr>
+</table>
+</div>
+<a name="gotoAndPlay()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">gotoAndPlay</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function gotoAndPlay(timeOrLabel:*, suppressEvents:Boolean = true):void</code><p>
+   Skips to a particular time, frame, or label and plays the timeline forwards from there (unpausing it)
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">timeOrLabel</span>:*</code> &mdash; time in seconds (or frame if the timeline is frames-based) or label to skip to. For example, myTimeline.gotoAndPlay(2) will skip to 2-seconds into a timeline, and myTimeline.gotoAndPlay("myLabel") will skip to wherever "myLabel" is. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">suppressEvents</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, no events or callbacks will be triggered as the "virtual playhead" moves to the new position (onComplete, onUpdate, onReverseComplete, etc. of this timeline and any of its child tweens/timelines won't be triggered, nor will any of the associated events be dispatched) 
+   </td>
+</tr>
+</table>
+</div>
+<a name="gotoAndStop()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">gotoAndStop</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function gotoAndStop(timeOrLabel:*, suppressEvents:Boolean = true):void</code><p>
+   Skips to a particular time, frame, or label and stops the timeline (pausing it)
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">timeOrLabel</span>:*</code> &mdash; time in seconds (or frame if the timeline is frames-based) or label to skip to. For example, myTimeline.gotoAndStop(2) will skip to 2-seconds into a timeline, and myTimeline.gotoAndStop("myLabel") will skip to wherever "myLabel" is. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">suppressEvents</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, no events or callbacks will be triggered as the "virtual playhead" moves to the new position (onComplete, onUpdate, onReverseComplete, etc. of this timeline and any of its child tweens/timelines won't be triggered, nor will any of the associated events be dispatched) 
+   </td>
+</tr>
+</table>
+</div>
+<a name="insert()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">insert</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function insert(tween:<a href="core/TweenCore.html">TweenCore</a>, timeOrLabel:* = 0):<a href="core/TweenCore.html">TweenCore</a></code><p>
+   Inserts a TweenLite, TweenMax, TimelineLite, or TimelineMax instance into the timeline at a specific time, frame, or label. 
+   If you insert at a label that doesn't exist yet, it will automatically place that label at the end of the timeline and then insert the tween/timeline.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">tween</span>:<a href="core/TweenCore.html">TweenCore</a></code> &mdash; TweenLite, TweenMax, TimelineLite, or TimelineMax instance to insert
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">timeOrLabel</span>:*</code> (default = <code>0</code>)<code></code> &mdash; The time in seconds (or frames for frames-based timelines) or label at which the tween/timeline should be inserted. For example, myTimeline.insert(myTween, 3) would insert myTween 3-seconds into the timeline, and myTimeline.insert(myTween, "myLabel") would insert it at the "myLabel" label.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="core/TweenCore.html">TweenCore</a></code> &mdash; 
+                        TweenLite, TweenMax, TimelineLite, or TimelineMax instance that was inserted
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="insertMultiple()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">insertMultiple</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function insertMultiple(tweens:Array, timeOrLabel:String = "0", align:Number = normal, stagger:* = 0):Array</code><p>
+   Inserts multiple tweens/timelines into the timeline at once, optionally aligning them (as a sequence for example)
+   and/or staggering the timing. This is one of the most powerful methods in TimelineLite because it accommodates
+   advanced timing effects and builds complex sequences with relatively little code.<br /><br />
+    
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">tweens</span>:Array</code> &mdash; an Array containing any or all of the following: TweenLite, TweenMax, TimelineLite, and/or TimelineMax instances  
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">timeOrLabel</span>:String</code> (default = "<code>0</code>")<code></code> &mdash; time in seconds (or frame if the timeline is frames-based) or label that serves as the point of insertion. For example, the number 2 would insert the tweens beginning at 2-seconds into the timeline, or "myLabel" would ihsert them wherever "myLabel" is.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">align</span>:Number</code> (default = <code>normal</code>)<code></code> &mdash; determines how the tweens will be aligned in relation to each other before getting inserted. Options are: TweenAlign.SEQUENCE (aligns the tweens one-after-the-other in a sequence), TweenAlign.START (aligns the start times of all of the tweens (ignores delays)), and TweenAlign.NORMAL (aligns the start times of all the tweens (honors delays)). The default is NORMAL.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">stagger</span>:*</code> (default = <code>0</code>)<code></code> &mdash; staggers the tweens by a set amount of time (in seconds) (or in frames for frames-based timelines). For example, if the stagger value is 0.5 and the "align" property is set to TweenAlign.START, the second tween will start 0.5 seconds after the first one starts, then 0.5 seconds later the third one will start, etc. If the align property is TweenAlign.SEQUENCE, there would be 0.5 seconds added between each tween. Default is 0.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; The array of tweens that were inserted
+   </td>
+</tr>
+</table>
+</div>
+<a name="invalidate()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">invalidate</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function invalidate():void</code><p>  
+   Clears any initialization data (like starting values in tweens) which can be useful if, for example, 
+   you want to restart it without reverting to any previously recorded starting values. When you invalidate() 
+   a tween/timeline, it will be re-initialized the next time it renders and its <code>vars</code> object will be re-parsed. 
+   The timing of the tween/timeline (duration, startTime, delay) will NOT be affected. Another example would be if you
+   have a <code>TweenMax(mc, 1, {x:100, y:100})</code> that ran when mc.x and mc.y were initially at 0, but now mc.x 
+   and mc.y are 200 and you want them tween to 100 again, you could simply <code>invalidate()</code> the tween and 
+   <code>restart()</code> it. Without invalidating first, restarting it would cause the values jump back to 0 immediately 
+   (where they started when the tween originally began). When you invalidate a timeline, it automatically invalidates 
+   all of its children.
+   </p></div>
+<a name="killTweensOf()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">killTweensOf</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function killTweensOf(target:Object, nested:Boolean = true, vars:Object = null):Boolean</code><p>
+   Kills all the tweens (or certain tweening properties) of a particular object inside this TimelineLite, 
+   optionally completing them first. If, for example, you want to kill all tweens of the "mc" object, you'd do:<br /><br /><code>
+   
+   myTimeline.killTweensOf(mc);<br /><br /></code>
+   
+   But if you only want to kill all the "alpha" and "x" portions of mc's tweens, you'd do:<br /><br /><code>
+   
+   myTimeline.killTweensOf(mc, false, {alpha:true, x:true});<br /><br /></code>
+   
+   Killing a tween also removes it from the timeline.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; the target object of the tweens
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">nested</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; determines whether or not tweens that are inside nested timelines should be affected. If you only want the "top level" tweens/timelines to be affected, set this to false.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; An object defining which tweening properties should be killed (null causes all properties to be killed). For example, if you only want to kill "alpha" and "x" tweens of object "mc", you'd do <code>myTimeline.killTweensOf(mc, true, {alpha:true, x:true})</code>. If there are no tweening properties remaining in a tween after the indicated properties are killed, the entire tween is killed, meaning any onComplete, onUpdate, onStart, etc. won't fire.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code></td>
+</tr>
+</table>
+</div>
+<a name="prepend()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">prepend</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function prepend(tween:<a href="core/TweenCore.html">TweenCore</a>, adjustLabels:Boolean = false):<a href="core/TweenCore.html">TweenCore</a></code><p>
+   Inserts a TweenLite, TweenMax, TimelineLite, or TimelineMax instance at the beginning of the timeline,
+   pushing all existing tweens back in time to make room for the newly inserted one. You can optionally
+   affect the positions of labels too.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">tween</span>:<a href="core/TweenCore.html">TweenCore</a></code> &mdash; TweenLite, TweenMax, TimelineLite, or TimelineMax instance to prepend
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">adjustLabels</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true, all existing labels will be adjusted back in time along with the existing tweens to keep them aligned. (default is false)
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="core/TweenCore.html">TweenCore</a></code> &mdash; 
+                        TweenLite, TweenMax, TimelineLite, or TimelineMax instance that was prepended
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="prependMultiple()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">prependMultiple</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function prependMultiple(tweens:Array, align:String = "normal", stagger:Number = 0, adjustLabels:Boolean = false):Array</code><p>
+   Prepends multiple tweens/timelines to the beginning of the timeline at once, moving all existing children back to make
+   room, and optionally aligning the new children (as a sequence for example) and/or staggering the timing.<br /><br />
+    
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">tweens</span>:Array</code> &mdash; an Array containing any or all of the following: TweenLite, TweenMax, TimelineLite, and/or TimelineMax instances  
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">align</span>:String</code> (default = "<code>normal</code>")<code></code> &mdash; determines how the tweens will be aligned in relation to each other before getting prepended. Options are: TweenAlign.SEQUENCE (aligns the tweens one-after-the-other in a sequence), TweenAlign.START (aligns the start times of all of the tweens (ignores delays)), and TweenAlign.NORMAL (aligns the start times of all the tweens (honors delays)). The default is NORMAL.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">stagger</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; staggers the tweens by a set amount of time (in seconds) (or in frames for frames-based timelines). For example, if the stagger value is 0.5 and the "align" property is set to TweenAlign.START, the second tween will start 0.5 seconds after the first one starts, then 0.5 seconds later the third one will start, etc. If the align property is TweenAlign.SEQUENCE, there would be 0.5 seconds added between each tween. Default is 0.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">adjustLabels</span>:Boolean</code> (default = <code>false</code>)<code></code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; The array of tweens that were prepended
+   </td>
+</tr>
+</table>
+</div>
+<a name="remove()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">remove</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function remove(tween:<a href="core/TweenCore.html">TweenCore</a>, skipDisable:Boolean = false):void</code><p>
+   Removes a TweenLite, TweenMax, TimelineLite, or TimelineMax instance from the timeline.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">tween</span>:<a href="core/TweenCore.html">TweenCore</a></code> &mdash; TweenLite, TweenMax, TimelineLite, or TimelineMax instance to remove
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">skipDisable</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If false (the default), the TweenLite/Max/TimelineLite/Max instance is disabled. This is primarily used internally - there's really no reason to set it to true. 
+   </td>
+</tr>
+</table>
+</div>
+<a name="removeLabel()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">removeLabel</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function removeLabel(label:String):Number</code><p>
+   Removes a label from the timeline and returns the time of that label.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">label</span>:String</code> &mdash; The name of the label to remove
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Number</code> &mdash; Time associated with the label that was removed
+   </td>
+</tr>
+</table>
+</div>
+<a name="shiftChildren()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">shiftChildren</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function shiftChildren(amount:Number, adjustLabels:Boolean = false, ignoreBeforeTime:Number = 0):void</code><p>
+   Shifts the startTime of the timeline's children by a certain amount and optionally adjusts labels too. This can be useful
+   when you want to prepend children or splice them into a certain spot, moving existing ones back to make room for the new ones.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">amount</span>:Number</code> &mdash; Number of seconds (or frames for frames-based timelines) to move each child.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">adjustLabels</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true, the timing of all labels will be adjusted as well.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">ignoreBeforeTime</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; All children that begin at or after the startAtTime will be affected by the shift (the default is 0, causing all children to be affected). This provides an easy way to splice children into a certain spot on the timeline, pushing only the children after that point back to make room.
+   </td>
+</tr>
+</table>
+</div>
+<a name="stop()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">stop</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function stop():void</code><p> Pauses the timeline (same as pause() - added stop() for consistency with Flash's MovieClip.stop() functionality) </p></div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

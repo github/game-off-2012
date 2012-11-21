@@ -19,8 +19,6 @@ package org.flixel
 	import org.flixel.plugin.TimerManager;
 	import org.flixel.system.FlxDebugger;
 	import org.flixel.system.FlxReplay;
-	
-	import com.greensock.TweenMax;
 
 	/**
 	 * FlxGame is the heart of all flixel games, and contains a bunch of basic game loops and things.
@@ -404,7 +402,6 @@ package org.flixel
 			_lostFocus = _focus.visible = false;
 			stage.frameRate = _flashFramerate;
 			FlxG.resumeSounds();
-			TweenMax.resumeAll();
 		}
 		
 		/**
@@ -423,7 +420,6 @@ package org.flixel
 			_lostFocus = _focus.visible = true;
 			stage.frameRate = 10;
 			FlxG.pauseSounds();
-			TweenMax.pauseAll();
 		}
 		
 		/**

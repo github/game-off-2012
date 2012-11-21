@@ -1,0 +1,810 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="MotionPath,com.greensock.motionPaths.MotionPath,followers,height,progress,rawProgress,rotation,scaleX,scaleY,targets,visible,width,x,y,addFollower,distribute,getFollower,lineStyle,removeAllFollowers,removeFollower,renderObjectAt,update" name="keywords">
+<title>com.greensock.motionPaths.MotionPath</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'MotionPath - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?com/greensock/motionPaths/MotionPath.html&amp;com/greensock/motionPaths/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;MotionPath</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class MotionPath"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock.motionPaths</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class MotionPath</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">MotionPath <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> flash.display.Shape</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Subclasses</td><td><a href="../motionPaths/CirclePath2D.html">CirclePath2D</a>, <a href="../motionPaths/LinePath2D.html">LinePath2D</a>, <a href="../motionPaths/RectanglePath2D.html">RectanglePath2D</a></td>
+</tr>
+</table>
+<p></p>
+ A MotionPath defines a path along which a PathFollower can travel, making it relatively simple to do 
+ things like tween an object in a circular path. A PathFollower's position along the path is described using
+ its <code>progress</code> property, a value between 0 and 1 where 0 is at the beginning of the path, 0.5 is in
+ the middle, and 1 is at the very end of the path. So to tween a PathFollower along the path, you can simply
+ tween its <code>progress</code> property. To tween ALL of the followers on the path at once, you can
+ tween the MotionPath's <code>progress</code> property. PathFollowers automatically wrap so that if 
+ the <code>progress</code> value exceeds 1 or drops below 0, it shows up on the other end of the path.<br /><br />
+  
+ Since MotionPath extends the Shape class, you can add an instance to the display list to see a line representation
+ of the path drawn which can be helpful especially during the production phase. Use <code>lineStyle()</code> 
+ to adjust the color, thickness, and other attributes of the line that is drawn (or set the MotionPath's 
+ <code>visible</code> property to false or don't add it to the display list if you don't want to see the line 
+ at all). You can also adjust all of its properties like <code>scaleX, scaleY, rotation, width, height, x,</code> 
+ and <code>y</code> just like any DisplayObject. That means you can tween those values as well to achieve very 
+ dynamic, complex effects with ease.<br /><br />
+ 
+ <p></p>
+<br>
+<span class="label">Example</span>
+<br>Example AS3 code:<div class='listing'><pre>
+import com.greensock.*;
+import com.greensock.plugins.*;
+import com.greensock.motionPaths.*;
+TweenPlugin.activate([CirclePath2DPlugin]); //only needed once in your swf, and only if you plan to use the circlePath2D tweening feature for convenience
+
+//create a circle motion path at coordinates x:150, y:150 with a radius of 100
+var circle:CirclePath2D = new CirclePath2D(150, 150, 100);
+
+//tween mc along the path from the bottom (90 degrees) to 315 degrees in the counter-clockwise direction and make an extra revolution
+TweenLite.to(mc, 3, {circlePath2D:{path:circle, startAngle:90, endAngle:315, autoRotate:true, direction:Direction.COUNTER_CLOCKWISE, extraRevolutions:1}});
+
+//tween the circle's rotation, scaleX, scaleY, x, and y properties:
+TweenLite.to(circle, 3, {rotation:180, scaleX:0.5, scaleY:2, x:250, y:200});
+
+//show the path visually by adding it to the display list (optional)
+this.addChild(circle);
+
+
+//--- Instead of using the plugin, you could manually manage followers and tween their "progress" property...
+ 
+//make the MovieClip "mc2" follow the circle and start at a position of 90 degrees (this returns a PathFollower instance)
+var follower:PathFollower = circle.addFollower(mc2, circle.angleToProgress(90));
+
+//tween the follower clockwise along the path to 315 degrees
+TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 315, Direction.CLOCKWISE)});
+
+//tween the follower counter-clockwise to 200 degrees and add an extra revolution
+TweenLite.to(follower, 2, {progress:circle.followerTween(follower, 200, Direction.COUNTER_CLOCKWISE, 1)});
+</pre></div>
+ 
+ <b>NOTES</b><br />
+ <ul>
+   <li>All followers are automatically updated when you alter the MotionPath that they're following.</li>
+   <li>To tween all followers along the path at once, simply tween the MotionPath's <code>progress</code> 
+    property which will provide better performance than tweening each follower independently.</li>
+ </ul>
+ 
+ <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#followers">followers</a> : Array<div class="summaryTableDescription">[read-only] Returns an array of all PathFollower instances associated with this path </div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#height">height</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#progress">progress</a> : Number<div class="summaryTableDescription"> 
+   A value between 0 and 1 that can be used to move all followers along the path.</div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#rawProgress">rawProgress</a> : Number<div class="summaryTableDescription"> 
+   Identical to <code>progress</code> except that the value is not re-interpolated between 0 and 1.</div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#rotation">rotation</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#scaleX">scaleX</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#scaleY">scaleY</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#targets">targets</a> : Array<div class="summaryTableDescription">[read-only] Returns an array of all target instances associated with the PathFollowers of this path </div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#visible">visible</a> : Boolean<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#width">width</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#x">x</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#y">y</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addFollower()">addFollower</a>(target:*, progress:Number = 0, autoRotate:Boolean = false, rotationOffset:Number = 0):<a href="../motionPaths/PathFollower.html">PathFollower</a>
+</div>
+<div class="summaryTableDescription">
+   Adds a follower to the path, optionally setting it to a particular progress position.</div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#distribute()">distribute</a>(targets:Array = null, min:Number = 0, max:Number = 1, autoRotate:Boolean = false, rotationOffset:Number = 0):void</div>
+<div class="summaryTableDescription">
+   Distributes objects evenly along the MotionPath.</div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getFollower()">getFollower</a>(target:Object):<a href="../motionPaths/PathFollower.html">PathFollower</a>
+</div>
+<div class="summaryTableDescription">
+   Returns the PathFollower instance associated with a particular target or null if none exists.</div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#lineStyle()">lineStyle</a>(thickness:Number = 1, color:uint = 0x666666, alpha:Number = 1, pixelHinting:Boolean = false, scaleMode:String = "none", caps:String = null, joints:String = null, miterLimit:Number = 3, skipRedraw:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Sets the line style for the path which you will only see if you add the path to the display list
+   with something like addChild() and make sure the visible property is true.</div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#removeAllFollowers()">removeAllFollowers</a>():void</div>
+<div class="summaryTableDescription"> Removes all followers.</div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#removeFollower()">removeFollower</a>(target:*):void</div>
+<div class="summaryTableDescription">
+   Removes the target as a follower.</div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#renderObjectAt()">renderObjectAt</a>(target:Object, progress:Number, autoRotate:Boolean = false, rotationOffset:Number = 0):void</div>
+<div class="summaryTableDescription">
+   Positions any object with x and y properties on the path at a specific progress position.</div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#update()">update</a>(event:Event = null):void</div>
+<div class="summaryTableDescription"> 
+   Forces the MotionPath to re-render itself and all of its followers.</div>
+</td><td class="summaryTableOwnerCol">MotionPath</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="followers"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">followers</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>followers:Array</code>&nbsp;&nbsp;[read-only]<p> Returns an array of all PathFollower instances associated with this path </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get followers():Array</code>
+<br>
+</div>
+<a name="height"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">height</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>height:Number</code>&nbsp;&nbsp;[read-write]<p> </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get height():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set height(value:Number):void</code>
+<br>
+</div>
+<a name="progress"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">progress</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>progress:Number</code>&nbsp;&nbsp;[read-write]<p> 
+   A value between 0 and 1 that can be used to move all followers along the path. <code>progress</code>
+   is identical to <code>rawProgress</code> except that the <code>rawProgress</code> is not re-interpolated 
+   between 0 and 1. For example, if you set the motion path's <code>rawProgress</code> to 2.1, <code>progress</code> 
+   would be 0.1 (the corresponding value between 0 and 1), essentially wrapping it. If <code>rawProgress</code> 
+   is set to -3.4, <code>progress</code> would be 0.6. You may set <code>progress</code> to any value but it will
+   be re-interpolated to its corresponding value between 0 and 1 very much like a DisplayObject's "rotation" 
+   property in Flash where setting it to 270 works fine but when you trace() the rotation value it will report 
+   as -90 instead because rotation is always interpolated to be between 180 and -180. Setting <code>progress</code> 
+   affects <code>rawProgress</code> too. For example:<br /><br /><code>
+   
+   myPath.progress = 2.1;<br />
+   trace(myPath.progress); //traces "0.1"<br />
+   trace(myPath.rawProgress); //traces "2.1"<br /><br /></code>
+   
+   Either property can be used to move all followers along the path. Unlike a PathFollower's 
+   <code>progress</code> or <code>rawProgress</code>, this value is not absolute for motion paths - it simply 
+   facilitates movement of followers together along the path in a way that performs better than 
+   tweening each follower independently (plus it's easier). If your goal is to tween all followers around 
+   a CirclePath2D twice completely, you could just add 2 to the <code>progress</code> or 
+   <code>rawProgress</code> value or use a relative value in the tween, like: <br /><br /><code>
+   
+   TweenLite.to(myCircle, 5, {progress:"2"}); //or myCircle.progress + 2<br /><br /></code>
+   
+   Also note that if you set <code>progress</code> to any value <i>outside</i> of the 0-1 range, 
+   <code>rawProgress</code> will be set to that exact value. If <code>progress</code> is
+   set to a value <i>within</i> the typical 0-1 range, it will only affect the decimal value of 
+   <code>rawProgress</code>. For example, if <code>rawProgress</code> is 3.4 and then you 
+   set <code>progress</code> to 0.1, <code>rawProgress</code> will end up at 3.1 (notice
+   the "3" integer was kept). But if <code>progress</code> was instead set to 5.1, since
+   it exceeds the 0-1 range, <code>rawProgress</code> would become 5.1. This behavior was 
+   adopted in order to deal most effectively with wrapping situations. For example, if 
+   <code>rawProgress</code> was tweened to 3.4 and then later you wanted to fine-tune
+   where things were positioned by tweening <code>progress</code> to 0.8, it still may be
+   important to be able to determine how many loops/wraps occurred, so <code>rawProgress</code>
+   should be 3.8, not reset to 0.8. Feel free to use <code>rawProgress</code> exclusively if you 
+   prefer to avoid any of the re-interpolation that occurs with <code>progress</code>.
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get progress():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set progress(value:Number):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../motionPaths/MotionPath.html#rawProgress" target="">rawProgress</a>
+</div>
+</div>
+<a name="rawProgress"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">rawProgress</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>rawProgress:Number</code>&nbsp;&nbsp;[read-write]<p> 
+   Identical to <code>progress</code> except that the value is not re-interpolated between 0 and 1. 
+   For example, if you set the motion path's <code>rawProgress</code> to 2.1, <code>progress</code> 
+   would be 0.1 (the corresponding value between 0 and 1), essentially wrapping it. If <code>rawProgress</code> 
+   is set to -3.4, <code>progress</code> would be 0.6. Setting <code>progress</code> affects <code>rawProgress</code>
+   and vice versa. For example:<br /><br /><code>
+   
+   myPath.progress = 2.1;<br />
+   trace(myPath.progress); //traces "0.1"<br />
+   trace(myPath.rawProgress); //traces "2.1"<br /><br /></code>
+   
+   Either property can be used to move all followers along the path. Unlike a PathFollower's 
+   <code>progress</code> or <code>rawProgress</code>, this value is not absolute for motion paths - it simply 
+   facilitates relative movement of followers together along the path in a way that performs better than 
+   tweening each follower independently (plus it's easier). If your goal is to tween all followers around 
+   a CirclePath2D twice completely, for example, you could just add 2 to the <code>progress</code> or 
+   <code>rawProgress</code> value or use a relative value in the tween, like: <br /><br /><code>
+   
+   TweenLite.to(myCircle, 5, {rawProgress:"2"}); //or myCircle.rawProgress + 2
+   
+   </code>
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get rawProgress():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set rawProgress(value:Number):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../motionPaths/MotionPath.html#progress" target="">progress</a>
+</div>
+</div>
+<a name="rotation"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">rotation</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>rotation:Number</code>&nbsp;&nbsp;[read-write]<p> </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get rotation():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set rotation(value:Number):void</code>
+<br>
+</div>
+<a name="scaleX"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">scaleX</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>scaleX:Number</code>&nbsp;&nbsp;[read-write]<p> </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scaleX():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set scaleX(value:Number):void</code>
+<br>
+</div>
+<a name="scaleY"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">scaleY</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>scaleY:Number</code>&nbsp;&nbsp;[read-write]<p> </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scaleY():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set scaleY(value:Number):void</code>
+<br>
+</div>
+<a name="targets"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">targets</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>targets:Array</code>&nbsp;&nbsp;[read-only]<p> Returns an array of all target instances associated with the PathFollowers of this path </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get targets():Array</code>
+<br>
+</div>
+<a name="visible"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">visible</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>visible:Boolean</code>&nbsp;&nbsp;[read-write]<p> </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get visible():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set visible(value:Boolean):void</code>
+<br>
+</div>
+<a name="width"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">width</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>width:Number</code>&nbsp;&nbsp;[read-write]<p> </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get width():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set width(value:Number):void</code>
+<br>
+</div>
+<a name="x"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">x</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>x:Number</code>&nbsp;&nbsp;[read-write]<p> </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get x():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set x(value:Number):void</code>
+<br>
+</div>
+<a name="y"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">y</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>y:Number</code>&nbsp;&nbsp;[read-write]<p> </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get y():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set y(value:Number):void</code>
+<br>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="addFollower()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addFollower</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function addFollower(target:*, progress:Number = 0, autoRotate:Boolean = false, rotationOffset:Number = 0):<a href="../motionPaths/PathFollower.html">PathFollower</a></code><p>
+   Adds a follower to the path, optionally setting it to a particular progress position. If
+   the target isn't a PathFollower instance already, one will be created for it. The target
+   can be any object that has x and y properties.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:*</code> &mdash; Any object that has x and y properties that you'd like to follow the path. Existing PathFollower instances are allowed.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">progress</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; The progress position at which the target should be placed initially (0 by default)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">autoRotate</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; When <code>autoRotate</code> is <code>true</code>, the target will automatically be rotated so that it is oriented to the angle of the path. To offset this value (like to always add 90 degrees for example), use the <code>rotationOffset</code> property.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">rotationOffset</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; When <code>autoRotate</code> is <code>true</code>, this value will always be added to the resulting <code>rotation</code> of the target.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../motionPaths/PathFollower.html">PathFollower</a></code> &mdash; 
+                        A PathFollower instance associated with the target (you can tween this PathFollower's <code>progress</code> property to move it along the path).
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="distribute()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">distribute</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function distribute(targets:Array = null, min:Number = 0, max:Number = 1, autoRotate:Boolean = false, rotationOffset:Number = 0):void</code><p>
+   Distributes objects evenly along the MotionPath. You can optionally define minimum and maximum 
+   <code>progress</code> values between which the objects will be distributed. For example, if you want them 
+   distributed from the very beginning of the path to the middle, you would do:<br /><br /><code>
+   
+   path.distribute([mc1, mc2, mc3], 0, 0.5);<br /><br /></code>
+   
+   As it loops through the <code>targets</code> array, if a target is found for which a PathFollower
+   doesn't exist, one will automatically be created and added to the path. The <code>targets</code> 
+   array can be populated with PathFollowers or DisplayObjects or Points or pretty much any object. 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">targets</span>:Array</code> (default = <code>null</code>)<code></code> &mdash; An array of targets (PathFollowers, DisplayObjects, Points, or pretty much any object) that should be distributed evenly along the MotionPath. As it loops through the <code>targets</code> array, if a target is found for which a PathFollower doesn't exist, one will automatically be created and added to the path.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">min</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; The minimum <code>progress</code> value at which the targets will begin being distributed. This value will always be between 0 and 1. For example, if the targets should be distributed from the midpoint of the path through the end, the <code>min</code> parameter would be 0.5 and the <code>max</code> parameter would be 1.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">max</span>:Number</code> (default = <code>1</code>)<code></code> &mdash; The maximum <code>progress</code> value where the targets will end distribution. This value will always be between 0 and 1. For example, if the targets should be distributed from the midpoint of the path through the end, the <code>min</code> parameter would be 0.5 and the <code>max</code> parameter would be 1.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">autoRotate</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; When <code>autoRotate</code> is <code>true</code>, the target will automatically be rotated so that it is oriented to the angle of the path. To offset this value (like to always add 90 degrees for example), use the <code>rotationOffset</code> property.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">rotationOffset</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; When <code>autoRotate</code> is <code>true</code>, this value will always be added to the resulting <code>rotation</code> of the target. For example, to always add 90 degrees to the autoRotation, <code>rotationOffset</code> would be 90.
+   </td>
+</tr>
+</table>
+</div>
+<a name="getFollower()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getFollower</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getFollower(target:Object):<a href="../motionPaths/PathFollower.html">PathFollower</a></code><p>
+   Returns the PathFollower instance associated with a particular target or null if none exists.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; The target whose PathFollower instance you want returned.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../motionPaths/PathFollower.html">PathFollower</a></code> &mdash; 
+                        PathFollower instance
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="lineStyle()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">lineStyle</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function lineStyle(thickness:Number = 1, color:uint = 0x666666, alpha:Number = 1, pixelHinting:Boolean = false, scaleMode:String = "none", caps:String = null, joints:String = null, miterLimit:Number = 3, skipRedraw:Boolean = false):void</code><p>
+   Sets the line style for the path which you will only see if you add the path to the display list
+   with something like addChild() and make sure the visible property is true. For example, to make
+   a CirclePath2D visible with a red line red that's 3 pixels thick, you could do: <br /><br /><code>
+   
+   var myCircle:CirclePath2D = new CirclePath2D(150, 150, 100); <br />
+   myCircle.lineStyle(3, 0xFF0000);<br />
+   addChild(myCircle);<br />
+   
+   </code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">thickness</span>:Number</code> (default = <code>1</code>)<code></code> &mdash; line thickness
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">color</span>:uint</code> (default = <code>0x666666</code>)<code></code> &mdash; line color
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">alpha</span>:Number</code> (default = <code>1</code>)<code></code> &mdash; line alpha
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">pixelHinting</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; pixel hinting
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">scaleMode</span>:String</code> (default = "<code>none</code>")<code></code> &mdash; scale mode
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">caps</span>:String</code> (default = <code>null</code>)<code></code> &mdash; caps
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">joints</span>:String</code> (default = <code>null</code>)<code></code> &mdash; joints
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">miterLimit</span>:Number</code> (default = <code>3</code>)<code></code> &mdash; miter limit
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">skipRedraw</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; if true, the redraw will be skipped.
+   </td>
+</tr>
+</table>
+</div>
+<a name="removeAllFollowers()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">removeAllFollowers</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function removeAllFollowers():void</code><p> Removes all followers. </p></div>
+<a name="removeFollower()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">removeFollower</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function removeFollower(target:*):void</code><p>
+   Removes the target as a follower. The target can be a PathFollower instance or the target associated
+   with one of the PathFollower instances.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:*</code> &mdash; the target or PathFollower instance to remove.
+   </td>
+</tr>
+</table>
+</div>
+<a name="renderObjectAt()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">renderObjectAt</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function renderObjectAt(target:Object, progress:Number, autoRotate:Boolean = false, rotationOffset:Number = 0):void</code><p>
+   Positions any object with x and y properties on the path at a specific progress position. 
+   For example, to position <code>mc</code> in the middle of the path, you would do:<br /><br /><code>
+   
+   myPath.renderObjectAt(mc, 0.5);</code><br /><br />
+   
+   Some paths have methods to translate other meaningful information into a progress value, like
+   for a <code>CirclePath2D</code> you can get the progress associated with the 90-degree position with the
+   <code>angleToPosition()</code> method like this:<br /><br /><code>
+   
+   myCircle.renderObjectAt(mc, myCircle.angleToProgress(90));
+   
+   </code><br />
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; The target object to position
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">progress</span>:Number</code> &mdash; The progress value (typically between 0 and 1 where 0 is the beginning of the path, 0.5 is in the middle, and 1 is at the end)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">autoRotate</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; When <code>autoRotate</code> is <code>true</code>, the target will automatically be rotated so that it is oriented to the angle of the path. To offset this value (like to always add 90 degrees for example), use the <code>rotationOffset</code> property.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">rotationOffset</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; When <code>autoRotate</code> is <code>true</code>, this value will always be added to the resulting <code>rotation</code> of the target.
+   </td>
+</tr>
+</table>
+</div>
+<a name="update()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">update</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function update(event:Event = null):void</code><p> 
+   Forces the MotionPath to re-render itself and all of its followers.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:Event</code> (default = <code>null</code>)<code></code> &mdash; An optional Event that is accepted just to make it easier for use as an event handler (to have it update automatically on every frame, for example, you could add an ENTER_FRAME listener and point it to this method).  </td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

@@ -1,0 +1,650 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="ThrowPropsPlugin,com.greensock.plugins.ThrowPropsPlugin,defaultResistance,calculateChange,calculateDuration,calculateTweenDuration,to" name="keywords">
+<title>com.greensock.plugins.ThrowPropsPlugin</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'ThrowPropsPlugin - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?com/greensock/plugins/ThrowPropsPlugin.html&amp;com/greensock/plugins/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;ThrowPropsPlugin</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#constantSummary">Constants</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class ThrowPropsPlugin"); titleBar_setSubNav(true,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock.plugins</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class ThrowPropsPlugin</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">ThrowPropsPlugin <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> <a href="TweenPlugin.html">TweenPlugin</a></td>
+</tr>
+</table>
+<p></p>
+ <code>ThrowPropsPlugin</code> allows you to simply define an initial velocity for a property 
+ (or multiple properties) as well as optional maximum and/or minimum end values and then it 
+ will calculate the appropriate landing position and plot a smooth course based on the easing 
+ equation you define (Quad.easeOut by default, as set in TweenLite). This is perfect
+ for flick-scrolling or animating things as though they are being thrown. <br /><br />
+ 
+ For example, let's say a user clicks and drags a ball and you track its velocity using an 
+ <code>ENTER_FRAME</code> handler and then when the user releases the mouse button, you'd determine 
+ the velocity but you can't do a normal tween because you don't know exactly where it should 
+ land or how long the tween should last (faster initial velocity would mean a longer duration). 
+ You need the tween to pick up exactly where the user left off so that it appears to smoothly continue 
+ moving in the same direction and at the same velocity they were dragging and then decelerate 
+ based on whatever ease you define in your tween. <br /><br />
+ 
+ Oh, and one more challenge: maybe you want the final resting value to always lie within a 
+ particular range so that things don't land way off the edge of the screen. But you don't want 
+ it to suddenly jerk to a stop when it hits the edge of the screen; instead, you want it to ease 
+ gently into place even if that means going past the landing spot briefly and easing back 
+ (if the initial velocity is fast enough to require that). The whole point is to make it look smooth. <br /><br />
+ 
+ <strong>No problem.</strong> <br /><br />
+ 
+ In its simplest form, you can pass just the initial velocity for each property like this:<br /><br /><code>
+ 
+ TweenLite.to(mc, 2, {throwProps:{x:500, y:-300}});</code><br /><br />
+ 
+ In the above example, <code>mc.x</code> will animate at 500 pixels per second initially and 
+ <code>mc.y</code> will animate at -300 pixels per second. Both will decelerate smoothly 
+ until they come to rest 2 seconds later (because the tween's duration is 2 seconds). <br /><br /> 
+ 
+ To use the <code>Strong.easeOut</code> easing equation and impose maximum and minimum boundaries on 
+ the end values, use the object syntax with the <code>max</code> and <code>min</code> special 
+ properties like this:<br /><br /><code>
+ 
+ TweenLite.to(mc, 2, {throwProps:{x:{velocity:500, max:1024, min:0}, y:{velocity:-300, max:720, min:0}}, ease:Strong.easeOut});
+ </code><br /><br />
+ 
+ Notice the nesting of the objects ({}). The <code>max</code> and <code>min</code> values refer
+ to the range for the final resting position (coordinates in this case), NOT the velocity. 
+ So <code>mc.x</code> would always land between 0 and 1024 in this case, and <code>mc.y</code> 
+ would always land between 0 and 720. If you want the target object to land on a specific value 
+ rather than within a range, simply set <code>max</code> and <code>min</code> to identical values. 
+ Also notice that you must define a <code>velocity</code> value for each property.<br /><br />
+ 
+ ThrowPropsPlugin isn't just for tweening x and y coordinates. It works with any numeric property,
+ so you could use it for spinning the <code>rotation</code> of an object as well. Or the 
+ <code>scaleX</code>/<code>scaleY</code> properties. Maybe the user drags to spin a wheel and
+ lets go and you want it to continue increasing the <code>rotation</code> at that velocity, 
+ decelerating smoothly until it stops.<br /><br />
+  
+ One of the trickiest parts of creating a <code>throwProps</code> tween that looks fluid and natural, 
+ particularly if you're applying maximum and/or minimum values, is determining its duration. 
+ Typically it's best to have a relatively consistent level of resistance so that if the 
+ initial velocity is very fast, it takes longer for the object to come to rest compared to 
+ when the initial velocity is slower. You also may want to impose some restrictions on how long
+ a tween can last (if the user drags incredibly fast, you might not want the tween to last 200
+ seconds). The duration will also affect how far past a max/min boundary the property can potentially
+ go, so you might want to only allow a certain amount of overshoot tolerance. That's why <code>ThrowPropsPlugin</code>
+ has a few static helper methods that make managing all these variables much easier. The one you'll 
+ probably use most often is the <a href="#to()"><code>to()</code></a> method which is very similar 
+ to <code>TweenLite.to()</code> except that it doesn't have a <code>duration</code> parameter and 
+ it adds several other optional parameters. Read the <a href="#to()">docs below</a> for details.<br /><br />
+ 
+ Feel free to experiment with using different easing equations to control how the values ease into
+ place at the end. You don't need to put the "ease" special property inside the 
+ <code>throwProps</code> object. Just keep it in the same place it has always been, like:<br /><br /><code>
+ 
+ TweenLite.to(mc, 1, {throwProps:{x:500, y:-300}, ease:Strong.easeOut});</code><br /><br />
+ 
+ A unique convenience of ThrowPropsPlugin compared to most other solutions out there which use 
+ <code>ENTER_FRAME</code> loops is that everything is reverseable and you can jump to any spot 
+ in the tween immediately. So if you create several <code>throwProps</code> tweens, for example, and 
+ dump them into a TimelineLite, you could simply call <code>reverse()</code> on the timeline 
+ to watch the objects retrace their steps right back to the beginning. <br /><br />
+ 
+ <i>(note: it is best to use an <code>easeOut</code> with <code>throwProps</code> tweens, but 
+ you can vary the strength by using different flavors like <code>Strong.easeOut, Cubic.easeOut, 
+ Quad.easeOut, Back.easeOut</code>, etc.)</i><br /><br />
+ 
+ The following example creates a Sprite (<code>mc</code>), populates it with a long TextField
+ and makes it vertically draggable. Then it tracks its velocity in an <code>ENTER_FRAME</code> 
+ handler and then allows it to be thrown within the bounds defined by the <code>bounds</code> 
+ rectangle, smoothly easing into place regardless of where and how fast it is thrown:
+<p></p>
+<br>
+<span class="label">Example</span>
+<br>Example AS3 code:<div class='listing'><pre>
+import com.greensock.*;
+import flash.events.MouseEvent;
+import com.greensock.plugins.*;
+import com.greensock.easing.*;
+import flash.geom.Rectangle;
+import flash.utils.getTimer;
+import flash.text.*;
+import flash.display.*;
+
+TweenPlugin.activate([ThrowPropsPlugin]);
+
+var bounds:Rectangle = new Rectangle(30, 30, 250, 230);
+var mc:Sprite = new Sprite();
+addChild(mc);
+setupTextField(mc, bounds, 20);
+
+//some variables for tracking the velocity of mc
+var t1:uint, t2:uint, y1:Number, y2:Number;
+
+mc.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
+
+function mouseDownHandler(event:MouseEvent):void {
+ TweenLite.killTweensOf(mc);
+ y1 = y2 = mc.y;
+ t1 = t2 = getTimer();
+ mc.startDrag(false, new Rectangle(bounds.x, -99999, 0, 99999999));
+ mc.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+ mc.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+}
+
+function enterFrameHandler(event:Event):void {
+ //track velocity using the last 2 frames for more accuracy
+ y2 = y1;
+ t2 = t1;
+ y1 = mc.y;
+ t1 = getTimer();
+}
+
+function mouseUpHandler(event:MouseEvent):void {
+ mc.stopDrag();
+ mc.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+ mc.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
+ var time:Number = (getTimer() - t2) / 1000;
+ var yVelocity:Number = (mc.y - y2) / time;
+ var yOverlap:Number = Math.max(0, mc.height - bounds.height);
+ ThrowPropsPlugin.to(mc, {ease:Strong.easeOut, throwProps:{y:{velocity:yVelocity, max:bounds.top, min:bounds.top - yOverlap, resistance:200}}}, 10, 0.25, 1);
+}
+
+function setupTextField(container:Sprite, bounds:Rectangle, padding:Number=20):void {
+ var tf:TextField = new TextField();
+ tf.width = bounds.width - padding;
+ tf.x = tf.y = padding / 2;
+ tf.defaultTextFormat = new TextFormat("_sans", 12);
+ tf.text = "Click and drag this content and then let go as you're dragging to throw it. Notice how it smoothly glides into place, respecting the initial velocity and the maximum/minimum coordinates.\n\nThrowPropsPlugin allows you to simply define an initial velocity for a property (or multiple properties) as well as optional maximum and/or minimum end values and then it will calculate the appropriate landing position and plot a smooth course based on the easing equation you define (Quad.easeOut by default, as set in TweenLite). This is perfect for flick-scrolling or animating things as though they are being thrown.\n\nFor example, let's say a user clicks and drags a ball and you track its velocity using an ENTER_FRAME handler and then when the user releases the mouse button, you'd determine the velocity but you can't do a normal tween because you don't know exactly where it should land or how long the tween should last (faster initial velocity would mean a longer duration). You need the tween to pick up exactly where the user left off so that it appears to smoothly continue moving at the same velocity they were dragging and then decelerate based on whatever ease you define in your tween.\n\nAs demonstrated here, maybe the final resting value needs to lie within a particular range so that the content doesn't land outside a particular area. But you don't want it to suddenly jerk to a stop when it hits the edge; instead, you want it to ease gently into place even if that means going past the landing spot briefly and curving back (if the initial velocity is fast enough to require that). The whole point is to make it look smooth.";
+ tf.multiline = tf.wordWrap = true;
+ tf.selectable = false;
+ tf.autoSize = TextFieldAutoSize.LEFT;
+ container.addChild(tf);
+ 
+ container.graphics.beginFill(0xFFFFFF, 1);
+ container.graphics.drawRect(0, 0, tf.width + padding, tf.textHeight + padding);
+ container.graphics.endFill();
+ container.x = bounds.x;
+ container.y = bounds.y;
+ 
+ var crop:Shape = new Shape();
+ crop.graphics.beginFill(0xFF0000, 1);
+ crop.graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+ crop.graphics.endFill();
+ container.parent.addChild(crop);
+ container.mask = crop;
+}
+
+ </pre></div>
+ 
+ ThrowPropsPlugin is a <a href="http://www.greensock.com/club/">Club GreenSock</a> membership benefit. 
+ You must have a valid membership to use this class without violating the terms of use. Visit 
+ <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a> to sign up or get more details.<br /><br />
+ 
+ <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<div class="showHideLinks">
+<div class="hideInheritedProperty" id="hideInheritedProperty">
+<a onclick="javascript:setInheritedVisible(false,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Properties</a>
+</div>
+<div class="showInheritedProperty" id="showInheritedProperty">
+<a onclick="javascript:setInheritedVisible(true,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Properties</a>
+</div>
+</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="TweenPlugin.html#changeFactor">changeFactor</a> : Number<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol"><a href="TweenPlugin.html">TweenPlugin</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#defaultResistance">defaultResistance</a> : Number = 100<div class="summaryTableDescription">[static] 
+   The default <code>resistance</code> that is used to calculate how long it will take 
+   for the tweening property (or properties) to come to rest by the static <code>ThrowPropsPlugin.to()</code>
+   and <code>ThrowPropsPlugin.calculateTweenDuration()</code> methods.</div>
+</td><td class="summaryTableOwnerCol">ThrowPropsPlugin</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#calculateChange()">calculateChange</a>(velocity:Number, ease:Function, duration:Number, checkpoint:Number = 0.05):Number</div>
+<div class="summaryTableDescription">[static]
+   Determines the amount of change given a particular velocity, an specific easing equation, 
+   and the duration that the tween will last.</div>
+</td><td class="summaryTableOwnerCol">ThrowPropsPlugin</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#calculateDuration()">calculateDuration</a>(start:Number, end:Number, velocity:Number, ease:Function, checkpoint:Number = 0.05):Number</div>
+<div class="summaryTableDescription">[static]
+   Calculates the duration (in seconds) that it would take to move from a particular start value
+   to an end value at the given initial velocity, decelerating according to a certain easing 
+   equation (like <code>Strong.easeOut</code>).</div>
+</td><td class="summaryTableOwnerCol">ThrowPropsPlugin</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#calculateTweenDuration()">calculateTweenDuration</a>(target:Object, vars:Object, maxDuration:Number = 100, minDuration:Number = 0.25, overshootTolerance:Number = 1):Number</div>
+<div class="summaryTableDescription">[static]
+   Analyzes various throwProps variables (like initial velocities, max/min values, 
+   and resistance) and determines the appropriate duration.</div>
+</td><td class="summaryTableOwnerCol">ThrowPropsPlugin</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#to()">to</a>(target:Object, vars:Object, maxDuration:Number = 100, minDuration:Number = 0.25, overshootTolerance:Number = 1):<a href="../../greensock/TweenLite.html">TweenLite</a>
+</div>
+<div class="summaryTableDescription">[static]
+   Automatically analyzes various throwProps variables (like <code>velocity</code>, <code>max</code>, <code>min</code>, 
+   and <code>resistance</code>) and creates a TweenLite instance with the appropriate duration.</div>
+</td><td class="summaryTableOwnerCol">ThrowPropsPlugin</td>
+</tr>
+</table>
+</div>
+<a name="constantSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Constants</div>
+<div class="showHideLinks">
+<div class="hideInheritedConstant" id="hideInheritedConstant">
+<a onclick="javascript:setInheritedVisible(false,'Constant');" href="#constantSummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Constants</a>
+</div>
+<div class="showInheritedConstant" id="showInheritedConstant">
+<a onclick="javascript:setInheritedVisible(true,'Constant');" href="#constantSummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Constants</a>
+</div>
+</div>
+<table id="summaryTableConstant" class="summaryTable hideInheritedConstant" cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Constant</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="hideInheritedConstant">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="TweenPlugin.html#VERSION">VERSION</a> : Number = 1.4<div class="summaryTableDescription">[static]</div>
+</td><td class="summaryTableOwnerCol"><a href="TweenPlugin.html">TweenPlugin</a></td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="defaultResistance"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">defaultResistance</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static var defaultResistance:Number = 100</code><p> 
+   The default <code>resistance</code> that is used to calculate how long it will take 
+   for the tweening property (or properties) to come to rest by the static <code>ThrowPropsPlugin.to()</code>
+   and <code>ThrowPropsPlugin.calculateTweenDuration()</code> methods. Keep in mind that you can define
+   a <code>resistance</code> value either for each individual property in the <code>throwProps</code> tween
+   like this:<br /><br /><code>
+   
+   ThrowPropsPlugin.to(mc, {throwProps:{x:{velocity:500, resistance:150}, y:{velocity:-300, resistance:50}}});
+   </code><br /><br />
+   
+   <strong>OR</strong> you can define a single <code>resistance</code> value that will be used for all of the 
+   properties in that particular <code>throwProps</code> tween like this:<br /><br /><code>
+   
+   ThrowPropsPlugin.to(mc, {throwProps:{x:500, y:-300, resistance:150}}); <br /><br />
+   
+   //-OR- <br /><br />
+   
+   ThrowPropsPlugin.to(mc, {throwProps:{x:{velocity:500, max:800, min:0}, y:{velocity:-300, max:800, min:100}, resistance:150}});
+   </code><br /><br /> 
+   </p></div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="calculateChange()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">calculateChange</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function calculateChange(velocity:Number, ease:Function, duration:Number, checkpoint:Number = 0.05):Number</code><p>
+   Determines the amount of change given a particular velocity, an specific easing equation, 
+   and the duration that the tween will last. This is useful for plotting the resting position
+   of an object that starts out at a certain velocity and decelerates based on an ease (like 
+   <code>Strong.easeOut</code>). 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">velocity</span>:Number</code> &mdash; The initial velocity
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">ease</span>:Function</code> &mdash; The easing equation (like <code>Strong.easeOut</code> or <code>Quad.easeOut</code>).
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; The duration (in seconds) of the tween
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">checkpoint</span>:Number</code> (default = <code>0.05</code>)<code></code> &mdash; A value between 0 and 1 (typically 0.05) that is used to measure an easing equation's initial strength. The goal is for the value to have moved at the initial velocity through that point in the ease. So 0.05 represents 5%. If the initial velocity is 500, for example, and the ease is <code>Strong.easeOut</code> and <code>checkpoint</code> is 0.05, it will measure 5% into that ease and plot the position that would represent where the value would be if it was moving 500 units per second for the first 5% of the tween. If you notice that your tween appears to start off too fast or too slow, try adjusting the <code>checkpoint</code> higher or lower slightly. Typically 0.05 works great. 
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Number</code> &mdash; The amount of change (can be positive or negative based on the velocity)
+   </td>
+</tr>
+</table>
+</div>
+<a name="calculateDuration()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">calculateDuration</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function calculateDuration(start:Number, end:Number, velocity:Number, ease:Function, checkpoint:Number = 0.05):Number</code><p>
+   Calculates the duration (in seconds) that it would take to move from a particular start value
+   to an end value at the given initial velocity, decelerating according to a certain easing 
+   equation (like <code>Strong.easeOut</code>). 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">start</span>:Number</code> &mdash; Starting value
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">end</span>:Number</code> &mdash; Ending value
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">velocity</span>:Number</code> &mdash; the initial velocity at which the starting value is changing
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">ease</span>:Function</code> &mdash; The easing equation used for deceleration (like <code>Strong.easeOut</code> or <code>Quad.easeOut</code>).
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">checkpoint</span>:Number</code> (default = <code>0.05</code>)<code></code> &mdash; A value between 0 and 1 (typically 0.05) that is used to measure an easing equation's initial strength. The goal is for the value to have moved at the initial velocity through that point in the ease. So 0.05 represents 5%. If the initial velocity is 500, for example, and the ease is <code>Strong.easeOut</code> and <code>checkpoint</code> is 0.05, it will measure 5% into that ease and plot the position that would represent where the value would be if it was moving 500 units per second for the first 5% of the tween. If you notice that your tween appears to start off too fast or too slow, try adjusting the <code>checkpoint</code> higher or lower slightly. Typically 0.05 works great. 
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Number</code> &mdash; The duration (in seconds) that it would take to move from the start value to the end value at the initial velocity provided, decelerating according to the ease. 
+   </td>
+</tr>
+</table>
+</div>
+<a name="calculateTweenDuration()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">calculateTweenDuration</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function calculateTweenDuration(target:Object, vars:Object, maxDuration:Number = 100, minDuration:Number = 0.25, overshootTolerance:Number = 1):Number</code><p>
+   Analyzes various throwProps variables (like initial velocities, max/min values, 
+   and resistance) and determines the appropriate duration. Typically it is best to 
+   use the <code>ThrowPropsPlugin.to()</code> method for this, but <code>calculateTweenDuration()</code>
+   could be convenient if you want to create a TweenMax instance instead of a TweenLite instance
+   (which is what <code>throwPropsPlugin.to()</code> returns).
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Target object whose properties the tween affects. This can be ANY object, not just a DisplayObject. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object containing the end values of the properties you're tweening, and it must also contain a <code>throwProps</code> object. For example, to create a tween that tweens <code>mc.x</code> at an initial velocity of 500 and <code>mc.y</code> at an initial velocity of -300 and applies a <code>resistance<code> of 80 and uses the <code>Strong.easeOut</code> easing equation and calls the method <code>tweenCompleteHandler</code> when it is done, the <code>vars</code> object would look like: <code>{throwProps:{x:500, y:-300, resistance:80}, ease:Strong.easeOut, onComplete:tweenCompleteHandler}</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">maxDuration</span>:Number</code> (default = <code>100</code>)<code></code> &mdash; Maximum duration (in seconds)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">minDuration</span>:Number</code> (default = <code>0.25</code>)<code></code> &mdash; Minimum duration (in seconds)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">overshootTolerance</span>:Number</code> (default = <code>1</code>)<code></code> &mdash; sets a maximum number of seconds that can be added to the tween's duration (if necessary) to 
+   accommodate temporarily overshooting the end value before smoothly returning to it at the end of the tween. 
+   This can happen in situations where the initial velocity would normally cause it to exceed the <code>max</code> 
+   or <code>min</code> values. An example of this would be in the iOS (iPhone or iPad) when you flick-scroll 
+   so quickly that the content would shoot past the end of the scroll area. Instead of jerking to a sudden stop
+   when it reaches the edge, the content briefly glides past the max/min position and gently eases back into place. 
+   The larger the <code>overshootTolerance</code> the more leeway the tween has to temporarily shoot past the 
+   max/min if necessary.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Number</code> &mdash; The duration (in seconds) that the tween should use. 
+   </td>
+</tr>
+</table>
+</div>
+<a name="to()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">to</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function to(target:Object, vars:Object, maxDuration:Number = 100, minDuration:Number = 0.25, overshootTolerance:Number = 1):<a href="../../greensock/TweenLite.html">TweenLite</a></code><p>
+   Automatically analyzes various throwProps variables (like <code>velocity</code>, <code>max</code>, <code>min</code>, 
+   and <code>resistance</code>) and creates a TweenLite instance with the appropriate duration. You can use
+   <code>ThrowPropsPlugin.to()</code> instead of <code>TweenLite.to()</code> to create
+   a tween - they're identical except that <code>ThrowPropsPlugin.to()</code> doesn't have a 
+   <code>duration</code> parameter (it figures it out for you) and it adds a few extra parameters
+   to the end that can optionally be used to affect the duration. <br /><br />
+   
+   Another key difference is that <code>ThrowPropsPlugin.to()</code> will recognize the 
+   <code>resistance</code> special property which basically controls how quickly each 
+   property's velocity decelerates (and consequently influences the duration of the tween). 
+   For example, if the initial <code>velocity</code> is 500 and the <code>resistance</code> 
+   is 300, it will decelerate much faster than if the resistance was 20. You can define
+   a <code>resistance</code> value either for each individual property in the <code>throwProps</code> 
+   tween like this:<br /><br /><code>
+   
+   ThrowPropsPlugin.to(mc, {throwProps:{x:{velocity:500, resistance:150}, y:{velocity:-300, resistance:50}}});
+   </code><br /><br />
+   
+   <strong>OR</strong> you can define a single <code>resistance</code> value that will be used for all of the 
+   properties in that particular <code>throwProps</code> tween like this:<br /><br /><code>
+   
+   ThrowPropsPlugin.to(mc, {throwProps:{x:500, y:-300, resistance:150}}); <br /><br />
+   
+   //-OR- <br /><br />
+   
+   ThrowPropsPlugin.to(mc, {throwProps:{x:{velocity:500, max:800, min:0}, y:{velocity:-300, max:700, min:100}, resistance:150}});
+   </code><br /><br /> 
+   
+   <code>resistance</code> should always be a positive value, although <code>velocity</code> can be negative. 
+   <code>resistance</code> always works against <code>velocity</code>. If no <code>resistance</code> value is 
+   found, the <code>ThrowPropsPlugin.defaultResistance</code> value will be used. The <code>resistance</code>
+   values merely affect the duration of the tween and can be overriden by the <code>maxDuration</code> and 
+   <code>minDuration</code> parameters. Think of the <code>resistance</code> as more of a suggestion that 
+   ThrowPropsPlugin uses in its calculations rather than an absolute set-in-stone value. When there are multiple
+   properties in one throwProps tween (like <code>x</code> and <code>y</code>) and the calculated duration
+   for each one is different, the longer duration is always preferred in order to make things animate more 
+   smoothly.<br /><br />
+   
+   You also may want to impose some restrictions on the tween's duration (if the user drags incredibly 
+   fast, for example, you might not want the tween to last 200 seconds). Use <code>maxDuration</code> and 
+   <code>minDuration</code> parameters for that. You can use the <code>overshootTolerance</code>
+   parameter to set a maximum number of seconds that can be added to the tween's duration (if necessary) to 
+   accommodate temporarily overshooting the end value before smoothly returning to it at the end of the tween. 
+   This can happen in situations where the initial velocity would normally cause it to exceed the <code>max</code> 
+   or <code>min</code> values. An example of this would be in the iOS (iPhone or iPad) when you flick-scroll 
+   so quickly that the content would shoot past the end of the scroll area. Instead of jerking to a sudden stop
+   when it reaches the edge, the content briefly glides past the max/min position and gently eases back into place. 
+   The larger the <code>overshootTolerance</code> the more leeway the tween has to temporarily shoot past the 
+   max/min if necessary. 
+   
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Target object whose properties the tween affects. This can be ANY object, not just a DisplayObject. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object containing the end values of the properties you're tweening, and it must also contain a <code>throwProps</code> object. For example, to create a tween that tweens <code>mc.x</code> at an initial velocity of 500 and <code>mc.y</code> at an initial velocity of -300 and applies a <code>resistance<code> of 80 and uses the <code>Strong.easeOut</code> easing equation and calls the method <code>tweenCompleteHandler</code> when it is done, the <code>vars</code> object would look like: <code>{throwProps:{x:500, y:-300, resistance:80}, ease:Strong.easeOut, onComplete:tweenCompleteHandler}</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">maxDuration</span>:Number</code> (default = <code>100</code>)<code></code> &mdash; Maximum duration of the tween
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">minDuration</span>:Number</code> (default = <code>0.25</code>)<code></code> &mdash; Minimum duration of the tween
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">overshootTolerance</span>:Number</code> (default = <code>1</code>)<code></code> &mdash; sets a maximum number of seconds that can be added to the tween's duration (if necessary) to 
+   accommodate temporarily overshooting the end value before smoothly returning to it at the end of the tween. 
+   This can happen in situations where the initial velocity would normally cause it to exceed the <code>max</code> 
+   or <code>min</code> values. An example of this would be in the iOS (iPhone or iPad) when you flick-scroll 
+   so quickly that the content would shoot past the end of the scroll area. Instead of jerking to a sudden stop
+   when it reaches the edge, the content briefly glides past the max/min position and gently eases back into place. 
+   The larger the <code>overshootTolerance</code> the more leeway the tween has to temporarily shoot past the 
+   max/min if necessary.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../../greensock/TweenLite.html">TweenLite</a></code> &mdash; 
+                        TweenLite instance
+   
+   
+                        
+                     </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../plugins/ThrowPropsPlugin.html#defaultResistance" target="">defaultResistance</a>
+</div>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

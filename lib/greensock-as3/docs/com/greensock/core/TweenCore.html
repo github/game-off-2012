@@ -1,0 +1,527 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="TweenCore,com.greensock.core.TweenCore,data,timeline,vars,currentTime,delay,duration,paused,reversed,startTime,totalDuration,totalTime,complete,invalidate,kill,pause,play,restart,resume,reverse" name="keywords">
+<title>com.greensock.core.TweenCore</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'TweenCore - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?com/greensock/core/TweenCore.html&amp;com/greensock/core/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;TweenCore</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class TweenCore"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock.core</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class TweenCore</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Subclasses</td><td><a href="../core/SimpleTimeline.html">SimpleTimeline</a>, <a href="../../greensock/TweenLite.html">TweenLite</a></td>
+</tr>
+</table>
+<p></p>
+ TweenCore is the base class for all TweenLite, TweenMax, TimelineLite, and TimelineMax classes and 
+ provides core functionality and properties. There is no reason to use this class directly.<br /><br />
+ 
+ <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#currentTime">currentTime</a> : Number<div class="summaryTableDescription">
+   Most recently rendered time (or frame for frames-based tweens/timelines) according to its 
+   <code>duration</code>.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#data">data</a> : *<div class="summaryTableDescription"> Place to store any data you want.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#delay">delay</a> : Number<div class="summaryTableDescription"> 
+   Length of time in seconds (or frames for frames-based tweens/timelines) before the tween should begin.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#duration">duration</a> : Number<div class="summaryTableDescription">
+   Duration of the tween in seconds (or frames for frames-based tweens/timelines) not including any repeats
+   or repeatDelays.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#paused">paused</a> : Boolean<div class="summaryTableDescription"> Indicates the paused state of the tween/timeline.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#reversed">reversed</a> : Boolean<div class="summaryTableDescription"> Indicates the reversed state of the tween/timeline.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#startTime">startTime</a> : Number<div class="summaryTableDescription"> Start time in seconds (or frames for frames-based tweens/timelines), according to its position on its parent timeline </div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#timeline">timeline</a> : <a href="../core/SimpleTimeline.html">SimpleTimeline</a>
+<div class="summaryTableDescription"> The parent timeline on which the tween/timeline is placed.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#totalDuration">totalDuration</a> : Number<div class="summaryTableDescription">
+   Duration of the tween in seconds (or frames for frames-based tweens/timelines) including any repeats
+   or repeatDelays (which are only available on TweenMax and TimelineMax).</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#totalTime">totalTime</a> : Number<div class="summaryTableDescription">
+   Most recently rendered time (or frame for frames-based tweens/timelines) according to its 
+   <code>totalDuration</code>.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#vars">vars</a> : Object<div class="summaryTableDescription"> Stores variables (things like alpha, y or whatever we're tweening as well as special properties like "onComplete").</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#TweenCore()">TweenCore</a>(duration:Number = 0, vars:Object = null)</div>
+<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#complete()">complete</a>(skipRender:Boolean = false, suppressEvents:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Forces the tween/timeline to completion.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#invalidate()">invalidate</a>():void</div>
+<div class="summaryTableDescription"> 
+   Clears any initialization data (like starting values in tweens) which can be useful if, for example, 
+   you want to restart it without reverting to any previously recorded starting values.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#kill()">kill</a>():void</div>
+<div class="summaryTableDescription"> Kills the tween/timeline, stopping it immediately.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#pause()">pause</a>():void</div>
+<div class="summaryTableDescription"> Pauses the tween/timeline </div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#play()">play</a>():void</div>
+<div class="summaryTableDescription"> Starts playing forward from the current position.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#restart()">restart</a>(includeDelay:Boolean = false, suppressEvents:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Restarts and begins playing forward.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#resume()">resume</a>():void</div>
+<div class="summaryTableDescription"> Starts playing from the current position without altering direction (forward or reversed).</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#reverse()">reverse</a>(forceResume:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Reverses smoothly, adjusting the startTime to avoid any skipping.</div>
+</td><td class="summaryTableOwnerCol">TweenCore</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="currentTime"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">currentTime</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>currentTime:Number</code>&nbsp;&nbsp;[read-write]<p>
+   Most recently rendered time (or frame for frames-based tweens/timelines) according to its 
+   <code>duration</code>. <code>totalTime</code>, by contrast, is based on its <code>totalDuration</code> 
+   which includes repeats and repeatDelays. Since TweenLite and TimelineLite don't offer 
+   <code>repeat</code> and <code>repeatDelay</code> functionality, <code>currentTime</code> 
+   and <code>totalTime</code> will always be the same but in TweenMax or TimelineMax, they 
+   could be different. For example, if a TimelineMax instance has a duration 
+   of 5 a repeat of 1 (meaning its <code>totalDuration</code> is 10), at the end of the second cycle, 
+   <code>currentTime</code> would be 5 whereas <code>totalTime</code> would be 10. If you tracked both
+   properties over the course of the tween, you'd see <code>currentTime</code> go from 0 to 5 twice (one for each
+   cycle) in the same time it takes <code>totalTime</code> go from 0 to 10.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get currentTime():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set currentTime(value:Number):void</code>
+<br>
+</div>
+<a name="data"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">data</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var data:*</code><p> Place to store any data you want.</p></div>
+<a name="delay"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">delay</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>delay:Number</code>&nbsp;&nbsp;[read-write]<p> 
+   Length of time in seconds (or frames for frames-based tweens/timelines) before the tween should begin. 
+   The tween's starting values are not determined until after the delay has expired (except in from() tweens) 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get delay():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set delay(value:Number):void</code>
+<br>
+</div>
+<a name="duration"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">duration</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>duration:Number</code>&nbsp;&nbsp;[read-write]<p>
+   Duration of the tween in seconds (or frames for frames-based tweens/timelines) not including any repeats
+   or repeatDelays. <code>totalDuration</code>, by contrast, does include repeats and repeatDelays. If you alter
+   the <code>duration</code> of a tween while it is in-progress (active), its <code>startTime</code> will automatically 
+   be adjusted in order to make the transition smoothly (without a sudden skip). 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get duration():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set duration(value:Number):void</code>
+<br>
+</div>
+<a name="paused"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">paused</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>paused:Boolean</code>&nbsp;&nbsp;[read-write]<p> Indicates the paused state of the tween/timeline. This does not take into account anscestor timelines. So for example, a tween that is not paused might appear paused if its parent timeline (or any ancenstor timeline) is paused. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get paused():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set paused(value:Boolean):void</code>
+<br>
+</div>
+<a name="reversed"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">reversed</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>reversed:Boolean</code>&nbsp;&nbsp;[read-write]<p> Indicates the reversed state of the tween/timeline. This value is not affected by <code>yoyo</code> repeats and it does not take into account the reversed state of anscestor timelines. So for example, a tween that is not reversed might appear reversed if its parent timeline (or any ancenstor timeline) is reversed. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get reversed():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set reversed(value:Boolean):void</code>
+<br>
+</div>
+<a name="startTime"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">startTime</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>startTime:Number</code>&nbsp;&nbsp;[read-write]<p> Start time in seconds (or frames for frames-based tweens/timelines), according to its position on its parent timeline </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get startTime():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set startTime(value:Number):void</code>
+<br>
+</div>
+<a name="timeline"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">timeline</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var timeline:<a href="../core/SimpleTimeline.html">SimpleTimeline</a></code><p> The parent timeline on which the tween/timeline is placed. By default, it uses the TweenLite.rootTimeline (or TweenLite.rootFramesTimeline for frames-based tweens/timelines). </p></div>
+<a name="totalDuration"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">totalDuration</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>totalDuration:Number</code>&nbsp;&nbsp;[read-write]<p>
+   Duration of the tween in seconds (or frames for frames-based tweens/timelines) including any repeats
+   or repeatDelays (which are only available on TweenMax and TimelineMax). <code>duration</code>, by contrast, does 
+   <b>NOT</b> include repeats and repeatDelays. So if a TweenMax's <code>duration</code> is 1 and it has a repeat of 2, 
+   the <code>totalDuration</code> would be 3.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get totalDuration():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set totalDuration(value:Number):void</code>
+<br>
+</div>
+<a name="totalTime"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">totalTime</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>totalTime:Number</code>&nbsp;&nbsp;[read-write]<p>
+   Most recently rendered time (or frame for frames-based tweens/timelines) according to its 
+   <code>totalDuration</code>. <code>currentTime</code>, by contrast, is based on its <code>duration</code> 
+   which does NOT include repeats and repeatDelays. Since TweenLite and TimelineLite don't offer 
+   <code>repeat</code> and <code>repeatDelay</code> functionality, <code>currentTime</code> 
+   and <code>totalTime</code> will always be the same but in TweenMax or TimelineMax, they 
+   could be different. For example, if a TimelineMax instance has a duration 
+   of 5 a repeat of 1 (meaning its <code>totalDuration</code> is 10), at the end of the second cycle, 
+   <code>currentTime</code> would be 5 whereas <code>totalTime</code> would be 10. If you tracked both
+   properties over the course of the tween, you'd see <code>currentTime</code> go from 0 to 5 twice (one for each
+   cycle) in the same time it takes <code>totalTime</code> go from 0 to 10.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get totalTime():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set totalTime(value:Number):void</code>
+<br>
+</div>
+<a name="vars"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">vars</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var vars:Object</code><p> Stores variables (things like alpha, y or whatever we're tweening as well as special properties like "onComplete"). </p></div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="TweenCore()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">TweenCore</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function TweenCore(duration:Number = 0, vars:Object = null)</code><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">duration</span>:Number</code> (default = <code>0</code>)<code></code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> (default = <code>null</code>)<code></code></td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="complete()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">complete</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function complete(skipRender:Boolean = false, suppressEvents:Boolean = false):void</code><p>
+   Forces the tween/timeline to completion.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">skipRender</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; to skip rendering the final state of the tween, set skipRender to true. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">suppressEvents</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true, no events or callbacks will be triggered for this render (like onComplete, onUpdate, onReverseComplete, etc.)
+   </td>
+</tr>
+</table>
+</div>
+<a name="invalidate()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">invalidate</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function invalidate():void</code><p> 
+   Clears any initialization data (like starting values in tweens) which can be useful if, for example, 
+   you want to restart it without reverting to any previously recorded starting values. When you invalidate() 
+   a tween/timeline, it will be re-initialized the next time it renders and its <code>vars</code> object will be re-parsed. 
+   The timing of the tween/timeline (duration, startTime, delay) will NOT be affected. Another example would be if you
+   have a <code>TweenMax(mc, 1, {x:100, y:100})</code> that ran when mc.x and mc.y were initially at 0, but now mc.x 
+   and mc.y are 200 and you want them tween to 100 again, you could simply <code>invalidate()</code> the tween and 
+   <code>restart()</code> it. Without invalidating first, restarting it would cause the values jump back to 0 immediately 
+   (where they started when the tween originally began). When you invalidate a timeline, it automatically invalidates 
+   all of its children.
+   </p></div>
+<a name="kill()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">kill</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function kill():void</code><p> Kills the tween/timeline, stopping it immediately. </p></div>
+<a name="pause()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">pause</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function pause():void</code><p> Pauses the tween/timeline </p></div>
+<a name="play()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">play</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function play():void</code><p> Starts playing forward from the current position. (essentially unpauses and makes sure that it is not reversed) </p></div>
+<a name="restart()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">restart</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function restart(includeDelay:Boolean = false, suppressEvents:Boolean = true):void</code><p>
+   Restarts and begins playing forward.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">includeDelay</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Determines whether or not the delay (if any) is honored in the restart()
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">suppressEvents</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, no events or callbacks will be triggered as the "virtual playhead" moves to the new position (onComplete, onUpdate, onReverseComplete, etc. of this tween/timeline and any of its child tweens/timelines won't be triggered, nor will any of the associated events be dispatched) 
+   </td>
+</tr>
+</table>
+</div>
+<a name="resume()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">resume</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function resume():void</code><p> Starts playing from the current position without altering direction (forward or reversed). </p></div>
+<a name="reverse()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">reverse</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function reverse(forceResume:Boolean = true):void</code><p>
+   Reverses smoothly, adjusting the startTime to avoid any skipping. After being reversed,
+   it will play backwards, exactly opposite from its forward orientation, meaning that, for example, a
+   tween's easing equation will appear reversed as well. If a tween/timeline plays for 2 seconds and gets
+   reversed, it will play for another 2 seconds to return to the beginning.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">forceResume</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, it will resume() immediately upon reversing. Otherwise its paused state will remain unchanged.
+   </td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->
