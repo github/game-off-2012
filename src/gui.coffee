@@ -19,8 +19,8 @@ class Map
     @do = 0
     
     @texts =[
-      new Text("Level 1", 16*4, (16*4)-4, true),
-      new Text("Level 2", 6*8*4, (8*13*4)+4, false),
+      new Text("TestMap 1", 16*4, (16*4)-4, true),
+      new Text("TestMap 2", 6*8*4, (8*13*4)+4, false),
       new Text("Level 3", 11*8*4, (8*2*4)-4, false),
       new Text("Final", 15*8*4, (12*8*4)-4, false)
     ]
