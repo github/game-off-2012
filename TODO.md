@@ -1,5 +1,9 @@
 MUST:
   * Add README + change name of repo.
+  * Score broken after restart
+  * Game over - current score / best score
+  * ready-code on restart
+  
 
 LAST (BUT MUST):
   * CSS compatability.
