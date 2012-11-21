@@ -62,7 +62,7 @@ function Tower(baseTile) {
     var nextFireIn = this.attr.coolDown;
     var mutateCounter = this.attr.mutate;
     var towerRange = new Tower_Range(this);
-    var tooltip = new ToolTip(this);
+    var tooltip = new ToolTip(this, this.attr);
     var added = false;
     
     this.draw = function (pen) {
