@@ -241,7 +241,7 @@
 
       // Check Collisions with pappu
       mit.ForkUtils.checkCollision();
-      //mit.BranchUtils.checkCollision();
+      mit.BranchUtils.checkCollision();
 
       // Send over Pakias (Enemies)
       if (mit.score > 199)
