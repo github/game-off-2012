@@ -20,8 +20,19 @@
     };
 
     this.generateRandomVelocity = function() {
-      this.vx = -20;
-      this.vy = utils.randomNumber(-25,-18);
+      this.vx = -10;
+      this.vy = utils.randomNumber(-30,-20);
+    };
+
+    this.getBounds = function() {
+      var bounds = {};
+
+      bounds.start_x = this.x;
+      bounds.start_y = this.y;
+      bounds.end_x = this.x + this.w;
+      bounds.end_y = this.y + this.h;
+
+      return bounds;
     };
   };
 
@@ -90,7 +101,7 @@
 
       this.cur_pakia.x += this.cur_pakia.vx;
       this.cur_pakia.y += this.cur_pakia.vy;
-      // console.log(cur_pakia.x)
+      // console.log(this.cur_pakia.x)
 
       // Reset positions
       if (this.cur_pakia.x + this.cur_pakia.w < 0) {
@@ -112,9 +123,21 @@
         this.createPakias();
       }
 
-      if (mit.score.toFixed(2) % 10 === 0 || this.cur_pakia) {
+      if (mit.score.toFixed(2) % 50 === 0 || this.cur_pakia) {
         this.reflow(ctx);
         this.repaint(ctx);
+      }
+    },
+
+    checkCollision: function() {
+      if (!this.cur_pakia)
+        return;
+
+      var pappu_bounds = mit.Pappu.getBounds();
+      var pakia_bounds = this.cur_pakia.getBounds();
+
+      if (utils.intersect(pappu_bounds, pakia_bounds)) {
+        mit.gameOver();
       }
     }
 

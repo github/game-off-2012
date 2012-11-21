@@ -242,9 +242,10 @@
       // Check Collisions with pappu
       mit.ForkUtils.checkCollision();
       mit.BranchUtils.checkCollision();
+      mit.PakiaUtils.checkCollision();
 
       // Send over Pakias (Enemies)
-      if (mit.score > 9)
+      if (mit.score > 199)
         mit.PakiaUtils.render(ctx);
 
       // Update score
