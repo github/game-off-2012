@@ -89,7 +89,7 @@ function Tower(baseTile) {
         var a = this.attr;
         
         for (at in a) {
-		if (at != "hitcount") {
+		if (at != "hitcount" && at != "coolDown") {
             a[at] += (Math.random() - 0.5) * a.mutatestrength * a[at] * 0.30;
             a[at] = Math.floor(a[at] + 0.5);
 		}

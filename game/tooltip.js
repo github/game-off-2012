@@ -14,7 +14,7 @@ function ToolTip(basetile, attr) {
 	this.visibility = 1;
 	
 
-	this.base = new baseObj(this, 10);
+	this.base = new baseObj(this, 13);
 
 	this.update = function(dt) {
 		if (this.hover == false) {
