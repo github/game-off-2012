@@ -20,6 +20,7 @@ class Level
   tick:->
     if @inputHandler.ESC.isPressed()
       impress().goto("map_screen")
+      @inputHandler.ESC.toggle(false)
       @game.loadMap()
     
     for i in [0...@entities.size()]
