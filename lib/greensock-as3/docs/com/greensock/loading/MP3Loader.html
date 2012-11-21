@@ -1,0 +1,880 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="MP3Loader,com.greensock.loading.MP3Loader,PLAY_PROGRESS,SOUND_COMPLETE,SOUND_PAUSE,SOUND_PLAY,channel,initThreshold,duration,playProgress,soundPaused,soundTime,volume,_playSound,addEventListener,gotoSoundTime,pauseSound,playSound" name="keywords">
+<title>com.greensock.loading.MP3Loader</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'MP3Loader - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?com/greensock/loading/MP3Loader.html&amp;com/greensock/loading/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;MP3Loader</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#constantSummary">Constants</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class MP3Loader"); titleBar_setSubNav(true,true,false,false,true,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock.loading</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class MP3Loader</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">MP3Loader <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> <a href="core/LoaderItem.html">LoaderItem</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> <a href="core/LoaderCore.html">LoaderCore</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
+</tr>
+</table>
+<p></p>
+ Loads an MP3 audio file and also provides convenient playback methods 
+ and properties like <code>pauseSound(), playSound(), gotoSoundTime(), playProgress, volume, 
+ soundPaused, duration, </code> and <code>soundTime</code>. An MP3Loader will dispatch useful events
+ like <code>SOUND_COMPLETE, SOUND_PAUSE, SOUND_PLAY</code>, and <code>PLAY_PROGRESS</code> in addition
+ to the typical loader events, making it easy to hook up your own control interface. It packs a 
+ surprising amount of functionality into a very small amount of kb. <br /><br />
+ 
+ <strong>OPTIONAL VARS PROPERTIES</strong><br />
+ The following special properties can be passed into the MP3Loader constructor via its <code>vars</code> 
+ parameter which can be either a generic object or an <code><a href="data/MP3LoaderVars.html">MP3LoaderVars</a></code> object:<br />
+ <ul>
+   <li><strong> name : String</strong> - A name that is used to identify the MP3Loader instance. This name can be fed to the <code>find()</code> method or traced at any time. Each loader's name should be unique. If you don't define one, a unique name will be created automatically, like "loader21".</li>
+   <li><strong> autoPlay : Boolean</strong> - By default the MP3 will begin playing immediately when enough of the file has buffered, but to prevent it from autoPlaying, set <code>autoPlay</code> to <code>false</code>.</li>
+   <li><strong> repeat : int</strong> - Number of times that the mp3 should repeat. To repeat indefinitely, use -1. Default is 0.</li>
+   <li><strong> volume : Number</strong> - A value between 0 and 1 indicating the volume at which the sound should play when the MP3Loader's controls are used to play the sound, like <code>playSound()</code> or when <code>autoPlay</code> is <code>true</code> (default volume is 1).</li>
+   <li><strong> initThreshold : uint</strong> - The minimum number of <code>bytesLoaded</code> to wait for before the <code>LoaderEvent.INIT</code> event is dispatched - the higher the number the more accurate the <code>duration</code> estimate will be when the INIT event is dispatched (the default value is 102400 which is 100k). The MP3's duration cannot be determined with 100% accuracy until it has completely loaded, but it is estimated with more and more accuracy as the file loads.</li>
+   <li><strong> alternateURL : String</strong> - If you define an <code>alternateURL</code>, the loader will initially try to load from its original <code>url</code> and if it fails, it will automatically (and permanently) change the loader's <code>url</code> to the <code>alternateURL</code> and try again. Think of it as a fallback or backup <code>url</code>. It is perfectly acceptable to use the same <code>alternateURL</code> for multiple loaders (maybe a default image for various ImageLoaders for example).</li>
+   <li><strong> context : SoundLoaderContext</strong> - To control things like the buffer time and whether or not a policy file is checked, define a <code>SoundLoaderContext</code> object. The default context is null. See Adobe's SoundLoaderContext documentation for details.</li>
+   <li><strong> noCache : Boolean</strong> - If <code>noCache</code> is <code>true</code>, a "gsCacheBusterID" parameter will be appended to the url with a random set of numbers to prevent caching (don't worry, this info is ignored when you <code>getLoader()</code> or <code>getContent()</code> by url and when you're running locally)</li>
+   <li><strong> estimatedBytes : uint</strong> - Initially, the loader's <code>bytesTotal</code> is set to the <code>estimatedBytes</code> value (or <code>LoaderMax.defaultEstimatedBytes</code> if one isn't defined). Then, when the loader begins loading and it can accurately determine the bytesTotal, it will do so. Setting <code>estimatedBytes</code> is optional, but the more accurate the value, the more accurate your loaders' overall progress will be initially. If the loader will be inserted into a LoaderMax instance (for queue management), its <code>auditSize</code> feature can attempt to automatically determine the <code>bytesTotal</code> at runtime (there is a slight performance penalty for this, however - see LoaderMax's documentation for details).</li>
+   <li><strong> requireWithRoot : DisplayObject</strong> - LoaderMax supports <i>subloading</i>, where an object can be factored into a parent's loading progress. If you want LoaderMax to require this MP3Loader as part of its parent SWFLoader's progress, you must set the <code>requireWithRoot</code> property to your swf's <code>root</code>. For example, <code>var loader:MP3Loader = new MP3Loader("audio.mp3", {name:"audio", requireWithRoot:this.root});</code></li>
+   <li><strong> allowMalformedURL : Boolean</strong> - Normally, the URL will be parsed and any variables in the query string (like "?name=test&amp;state=il&amp;gender=m") will be placed into a URLVariables object which is added to the URLRequest. This avoids a few bugs in Flash, but if you need to keep the entire URL intact (no parsing into URLVariables), set <code>allowMalformedURL:true</code>. For example, if your URL has duplicate variables in the query string like <code>http://www.greensock.com/?c=S&amp;c=SE&amp;c=SW</code>, it is technically considered a malformed URL and a URLVariables object can't properly contain all the duplicates, so in this case you'd want to set <code>allowMalformedURL</code> to <code>true</code>.</li>
+   <li><strong> autoDispose : Boolean</strong> - When <code>autoDispose</code> is <code>true</code>, the loader will be disposed immediately after it completes (it calls the <code>dispose()</code> method internally after dispatching its <code>COMPLETE</code> event). This will remove any listeners that were defined in the vars object (like onComplete, onProgress, onError, onInit). Once a loader is disposed, it can no longer be found with <code>LoaderMax.getLoader()</code> or <code>LoaderMax.getContent()</code> - it is essentially destroyed but its content is not unloaded (you must call <code>unload()</code> or <code>dispose(true)</code> to unload its content). The default <code>autoDispose</code> value is <code>false</code>.
+   
+   <br /><br />----EVENT HANDLER SHORTCUTS----</li>
+   <li><strong> onOpen : Function</strong> - A handler function for <code>LoaderEvent.OPEN</code> events which are dispatched when the loader begins loading. Make sure your onOpen function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+   <li><strong> onInit : Function</strong> - A handler function for <code>Event.INIT</code> events which will be dispatched when the <code>bytesLoaded</code> exceeds the <code>initThreshold</code> (100k by default) and the MP3 has streamed enough of its content to identify the ID3 meta data. Make sure your onInit function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+   <li><strong> onProgress : Function</strong> - A handler function for <code>LoaderEvent.PROGRESS</code> events which are dispatched whenever the <code>bytesLoaded</code> changes. Make sure your onProgress function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>). You can use the LoaderEvent's <code>target.progress</code> to get the loader's progress value or use its <code>target.bytesLoaded</code> and <code>target.bytesTotal</code>.</li>
+   <li><strong> onComplete : Function</strong> - A handler function for <code>LoaderEvent.COMPLETE</code> events which are dispatched when the loader has finished loading successfully. Make sure your onComplete function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+   <li><strong> onCancel : Function</strong> - A handler function for <code>LoaderEvent.CANCEL</code> events which are dispatched when loading is aborted due to either a failure or because another loader was prioritized or <code>cancel()</code> was manually called. Make sure your onCancel function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+   <li><strong> onError : Function</strong> - A handler function for <code>LoaderEvent.ERROR</code> events which are dispatched whenever the loader experiences an error (typically an IO_ERROR or SECURITY_ERROR). An error doesn't necessarily mean the loader failed, however - to listen for when a loader fails, use the <code>onFail</code> special property. Make sure your onError function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+   <li><strong> onFail : Function</strong> - A handler function for <code>LoaderEvent.FAIL</code> events which are dispatched whenever the loader fails and its <code>status</code> changes to <code>LoaderStatus.FAILED</code>. Make sure your onFail function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+   <li><strong> onIOError : Function</strong> - A handler function for <code>LoaderEvent.IO_ERROR</code> events which will also call the onError handler, so you can use that as more of a catch-all whereas <code>onIOError</code> is specifically for LoaderEvent.IO_ERROR events. Make sure your onIOError function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+ </ul><br />
+ 
+ <strong>Note:</strong> Using a <code><a href="data/MP3LoaderVars.html">MP3LoaderVars</a></code> instance 
+ instead of a generic object to define your <code>vars</code> is a bit more verbose but provides 
+ code hinting and improved debugging because it enforces strict data typing. Use whichever one you prefer.<br /><br />
+ 
+ <code>content</code> data type: <strong><code>flash.media.Sound</code></strong><br /><br />
+ 
+ <strong>NOTE:</strong> To avoid garbage collection issues in the Flash player, the <code>Sound</code> 
+ object that MP3Loader employs must get recreated internally anytime the MP3Loader is unloaded or its loading 
+ is cancelled, so it is best to access the <code>content</code> after the <code>COMPLETE</code>
+ event has been dispatched. Otherwise, if you store a reference to the MP3Loader's <code>content</code>
+ before or during a load and it gets cancelled or unloaded for some reason, the <code>Sound</code> object 
+ won't be the one into which the MP3 is eventually loaded.<br /><br />
+ 
+ <p></p>
+<br>
+<span class="label">Example</span>
+<br>Example AS3 code:<div class='listing'><pre>
+ import com.greensock.*;
+ import com.greensock.loading.*;
+ import com.greensock.events.LoaderEvent;
+ 
+ //create a MP3Loader that will begin playing immediately when it loads
+ var sound:MP3Loader = new MP3Loader("mp3/audio.mp3", {name:"audio", autoPlay:true, repeat:3, estimatedBytes:9500});
+ 
+ //begin loading
+ sound.load();
+ 
+ //add a CLICK listener to a button that causes the sound to toggle its paused state.
+ button.addEventListener(MouseEvent.CLICK, toggleSound);
+ function toggleSound(event:MouseEvent):void {
+     sound.soundPaused = !sound.soundPaused;
+ }
+ 
+ //or you could put the MP3Loader into a LoaderMax queue. Create one first...
+ var queue:LoaderMax = new LoaderMax({name:"mainQueue", onProgress:progressHandler, onComplete:completeHandler, onError:errorHandler});
+ 
+ //append the MP3Loader and then several other loaders
+ queue.append( sound );
+ queue.append( new XMLLoader("xml/doc.xml", {name:"xmlDoc", estimatedBytes:425}) );
+ queue.append( new ImageLoader("img/photo1.jpg", {name:"photo1", estimatedBytes:3500}) );
+ 
+ //start loading
+ queue.load();
+ 
+ function progressHandler(event:LoaderEvent):void {
+   trace("progress: " + event.target.progress);
+ }
+ 
+ function completeHandler(event:LoaderEvent):void {
+   trace(event.target + " is complete!");
+ }
+ 
+ function errorHandler(event:LoaderEvent):void {
+   trace("error occured with " + event.target + ": " + event.text);
+ }
+ </pre></div>
+ 
+ <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<p>
+<span class="classHeaderTableLabel">See also</span>
+</p>
+<div class="seeAlso">
+<a href="data/MP3LoaderVars.html" target="">com.greensock.loading.data.MP3LoaderVars</a>
+</div>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<div class="showHideLinks">
+<div class="hideInheritedProperty" id="hideInheritedProperty">
+<a onclick="javascript:setInheritedVisible(false,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Properties</a>
+</div>
+<div class="showInheritedProperty" id="showInheritedProperty">
+<a onclick="javascript:setInheritedVisible(true,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Properties</a>
+</div>
+</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderCore.html#auditedSize">auditedSize</a> : Boolean<div class="summaryTableDescription"> 
+   Indicates whether or not the loader's <code>bytesTotal</code> value has been set by any of the following:
+   <ul>
+     <li>Defining an <code>estimatedBytes</code> in the <code>vars</code> object passed to the constructor</li>
+     <li>Calling <code>auditSize()</code> and getting a response (an error is also considered a response)</li>
+     <li>When a LoaderMax instance begins loading, it will automatically force a call to <code>auditSize()</code> for any of its children that don't have an <code>estimatedBytes</code> defined.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderCore.html#autoDispose">autoDispose</a> : Boolean<div class="summaryTableDescription"> When <code>autoDispose</code> is <code>true</code>, the loader will be disposed immediately after it completes (it calls the <code>dispose()</code> method internally after dispatching its <code>COMPLETE</code> event).</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderCore.html#bytesLoaded">bytesLoaded</a> : uint<div class="summaryTableDescription"> Bytes loaded </div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderCore.html#bytesTotal">bytesTotal</a> : uint<div class="summaryTableDescription"> Total bytes that are to be loaded by the loader.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#channel">channel</a> : SoundChannel<div class="summaryTableDescription"> The SoundChannel object that results from the most recent <code>playSound()</code> call (or when <code>autoPlay</code> is <code>true</code> in the constructor's <code>vars</code> parameter).</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderCore.html#content">content</a> : *<div class="summaryTableDescription"> 
+   The content that was loaded by the loader which varies by the type of loader:
+   <ul>
+     <li><strong> ImageLoader </strong> - A <code>com.greensock.loading.display.ContentDisplay</code> (a Sprite) which contains the ImageLoader's <code>rawContent</code> (a <code>flash.display.Bitmap</code> unless script access was denied in which case <code>rawContent</code> will be a <code>flash.display.Loader</code> to avoid security errors).</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#duration">duration</a> : Number<div class="summaryTableDescription">[read-only] The duration (in seconds) of the sound.</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderItem.html#httpStatus">httpStatus</a> : int<div class="summaryTableDescription"> The httpStatus code of the loader.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderItem.html">LoaderItem</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#initThreshold">initThreshold</a> : uint<div class="summaryTableDescription"> The minimum number of <code>bytesLoaded</code> to wait for before the <code>LoaderEvent.INIT</code> event is dispatched - the higher the number the more accurate the <code>duration</code> estimate will be when the INIT event is dispatched (the default value is 102400 which is 100k).</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderCore.html#loadTime">loadTime</a> : Number<div class="summaryTableDescription"> 
+   The number of seconds that elapsed between when the loader began and when it either completed, failed, 
+   or was canceled.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderCore.html#name">name</a> : String<div class="summaryTableDescription"> A name that you use to identify the loader instance.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderCore.html#paused">paused</a> : Boolean<div class="summaryTableDescription"> If a loader is paused, its progress will halt and any LoaderMax instances to which it belongs will either skip over it or stop when its position is reached in the queue (depending on whether or not the LoaderMax's <code>skipPaused</code> property is <code>true</code>).</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#playProgress">playProgress</a> : Number<div class="summaryTableDescription"> A value between 0 and 1 describing the playback progress where 0 means the virtual playhead is at the very beginning of the sound, 0.5 means it is at the halfway point and 1 means it is at the end of the sound.</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderCore.html#progress">progress</a> : Number<div class="summaryTableDescription"> A value between 0 and 1 indicating the overall progress of the loader.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderItem.html#request">request</a> : URLRequest<div class="summaryTableDescription"> The <code>URLRequest</code> associated with the loader.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderItem.html">LoaderItem</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderItem.html#scriptAccessDenied">scriptAccessDenied</a> : Boolean<div class="summaryTableDescription">
+   If the loaded content is denied script access (because of security sandbox restrictions,
+   a missing crossdomain.xml file, etc.), <code>scriptAccessDenied</code> will be set to <code>true</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderItem.html">LoaderItem</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#soundPaused">soundPaused</a> : Boolean<div class="summaryTableDescription"> The playback status of the sound: <code>true</code> if the sound's playback is paused, <code>false</code> if it isn't.</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#soundTime">soundTime</a> : Number<div class="summaryTableDescription"> The time (in seconds) at which the virtual playhead is positioned on the sound.</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderCore.html#status">status</a> : int<div class="summaryTableDescription"> Integer code indicating the loader's status; options are <code>LoaderStatus.READY, LoaderStatus.LOADING, LoaderStatus.COMPLETED, LoaderStatus.PAUSED,</code> and <code>LoaderStatus.DISPOSED</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderItem.html#url">url</a> : String<div class="summaryTableDescription"> The url from which the loader should get its content.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderItem.html">LoaderItem</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/LoaderCore.html#vars">vars</a> : Object<div class="summaryTableDescription"> An object containing optional configuration details, typically passed through a constructor parameter.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#volume">volume</a> : Number<div class="summaryTableDescription"> The volume of the sound (a value between 0 and 1).</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<div class="showHideLinks">
+<div class="hideInheritedMethod" id="hideInheritedMethod">
+<a onclick="javascript:setInheritedVisible(false,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Methods</a>
+</div>
+<div class="showInheritedMethod" id="showInheritedMethod">
+<a onclick="javascript:setInheritedVisible(true,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Methods</a>
+</div>
+</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#MP3Loader()">MP3Loader</a>(urlOrRequest:*, vars:Object = null)</div>
+<div class="summaryTableDescription">
+   Constructor.</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addEventListener()">addEventListener</a>(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void</div>
+<div class="summaryTableDescription">  </div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderItem.html#auditSize()">auditSize</a>():void</div>
+<div class="summaryTableDescription"> 
+   Attempts loading just enough of the content to accurately determine the <code>bytesTotal</code> 
+   in order to improve the accuracy of the <code>progress</code> property.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderItem.html">LoaderItem</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#cancel()">cancel</a>():void</div>
+<div class="summaryTableDescription"> 
+   If the loader is currently loading (<code>status</code> is <code>LoaderStatus.LOADING</code>), it will be canceled 
+   immediately and its status will change to <code>LoaderStatus.READY</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#dispose()">dispose</a>(flushContent:Boolean = false):void</div>
+<div class="summaryTableDescription"> 
+   Disposes of the loader and releases it internally for garbage collection.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#gotoSoundTime()">gotoSoundTime</a>(time:Number, forcePlay:Boolean = false, resetRepeatCount:Boolean = true):void</div>
+<div class="summaryTableDescription"> 
+   Attempts to jump to a certain time in the sound.</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#load()">load</a>(flushContent:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Loads the loader's content, optionally flushing any previously loaded content first.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#pause()">pause</a>():void</div>
+<div class="summaryTableDescription"> Pauses the loader immediately.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#pauseSound()">pauseSound</a>(event:Event = null):void</div>
+<div class="summaryTableDescription"> 
+   Pauses playback of the sound.</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#playSound()">playSound</a>(event:Event = null):SoundChannel</div>
+<div class="summaryTableDescription"> 
+   Plays the sound.</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#prioritize()">prioritize</a>(loadNow:Boolean = true):void</div>
+<div class="summaryTableDescription"> 
+   Immediately prioritizes the loader inside any LoaderMax instances that contain it,
+   forcing it to the top position in their queue and optionally calls <code>load()</code>
+   immediately as well.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#resume()">resume</a>():void</div>
+<div class="summaryTableDescription"> Unpauses the loader and resumes loading immediately.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#toString()">toString</a>():String</div>
+<div class="summaryTableDescription"> Returns information about the loader, like its type, its <code>name</code>, and its <code>url</code> (if it has one).</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#unload()">unload</a>():void</div>
+<div class="summaryTableDescription"> 
+   Removes any content that was loaded and sets <code>bytesLoaded</code> back to zero.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+</table>
+</div>
+<a name="protectedMethodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Protected Methods</div>
+<table id="summaryTableProtectedMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#_playSound()">_playSound</a>(position:Number):void</div>
+<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+</table>
+</div>
+<a name="eventSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Events</div>
+<div class="showHideLinks">
+<div class="hideInheritedEvent" id="hideInheritedEvent">
+<a onclick="javascript:setInheritedVisible(false,'Event');" href="#eventSummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Events</a>
+</div>
+<div class="showInheritedEvent" id="showInheritedEvent">
+<a onclick="javascript:setInheritedVisible(true,'Event');" href="#eventSummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Events</a>
+</div>
+</div>
+<table id="summaryTableEvent" class="summaryTable hideInheritedEvent" cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Event</th><th>Summary</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#event:cancel">cancel</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader is canceled while loading which can occur either because of a failure or when a sibling loader is prioritized in a LoaderMax queue.</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#event:complete">complete</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader completes.</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#event:error">error</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader experiences some type of error, like a SECURITY_ERROR or IO_ERROR.</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#event:fail">fail</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader fails.</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderItem.html#event:ioError">ioError</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader experiences an IO_ERROR while loading or auditing its size.</td><td class="summaryTableOwnerCol"><a href="core/LoaderItem.html">LoaderItem</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#event:open">open</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader starts loading.</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#event:progress">progress</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched each time the <code>bytesLoaded</code> value changes while loading (indicating progress).</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/LoaderCore.html#event:unload">unload</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader unloads (which happens when either <code>unload()</code> or <code>dispose(true)</code> is called or if a loader is canceled while in the process of loading).</td><td class="summaryTableOwnerCol"><a href="core/LoaderCore.html">LoaderCore</a></td>
+</tr>
+</table>
+</div>
+<a name="constantSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Constants</div>
+<table id="summaryTableConstant" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Constant</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#PLAY_PROGRESS">PLAY_PROGRESS</a> : String = "playProgress"<div class="summaryTableDescription">[static] Event type constant for when the playback progresses (only dispatched when the sound is playing).</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#SOUND_COMPLETE">SOUND_COMPLETE</a> : String = "soundComplete"<div class="summaryTableDescription">[static] Event type constant for when the sound completes.</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#SOUND_PAUSE">SOUND_PAUSE</a> : String = "soundPause"<div class="summaryTableDescription">[static] Event type constant for when the sound is paused.</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#SOUND_PLAY">SOUND_PLAY</a> : String = "soundPlay"<div class="summaryTableDescription">[static] Event type constant for when the sound begins or resumes playing.</div>
+</td><td class="summaryTableOwnerCol">MP3Loader</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="channel"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">channel</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var channel:SoundChannel</code><p> The SoundChannel object that results from the most recent <code>playSound()</code> call (or when <code>autoPlay</code> is <code>true</code> in the constructor's <code>vars</code> parameter). Typically there isn't much reason to use this directly. Instead, use the MP3Loader's controls like <code>playSound(), pauseSound(), gotoSoundTime(), playProgress, duration, soundTime</code>, etc. </p></div>
+<a name="duration"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">duration</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>duration:Number</code>&nbsp;&nbsp;[read-only]<p> The duration (in seconds) of the sound. This value cannot be determined with 100% accuracy until the file has completely loaded, but it is estimated with more and more accuracy as the file loads. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get duration():Number</code>
+<br>
+</div>
+<a name="initThreshold"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">initThreshold</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var initThreshold:uint</code><p> The minimum number of <code>bytesLoaded</code> to wait for before the <code>LoaderEvent.INIT</code> event is dispatched - the higher the number the more accurate the <code>duration</code> estimate will be when the INIT event is dispatched (the default value is 102400 which is 100k). The MP3's duration cannot be determined with 100% accuracy until it has completely loaded, but it is estimated with more and more accuracy as the file loads. </p></div>
+<a name="playProgress"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">playProgress</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>playProgress:Number</code>&nbsp;&nbsp;[read-write]<p> A value between 0 and 1 describing the playback progress where 0 means the virtual playhead is at the very beginning of the sound, 0.5 means it is at the halfway point and 1 means it is at the end of the sound. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get playProgress():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set playProgress(value:Number):void</code>
+<br>
+</div>
+<a name="soundPaused"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">soundPaused</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>soundPaused:Boolean</code>&nbsp;&nbsp;[read-write]<p> The playback status of the sound: <code>true</code> if the sound's playback is paused, <code>false</code> if it isn't. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get soundPaused():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set soundPaused(value:Boolean):void</code>
+<br>
+</div>
+<a name="soundTime"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">soundTime</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>soundTime:Number</code>&nbsp;&nbsp;[read-write]<p> The time (in seconds) at which the virtual playhead is positioned on the sound. For example, if the virtual playhead is currently at the 3-second position (3 seconds from the beginning), this value would be 3. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get soundTime():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set soundTime(value:Number):void</code>
+<br>
+</div>
+<a name="volume"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">volume</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>volume:Number</code>&nbsp;&nbsp;[read-write]<p> The volume of the sound (a value between 0 and 1). </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get volume():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set volume(value:Number):void</code>
+<br>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="MP3Loader()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">MP3Loader</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function MP3Loader(urlOrRequest:*, vars:Object = null)</code><p>
+   Constructor.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">urlOrRequest</span>:*</code> &mdash; The url (<code>String</code>) or <code>URLRequest</code> from which the loader should get its content
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; An object containing optional configuration details. For example: <code>new MP3Loader("mp3/audio.mp3", {name:"audio", autoPlay:true, onComplete:completeHandler, onProgress:progressHandler})</code>.<br /><br />
+   
+   The following special properties can be passed into the constructor via the <code>vars</code> parameter
+   which can be either a generic object or an <code><a href="data/MP3LoaderVars.html">MP3LoaderVars</a></code> object:<br />
+   <ul>
+     <li><strong> name : String</strong> - A name that is used to identify the MP3Loader instance. This name can be fed to the <code>find()</code> method or traced at any time. Each loader's name should be unique. If you don't define one, a unique name will be created automatically, like "loader21".</li>
+     <li><strong> autoPlay : Boolean</strong> - By default the MP3 will begin playing immediately when enough of the file has buffered, but to prevent it from autoPlaying, set <code>autoPlay</code> to <code>false</code>.</li>
+     <li><strong> repeat : int</strong> - Number of times that the mp3 should repeat. To repeat indefinitely, use -1. Default is 0.</li>
+     <li><strong> volume : Number</strong> - A value between 0 and 1 indicating the volume at which the sound should play (default is 1).</li>
+     <li><strong> initThreshold : uint</strong> - The minimum number of <code>bytesLoaded</code> to wait for before the <code>LoaderEvent.INIT</code> event is dispatched - the higher the number the more accurate the <code>duration</code> estimate will be when the INIT event is dispatched (the default value is 102400 which is 100k). The MP3's duration cannot be determined with 100% accuracy until it has completely loaded, but it is estimated with more and more accuracy as the file loads.</li>
+     <li><strong> alternateURL : String</strong> - If you define an <code>alternateURL</code>, the loader will initially try to load from its original <code>url</code> and if it fails, it will automatically (and permanently) change the loader's <code>url</code> to the <code>alternateURL</code> and try again. Think of it as a fallback or backup <code>url</code>. It is perfectly acceptable to use the same <code>alternateURL</code> for multiple loaders (maybe a default image for various ImageLoaders for example).</li>
+     <li><strong> context : SoundLoaderContext</strong> - To control things like the buffer time and whether or not a policy file is checked, define a <code>SoundLoaderContext</code> object. The default context is null. See Adobe's SoundLoaderContext documentation for details.</li>
+     <li><strong> noCache : Boolean</strong> - If <code>noCache</code> is <code>true</code>, a "gsCacheBusterID" parameter will be appended to the url with a random set of numbers to prevent caching (don't worry, this info is ignored when you <code>getLoader()</code> or <code>getContent()</code> by url and when you're running locally)</li>
+     <li><strong> estimatedBytes : uint</strong> - Initially, the loader's <code>bytesTotal</code> is set to the <code>estimatedBytes</code> value (or <code>LoaderMax.defaultEstimatedBytes</code> if one isn't defined). Then, when the loader begins loading and it can accurately determine the bytesTotal, it will do so. Setting <code>estimatedBytes</code> is optional, but the more accurate the value, the more accurate your loaders' overall progress will be initially. If the loader will be inserted into a LoaderMax instance (for queue management), its <code>auditSize</code> feature can attempt to automatically determine the <code>bytesTotal</code> at runtime (there is a slight performance penalty for this, however - see LoaderMax's documentation for details).</li>
+     <li><strong> requireWithRoot : DisplayObject</strong> - LoaderMax supports <i>subloading</i>, where an object can be factored into a parent's loading progress. If you want LoaderMax to require this MP3Loader as part of its parent SWFLoader's progress, you must set the <code>requireWithRoot</code> property to your swf's <code>root</code>. For example, <code>var loader:MP3Loader = new MP3Loader("audio.mp3", {name:"audio", requireWithRoot:this.root});</code></li>
+     <li><strong> allowMalformedURL : Boolean</strong> - Normally, the URL will be parsed and any variables in the query string (like "?name=test&amp;state=il&amp;gender=m") will be placed into a URLVariables object which is added to the URLRequest. This avoids a few bugs in Flash, but if you need to keep the entire URL intact (no parsing into URLVariables), set <code>allowMalformedURL:true</code>. For example, if your URL has duplicate variables in the query string like <code>http://www.greensock.com/?c=S&amp;c=SE&amp;c=SW</code>, it is technically considered a malformed URL and a URLVariables object can't properly contain all the duplicates, so in this case you'd want to set <code>allowMalformedURL</code> to <code>true</code>.</li>
+     <li><strong> autoDispose : Boolean</strong> - When <code>autoDispose</code> is <code>true</code>, the loader will be disposed immediately after it completes (it calls the <code>dispose()</code> method internally after dispatching its <code>COMPLETE</code> event). This will remove any listeners that were defined in the vars object (like onComplete, onProgress, onError, onInit). Once a loader is disposed, it can no longer be found with <code>LoaderMax.getLoader()</code> or <code>LoaderMax.getContent()</code> - it is essentially destroyed but its content is not unloaded (you must call <code>unload()</code> or <code>dispose(true)</code> to unload its content). The default <code>autoDispose</code> value is <code>false</code>.
+     
+     <br /><br />----EVENT HANDLER SHORTCUTS----</li>
+     <li><strong> onOpen : Function</strong> - A handler function for <code>LoaderEvent.OPEN</code> events which are dispatched when the loader begins loading. Make sure your onOpen function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+     <li><strong> onInit : Function</strong> - A handler function for <code>Event.INIT</code> events which will be dispatched when the <code>bytesLoaded</code> exceeds the <code>initThreshold</code> (100k by default) and the MP3 has streamed enough of its content to identify the ID3 meta data. Make sure your onInit function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+     <li><strong> onProgress : Function</strong> - A handler function for <code>LoaderEvent.PROGRESS</code> events which are dispatched whenever the <code>bytesLoaded</code> changes. Make sure your onProgress function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>). You can use the LoaderEvent's <code>target.progress</code> to get the loader's progress value or use its <code>target.bytesLoaded</code> and <code>target.bytesTotal</code>.</li>
+     <li><strong> onComplete : Function</strong> - A handler function for <code>LoaderEvent.COMPLETE</code> events which are dispatched when the loader has finished loading successfully. Make sure your onComplete function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+     <li><strong> onCancel : Function</strong> - A handler function for <code>LoaderEvent.CANCEL</code> events which are dispatched when loading is aborted due to either a failure or because another loader was prioritized or <code>cancel()</code> was manually called. Make sure your onCancel function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+     <li><strong> onError : Function</strong> - A handler function for <code>LoaderEvent.ERROR</code> events which are dispatched whenever the loader experiences an error (typically an IO_ERROR or SECURITY_ERROR). An error doesn't necessarily mean the loader failed, however - to listen for when a loader fails, use the <code>onFail</code> special property. Make sure your onError function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+     <li><strong> onFail : Function</strong> - A handler function for <code>LoaderEvent.FAIL</code> events which are dispatched whenever the loader fails and its <code>status</code> changes to <code>LoaderStatus.FAILED</code>. Make sure your onFail function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+     <li><strong> onIOError : Function</strong> - A handler function for <code>LoaderEvent.IO_ERROR</code> events which will also call the onError handler, so you can use that as more of a catch-all whereas <code>onIOError</code> is specifically for LoaderEvent.IO_ERROR events. Make sure your onIOError function accepts a single parameter of type <code>LoaderEvent</code> (<code>com.greensock.events.LoaderEvent</code>).</li>
+   </ul>
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="data/MP3LoaderVars.html" target="">com.greensock.loading.data.MP3LoaderVars</a>
+</div>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="_playSound()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">_playSound</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function _playSound(position:Number):void</code><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">position</span>:Number</code></td>
+</tr>
+</table>
+</div>
+<a name="addEventListener()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addEventListener</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void</code><p>  </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">type</span>:String</code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">listener</span>:Function</code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">useCapture</span>:Boolean</code> (default = <code>false</code>)<code></code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">priority</span>:int</code> (default = <code>0</code>)<code></code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">useWeakReference</span>:Boolean</code> (default = <code>false</code>)<code></code></td>
+</tr>
+</table>
+</div>
+<a name="gotoSoundTime()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">gotoSoundTime</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function gotoSoundTime(time:Number, forcePlay:Boolean = false, resetRepeatCount:Boolean = true):void</code><p> 
+   Attempts to jump to a certain time in the sound. If the sound hasn't downloaded enough to get to
+   the new time, it will get as close as possible.
+   For example, to jump to exactly 3-seconds into the sound and play from there:<br /><br /><code>
+   
+   loader.gotoSoundTime(3, true);<br /><br /></code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">time</span>:Number</code> &mdash; The time (in seconds, offset from the very beginning) at which to place the virtual playhead in the sound.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">forcePlay</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If <code>true</code>, the sound will resume playback immediately after seeking to the new position.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">resetRepeatCount</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If the MP3Loader has a non-zero <code>repeat</code> value (meaning it loops/repeats at least once), setting <code>resetRepeatCount</code> to <code>true</code> will cause it to act like this is the first time through (no repeats yet). For example, if the MP3Loader had a <code>repeat</code> value of 3 and it already repeated twice when <code>gotoSoundTime()</code> was called, it would act like it forgot that it repeated twice already.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../loading/MP3Loader.html#pauseSound()" target="">pauseSound()</a>
+<br>
+<a href="../loading/MP3Loader.html#playSound()" target="">playSound()</a>
+<br>
+<a href="../loading/MP3Loader.html#soundTime" target="">soundTime</a>
+<br>
+<a href="../loading/MP3Loader.html#playProgress" target="">playProgress</a>
+</div>
+</div>
+<a name="pauseSound()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">pauseSound</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function pauseSound(event:Event = null):void</code><p> 
+   Pauses playback of the sound. 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:Event</code> (default = <code>null</code>)<code></code> &mdash; An optional Event which simply makes it easier to use the method as a handler for mouse clicks or other events.
+   
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../loading/MP3Loader.html#soundPaused" target="">soundPaused</a>
+<br>
+<a href="../loading/MP3Loader.html#gotoSoundTime()" target="">gotoSoundTime()</a>
+<br>
+<a href="../loading/MP3Loader.html#playSound()" target="">playSound()</a>
+<br>
+<a href="../loading/MP3Loader.html#soundTime" target="">soundTime</a>
+<br>
+<a href="../loading/MP3Loader.html#playProgress" target="">playProgress</a>
+</div>
+</div>
+<a name="playSound()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">playSound</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function playSound(event:Event = null):SoundChannel</code><p> 
+   Plays the sound.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:Event</code> (default = <code>null</code>)<code></code> &mdash; An optional Event which simply makes it easier to use the method as a handler for mouse clicks or other events.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>SoundChannel</code> &mdash; The SoundChannel object created by the play()
+   
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../loading/MP3Loader.html#soundPaused" target="">soundPaused</a>
+<br>
+<a href="../loading/MP3Loader.html#pauseSound()" target="">pauseSound()</a>
+<br>
+<a href="../loading/MP3Loader.html#gotoSoundTime()" target="">gotoSoundTime()</a>
+<br>
+<a href="../loading/MP3Loader.html#soundTime" target="">soundTime</a>
+<br>
+<a href="../loading/MP3Loader.html#playProgress" target="">playProgress</a>
+</div>
+</div>
+<a name="constantDetail"></a>
+<div class="detailSectionHeader">Constant detail</div>
+<a name="PLAY_PROGRESS"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">PLAY_PROGRESS</td><td class="detailHeaderType">constant</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static const PLAY_PROGRESS:String = "playProgress"</code><p> Event type constant for when the playback progresses (only dispatched when the sound is playing). </p></div>
+<a name="SOUND_COMPLETE"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">SOUND_COMPLETE</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static const SOUND_COMPLETE:String = "soundComplete"</code><p> Event type constant for when the sound completes. </p></div>
+<a name="SOUND_PAUSE"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">SOUND_PAUSE</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static const SOUND_PAUSE:String = "soundPause"</code><p> Event type constant for when the sound is paused. </p></div>
+<a name="SOUND_PLAY"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">SOUND_PLAY</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static const SOUND_PLAY:String = "soundPlay"</code><p> Event type constant for when the sound begins or resumes playing. </p></div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

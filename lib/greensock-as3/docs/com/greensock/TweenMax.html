@@ -1,0 +1,1680 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../print.css" type="text/css" media="print">
+<meta content="TweenMax,com.greensock.TweenMax,killTweensOf,yoyo,currentProgress,globalTimeScale,repeat,repeatDelay,timeScale,totalDuration,totalProgress,currentTime,allFrom,allFromTo,allTo,complete,delayedCall,from,fromTo,getAllTweens,getTweensOf,invalidate,isTweening,killAll,killChildTweensOf,killProperties,pauseAll,resumeAll,setDestination,to,updateTo" name="keywords">
+<title>com.greensock.TweenMax</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'TweenMax - API Documentation';
+				var baseRef = '../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../all-classes.html')" href="../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../all-classes.html')" href="../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../index-list.html')" href="../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../index.html?com/greensock/TweenMax.html&amp;com/greensock/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;TweenMax</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class TweenMax"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class TweenMax</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">TweenMax <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../images/inherit-arrow.gif"> <a href="TweenLite.html">TweenLite</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../images/inherit-arrow.gif"> <a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Implements</td><td>flash.events.IEventDispatcher</td>
+</tr>
+</table>
+<p></p>
+  TweenMax extends the extremely lightweight, fast TweenLite engine, adding many useful features
+  like timeScale, event dispatching, updateTo(), yoyo, repeat, repeatDelay, rounding, and more. It also 
+  activates many extra plugins by default, making it extremely full-featured. Since TweenMax extends 
+  TweenLite, it can do ANYTHING TweenLite can do plus much more. The syntax is identical. With plenty 
+  of other tweening engines to choose from, here's why you might want to consider TweenMax: 
+ 
+ <ul>
+   <li><b> SPEED </b>- TweenMax has been highly optimized for maximum performance. See some speed comparisons yourself at 
+     <a href="http://www.greensock.com/tweening-speed-test/">http://www.greensock.com/tweening-speed-test/</a></li>
+ 
+      <li><b> Feature set </b>- In addition to tweening ANY numeric property of ANY object, TweenMax can tween filters, 
+      hex colors, volume, tint, frames, saturation, contrast, hue, colorization, brightness, and even do 
+      bezier tweening, orientToBezier, round values, jump to any point in the tween with the <code>currentTime</code> 
+    or <code>currentProgress</code> property, automatically rotate in the shortest direction, plus LOTS more. 
+     Overwrite management is an important consideration for a tweening engine as well which is another area 
+      where the GreenSock Tweening Platform shines. You have options for AUTO overwriting or you can manually 
+      define how each tween will handle overlapping tweens of the same object.</li>
+     
+   <li><b> Expandability </b>- With its plugin architecture, you can activate as many (or as few) features as your 
+       project requires. Write your own plugin to handle particular special properties in custom ways. Minimize bloat, and
+       maximize performance.</li>
+     
+   <li><b> Sequencing, grouping, and management features </b>- TimelineLite and TimelineMax make it surprisingly 
+     simple to create complex sequences or groups of tweens that you can control as a whole. play(), pause(), restart(), 
+     or reverse(). You can even tween a timeline's <code>currentTime</code> or <code>currentProgress</code> property 
+     to fastforward or rewind the entire timeline. Add labels, gotoAndPlay(), change the timeline's timeScale, nest 
+     timelines within timelines, and lots more.</li>
+     
+   <li><b> Ease of use </b>- Designers and Developers alike rave about how intuitive the platform is.</li>
+   
+   <li><b> Updates </b>- Frequent updates and feature additions make the GreenSock Tweening Platform reliable and robust.</li>
+   
+   <li><b> AS2 and AS3 </b>- Most other engines are only developed for AS2 or AS3 but not both.</li>
+  </ul>
+              
+ <b>SPECIAL PROPERTIES:</b><br /><br />
+ The following special properties can be defined in the <code>vars</code> parameter which can 
+ be either a generic Object or a <code><a href="data/TweenMaxVars.html">TweenMaxVars</a></code> instance:
+  <ul>
+   <li><b> delay : Number</b>    Amount of delay in seconds (or frames for frames-based tweens) before the tween should begin.</li>
+  
+  <li><b> useFrames : Boolean</b>   If useFrames is set to true, the tweens's timing mode will be based on frames. 
+            Otherwise, it will be based on seconds/time. NOTE: a tween's timing mode is 
+            always determined by its parent timeline. </li>
+  
+  <li><b> ease : Function</b>    Use any standard easing equation to control the rate of change. For example, 
+            Elastic.easeOut. The Default is Quad.easeOut.</li>
+  
+  <li><b> easeParams : Array</b>   An Array of extra parameters to feed the easing equation (beyond the standard first 4). 
+            This can be useful when using an ease like Elastic and want to control extra parameters 
+            like the amplitude and period. Most easing equations, however, don't require extra parameters 
+            so you won't need to pass in any easeParams.</li>
+  
+  <li><b> onInit : Function</b>   A function that should be called just before the tween inits (renders for the first time).
+            Since onInit runs before the start/end values are recorded internally, it is a good place to run
+            code that affects the target's initial position or other tween-related properties. onStart, by
+            contrast, runs AFTER the tween inits and the start/end values are recorded internally. onStart
+            is called every time the tween begins which can happen more than once if the tween is restarted
+            multiple times.</li>
+  
+  <li><b> onInitParams : Array</b>  An Array of parameters to pass the onInit function.</li> 
+ 
+  <li><b> onStart : Function</b>   A function that should be called when the tween begins (when its currentTime is at 0 and 
+            changes to some other value which can happen more than once if the tween is restarted multiple times).</li>
+  
+  <li><b> onStartParams : Array</b>  An Array of parameters to pass the onStart function.</li>
+  
+  <li><b> onUpdate : Function</b>   A function that should be called every time the tween's time/position is updated 
+            (on every frame while the timeline is active)</li>
+  
+  <li><b> onUpdateParams : Array</b>  An Array of parameters to pass the onUpdate function</li>
+  
+  <li><b> onComplete : Function</b>  A function that should be called when the tween has finished </li>
+  
+  <li><b> onCompleteParams : Array</b> An Array of parameters to pass the onComplete function</li>
+  
+  <li><b> onReverseComplete : Function</b> A function that should be called when the tween has reached its starting point again after having been reversed. </li>
+  
+  <li><b> onReverseCompleteParams : Array</b> An Array of parameters to pass the onReverseComplete function.</li>
+  
+  <li><b> onRepeat : Function</b>   A function that should be called every time the tween repeats </li>
+  
+  <li><b> onRepeatParams : Array</b>  An Array of parameters to pass the onRepeat function</li>
+  
+  <li><b> immediateRender : Boolean</b> Normally when you create a tween, it begins rendering on the very next frame (when 
+            the Flash Player dispatches an ENTER_FRAME event) unless you specify a <code>delay</code>. This 
+            allows you to insert tweens into timelines and perform other actions that may affect 
+            its timing. However, if you prefer to force the tween to render immediately when it is 
+            created, set <code>immediateRender</code> to true. Or to prevent a tween with a duration of zero from
+            rendering immediately, set this to false.</li>
+ 
+  <li><b> paused : Boolean</b>   If true, the tween will be paused initially.</li>
+ 
+  <li><b> reversed : Boolean</b>   If true, the tween will be reversed initially. This does not swap the starting/ending
+            values in the tween - it literally changes its orientation/direction. Imagine the playhead
+            moving backwards instead of forwards. This does NOT force it to the very end and start 
+            playing backwards. It simply affects the orientation of the tween, so if reversed is set to 
+            true initially, it will appear not to play because it is already at the beginning. To cause it to
+            play backwards from the end, set reversed to true and then set the <code>currentProgress</code> 
+            property to 1 immediately after creating the tween (or set the currentTime to the duration). </li>
+  
+  <li><b> overwrite : int</b>   Controls how (and if) other tweens of the same target are overwritten by this tween. There are
+           several modes to choose from, and TweenMax automatically calls <code>OverwriteManager.init()</code> if you haven't
+           already manually dones so, which means that by default <code>AUTO</code> mode is used (please see 
+           <a href="http://www.greensock.com/overwritemanager/">http://www.greensock.com/overwritemanager/</a> 
+           for details and a full explanation of the various modes):
+           <ul>
+              <li>NONE (0) (or false) </li>
+            
+            <li>ALL_IMMEDIATE (1) (or true)</li>
+              
+            <li>AUTO (2) - this is the default mode for TweenMax.</li>
+             
+            <li>CONCURRENT (3)</li>
+             
+            <li>ALL_ONSTART (4)</li>
+             
+            <li>PREEXISTING (5)</li>
+ 
+           </ul></li>
+  
+  <li><b> repeat : int</b>     Number of times that the tween should repeat. To repeat indefinitely, use -1.</li>
+  
+  <li><b> repeatDelay : Number</b>   Amount of time in seconds (or frames for frames-based tween) between repeats.</li>
+  
+  <li><b> yoyo : Boolean</b>      Works in conjunction with the repeat property, determining the behavior of each 
+             cycle. When yoyo is true, the tween will go back and forth, appearing to reverse 
+             every other cycle (this has no affect on the "reversed" property though). So if repeat is
+             2 and yoyo is false, it will look like: start - 1 - 2 - 3 - 1 - 2 - 3 - 1 - 2 - 3 - end. But 
+             if repeat is 2 and yoyo is true, it will look like: start - 1 - 2 - 3 - 3 - 2 - 1 - 1 - 2 - 3 - end. </li>
+          
+  <li><b> onStartListener : Function</b>  A function to which the TweenMax instance should dispatch a TweenEvent when it begins.
+               This is the same as doing <code>myTween.addEventListener(TweenEvent.START, myFunction);</code></li>
+  
+  <li><b> onUpdateListener : Function</b>  A function to which the TweenMax instance should dispatch a TweenEvent every time it 
+             updates values. This is the same as doing <code>myTween.addEventListener(TweenEvent.UPDATE, myFunction);</code></li>
+    
+  <li><b> onCompleteListener : Function</b> A function to which the TweenMax instance should dispatch a TweenEvent when it completes.
+               This is the same as doing <code>myTween.addEventListener(TweenEvent.COMPLETE, myFunction);</code></li>
+ 
+  <li><b> onReverseCompleteListener : Function</b> A function to which the TweenMax instance should dispatch a TweenEvent when it completes
+             in the reverse direction. This is the same as doing <code>myTween.addEventListener(TweenEvent.REVERSE_COMPLETE, myFunction);</code></li>
+ 
+  <li><b> onRepeatListener : Function</b>  A function to which the TweenMax instance should dispatch a TweenEvent when it repeats.
+               This is the same as doing <code>myTween.addEventListener(TweenEvent.REPEAT, myFunction);</code></li>
+  
+  <li><b> startAt : Object</b>    Allows you to define the starting values for each property. Typically, TweenMax uses the current
+             value (whatever it happens to be at the time the tween begins) as the start value, but startAt
+             allows you to override that behavior. Simply pass an object in with whatever properties you'd like
+             to set just before the tween begins. For example, if mc.x is currently 100, and you'd like to 
+             tween it from 0 to 500, do <code>TweenMax.to(mc, 2, {x:500, startAt:{x:0}});</code> </li>
+ </ul>
+ 
+ <b>Note:</b> Using a <code><a href="data/TweenMaxVars.html">TweenMaxVars</a></code> instance 
+ instead of a generic Object to define your <code>vars</code> is a bit more verbose but provides 
+ code hinting and improved debugging because it enforces strict data typing. Use whichever one you prefer.<br /><br />
+ 
+ <b>PLUGINS: </b><br /><br />
+ 
+  There are many plugins that add capabilities through other special properties. Adding the capabilities 
+  is as simple as activating the plugin with a single line of code, like <code>TweenPlugin.activate([SetSizePlugin]);</code>
+  Get information about all the plugins at <a href="http://www.TweenMax.com">http://www.TweenMax.com</a>. The 
+  following plugins are activated by default in TweenMax (you can easily prevent them from activating, thus 
+  saving file size, by commenting out the associated activation lines towards the top of the class):
+  
+ <ul>
+    <li><b> autoAlpha : Number</b> - Use it instead of the alpha property to gain the additional feature of toggling 
+                the visible property to false when alpha reaches 0. It will also toggle visible 
+                to true before the tween starts if the value of autoAlpha is greater than zero.</li>
+          
+    <li><b> visible : Boolean</b> - To set a DisplayObject's "visible" property at the end of the tween, use this special property.</li>
+    
+    <li><b> volume : Number</b> - Tweens the volume of an object with a soundTransform property (MovieClip/SoundChannel/NetStream, etc.)</li>
+    
+    <li><b> tint : Number</b> - To change a DisplayObject's tint/color, set this to the hex value of the tint you'd like
+             to end up at(or begin at if you're using TweenMax.from()). An example hex value would be 0xFF0000.</li>
+        
+    <li><b> removeTint : Boolean</b> - If you'd like to remove the tint that's applied to a DisplayObject, pass true for this special property.</li>
+    
+    <li><b> frame : Number</b> - Use this to tween a MovieClip to a particular frame.</li>
+    
+    <li><b> bezier : Array</b> - Bezier tweening allows you to tween in a non-linear way. For example, you may want to tween
+             a MovieClip's position from the origin (0,0) 500 pixels to the right (500,0) but curve downwards
+              through the middle of the tween. Simply pass as many objects in the bezier array as you'd like, 
+              one for each "control point" (see documentation on Flash's curveTo() drawing method for more
+              about how control points work). In this example, let's say the control point would be at x/y coordinates
+              250,50. Just make sure your my_mc is at coordinates 0,0 and then do: 
+              <code>TweenMax.to(my_mc, 3, {bezier:[{x:250, y:50}, {x:500, y:0}]});</code></li>
+         
+    <li><b> bezierThrough : Array</b> - Identical to bezier except that instead of passing bezier control point values, you
+               pass points through which the bezier values should move. This can be more intuitive
+               than using control points.</li>
+          
+    <li><b> orientToBezier : Array (or Boolean)</b> - A common effect that designers/developers want is for a MovieClip/Sprite to 
+          orient itself in the direction of a Bezier path (alter its rotation). orientToBezier
+        makes it easy. In order to alter a rotation property accurately, TweenMax needs 4 pieces
+        of information: 
+        <ol>
+         <li> Position property 1 (typically "x")</li>
+         <li> Position property 2 (typically "y")</li>
+         <li> Rotational property (typically "rotation")</li>
+         <li> Number of degrees to add (optional - makes it easy to orient your MovieClip properly)</li>
+       </ol>
+        The orientToBezier property should be an Array containing one Array for each set of these values. 
+        For maximum flexibility, you can pass in any number of arrays inside the container array, one 
+        for each rotational property. This can be convenient when working in 3D because you can rotate
+        on multiple axis. If you're doing a standard 2D x/y tween on a bezier, you can simply pass 
+        in a boolean value of true and TweenMax will use a typical setup, <code>[["x", "y", "rotation", 0]]</code>. 
+        Hint: Don't forget the container Array (notice the double outer brackets)</li>
+        
+    <li><b> hexColors : Object</b> - Although hex colors are technically numbers, if you try to tween them conventionally,
+      you'll notice that they don't tween smoothly. To tween them properly, the red, green, and 
+      blue components must be extracted and tweened independently. TweenMax makes it easy. To tween
+      a property of your object that's a hex color to another hex color, use this special hexColors 
+      property of TweenMax. It must be an OBJECT with properties named the same as your object's 
+      hex color properties. For example, if your my_obj object has a "myHexColor" property that you'd like
+      to tween to red (0xFF0000) over the course of 2 seconds, do: <br />
+      <code>TweenMax.to(my_obj, 2, {hexColors:{myHexColor:0xFF0000}});</code><br />
+      You can pass in any number of hexColor properties.</li>
+      
+    <li><b> shortRotation : Object</b> - To tween the rotation property of the target object in the shortest direction, use "shortRotation" 
+             instead of "rotation" as the property. For example, if <code>myObject.rotation</code> is currently 170 degrees 
+             and you want to tween it to -170 degrees, a normal rotation tween would travel a total of 340 degrees 
+             in the counter-clockwise direction, but if you use shortRotation, it would travel 20 degrees in the 
+             clockwise direction instead.</li>
+            
+    <li><b> roundProps : Array</b> - If you'd like the inbetween values in a tween to always get rounded to the nearest integer, use the roundProps
+            special property. Just pass in an Array containing the property names that you'd like rounded. For example,
+            if you're tweening the x, y, and alpha properties of mc and you want to round the x and y values (not alpha)
+            every time the tween is rendered, you'd do: <code>TweenMax.to(mc, 2, {x:300, y:200, alpha:0.5, roundProps:["x","y"]});</code></li>
+            
+    <li><b> blurFilter : Object</b> - To apply a BlurFilter, pass an object with one or more of the following properties:
+             <code>blurX, blurY, quality, remove, addFilter, index</code></li>
+          
+    <li><b> glowFilter : Object</b> - To apply a GlowFilter, pass an object with one or more of the following properties:
+            <code>alpha, blurX, blurY, color, strength, quality, inner, knockout, remove, addFilter, index</code></li>
+          
+    <li><b> colorMatrixFilter : Object</b> - To apply a ColorMatrixFilter, pass an object with one or more of the following properties:
+            <code>colorize, amount, contrast, brightness, saturation, hue, threshold, relative, matrix, remove, addFilter, index</code></li>
+            
+    <li><b> dropShadowFilter : Object</b> - To apply a DropShadowFilter, pass an object with one or more of the following properties:
+                <code>alpha, angle, blurX, blurY, color, distance, strength, quality, remove, addFilter, index</code></li>
+           
+    <li><b> bevelFilter : Object</b> - To apply a BevelFilter, pass an object with one or more of the following properties:
+             <code>angle, blurX, blurY, distance, highlightAlpha, highlightColor, shadowAlpha, shadowColor, strength, quality, remove, addFilter, index</code></li>
+  </ul>
+  
+  
+ <b>EXAMPLES:</b><br /><br /> 
+  
+  Please see <a href="http://www.tweenmax.com">http://www.tweenmax.com</a> for examples, tutorials, and interactive demos. <br /><br />
+ 
+ <b>NOTES / TIPS:</b>
+ <ul>
+  <li> Passing values as Strings will make the tween relative to the current value. For example, if you do
+    <code>TweenMax.to(mc, 2, {x:"-20"});</code> it'll move the mc.x to the left 20 pixels which is the same as doing
+    <code>TweenMax.to(mc, 2, {x:mc.x - 20});</code> You could also cast it like: <code>TweenMax.to(mc, 2, {x:String(myVariable)});</code></li>
+    
+  <li> If you prefer, instead of using the onCompleteListener, onInitListener, onStartListener, and onUpdateListener special properties, 
+    you can set up listeners the typical way, like:<br /><code>
+    var myTween:TweenMax = new TweenMax(my_mc, 2, {x:200});<br />
+    myTween.addEventListener(TweenEvent.COMPLETE, myFunction);</code></li>
+    
+  <li> You can kill all tweens of a particular object anytime with the <code>TweenMax.killTweensOf(myObject); </code></li>
+    
+  <li> You can kill all delayedCalls to a particular function using <code>TweenMax.killDelayedCallsTo(myFunction);</code>
+    This can be helpful if you want to preempt a call.</li>
+    
+  <li> Use the <code>TweenMax.from()</code> method to animate things into place. For example, if you have things set up on 
+    the stage in the spot where they should end up, and you just want to animate them into place, you can 
+    pass in the beginning x and/or y and/or alpha (or whatever properties you want).</li>
+ 
+  <li> If you find this class useful, please consider joining Club GreenSock which not only helps to sustain
+    ongoing development, but also gets you bonus plugins, classes and other benefits that are ONLY available 
+    to members. Learn more at <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a></li>
+  </ul>
+    
+ <b>Copyright 2012, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<div class="showHideLinks">
+<div class="hideInheritedProperty" id="hideInheritedProperty">
+<a onclick="javascript:setInheritedVisible(false,'Property');" href="#propertySummary" class="showHideLink"><img src="../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Properties</a>
+</div>
+<div class="showInheritedProperty" id="showInheritedProperty">
+<a onclick="javascript:setInheritedVisible(true,'Property');" href="#propertySummary" class="showHideLink"><img src="../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Properties</a>
+</div>
+</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#currentProgress">currentProgress</a> : Number<div class="summaryTableDescription"> 
+   Value between 0 and 1 indicating the progress of the tween according to its <code>duration</code> 
+    where 0 is at the beginning, 0.5 is halfway finished, and 1 is finished.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#currentTime">currentTime</a> : Number<div class="summaryTableDescription">[write-only]
+   Most recently rendered time (or frame for frames-based timelines) according to the tween's 
+   duration.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#data">data</a> : *<div class="summaryTableDescription"> Place to store any data you want.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="TweenLite.html#defaultEase">defaultEase</a> : Function<div class="summaryTableDescription">[static] Provides an easy way to change the default easing equation.</div>
+</td><td class="summaryTableOwnerCol"><a href="TweenLite.html">TweenLite</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#delay">delay</a> : Number<div class="summaryTableDescription"> 
+   Length of time in seconds (or frames for frames-based tweens/timelines) before the tween should begin.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#duration">duration</a> : Number<div class="summaryTableDescription">
+   Duration of the tween in seconds (or frames for frames-based tweens/timelines) not including any repeats
+   or repeatDelays.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#globalTimeScale">globalTimeScale</a> : Number<div class="summaryTableDescription">[static] Multiplier describing the speed of the root timelines where 1 is normal speed, 0.5 is half-speed, 2 is double speed, etc.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#killTweensOf">killTweensOf</a> : Function<div class="summaryTableDescription">[static]
+   Kills all the tweens of a particular object, optionally completing them first.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#paused">paused</a> : Boolean<div class="summaryTableDescription"> Indicates the paused state of the tween/timeline.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#repeat">repeat</a> : int<div class="summaryTableDescription"> Number of times that the tween should repeat; -1 repeats indefinitely.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#repeatDelay">repeatDelay</a> : Number<div class="summaryTableDescription"> Amount of time in seconds (or frames for frames-based tweens) between repeats </div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#reversed">reversed</a> : Boolean<div class="summaryTableDescription"> Indicates the reversed state of the tween/timeline.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#startTime">startTime</a> : Number<div class="summaryTableDescription"> Start time in seconds (or frames for frames-based tweens/timelines), according to its position on its parent timeline </div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="TweenLite.html#target">target</a> : Object<div class="summaryTableDescription"> Target object whose properties this tween affects.</div>
+</td><td class="summaryTableOwnerCol"><a href="TweenLite.html">TweenLite</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#timeline">timeline</a> : <a href="core/SimpleTimeline.html">SimpleTimeline</a>
+<div class="summaryTableDescription"> The parent timeline on which the tween/timeline is placed.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#timeScale">timeScale</a> : Number<div class="summaryTableDescription"> Multiplier affecting the speed of the timeline where 1 is normal speed, 0.5 is half-speed, 2 is double speed, etc.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#totalDuration">totalDuration</a> : Number<div class="summaryTableDescription">
+   Duration of the tween in seconds (or frames for frames-based timelines) including any repeats
+   or repeatDelays.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#totalProgress">totalProgress</a> : Number<div class="summaryTableDescription"> 
+   Value between 0 and 1 indicating the overall progress of the tween according to its <code>totalDuration</code>
+    where 0 is at the beginning, 0.5 is halfway finished, and 1 is finished.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#totalTime">totalTime</a> : Number<div class="summaryTableDescription">
+   Most recently rendered time (or frame for frames-based tweens/timelines) according to its 
+   <code>totalDuration</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#vars">vars</a> : Object<div class="summaryTableDescription"> Stores variables (things like alpha, y or whatever we're tweening as well as special properties like "onComplete").</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#yoyo">yoyo</a> : Boolean<div class="summaryTableDescription"> 
+   Works in conjunction with the repeat property, determining the behavior of each cycle; when yoyo is true, 
+   the tween will go back and forth, appearing to reverse every other cycle (this has no affect on the "reversed" 
+   property though).</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<div class="showHideLinks">
+<div class="hideInheritedMethod" id="hideInheritedMethod">
+<a onclick="javascript:setInheritedVisible(false,'Method');" href="#methodSummary" class="showHideLink"><img src="../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Methods</a>
+</div>
+<div class="showInheritedMethod" id="showInheritedMethod">
+<a onclick="javascript:setInheritedVisible(true,'Method');" href="#methodSummary" class="showHideLink"><img src="../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Methods</a>
+</div>
+</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#TweenMax()">TweenMax</a>(target:Object, duration:Number, vars:Object)</div>
+<div class="summaryTableDescription">
+   Constructor
+    
+   </div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#allFrom()">allFrom</a>(targets:Array, duration:Number, vars:Object, stagger:Number = 0, onCompleteAll:Function = null, onCompleteAllParams:Array = null):Array</div>
+<div class="summaryTableDescription">[static]
+   Exactly the same as TweenMax.allTo(), but instead of tweening the properties from where they're 
+   at currently to whatever you define, this tweens them the opposite way - from where you define TO 
+   where ever they are when the tweens begin.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#allFromTo()">allFromTo</a>(targets:Array, duration:Number, fromVars:Object, toVars:Object, stagger:Number = 0, onCompleteAll:Function = null, onCompleteAllParams:Array = null):Array</div>
+<div class="summaryTableDescription">[static]
+   Tweens multiple targets from a common set of starting values to a common set of ending values; exactly the same 
+   as TweenMax.allTo(), but adds the ability to define the starting values.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#allTo()">allTo</a>(targets:Array, duration:Number, vars:Object, stagger:Number = 0, onCompleteAll:Function = null, onCompleteAllParams:Array = null):Array</div>
+<div class="summaryTableDescription">[static]
+   Tween multiple objects to the same end values.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#complete()">complete</a>(skipRender:Boolean = false, suppressEvents:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Forces the tween to completion.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#delayedCall()">delayedCall</a>(delay:Number, onComplete:Function, onCompleteParams:Array = null, useFrames:Boolean = false):<a href="../greensock/TweenMax.html">TweenMax</a>
+</div>
+<div class="summaryTableDescription">[static]
+   Provides a simple way to call a function after a set amount of time (or frames).</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#from()">from</a>(target:Object, duration:Number, vars:Object):<a href="../greensock/TweenMax.html">TweenMax</a>
+</div>
+<div class="summaryTableDescription">[static]
+   Static method for creating a TweenMax instance that tweens in the opposite direction
+   compared to a <code>TweenMax.to()</code> tween.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#fromTo()">fromTo</a>(target:Object, duration:Number, fromVars:Object, toVars:Object):<a href="../greensock/TweenMax.html">TweenMax</a>
+</div>
+<div class="summaryTableDescription">[static]
+   Static method for creating a TweenMax instance that tweens from a particular set of
+   values to another set of values, as opposed to a normal to() or from() tween which are 
+   based on the target's current values.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getAllTweens()">getAllTweens</a>():Array</div>
+<div class="summaryTableDescription">[static]
+   Returns all tweens that are in the masterList.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getTweensOf()">getTweensOf</a>(target:Object):Array</div>
+<div class="summaryTableDescription">[static]
+   Gets all the tweens of a particular object.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#invalidate()">invalidate</a>():void</div>
+<div class="summaryTableDescription">   
+   Clears any initialization data (like starting values in tweens) which can be useful if, for example, 
+   you want to restart it without reverting to any previously recorded starting values.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#isTweening()">isTweening</a>(target:Object):Boolean</div>
+<div class="summaryTableDescription">[static]
+   Determines whether or not a particular object is actively tweening.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#kill()">kill</a>():void</div>
+<div class="summaryTableDescription"> Kills the tween/timeline, stopping it immediately.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#killAll()">killAll</a>(complete:Boolean = false, tweens:Boolean = true, delayedCalls:Boolean = true):void</div>
+<div class="summaryTableDescription">[static]
+   Kills all tweens and/or delayedCalls/callbacks, optionally forcing them to completion first.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#killChildTweensOf()">killChildTweensOf</a>(parent:DisplayObjectContainer, complete:Boolean = false):void</div>
+<div class="summaryTableDescription">[static]
+   Kills all tweens of the children of a particular DisplayObjectContainer, optionally forcing them to completion first.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#killProperties()">killProperties</a>(names:Array):void</div>
+<div class="summaryTableDescription">
+   Allows particular properties of the tween to be killed, much like the killVars() method
+   except that killProperties() accepts an Array of property names.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="TweenLite.html#killTweensOf()">killTweensOf</a>(target:Object, complete:Boolean = false, vars:Object = null):void</div>
+<div class="summaryTableDescription">[static]
+   Kills all the tweens of a particular object or delayedCalls to a particular function, optionally 
+   completing them first.</div>
+</td><td class="summaryTableOwnerCol"><a href="TweenLite.html">TweenLite</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="TweenLite.html#killVars()">killVars</a>(vars:Object, permanent:Boolean = true):Boolean</div>
+<div class="summaryTableDescription">
+   Allows particular properties of the tween to be killed.</div>
+</td><td class="summaryTableOwnerCol"><a href="TweenLite.html">TweenLite</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#pause()">pause</a>():void</div>
+<div class="summaryTableDescription"> Pauses the tween/timeline </div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#pauseAll()">pauseAll</a>(tweens:Boolean = true, delayedCalls:Boolean = true):void</div>
+<div class="summaryTableDescription">[static]
+   Pauses all tweens and/or delayedCalls/callbacks.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#play()">play</a>():void</div>
+<div class="summaryTableDescription"> Starts playing forward from the current position.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#restart()">restart</a>(includeDelay:Boolean = false, suppressEvents:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Restarts and begins playing forward.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#resume()">resume</a>():void</div>
+<div class="summaryTableDescription"> Starts playing from the current position without altering direction (forward or reversed).</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#resumeAll()">resumeAll</a>(tweens:Boolean = true, delayedCalls:Boolean = true):void</div>
+<div class="summaryTableDescription">[static]
+   Resumes all paused tweens and/or delayedCalls/callbacks.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#reverse()">reverse</a>(forceResume:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Reverses smoothly, adjusting the startTime to avoid any skipping.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#setDestination()">setDestination</a>(property:String, value:Boolean, adjustStartValues:* = true):void</div>
+<div class="summaryTableDescription">
+   Adjusts a destination value on the fly, optionally adjusting the start values so that it appears to redirect seamlessly
+   without skipping/jerking (<b>this method has been deprecated in favor of <code>updateTo()</code></b>).</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#to()">to</a>(target:Object, duration:Number, vars:Object):<a href="../greensock/TweenMax.html">TweenMax</a>
+</div>
+<div class="summaryTableDescription">[static]
+   Static method for creating a TweenMax instance.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#updateTo()">updateTo</a>(vars:Object, resetDuration:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Updates tweening values on the fly so that they appear to seamlessly change course even if the tween is in-progress.</div>
+</td><td class="summaryTableOwnerCol">TweenMax</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="currentProgress"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">currentProgress</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>currentProgress:Number</code>&nbsp;&nbsp;[read-write]<p> 
+   Value between 0 and 1 indicating the progress of the tween according to its <code>duration</code> 
+    where 0 is at the beginning, 0.5 is halfway finished, and 1 is finished. <code>totalProgress</code>, 
+    by contrast, describes the overall progress according to the tween's <code>totalDuration</code> 
+    which includes repeats and repeatDelays (if there are any). For example, if a TweenMax instance 
+   is set to repeat once, at the end of the first cycle <code>totalProgress</code> would only be 0.5 
+   whereas <code>currentProgress</code> would be 1. If you tracked both properties over the course of the 
+   tween, you'd see <code>currentProgress</code> go from 0 to 1 twice (once for each cycle) in the same
+   time it takes the <code>totalProgress</code> property to go from 0 to 1 once.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get currentProgress():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set currentProgress(value:Number):void</code>
+<br>
+</div>
+<a name="currentTime"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">currentTime</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>currentTime:Number</code>&nbsp;&nbsp;[write-only]<p>
+   Most recently rendered time (or frame for frames-based timelines) according to the tween's 
+   duration. <code>totalTime</code>, by contrast, is based on the <code>totalDuration</code> which includes repeats and repeatDelays.
+   For example, if a TweenMax instance has a duration of 5 a repeat of 1 (meaning its 
+   <code>totalDuration</code> is 10), at the end of the second cycle, <code>currentTime</code> would be 5 whereas <code>totalTime</code> 
+   would be 10. If you tracked both properties over the course of the tween, you'd see <code>currentTime</code> 
+   go from 0 to 5 twice (one for each cycle) in the same time it takes <code>totalTime</code> go from 0 to 10.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set currentTime(value:Number):void</code>
+<br>
+</div>
+<a name="globalTimeScale"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">globalTimeScale</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>globalTimeScale:Number</code>&nbsp;&nbsp;[read-write]<p> Multiplier describing the speed of the root timelines where 1 is normal speed, 0.5 is half-speed, 2 is double speed, etc. The lowest globalTimeScale possible is 0.0001. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public static function get globalTimeScale():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set globalTimeScale(value:Number):void</code>
+<br>
+</div>
+<a name="killTweensOf"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">killTweensOf</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static var killTweensOf:Function</code><p>
+   Kills all the tweens of a particular object, optionally completing them first.
+   
+   </p></div>
+<a name="repeat"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">repeat</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>repeat:int</code>&nbsp;&nbsp;[read-write]<p> Number of times that the tween should repeat; -1 repeats indefinitely. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get repeat():int</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set repeat(value:int):void</code>
+<br>
+</div>
+<a name="repeatDelay"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">repeatDelay</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>repeatDelay:Number</code>&nbsp;&nbsp;[read-write]<p> Amount of time in seconds (or frames for frames-based tweens) between repeats </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get repeatDelay():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set repeatDelay(value:Number):void</code>
+<br>
+</div>
+<a name="timeScale"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">timeScale</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>timeScale:Number</code>&nbsp;&nbsp;[read-write]<p> Multiplier affecting the speed of the timeline where 1 is normal speed, 0.5 is half-speed, 2 is double speed, etc. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get timeScale():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set timeScale(value:Number):void</code>
+<br>
+</div>
+<a name="totalDuration"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">totalDuration</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>totalDuration:Number</code>&nbsp;&nbsp;[read-write]<p>
+   Duration of the tween in seconds (or frames for frames-based timelines) including any repeats
+   or repeatDelays. <code>duration</code>, by contrast, does NOT include repeats and repeatDelays. 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get totalDuration():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set totalDuration(value:Number):void</code>
+<br>
+</div>
+<a name="totalProgress"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">totalProgress</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>totalProgress:Number</code>&nbsp;&nbsp;[read-write]<p> 
+   Value between 0 and 1 indicating the overall progress of the tween according to its <code>totalDuration</code>
+    where 0 is at the beginning, 0.5 is halfway finished, and 1 is finished. <code>currentProgress</code>, 
+    by contrast, describes the progress according to the tween's <code>duration</code> which does not
+    include repeats and repeatDelays. For example, if a TweenMax instance is set to repeat 
+    once, at the end of the first cycle <code>totalProgress</code> would only be 0.5 
+   whereas <code>currentProgress</code> would be 1. If you tracked both properties over the course of the 
+   tween, you'd see <code>currentProgress</code> go from 0 to 1 twice (once for each cycle) in the same
+   time it takes the <code>totalProgress</code> property to go from 0 to 1 once.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get totalProgress():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set totalProgress(value:Number):void</code>
+<br>
+</div>
+<a name="yoyo"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">yoyo</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var yoyo:Boolean</code><p> 
+   Works in conjunction with the repeat property, determining the behavior of each cycle; when yoyo is true, 
+   the tween will go back and forth, appearing to reverse every other cycle (this has no affect on the "reversed" 
+   property though). So if repeat is 2 and yoyo is false, it will look like: start - 1 - 2 - 3 - 1 - 2 - 3 - 1 - 2 - 3 - end. 
+   But if repeat is 2 and yoyo is true, it will look like: start - 1 - 2 - 3 - 3 - 2 - 1 - 1 - 2 - 3 - end.  
+   </p></div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="TweenMax()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">TweenMax</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function TweenMax(target:Object, duration:Number, vars:Object)</code><p>
+   Constructor
+    
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Target object whose properties this tween affects. This can be ANY object, not just a DisplayObject. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; Duration in seconds (or in frames if the tween's timing mode is frames-based)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object containing the end values of the properties you're tweening. For example, to tween to x=100, y=100, you could pass {x:100, y:100}. It can also contain special properties like "onComplete", "ease", "delay", etc.
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="allFrom()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">allFrom</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function allFrom(targets:Array, duration:Number, vars:Object, stagger:Number = 0, onCompleteAll:Function = null, onCompleteAllParams:Array = null):Array</code><p>
+   Exactly the same as TweenMax.allTo(), but instead of tweening the properties from where they're 
+   at currently to whatever you define, this tweens them the opposite way - from where you define TO 
+   where ever they are when the tweens begin. This is useful when things are set up on the stage the way they should 
+   end up and you just want to tween them into place. <b>NOTE:</b> By default, <code>immediateRender</code>
+   is <code>true</code> for allFrom() tweens, meaning that they immediately render their starting state 
+   regardless of any delay or stagger that is specified. You can override this behavior by passing 
+   <code>immediateRender:false</code> in the <code>vars</code> object so that each tween will wait to render until
+   any delay/stagger has passed (often the desired behavior when inserting into timelines). To illustrate
+   the default behavior, the following code will immediately set the <code>alpha</code> of <code>mc1</code>, 
+   <code>mc2</code>, and <code>mc3</code> to 0 and then wait 2 seconds before tweening each <code>alpha</code> 
+   back to 1 over the course of 1.5 seconds with 0.1 seconds lapsing between the start times of each:<br /><br /><code>
+   
+   TweenMax.allFrom([mc1, mc2, mc3], 1.5, {alpha:0, delay:2}, 0.1);</code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">targets</span>:Array</code> &mdash; An Array of objects to tween.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; Duration (in seconds) of the tween (or in frames for frames-based tweens)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object containing the start values of all the properties you'd like to have tweened.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">stagger</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; Staggers the start time of each tween. For example, you might want to have 5 MovieClips move down 100 pixels while fading from alpha:0, and stagger the start times slightly by 0.2 seconds, you could do: <code>TweenMax.allFromTo([mc1, mc2, mc3, mc4, mc5], 1, {y:"-100", alpha:0}, 0.2)</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">onCompleteAll</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; A function to call when all of the tweens have completed.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">onCompleteAllParams</span>:Array</code> (default = <code>null</code>)<code></code> &mdash; An Array of parameters to pass the onCompleteAll function when all the tweens have completed.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; Array of TweenMax instances
+   </td>
+</tr>
+</table>
+</div>
+<a name="allFromTo()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">allFromTo</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function allFromTo(targets:Array, duration:Number, fromVars:Object, toVars:Object, stagger:Number = 0, onCompleteAll:Function = null, onCompleteAllParams:Array = null):Array</code><p>
+   Tweens multiple targets from a common set of starting values to a common set of ending values; exactly the same 
+   as TweenMax.allTo(), but adds the ability to define the starting values. <b>NOTE</b>: Only put starting values
+   in the fromVars parameter - all special properties for the tween (like onComplete, onUpdate, delay, etc.) belong
+   in the toVars parameter. 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">targets</span>:Array</code> &mdash; An Array of objects to tween.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; Duration (in seconds) of the tween (or in frames for frames-based tweens)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">fromVars</span>:Object</code> &mdash; An object containing the starting values of all the properties you'd like to have tweened.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">toVars</span>:Object</code> &mdash; An object containing the ending values of all the properties you'd like to have tweened.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">stagger</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; Staggers the start time of each tween. For example, you might want to have 5 MovieClips move down from y:0 to y:100 while fading from alpha:0 to alpha:1, and stagger the start times slightly by 0.2 seconds, you could do: <code>TweenMax.allFromTo([mc1, mc2, mc3, mc4, mc5], 1, {y:0, alpha:0}, {y:100, alpha:1}, 0.2)</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">onCompleteAll</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; A function to call when all of the tweens have completed.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">onCompleteAllParams</span>:Array</code> (default = <code>null</code>)<code></code> &mdash; An Array of parameters to pass the onCompleteAll function when all the tweens have completed.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; Array of TweenMax instances
+   </td>
+</tr>
+</table>
+</div>
+<a name="allTo()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">allTo</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function allTo(targets:Array, duration:Number, vars:Object, stagger:Number = 0, onCompleteAll:Function = null, onCompleteAllParams:Array = null):Array</code><p>
+   Tween multiple objects to the same end values. The "stagger" parameter 
+   staggers the start time of each tween. For example, you might want to have 5 MovieClips move down 
+   100 pixels while fading out, and stagger the start times slightly by 0.2 seconds:  <br /><br /><code>
+   
+   TweenMax.allTo([mc1, mc2, mc3, mc4, mc5], 1, {y:"100", alpha:0}, 0.2); <br /><br /></code>
+   
+   Note: You can easily add a group of tweens to a TimelineLite/Max instance using allTo() in conjunction with the 
+   insertMultipe() method of a timeline, like:<br /><br />
+   <code>myTimeline.insertMultiple(TweenMax.allTo([mc1, mc2, mc3], 1, {alpha:0, y:"100"}, 0.1));</code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">targets</span>:Array</code> &mdash; An Array of objects to tween.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; Duration in seconds (or frames for frames-based tweens) of the tween
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object containing the end values of all the properties you'd like to have tweened (or if you're using the TweenMax.allFrom() method, these variables would define the BEGINNING values).
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">stagger</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; Staggers the start time of each tween. For example, you might want to have 5 MovieClips move down 100 pixels while fading out, and stagger the start times slightly by 0.2 seconds, you could do: <code>TweenMax.allTo([mc1, mc2, mc3, mc4, mc5], 1, {y:"100", alpha:0}, 0.2)</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">onCompleteAll</span>:Function</code> (default = <code>null</code>)<code></code> &mdash; A function to call when all of the tweens have completed.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">onCompleteAllParams</span>:Array</code> (default = <code>null</code>)<code></code> &mdash; An Array of parameters to pass the onCompleteAll function when all the tweens have completed.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; Array of TweenMax tweens
+   </td>
+</tr>
+</table>
+</div>
+<a name="complete()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">complete</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function complete(skipRender:Boolean = false, suppressEvents:Boolean = false):void</code><p>
+   Forces the tween to completion.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">skipRender</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; to skip rendering the final state of the tween, set skipRender to true. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">suppressEvents</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true, no events or callbacks will be triggered for this render (like onComplete, onUpdate, onReverseComplete, etc.)
+   </td>
+</tr>
+</table>
+</div>
+<a name="delayedCall()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">delayedCall</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function delayedCall(delay:Number, onComplete:Function, onCompleteParams:Array = null, useFrames:Boolean = false):<a href="../greensock/TweenMax.html">TweenMax</a></code><p>
+   Provides a simple way to call a function after a set amount of time (or frames). You can
+   optionally pass any number of parameters to the function too. For example: <br /><br /><code>
+   
+     TweenMax.delayedCall(1, myFunction, ["param1", 2]);<br />
+     function myFunction(param1:String, param2:Number):void {<br />
+         trace("called myFunction and passed params: " + param1 + ", " + param2);<br />
+     }<br /><br /></code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">delay</span>:Number</code> &mdash; Delay in seconds (or frames if useFrames is true) before the function should be called
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">onComplete</span>:Function</code> &mdash; Function to call
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">onCompleteParams</span>:Array</code> (default = <code>null</code>)<code></code> &mdash; An Array of parameters to pass the function.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">useFrames</span>:Boolean</code> (default = <code>false</code>)<code></code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../greensock/TweenMax.html">TweenMax</a></code> &mdash; 
+                        TweenMax instance
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="from()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">from</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function from(target:Object, duration:Number, vars:Object):<a href="../greensock/TweenMax.html">TweenMax</a></code><p>
+   Static method for creating a TweenMax instance that tweens in the opposite direction
+   compared to a <code>TweenMax.to()</code> tween. In other words, you define the START values in the 
+   vars object instead of the end values, and the tween will use the current values as 
+   the end values. This can be very useful for animating things into place on the stage
+   because you can build them in their end positions and do some simple <code>TweenMax.from()</code>
+   calls to animate them into place. <b>NOTE:</b> By default, <code>immediateRender</code>
+   is <code>true</code> for from() tweens, meaning that they immediately render their starting state 
+   regardless of any delay that is specified. You can override this behavior by passing 
+   <code>immediateRender:false</code> in the <code>vars</code> object so that it will wait to 
+   render until the tween actually begins (often the desired behavior when inserting into timelines). 
+   To illustrate the default behavior, the following code will immediately set the <code>alpha</code> of <code>mc</code> 
+   to 0 and then wait 2 seconds before tweening the <code>alpha</code> back to 1 over the course 
+   of 1.5 seconds:<br /><br /><code>
+   
+   TweenMax.from(mc, 1.5, {alpha:0, delay:2});</code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Target object whose properties this tween affects. This can be ANY object, not just a DisplayObject. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; Duration in seconds (or in frames for frames-based tweens)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object containing the start values of the properties you're tweening. For example, to tween from x=100, y=100, you could pass {x:100, y:100}. It can also contain special properties like "onComplete", "ease", "delay", etc.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../greensock/TweenMax.html">TweenMax</a></code> &mdash; 
+                        TweenMax instance
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="fromTo()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fromTo</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function fromTo(target:Object, duration:Number, fromVars:Object, toVars:Object):<a href="../greensock/TweenMax.html">TweenMax</a></code><p>
+   Static method for creating a TweenMax instance that tweens from a particular set of
+   values to another set of values, as opposed to a normal to() or from() tween which are 
+   based on the target's current values. <b>NOTE</b>: Only put starting values
+   in the fromVars parameter - all special properties for the tween (like onComplete, onUpdate, delay, etc.) belong
+   in the toVars parameter. 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Target object whose properties this tween affects. This can be ANY object, not just a DisplayObject. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; Duration in seconds (or in frames for frames-based tweens)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">fromVars</span>:Object</code> &mdash; An object containing the starting values of the properties you're tweening. For example, to tween from x=0, y=0, you could pass {x:0, y:0}. Only put starting values in the fromVars parameter - all special properties for the tween (like onComplete, onUpdate, delay, etc.) belong in the toVars parameter. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">toVars</span>:Object</code> &mdash; An object containing the ending values of the properties you're tweening. For example, to tween to x=100, y=100, you could pass {x:100, y:100}. It can also contain special properties like "onComplete", "ease", "delay", etc.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../greensock/TweenMax.html">TweenMax</a></code> &mdash; 
+                        TweenMax instance
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="getAllTweens()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getAllTweens</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function getAllTweens():Array</code><p>
+   Returns all tweens that are in the masterList. Tweens are automatically removed from the
+   masterList when they complete and are not attached to a timeline that has 
+   autoRemoveChildren set to true.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; Array of TweenLite and/or TweenMax instances
+   </td>
+</tr>
+</table>
+</div>
+<a name="getTweensOf()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getTweensOf</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function getTweensOf(target:Object):Array</code><p>
+   Gets all the tweens of a particular object.
+    
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; The target object whose tweens you want returned
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; Array of tweens (could be TweenLite and/or TweenMax instances)
+   </td>
+</tr>
+</table>
+</div>
+<a name="invalidate()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">invalidate</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function invalidate():void</code><p>   
+   Clears any initialization data (like starting values in tweens) which can be useful if, for example, 
+   you want to restart it without reverting to any previously recorded starting values. When you invalidate() 
+   a tween/timeline, it will be re-initialized the next time it renders and its <code>vars</code> object will be re-parsed. 
+   The timing of the tween/timeline (duration, startTime, delay) will NOT be affected. Another example would be if you
+   have a <code>TweenMax(mc, 1, {x:100, y:100})</code> that ran when mc.x and mc.y were initially at 0, but now mc.x 
+   and mc.y are 200 and you want them tween to 100 again, you could simply <code>invalidate()</code> the tween and 
+   <code>restart()</code> it. Without invalidating first, restarting it would cause the values jump back to 0 immediately 
+   (where they started when the tween originally began). When you invalidate a timeline, it automatically invalidates 
+   all of its children.
+   </p></div>
+<a name="isTweening()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isTweening</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function isTweening(target:Object):Boolean</code><p>
+   Determines whether or not a particular object is actively tweening. If a tween
+   is paused or hasn't started yet, it doesn't count as active.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Target object whose tweens you're checking
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; Boolean value indicating whether or not any active tweens were found
+   </td>
+</tr>
+</table>
+</div>
+<a name="killAll()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">killAll</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function killAll(complete:Boolean = false, tweens:Boolean = true, delayedCalls:Boolean = true):void</code><p>
+   Kills all tweens and/or delayedCalls/callbacks, optionally forcing them to completion first. The 
+   various parameters provide a way to distinguish between delayedCalls and tweens, so if you want to 
+   kill EVERYTHING (tweens and delayedCalls), you'd do:<br /><br /><code>
+   
+   TweenMax.killAll(false, true, true);<br /><br /></code>
+   
+   But if you want to kill only the tweens but allow the delayedCalls to continue, you'd do:<br /><br /><code>
+   
+   TweenMax.killAll(false, true, false);<br /><br /></code>
+   
+   And if you want to kill only the delayedCalls but not the tweens, you'd do:<br /><br /><code>
+   
+   TweenMax.killAll(false, false, true);<br /></code>
+    
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">complete</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Determines whether or not the tweens/delayedCalls/callbacks should be forced to completion before being killed.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">tweens</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, all tweens will be killed
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">delayedCalls</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, all delayedCalls will be killed. TimelineMax callbacks are treated the same as delayedCalls.
+   </td>
+</tr>
+</table>
+</div>
+<a name="killChildTweensOf()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">killChildTweensOf</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function killChildTweensOf(parent:DisplayObjectContainer, complete:Boolean = false):void</code><p>
+   Kills all tweens of the children of a particular DisplayObjectContainer, optionally forcing them to completion first.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">parent</span>:DisplayObjectContainer</code> &mdash; The DisplayObjectContainer whose children should no longer be affected by any tweens. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">complete</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Determines whether or not the tweens should be forced to completion before being killed.
+   </td>
+</tr>
+</table>
+</div>
+<a name="killProperties()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">killProperties</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function killProperties(names:Array):void</code><p>
+   Allows particular properties of the tween to be killed, much like the killVars() method
+   except that killProperties() accepts an Array of property names.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">names</span>:Array</code> &mdash; An Array of property names whose tweens should be killed immediately.
+   </td>
+</tr>
+</table>
+</div>
+<a name="pauseAll()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">pauseAll</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function pauseAll(tweens:Boolean = true, delayedCalls:Boolean = true):void</code><p>
+   Pauses all tweens and/or delayedCalls/callbacks.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">tweens</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, all tweens will be paused.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">delayedCalls</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, all delayedCalls will be paused. TimelineMax callbacks are treated the same as delayedCalls.
+   </td>
+</tr>
+</table>
+</div>
+<a name="resumeAll()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">resumeAll</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function resumeAll(tweens:Boolean = true, delayedCalls:Boolean = true):void</code><p>
+   Resumes all paused tweens and/or delayedCalls/callbacks.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">tweens</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, all tweens will be resumed.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">delayedCalls</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, all delayedCalls will be resumed. TimelineMax callbacks are treated the same as delayedCalls.
+   </td>
+</tr>
+</table>
+</div>
+<a name="setDestination()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">setDestination</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function setDestination(property:String, value:Boolean, adjustStartValues:* = true):void</code><p>
+   Adjusts a destination value on the fly, optionally adjusting the start values so that it appears to redirect seamlessly
+   without skipping/jerking (<b>this method has been deprecated in favor of <code>updateTo()</code></b>). 
+   If you plan to constantly update values, please look into using the DynamicPropsPlugin.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">property</span>:String</code> &mdash; Name of the property that should be updated. For example, "x".
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:Boolean</code> &mdash; The new destination value
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">adjustStartValues</span>:*</code> (default = <code>true</code>)<code></code> &mdash; If true, the property's start value will be adjusted to make the tween appear to seamlessly/smoothly redirect without any skipping/jerking. Beware that if start values are adjusted, reversing the tween will not make it travel back to the original starting value.
+   </td>
+</tr>
+</table>
+</div>
+<a name="to()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">to</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function to(target:Object, duration:Number, vars:Object):<a href="../greensock/TweenMax.html">TweenMax</a></code><p>
+   Static method for creating a TweenMax instance. This can be more intuitive for some developers 
+   and shields them from potential garbage collection issues that could arise when assigning a
+   tween instance to a variable that persists. The following lines of code produce exactly 
+   the same result: <br /><br /><code>
+   
+     var myTween:TweenMax = new TweenMax(mc, 1, {x:100}); <br />
+     TweenMax.to(mc, 1, {x:100}); <br />
+     var myTween:TweenMax = TweenMax.to(mc, 1, {x:100}); <br /><br /></code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Target object whose properties this tween affects. This can be ANY object, not just a DisplayObject. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; Duration in seconds (or in frames for frames-based tweens)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object containing the end values of the properties you're tweening. For example, to tween to x=100, y=100, you could pass {x:100, y:100}. It can also contain special properties like "onComplete", "ease", "delay", etc.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../greensock/TweenMax.html">TweenMax</a></code> &mdash; 
+                        TweenMax instance
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="updateTo()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">updateTo</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function updateTo(vars:Object, resetDuration:Boolean = false):void</code><p>
+   Updates tweening values on the fly so that they appear to seamlessly change course even if the tween is in-progress.
+   Think of it as dynamically updating the <code>vars</code> object that you passed in to the tween when it was originally
+   created. You do <b>NOT</b> need to redefine all of the <code>vars</code> values - only the ones that you want
+   to update. You can even define new properties that you didn't define in the original <code>vars</code> object. 
+   If the <code>resetDuration</code> parameter is <code>true</code> and the tween has already started (or finished), 
+   <code>updateTo()</code> will restart the tween. Otherwise, the tween's timing will be honored. And if
+   <code>resetDuration</code> is <code>false</code> and the tween is in-progress, the starting values of each 
+   property will be adjusted so that the tween appears to seamlessly redirect to the new destination values. 
+   For example:<br /><br /><code>
+   
+   //create the tween <br />
+   var tween:TweenMax = new TweenMax(mc, 2, {x:100, y:200, alpha:0.5});<br /><br />
+   
+   //then later, update the destination x and y values, restarting the tween<br />
+   tween.updateTo({x:300, y:0}, true);<br /><br />
+   
+   //or to update the values mid-tween while keeping the end time the same (don't restart the tween), do this:<br />
+   tween.updateTo({x:300, y:0}, false);<br /><br /></code>
+   
+   Note: If you plan to constantly update values, please look into using the <code>DynamicPropsPlugin</code>.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; Object containing properties with the end values that should be udpated. You do <b>NOT</b> need to redefine all of the original <code>vars</code> values - only the ones that should be updated (although if you change a plugin value, you will need to fully define it). For example, to update the destination <code>x</code> value to 300 and the destination <code>y</code> value to 500, pass: <code>{x:300, y:500}</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">resetDuration</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If the tween has already started (or finished) and <code>resetDuration</code> is true, the tween will restart. If <code>resetDuration</code> is false, the tween's timing will be honored (no restart) and each tweening property's starting value will be adjusted so that it appears to seamlessly redirect to the new destination value.
+   </td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

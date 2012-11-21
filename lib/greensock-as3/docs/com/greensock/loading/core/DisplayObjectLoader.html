@@ -1,0 +1,488 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
+<meta content="DisplayObjectLoader,com.greensock.loading.core.DisplayObjectLoader,defaultAutoForceGC,content,rawContent,_closeFallbackAudit,_closeStream,auditSize" name="keywords">
+<title>com.greensock.loading.core.DisplayObjectLoader</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'DisplayObjectLoader - API Documentation';
+				var baseRef = '../../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../index-list.html')" href="../../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../../index.html?com/greensock/loading/core/DisplayObjectLoader.html&amp;com/greensock/loading/core/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;DisplayObjectLoader</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class DisplayObjectLoader"); titleBar_setSubNav(false,true,false,false,true,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock.loading.core</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class DisplayObjectLoader</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">DisplayObjectLoader <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> <a href="LoaderItem.html">LoaderItem</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> <a href="LoaderCore.html">LoaderCore</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Subclasses</td><td><a href="../../loading/ImageLoader.html">ImageLoader</a>, <a href="../../loading/SWFLoader.html">SWFLoader</a></td>
+</tr>
+</table>
+<p></p>
+ Serves as the base class for SWFLoader and ImageLoader. There is no reason to use this class on its own. 
+ Please refer to the documentation for the other classes.
+ <br /><br />
+ 
+ <b>Copyright 2012, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<div class="showHideLinks">
+<div class="hideInheritedProperty" id="hideInheritedProperty">
+<a onclick="javascript:setInheritedVisible(false,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Properties</a>
+</div>
+<div class="showInheritedProperty" id="showInheritedProperty">
+<a onclick="javascript:setInheritedVisible(true,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Properties</a>
+</div>
+</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderCore.html#auditedSize">auditedSize</a> : Boolean<div class="summaryTableDescription"> 
+   Indicates whether or not the loader's <code>bytesTotal</code> value has been set by any of the following:
+   <ul>
+     <li>Defining an <code>estimatedBytes</code> in the <code>vars</code> object passed to the constructor</li>
+     <li>Calling <code>auditSize()</code> and getting a response (an error is also considered a response)</li>
+     <li>When a LoaderMax instance begins loading, it will automatically force a call to <code>auditSize()</code> for any of its children that don't have an <code>estimatedBytes</code> defined.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderCore.html#autoDispose">autoDispose</a> : Boolean<div class="summaryTableDescription"> When <code>autoDispose</code> is <code>true</code>, the loader will be disposed immediately after it completes (it calls the <code>dispose()</code> method internally after dispatching its <code>COMPLETE</code> event).</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderCore.html#bytesLoaded">bytesLoaded</a> : uint<div class="summaryTableDescription"> Bytes loaded </div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderCore.html#bytesTotal">bytesTotal</a> : uint<div class="summaryTableDescription"> Total bytes that are to be loaded by the loader.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#content">content</a> : *<div class="summaryTableDescription">[read-only] A ContentDisplay object (a Sprite) that will contain the remote content as soon as the <code>INIT</code> event has been dispatched.</div>
+</td><td class="summaryTableOwnerCol">DisplayObjectLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#defaultAutoForceGC">defaultAutoForceGC</a> : Boolean = true<div class="summaryTableDescription">[static] By default, LoaderMax will automatically attempt to force garbage collection when a SWFLoader or ImageLoader is unloaded or cancelled but if you prefer to skip this measure, set defaultAutoForceGC to <code>false</code>.</div>
+</td><td class="summaryTableOwnerCol">DisplayObjectLoader</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderItem.html#httpStatus">httpStatus</a> : int<div class="summaryTableDescription"> The httpStatus code of the loader.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderItem.html">LoaderItem</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderCore.html#loadTime">loadTime</a> : Number<div class="summaryTableDescription"> 
+   The number of seconds that elapsed between when the loader began and when it either completed, failed, 
+   or was canceled.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderCore.html#name">name</a> : String<div class="summaryTableDescription"> A name that you use to identify the loader instance.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderCore.html#paused">paused</a> : Boolean<div class="summaryTableDescription"> If a loader is paused, its progress will halt and any LoaderMax instances to which it belongs will either skip over it or stop when its position is reached in the queue (depending on whether or not the LoaderMax's <code>skipPaused</code> property is <code>true</code>).</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderCore.html#progress">progress</a> : Number<div class="summaryTableDescription"> A value between 0 and 1 indicating the overall progress of the loader.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#rawContent">rawContent</a> : *<div class="summaryTableDescription">[read-only] 
+   The raw content that was successfully loaded <strong>into</strong> the <code>content</code> ContentDisplay 
+   Sprite which varies depending on the type of loader and whether or not script access was denied while 
+   attempting to load the file: 
+   
+   <ul>
+     <li>ImageLoader with script access granted: <code>flash.display.Bitmap</code></li>
+     <li>ImageLoader with script access denied: <code>flash.display.Loader</code></li>
+     <li>SWFLoader with script access granted: <code>flash.display.DisplayObject</code> (the swf's <code>root</code>)</li>
+     <li>SWFLoader with script access denied: <code>flash.display.Loader</code> (the swf's <code>root</code> cannot be accessed because it would generate a security error)</li>
+   </ul>
+   </div>
+</td><td class="summaryTableOwnerCol">DisplayObjectLoader</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderItem.html#request">request</a> : URLRequest<div class="summaryTableDescription"> The <code>URLRequest</code> associated with the loader.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderItem.html">LoaderItem</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderItem.html#scriptAccessDenied">scriptAccessDenied</a> : Boolean<div class="summaryTableDescription">
+   If the loaded content is denied script access (because of security sandbox restrictions,
+   a missing crossdomain.xml file, etc.), <code>scriptAccessDenied</code> will be set to <code>true</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderItem.html">LoaderItem</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderCore.html#status">status</a> : int<div class="summaryTableDescription"> Integer code indicating the loader's status; options are <code>LoaderStatus.READY, LoaderStatus.LOADING, LoaderStatus.COMPLETED, LoaderStatus.PAUSED,</code> and <code>LoaderStatus.DISPOSED</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderItem.html#url">url</a> : String<div class="summaryTableDescription"> The url from which the loader should get its content.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderItem.html">LoaderItem</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="LoaderCore.html#vars">vars</a> : Object<div class="summaryTableDescription"> An object containing optional configuration details, typically passed through a constructor parameter.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<div class="showHideLinks">
+<div class="hideInheritedMethod" id="hideInheritedMethod">
+<a onclick="javascript:setInheritedVisible(false,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Methods</a>
+</div>
+<div class="showInheritedMethod" id="showInheritedMethod">
+<a onclick="javascript:setInheritedVisible(true,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Methods</a>
+</div>
+</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#DisplayObjectLoader()">DisplayObjectLoader</a>(urlOrRequest:*, vars:Object = null)</div>
+<div class="summaryTableDescription">
+   Constructor
+   
+   </div>
+</td><td class="summaryTableOwnerCol">DisplayObjectLoader</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#addEventListener()">addEventListener</a>(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void</div>
+<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#auditSize()">auditSize</a>():void</div>
+<div class="summaryTableDescription">  
+   Attempts loading just enough of the content to accurately determine the <code>bytesTotal</code> 
+   in order to improve the accuracy of the <code>progress</code> property.</div>
+</td><td class="summaryTableOwnerCol">DisplayObjectLoader</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#cancel()">cancel</a>():void</div>
+<div class="summaryTableDescription"> 
+   If the loader is currently loading (<code>status</code> is <code>LoaderStatus.LOADING</code>), it will be canceled 
+   immediately and its status will change to <code>LoaderStatus.READY</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#dispose()">dispose</a>(flushContent:Boolean = false):void</div>
+<div class="summaryTableDescription"> 
+   Disposes of the loader and releases it internally for garbage collection.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#load()">load</a>(flushContent:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Loads the loader's content, optionally flushing any previously loaded content first.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#pause()">pause</a>():void</div>
+<div class="summaryTableDescription"> Pauses the loader immediately.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#prioritize()">prioritize</a>(loadNow:Boolean = true):void</div>
+<div class="summaryTableDescription"> 
+   Immediately prioritizes the loader inside any LoaderMax instances that contain it,
+   forcing it to the top position in their queue and optionally calls <code>load()</code>
+   immediately as well.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#resume()">resume</a>():void</div>
+<div class="summaryTableDescription"> Unpauses the loader and resumes loading immediately.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#toString()">toString</a>():String</div>
+<div class="summaryTableDescription"> Returns information about the loader, like its type, its <code>name</code>, and its <code>url</code> (if it has one).</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#unload()">unload</a>():void</div>
+<div class="summaryTableDescription"> 
+   Removes any content that was loaded and sets <code>bytesLoaded</code> back to zero.</div>
+</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+</table>
+</div>
+<a name="protectedMethodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Protected Methods</div>
+<table id="summaryTableProtectedMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#_closeFallbackAudit()">_closeFallbackAudit</a>():void</div>
+<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol">DisplayObjectLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#_closeStream()">_closeStream</a>():void</div>
+<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol">DisplayObjectLoader</td>
+</tr>
+</table>
+</div>
+<a name="eventSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Events</div>
+<div class="showHideLinks">
+<div class="hideInheritedEvent" id="hideInheritedEvent">
+<a onclick="javascript:setInheritedVisible(false,'Event');" href="#eventSummary" class="showHideLink"><img src="../../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Events</a>
+</div>
+<div class="showInheritedEvent" id="showInheritedEvent">
+<a onclick="javascript:setInheritedVisible(true,'Event');" href="#eventSummary" class="showHideLink"><img src="../../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Events</a>
+</div>
+</div>
+<table id="summaryTableEvent" class="summaryTable hideInheritedEvent" cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Event</th><th>Summary</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#event:cancel">cancel</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader is canceled while loading which can occur either because of a failure or when a sibling loader is prioritized in a LoaderMax queue.</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#event:complete">complete</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader completes.</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#event:error">error</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader experiences some type of error, like a SECURITY_ERROR or IO_ERROR.</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#event:fail">fail</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader fails.</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderItem.html#event:ioError">ioError</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader experiences an IO_ERROR while loading or auditing its size.</td><td class="summaryTableOwnerCol"><a href="LoaderItem.html">LoaderItem</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#event:open">open</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader starts loading.</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#event:progress">progress</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched each time the <code>bytesLoaded</code> value changes while loading (indicating progress).</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="LoaderCore.html#event:unload">unload</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol"> Dispatched when the loader unloads (which happens when either <code>unload()</code> or <code>dispose(true)</code> is called or if a loader is canceled while in the process of loading).</td><td class="summaryTableOwnerCol"><a href="LoaderCore.html">LoaderCore</a></td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="content"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">content</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>content:*</code>&nbsp;&nbsp;[read-only]<p> A ContentDisplay object (a Sprite) that will contain the remote content as soon as the <code>INIT</code> event has been dispatched. This ContentDisplay can be accessed immediately; you do not need to wait for the content to load. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get content():*</code>
+<br>
+</div>
+<a name="defaultAutoForceGC"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">defaultAutoForceGC</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static var defaultAutoForceGC:Boolean = true</code><p> By default, LoaderMax will automatically attempt to force garbage collection when a SWFLoader or ImageLoader is unloaded or cancelled but if you prefer to skip this measure, set defaultAutoForceGC to <code>false</code>. If garbage collection isn't forced, sometimes Flash doesn't completely unload swfs/images properly, particularly if there is audio embedded in the root timeline. </p></div>
+<a name="rawContent"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">rawContent</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>rawContent:*</code>&nbsp;&nbsp;[read-only]<p> 
+   The raw content that was successfully loaded <strong>into</strong> the <code>content</code> ContentDisplay 
+   Sprite which varies depending on the type of loader and whether or not script access was denied while 
+   attempting to load the file: 
+   
+   <ul>
+     <li>ImageLoader with script access granted: <code>flash.display.Bitmap</code></li>
+     <li>ImageLoader with script access denied: <code>flash.display.Loader</code></li>
+     <li>SWFLoader with script access granted: <code>flash.display.DisplayObject</code> (the swf's <code>root</code>)</li>
+     <li>SWFLoader with script access denied: <code>flash.display.Loader</code> (the swf's <code>root</code> cannot be accessed because it would generate a security error)</li>
+   </ul>
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get rawContent():*</code>
+<br>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="DisplayObjectLoader()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">DisplayObjectLoader</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function DisplayObjectLoader(urlOrRequest:*, vars:Object = null)</code><p>
+   Constructor
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">urlOrRequest</span>:*</code> &mdash; The url (<code>String</code>) or <code>URLRequest</code> from which the loader should get its content
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; An object containing optional parameters like <code>estimatedBytes, name, autoDispose, onComplete, onProgress, onError</code>, etc. For example, <code>{estimatedBytes:2400, name:"myImage1", onComplete:completeHandler}</code>.
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="_closeFallbackAudit()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">_closeFallbackAudit</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function _closeFallbackAudit():void</code>
+</div>
+<a name="_closeStream()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">_closeStream</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected override function _closeStream():void</code>
+</div>
+<a name="auditSize()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">auditSize</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function auditSize():void</code><p>  
+   Attempts loading just enough of the content to accurately determine the <code>bytesTotal</code> 
+   in order to improve the accuracy of the <code>progress</code> property. Once the 
+   <code>bytesTotal</code> has been determined or the <code>auditSize()</code> attempt fails due
+   to an error (typically IO_ERROR or SECURITY_ERROR), the <code>auditedSize</code> property will be 
+   set to <code>true</code>. Auditing the size opens a URLStream that will be closed 
+   as soon as a response is received.
+   </p></div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

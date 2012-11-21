@@ -1,0 +1,752 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../print.css" type="text/css" media="print">
+<meta content="TweenLite,com.greensock.TweenLite,defaultEase,target,delayedCall,from,invalidate,killTweensOf,killVars,to" name="keywords">
+<title>com.greensock.TweenLite</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'TweenLite - API Documentation';
+				var baseRef = '../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../all-classes.html')" href="../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../all-classes.html')" href="../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../index-list.html')" href="../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../index.html?com/greensock/TweenLite.html&amp;com/greensock/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;TweenLite</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class TweenLite"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class TweenLite</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">TweenLite <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../images/inherit-arrow.gif"> <a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Subclasses</td><td><a href="../greensock/TweenMax.html">TweenMax</a></td>
+</tr>
+</table>
+<p></p>
+  TweenLite is an extremely fast, lightweight, and flexible tweening engine that serves as the foundation of 
+  the GreenSock Tweening Platform. A TweenLite instance handles tweening one or more numeric properties of any
+  object over time, updating them on every frame. Sounds simple, but there's a wealth of capabilities and conveniences
+  at your fingertips with TweenLite. With plenty of other tweening engines to choose from, here's why you might 
+  want to consider TweenLite:
+  <ul>
+   <li><b> SPEED </b>- TweenLite has been highly optimized for maximum performance. See some speed comparisons yourself at 
+     <a href="http://www.greensock.com/tweening-speed-test/">http://www.greensock.com/tweening-speed-test/</a></li>
+     
+   <li><b> Feature set </b>- In addition to tweening ANY numeric property of ANY object, TweenLite can tween filters, 
+       hex colors, volume, tint, frames, and even do bezier tweening, plus LOTS more. TweenMax extends 
+       TweenLite and adds even more capabilities like repeat, yoyo, repeatDelay, timeScale, event dispatching, on-the-fly 
+     destination value updates, rounding and more. Overwrite management is an important consideration in 
+     a tweening engine as well which is another area where the GreenSock Tweening Platform shines. 
+     You have options for AUTO overwriting or you can manually define how each tween will handle overlapping 
+     tweens of the same object.</li>
+     
+   <li><b> Expandability </b>- With its plugin architecture, you can activate as many (or as few) features as your 
+       project requires. Write your own plugin to handle particular special properties in custom ways. Minimize bloat, and
+       maximize performance.</li>
+     
+   <li><b> Sequencing, grouping, and management features </b>- TimelineLite and TimelineMax make it surprisingly 
+     simple to create complex sequences or groups of tweens that you can control as a whole. play(), pause(), restart(), 
+     or reverse(). You can even tween a timeline's <code>currentTime</code> or <code>currentProgress</code> property 
+     to fastforward or rewind the entire timeline. Add labels, gotoAndPlay(), change the timeline's timeScale, nest 
+     timelines within timelines, and lots more.</li>
+     
+   <li><b> Ease of use </b>- Designers and Developers alike rave about how intuitive the platform is.</li>
+   
+   <li><b> Updates </b>- Frequent updates and feature additions make the GreenSock Tweening Platform reliable and robust.</li>
+   
+   <li><b> AS2 and AS3 </b>- Most other engines are only developed for AS2 or AS3 but not both.</li>
+  </ul>
+ 
+ <hr /> 
+ <b>SPECIAL PROPERTIES (no plugins required):</b>
+ The following special properties can be defined in the <code>vars</code> parameter which can 
+ be either a generic Object or a <code><a href="data/TweenLiteVars.html">TweenLiteVars</a></code> instance:
+ <br />
+ 
+ <ul>
+  <li><b> delay : Number</b>   Amount of delay in seconds (or frames for frames-based tweens) before the tween should begin.</li>
+  
+  <li><b> useFrames : Boolean</b>  If useFrames is set to true, the tweens's timing mode will be based on frames. 
+           Otherwise, it will be based on seconds/time. NOTE: a tween's timing mode is 
+           always determined by its parent timeline. </li>
+  
+  <li><b> ease : Function</b>   Use any standard easing equation to control the rate of change. For example, 
+           <code>Elastic.easeOut</code>. The Default is Quad.easeOut.</li>
+  
+  <li><b> easeParams : Array</b>  An Array of extra parameters to feed the easing equation. This can be useful when 
+           using an ease like <code>Elastic</code> and want to control extra parameters like the amplitude 
+           and period. Most easing equations, however, don't require extra parameters so you 
+           won't need to pass in any easeParams.</li>
+  
+  <li><b> immediateRender : Boolean</b> Normally when you create a tween, it begins rendering on the very next frame (when 
+           the Flash Player dispatches an ENTER_FRAME event) unless you specify a <code>delay</code>. This 
+           allows you to insert tweens into timelines and perform other actions that may affect 
+           its timing. However, if you prefer to force the tween to render immediately when it is 
+           created, set <code>immediateRender</code> to true. Or to prevent a tween with a duration of zero from
+           rendering immediately, set <code>immediateRender</code> to false.</li>
+  
+  <li><b> onInit : Function</b>  A function that should be called just before the tween inits (renders for the first time).
+           Since onInit runs before the start/end values are recorded internally, it is a good place to run
+           code that affects the target's initial position or other tween-related properties. onStart, by
+           contrast, runs AFTER the tween inits and the start/end values are recorded internally. onStart
+           is called every time the tween begins which can happen more than once if the tween is restarted
+           multiple times.</li>
+  
+  <li><b> onInitParams : Array</b> An Array of parameters to pass the onInit function.</li> 
+ 
+  <li><b> onStart : Function</b>  A function that should be called when the tween begins (when its currentTime is at 0 and 
+           changes to some other value which can happen more than once if the tween is restarted multiple times).</li>
+  
+  <li><b> onStartParams : Array</b> An Array of parameters to pass the onStart function.</li>
+  
+  <li><b> onUpdate : Function</b>  A function that should be called every time the tween's time/position is updated 
+           (on every frame while the tween is active)</li>
+  
+  <li><b> onUpdateParams : Array</b> An Array of parameters to pass the onUpdate function</li>
+  
+  <li><b> onComplete : Function</b> A function that should be called when the tween has finished </li>
+  
+  <li><b> onCompleteParams : Array</b> An Array of parameters to pass the onComplete function</li>
+  
+  <li><b> onReverseComplete : Function</b> A function that should be called when the tween has reached its starting point again after having been reversed. </li>
+  
+  <li><b> onReverseCompleteParams : Array</b> An Array of parameters to pass the onReverseComplete function</li>
+ 
+  <li><b> paused : Boolean</b>  If true, the tween will be paused initially.</li>
+  
+  <li><b> overwrite : int</b>   Controls how (and if) other tweens of the same target are overwritten by this tween. There are
+           several modes to choose from, but only the first two are available in TweenLite unless 
+           <code>OverwriteManager.init()</code> has been called (please see 
+           <a href="http://www.greensock.com/overwritemanager/">http://www.greensock.com/overwritemanager/</a> 
+           for details and a full explanation of the various modes):
+           <ul>
+              <li>NONE (0) (or false) </li>
+            
+            <li>ALL_IMMEDIATE (1) (or true) - this is the default mode in TweenLite</li>
+              
+            <li>AUTO (2) - this is the default mode if TweenMax, TimelineLite, or TimelineMax is used in the swf. (these classes automatically init() OverwriteManager if you haven't done so already)</li>
+             
+            <li>CONCURRENT (3) (requires OverwriteManager)</li>
+             
+            <li>ALL_ONSTART (4) (requires OverwriteManager)</li>
+             
+            <li>PREEXISTING (5) (requires OverwriteManager)</li>
+ 
+           </ul></li>
+  </ul>
+ 
+ <b>Note:</b> Using a <code><a href="data/TweenLiteVars.html">TweenLiteVars</a></code> instance 
+ instead of a generic object to define your <code>vars</code> is a bit more verbose but provides 
+ code hinting and improved debugging because it enforces strict data typing. Use whichever one you prefer.<br /><br />
+ 
+ <b>PLUGINS:</b><br /><br />
+ 
+  There are many plugins that add capabilities through other special properties. Some examples are "tint", 
+  "volume", "frame", "frameLabel", "bezier", "blurFilter", "colorMatrixFilter", "hexColors", and many more.
+  Adding the capabilities is as simple as activating the plugin with a single line of code, like 
+  TweenPlugin.activate([TintPlugin]); Get information about all the plugins at 
+  <a href="http://www.TweenLite.com">http://www.TweenLite.com</a><br /><br />
+ 
+ <b>EXAMPLES:</b> <br /><br />
+ 
+  Please see <a href="http://www.tweenlite.com">http://www.tweenlite.com</a> for examples, tutorials, and interactive demos. <br /><br />
+ 
+ <b>NOTES / TIPS:</b><br /><br />
+ <ul>
+  <li> The base TweenLite class adds about 4.7kb to your compressed swf (if no plugins are activated)</li>
+    
+  <li> Passing values as Strings will make the tween relative to the current value. For example, if you do
+    <code>TweenLite.to(mc, 2, {x:"-20"});</code> it'll move the mc.x to the left 20 pixels which is the same as doing
+    <code>TweenLite.to(mc, 2, {x:mc.x - 20});</code> You could also cast it like: <code>TweenLite.to(mc, 2, {x:String(myVariable)});</code></li>
+    
+  <li> You can change the <code>TweenLite.defaultEase</code> function if you prefer something other than <code>Regular.easeOut</code>.</li>
+  
+  <li> Kill all tweens for a particular object anytime with the <code>TweenLite.killTweensOf(mc); </code></li>
+    
+  <li> You can kill all delayedCalls to a particular function using <code>TweenLite.killDelayedCallsTo(myFunction);</code>
+    This can be helpful if you want to preempt a call.</li>
+    
+  <li> Use the <code>TweenLite.from()</code> method to animate things into place. For example, if you have things set up on 
+    the stage in the spot where they should end up, and you just want to animate them into place, you can 
+    pass in the beginning x and/or y and/or alpha (or whatever properties you want).</li>
+    
+  <li> If you find this class useful, please consider joining Club GreenSock which not only helps to sustain
+    ongoing development, but also gets you bonus plugins, classes and other benefits that are ONLY available 
+    to members. Learn more at <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a></li>
+ </ul>
+ 
+ <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<div class="showHideLinks">
+<div class="hideInheritedProperty" id="hideInheritedProperty">
+<a onclick="javascript:setInheritedVisible(false,'Property');" href="#propertySummary" class="showHideLink"><img src="../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Properties</a>
+</div>
+<div class="showInheritedProperty" id="showInheritedProperty">
+<a onclick="javascript:setInheritedVisible(true,'Property');" href="#propertySummary" class="showHideLink"><img src="../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Properties</a>
+</div>
+</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#currentTime">currentTime</a> : Number<div class="summaryTableDescription">
+   Most recently rendered time (or frame for frames-based tweens/timelines) according to its 
+   <code>duration</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#data">data</a> : *<div class="summaryTableDescription"> Place to store any data you want.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#defaultEase">defaultEase</a> : Function<div class="summaryTableDescription">[static] Provides an easy way to change the default easing equation.</div>
+</td><td class="summaryTableOwnerCol">TweenLite</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#delay">delay</a> : Number<div class="summaryTableDescription"> 
+   Length of time in seconds (or frames for frames-based tweens/timelines) before the tween should begin.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#duration">duration</a> : Number<div class="summaryTableDescription">
+   Duration of the tween in seconds (or frames for frames-based tweens/timelines) not including any repeats
+   or repeatDelays.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#paused">paused</a> : Boolean<div class="summaryTableDescription"> Indicates the paused state of the tween/timeline.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#reversed">reversed</a> : Boolean<div class="summaryTableDescription"> Indicates the reversed state of the tween/timeline.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#startTime">startTime</a> : Number<div class="summaryTableDescription"> Start time in seconds (or frames for frames-based tweens/timelines), according to its position on its parent timeline </div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#target">target</a> : Object<div class="summaryTableDescription"> Target object whose properties this tween affects.</div>
+</td><td class="summaryTableOwnerCol">TweenLite</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#timeline">timeline</a> : <a href="core/SimpleTimeline.html">SimpleTimeline</a>
+<div class="summaryTableDescription"> The parent timeline on which the tween/timeline is placed.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#totalDuration">totalDuration</a> : Number<div class="summaryTableDescription">
+   Duration of the tween in seconds (or frames for frames-based tweens/timelines) including any repeats
+   or repeatDelays (which are only available on TweenMax and TimelineMax).</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#totalTime">totalTime</a> : Number<div class="summaryTableDescription">
+   Most recently rendered time (or frame for frames-based tweens/timelines) according to its 
+   <code>totalDuration</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="core/TweenCore.html#vars">vars</a> : Object<div class="summaryTableDescription"> Stores variables (things like alpha, y or whatever we're tweening as well as special properties like "onComplete").</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<div class="showHideLinks">
+<div class="hideInheritedMethod" id="hideInheritedMethod">
+<a onclick="javascript:setInheritedVisible(false,'Method');" href="#methodSummary" class="showHideLink"><img src="../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Methods</a>
+</div>
+<div class="showInheritedMethod" id="showInheritedMethod">
+<a onclick="javascript:setInheritedVisible(true,'Method');" href="#methodSummary" class="showHideLink"><img src="../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Methods</a>
+</div>
+</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#TweenLite()">TweenLite</a>(target:Object, duration:Number, vars:Object)</div>
+<div class="summaryTableDescription">
+   Constructor
+    
+   </div>
+</td><td class="summaryTableOwnerCol">TweenLite</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#complete()">complete</a>(skipRender:Boolean = false, suppressEvents:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Forces the tween/timeline to completion.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#delayedCall()">delayedCall</a>(delay:Number, onComplete:Function, onCompleteParams:Array = null, useFrames:Boolean = false):<a href="../greensock/TweenLite.html">TweenLite</a>
+</div>
+<div class="summaryTableDescription">[static]
+   Provides a simple way to call a function after a set amount of time (or frames).</div>
+</td><td class="summaryTableOwnerCol">TweenLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#from()">from</a>(target:Object, duration:Number, vars:Object):<a href="../greensock/TweenLite.html">TweenLite</a>
+</div>
+<div class="summaryTableDescription">[static]
+   Static method for creating a TweenLite instance that tweens in the opposite direction
+   compared to a TweenLite.to() tween.</div>
+</td><td class="summaryTableOwnerCol">TweenLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#invalidate()">invalidate</a>():void</div>
+<div class="summaryTableDescription">  
+   Clears any initialization data (like starting values in tweens) which can be useful if, for example, 
+   you want to restart it without reverting to any previously recorded starting values.</div>
+</td><td class="summaryTableOwnerCol">TweenLite</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#kill()">kill</a>():void</div>
+<div class="summaryTableDescription"> Kills the tween/timeline, stopping it immediately.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#killTweensOf()">killTweensOf</a>(target:Object, complete:Boolean = false, vars:Object = null):void</div>
+<div class="summaryTableDescription">[static]
+   Kills all the tweens of a particular object or delayedCalls to a particular function, optionally 
+   completing them first.</div>
+</td><td class="summaryTableOwnerCol">TweenLite</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#killVars()">killVars</a>(vars:Object, permanent:Boolean = true):Boolean</div>
+<div class="summaryTableDescription">
+   Allows particular properties of the tween to be killed.</div>
+</td><td class="summaryTableOwnerCol">TweenLite</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#pause()">pause</a>():void</div>
+<div class="summaryTableDescription"> Pauses the tween/timeline </div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#play()">play</a>():void</div>
+<div class="summaryTableDescription"> Starts playing forward from the current position.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#restart()">restart</a>(includeDelay:Boolean = false, suppressEvents:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Restarts and begins playing forward.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#resume()">resume</a>():void</div>
+<div class="summaryTableDescription"> Starts playing from the current position without altering direction (forward or reversed).</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="core/TweenCore.html#reverse()">reverse</a>(forceResume:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Reverses smoothly, adjusting the startTime to avoid any skipping.</div>
+</td><td class="summaryTableOwnerCol"><a href="core/TweenCore.html">TweenCore</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#to()">to</a>(target:Object, duration:Number, vars:Object):<a href="../greensock/TweenLite.html">TweenLite</a>
+</div>
+<div class="summaryTableDescription">[static]
+   Static method for creating a TweenLite instance.</div>
+</td><td class="summaryTableOwnerCol">TweenLite</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="defaultEase"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">defaultEase</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static var defaultEase:Function</code><p> Provides an easy way to change the default easing equation.</p></div>
+<a name="target"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">target</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var target:Object</code><p> Target object whose properties this tween affects. This can be ANY object, not just a DisplayObject. </p></div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="TweenLite()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">TweenLite</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function TweenLite(target:Object, duration:Number, vars:Object)</code><p>
+   Constructor
+    
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Target object whose properties this tween affects. This can be ANY object, not just a DisplayObject. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; Duration in seconds (or in frames if the tween's timing mode is frames-based)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object containing the end values of the properties you're tweening. For example, to tween to x=100, y=100, you could pass {x:100, y:100}. It can also contain special properties like "onComplete", "ease", "delay", etc.
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="delayedCall()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">delayedCall</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function delayedCall(delay:Number, onComplete:Function, onCompleteParams:Array = null, useFrames:Boolean = false):<a href="../greensock/TweenLite.html">TweenLite</a></code><p>
+   Provides a simple way to call a function after a set amount of time (or frames). You can
+   optionally pass any number of parameters to the function too. For example:<br /><br /><code>
+   
+   TweenLite.delayedCall(1, myFunction, ["param1", 2]); <br />
+   function myFunction(param1:String, param2:Number):void { <br />
+       trace("called myFunction and passed params: " + param1 + ", " + param2); <br />
+   } </code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">delay</span>:Number</code> &mdash; Delay in seconds (or frames if useFrames is true) before the function should be called
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">onComplete</span>:Function</code> &mdash; Function to call
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">onCompleteParams</span>:Array</code> (default = <code>null</code>)<code></code> &mdash; An Array of parameters to pass the function.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">useFrames</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If the delay should be measured in frames instead of seconds, set useFrames to true (default is false)
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../greensock/TweenLite.html">TweenLite</a></code> &mdash; 
+                        TweenLite instance
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="from()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">from</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function from(target:Object, duration:Number, vars:Object):<a href="../greensock/TweenLite.html">TweenLite</a></code><p>
+   Static method for creating a TweenLite instance that tweens in the opposite direction
+   compared to a TweenLite.to() tween. In other words, you define the START values in the 
+   vars object instead of the end values, and the tween will use the current values as 
+   the end values. This can be very useful for animating things into place on the stage
+   because you can build them in their end positions and do some simple TweenLite.from()
+   calls to animate them into place. <b>NOTE:</b> By default, <code>immediateRender</code>
+   is <code>true</code> in from() tweens, meaning that they immediately render their starting state 
+   regardless of any delay that is specified. You can override this behavior by passing 
+   <code>immediateRender:false</code> in the <code>vars</code> object so that it will wait to 
+   render until the tween actually begins (often the desired behavior when inserting into timelines). 
+   To illustrate the default behavior, the following code will immediately set the <code>alpha</code> of <code>mc</code> 
+   to 0 and then wait 2 seconds before tweening the <code>alpha</code> back to 1 over the course 
+   of 1.5 seconds:<br /><br /><code>
+   
+   TweenLite.from(mc, 1.5, {alpha:0, delay:2});</code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Target object whose properties this tween affects. This can be ANY object, not just a DisplayObject. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; Duration in seconds (or in frames if the tween's timing mode is frames-based)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object containing the start values of the properties you're tweening. For example, to tween from x=100, y=100, you could pass {x:100, y:100}. It can also contain special properties like "onComplete", "ease", "delay", etc.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../greensock/TweenLite.html">TweenLite</a></code> &mdash; 
+                        TweenLite instance
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="invalidate()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">invalidate</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function invalidate():void</code><p>  
+   Clears any initialization data (like starting values in tweens) which can be useful if, for example, 
+   you want to restart it without reverting to any previously recorded starting values. When you invalidate() 
+   a tween/timeline, it will be re-initialized the next time it renders and its <code>vars</code> object will be re-parsed. 
+   The timing of the tween/timeline (duration, startTime, delay) will NOT be affected. Another example would be if you
+   have a <code>TweenMax(mc, 1, {x:100, y:100})</code> that ran when mc.x and mc.y were initially at 0, but now mc.x 
+   and mc.y are 200 and you want them tween to 100 again, you could simply <code>invalidate()</code> the tween and 
+   <code>restart()</code> it. Without invalidating first, restarting it would cause the values jump back to 0 immediately 
+   (where they started when the tween originally began). When you invalidate a timeline, it automatically invalidates 
+   all of its children.
+   </p></div>
+<a name="killTweensOf()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">killTweensOf</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function killTweensOf(target:Object, complete:Boolean = false, vars:Object = null):void</code><p>
+   Kills all the tweens of a particular object or delayedCalls to a particular function, optionally 
+   completing them first. If, for example, you want to kill all tweens of the "mc" object, you'd do:<br /><br /><code>
+   
+   TweenLite.killTweensOf(mc);<br /><br /></code>
+   
+   You can also just kill certain tweening properties of a particular object. For example, if you only want to kill all 
+   the "alpha" and "x" portions of mc's tweens, you'd do:<br /><br /><code>
+   
+   TweenLite.killTweensOf(mc, false, {alpha:true, x:true});<br /><br /></code>
+   
+   To kill all the delayedCalls that were created like <code>TweenLite.delayedCall(5, myFunction);</code>, 
+   you can simply call <code>TweenLite.killTweensOf(myFunction);</code> because delayedCalls are just
+   tweens that have their <code>target</code> and <code>onComplete</code> set to the same function (and 
+   a <code>delay</code> of course). <br /><br />
+   
+   <code>killTweensOf()</code> affects tweens that haven't begun yet too. If, for example, 
+   a tween of object "mc" has a delay of 5 seconds and <code>TweenLite.killTweensOf(mc)</code> is called
+   2 seconds after the tween was created, it will still be killed even though it hasn't started yet. <br /><br />
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Object whose tweens should be immediately killed
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">complete</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Indicates whether or not the tweens should be forced to completion before being killed.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; An object defining which tweening properties should be killed (null causes all properties to be killed). For example, if you only want to kill "alpha" and "x" tweens of object "mc", you'd do <code>myTimeline.killTweensOf(mc, true, {alpha:true, x:true})</code>. If there are no tweening properties remaining in a tween after the indicated properties are killed, the entire tween is killed, meaning any onComplete, onUpdate, onStart, etc. won't fire.
+   </td>
+</tr>
+</table>
+</div>
+<a name="killVars()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">killVars</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function killVars(vars:Object, permanent:Boolean = true):Boolean</code><p>
+   Allows particular properties of the tween to be killed. For example, if a tween is affecting 
+   the "x", "y", and "alpha" properties and you want to kill just the "x" and "y" parts of the 
+   tween, you'd do <code>myTween.killVars({x:true, y:true});</code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object containing a corresponding property for each one that should be killed. The values don't really matter. For example, to kill the x and y property tweens, do <code>myTween.killVars({x:true, y:true});</code>
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">permanent</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, the properties specified in the vars object will be permanently disallowed in the tween. Typically the only time false might be used is while the tween is in the process of initting and a plugin needs to make sure tweens of a particular property (or set of properties) is killed. 
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; Boolean value indicating whether or not properties may have changed on the target when any of the vars were disabled. For example, when a motionBlur (plugin) is disabled, it swaps out a BitmapData for the target and may alter the alpha. We need to know this in order to determine whether or not a new tween that is overwriting this one should be re-initted() with the changed properties. 
+   </td>
+</tr>
+</table>
+</div>
+<a name="to()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">to</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function to(target:Object, duration:Number, vars:Object):<a href="../greensock/TweenLite.html">TweenLite</a></code><p>
+   Static method for creating a TweenLite instance. This can be more intuitive for some developers 
+   and shields them from potential garbage collection issues that could arise when assigning a
+   tween instance to a variable that persists. The following lines of code produce exactly 
+   the same result: <br /><br /><code>
+   
+   var myTween:TweenLite = new TweenLite(mc, 1, {x:100}); <br />
+   TweenLite.to(mc, 1, {x:100}); <br />
+   var myTween:TweenLite = TweenLite.to(mc, 1, {x:100});</code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; Target object whose properties this tween affects. This can be ANY object, not just a DisplayObject. 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">duration</span>:Number</code> &mdash; Duration in seconds (or in frames if the tween's timing mode is frames-based)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">vars</span>:Object</code> &mdash; An object containing the end values of the properties you're tweening. For example, to tween to x=100, y=100, you could pass {x:100, y:100}. It can also contain special properties like "onComplete", "ease", "delay", etc.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../greensock/TweenLite.html">TweenLite</a></code> &mdash; 
+                        TweenLite instance
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->
