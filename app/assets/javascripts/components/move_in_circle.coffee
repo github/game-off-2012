@@ -17,8 +17,6 @@ Crafty.c "MoveInCircle",
     @reset()
     @_setKeys()
     @origin("center")
-    Crafty.audio.add("faster", "sounds/faster.wav")
-    Crafty.audio.add("crash", "sounds/crash.wav")
     @disableControl()
     @enableControl()
     @color(Config.player.color)
@@ -82,7 +80,6 @@ Crafty.c "MoveInCircle",
     Crafty.e("Trail").attr(rotation: @rotation, x: @_x, y: @_y).Trail()
 
   upgrade: ->
-#    Crafty.audio.play("faster")
     @_speed += Config.player.speed.angular.increase
     @_speed = Math.min(@_speed, Config.player.speed.angular.maximum)
 
@@ -94,8 +91,8 @@ Crafty.c "MoveInCircle",
 
   crash: ->
     return if @disableControls
-    Crafty.audio.play("crash")
-    Crafty.audio.play("conflict.mp3")
+    SFX.play("crash")
+    Narrator.play("conflict")
     @disableControls = true
     @crashed = true
     Crafty.trigger("GameOver")

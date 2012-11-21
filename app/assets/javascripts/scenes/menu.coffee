@@ -30,6 +30,9 @@ Crafty.scene "menu", ->
 
   Crafty.e("Mute")
 
+  #hack to fix loading of wavs
+  Crafty.audio.add("faster.wav", "sounds/faster.wav")
+  Crafty.audio.add("crash.wav", "sounds/crash.wav")
   Crafty.load(_.flatten(Config.sounds), =>
     loaded()
   )
