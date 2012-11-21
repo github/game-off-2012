@@ -5,9 +5,13 @@ class Storage
     @counter = 0
     @finshed = ->
     
-  register:(loader)->
-    ++@counter
-    loader.setCallback(@callback)
+  register:(loader...)->
+    @counter = loader.length
+    for l in loader
+      l.setCallback(@callback)
+    
+    for l in loader
+      l.start()
      
   callback:(loader)=>
     --@counter
