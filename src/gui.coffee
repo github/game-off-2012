@@ -39,9 +39,6 @@ class Map
     @mapgen = new MapGenerator(STORAGE.getRessource("map"), STORAGE.getRessource("spritesheet"))
     
   tick:->
-    if @inputHandler.ESC.isPressed()
-      impress().goto("start")
-    
     if @active is true
       if @inputHandler.RIGHT.isPressed()
         if @actualText < 3
@@ -62,6 +59,9 @@ class Map
           @actualText += @do
           @texts[@actualText].actual = true
           @do = 0
+          
+      if @inputHandler.ESC.isPressed()
+        impress().goto("start")
         
       if @inputHandler.ENTER.isPressed()
         @game.loadLevel(@actualText)
