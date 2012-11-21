@@ -62,6 +62,7 @@ function Tower(baseTile) {
     var nextFireIn = this.attr.coolDown;
     var mutateCounter = this.attr.mutate;
     var towerRange = new Tower_Range(this);
+    var tooltip = new ToolTip(this);
     var added = false;
     
     this.draw = function (pen) {
@@ -143,6 +144,7 @@ function Tower(baseTile) {
         if (!added) {
             document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
             this.base.addObject(towerRange);
+            this.base.addObject(tooltip);
             added = true;
         }
     };
@@ -150,6 +152,7 @@ function Tower(baseTile) {
     this.mouseout = function(e) {
         if (added) {
             this.base.removeObject(towerRange);
+            //this.base.removeObject(tooltip);
             added = false;
         }
     };
