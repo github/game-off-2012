@@ -14,6 +14,8 @@ Config.sounds =
       "sounds/merge.mp3"
       "sounds/fork.mp3"
       "sounds/conflict.mp3"
+      "sounds/ready.mp3"
+      "sounds/code.mp3"
     ]
 
   sfx:
