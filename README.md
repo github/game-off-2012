@@ -9,3 +9,5 @@ Beautiful graphics by [Kushagra](http://twitter.com/solitarydesigns).
 Some tricks and tips that we learnt while making this game has been
 shared on [CodeTheory](http://codetheory.in) and
 [CSSDeck](http://cssdeck.com/codecasts).
+
+No Libraries/Frameworks used. All Custom Code and Custom Physics.
