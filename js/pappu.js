@@ -1,12 +1,8 @@
 (function() {
 
-  window.mit = window.mit || {};
-
-  // Main Canvas Height/Width
-  var W, H;
-
   // There will be only 1 Pappu
-  var pappu = {
+
+  mit.Pappu = {
     x: 50,
     y: 10,
     w: 50,
@@ -20,6 +16,29 @@
 
     fly_frame_count: 0,
     max_fly_frame_count: 10,
+
+    init: function() {
+      // Initializing Pappu Sprite, lolzzz..!
+      pappu.sprite = new Image();
+      pappu.sprite.src = 'img/pappu.png';
+
+      pappu.sprite.onload = function() {
+        //pappu.w = pappu.sprite.width;
+        pappu.w = 48;
+        pappu.h = pappu.sprite.height;
+
+        // Sprite Frame Count
+        pappu.max_fly_frame_count = 6;
+        pappu.max_fly_frame_count--;
+
+        // Sprite Frame Change Speed.
+        // This will affect the flap speed.
+        pappu.change_per_frame = 5;
+
+        // X Pos
+        pappu.x = 35;
+      };
+    },
 
     draw: function(ctx) {
       var cur_sprite_frame = this.fly_frame_count / this.change_per_frame;
@@ -113,27 +132,6 @@
     }
   };
 
-  // Initializing Pappu Sprite, lolzzz..!
-  pappu.sprite = new Image();
-  pappu.sprite.src = 'img/pappu.png';
-
-  pappu.sprite.onload = function() {
-    //pappu.w = pappu.sprite.width;
-    pappu.w = 48;
-    pappu.h = pappu.sprite.height;
-
-    // Sprite Frame Count
-    pappu.max_fly_frame_count = 6;
-    pappu.max_fly_frame_count--;
-
-    // Sprite Frame Change Speed.
-    // This will affect the flap speed.
-    pappu.change_per_frame = 5;
-
-    // X Pos
-    pappu.x = 35;
-  };
-
-  window.mit.pappu = pappu;
+  mit.Pappu.init();
 
 }());
