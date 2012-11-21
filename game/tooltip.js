@@ -5,7 +5,7 @@ function ToolTip(basetile, attr) {
 	this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0);
 	this.tPos.x += tileSize-2;
 	this.tPos.w = 110;
-	this.tPos.h = 70;
+	this.tPos.h = 80;
 
 
 	this.baseTile = basetile;
@@ -18,7 +18,7 @@ function ToolTip(basetile, attr) {
 
 	this.update = function(dt) {
 		if (this.hover == false) {
-			this.visibility -= dt;
+			this.visibility -= 3*dt;
 
 			if (this.visibility < 0) {
 				this.base.parent.base.removeObject(this);

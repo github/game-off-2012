@@ -54,6 +54,7 @@ function Tower(baseTile) {
         coolDown:       Math.random() * 1   + 1,
         mutate:         Math.random() * 1   + 1,
         mutatestrength: Math.random() * 3   + 1,
+	hitcount:	0,
     };
 
     this.hover = false;
@@ -88,8 +89,10 @@ function Tower(baseTile) {
         var a = this.attr;
         
         for (at in a) {
+		if (at != "hitcount") {
             a[at] += (Math.random() - 0.5) * a.mutatestrength * a[at] * 0.30;
             a[at] = Math.floor(a[at] + 0.5);
+		}
         }
         
         if (a.mutatestrength < 1) {
@@ -115,6 +118,7 @@ function Tower(baseTile) {
         }
         
         target.hp -= this.attr.damage;
+	this.attr.hitcount += 1;
         
         var cent1 = this.tPos.getCenter();
         var cent2 = target.tPos.getCenter();
