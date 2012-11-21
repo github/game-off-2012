@@ -5,15 +5,7 @@ function loadMap(level, loadComplete) {
     
     // Set the background to light gray
     Crafty.background("#9F9F9F");
-    
-    Crafty.sprite(32, "images/sprite_sheet.png", {
-      wall: [0, 13],
-      white: [0, 10],
-      blue: [0, 11],
-      red: [0, 11],
-      purple: [0, 12]
-    });
-    
+
     for (var i = 0; i < map.length; i++) {
       for (var j = 0; j < map[0].length; j++) {
         var curr = map[i][j];
@@ -35,7 +27,7 @@ function loadMap(level, loadComplete) {
           Crafty.e("2D, DOM, PushableBox, RemovableBox, ColorBox")
           .ColorBox(item)
           .attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
-        
+
         if (curr == 'F' || curr == 'W')
           Crafty.e("2D, DOM, solid, " + item).attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
           
