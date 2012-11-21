@@ -88,13 +88,13 @@
         pos.x = utils.randomNumber(2000, 2500);
       }
 
-      /*var forks = mit.ForkUtils.forks;
+      var forks = mit.ForkUtils.forks;
       var last_fork = [forks.length-1];
       
       if (last_fork) {
         if (Math.abs(pos.x - last_fork.x) < 300)
           pos.x = last_fork.x + 300;
-      }*/
+      }
 
       return pos;
     },
