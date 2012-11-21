@@ -8,7 +8,6 @@ LAST (BUT MUST):
   * Sound files compatability.
   * Balance.
   * Fix merge bug (merges too much).
-  * Performance.
 
 OPTIONAL:
     * Analytics.
