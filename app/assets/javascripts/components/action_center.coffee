@@ -7,6 +7,7 @@ Crafty.c "ActionCenter",
     @bind("EnterFrame", ->
       @tick()
     )
+    @z = Config.gfx.segmentsInitialIndex + 1
 
   tick: ->
     @x = -70/2
