@@ -33,12 +33,15 @@ Crafty.c("Segment",
     @_inner.reset()
     @_outer.reset()
 
-  perform: (action, value = null, cameFrom = null) ->
+  perform: (action, value = null, cameFrom = null, index = null) ->
     value = Config.actionValues[action] unless value
     return if value < Config.obstacles.effect.threshold
     @[action](value)
-    @prev.perform(action, value / Config.obstacles.effect.divisor, 'next') unless cameFrom == 'prev'
-    @next.perform(action, value / Config.obstacles.effect.divisor, 'prev') unless cameFrom == 'next'
+
+    @attr(z: Config.gfx.segmentsInitialIndex) if not index
+
+    @prev.perform(action, value / Config.obstacles.effect.divisor, 'next', @z - 1) unless cameFrom == 'prev'
+    @next.perform(action, value / Config.obstacles.effect.divisor, 'prev', @z - 1) unless cameFrom == 'next'
 
   Pull: (value) ->
     @_inner.shiftRadius(-value)
