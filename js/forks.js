@@ -67,9 +67,6 @@
     fork_head_img: {},
     dig_img: {},
 
-    had_head_collision: false,
-    last_push: 0,
-
     // How many forks to have in memory ?
     count: 6,
 
@@ -276,28 +273,10 @@
       // If there's a collision pappu will be pushed!
       var fork_head_bounds = first_fork.getHeadBounds();
 
-      if (this.had_head_collision) {
-        this.had_head_collision = false;
-
-        mit.vy += -this.last_push;
-      }
-
       // Check whether pappu collided with the
       // fork head or not.
       if (utils.intersect(pappu_bounds, fork_head_bounds)) {
-        this.had_head_collision = true;
-
-        if (first_fork.edge === 'top') {
-          this.last_push = +first_fork.head_h;
-        }
-        else {
-          this.last_push = -first_fork.head_h;
-        }
-
-        mit.vy += this.last_push;
-        mit.ay = 0;
-        // console.log(pappu_bounds, fork_head_bounds);
-        // console.log(mit.vy);
+        mit.gameOver();
       }
     }
 
