@@ -29,7 +29,7 @@ $ ->
     new jl("level/level2.json", "test2"))
   
   game = new Game()
-  @STORAGE.setFinished(game.init)
+  @STORAGE.setOnFinish(game.init)
   
 class Game
   constructor: ->

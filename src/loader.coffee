@@ -19,7 +19,7 @@ class Storage
     if @counter == 0
       @finshed()
      
-  setFinished:(finished)->
+  setOnFinish:(finished)->
     @finshed = finished
 
   getRessource:(name)->
