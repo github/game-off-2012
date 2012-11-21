@@ -18,7 +18,6 @@ class Level
       @entities.add({e:new TestEntity(0, 0), m:new PlayerModel(world, (Math.random()*200)+50, 30)})
 
   tick:->
-    
     if @inputHandler.ESC.isPressed()
       impress().goto("map_screen")
       @game.loadMap()
