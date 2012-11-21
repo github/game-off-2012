@@ -1,7 +1,5 @@
 (function() {
 
-  window.mit = window.mit || {};
-
   // We're having lots of forks to
   // make gameplay a little harder
   // and incorporate ggo's required concepts.
@@ -19,10 +17,7 @@
   // If it collides at some part other than
   // the hole, he'll decease.
 
-  var branch_img = new Image();
-  branch_img.src = 'img/branch.png';
-
-  function Branch() {
+  mit.Branch = function() {
     this.x = 0;
     this.y = 0;
 
@@ -57,114 +52,142 @@
 
       return bounds;
     };
-  }
-
-  var branches = [];
-
-  /*
-  This method will generate a random x/y
-  position for the forks to start at.
-
-  Based on the `fork.edge` we can draw
-  the fork easily on the canvas edges.
-  */
-  var getRandomBranchPos = function() {
-    // We have access to `branches` here
-    var pos = {};
-
-    if (branches[branches.length-1]) {
-      pos.x = branches[branches.length-1].x;
-      pos.x += utils.randomNumber(500, 2000);
-    }
-    else {
-      // First
-      pos.x = utils.randomNumber(2000, 2500);
-    }
-
-    return pos;
   };
 
-  var draw = function(ctx, count) {
 
-    if (branches.length < count) {
+  mit.BranchUtils = {
+
+    branch_img: {},
+
+    branches: [],
+    count: 4,
+
+    init: function() {
+      // Load Images
+      this.branch_img = new Image();
+      this.branch_img.src = 'img/branch.png';
+    },
+
+    /*
+      This method will generate a random x/y
+      position for the forks to start at.
+
+      Based on the `fork.edge` we can draw
+      the fork easily on the canvas edges.
+    */
+    getRandomBranchPos: function() {
+      // We have access to `branches` here
+      var pos = {};
+
+      if (this.branches[this.branches.length-1]) {
+        pos.x = this.branches[this.branches.length-1].x;
+        pos.x += utils.randomNumber(500, 2000);
+      }
+      else {
+        // First
+        pos.x = utils.randomNumber(2000, 2500);
+      }
+
+      /*var forks = mit.ForkUtils.forks;
+      var last_fork = [forks.length-1];
       
-      for (var i = 0; i < count - branches.length; i++) {
-        var branch = new Branch();
+      if (last_fork) {
+        if (Math.abs(pos.x - last_fork.x) < 300)
+          pos.x = last_fork.x + 300;
+      }*/
 
-        var pos = getRandomBranchPos();
-        branch.x = pos.x;
-        branch.y = 0;
+      return pos;
+    },
 
-        branch.w = branch_img.width;
-        branch.h = branch_img.height;
+    create: function() {
+      var branches = this.branches,
+          count = this.count;
+
+      if (branches.length < count) {
+      
+        for (var i = 0; i < count - branches.length; i++) {
+          var branch = new mit.Branch();
+
+          var pos = this.getRandomBranchPos();
+          branch.x = pos.x;
+          branch.y = 0;
+
+          branch.w = this.branch_img.width;
+          branch.h = this.branch_img.height;
+
+          // Escape Positions
+          branch.escape_x = branch.x;
+          branch.escape_y = branch.y + utils.randomNumber(0, branch.h-150);
+
+          // Escape Area's Width/Height
+          branch.escape_w = this.branch_img.width;
+          branch.escape_h = 150;
+
+          branches.push(branch);
+        }
+    }
+    },
+
+    draw: function(ctx) {
+      var branches = this.branches,
+          branch_img = this.branch_img;
+
+      this.create();
+
+      // console.log(branches);
+
+      // Loop over branches and draw each of them
+      branches.forEach(function(branch, index) {
+        if (branch.x < 0) {
+          branches.splice(index, 1);
+        }
+        branch.x -= mit.backgrounds.ground_bg_move_speed;
 
         // Escape Positions
         branch.escape_x = branch.x;
-        branch.escape_y = branch.y + utils.randomNumber(0, branch_img.height-150);
 
-        // Escape Area's Width/Height
-        branch.escape_w = branch_img.width;
-        branch.escape_h = 150;
+        ctx.drawImage(branch_img, branch.x, branch.y);
 
-        branches.push(branch);
+        // Draw Escapes
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = 'white';
+        ctx.fillRect(
+          branch.escape_x,
+          branch.escape_y,
+          branch.escape_w,
+          branch.escape_h
+        );
+        ctx.restore();
+      });
+    },
+
+    // Check collisions with branches
+    checkCollision: function() {
+      var first_branch = this.branches[0],
+          // Get Pappu Bounds
+          pappu_bounds = mit.pappu.getBounds(),
+          // Get Nearest Branch's Top Part's Bounds
+          branch_bounds = first_branch.getBounds();
+
+      if (utils.intersect(pappu_bounds, branch_bounds)) {
+        // console.log(pappu_bounds, branch_bounds);
+
+        // If the Escape Area intersects then pappu
+        // can escape, else game over matey!
+        var escape_bounds = first_branch.getEscapeBounds();
+
+        if (!utils.intersect(pappu_bounds, escape_bounds)) {
+          mit.gameOver();
+        }
+
       }
+
+      return;
     }
 
-    // console.log(branches);
-
-    // Loop over branches and draw each of them
-    branches.forEach(function(branch, index) {
-      if (branch.x < 0) {
-        branches.splice(index, 1);
-      }
-      branch.x -= mit.backgrounds.ground_bg_move_speed;
-
-      // Escape Positions
-      branch.escape_x = branch.x;
-
-      ctx.drawImage(branch_img, branch.x, branch.y);
-
-      // Draw Escapes
-      ctx.save();
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.fillStyle = 'white';
-      ctx.fillRect(
-        branch.escape_x,
-        branch.escape_y,
-        branch.escape_w,
-        branch.escape_h
-      );
-      ctx.restore();
-    });
   };
 
-
-  // Check collisions with branches
-  var checkCollision = function() {
-    // Get Pappu Bounds
-    var pappu_bounds = mit.pappu.getBounds();
-
-    // Get Nearest Branch's Top Part's Bounds
-    var branch_bounds = branches[0].getBounds();
-
-    if (utils.intersect(pappu_bounds, branch_bounds)) {
-      // console.log(pappu_bounds, branch_bounds);
-
-      // If the Escape Area intersects then pappu
-      // can escape, else game over matey!
-      var escape_bounds = branches[0].getEscapeBounds();
-
-      if (!utils.intersect(pappu_bounds, escape_bounds)) {
-        mit.gameOver();
-      }
-
-    }
-  };
-
-
-  window.mit.branches = {
-    draw: draw,
-    checkCollision: checkCollision
-  };
+  mit.BranchUtils.init();
 
 }());

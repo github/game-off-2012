@@ -102,7 +102,7 @@
   mit.config.canvas_height = mit.H = H;
 
   // Gravity
-  mit.gravity = 0.5;
+  mit.gravity = 0.7;
 
   // Velocity x,y
   mit.vx = 0;
@@ -168,7 +168,7 @@
     if (!mit.game_started)
       mit.game_started = 1;
 
-    mit.ay = -1.0;
+    mit.ay = -1.5;
     flying_up = 1;
   }, false);
 
@@ -224,8 +224,8 @@
       return;
     }
 
-    //mit.ForkUtils.draw(ctx, 6);
-    //mit.branches.draw(ctx, 4);
+    //mit.ForkUtils.draw(ctx);
+    //mit.BranchUtils.draw(ctx, 4);
 
     //mit.ForkUtils.checkCollision();
 
@@ -237,11 +237,11 @@
       // Draw Forks
       mit.ForkUtils.draw(ctx);
       // Draw Branches
-      mit.branches.draw(ctx, 4);
+      mit.BranchUtils.draw(ctx);
 
       // Check Collisions with pappu
       mit.ForkUtils.checkCollision();
-      //mit.branches.checkCollision();
+      //mit.BranchUtils.checkCollision();
 
       // Send over Pakias (Enemies)
       if (mit.score > 199)

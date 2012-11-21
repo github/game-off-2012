@@ -67,7 +67,7 @@
   };
 
 
-  var ground_bg_move_speed = 6;
+  var ground_bg_move_speed = 8;
   var ground_bg_vx = 0;
 
   var drawGround = function(ctx) {
@@ -88,7 +88,7 @@
   };
 
 
-  var grass_bg_move_speed = 6;
+  var grass_bg_move_speed = 8;
   var grass_bg_vx = 0;
 
   var drawGrass = function(ctx) {

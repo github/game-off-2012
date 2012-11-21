@@ -116,10 +116,25 @@
 
       if (this.forks[this.forks.length-1]) {
         pos.x = this.forks[this.forks.length-1].x;
-        pos.x += 300;
+        pos.x += utils.randomNumber(300,600);
       }
       else {
-        pos.x = 1*200;
+        pos.x = mit.W/1000 * 800;
+      }
+
+      var branches = mit.BranchUtils.branches;
+      /*var last_branch = [branches.length-1];
+
+      if (last_branch) {
+        if (Math.abs(pos.x - last_branch.x) < 300)
+          pos.x = last_branch.x + 300;
+      }*/
+
+      if (branches.length) {
+        branches.forEach(function(branch) {
+          if (Math.abs(pos.x - branch.x) < 300)
+            pos.x = branch.x + 300;
+        });
       }
 
       return pos;
