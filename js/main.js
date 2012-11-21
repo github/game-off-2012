@@ -199,7 +199,7 @@
     window.requestAnimationFrame(renderGame);
 
     // Draw Backgrounds on BG Canvas
-    mit.backgrounds.draw(bg_ctx);
+    mit.Backgrounds.draw(bg_ctx);
 
     ctx.clearRect(0, 0, W, H);
 
@@ -209,7 +209,7 @@
     mit.ForkUtils.drawDigs(ctx);
 
     // Draw Grass on Main Canvas
-    mit.backgrounds.drawGrass(ctx);
+    mit.Backgrounds.drawGrass(ctx);
 
     if (flying_up)
       mit.pappu.updateFlyFrameCount();

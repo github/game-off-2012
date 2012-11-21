@@ -141,7 +141,7 @@
         if (branch.x < 0) {
           branches.splice(index, 1);
         }
-        branch.x -= mit.backgrounds.ground_bg_move_speed;
+        branch.x -= mit.Backgrounds.ground_bg_move_speed;
 
         // Escape Positions
         branch.escape_x = branch.x;

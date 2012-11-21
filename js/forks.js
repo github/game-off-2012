@@ -200,7 +200,7 @@
           forks.splice(index, 1);
         }
 
-        fork.x -= mit.backgrounds.ground_bg_move_speed;
+        fork.x -= mit.Backgrounds.ground_bg_move_speed;
 
         if (fork.edge === 'top') {
           // ctx.lineTo(fork.x, 0);
