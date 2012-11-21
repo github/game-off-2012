@@ -32,9 +32,6 @@ Crafty.c "Game",
     @attr(cycles: @cycles + 1)
 
   crash: ->
-    if @hasBestScore(@time)
-      @setBestScore(@time)
-      # TODO declare new high score.
 
   rollActionIn: (delayOverride = @_actionDelay) ->
     @delay((=> @currentAction = null), delayOverride * 3/4)
@@ -48,12 +45,6 @@ Crafty.c "Game",
 
   onAction: (cb) ->
     @bind("action", cb)
-
-  hasBestScore: (score) ->
-    score > Settings.get('score')
-
-  setBestScore: (score) ->
-    Settings.set('score', score)
 
   reset: ->
     @attr(

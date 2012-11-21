@@ -24,7 +24,6 @@ Crafty.c "MoveInCircle",
 
 
   reset: ->
-    @disableControls = false
     @_angle = @_initialAngle
     @_speed = Config.player.speed.angular.initial
     @_sideSpeed = Config.player.speed.sides.initial
@@ -55,8 +54,8 @@ Crafty.c "MoveInCircle",
     @
 
   disableControl: ->
-     @hide().unbind("KeyDown", @_keydown).unbind("KeyDown", @_keydown).unbind "EnterFrame", @_enterframe
-     @
+    @hide().unbind("KeyDown", @_keydown).unbind("KeyDown", @_keydown).unbind "EnterFrame", @_enterframe
+    @
 
   enableControl: ->
     @show().bind("KeyDown", @_keydown).bind("KeyUp", @_keyup).bind "EnterFrame", @_enterframe

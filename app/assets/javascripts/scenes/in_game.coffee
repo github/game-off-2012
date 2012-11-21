@@ -27,12 +27,14 @@ Crafty.scene("in_game", ->
   restart = =>
     track.reset()
     game.reset().start()
-    player.enableControl()
     center.show()
+    player.reset()
+    ready_go( -> player.enableControl())
 
   gameover = =>
     game.stop()
     player.reset().disableControl()
+    track.reset()
     game.reset()
     SFX.play("crash")
     Narrator.play("conflict")
@@ -48,11 +50,14 @@ Crafty.scene("in_game", ->
     ).start()
     pause.bindKeyboard()
 
-  Utils.showText("Ready?")
-  Narrator.play "ready", ->
-    Utils.showText("Code!")
-    Narrator.play "code", ->
-      start()
+  ready_go = (cb) =>
+    Utils.showText("Ready?")
+    Narrator.play "ready", ->
+      Utils.showText("Code!")
+      Narrator.play "code", ->
+        cb()
+
+  ready_go( -> start())
 
 )
 
