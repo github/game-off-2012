@@ -18,18 +18,15 @@ $ ->
   #GLOABAL Storage
   @STORAGE = new Storage()
   
-  l1 = new SimpleImageLoader("img/sprites.png", "spritesheet")
-  l2 = new SimpleJSONLoader("img/map.json", "map")
-  l3 = new SimpleJSONLoader("level/test.json", "test")
-  l4 = new SimpleJSONLoader("level/level2.json", "test2")
-  STORAGE.register(l1)
-  STORAGE.register(l2)
-  STORAGE.register(l3)
-  STORAGE.register(l4)
-  l1.start()
-  l2.start()
-  l3.start()
-  l4.start()
+  #Short-Aliases
+  il = SimpleImageLoader
+  jl = SimpleJSONLoader
+  
+  #Register some Loaders
+  STORAGE.register(new il("img/sprites.png", "spritesheet"),
+    new jl("img/map.json", "map"),
+    new jl("level/test.json", "test"),
+    new jl("level/level2.json", "test2"))
   
   game = new Game()
   @STORAGE.setFinished(game.init)
