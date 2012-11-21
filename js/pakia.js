@@ -90,8 +90,7 @@
       cur_pakia.generateRandomPos();
 
       cur_pakia.generateRandomVelocity();
-
-console.log(cur_pakia.vy);
+      
       cur_pakia = false;
     }
   };
@@ -106,7 +105,7 @@ console.log(cur_pakia.vy);
       createPakias();
     }
 
-    if (mit.score.toFixed(2) % 10 === 0 || cur_pakia) {
+    if (mit.score.toFixed(2) % 50 === 0 || cur_pakia) {
       mit.pakia.reflow(ctx);
       mit.pakia.repaint(ctx);
     }

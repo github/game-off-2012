@@ -84,6 +84,9 @@
     mit.ax = 0; mit.ay = 0;
     mit.vx = 0; mit.vy = 0;
 
+    // reset score
+    mit.score = 0;
+
     return false;
   });
 
@@ -95,8 +98,8 @@
 
 
   // Set Canvas Width/Height in Config
-  mit.config.canvas_width = W;
-  mit.config.canvas_height = H;
+  mit.config.canvas_width = mit.W = W;
+  mit.config.canvas_height = mit.H = H;
 
   // Gravity
   mit.gravity = 0.5;
@@ -203,7 +206,7 @@
     // Draw Digs (holds forks)
     // I am fine without Digs, but Kushagra
     // just WANTS me to do this extra work :/
-    mit.forks.drawDigs(ctx);
+    mit.ForkUtils.drawDigs(ctx);
 
     // Draw Grass on Main Canvas
     mit.backgrounds.drawGrass(ctx);
@@ -221,27 +224,28 @@
       return;
     }
 
-    //mit.forks.draw(ctx, 6);
+    //mit.ForkUtils.draw(ctx, 6);
     //mit.branches.draw(ctx, 4);
 
-    //mit.forks.checkCollision();
+    //mit.ForkUtils.checkCollision();
 
     // Send over Pakias (Enemies)
-    mit.pakia.render(ctx);
+    // mit.pakia.render(ctx);
 
     if (mit.game_started) {
 
       // Draw Forks
-      mit.forks.draw(ctx, 6);
+      mit.ForkUtils.draw(ctx, 6);
       // Draw Branches
       mit.branches.draw(ctx, 4);
 
       // Check Collisions with pappu
-      mit.forks.checkCollision();
+      mit.ForkUtils.checkCollision();
       mit.branches.checkCollision();
 
       // Send over Pakias (Enemies)
-      mit.pakia.render(ctx);
+      if (mit.score > 199)
+        mit.pakia.render(ctx);
 
       // Update score
       mit.score = mit.score + 0.2;
