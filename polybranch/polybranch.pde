@@ -21,6 +21,7 @@ PVector focalPoint;
 
 void setup(){
   size(800,800);
+  frameRate(30);
   originX = width/2;
   originY = height/2;
   imageMode(CENTER);
@@ -35,11 +36,13 @@ void setup(){
   Layer layer = new Layer(16, width, height);
 }
 
-void draw(){}
+void draw(){
+  background(255);
+  g.update();
+}
 
 //testtesttest
 void mousePressed(){
-  println("boop!");
   background(255);
   //testTree = new Tree(15, bob);
   //Layer layer = new Layer(16, width, height);
@@ -49,6 +52,14 @@ void mousePressed(){
   
   g = new Game();
   g.display();
+}
+
+void mouseMoved(){
+  originX = mouseX;
+  originY = mouseY;
+  //if(dist(int(mouseX),int(mouseY), int(width/2), int(height/2)) < width/2){
+    
+  //}
 }
 
 

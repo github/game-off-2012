@@ -11,7 +11,7 @@ class Tree{
     trunkLen = dist(lerp(trunk.verticies[0].x, trunk.verticies[1].x, 0.5), lerp(trunk.verticies[0].y, trunk.verticies[1].y, 0.5), trunk.verticies[2].x, trunk.verticies[2].y);
     this.populateBranches(branches[0], (random(1)));
     this.render(context);
-    println("trunks is "+trunkLen);
+    //println("trunks is "+trunkLen);
   }
   
   void populateBranches(Branch trunkIn, float sides){
@@ -30,7 +30,7 @@ class Tree{
           
           //check if the random angle will fit inside the circle
           if(dist((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle)),width/2,height/2) < width/2){
-            println(index);
+            //println(index);
             branches[index] = new Branch(
                       new PVector(trunkIn.verticies[2].x, trunkIn.verticies[2].y),
                       new PVector(lerp(trunkIn.verticies[2].x, trunkIn.verticies[1].x, 0.3), lerp(trunkIn.verticies[2].y, trunkIn.verticies[1].y, 0.3)),
@@ -57,7 +57,7 @@ class Tree{
           
           //check if the random angle will fit inside the circle
           if(dist((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle)),width/2,height/2) < width/2){
-            println(index);
+            //println(index);
             branches[index] = new Branch(
                       new PVector(lerp(trunkIn.verticies[2].x, trunkIn.verticies[0].x, 0.3), lerp(trunkIn.verticies[2].y, trunkIn.verticies[0].y, 0.3)),
                       new PVector(trunkIn.verticies[2].x, trunkIn.verticies[2].y),

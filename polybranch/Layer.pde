@@ -16,7 +16,6 @@ class Layer{
     pg = createGraphics(layerWidth, layerHeight);
 
     startVertex = int(random(0, numSides));
-    println(startVertex);
     
     
     float aX = (layerWidth/2) + (layerWidth/2 - ringWeight/2) * cos((TWO_PI/numSides)*startVertex);
@@ -39,12 +38,21 @@ class Layer{
   
   public void updateDist(float increment){
     distance += increment;
+//    if(easedDistance > 4){
+//      reset();
+//    }
+    easedDistance = easeInExpo(distance, distance, 0,1,1);
     
   }
   
+  public void reset(){
+    distance = 0;
+    easedDistance = 0;
+  }
+  
   public void render(){
-    fill(255,100);
-    rect(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
+    //fill(255,100);
+    //rect(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
     image(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
   }
 
