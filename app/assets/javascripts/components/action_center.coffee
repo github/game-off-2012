@@ -3,8 +3,10 @@ Crafty.c "ActionCenter",
   refreshDelay: 10
 
   init: ->
-    @requires("2D, DOM, Color, Text, KnowsGame, Delay")
-    @delay(@tick, @refreshDelay)
+    @requires("2D, DOM, Color, Text, KnowsGame")
+    @bind("EnterFrame", ->
+      @tick()
+    )
 
   tick: ->
     @x = -70/2
@@ -15,5 +17,3 @@ Crafty.c "ActionCenter",
     text += "<br><strong class='current-action'>#{@game.currentAction}!<br>" if @game.currentAction
 
     @text(text)
-    @delay(@tick, @refreshDelay)
-

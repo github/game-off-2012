@@ -4,7 +4,6 @@ Crafty.scene("in_game", ->
   Crafty.viewport.y = Config.viewport.center.y
 
   Crafty.background("#000")
-  Crafty.pause()
 
 
   game = Crafty.e("Game")
@@ -12,6 +11,7 @@ Crafty.scene("in_game", ->
 
   center = Crafty.e("ActionCenter").game(game)
 
+  Crafty.pause()
   player = Crafty.e("2D, DOM, Color, MoveInCircle, Player, Collision").onHit("Obstacle", ->
     @crash()
     game.stop()
@@ -31,9 +31,9 @@ Crafty.scene("in_game", ->
   )
 
 
-  start = ->
+  start = =>
     music.play()
-    Crafty.pause()
+    Crafty.pause(false)
 
     game.onAction( (action) =>
       Narrator.play(action)
