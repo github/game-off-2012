@@ -18,19 +18,19 @@ Crafty.c("Phil", {
             .bind("NewDirection", function (direction) {
                 if (direction[0] < 0) {
                     if (!this.isPlaying("walk_left"))
-                        this.stop().animate("walk_left", 10, -1);
+                        this.stop().animate("walk_left", gameBoard.standardAnimationLength, -1);
                     }
                     if (direction[0] > 0) {
                         if (!this.isPlaying("walk_right"))
-                            this.stop().animate("walk_right", 10, -1);
+                            this.stop().animate("walk_right", gameBoard.standardAnimationLength, -1);
                     }
                     if (direction[1] < 0) {
                         if (!this.isPlaying("walk_up"))
-                            this.stop().animate("walk_up", 10, -1);
+                            this.stop().animate("walk_up", gameBoard.standardAnimationLength, -1);
                     }
                     if (direction[1] > 0) {
                         if (!this.isPlaying("walk_down"))
-                            this.stop().animate("walk_down", 10, -1);
+                            this.stop().animate("walk_down", gameBoard.standardAnimationLength, -1);
                     }
                     if(!direction[0] && !direction[1]) {
                         this.stop();
@@ -39,19 +39,19 @@ Crafty.c("Phil", {
             .bind("GrabDirection", function (direction) {
                 if (direction[0] < 0) {
                     if (!this.isPlaying("grab_left"))
-                        this.stop().animate("grab_left", 10, -1);
+                        this.stop().animate("grab_left", gameBoard.standardAnimationLength, -1);
                     }
                     if (direction[0] > 0) {
                         if (!this.isPlaying("grab_right"))
-                            this.stop().animate("grab_right", 10, -1);
+                            this.stop().animate("grab_right", gameBoard.standardAnimationLength, -1);
                     }
                     if (direction[1] < 0) {
                         if (!this.isPlaying("grab_up"))
-                            this.stop().animate("grab_up", 10, -1);
+                            this.stop().animate("grab_up", gameBoard.standardAnimationLength, -1);
                     }
                     if (direction[1] > 0) {
                         if (!this.isPlaying("grab_down"))
-                            this.stop().animate("grab_down", 10, -1);
+                            this.stop().animate("grab_down", gameBoard.standardAnimationLength, -1);
                     }
                     if(!direction[0] && !direction[1]) {
                         this.stop();

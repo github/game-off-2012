@@ -11,6 +11,7 @@ var gameBoard = {
   actionKey: 32,    // Spacebar is the action key
   removeKey: 70,    // F is the remove key
   colorKey: 69,     // E is the take / give color key
+  standardAnimationLength: 50,   // Number of frames to play animations
 
   getHeight: function () {
     return this.height * this.tileSize;
