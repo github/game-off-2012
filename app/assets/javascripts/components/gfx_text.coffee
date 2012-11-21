@@ -10,4 +10,4 @@ Crafty.c "GFXText",
     @delay((=> @destroy()), Config.gfx.text.duration)
 
 Utils.showText = (text) ->
-    Crafty.e("GFXText").text(text).Start()
+  Crafty.e("GFXText").text(text).Start()
