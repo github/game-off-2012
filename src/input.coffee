@@ -23,14 +23,16 @@ class InputHandler
     
     if keycode is 37
       @LEFT.toggle(true)
+      e.preventDefault()
     
     if keycode is 39
       @RIGHT.toggle(true)
+      e.preventDefault()
       
     if keycode is 13
       @ENTER.toggle(true)
+      e.preventDefault()
     
-    e.preventDefault()
     
     
   keyUp:(e)=>
@@ -38,13 +40,17 @@ class InputHandler
   
     if keycode is 37
       @LEFT.toggle(false)
+      e.preventDefault()
       
     if keycode is 39
       @RIGHT.toggle(false)
+      e.preventDefault()
       
     if keycode is 13
       @ENTER.toggle(false)
-      
+      e.preventDefault()
     e.preventDefault()
+      
+    
     
   
