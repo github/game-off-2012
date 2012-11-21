@@ -19,6 +19,7 @@ Crafty.scene("in_game", ->
   track  = Crafty.e("Track").player(player).Track().color(Config.cycle.colors.base)
 
   Crafty.e("Mute")
+  pause = Crafty.e("Pause")
 
   player.bind("LevelUp", ->
     game.levelUp()
@@ -30,6 +31,9 @@ Crafty.scene("in_game", ->
     game.reset().start()
   )
 
+  pauseWithEscape = =>
+
+
   start = =>
     music.play()
 
@@ -38,6 +42,8 @@ Crafty.scene("in_game", ->
       Narrator.play(action)
       track.currentSegment(Config.obstacles.changeWhere.initial + Config.obstacles.changeWhere.increaseBy * game.cycles).perform(action)
     ).start()
+    pause.bindKeyboard()
+
 
   Utils.showText("Ready?")
   Narrator.play "ready", ->

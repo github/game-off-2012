@@ -115,3 +115,20 @@ footer{
 .current-action {
     text-transform: uppercase;
 }
+
+.Pause{
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.Pause:hover{
+    color: #bbb;
+}
+
+.Pause:active{
+    color: #999;
+}
+
+.Pause.paused{
+    color: #555;
+}
