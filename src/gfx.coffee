@@ -43,6 +43,7 @@ class MapGenerator
 class LevelGenerator
   constructor:(@data,@img,@world)->
     @sprites = new SpriteSheet(@img, 8)
+    @bodies = new List()
     @load()
   
   load:->
@@ -135,6 +136,7 @@ class LevelGenerator
       bodyDef.position.x = obj.x/30*scalew
       bodyDef.position.y = obj.y/30*scaleh
       
+      @bodies.add({bd: bodyDef, fd:fixDef})
       @world.CreateBody(bodyDef).CreateFixture(fixDef)
          
 class Camera
