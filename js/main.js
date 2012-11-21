@@ -244,8 +244,8 @@
       mit.BranchUtils.checkCollision();
 
       // Send over Pakias (Enemies)
-      if (mit.score > 199)
-        mit.pakia.render(ctx);
+      if (mit.score > 9)
+        mit.PakiaUtils.render(ctx);
 
       // Update score
       mit.score = mit.score + 0.2;

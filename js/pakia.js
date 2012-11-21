@@ -1,27 +1,6 @@
 (function() {
-  
-  window.mit = window.mit || {};
 
-  var W, H;
-
-  var types = [
-    'sad', // pulls
-    'happy', // pushes
-    'angry' // kills
-  ];
-
-  var pakia_img = {};
-
-  pakia_img['sad'] = new Image();
-  pakia_img['sad'].src = 'img/sad_pakia.png';
-
-  pakia_img['happy'] = new Image();
-  pakia_img['happy'].src = 'img/happy_pakia.png';
-
-  pakia_img['angry'] = new Image();
-  pakia_img['angry'].src = 'img/angry_pakia.png';
-
-  var Pakia = function() {
+  mit.Pakia = function() {
 
     // Default type will be angry
     this.type = 'angry';
@@ -32,7 +11,7 @@
     this.h;
 
     this.draw = function(ctx) {
-      ctx.drawImage(pakia_img[this.type], this.x, this.y);
+      ctx.drawImage(mit.PakiaUtils.pakia_img[this.type], this.x, this.y);
     };
 
     this.generateRandomPos = function() {
@@ -41,81 +20,107 @@
     };
 
     this.generateRandomVelocity = function() {
-      this.vx = -8;
+      this.vx = -20;
       this.vy = utils.randomNumber(-25,-18);
     };
   };
 
-  var pakias = [];
 
-  var createPakias = function() {
+  mit.PakiaUtils = {
 
-    for (var i = 0; i < 3; i++) {
-      var pakia = new Pakia();
-      pakia.w = pakia_img['sad'].width;
-      pakia.h = pakia_img['sad'].height;
+    pakias: [],
 
-      pakia.generateRandomPos();
+    // Only 1 pakia at once, to make sure
+    // gameplay is not terribly hard
+    // as forks and branches have already
+    // made it quite hard.
+    cur_pakia: false,
 
-      pakia.generateRandomVelocity();
+    types: [
+      'sad', // pulls
+      'happy', // pushes
+      'angry' // kills
+    ],
 
-      pakia.type = types[i];
+    pakia_img: {
+      sad: {},
+      happy: {},
+      angry: {}
+    },
 
-      pakias.push(pakia);
+    init: function() {
+
+      // Loading All Pakia Images
+
+      this.pakia_img.sad = new Image();
+      this.pakia_img.sad.src = 'img/sad_pakia.png';
+
+      this.pakia_img.happy = new Image();
+      this.pakia_img.happy.src = 'img/happy_pakia.png';
+
+      this.pakia_img.angry = new Image();
+      this.pakia_img.angry.src = 'img/angry_pakia.png';
+    },
+
+    createPakias: function() {
+
+      for (var i = 0; i < 3; i++) {
+        var pakia = new mit.Pakia();
+        pakia.w = this.pakia_img.sad.width;
+        pakia.h = this.pakia_img.sad.height;
+
+        pakia.generateRandomPos();
+
+        pakia.generateRandomVelocity();
+
+        pakia.type = this.types[i];
+
+        this.pakias.push(pakia);
+      }
+    },
+
+    reflow: function(ctx) {
+
+      if (!this.cur_pakia) {
+        // Object by Reference!
+        this.cur_pakia = this.pakias[utils.randomNumber(0,2)];
+      }
+
+      this.cur_pakia.vy += mit.gravity;
+
+      this.cur_pakia.x += this.cur_pakia.vx;
+      this.cur_pakia.y += this.cur_pakia.vy;
+      // console.log(cur_pakia.x)
+
+      // Reset positions
+      if (this.cur_pakia.x + this.cur_pakia.w < 0) {
+        this.cur_pakia.generateRandomPos();
+
+        this.cur_pakia.generateRandomVelocity();
+        
+        this.cur_pakia = false;
+      }
+    },
+
+    repaint: function(ctx) {
+      if (this.cur_pakia)
+        this.cur_pakia.draw(ctx);
+    },
+
+    render: function(ctx) {
+      if (!this.pakias.length) {
+        this.createPakias();
+      }
+
+      if (mit.score.toFixed(2) % 10 === 0 || this.cur_pakia) {
+        this.reflow(ctx);
+        this.repaint(ctx);
+      }
     }
+
   };
 
 
-  // Only 1 pakia at once, to make sure
-  // gameplay is not terribly hard
-  // as forks and branches have already
-  // made it quite hard.
-  var cur_pakia = false;
-
-
-  var reflow = function(ctx) {
-    if (!cur_pakia) {
-      // Object by Reference!
-      cur_pakia = pakias[utils.randomNumber(0,2)];
-    }
-
-    cur_pakia.vy += mit.gravity;
-
-    cur_pakia.x += cur_pakia.vx;
-    cur_pakia.y += cur_pakia.vy;
-    // console.log(cur_pakia.x)
-
-    // Reset positions
-    if (cur_pakia.x + cur_pakia.w < 0) {
-      cur_pakia.generateRandomPos();
-
-      cur_pakia.generateRandomVelocity();
-      
-      cur_pakia = false;
-    }
-  };
-
-  var repaint = function(ctx) {
-    if (cur_pakia)
-      cur_pakia.draw(ctx);
-  };
-
-  var render = function(ctx) {
-    if (!pakias.length) {
-      createPakias();
-    }
-
-    if (mit.score.toFixed(2) % 50 === 0 || cur_pakia) {
-      mit.pakia.reflow(ctx);
-      mit.pakia.repaint(ctx);
-    }
-  };
-
-
-  window.mit.pakia = {
-    reflow: reflow,
-    repaint: repaint,
-    render: render
-  };
+  mit.PakiaUtils.init();
 
 }());
