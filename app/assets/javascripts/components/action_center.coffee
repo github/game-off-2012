@@ -12,7 +12,8 @@ Crafty.c "ActionCenter",
 
     text = "<strong>Score:</strong><span>#{@game.time}</span><br>" +
            "<strong>Cycles:</strong><span>#{@game.cycles}</span><br>"
-    text += "<br><strong>#{@game.currentAction}!<br>" if @game.currentAction
+    text += "<br><strong class='current-action'>#{@game.currentAction}!<br>" if @game.currentAction
 
     @text(text)
     @delay(@tick, @refreshDelay)
+

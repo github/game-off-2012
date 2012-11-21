@@ -111,3 +111,7 @@ footer{
 .Obstacle{
     -webkit-transition: background-color 200ms;
 }
+
+.current-action {
+    text-transform: uppercase;
+}
