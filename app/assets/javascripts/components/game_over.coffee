@@ -20,7 +20,7 @@ Crafty.c "GameOver"
       h:   Config.viewport.height     - @margin.y * 2
       z: 50000
     )
-    @text("<div><h1>Conflict!</h1><h2>Game Over!</h2></div>")
+    @text("<div><h1>Conflict!</h1><h2>Game Over!</h2><h3>Best score: #{Settings.get('score')}</h3></div>")
     @button = Crafty.e("2D, Mouse, DOM, Text, Button").text("Try Again").attr(x: -130, y: 50, w: 260, h:42, z: 50001).bind('Click', =>
       @restart()
     )

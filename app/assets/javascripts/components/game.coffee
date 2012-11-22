@@ -16,6 +16,8 @@ Crafty.c "Game",
     @
 
   stop: ->
+    @time++
+    @setBestScore(@time) if @hasBestScore(@time)
     @attr(
       stopped: true
     )
@@ -43,14 +45,11 @@ Crafty.c "Game",
     @bind("action", cb)
 
   hasBestScore: (score) ->
-    score > Settings.get('score')
+    score > (Settings.get('score') || 0)
 
   setBestScore: (score) ->
     Settings.set('score', score)
 
   reset: ->
-    if @hasBestScore(@time)
-      @setBestScore(@time)
-
     @attr(time: 0, cycles: 0, currentAction: "")
     @
