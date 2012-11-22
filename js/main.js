@@ -74,7 +74,7 @@
   ui.start_screen.css('height', canvas.height + 'px');
 
   // Start Button
-  ui.start_game.on('mousedown', function() {
+  var startGame = function() {
     ui.start_screen.fadeOut();
 
     mit.start_btn_clicked = 1;
@@ -86,9 +86,15 @@
 
     // reset score
     mit.score = 0;
+  };
+
+  ui.start_game.on('mousedown', function() {
+    startGame();
 
     return false;
   });
+
+  startGame();
 
 
   mit.score = 0;
@@ -113,52 +119,14 @@
   // 
   // You can console.log velocities in drawing methods
   // and from there decide what to set as the cap.
-  var v_cap = 7;
+  mit.v_cap = 7;
 
   // Accelaration x,y
   mit.ax = 0;
   mit.ay = 0;
 
   // Flying up ?
-  var flying_up = 0;
-
-
-  // Key Events
-  window.addEventListener('keydown', function(e) {
-    if (!mit.start_btn_clicked)
-      return;
-
-    switch (e.keyCode) {
-      // Left
-      //case 37:
-      //  mit.ax = -0.4;
-      //  break;
-
-      // Right
-      //case 39:
-      //  mit.ax = 0.4;
-      //  break;
-
-      // Up
-      case 38:
-        mit.ay = -1.0;
-        break;
-
-      // Down
-      case 40:
-        mit.ay = 1.0;
-        break;
-    }
-
-  }, false);
-
-  window.addEventListener('keyup', function(e) {
-    if (!mit.start_btn_clicked)
-      return;
-
-    mit.ax = 0;
-    mit.ay = 0;
-  }, false);
+  mit.flying_up = 0;
 
   // Game play on mouse clicks too!
   window.addEventListener('mousedown', function(e) {
@@ -169,7 +137,7 @@
       mit.game_started = 1;
 
     mit.ay = -1.5;
-    flying_up = 1;
+    mit.flying_up = 1;
   }, false);
 
   window.addEventListener('mouseup', function(e) {
@@ -177,7 +145,7 @@
       return;
 
     mit.ay = 0;
-    flying_up = 0;
+    mit.flying_up = 0;
   }, false);
 
 
@@ -193,14 +161,14 @@
     mit.game_over = 1;
     mit.start_btn_clicked = 0;
   };
-
+  
 
   (function renderGame() {
     window.requestAnimationFrame(renderGame);
 
     // Draw Backgrounds on BG Canvas
     mit.Backgrounds.draw(bg_ctx);
-
+    
     ctx.clearRect(0, 0, W, H);
 
     // Draw Digs (holds forks)
@@ -211,7 +179,7 @@
     // Draw Grass on Main Canvas
     mit.Backgrounds.drawGrass(ctx);
 
-    if (flying_up)
+    if (mit.flying_up)
       mit.Pappu.updateFlyFrameCount();
     else
       mit.Pappu.updateFlyFrameCount(0);
@@ -257,8 +225,8 @@
       
       // Velocity
       if (
-        (mit.vy < v_cap && mit.ay+mit.gravity > 0) ||
-        (mit.vy > -v_cap && mit.ay+mit.gravity < 0)
+        (mit.vy < mit.v_cap && mit.ay+mit.gravity > 0) ||
+        (mit.vy > -mit.v_cap && mit.ay+mit.gravity < 0)
         ) {
 
         // console.log(mit.ay);

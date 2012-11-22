@@ -52,22 +52,41 @@
       }
 
       // console.log(cur_sprite_frame, source_x);
-      
-      ctx.drawImage(
-        this.sprite,
-        0,
-        source_y,
-        this.w,
-        60,
-        this.x,
-        this.y,
-        this.w,
-        60
-      );
 
-      // During Testing Phase
-      // ctx.fillStyle = 'red';
-      // ctx.fillRect(this.x, this.y, this.w, this.h);
+      // Rotation on Flying
+      if (mit.flying_up) {
+        ctx.save();
+
+        ctx.rotate(30);
+        ctx.translate(this.x, this.y);
+        ctx.drawImage(
+          this.sprite,
+          0,
+          source_y,
+          this.w,
+          60,
+          0,
+          0,
+          this.w,
+          60
+        );
+
+        ctx.restore();
+      }
+      else {
+      
+        ctx.drawImage(
+          this.sprite,
+          0,
+          source_y,
+          this.w,
+          60,
+          this.x,
+          this.y,
+          this.w,
+          60
+        );
+      }
     },
 
     drawStatic: function(ctx) {
@@ -101,16 +120,13 @@
     },
 
     hasReachedBoundary: function(canvas_width, canvas_height) {
-      var W = canvas_width;
-      var H = canvas_height;
-
       // Crossed Sides ?
       // `c` stands for crossed
 
       var ctop = (this.y < 0);
-      var cbtm = (this.y > H);
+      var cbtm = (this.y > mit.H);
       var cleft = (this.x < 0);
-      var crgt = (this.x > W);
+      var crgt = (this.x > mit.W);
 
       // return true if crossed any sides
       if (ctop || cbtm || cleft || crgt) {
