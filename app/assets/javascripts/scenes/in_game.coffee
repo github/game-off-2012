@@ -34,7 +34,6 @@ Crafty.scene("in_game", ->
   gameover = =>
     game.stop()
     player.reset().disableControl()
-    track.reset()
     SFX.play("crash")
     Narrator.play("conflict")
     Crafty.e("GameOver").bind("Restart", => restart())
