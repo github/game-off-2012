@@ -24,6 +24,8 @@ function Tower_Laser(xs, ys, xe, ye, duration) {
 
     var timeleft = duration;
     var color = "rgba(255,0,255,1)";
+    this.sound = new Audio("snd/Laser_Shoot.wav");
+    this.sound.play();
 
     this.update = function (dt) {
         timeleft -= dt;
@@ -101,12 +103,13 @@ function Tower(baseTile) {
     this.connections = [];
 
     this.hover = false;
+    this.selected = false;
     
     var laserTime = 0.5;
     var nextFireIn = 1/this.attr.speed;
     var mutateCounter = 1/this.attr.mutate;
     var towerRange = new Tower_Range(this);
-    var tooltip = new ToolTip(this, this.attr);
+    //var tooltip = new ToolTip(this, this.attr);
     var added = false;
     
     this.draw = function (pen) {
@@ -167,6 +170,8 @@ function Tower(baseTile) {
         
         var cent1 = this.tPos.getCenter();
         var cent2 = target.tPos.getCenter();
+
+
         
         return new Tower_Laser(cent1.x, cent1.y, cent2.x, cent2.y, laserTime);
     };
@@ -193,7 +198,7 @@ function Tower(baseTile) {
         if (!added) {
             document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
             this.base.addObject(towerRange);
-            this.base.addObject(tooltip);
+            //this.base.addObject(tooltip);
             added = true;
         }
     };
@@ -231,6 +236,10 @@ function Tower(baseTile) {
         }
     };*/
     
+    this.mousedown = function (e) {
+	    this.selected = true;
+	    return;
+    }
     // Yes, this is supposed to be here.
     this.mutate();
 }
