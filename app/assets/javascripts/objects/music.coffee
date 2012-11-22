@@ -17,7 +17,8 @@ class window.Music
   play: ->
     track = @track.substr(@track.lastIndexOf('/') + 1).toLowerCase()
     Crafty.audio.play(track, 1, Settings.get("musicVolume"))
-    jQuery(Crafty.audio.sounds[track].obj).one("ended", setTimeout(
+    Crafty.audio.sounds[track].obj.addEventListener("ended", =>
+      setTimeout(
         (=> @randomTrack().play())
       , 10)
     )
