@@ -32,11 +32,12 @@ Crafty.scene("in_game", ->
     ready_go( -> game.start(); player.enableControl())
 
   gameover = =>
+    center.hide()
     game.stop()
     player.reset().disableControl()
     SFX.play("crash")
     Narrator.play("conflict")
-    Crafty.e("GameOver").bind("Restart", => restart())
+    Crafty.e("GameOver").game(game).bind("Restart", => restart()).show()
 
   start = =>
     music.play()
