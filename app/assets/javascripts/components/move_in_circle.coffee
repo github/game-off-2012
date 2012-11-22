@@ -48,9 +48,11 @@ Crafty.c "MoveInCircle",
 
   hide: ->
     @visible = false
+    @draw()
     @
   show: ->
     @visible = true
+    @draw()
     @
 
   disableControl: ->

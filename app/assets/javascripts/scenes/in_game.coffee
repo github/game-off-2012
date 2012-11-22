@@ -29,7 +29,9 @@ Crafty.scene("in_game", ->
     game.reset()
     center.show()
     player.reset()
-    ready_go( -> game.start(); player.enableControl())
+    ready_go  ->
+      game.start()
+      player.enableControl()
 
   gameover = =>
     center.hide()
