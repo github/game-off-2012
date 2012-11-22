@@ -20,8 +20,8 @@
     };
 
     this.generateRandomVelocity = function() {
-      this.vx = -10;
-      this.vy = utils.randomNumber(-30,-20);
+      this.vx = -12;
+      this.vy = utils.randomNumber(-27,-20);
     };
 
     this.getBounds = function() {

@@ -198,7 +198,7 @@
     //mit.ForkUtils.checkCollision();
 
     // Send over Pakias (Enemies)
-    // mit.pakia.render(ctx);
+    // mit.PakiaUtils.render(ctx);
 
     if (mit.game_started) {
 

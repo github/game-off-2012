@@ -68,7 +68,7 @@ canvas#game_bg {
 	top: 0; left: 0; right: 0;
 	padding: 10px;
 	height: 10%;
-	text-align: right;
+	text-align: left;
 	font-size: 30px;
 	font-weight: normal;
 
