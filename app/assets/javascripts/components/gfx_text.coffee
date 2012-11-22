@@ -6,7 +6,7 @@ Crafty.c "GFXText",
 
   Start: ->
     @delay((=> @addComponent("WithTransition")), 1)
-    @delay((=> @addComponent("StartGFXTitle")), 100)
+    @delay((=> @addComponent("StartGFXTitle")), 50)
     @delay((=> @destroy()), Config.gfx.text.duration)
 
 Utils.showText = (text) ->

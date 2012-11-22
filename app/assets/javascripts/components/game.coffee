@@ -23,7 +23,7 @@ Crafty.c "Game",
     )
 
   tick: ->
-    @time += @_delay
+    @time += @_delay * (@cycles + 1)
     Crafty.trigger("tick")
     @delay((-> @tick()), @_delay) unless @stopped
 

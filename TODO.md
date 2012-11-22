@@ -1,5 +1,4 @@
 MUST:
-    * Music bug.
     * Add README + change name of repo.
     * CSS compatability.
     * Sound files compatability.
