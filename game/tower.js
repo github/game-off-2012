@@ -41,6 +41,46 @@ function Tower_Laser(xs, ys, xe, ye, duration) {
     };  
 }
 
+function Tower_Connection(t1, t2) {
+    var p1 = getRectCenter(t1.tPos);
+    var p2 = getRectCenter(t2.tPos);
+    this.tPos = new temporalPos(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y, 0, 0);
+    this.base = new baseObj(this, 11);
+    this.hover = true;
+    var color = "rgba(0, 0, 255, 0.1)";
+    
+    this.update = function(dt) {
+        var a1 = t1.attr;
+        var a2 = t2.attr;
+        // Should have same properties; a1 vs a2 for loop should not matter.
+        for (at in a1) {
+            if (!a1[at] || !a2[at] || !dt) {
+                debugger;
+                throw "ERRORORERUHTNROOR NULLLLL";
+            }
+            if (a1[at] > a2[at]) {
+                a1[at] += (a1[at] - a2[at]) * a1.download / 1000 * a2.upload / 1000 * dt;
+            } else if (a1[at] < a2[at]) {
+                a2[at] += (a2[at] - a1[at]) * a1.upload / 1000 * a2.download / 1000 * dt;
+            }
+        }
+        if (this.hover) {
+            color = "rgba(0, 0, 255, 0.9)";
+        } else {
+            color = "rgba(0, 0, 255, 0.1)";
+        }
+    }
+    
+    this.draw = function(pen) {
+        var p = this.tPos;
+        pen.strokeStyle = color;
+        pen.lineWidth = 2;
+        ink.line(p1.x, p1.y, p2.x, p2.y, pen);
+    }
+}
+
+// FRIGGIN UGLY, waiting for mouseup fix...
+var towerDragStartMouseDown;
 //All mutate stuff is copy-pasta from our mother project (for now)
 function Tower(baseTile) {
     var p = baseTile.tPos;
@@ -54,7 +94,10 @@ function Tower(baseTile) {
         coolDown:       Math.random() * 1   + 1,
         mutate:         Math.random() * 1   + 1,
         mutatestrength: Math.random() * 3   + 1,
+        upload:         Math.random(),
+        download:       Math.random(),
     };
+    this.connections = [];
 
     this.hover = false;
     
@@ -88,15 +131,17 @@ function Tower(baseTile) {
         var a = this.attr;
         
         for (at in a) {
-            a[at] += (Math.random() - 0.5) * a.mutatestrength * a[at] * 0.30;
-            a[at] = Math.floor(a[at] + 0.5);
+            if (!a[at]) {
+                debugger;
+            }
+            a[at] += (Math.random() - 0.5) * a.mutatestrength * a[at];
         }
         
         if (a.mutatestrength < 1) {
             a.mutatestrength = 1;
         }
         // Make sure towers are at least barely functional
-        if (a.range <= 20) {
+/*        if (a.range <= 20) {
             a.range = 20;
         }
         if (a.damage <= 1) {
@@ -104,7 +149,7 @@ function Tower(baseTile) {
         }
         if (a.coolDown >= 4) {
             a.range = 80;
-        }        
+        }   */     
         this.color = "#" + hexPair(255 - a.hp) + hexPair(a.range) + hexPair(a.damage);
     };
 
@@ -156,9 +201,20 @@ function Tower(baseTile) {
             added = false;
         }
     };
-
-    this.dragged = function(e){
+    
+    this.mousedown = function(e) {
+        towerDragStartMouseDown = this;
+    };
+    
+    this.mouseup = function(e) {
+        var dst = towerDragStartMouseDown;
+        console.log("mouseup event! Found tower: ", this, dst, this == dst);
+        if (!dst) return;
+        this.base.addObject(new Tower_Connection(this, dst));
+    };
+/*    this.dragged = function(e){
         var eng = this.base.rootNode;
+        var dst = findClosest(eng, "Tower", e, 0);
         var curTile = findClosest(eng, "Tile", e, 0);
         if (curTile !== this.baseTile) {
             var towerOnCurTile = findClosest(eng, "Tower", e, 0);
@@ -169,7 +225,7 @@ function Tower(baseTile) {
                 this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0); //maybe I shouldn't new it
             }
         }
-    };
+    };*/
     
     // Yes, this is supposed to be here.
     this.mutate();

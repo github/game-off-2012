@@ -25,7 +25,7 @@ function ToolTip(basetile) {
 	
 	this.draw = function(pen) {
 		pen.save();
-		pen.fillStyle = "#ffffff";
+		pen.fillStyle = "rgba(255,255,255,0.5)";
 		pen.strokeStyle = "lightblue";
 		ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);        
 		pen.restore();

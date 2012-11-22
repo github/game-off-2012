@@ -8,7 +8,7 @@
 
 /********************************* CODE START *********************************/
 
-function Engine(pen) {    
+function Engine(pen) {
     this.mX = -1;
     this.mY = -1;    
     this.mdX = -1; //Mouse down
