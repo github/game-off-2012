@@ -289,8 +289,18 @@
       var fork_head_bounds = first_fork.getHeadBounds();
 
       // Check whether pappu collided with the
-      // fork head or not.
-      if (utils.intersect(pappu_bounds, fork_head_bounds)) {
+      // fork head or not. With fork heads
+      // collision detection checks would be
+      // a little casual than super stern.
+
+      // if (utils.intersect(pappu_bounds, fork_head_bounds)) {
+
+      if (
+        pappu_bounds.end_x      >  fork_head_bounds.start_x+20 &&
+        fork_head_bounds.end_x-20  >  pappu_bounds.start_x &&
+        pappu_bounds.end_y      >  fork_head_bounds.start_y+20 &&
+        fork_head_bounds.end_y-20  >  pappu_bounds.start_y
+      ) {
         mit.gameOver();
       }
     }
