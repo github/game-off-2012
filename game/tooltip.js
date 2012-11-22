@@ -41,7 +41,7 @@ function ToolTip(basetile, attr) {
 		var counter = 0;
 		var txt = "";
 		for (i in attr) {
-			txt = i + ": " + attr[i];
+			txt = i + ": " + Math.round(attr[i] * 10) / 10;
 			ink.text(this.tPos.x+2, this.tPos.y+10+counter, txt, pen);
 			counter += 10;
 		}
