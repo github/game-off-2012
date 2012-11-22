@@ -91,11 +91,11 @@ function Tower(baseTile) {
         range:          Math.random() * 200 + 100,
         damage:         Math.random() * 30  + 1,
         hp:             Math.random() * 100 + 10,
-        coolDown:       Math.random() * 1   + 1,
+        speed:          Math.random() * 1   + 1,
         mutate:         Math.random() * 1   + 1,
         mutatestrength: Math.random() * 3   + 1,
-        upload:         Math.random(),
-        download:       Math.random(),
+        upload:         Math.random() + 1,
+        download:       Math.random() + 1,
         hitcount:       0,
     };
     this.connections = [];
@@ -103,8 +103,8 @@ function Tower(baseTile) {
     this.hover = false;
     
     var laserTime = 0.5;
-    var nextFireIn = this.attr.coolDown;
-    var mutateCounter = this.attr.mutate;
+    var nextFireIn = 1/this.attr.speed;
+    var mutateCounter = 1/this.attr.mutate;
     var towerRange = new Tower_Range(this);
     var tooltip = new ToolTip(this, this.attr);
     var added = false;
@@ -175,14 +175,14 @@ function Tower(baseTile) {
         mutateCounter -= dt;
         if (mutateCounter < 0) {
             this.mutate();
-            mutateCounter = this.attr.mutate;
+            mutateCounter = 1/this.attr.mutate;
         }
         
         var newObjs = [];
         nextFireIn -= dt;
         if (nextFireIn < 0) {
             mergeToArray(this.attack(), newObjs);
-            nextFireIn = this.attr.coolDown;
+            nextFireIn = 1/this.attr.speed;
         }        
 
         return newObjs;
