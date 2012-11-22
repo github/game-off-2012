@@ -1,3 +1,24 @@
+function Button(pos, txt) {
+	this.clicked;
+
+	this.update = function (dt) {
+		return;
+	}
+	
+	this.draw = function () {
+		return;
+	}
+
+	this.mouseover = function (e) {
+		return;
+	}
+
+	this.mouseout = function (e) {
+		return;
+	}
+}
+
+
 function ToolTip(basetile, attr) {
 	var p = basetile.tPos;
 
