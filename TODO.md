@@ -1,11 +1,11 @@
 MUST:
-  * Add README + change name of repo.
+    * Add README + change name of repo.
 
 LAST (BUT MUST):
-  * CSS compatability.
-  * Sound files compatability.
-  * Balance.
-  * Fix merge bug (merges too much).
+    * CSS compatability.
+    * Sound files compatability.
+    * Balance.
+    * Fix merge bug (merges too much).
 
 OPTIONAL:
     * Analytics.

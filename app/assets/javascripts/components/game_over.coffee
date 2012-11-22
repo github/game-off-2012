@@ -4,7 +4,15 @@ Crafty.c "GameOver"
     y: 50
 
   init: ->
-    @requires("2D, DOM, Keyboard, Text,Mouse")
+    @requires("2D, DOM, Keyboard, Text,Mouse, Delay")
+    @delay((=> @show()), Config.flow.restartDelay)
+
+  restart: ->
+    @trigger("Restart")
+    @button.destroy()
+    @destroy()
+
+  show: ->
     @attr(
       x: - Config.viewport.width / 2  + @margin.x
       y: - Config.viewport.height/ 2  + @margin.y
@@ -17,8 +25,3 @@ Crafty.c "GameOver"
       @restart()
     )
     @bind('KeyDown', (e) => @restart() if e.key == Crafty.keys.ENTER)
-
-  restart: ->
-    @trigger("Restart")
-    @button.destroy()
-    @destroy()
