@@ -124,9 +124,10 @@ function Tower(baseTile) {
 
     // WTF - yeah man, this code is the bomb
     this.tryUpgrade = function () {
-        if (eng.money >= 100 && this.attr.coolDown >= (2 / 50)) {
-            this.damage *= 2;
-            this.attr.coolDown /= 2;
+        if (eng.money >= 100 ) {
+            this.attr.damage *= 2;
+	    this.attr.speed *= 2;
+            //this.attr.coolDown /= 2;
             eng.money -= 100;
         }
     };

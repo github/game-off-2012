@@ -1,6 +1,7 @@
 function Button(pos, txt) {
 	this.tPos = pos;
 	this.base = new baseObj(this, 15);
+	var textsize = 14;
 
 	this.clicked = false;
 	this.activated = false;
@@ -16,7 +17,12 @@ function Button(pos, txt) {
 		
 		//Draw text
 		pen.fillStyle = "#000000";
-		ink.text(this.tPos.x+50, this.tPos.y+30, txt, pen);
+		pen.font = textsize + "px arial";
+
+		//How wide is text?
+		var tW = pen.measureText(txt).width;
+
+		ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+textsize+4, txt, pen);
 		return;
 	}
 
@@ -53,8 +59,8 @@ function Infobar() {
 
 	var buttonW = 100;
 	var pos = new temporalPos(((width-bW)/2)-(buttonW/2)+bW,400,buttonW,30,0);
-	this.testb = new Button(pos, "Hello") ;
-	this.base.addObject(this.testb);
+	this.upgradeb = new Button(pos, "Upgrade!") ;
+	this.base.addObject(this.upgradeb);
 
 
 	this.updateSelectedTower = function (tower) {
@@ -86,6 +92,10 @@ function Infobar() {
 	}
 
 	this.update = function (dt) {
+		if (this.upgradeb.activated == true) {
+			this.base.parent.upgradeSelTower();
+			this.upgradeb.reset();
+		}
 		return;
 	}
 
