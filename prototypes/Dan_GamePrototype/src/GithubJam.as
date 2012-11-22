@@ -17,7 +17,7 @@ package
 
 		{
 			
-			super(320, 240, PlayState, 2, 3, 60, true);
+			super(320, 240, PlayState, 2, 60, 60, true);
 			
 			forceDebugger = true;
 		}
