@@ -144,6 +144,6 @@ footer{
     font-family: "Courier New", monospace;
     font-weight: bold;
 }
-.GameOver h1, .GameOver h2{
+.GameOver h1, .GameOver h2, .GameOver h3 {
     margin: 5px 0;
 }

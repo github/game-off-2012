@@ -10,28 +10,26 @@ Crafty.c "Game",
     @reset()
 
   start: ->
+    @attr(stopped: false)
     @tick()
-    @attr(
-      stopped: false
-    )
     @rollActionIn(Config.obstacles.intervals.atStart)
     @
 
   stop: ->
+    @time++
+    @setBestScore(@time) if @hasBestScore(@time)
     @attr(
       stopped: true
     )
 
   tick: ->
-    @time += @_delay
+    @time += @_delay * (@cycles + 1)
     Crafty.trigger("tick")
     @delay((-> @tick()), @_delay) unless @stopped
 
   levelUp: ->
     Utils.showText(Config.gfx.cyclesTitles[@cycles])
     @attr(cycles: @cycles + 1)
-
-  crash: ->
 
   rollActionIn: (delayOverride = @_actionDelay) ->
     @delay((=> @currentAction = null), delayOverride * 3/4)
@@ -46,11 +44,12 @@ Crafty.c "Game",
   onAction: (cb) ->
     @bind("action", cb)
 
-  reset: ->
-    @attr(
-      time: 0
-      cycles: 0
-      currentAction: ""
-    )
-    @
+  hasBestScore: (score) ->
+    score > (Settings.get('score') || 0)
 
+  setBestScore: (score) ->
+    Settings.set('score', score)
+
+  reset: ->
+    @attr(time: 0, cycles: 0, currentAction: "")
+    @
