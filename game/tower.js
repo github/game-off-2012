@@ -96,6 +96,7 @@ function Tower(baseTile) {
         mutatestrength: Math.random() * 3   + 1,
         upload:         Math.random(),
         download:       Math.random(),
+        hitcount:       0,
     };
     this.connections = [];
 
@@ -105,7 +106,7 @@ function Tower(baseTile) {
     var nextFireIn = this.attr.coolDown;
     var mutateCounter = this.attr.mutate;
     var towerRange = new Tower_Range(this);
-    var tooltip = new ToolTip(this);
+    var tooltip = new ToolTip(this, this.attr);
     var added = false;
     
     this.draw = function (pen) {
@@ -134,7 +135,9 @@ function Tower(baseTile) {
             if (!a[at]) {
                 debugger;
             }
-            a[at] += (Math.random() - 0.5) * a.mutatestrength * a[at];
+            if (at != "hitcount" && at != "coolDown") {
+                a[at] += (Math.random() - 0.5) * a.mutatestrength * a[at] * 0.30;
+            }
         }
         
         if (a.mutatestrength < 1) {
@@ -160,6 +163,7 @@ function Tower(baseTile) {
         }
         
         target.hp -= this.attr.damage;
+        this.attr.hitcount += 1;
         
         var cent1 = this.tPos.getCenter();
         var cent2 = target.tPos.getCenter();
