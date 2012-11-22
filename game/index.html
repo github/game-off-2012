@@ -41,7 +41,7 @@ canvas {
 <script src="commonGeometry.js"></script>
 
 <script src="baseEntities.js"></script>
-<script src="tooltip.js"></script>
+<script src="infobar.js"></script>
 <script src="tower.js"></script>
 <script src="entities.js"></script>
 
@@ -57,10 +57,10 @@ canvas {
     var wTiles = 20;
     var hTiles = 16;
     var tileSize = 32;
-    var width = wTiles * tileSize;
-    var height = hTiles * tileSize + 200;
-    var bW = width;
-    var bH = height - 200;
+    var width = wTiles * tileSize + 150;
+    var height = hTiles * tileSize + 120;
+    var bW = width - 150;
+    var bH = height - 120;
     var mX = -1;
     var mY = -1;
 

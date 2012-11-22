@@ -42,6 +42,10 @@ function Engine(pen) {
 
     this.secondTimer = 1;
 
+    this.selectedTower = null;
+    this.infobar = new Infobar();
+    this.base.addObject(this.infobar);
+
     generatePath(this);
     
     //https://developer.mozilla.org/en-US/docs/DOM/window.requestAnimationFrame
@@ -178,6 +182,7 @@ function Engine(pen) {
             this.maxBugs += this.bugIncrease;
             //this.bugIncrease += this.bugIncInc;
         }
+
     };   
    
 /** Function */
@@ -186,13 +191,13 @@ function Engine(pen) {
         pen = this.pen;
         pen.fillStyle = "black";
         ink.rect(0, 0, width, height, pen);
-        pen.font = "25px Helvetica";
+        pen.font = "15px Helvetica";
         pen.fillStyle = "#2233FF";
-        ink.text(10, bH + 30, "Health: " + this.health, pen);
-        ink.text(10, bH + 60, "Money: $" + this.money, pen);
-        ink.text(10, bH + 90, "Time passed: " + gameTimeAccumulated, pen);
-        ink.text(10, bH + 120, "FPS: " + this.lastFPS, pen);
-        ink.text(10, bH + 150, "Bugs: " + eng.base.lengths.Bug, pen);
+        ink.text(10, bH + 20, "Health: " + this.health, pen);
+        ink.text(10, bH + 40, "Money: $" + this.money, pen);
+        ink.text(10, bH + 60, "Time passed: " + gameTimeAccumulated, pen);
+        ink.text(10, bH + 80, "FPS: " + this.lastFPS, pen);
+        ink.text(10, bH + 100, "Bugs: " + eng.base.lengths.Bug, pen);
         
         this.pen.save();
         this.pen.strokeStyle = "red";
@@ -201,4 +206,11 @@ function Engine(pen) {
         //drawTree(this, "Bug", this.pen);
         this.pen.restore();        
     };
+
+    this.changeSelTower = function(tower) {
+	    //Change the selected tower
+	    this.selectedTower = tower;
+	    this.infobar.updateSelectedTower(tower);
+	    return;
+    }
 }

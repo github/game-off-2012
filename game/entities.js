@@ -44,6 +44,8 @@
         else if(towerOnTile)
         {
             towerOnTile.tryUpgrade();
+	    //this.base.parent.selectedTower = towerOnTile;
+	    this.base.parent.changeSelTower(towerOnTile);
         }
     };
 }
