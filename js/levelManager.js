@@ -12,13 +12,13 @@ function loadMap(level, loadComplete) {
         var item = " ";
         if (curr == 'B')
           item = "blue";
-        else if (curr == 'H')
+        else if (curr == 'W')
           item = "white";
         else if (curr == 'P')
           item = "purple";
         else if (curr == 'R')
           item = "red";
-        else if (curr == 'W')
+        else if (curr == 'X')
           item = "wall";
         else if (curr == 'F')
           item = "portal";
