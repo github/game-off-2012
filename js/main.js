@@ -94,9 +94,9 @@
     return false;
   });
 
-  startGame();
+  // startGame();
 
-
+  // Score Board
   mit.score = 0;
 
   ui.score_board.css('width', canvas.width + 'px');
@@ -161,14 +161,14 @@
     mit.game_over = 1;
     mit.start_btn_clicked = 0;
   };
-  
+
 
   (function renderGame() {
     window.requestAnimationFrame(renderGame);
 
     // Draw Backgrounds on BG Canvas
     mit.Backgrounds.draw(bg_ctx);
-    
+
     ctx.clearRect(0, 0, W, H);
 
     // Draw Digs (holds forks)
@@ -184,7 +184,7 @@
     else
       mit.Pappu.updateFlyFrameCount(0);
 
-    
+
     // Game over on reaching any boundary
     if (mit.Pappu.hasReachedBoundary(W, H)) {
       // Performing some game over tasks

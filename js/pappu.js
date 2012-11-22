@@ -8,6 +8,8 @@
     w: 50,
     h: 50,
 
+    rotate_angle: 15,
+
     sprite: {},
 
     // Rate of sprite frame change
@@ -55,18 +57,24 @@
 
       // Rotation on Flying
       if (mit.flying_up) {
+        if (this.rotate_angle > 15) {
+          this.rotate_angle--;
+        }
+
         ctx.save();
 
-        ctx.rotate(30);
         ctx.translate(this.x, this.y);
+        ctx.translate(this.w/2, this.h/2);
+        ctx.rotate(utils.toRadian(this.rotate_angle));
+
         ctx.drawImage(
           this.sprite,
           0,
           source_y,
           this.w,
           60,
-          0,
-          0,
+          -this.w/2,
+          -this.h/2,
           this.w,
           60
         );
@@ -74,6 +82,15 @@
         ctx.restore();
       }
       else {
+        if (this.rotate_angle < 35) {
+          this.rotate_angle++;
+        }
+
+        ctx.save();
+
+        ctx.translate(this.x, this.y);
+        ctx.translate(this.w/2, this.h/2);
+        ctx.rotate(utils.toRadian(this.rotate_angle));
       
         ctx.drawImage(
           this.sprite,
@@ -81,11 +98,13 @@
           source_y,
           this.w,
           60,
-          this.x,
-          this.y,
+          -this.w/2,
+          -this.h/2,
           this.w,
           60
         );
+
+        ctx.restore();
       }
     },
 
