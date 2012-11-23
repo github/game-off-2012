@@ -3,16 +3,13 @@
 <head>
   <title>Release Cycles</title>
   <meta name="description" content="An abstract racing game where you fight against the clock and the computer to get as far as you can in a products life-cycle."/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:url" content="http://www.release-cycles.com/"/>
-  <meta property="og:title" content="Release Cycles"/>
-  <meta property="og:description" content="An abstract racing game where you fight against the clock and the computer to get as far as you can in a products life-cycle."/>
-  <meta property="og:image" content="http://www.release-cycles.com/screen-1.png"/>
+  <%= render :partial => "layouts/og_meta_tags" %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <link rel="icon" type="image/gif" href="/favicon.gif">
 
+  <%= render :partial => "layouts/mixpanel" %>
 </head>
 <body>
 
@@ -24,11 +21,8 @@
   <p> Music by <a href="http://www.goto80.com/">Goto-80</a> taken from <a href="http://gratisvibes.com/post/goto80-and-digi-dig/">[CC-gratisvibes]</a></p>
 </footer>
 
-<div id="getsat-widget-2425"></div>
-<script type="text/javascript" src="https://loader.engage.gsfn.us/loader.js"></script>
-<script type="text/javascript">
-if (typeof GSFN !== "undefined") { GSFN.loadWidget(2425,{"containerId":"getsat-widget-2425"}); }
-</script>
+<%= render :partial => "layouts/getsatisfaction" %>
+
 
 </body>
 </html>

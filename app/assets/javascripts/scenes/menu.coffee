@@ -18,7 +18,6 @@ Crafty.scene "menu", ->
     start()
 
   loaded = =>
-#    Crafty.audio.play(Crafty.math.randomElementOfArray(Config.sounds.music))
     showButton()
     @bind('KeyDown', startWithEnter)
     loading.visible = false
@@ -33,6 +32,9 @@ Crafty.scene "menu", ->
   #hack to fix loading of wavs
   Crafty.audio.add("faster.wav", "sounds/faster.wav")
   Crafty.audio.add("crash.wav", "sounds/crash.wav")
+  mixpanel.track("view menu")
+  started_loading = Date.now()
   Crafty.load(_.flatten(Config.sounds), =>
+    mixpanel.track("finished loading", load_time: Date.now() - started_loading)
     loaded()
   )

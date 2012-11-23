@@ -14,11 +14,14 @@ Crafty.c "Pause",
       @unpause()
     else
       @pause()
+
   pause: ->
+    mixpanel.track("game paused")
     @addComponent("paused")
     Crafty.pause(true)
 
   unpause: ->
+    mixpanel.track("game unpaused")
     @removeComponent("paused")
     Crafty.pause(false)
 

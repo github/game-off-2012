@@ -32,6 +32,7 @@ Crafty.scene("in_game", ->
     ready_go  ->
       game.start()
       player.enableControl()
+    mixpanel.track("restart game")
 
   gameover = =>
     center.hide()
@@ -39,6 +40,7 @@ Crafty.scene("in_game", ->
     player.reset().disableControl()
     SFX.play("crash")
     Narrator.play("conflict")
+    mixpanel.track("game over", score: game.score(), cycles: game.cycles)
     Crafty.e("GameOver").game(game).bind("Restart", => restart()).show()
 
   start = =>
@@ -57,7 +59,9 @@ Crafty.scene("in_game", ->
       Narrator.play "code", ->
         cb()
 
+
   ready_go( -> start())
+  mixpanel.track("started game", first: true)
 
 )
 

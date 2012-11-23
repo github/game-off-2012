@@ -16,8 +16,10 @@ Crafty.c "Mute",
 
     @bind('Click', (e) ->
       if Crafty.audio.muted
+        mixpanel.track("sound unmuted", mute: true)
         @unmute()
       else
+        mixpanel.track("sound unmuted", mute: false)
         @mute()
 
     )
