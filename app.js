@@ -1,42 +1,39 @@
 window.game = {};
 game.events = _.clone(Backbone.Events);
 
+game.refreshView = function(view) {
+  $('.container').html(game.activeView.el);
+};
+
 game.events.on("start", function() {
-  console.log('insert song select view');
-  var song = new SongView({
+  game.activeView.destroy();
+  game.activeView = new SongView({
     model: songs.first()
-  });
-  $('.container').html(song.el);
+  });  
 });
 
 game.events.on("howto", function() {
   game.activeView.destroy();
-  var howto = new HowtoView();
-  game.activeView = howto;
-  $('.container').html(howto.el);
+  game.activeView = new HowtoView();
+  game.refreshView();
 });
 
 game.events.on("highscores", function() {
   game.activeView.destroy();
-  var highscore = new HighScoreView();
-  game.activeView = highscore;
-  $('.container').html(highscore.el);
+  game.activeView = new HighScoreView();
+  game.refreshView();
 });
 
 game.events.on("credits", function() {
   game.activeView.destroy();
-  var credits = new CreditsView();
-  game.activeView = credits;
-  $('.container').html(credits.el);
+  game.activeView = new CreditsView();
+  game.refreshView();
 });
 
 game.events.on("menu", function() {
-  if(game.activeView) {
-    game.activeView.destroy();
-  }
-  var menu = new MenuView();
-  game.activeView = menu;
-  $('.container').html(menu.el);
+  if(game.activeView) game.activeView.destroy();
+  game.activeView = new MenuView();
+  game.refreshView();
 });
 
 game.events.trigger('menu');
