@@ -1,6 +1,5 @@
 window.game = {};
 game.events = _.clone(Backbone.Events);
-var activeView;
 
 game.events.on("start", function() {
   console.log('insert song select view');
@@ -11,32 +10,32 @@ game.events.on("start", function() {
 });
 
 game.events.on("howto", function() {
-  activeView.destroy();
+  game.activeView.destroy();
   var howto = new HowtoView();
-  activeView = howto;
+  game.activeView = howto;
   $('.container').html(howto.el);
 });
 
 game.events.on("highscores", function() {
-  activeView.destroy();
+  game.activeView.destroy();
   var highscore = new HighScoreView();
-  activeView = highscore;
+  game.activeView = highscore;
   $('.container').html(highscore.el);
 });
 
 game.events.on("credits", function() {
-  activeView.destroy();
+  game.activeView.destroy();
   var credits = new CreditsView();
-  activeView = credits;
+  game.activeView = credits;
   $('.container').html(credits.el);
 });
 
 game.events.on("menu", function() {
-  if(activeView) {
-    activeView.destroy();
+  if(game.activeView) {
+    game.activeView.destroy();
   }
   var menu = new MenuView();
-  activeView = menu;
+  game.activeView = menu;
   $('.container').html(menu.el);
 });
 
