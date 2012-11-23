@@ -12,6 +12,14 @@
     <audio class="click" src="audio/effects/click.wav">
     <audio class="whip" src="audio/effects/whip.wav">
 
+    <script>
+      var newImg = function(url) {
+        var img = new Image();
+        img.src = url;
+        return img;
+      }
+    </script>
+
     <script type="text/template" id="menu-template">
       <img src="img/logo.png"/>
       <ul class="menu">
@@ -20,8 +28,6 @@
         <li id="highscores">High Scores</li>
         <li id="credits">Credits</li>
       </ul>
-      <!--http://www.freesound.org/people/KorgMS2000B/sounds/54405/-->
-      <audio class="click" src="audio/effects/click.wav">
     </script>
 
     <script type="text/template" id="song-template">
