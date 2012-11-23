@@ -5,7 +5,9 @@ game.audio = {
     click : $('audio.click')[0],
     whip  : $('audio.whip')[0]
   }
-}
+};
+
+game.mute = true;
 
 game.refreshView = function(view) {
   $('.container').html(game.activeView.el);
@@ -53,7 +55,9 @@ game.events.on("loadSong", function(song) {
 });
 
 game.events.on("playSound", function(sound) {
-  game.audio.effects[sound].play();
+  if(!game.mute){
+    game.audio.effects[sound].play();
+  }
 });
 
 game.events.trigger('menu');
