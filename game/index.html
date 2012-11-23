@@ -6,10 +6,12 @@ Tower Defence by Justin, Kevin, Quentin and Wesley
 </title>
 <style type="text/css">
 body {
-    background-color : #FFFFFF;
+    background: url('http://www.rovart.com/foto/orig/11842.jpg');
+    background-position: center center;
+    margin: 0px;
+    padding: 0px;
 }
 canvas {
-    border : 2px solid #FF0000;
     margin-left : auto;
     margin-right : auto;
     display : block
@@ -18,9 +20,6 @@ canvas {
 </head>
 <body>
 <canvas id="myCanvas"></canvas>
-<div id="towerinfo">
-	Selected tower things
-</div>
 
 <script src="lib/jquery.min.js"></script><!-- //ajax.googleapis.com/ajax/libs/jquery/1.8.2/ -->
 
@@ -58,9 +57,9 @@ canvas {
     var hTiles = 16;
     var tileSize = 32;
     var width = wTiles * tileSize + 150;
-    var height = hTiles * tileSize + 120;
+    var height = hTiles * tileSize;
     var bW = width - 150;
-    var bH = height - 120;
+    var bH = height;
     var mX = -1;
     var mY = -1;
 

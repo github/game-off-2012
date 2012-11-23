@@ -53,12 +53,12 @@ function Button(pos, txt) {
 
 function Infobar() {
 	//Make new tPos and offset it
-	this.tPos = new temporalPos(bW, 0, 150, bH, 0);
+	this.tPos = new temporalPos(bW, 0, 150, bH/2, 0);
 	this.base = new baseObj(this, 14);
 	this.tattr = null;
 
 	var buttonW = 100;
-	var pos = new temporalPos(((width-bW)/2)-(buttonW/2)+bW,400,buttonW,30,0);
+	var pos = new temporalPos(((width-bW)/2)-(buttonW/2)+bW,200,buttonW,30,0);
 	this.upgradeb = new Button(pos, "Upgrade!") ;
 	this.base.addObject(this.upgradeb);
 
@@ -70,25 +70,28 @@ function Infobar() {
 		
 
 	this.draw = function(pen) {
-		pen.fillStyle = "#ffffff";
+		pen.fillStyle = "#000";
 		ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-		var counter = 0;
-		pen.fillStyle = "black";
-		pen.font = "10px courier";
-		if (this.tattr != null) {
-			ink.text(this.tPos.x+2, this.tPos.y+10+counter, "Tower", pen);
-			counter += 10;
-			for (i in this.tattr) {
-				txt = i + ": " + Math.round(this.tattr[i]*10)/10;
-				ink.text(this.tPos.x+2, this.tPos.y+10+counter, txt, pen);
-				counter += 10;
-			}
-		} else {
-			ink.text(this.tPos.x+2, this.tPos.y+10+counter, "No tower selected!", pen);
-		}
-
-
-		return;
+        
+		pen.fillStyle = "#0f0";
+		pen.font = "15px courier";
+        
+        var x = this.tPos.x + 10;
+        var y = this.tPos.y + 15;
+        
+        if (this.tattr == null) {
+            ink.text(x, y, "[no selction]", pen);
+            return;
+        }
+        
+        ink.text(x, y, "Tower", pen);
+        var counter = 20;
+        pen.font = "10px courier";
+        for (i in this.tattr) {
+            txt = i + ": " + Math.round(this.tattr[i]*10)/10;
+            ink.text(x, y + counter, txt, pen);
+            counter += 15;
+        }
 	}
 
 	this.update = function (dt) {
