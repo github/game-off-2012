@@ -137,7 +137,10 @@ class LevelGenerator
       bodyDef.position.y = obj.y/30*scaleh
       
       @bodies.add({bd: bodyDef, fd:fixDef})
-      @world.CreateBody(bodyDef).CreateFixture(fixDef)
+      body = @world.CreateBody(bodyDef)
+      #SetUser Data if setted
+      body.UserData = obj.properties.userdata if obj.properties.userdata? 
+      body.CreateFixture(fixDef)
          
 class Camera
   constructor:(@world,@scale,@screenscale,@inputHandler)->

@@ -70,7 +70,8 @@
                     {
                      "density":"1",
                      "friction":"1",
-                     "restitution":"0.2"
+                     "restitution":"0.2",
+                     "userdata":"Tower"
                     },
                  "type":"static",
                  "width":0,
