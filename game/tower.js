@@ -122,9 +122,9 @@ function Tower(baseTile) {
 
     // WTF - yeah man, this code is the bomb
     this.tryUpgrade = function () {
-        if (eng.money >= 100 && this.attr.coolDown >= (2 / 50)) {
-            this.damage *= 2;
-            this.attr.coolDown /= 2;
+        if (eng.money >= 100) {
+            this.attr.damage *= 2;
+            this.attr.speed *= 2;
             eng.money -= 100;
         }
     };
@@ -198,12 +198,18 @@ function Tower(baseTile) {
         }
     };
 
+    this.click = function()
+    {
+        this.tryUpgrade();
+    };
+
     this.mouseover = function(e) {
         // Only required because of issue #29
         if (!added) {
             document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
             this.base.addObject(towerRange);
             //this.base.addObject(tooltip);
+            this.base.rootNode.changeSelTower(this);
             added = true;
         }
     };
