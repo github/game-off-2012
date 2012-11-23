@@ -20,25 +20,19 @@ function Engine(pen) {
     this.pen = pen;
 
     this.id = 0;
-    this.money = 1000;
+    this.money = 100;
     this.health = 100;
 
     this.lastTowerHover = null;
 
     this.base = new baseObj(this);
 
-    //this.base.children.Tile = [];
-    //this.base.children.Bug = [];
-
     this.engine = this; //eng also works fine
 
-    this.maxBugs = 2;
-    this.bugIncrease = 5;
-    this.bugIncInc = 0.1;
-
-    //this.maxBugs = 0;
-    //this.bugIncrease = 0;
-    //this.bugIncInc = 0;
+    this.currentBugs = 10;
+    this.maxBugs = 150;
+    this.bugIncrease = 10;
+    this.bugDifficulty = 1;
 
     this.secondTimer = 1;
 
@@ -119,11 +113,17 @@ function Engine(pen) {
 
         this.curQuadTree = new QuadTree(this.base.allChildren);
 
-        if (eng.base.lengths["Path_Start"] > 0) {
-            while (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] < this.maxBugs) {
+        if (eng.base.lengths["Path_Start"] > 0
+                && (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] === 0)) {
+            this.bugDifficulty += 0.1;
+            while (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] < this.currentBugs) {
                 var bugStart = getAnElement(eng.base.children["Path_Start"]);
-                var newBug = new Bug(bugStart, 4);
+                var newBug = new Bug(bugStart, this.bugDifficulty);
                 this.base.addObject(newBug);
+            }
+            this.currentBugs += this.bugIncrease;
+            if (this.currentBugs > this.maxBugs) {
+                this.currentBugs = this.maxBugs;
             }
         }
 
@@ -180,7 +180,7 @@ function Engine(pen) {
             this.secondTimer = 1;
 
             this.maxBugs += this.bugIncrease;
-            //this.bugIncrease += this.bugIncInc;
+            
         }
 
     };   
