@@ -2,10 +2,8 @@
 
 An abstract racing game where you fight against the clock and the computer to get as far as you can in a products life-cycle.
 
-![menu](https://raw.github.com/RothschildGames/game-off-2012/master/public/screen-0.png)
-![start](https://raw.github.com/RothschildGames/game-off-2012/master/public/screen-1.png)
-![easy](https://raw.github.com/RothschildGames/game-off-2012/master/public/screen-2.png)
-![hard](https://raw.github.com/RothschildGames/game-off-2012/master/public/screen-3.png)
+![menu](https://raw.github.com/RothschildGames/game-off-2012/master/public/screen-0.png)..![start](https://raw.github.com/RothschildGames/game-off-2012/master/public/screen-1.png)
+![easy](https://raw.github.com/RothschildGames/game-off-2012/master/public/screen-2.png)..![hard](https://raw.github.com/RothschildGames/game-off-2012/master/public/screen-3.png)
 ## Controls
 You can control your program by using the **left-right** keyboard keys or the **A-D** keys.
 
