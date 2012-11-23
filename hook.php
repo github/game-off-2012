@@ -4,5 +4,5 @@ if ($addr !== '207.97.227.253' && $addr !== '50.57.128.197' && $addr !== '108.17
     exec("echo 'Access denied! $addr' >> ../gitdefence.log");
     exit;
 }
-exec("echo 'pulling down... $addr' >> ../gitdefence.log")
-exec('git pull >> ../gitdefence.log 2>&1');
+exec("echo 'pulling down... $addr' >> ../gitdefence.log");
+exec("git pull >> ../gitdefence.log 2>&1");
