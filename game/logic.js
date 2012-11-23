@@ -213,4 +213,9 @@ function Engine(pen) {
 	    this.infobar.updateSelectedTower(tower);
 	    return;
     }
+
+    this.upgradeSelTower = function () {
+	    this.selectedTower.tryUpgrade();
+	    return;
+    }
 }
