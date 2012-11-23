@@ -1,0 +1,88 @@
+-------------------------------------------------------------------------
+WyrmTale Orthello 2D framework v2.1
+(C)opyright 2011 WyrmTale Games
+-------------------------------------------------------------------------
+
+INSTALLATION FROM UNITY ASSET STORE
+
+After you download and import this package from the Unity Asset Store, this product will be automaticly be installed.
+
+INSTALLATION AFTER DOWNLOAD FROM WWW.WYRMTALE.COM WEBSITE
+
+After you have downloaded the component archive file (orthello.rar) you will find an orthello.unitypackage when you extract the files from the archive.
+
+To install this package :
+
+- create an empty Unity Project.
+- select [Menu] Assets->Import Package->Custom Package
+- select the extracted orthello-pro.unitypackage and import all assets.
+
+After importing is complete, you will be ready to go.
+
+-------------------------------------------------------------------------
+
+Examples
+
+in  [Project] /Orthello/Examples you will find the  examples
+
+!IMPORTANT!! If would like to run the JS Javascript Examples, take the following steps
+
+ 1. Move the [Project] /Orthello/Standard Assets folder to the root : [Project] /
+ 2. In each specific example you want to run, enable the Javascript code because
+    it is commented out now, because other wise it would generate a compile error.
+
+-------------------------------------------------------------------------
+
+PACKAGE STRUCTURE
+
+ [Project] Orthello			- Main folder 
+
+ [Project] Orthello/Examples		- Orthello examples
+
+ [Project] Orthello/Objects		- Contains draggable Orthello objects that you can add to your scene.
+				
+ [Project] Orthello/Standard Assets	- Contains C# 2D Orthello framework source code
+
+-------------------------------------------------------------------------
+
+DOCUMENTATION
+
+USER-GUIDE
+http://www.wyrmtale.com/orthello
+
+C# CLASS REFERENCE
+http://www.wyrmtale.com/ref/orthello
+
+-------------------------------------------------------------------------
+
+SOME WORKFLOW INFO
+
+WORKFLOW - to create a new scene with a sprite.
+
+ 1. Create a new scene.
+ 2. Add the main OT (prefab) object to the scene.
+ 3. Add a sprite (prefab) object to the scene.
+ 4. Link the image to a texture.
+ 5. Done.
+
+WOKFLOW - to create a new scene with an animating sprite
+ 1. Create a new scene.
+ 2. Add the main OT (prefab) object to the scene.
+ 3. Add a spritesheet object to the scene - will be automaticly placed into OT/Containers
+ 4. Configure your spritesheet ( texture, framesXY etc )
+ 5. Add an animation object to your scene - will be automaticly placed into OT/Animations
+ 6. Configure your animation by adding one or more framesets (linking it to the sprite sheet)
+ 7. Add am animating sprite object to the scene.
+ 8. Link the sprite to the animation (select animation in editor)
+
+ HINT : You can preview the animation by setting (dragging) the animation progress setting.
+
+-------------------------------------------------------------------------
+
+If you have any questions regarding this product send us an email at support@wyrmtale.com
+
+
+Thanks for your interest in our components
+
+	The WyrmTale Team.
+

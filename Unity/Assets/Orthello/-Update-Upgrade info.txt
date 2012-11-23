@@ -1,0 +1,44 @@
+-------------------------------------------------------------------------
+WyrmTale Orthello 2D framework
+(C)opyright 2011 WyrmTale Games
+-------------------------------------------------------------------------
+
+** UPDATE 1.# TO 2.# ***
+
+Between Orthello versions 1.# and 2.# , 2 major changes have been implemented that
+have to be taken into account when upgrading your projects.
+
+* Local positioning
+
+--> SET YOUR 'FOLDER' EMPTIES TO TRANSFORM.POSITION (0,0,0)
+
+In version 2.0 of Orthello, local positioning has been implemented. This means that the 
+sprite.position is no longer in world coordinates but in local coordinates (parent related).
+They are still world coordinates when the object is located in the root or if the position of
+the parent object is at Vector(0,0).
+
+Problems can occur when using empty game objects as containers that are not located at (0,0).
+Previously your sprites would be correctly world-positioned but now you have to set the 
+empty's position to (0,0) to correctly set world positions for your sprites.
+
+The win is that you can now use parent/child relations between sprites.
+
+* Orthello rect format is now Cartesian
+
+--> REWRITE YOUR SPRITE.RECT or OT.VIEW.WORLDRECT CODE
+
+Previously the different rects you encountered in Orthello like OT.view.worldRect, sprite.rect 
+and worldbounds etc... had the format ( left, top, width, -1 * height ). We changed this to
+reflect the normal Cartesian system .. so ( left, bottom, width, height ).
+
+You can encounter problems if you worked with those rects in your code.
+
+-------------------------------------------------------------------------
+
+If you have any questions regarding this product send us an email at support@wyrmtale.com
+
+
+Thanks for your interest in our components
+
+	The WyrmTale Team.
+
