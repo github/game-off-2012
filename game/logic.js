@@ -187,24 +187,20 @@ function Engine(pen) {
    
 /** Function */
     this.draw = function () {
-
         pen = this.pen;
+        
         pen.fillStyle = "black";
         ink.rect(0, 0, width, height, pen);
-        pen.font = "15px Helvetica";
-        pen.fillStyle = "#2233FF";
-        ink.text(10, bH + 20, "Health: " + this.health, pen);
-        ink.text(10, bH + 40, "Money: $" + this.money, pen);
-        ink.text(10, bH + 60, "Time passed: " + gameTimeAccumulated, pen);
-        ink.text(10, bH + 80, "FPS: " + this.lastFPS, pen);
-        ink.text(10, bH + 100, "Bugs: " + eng.base.lengths.Bug, pen);
         
-        this.pen.save();
-        this.pen.strokeStyle = "red";
-        //drawTree(this, "Tile", this.pen);
-        //drawTree(this, "Tower", this.pen);
-        //drawTree(this, "Bug", this.pen);
-        this.pen.restore();        
+        pen.font = "10px courier";
+        pen.fillStyle = "#0F0";
+        var x = bW + 10;
+        var y = bH - 75;
+        ink.text(x, y, "Health: " + this.health, pen);
+        ink.text(x, y + 15, "Money: $" + this.money, pen);
+        ink.text(x, y + 30, "Time passed: " + gameTimeAccumulated, pen);
+        ink.text(x, y + 45, "FPS: " + this.lastFPS, pen);
+        ink.text(x, y + 60, "Bugs: " + eng.base.lengths.Bug, pen);  
     };
 
     this.changeSelTower = function(tower) {
