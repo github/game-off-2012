@@ -37,4 +37,12 @@ game.events.on("menu", function() {
   game.refreshView();
 });
 
+game.events.on("loadSong", function(song) {
+  game.activeView.destroy();
+  game.activeView = new SongView({
+    model : song
+  });
+  game.refreshView();
+});
+
 game.events.trigger('menu');
