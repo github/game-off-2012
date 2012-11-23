@@ -14,8 +14,11 @@ class Level
     
     @level = new LevelGenerator(json, sheet, world)
     
+    #Entities are added
     for i in [0...4]
-      @entities.add({e:new TestEntity(0, 0), m:new PlayerModel(world, (Math.random()*200)+50, 30)})
+      e = new PlayerModel(world, (Math.random()*200)+50, 30)
+      e.setUserData(new TestEntity(0, 0))
+      @entities.add(e)
 
   tick:->
     if @inputHandler.ESC.isPressed()
@@ -24,8 +27,8 @@ class Level
       @game.loadMap()
     
     for i in [0...@entities.size()]
-      e = @entities.get(i).e
-      m = @entities.get(i).m
+      m = @entities.get(i)
+      e = @entities.get(i).getUserData()
       m.tick()
       e.setX(m.getScreenX())
       e.setY(m.getScreenY())
@@ -35,4 +38,4 @@ class Level
     @ctx.drawImage(@level.background,xOffset, yOffset, 128, 128, 0, 0, 640, 480)
     
     for i in [0...@entities.size()]
-      @entities.get(i).e.render(@screen)
+      @entities.get(i).getUserData().render(@screen)

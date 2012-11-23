@@ -39,6 +39,11 @@ class Model
   getBody:->
     @body
     
+  setUserData:(data)->
+    @body.UserData = data
+  
+  getUserData:->
+    @body.UserData  
     
 class PlayerModel extends Model
   
@@ -81,27 +86,3 @@ class PlayerModel extends Model
     
   tick:->
     @body.SetLinearVelocity(new b2Vec2(5, @body.GetLinearVelocity().y));
-
-
-class GroundModel extends Model
-  constructor:(@world, @game) ->
-    @width = @game.width
-    @height = @game.height
-    @scale = @game.scale
-    
-    @fixDef = new b2FixtureDef
-    @fixDef.density = 0.1
-    @fixDef.friction = 0.3
-    @fixDef.restitution = 0.4
-    
-    
-    
-    @bodyDef = new b2BodyDef
-    @bodyDef.type = b2Body.b2_staticBody
-    @bodyDef.position.x = @width/@scale/2
-    @bodyDef.position.y = 250/@scale/2
-    
-    @fixDef.shape = new b2PolygonShape
-    @fixDef.shape.SetAsBox((2000/@scale)/2, (8/@scale)/2)
-    @body = @world.CreateBody(@bodyDef)
-    @body.CreateFixture(@fixDef)
