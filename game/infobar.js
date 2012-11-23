@@ -73,7 +73,7 @@ function Infobar() {
 			ink.text(this.tPos.x+2, this.tPos.y+10+counter, "Tower", pen);
 			counter += 10;
 			for (i in this.tattr) {
-				txt = i + ": " + this.tattr[i];
+				txt = i + ": " + Math.round(this.tattr[i]*10)/10;
 				ink.text(this.tPos.x+2, this.tPos.y+10+counter, txt, pen);
 				counter += 10;
 			}

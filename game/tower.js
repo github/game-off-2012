@@ -6,6 +6,7 @@ function Tower_Range(baseTower) {
     this.draw = function (pen) {
         var p = this.baseTower.tPos.getCenter();
         var range = this.baseTower.attr.range;
+        if (range < 1) range = 1;
         pen.lineWidth = 2;
         pen.fillStyle = "transparent";
         pen.strokeStyle = this.baseTower.color;
@@ -56,14 +57,10 @@ function Tower_Connection(t1, t2) {
         var a2 = t2.attr;
         // Should have same properties; a1 vs a2 for loop should not matter.
         for (at in a1) {
-            if (!a1[at] || !a2[at] || !dt) {
-                debugger;
-                throw "ERRORORERUHTNROOR NULLLLL";
-            }
             if (a1[at] > a2[at]) {
-                a1[at] += (a1[at] - a2[at]) * a1.download / 1000 * a2.upload / 1000 * dt;
+                a2[at] += (a1[at] - a2[at]) * Math.min(Math.min(a1.download, a2.upload), 1) * dt;
             } else if (a1[at] < a2[at]) {
-                a2[at] += (a2[at] - a1[at]) * a1.upload / 1000 * a2.download / 1000 * dt;
+                a1[at] += (a2[at] - a1[at]) * Math.min(Math.min(a1.upload, a2.download), 1) * dt;
             }
         }
         if (this.hover) {
@@ -95,9 +92,9 @@ function Tower(baseTile) {
         hp:             Math.random() * 100 + 10,
         speed:          Math.random() * 1   + 1,
         mutate:         Math.random() * 1   + 1,
-        mutatestrength: Math.random() * 3   + 1,
-        upload:         Math.random() + 1,
-        download:       Math.random() + 1,
+        mutatestrength: Math.random() * 1   + 1,
+        upload:         Math.random(),
+        download:       Math.random(),
         hitcount:       0,
     };
     this.connections = [];
@@ -135,9 +132,6 @@ function Tower(baseTile) {
         var a = this.attr;
         
         for (at in a) {
-            if (!a[at]) {
-                debugger;
-            }
             if (at != "hitcount" && at != "coolDown") {
                 a[at] += (Math.random() - 0.5) * a.mutatestrength * a[at] * 0.30;
             }
@@ -145,6 +139,9 @@ function Tower(baseTile) {
         
         if (a.mutatestrength < 1) {
             a.mutatestrength = 1;
+        }
+        if (a.range < 1) {
+            a.range = 1;
         }
         // Make sure towers are at least barely functional
 /*        if (a.range <= 20) {
@@ -213,6 +210,7 @@ function Tower(baseTile) {
     
     this.mousedown = function(e) {
         towerDragStartMouseDown = this;
+        this.selected = true;
     };
     
     this.mouseup = function(e) {
@@ -235,11 +233,6 @@ function Tower(baseTile) {
             }
         }
     };*/
-    
-    this.mousedown = function (e) {
-	    this.selected = true;
-	    return;
-    }
     // Yes, this is supposed to be here.
     this.mutate();
 }
