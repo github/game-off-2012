@@ -1,0 +1,17 @@
+.mute, .Pause{
+  font-size: 40px;
+  cursor: pointer;
+  &:hover{
+    color: #bbb;
+  }
+  &:active{
+    color: #999;
+  }
+  &.muted, &.paused{
+    color: #555;
+  }
+}
+
+.Pause{
+  font-size: 32px;
+}

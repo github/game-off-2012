@@ -1,0 +1,22 @@
+
+
+.GFXText{
+    width: 640px;
+    text-align: center;
+    font-size: 26px;
+    margin-top: -13px;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    line-height: 100%;
+}
+
+.WithTransition{
+    text-shadow: 0 5px #444;
+    -webkit-transition: font-size 300ms ease-in-out, margin-top 300ms ease-in-out;
+}
+
+.StartGFXTitle{
+    margin-top: -65px;
+    font-size: 130px;
+}
+
