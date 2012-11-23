@@ -25,8 +25,8 @@ function Tower_Laser(xs, ys, xe, ye, duration) {
 
     var timeleft = duration;
     var color = "rgba(255,0,255,1)";
-    this.sound = new Audio("snd/Laser_Shoot.wav");
-    this.sound.play();
+//     this.sound = new Audio("snd/Laser_Shoot.wav");
+//     this.sound.play();
 
     this.update = function (dt) {
         timeleft -= dt;
@@ -92,8 +92,8 @@ function Tower(baseTile) {
         damage:         Math.random() * 30  + 1,
         hp:             Math.random() * 100 + 10,
         speed:          Math.random() * 1   + 1,
-        mutate:         Math.random() / 10,
-        mutatestrength: Math.random() * 1,
+        mutate:         Math.random() * 50,
+        mutatestrength: Math.random() / 10,
         upload:         Math.random(),
         download:       Math.random(),
         hitcount:       0,
@@ -131,6 +131,7 @@ function Tower(baseTile) {
     
     this.die = function() {
         this.base.destroySelf();
+        new Audio("snd/Tower_Die.wav").play();
     };
 
     this.mutate = function() {
@@ -147,25 +148,18 @@ function Tower(baseTile) {
         for (at in a) {
             if (invalid(a[at])) this.die();
             if (at == "hitcount") continue;
-            a[at] += (Math.random() - 0.5) * a.mutatestrength * a[at] * 0.30;
+            if (at == "mutate") {
+                // Avoid exponetial increase in all tower stats if mutate mutation was calculated just like all the other values.
+                a[at] += (Math.random() - 0.5) * a.mutatestrength;
+            } else {
+                a[at] += (Math.random() - 0.5) * a.mutatestrength * a[at];
+            }
         }
         
-        if (a.mutatestrength < 1) {
-            a.mutatestrength = 1;
-        }
         if (a.range < 1) {
             a.range = 1;
         }
-        // Make sure towers are at least barely functional
-/*        if (a.range <= 20) {
-            a.range = 20;
-        }
-        if (a.damage <= 1) {
-            a.damage = 1;
-        }
-        if (a.coolDown >= 4) {
-            a.range = 80;
-        }   */
+        
         this.color = "#" + hexPair(255 - a.hp) + hexPair(a.range) + hexPair(a.damage);
     };
 
@@ -188,7 +182,7 @@ function Tower(baseTile) {
         mutateCounter -= dt;
         if (mutateCounter < 0) {
             this.mutate();
-            mutateCounter = 1/this.attr.mutate;
+            mutateCounter = 1000/this.attr.mutate;
         }
         
         nextFireIn -= dt;
@@ -206,7 +200,6 @@ function Tower(baseTile) {
     this.mouseover = function(e) {
         // Only required because of issue #29
         if (!added) {
-            document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
             this.base.addObject(towerRange);
             //this.base.addObject(tooltip);
             this.base.rootNode.changeSelTower(this);
