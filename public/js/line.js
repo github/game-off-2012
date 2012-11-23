@@ -23,9 +23,9 @@ function Line(game, color, x, y, r, keys, xSpeed, ySpeed) {
 	}
 	this.revive=function(){
 		var lines = this.game.objects['player'].lines
-		for(var i=0;i<lines.length;i++){
+		for(var i=lines.length-1;i>=0;i--){
 			if(!lines[i].isDead){
-				this.x=lines[i].x
+				this.x=lines[i].x+this.r*2
 				break
 			}
 		}
