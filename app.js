@@ -7,9 +7,10 @@ game.refreshView = function(view) {
 
 game.events.on("start", function() {
   game.activeView.destroy();
-  game.activeView = new SongView({
-    model: songs.first()
-  });  
+  game.activeView = new SongsView({
+    collection: songs
+  });
+  game.refreshView();
 });
 
 game.events.on("howto", function() {
