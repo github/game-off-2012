@@ -11,7 +11,10 @@ game.events.on("start", function() {
 });
 
 game.events.on("howto", function() {
-  console.log('insert how to play view');
+  activeView.destroy();
+  var howto = new HowtoView();
+  activeView = howto;
+  $('.container').html(howto.el);
 });
 
 game.events.on("highscores", function() {
