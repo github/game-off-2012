@@ -24,6 +24,16 @@ Crafty.scene("in_game", ->
     game.levelUp()
   )
 
+  pause.bind("Pause", ->
+    player.disableControl().show()
+    game.stop()
+  )
+
+  pause.bind("Unpause", ->
+    player.enableControl()
+    game.start()
+  )
+
   restart = =>
     track.reset()
     game.reset()

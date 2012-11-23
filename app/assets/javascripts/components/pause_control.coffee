@@ -4,6 +4,7 @@ Crafty.c "Pause",
     @attr(x: - Config.viewport.width / 2 + 5 , y: - Config.viewport.height / 2 , h: 30, w: 30,z: 1000)
     @text("❚❚")
     @enable()
+    @attr("paused", false)
 
     @bind('Click', (e) -> @pauseToggle())
 
@@ -12,7 +13,7 @@ Crafty.c "Pause",
 
   pauseToggle: ->
     return if @disabled
-    if Crafty.isPaused()
+    if @paused
       @unpause()
     else
       @pause()
@@ -28,10 +29,12 @@ Crafty.c "Pause",
   pause: ->
     mixpanel.track("game paused")
     @addComponent("paused")
-    Crafty.pause(true)
+    @attr("paused", true)
+    @trigger("Pause")
 
   unpause: ->
     mixpanel.track("game unpaused")
     @removeComponent("paused")
-    Crafty.pause(false)
+    @attr("paused", false)
+    @trigger("Unpause")
 
