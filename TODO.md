@@ -3,9 +3,9 @@
  * CSS
  * Sound files
  * Mobile*
+* Fix pause bug
 * Add the controls to the menu screen
 * Balance.
-* Analytics.
 * Global high score.
 * Slow upgrade.
 * Circle upgrade.
