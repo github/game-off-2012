@@ -13,11 +13,6 @@ MenuView = Backbone.View.extend({
     _.bindAll(this, 'handleKey');
     $(document).bind('keydown', this.handleKey);
     this.render();
-    this.clickAudio = this.$el.find('.click')[0];
-  },
-
-  playClick: function(){
-    this.clickAudio.play();
   },
 
   render: function () { 
@@ -28,7 +23,7 @@ MenuView = Backbone.View.extend({
   select: function (event) {
     $('.selected').removeClass('selected');
     $(event.target).addClass('selected');
-    this.playClick();
+    game.events.trigger('playSound', 'click');
   },
 
   selectNext: function () {
@@ -37,7 +32,7 @@ MenuView = Backbone.View.extend({
       $('.selected').removeClass('selected');
       next.addClass('selected');
     }
-    this.playClick();
+    game.events.trigger('playSound', 'click');
   },
 
   selectPrev: function () {
@@ -46,7 +41,7 @@ MenuView = Backbone.View.extend({
       $('.selected').removeClass('selected');
       prev.addClass('selected');
     }
-    this.playClick();
+    game.events.trigger('playSound', 'click');
   },
 
   choose: function () {

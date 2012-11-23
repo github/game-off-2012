@@ -1,5 +1,11 @@
 window.game = {};
 game.events = _.clone(Backbone.Events);
+game.audio = {
+  effects : {
+    click : $('audio.click')[0],
+    whip  : $('audio.whip')[0]
+  }
+}
 
 game.refreshView = function(view) {
   $('.container').html(game.activeView.el);
@@ -35,6 +41,7 @@ game.events.on("menu", function() {
   if(game.activeView) game.activeView.destroy();
   game.activeView = new MenuView();
   game.refreshView();
+  game.events.trigger('playSound', 'whip');
 });
 
 game.events.on("loadSong", function(song) {
@@ -43,6 +50,10 @@ game.events.on("loadSong", function(song) {
     model : song
   });
   game.refreshView();
+});
+
+game.events.on("playSound", function(sound) {
+  game.audio.effects[sound].play();
 });
 
 game.events.trigger('menu');
