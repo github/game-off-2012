@@ -73,14 +73,14 @@ float myAngleBetween (PVector myPVector1, PVector myPVector2) {
 
 void drawPolygon(float cX, float cY, float r, int numSides, int weight, PGraphics context){
   float a = TWO_PI / numSides;
-  context.noFill();
-  context.stroke(0);
-  context.strokeWeight(weight);
-  context.beginShape();
+  noFill();
+  stroke(0);
+  strokeWeight(weight);
+  beginShape();
   for(int i = 0; i < numSides; i++){
-    context.vertex(cX + r * cos(a*i), cY + r * sin(a*i));
+    vertex(cX + r * cos(a*i), cY + r * sin(a*i));
   }
-  context.endShape(CLOSE);
+  endShape(CLOSE);
 }
 
 float easeInExpo(float x, float t, float b, float c, float d) {

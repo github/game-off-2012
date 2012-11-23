@@ -73,14 +73,14 @@ float myAngleBetween (PVector myPVector1, PVector myPVector2) {
 
 void drawPolygon(float cX, float cY, float r, int numSides, int weight, PGraphics context){
   float a = TWO_PI / numSides;
-  context.noFill();
-  context.stroke(0);
-  context.strokeWeight(weight);
-  context.beginShape();
+  noFill();
+  stroke(0);
+  strokeWeight(weight);
+  beginShape();
   for(int i = 0; i < numSides; i++){
-    context.vertex(cX + r * cos(a*i), cY + r * sin(a*i));
+    vertex(cX + r * cos(a*i), cY + r * sin(a*i));
   }
-  context.endShape(CLOSE);
+  endShape(CLOSE);
 }
 
 float easeInExpo(float x, float t, float b, float c, float d) {
@@ -98,10 +98,16 @@ class Branch{
     col = colIn;
   }
   
-  public void render(PGraphics context){
-    context.fill(col);
-    context.noStroke();
-    context.triangle(verticies[0].x, verticies[0].y,verticies[1].x, verticies[1].y,verticies[2].x, verticies[2].y);
+  public void render(PGraphics context, float oX, float oY, float w, float h, float easedDist){
+//    context.fill(col);
+//    context.noStroke();
+//    context.triangle(verticies[0].x, verticies[0].y,verticies[1].x, verticies[1].y,verticies[2].x, verticies[2].y);
+      
+      fill(col);
+      noStroke();
+      triangle(verticies[0].x*easedDist+(oX-(w)/2), verticies[0].y*easedDist+(oY-h/2),
+                verticies[1].x*easedDist+(oX-(w)/2), verticies[1].y*easedDist+(oY-h/2),
+                verticies[2].x*easedDist+(oX-(w)/2), verticies[2].y*easedDist+(oY-h/2));
   }
 }
 class Layer{
@@ -159,7 +165,10 @@ class Layer{
   public void render(){
     //fill(255,100);
     //rect(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
-    image(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
+    
+    //image(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
+    tree.render(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), layerWidth*easedDistance, layerHeight*easedDistance, easedDistance);
+    drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY,easedDistance), (layerWidth*easedDistance)/2 - (ringWeight*easedDistance)/2, 16, ringWeight*easedDistance,pg);
   }
 
 }
@@ -175,7 +184,7 @@ class Tree{
     index ++;
     trunkLen = dist(lerp(trunk.verticies[0].x, trunk.verticies[1].x, 0.5), lerp(trunk.verticies[0].y, trunk.verticies[1].y, 0.5), trunk.verticies[2].x, trunk.verticies[2].y);
     this.populateBranches(branches[0], (random(1)));
-    this.render(context);
+    //this.render(context);
     //println("trunks is "+trunkLen);
   }
   
@@ -248,10 +257,11 @@ class Tree{
 
   }
   
-  void render(PGraphics context){
+  void render(PGraphics context, float oX, float oY, float w, float h, float easedDist){
     for(int i = 0; i < branches.length; i++){
       if(branches[i] != null){
-        branches[i].render(context);
+        //branches[i].render(context);
+        branches[i].render(context, oX, oY, w, h, easedDist);
       }
     }
   }

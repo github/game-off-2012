@@ -10,7 +10,7 @@ class Tree{
     index ++;
     trunkLen = dist(lerp(trunk.verticies[0].x, trunk.verticies[1].x, 0.5), lerp(trunk.verticies[0].y, trunk.verticies[1].y, 0.5), trunk.verticies[2].x, trunk.verticies[2].y);
     this.populateBranches(branches[0], (random(1)));
-    this.render(context);
+    //this.render(context);
     //println("trunks is "+trunkLen);
   }
   
@@ -83,10 +83,11 @@ class Tree{
 
   }
   
-  void render(PGraphics context){
+  void render(PGraphics context, float oX, float oY, float w, float h, float easedDist){
     for(int i = 0; i < branches.length; i++){
       if(branches[i] != null){
-        branches[i].render(context);
+        //branches[i].render(context);
+        branches[i].render(context, oX, oY, w, h, easedDist);
       }
     }
   }
