@@ -46,7 +46,7 @@ SongView = Backbone.View.extend({
       _.each(this.queues, function(queue, i){
           if (queue[0] <= (this.getTime() + 1000)){
             queue.shift();
-            this.active[i].push({top:0, type:(i+1)});
+            this.active[i].push({top:0, type:i});
           }
       }, this);
     }
@@ -136,7 +136,7 @@ SongView = Backbone.View.extend({
     _.each(type, function(queues){
       _.each(queues, function(marker){
         this.context.drawImage(this.sprites['marker'],
-          (marker.type * 120), marker.top);
+          (marker.type * 94 + 70), marker.top);
       }, this)
     }, this);
   },
@@ -147,10 +147,10 @@ SongView = Backbone.View.extend({
     this.clear();
 
     this.context.fillStyle = 'gray';
-    this.context.fillRect(120, 0, 20, this.canvas.height);
-    this.context.fillRect(240, 0, 20, this.canvas.height);
-    this.context.fillRect(360, 0, 20, this.canvas.height);
-    this.context.fillRect(480, 0, 20, this.canvas.height);
+    this.context.fillRect(70, 0, 20, this.canvas.height);
+    this.context.fillRect(165, 0, 20, this.canvas.height);
+    this.context.fillRect(258, 0, 20, this.canvas.height);
+    this.context.fillRect(353, 0, 20, this.canvas.height);
     this.context.fillRect(0, 335, this.canvas.width, 5);
     this.context.fillRect(0, 360, this.canvas.width, 5);
     
