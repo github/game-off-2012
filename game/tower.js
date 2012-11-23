@@ -198,12 +198,18 @@ function Tower(baseTile) {
         }
     };
 
+    this.click = function()
+    {
+        this.tryUpgrade();
+    };
+
     this.mouseover = function(e) {
         // Only required because of issue #29
         if (!added) {
             document.getElementById("towerinfo").innerHTML = JSON.stringify(this.attr);
             this.base.addObject(towerRange);
             //this.base.addObject(tooltip);
+            this.base.rootNode.changeSelTower(this);
             added = true;
         }
     };
