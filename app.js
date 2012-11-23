@@ -19,7 +19,6 @@ game.events.on("highscores", function() {
 });
 
 game.events.on("credits", function() {
-  console.log('insert credits view');
   activeView.destroy();
   var credits = new CreditsView();
   activeView = credits;
