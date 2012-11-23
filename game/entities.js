@@ -136,12 +136,13 @@ function Path(x, y, w, h) {
     };
 }
 
-function Bug(startPath, r) {
-    this.maxHP = 20;
+function Bug(startPath, difficulty) {
+    this.maxHP = Math.floor(20 * 3 * difficulty);
     this.hp = this.maxHP;
-    this.value = 15;
-    this.speed = 20;
+    this.value = Math.floor(5 * (1 + (difficulty / 16)));
+    this.speed = 20; //Math.floor(20 * difficulty);
     this.color = "yellow";
+    var r = 4;
 
     var sound = new Audio("snd/die.wav");
 
@@ -201,13 +202,13 @@ function Bug(startPath, r) {
         ink.circ(p.x + p.w / 2, p.y + p.h / 2, p.w / 2, pen);
     };
 
-    this.destroyAtBase = function()
-    {
+    this.destroyAtBase = function() {
         this.base.destroySelf();        
 
-        eng.health -= 50;
+        eng.health -= 5;
 
-        if (eng.health < 0)
-        window.location.reload();
+        if (eng.health < 0) {
+            window.location.reload();
+        }
     };
 }
