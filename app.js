@@ -15,7 +15,10 @@ game.events.on("howto", function() {
 });
 
 game.events.on("highscores", function() {
-  console.log('insert highscores view');
+  activeView.destroy();
+  var highscore = new HighScoreView();
+  activeView = highscore;
+  $('.container').html(highscore.el);
 });
 
 game.events.on("credits", function() {
@@ -26,7 +29,6 @@ game.events.on("credits", function() {
 });
 
 game.events.on("menu", function() {
-  console.log('menu view');
   if(activeView) {
     activeView.destroy();
   }
