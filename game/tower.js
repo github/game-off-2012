@@ -58,9 +58,10 @@ function Tower_Connection(t1, t2) {
         // Should have same properties; a1 vs a2 for loop should not matter.
         for (at in a1) {
             if (a1[at] > a2[at]) {
-                a2[at] += (a1[at] - a2[at]) * Math.min(Math.min(a1.download, a2.upload), 1) * dt;
+                a2[at] += Math.min(
+                    (a1[at] - a2[at]) * Math.min(a1.download, a2.upload, 1), a2[at]) * dt;
             } else if (a1[at] < a2[at]) {
-                a1[at] += (a2[at] - a1[at]) * Math.min(Math.min(a1.upload, a2.download), 1) * dt;
+                a1[at] += Math.min((a2[at] - a1[at]) * Math.min(a1.upload, a2.download, 1), a1[at])  * dt;
             }
         }
         if (this.hover) {
@@ -91,8 +92,8 @@ function Tower(baseTile) {
         damage:         Math.random() * 30  + 1,
         hp:             Math.random() * 100 + 10,
         speed:          Math.random() * 1   + 1,
-        mutate:         Math.random() * 1   + 1,
-        mutatestrength: Math.random() * 1   + 1,
+        mutate:         Math.random() / 10,
+        mutatestrength: Math.random() * 1,
         upload:         Math.random(),
         download:       Math.random(),
         hitcount:       0,
@@ -121,21 +122,32 @@ function Tower(baseTile) {
 
     // WTF - yeah man, this code is the bomb
     this.tryUpgrade = function () {
-        if (eng.money >= 100 ) {
-            this.attr.damage *= 2;
-	    this.attr.speed *= 2;
-            //this.attr.coolDown /= 2;
+        if (eng.money >= 100 && this.attr.coolDown >= (2 / 50)) {
+            this.damage *= 2;
+            this.attr.coolDown /= 2;
             eng.money -= 100;
         }
     };
+    
+    this.die = function() {
+        this.base.destroySelf();
+    };
 
     this.mutate = function() {
+        function invalid(attr) {
+            // NaN
+            if (attr != attr) return true;
+            if (attr == Infinity) return true;
+            if (attr == -Infinity) return true;
+            return false
+        }
+        
         var a = this.attr;
         
         for (at in a) {
-            if (at != "hitcount" && at != "coolDown") {
-                a[at] += (Math.random() - 0.5) * a.mutatestrength * a[at] * 0.30;
-            }
+            if (invalid(a[at])) this.die();
+            if (at == "hitcount") continue;
+            a[at] += (Math.random() - 0.5) * a.mutatestrength * a[at] * 0.30;
         }
         
         if (a.mutatestrength < 1) {
@@ -153,7 +165,7 @@ function Tower(baseTile) {
         }
         if (a.coolDown >= 4) {
             a.range = 80;
-        }   */     
+        }   */
         this.color = "#" + hexPair(255 - a.hp) + hexPair(a.range) + hexPair(a.damage);
     };
 
@@ -169,9 +181,7 @@ function Tower(baseTile) {
         var cent1 = this.tPos.getCenter();
         var cent2 = target.tPos.getCenter();
 
-
-        
-        return new Tower_Laser(cent1.x, cent1.y, cent2.x, cent2.y, laserTime);
+        this.base.addObject(new Tower_Laser(cent1.x, cent1.y, cent2.x, cent2.y, laserTime));
     };
 
     this.update = function (dt) {
@@ -181,14 +191,11 @@ function Tower(baseTile) {
             mutateCounter = 1/this.attr.mutate;
         }
         
-        var newObjs = [];
         nextFireIn -= dt;
         if (nextFireIn < 0) {
-            mergeToArray(this.attack(), newObjs);
+            this.attack();
             nextFireIn = 1/this.attr.speed;
-        }        
-
-        return newObjs;
+        }
     };
 
     this.mouseover = function(e) {
