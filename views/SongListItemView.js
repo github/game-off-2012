@@ -7,9 +7,9 @@ SongListItemView = Backbone.View.extend({
   className: 'song-list-item',
 
   events : {
-  	'click' : function(){
-  		game.events.trigger('loadSong', this.model);
-  	}
+    'click' : function(){
+      game.events.trigger('loadSong', this.model);
+    }
   },
 
   initialize: function(){
