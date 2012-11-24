@@ -84,7 +84,6 @@ function Engine(pen, bufferCanvas) {
         var allUnderMouse = [];
 
         for (var type in eng.base.allChildren) {
-			if(type == "Button")
             mergeToArray(findAllWithin(eng, type, { x: mX, y: mY }, 0), allUnderMouse);
         }
 

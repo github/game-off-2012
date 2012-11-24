@@ -152,7 +152,7 @@ function FancyBackground(pen) {
 			this.tPos.x -= dt*speed;
 		}
 
-		if (this.tPos.x < 0) {
+		if (this.tPos.x + this.tPos.w < 0) {
 			this.base.destroySelf();
 		}
 		return;

@@ -39,25 +39,25 @@ function Button(pos, txt, onClick) {
 	
 	this.mouseover = function()
 	{
-        console.log("mouseover");
+        //console.log("mouseover");
 		this.hover = true;
 	};
 	
 	this.mouseout = function()
 	{
-        console.log("out");
+        //console.log("out");
 		this.hover = false;
 	};
 	
 	this.mousedown = function()
 	{
-        console.log("down");
+        //console.log("down");
 		this.down = true;
 	};
 	
 	this.mouseup = function()
 	{
-        console.log("up");
+        //console.log("up");
 		this.down = false;
 	};
 }
