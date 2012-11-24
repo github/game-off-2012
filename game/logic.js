@@ -38,9 +38,7 @@ function Engine(pen, bufferCanvas) {
 
     this.secondTimer = 1;
 
-    this.selectedTower = null;
-    this.infobar = new Infobar();
-    this.base.addObject(this.infobar);
+    this.selectedObj = null;
 
     generatePath(this);
     
@@ -104,9 +102,9 @@ function Engine(pen, bufferCanvas) {
         
         for (var key in allUnderMouse)
             if(allUnderMouse[key] !== topMost)
-                allUnderMouse[key].base.raiseEvent(eventName, { x: mX, y: mY, topMost: false });
+                allUnderMouse[key].base.call(eventName, { x: mX, y: mY, topMost: false });
 
-        topMost.base.raiseEvent(eventName, { x: mX, y: mY, topMost: true });
+        topMost.base.call(eventName, { x: mX, y: mY, topMost: true });
 
         return allUnderMouse;
     }
@@ -145,7 +143,7 @@ function Engine(pen, bufferCanvas) {
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
                     if (vecToRect({ x: this.muX, y: this.muY }, this.prevMouseDown[i].tPos).magSq() == 0) {
-                        this.prevMouseDown[i].base.raiseEvent("click", { x: this.muX, y: this.muY });
+                        this.prevMouseDown[i].base.call("click", { x: this.muX, y: this.muY });
                     }
                 }
             }
@@ -158,13 +156,13 @@ function Engine(pen, bufferCanvas) {
 
         this.base.removeAllType("Tower_Range");
 
-        if (this.mY > 0 && this.mY < bH && this.mX > 0 && this.mX < bW) {
+        if (this.mY > 0 && this.mX > 0) {
             var curMouseOver = throwMouseEventAt(mX, mY, "mouseover", this);
             //Can actually find mouseout more efficiently... as we have previous and current mouseover...            
             if (this.prevMouseOver && this.prevMouseOver.length > 0) {
                 for (var i = 0; i < this.prevMouseOver.length; i++) {
                     if (vecToRect({ x: mX, y: mY }, this.prevMouseOver[i].tPos).magSq() != 0) {
-                        this.prevMouseOver[i].base.raiseEvent("mouseout", { x: mX, y: mY });
+                        this.prevMouseOver[i].base.call("mouseout", { x: mX, y: mY });
                     }
                 }
             }
@@ -173,7 +171,7 @@ function Engine(pen, bufferCanvas) {
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
                     //if (vecToRect({ x: this.mX, y: this.mY }, this.prevMouseDown[i].tPos).magSq() == 0) {
-                        this.prevMouseDown[i].base.raiseEvent("dragged", { x: this.mX, y: this.mY });
+                        this.prevMouseDown[i].base.call("dragged", { x: this.mX, y: this.mY });
                     //}
                 }
             }
@@ -188,13 +186,11 @@ function Engine(pen, bufferCanvas) {
             
         }
 
-	//Make fancy background
-	if (curFrameCounter % 100 == 0) {
-		this.base.addObject(new FancyBackground(this.pen));
-	}
-	
-
-    };   
+		//Make fancy background
+		if (curFrameCounter % 100 == 0) {
+			this.base.addObject(new FancyBackground(this.pen));
+		}	
+	};   
    
 /** Function */
     this.draw = function () {
@@ -214,28 +210,28 @@ function Engine(pen, bufferCanvas) {
         ink.text(x, y + 60, "Bugs: " + eng.base.lengths.Bug, pen);  
     };
 
-    this.changeSelTower = function(tower) {
+    this.changeSel = function(obj) {
+
 	    //Change the selected tower
-	    this.selectedTower = tower;
-	    this.infobar.updateSelectedTower(tower);
+	    this.selectedObj = obj;
+	    this.infobar.updateAttr(obj);
 	    return;
     }
 
-    this.upgradeSelTower = function () {
-	    this.selectedTower.tryUpgrade();
+    this.upgradeSel = function () {
+		if(this.selectedObj)
+			this.selectedObj.tryUpgrade();
 	    return;
     }
 
-    this.changeSelConn = function(connection) {
-	    this.selectedConnection = connection;
-	    return;
+    this.getSelType = function () {
+	    if (!this.selectedObj) {
+		    return null;
+	    } 
+	    return this.selectedObj.base.type;
+	   
     }
-
-    this.pushSelConn= function(dir) {
-	    //Push in dir direction
-	    if (dir == "to") {
-		    
-	    }
-    }
-
+	
+	this.infobar = new Infobar();
+    this.base.addObject(this.infobar);
 }

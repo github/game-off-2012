@@ -57,7 +57,7 @@ function Tower_Connection(t1, t2) {
     var p2 = getRectCenter(t2.tPos);
     this.tPos = new temporalPos(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y, 0, 0);
     this.base = new baseObj(this, 11);
-    this.hover = true;
+    this.hover = false;
     var color = "rgba(0, 0, 255, 0.1)";
     
     this.update = function(dt) {
@@ -125,7 +125,6 @@ function Tower(baseTile) {
         pen.strokeStyle = "lightblue";
         ink.rect(p.x, p.y, p.w, p.h, pen);        
         pen.restore();
-        this.hover = false;
     };
 
     // WTF - yeah man, this code is the bomb
@@ -210,15 +209,21 @@ function Tower(baseTile) {
 
     this.mouseover = function(e) {
         // Only required because of issue #29
+        for (var i = 0; i < this.connections.length; i++) {
+            this.connections[i].hover = true;
+        }
         if (!added) {
             this.base.addObject(towerRange);
             //this.base.addObject(tooltip);
-            this.base.rootNode.changeSelTower(this);
+            this.base.rootNode.changeSel(this);
             added = true;
         }
     };
     
     this.mouseout = function(e) {
+        for (var i = 0; i < this.connections.length; i++) {
+            this.connections[i].hover = false;
+        }
         if (added) {
             this.base.removeObject(towerRange);
             //this.base.removeObject(tooltip);
@@ -235,7 +240,10 @@ function Tower(baseTile) {
         var dst = towerDragStartMouseDown;
         console.log("mouseup event! Found tower: ", this, dst, this == dst);
         if (!dst) return;
-        this.base.addObject(new Tower_Connection(this, dst));
+        var conn = new Tower_Connection(this, dst);
+        this.base.addObject(conn);
+        this.connections.push(conn);
+        dst.connections.push(conn);
     };
 /*    this.dragged = function(e){
         var eng = this.base.rootNode;
