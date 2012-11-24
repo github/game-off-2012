@@ -225,9 +225,10 @@ function baseObj(holder, zindex) {
 
         for (var y = 0; y < childWithZIndex.length; y++) {
             for (var key in childWithZIndex[y].array) {
+                var child = childWithZIndex[y].array[key];
                 pen.save();
-                if (childWithZIndex[y].array[key].draw)
-                    childWithZIndex[y].array[key].draw(pen);
+                if (child.draw)
+                    child.draw(pen);
                 pen.restore();
             }
         }

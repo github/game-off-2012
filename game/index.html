@@ -33,6 +33,7 @@ canvas {
 <script src="debug.js"></script>
 <script src="fail.js"></script>
 <script src="type.js"></script>
+<script src="sound.js"></script>
 
 <script src="baseGeometry.js"></script>
 
@@ -63,6 +64,7 @@ canvas {
     var bH = height;
 
     var gameTimeAccumulated = 0;
+    var eng;
 
     $(document).ready(function () {
         $("#myCanvas").attr("width", width);
@@ -78,9 +80,10 @@ canvas {
             };
         })();
 
-        canvas = document.getElementById("myCanvas");
+        var canvas = document.getElementById("myCanvas");
+        var bufferCanvas = canvas.cloneNode();
         var pen = canvas.getContext("2d");
-        eng = new Engine(pen); //this.base.rootNode.holder will also get eng... but... yeah...
+        eng = new Engine(pen, bufferCanvas); //this.base.rootNode.holder will also get eng... but... yeah...
         window.reqAnim(eng.run.bind(eng));
 
         $("#myCanvas").mousemove(function (e) {

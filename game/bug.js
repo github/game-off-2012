@@ -6,7 +6,7 @@ function Bug(startPath, difficulty) {
     this.color = "yellow";
     var r = 4;
 
-    var sound = new Audio("snd/die.wav");
+    var sound = new Sound("snd/die.wav");
 
     var cen = { x: startPath.tPos.x, y: startPath.tPos.y };
     cen.x += Math.floor((startPath.tPos.w - 2*r) * Math.random()) + r;
@@ -70,7 +70,7 @@ function Bug(startPath, difficulty) {
         }
 
         if (this.hp < 0) {
-	    sound.play();
+            sound.play();
             this.base.destroySelf();
             eng.money += this.value;
         }                        

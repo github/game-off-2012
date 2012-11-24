@@ -14,7 +14,7 @@ function Tower_Range(baseTower) {
     };
 }
 
-function Tower_Laser(xs, ys, xe, ye, duration, buglaser) {
+function Tower_Laser(xs, ys, xe, ye, duration) {
     this.xs = xs;
     this.ys = ys;
     this.xe = xe;
@@ -25,11 +25,8 @@ function Tower_Laser(xs, ys, xe, ye, duration, buglaser) {
 
     var timeleft = duration;
     var color = "rgba(255,0,255,1)";
-    this.sound = new Audio("snd/Laser_Shoot.wav");
+    this.sound = new Sound("snd/Laser_Shoot.wav");
     this.sound.play();
-    if (typeof(buglaser) === "undefined") {
-	    buglaser = false;
-    }
 
     this.update = function (dt) {
         timeleft -= dt;
@@ -38,9 +35,6 @@ function Tower_Laser(xs, ys, xe, ye, duration, buglaser) {
             return;
         }
         color = "rgba(255,0,255," + timeleft/duration + ")";
-	if (buglaser) {
-		color = "rgba(255,0,0," + timeleft/duration + ")";
-	}
     };
 
     this.draw = function (pen) {
@@ -99,7 +93,7 @@ function Tower(baseTile) {
         hp:             Math.random() * 100 + 10,
         speed:          Math.random() * 1   + 1,
         mutate:         Math.random() * 50,
-        mutatestrength: Math.random() * 50,
+        mutatestrength: Math.random() / 10,
         upload:         Math.random(),
         download:       Math.random(),
         hitcount:       0,
@@ -137,7 +131,7 @@ function Tower(baseTile) {
     
     this.die = function() {
         this.base.destroySelf();
-        new Audio("snd/Tower_Die.wav").play();
+        new Sound("snd/Tower_Die.wav").play();
     };
 
     this.mutate = function() {
@@ -154,11 +148,11 @@ function Tower(baseTile) {
         for (at in a) {
             if (invalid(a[at])) this.die();
             if (at == "hitcount") continue;
-            if (at == "mutate" || at == "mutatestrength") {
+            if (at == "mutate") {
                 // Avoid exponetial increase in all tower stats if mutate mutation was calculated just like all the other values.
-                a[at] += (Math.random() - 0.5) * a.mutatestrength / 500;
+                a[at] += (Math.random() - 0.5) * a.mutatestrength;
             } else {
-                a[at] += (Math.random() - 0.5) * a.mutatestrength / 500 * a[at];
+                a[at] += (Math.random() - 0.5) * a.mutatestrength * a[at];
             }
         }
         
@@ -196,9 +190,6 @@ function Tower(baseTile) {
             this.attack();
             nextFireIn = 1/this.attr.speed;
         }
-	if (this.attr.hp < 0) {
-		this.die();
-	}
     };
 
     this.click = function()
