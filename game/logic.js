@@ -16,7 +16,6 @@ function Engine(pen, bufferCanvas) {
     this.muX = -1; //Mouse up
     this.muY = -1;
 
-
     this.pen = pen;
     this.bPen = bufferCanvas.getContext("2d");
     this.bufferCanvas = bufferCanvas;
@@ -173,12 +172,24 @@ function Engine(pen, bufferCanvas) {
                 }
             }
         }
+        
+        if (resizeEvent) {
+            console.log(resizeEvent);
+            this.base.raiseEvent("resize", resizeEvent);
+            resizeEvent = null;
+        }
 
 		//Make fancy background
 		if (curFrameCounter % 100 == 0) {
 			this.base.addObject(new FancyBackground(this.pen));
 		}	
-	};   
+	};
+//     this.resize = function(e){};
+    var resizeEvent;
+    this.resize = function(e) {
+        console.log(e);
+        resizeEvent = e;
+    }
    
 /** Function */
     this.draw = function () {

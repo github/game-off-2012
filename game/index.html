@@ -75,18 +75,20 @@ canvas {
     var pen = canvas.getContext("2d");
     function initCanvas() {
 // Someday...
-//         width = window.innerWidth;
-//         height = window.innerHeight - 5;
-        width = wTiles * tileSize + 150;
-        height = hTiles * tileSize;
+        minWidth = wTiles * tileSize + 150;
+        minHeight = hTiles * tileSize;
+        width = Math.max(window.innerWidth, minWidth);
+        height = Math.max(window.innerHeight - 5, minHeight);
         bW = width - 150;
         bH = height;
         canvas.width = width;
         canvas.height = height;
         bufferCanvas.width = width;
         bufferCanvas.height = height;
+        if (eng && eng.resize) {
+            eng.resize({width: width, height: height});
+        }
     }
-    $(window).resize(initCanvas);
     $(document).ready(function () {
         initCanvas();
         window.reqAnim = (function () {
@@ -102,8 +104,12 @@ canvas {
             };
         })();
 
-        eng = new Engine(pen, bufferCanvas); //this.base.rootNode.holder will also get eng... but... yeah...
+        eng = new Engine(pen, bufferCanvas);
+        //this.base.rootNode.holder will also get eng... but... yeah...
         window.reqAnim(eng.run.bind(eng));
+        
+        $(window).resize(initCanvas);
+        initCanvas();
 
         function getMousePos(e) {
             var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canvas.offsetLeft;

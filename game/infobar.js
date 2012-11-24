@@ -148,14 +148,17 @@ function RadioButton(pos, txt, context, functionName, callData, prevRadioButton)
 }
 
 function Infobar() {
-	//Make new tPos and offset it
-	this.tPos = new temporalPos(bW, 0, 150, bH * 0.8, 0);
 	this.base = new baseObj(this, 14);
 	this.tattr = null;
 
     this.targetStrategyButtons = {};
     
 	var buttonW = 100;
+    
+    this.resize = function(e) {
+        console.log(e);
+        this.tPos = new temporalPos(e.width - 150, 0, 150, e.height * 0.8, 0)
+    }
     
     //Upgrade button
     this.added = function()
