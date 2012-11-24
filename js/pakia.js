@@ -4,6 +4,7 @@
 
     // Default type will be angry
     this.type = 'angry';
+    this.sound = document.getElementById("jump1");
 
     this.x;
     this.y;
@@ -53,6 +54,13 @@
       'angry' // kills
     ],
 
+    // Sounds
+    sounds: [
+      document.getElementById("angry_jump"),
+      document.getElementById("sad_jump"),
+      document.getElementById("happy_jump")
+    ],      
+
     pakia_img: {
       sad: {},
       happy: {},
@@ -86,8 +94,17 @@
 
         pakia.type = this.types[i];
 
+        if (pakia.type == 'angry')
+          pakia.sound = this.sounds[0];
+        else if (pakia.type == 'sad')
+          pakia.sound = this.sounds[1];
+        else if (pakia.type == 'happy')
+          pakia.sound = this.sounds[2];
+
         this.pakias.push(pakia);
       }
+
+      //console.log(this.pakias);
     },
 
     reflow: function(ctx) {
@@ -126,6 +143,10 @@
       if (mit.score.toFixed(2) % 50 === 0 || this.cur_pakia) {
         this.reflow(ctx);
         this.repaint(ctx);
+      }
+
+      if (mit.score.toFixed(2) % 50 === 0 && this.cur_pakia) {
+        this.cur_pakia.sound.play();
       }
     },
 

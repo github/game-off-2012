@@ -39,6 +39,11 @@
   var W = canvas.width = ui.body.width();
   var H = canvas.height = ui.body.height();
 
+  // Music
+  var music = document.getElementById("start");
+  music.volume = 0.2;
+  music.play();
+
   // Width x Height capped to 1000 x 500
   if (canvas.width > 1000) {
     W = canvas.width = 1000;
@@ -119,7 +124,7 @@
   // 
   // You can console.log velocities in drawing methods
   // and from there decide what to set as the cap.
-  mit.v_cap = 7;
+  mit.v_cap = 7.5;
 
   // Accelaration x,y
   mit.ax = 0;
@@ -217,7 +222,7 @@
         mit.PakiaUtils.render(ctx);
 
       // Update score
-      mit.score = mit.score + 0.2;
+      mit.score = mit.score += 0.4;
       ui.score_board.text(parseInt(mit.score));
 
       // Acceleration + Gravity
