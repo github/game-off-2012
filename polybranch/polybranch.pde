@@ -39,6 +39,7 @@ void setup(){
 void draw(){
   background(255);
   g.update();
+  drawPolygon(lerp(width/2, originX, 1), lerp(height/2, originY,1), width/2, 16, 6, color(255,0,0,128));
 }
 
 //testtesttest
@@ -72,10 +73,10 @@ float myAngleBetween (PVector myPVector1, PVector myPVector2) {
 }
 
 
-void drawPolygon(float cX, float cY, float r, int numSides, float weight){
+void drawPolygon(float cX, float cY, float r, int numSides, float weight, color cIn){
   float a = TWO_PI / numSides;
   noFill();
-  stroke(0);
+  stroke(cIn);
   strokeWeight(weight);
   beginShape();
   for(int i = 0; i < numSides; i++){

@@ -32,8 +32,7 @@ class Tree{
             branches[index] = new Branch(
                       new PVector(trunkIn.verticies[2].x, trunkIn.verticies[2].y),
                       new PVector(lerp(trunkIn.verticies[2].x, trunkIn.verticies[1].x, 0.3), lerp(trunkIn.verticies[2].y, trunkIn.verticies[1].y, 0.3)),
-                      new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))),
-                      color(random(50,100)));
+                      new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))));
                       index ++;
                       populateBranches(branches[index-1], (random(1)));
                 //check if the min or max angle fit inside the area
@@ -59,8 +58,7 @@ class Tree{
             branches[index] = new Branch(
                       new PVector(lerp(trunkIn.verticies[2].x, trunkIn.verticies[0].x, 0.3), lerp(trunkIn.verticies[2].y, trunkIn.verticies[0].y, 0.3)),
                       new PVector(trunkIn.verticies[2].x, trunkIn.verticies[2].y),
-                      new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))),
-                      color(random(100,200)));
+                      new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))));
                       index ++;
                       populateBranches(branches[index-1], (random(1)));
           }else if(dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-HALF_PI)), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-HALF_PI)), width/2, height/2) < width / 2 ||

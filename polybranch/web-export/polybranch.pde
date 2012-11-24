@@ -39,6 +39,7 @@ void setup(){
 void draw(){
   background(255);
   g.update();
+  drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY,easedDistance), width/2, 16, 6);
 }
 
 //testtesttest
