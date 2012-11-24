@@ -139,10 +139,14 @@ function Path(x, y, w, h) {
 function FancyBackground(pen) {
 	this.base = new baseObj(this, 0);
 
-	var txt = "1000101010010";
+	var txt = "";
+	var possible = "01";
+	for (var i = 0; i < 10; i++) {
+		txt += possible.charAt(Math.round(Math.random()));
+	}
 	var textH = Math.floor(Math.random() * 5) + 10;
 	var direction = "left";
-	var speed = (Math.random() * 150)+ 50;
+	var speed = (Math.random() * 10)+ 50;
 	
 	this.tPos = new temporalPos(bW, Math.floor(Math.random()*bH), pen.measureText(txt), textH);
 	
@@ -159,6 +163,7 @@ function FancyBackground(pen) {
 	}
 	
 	this.draw = function(pen) {
+		pen.fillStyle = "rgba(0,255,0,0.3)";
 		ink.text(this.tPos.x, this.tPos.y, txt, pen);
 
 
