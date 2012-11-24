@@ -1,10 +1,12 @@
-function Button(pos, txt) {
+function Button(pos, txt, onClick) {
 	this.tPos = pos;
 	this.base = new baseObj(this, 15);
 	var textsize = 14;
 
 	this.clicked = false;
 	this.activated = false;
+	
+	this.onClick = onClick;
 
 	this.draw = function(pen) {
 		//Draw box
@@ -44,6 +46,10 @@ function Button(pos, txt) {
 		this.clicked = false;
 	}
 
+	this.click = function()
+	{
+		this.onClick();
+	};
 
 	this.mouseout = function (e) {
 		return;
