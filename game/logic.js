@@ -20,7 +20,7 @@ function Engine(pen) {
     this.pen = pen;
 
     this.id = 0;
-    this.money = 100;
+    this.money = 10000;
     this.health = 100;
 
     this.lastTowerHover = null;
