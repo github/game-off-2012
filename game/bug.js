@@ -49,7 +49,7 @@ function Bug(startPath, difficulty) {
         }
 
         if (this.hp < 0) {
-	    sound.play();
+            sound.play();
             this.base.destroySelf();
             eng.money += this.value;
         }                        

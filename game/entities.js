@@ -16,12 +16,8 @@
             pen.strokeStyle = "yellow";
         } else {
             pen.strokeStyle = "#123456";
-            pen.lineWidth = 2;
         }
         ink.rect(p.x, p.y, p.w, p.h, pen);
-
-        //Strange... but we can't set this during update!
-        this.hover = false;
     };
 
     this.mouseover = function() {

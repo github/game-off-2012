@@ -8,7 +8,7 @@
 
 /********************************* CODE START *********************************/
 
-function Engine(pen) {
+function Engine(pen, bufferCanvas) {
     this.mX = -1;
     this.mY = -1;    
     this.mdX = -1; //Mouse down
@@ -18,6 +18,8 @@ function Engine(pen) {
 
 
     this.pen = pen;
+    this.bPen = bufferCanvas.getContext("2d");
+    this.bufferCanvas = bufferCanvas;
 
     this.id = 0;
     this.money = 100;
@@ -73,8 +75,10 @@ function Engine(pen) {
 
         for (var key in newObjects)
             this.base.addObject(newObjects[key]);
-
-        this.base.draw(pen);
+        
+        this.bPen.clearRect(0, 0, bufferCanvas.width, bufferCanvas.height);
+        this.base.draw(this.bPen);
+        pen.drawImage(bufferCanvas, 0, 0);
         window.reqAnim(this.run.bind(this));
     };
 
