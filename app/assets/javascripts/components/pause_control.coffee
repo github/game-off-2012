@@ -30,11 +30,11 @@ Crafty.c "Pause",
     mixpanel.track("game paused")
     @addComponent("paused")
     @attr("paused", true)
-    @trigger("Pause")
+    @trigger("DoPause")
 
   unpause: ->
     mixpanel.track("game unpaused")
     @removeComponent("paused")
     @attr("paused", false)
-    @trigger("Unpause")
+    @trigger("DoUnpause")
 

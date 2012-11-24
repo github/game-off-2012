@@ -23,7 +23,7 @@ Crafty.scene "menu", ->
     loading.visible = false
 
 
-  Crafty.e("2D, DOM, Color, MoveInCircle, Player, Collision").attr(_speed: 1, _radius: 200)
+  Crafty.e("Player").attr(_speed: 1, _radius: 200)
   Crafty.e("2D, DOM, Text, Title").text("Release Cycles").attr(x: -160, y: -100, w: 320, h: 100)
   loading = Crafty.e("2D, DOM, Text").text("Loading...").attr(x: -30, y: 50)
 

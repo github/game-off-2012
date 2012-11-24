@@ -11,27 +11,26 @@ Crafty.scene("in_game", ->
 
   center = Crafty.e("ActionCenter").game(game)
 
-  player = Crafty.e("2D, DOM, Color, MoveInCircle, Player, Collision").disableControl().onHit("Obstacle", ->
+  player = Crafty.e("Player").disableControl().onHit("Obstacle", ->
     gameover()
   )
 
   track  = Crafty.e("Track").player(player).Track().color(Config.cycle.colors.base)
 
   Crafty.e("Mute")
+
   pause = Crafty.e("Pause")
 
   player.bind("LevelUp", ->
     game.levelUp()
   )
 
-  pause.bind("Pause", ->
-    player.disableControl().show()
-    game.stop()
+  pause.bind("DoPause", ->
+    Crafty.pause(true)
   )
 
-  pause.bind("Unpause", ->
-    player.enableControl()
-    game.start()
+  pause.bind("DoUnpause", ->
+    Crafty.pause(false)
   )
 
   restart = =>
