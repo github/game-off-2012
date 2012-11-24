@@ -74,10 +74,12 @@ function Infobar() {
 	//Std centered button position
 	var posb = new temporalPos(((width-bW)/2)-(buttonW/2)+bW,200,buttonW,30,0);
 
+
 	this.added = function()
     {
         //Upgrade button
-        this.upgradeb = new Button(posb, "Upgrade!", this.base.rootNode.upgradeSel) ;
+	var root = this.base.rootNode;
+        this.upgradeb = new Button(posb, "Upgrade!", root.upgradeSel.bind(root)) ;
         this.base.addObject(this.upgradeb);
     }
 	
