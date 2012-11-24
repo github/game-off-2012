@@ -136,3 +136,32 @@ function Path(x, y, w, h) {
     };
 }
 
+function FancyBackground(pen) {
+	this.base = new baseObj(this, 0);
+
+	var txt = "1000101010010";
+	var textH = Math.floor(Math.random() * 5) + 10;
+	var direction = "left";
+	var speed = (Math.random() * 150)+ 50;
+	
+	this.tPos = new temporalPos(bW, Math.floor(Math.random()*bH), pen.measureText(txt), textH);
+	
+
+	this.update = function(dt) {
+		if (direction == "left") {
+			this.tPos.x -= dt*speed;
+		}
+
+		if (this.tPos.x < 0) {
+			this.base.destroySelf();
+		}
+		return;
+	}
+	
+	this.draw = function(pen) {
+		ink.text(this.tPos.x, this.tPos.y, txt, pen);
+
+
+		return;
+	}
+}

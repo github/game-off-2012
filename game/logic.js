@@ -183,6 +183,12 @@ function Engine(pen) {
             
         }
 
+	//Make fancy background
+	if (curFrameCounter % 100 == 0) {
+		this.base.addObject(new FancyBackground(this.pen));
+	}
+	
+
     };   
    
 /** Function */
