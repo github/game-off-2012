@@ -21,7 +21,7 @@ PVector focalPoint;
 
 void setup(){
   size(800,800);
-  frameRate(30);
+  //frameRate(30);
   originX = width/2;
   originY = height/2;
   imageMode(CENTER);
@@ -43,15 +43,16 @@ void draw(){
 
 //testtesttest
 void mousePressed(){
-  background(255);
+  //background(255);
   //testTree = new Tree(15, bob);
   //Layer layer = new Layer(16, width, height);
   //Layer layer2 = new Layer(16, int(width*0.8), int(height*0.8));
   //layer2.render();
   //layer.render();
   
-  g = new Game();
-  g.display();
+  //g = new Game();
+  //g.display();
+  println(frameRate);
 }
 
 void mouseMoved(){
@@ -71,7 +72,7 @@ float myAngleBetween (PVector myPVector1, PVector myPVector2) {
 }
 
 
-void drawPolygon(float cX, float cY, float r, int numSides, int weight, PGraphics context){
+void drawPolygon(float cX, float cY, float r, int numSides, float weight){
   float a = TWO_PI / numSides;
   noFill();
   stroke(0);

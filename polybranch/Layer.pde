@@ -4,7 +4,6 @@ class Layer{
   Tree tree;
   int layerWidth, layerHeight;
   int ringWeight = 6;
-  PGraphics pg;
   float distance;
   float easedDistance;
   
@@ -13,7 +12,6 @@ class Layer{
     layerWidth = w;
     layerHeight = h;
     distance = 1;
-    pg = createGraphics(layerWidth, layerHeight);
 
     startVertex = int(random(0, numSides));
     
@@ -23,16 +21,13 @@ class Layer{
     float bX = (layerWidth/2) + (layerWidth/2 - ringWeight/2) * cos((TWO_PI/numSides)*(startVertex-1));
     float bY = (layerHeight/2) + (layerHeight/2 - ringWeight/2) * sin((TWO_PI/numSides)*(startVertex-1));
     
-    pg.beginDraw();
     
     tree = new Tree(11, new Branch(
                 new PVector(aX, aY),
                 new PVector(bX, bY),
                 new PVector(lerp(aX,layerWidth/2,0.7), lerp(aY,layerHeight/2,0.7)),
-                color(random(50,100))),
-                this.pg);
-    drawPolygon(layerWidth/2, layerHeight/2, layerWidth/2 - ringWeight/2, 16, ringWeight,pg);
-    pg.endDraw();
+                color(random(50,100))));
+    drawPolygon(layerWidth/2, layerHeight/2, layerWidth/2 - ringWeight/2, 16, ringWeight);
     
   }
   
@@ -55,8 +50,8 @@ class Layer{
     //rect(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
     
     //image(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
-    tree.render(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), layerWidth*easedDistance, layerHeight*easedDistance, easedDistance);
-    drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY,easedDistance), (layerWidth*easedDistance)/2 - (ringWeight*easedDistance)/2, 16, ringWeight*easedDistance,pg);
+    tree.render(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), layerWidth*easedDistance, layerHeight*easedDistance, easedDistance);
+    drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY,easedDistance), (layerWidth*easedDistance)/2 - (ringWeight*easedDistance)/2, 16, ringWeight*easedDistance);
   }
 
 }

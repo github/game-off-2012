@@ -10,11 +10,7 @@ class Branch{
     col = colIn;
   }
   
-  public void render(PGraphics context, float oX, float oY, float w, float h, float easedDist){
-//    context.fill(col);
-//    context.noStroke();
-//    context.triangle(verticies[0].x, verticies[0].y,verticies[1].x, verticies[1].y,verticies[2].x, verticies[2].y);
-      
+  public void render(float oX, float oY, float w, float h, float easedDist){
       fill(col);
       noStroke();
       triangle(verticies[0].x*easedDist+(oX-(w)/2), verticies[0].y*easedDist+(oY-h/2),

@@ -2,9 +2,7 @@ class Tree{
   Branch branches[];
   int index = 0;
   float trunkLen;
-  PGraphics context;
-  Tree(int numLimbs, Branch trunk, PGraphics contextIn){
-    context = contextIn;
+  Tree(int numLimbs, Branch trunk){
     branches = new Branch[numLimbs];
     branches[index] = trunk;
     index ++;
@@ -83,11 +81,11 @@ class Tree{
 
   }
   
-  void render(PGraphics context, float oX, float oY, float w, float h, float easedDist){
+  void render(float oX, float oY, float w, float h, float easedDist){
     for(int i = 0; i < branches.length; i++){
       if(branches[i] != null){
         //branches[i].render(context);
-        branches[i].render(context, oX, oY, w, h, easedDist);
+        branches[i].render(oX, oY, w, h, easedDist);
       }
     }
   }

@@ -21,7 +21,7 @@ PVector focalPoint;
 
 void setup(){
   size(800,800);
-  frameRate(30);
+  //frameRate(30);
   originX = width/2;
   originY = height/2;
   imageMode(CENTER);
@@ -43,15 +43,16 @@ void draw(){
 
 //testtesttest
 void mousePressed(){
-  background(255);
+  //background(255);
   //testTree = new Tree(15, bob);
   //Layer layer = new Layer(16, width, height);
   //Layer layer2 = new Layer(16, int(width*0.8), int(height*0.8));
   //layer2.render();
   //layer.render();
   
-  g = new Game();
-  g.display();
+  //g = new Game();
+  //g.display();
+  println(frameRate);
 }
 
 void mouseMoved(){
@@ -71,7 +72,7 @@ float myAngleBetween (PVector myPVector1, PVector myPVector2) {
 }
 
 
-void drawPolygon(float cX, float cY, float r, int numSides, int weight, PGraphics context){
+void drawPolygon(float cX, float cY, float r, int numSides, float weight){
   float a = TWO_PI / numSides;
   noFill();
   stroke(0);
@@ -98,11 +99,7 @@ class Branch{
     col = colIn;
   }
   
-  public void render(PGraphics context, float oX, float oY, float w, float h, float easedDist){
-//    context.fill(col);
-//    context.noStroke();
-//    context.triangle(verticies[0].x, verticies[0].y,verticies[1].x, verticies[1].y,verticies[2].x, verticies[2].y);
-      
+  public void render(float oX, float oY, float w, float h, float easedDist){
       fill(col);
       noStroke();
       triangle(verticies[0].x*easedDist+(oX-(w)/2), verticies[0].y*easedDist+(oY-h/2),
@@ -116,7 +113,6 @@ class Layer{
   Tree tree;
   int layerWidth, layerHeight;
   int ringWeight = 6;
-  PGraphics pg;
   float distance;
   float easedDistance;
   
@@ -125,7 +121,6 @@ class Layer{
     layerWidth = w;
     layerHeight = h;
     distance = 1;
-    pg = createGraphics(layerWidth, layerHeight);
 
     startVertex = int(random(0, numSides));
     
@@ -135,16 +130,13 @@ class Layer{
     float bX = (layerWidth/2) + (layerWidth/2 - ringWeight/2) * cos((TWO_PI/numSides)*(startVertex-1));
     float bY = (layerHeight/2) + (layerHeight/2 - ringWeight/2) * sin((TWO_PI/numSides)*(startVertex-1));
     
-    pg.beginDraw();
     
     tree = new Tree(11, new Branch(
                 new PVector(aX, aY),
                 new PVector(bX, bY),
                 new PVector(lerp(aX,layerWidth/2,0.7), lerp(aY,layerHeight/2,0.7)),
-                color(random(50,100))),
-                this.pg);
-    drawPolygon(layerWidth/2, layerHeight/2, layerWidth/2 - ringWeight/2, 16, ringWeight,pg);
-    pg.endDraw();
+                color(random(50,100))));
+    drawPolygon(layerWidth/2, layerHeight/2, layerWidth/2 - ringWeight/2, 16, ringWeight);
     
   }
   
@@ -167,8 +159,8 @@ class Layer{
     //rect(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
     
     //image(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
-    tree.render(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), layerWidth*easedDistance, layerHeight*easedDistance, easedDistance);
-    drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY,easedDistance), (layerWidth*easedDistance)/2 - (ringWeight*easedDistance)/2, 16, ringWeight*easedDistance,pg);
+    tree.render(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), layerWidth*easedDistance, layerHeight*easedDistance, easedDistance);
+    drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY,easedDistance), (layerWidth*easedDistance)/2 - (ringWeight*easedDistance)/2, 16, ringWeight*easedDistance);
   }
 
 }
@@ -176,9 +168,7 @@ class Tree{
   Branch branches[];
   int index = 0;
   float trunkLen;
-  PGraphics context;
-  Tree(int numLimbs, Branch trunk, PGraphics contextIn){
-    context = contextIn;
+  Tree(int numLimbs, Branch trunk){
     branches = new Branch[numLimbs];
     branches[index] = trunk;
     index ++;
@@ -257,11 +247,11 @@ class Tree{
 
   }
   
-  void render(PGraphics context, float oX, float oY, float w, float h, float easedDist){
+  void render(float oX, float oY, float w, float h, float easedDist){
     for(int i = 0; i < branches.length; i++){
       if(branches[i] != null){
         //branches[i].render(context);
-        branches[i].render(context, oX, oY, w, h, easedDist);
+        branches[i].render(oX, oY, w, h, easedDist);
       }
     }
   }
