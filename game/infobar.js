@@ -79,6 +79,7 @@ function Infobar() {
     {
         //Upgrade button
 	var root = this.base.rootNode;
+	//Use bind here to pass the context of the function (the rootNode, instead of using the global context)
         this.upgradeb = new Button(posb, "Upgrade!", root.upgradeSel.bind(root)) ;
         this.base.addObject(this.upgradeb);
     }
