@@ -7,7 +7,7 @@
     cloud_bg_move_speed: 2,
     cloud_bg_vx: 0,
 
-    backtree_bg_move_speed: 4,
+    backtree_bg_move_speed: 3,
     backtree_bg_vx: 0,
 
     fronttree_bg_move_speed: 6,
