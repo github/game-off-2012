@@ -3,8 +3,8 @@
  * CSS
  * Sound files
  * Mobile*
+* Fix pause bug
 * Balance.
-* Analytics.
 * Global high score.
 * Slow upgrade.
 * Circle upgrade.
