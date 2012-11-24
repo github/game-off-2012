@@ -24,9 +24,14 @@ function loadMap(level, loadComplete) {
           item = "portal";
           
         if (curr !== ' ' && curr !== 'S' && curr !== 'F' && curr !== 'X' && curr != 'W')
-          Crafty.e("2D, DOM, PushableBox, RemovableBox, ColorableBox")
-          .ColorableBox(item)
-          .attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+          if (curr == curr.toUpperCase())
+            Crafty.e("2D, DOM, RemovableBox, ColorableBox")
+            .ColorableBox(item)
+            .attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+          else
+            Crafty.e("2D, DOM, PushableBox, RemovableBox, ColorableBox")
+            .ColorableBox(item)
+            .attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
 
         if (curr == 'W')
           Crafty.e("2D, DOM, PushableBox, ColorableBox")
