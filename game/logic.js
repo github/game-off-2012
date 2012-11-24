@@ -39,8 +39,6 @@ function Engine(pen, bufferCanvas) {
     this.bugIncrease = 10;
     this.bugDifficulty = 1;
 
-    this.secondTimer = 1;
-
     this.selectedObj = null;
 
     generatePath(this);
@@ -52,6 +50,7 @@ function Engine(pen, bufferCanvas) {
 
     var curFrameCounter = 0;
     var lastFPSUpdate = firstStart;
+    var gameTimeAccumulated = 0;
 
     this.run = function (timestamp) {
         var updateAmount = timestamp - firstStart;
@@ -177,15 +176,6 @@ function Engine(pen, bufferCanvas) {
                     //}
                 }
             }
-        }
-
-        this.secondTimer -= dt;
-
-        if (this.secondTimer < 0) {
-            this.secondTimer = 1;
-
-            this.maxBugs += this.bugIncrease;
-            
         }
 
 		//Make fancy background
