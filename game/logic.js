@@ -39,9 +39,6 @@ function Engine(pen, bufferCanvas) {
     this.secondTimer = 1;
 
     this.selectedObj = null;
-    this.infobar = new Infobar();
-    this.base.addObject(this.infobar);
-    //this.infobar.init();
 
     generatePath(this);
     
@@ -188,13 +185,11 @@ function Engine(pen, bufferCanvas) {
             
         }
 
-	//Make fancy background
-	if (curFrameCounter % 100 == 0) {
-		this.base.addObject(new FancyBackground(this.pen));
-	}
-	
-
-    };   
+		//Make fancy background
+		if (curFrameCounter % 100 == 0) {
+			this.base.addObject(new FancyBackground(this.pen));
+		}	
+	};   
    
 /** Function */
     this.draw = function () {
@@ -223,7 +218,8 @@ function Engine(pen, bufferCanvas) {
     }
 
     this.upgradeSel = function () {
-	    this.selectedObj.tryUpgrade();
+		if(this.selectedObj)
+			this.selectedObj.tryUpgrade();
 	    return;
     }
 
@@ -234,7 +230,7 @@ function Engine(pen, bufferCanvas) {
 	    return this.selectedObj.base.type;
 	   
     }
-
-
-
+	
+	this.infobar = new Infobar();
+    this.base.addObject(this.infobar);
 }

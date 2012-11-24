@@ -88,7 +88,10 @@ function baseObj(holder, zindex) {
         obj.base.parent = this.holder;
         obj.base.setRootNode(this.rootNode);
 
-        addToArray(this, obj, "children", "lengths");        
+        addToArray(this, obj, "children", "lengths");
+
+        if(obj.added)
+            obj.added();
     };
 
     function removeFromArray(baseObj, obj, array, arrayLengths) {
