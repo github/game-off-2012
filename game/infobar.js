@@ -226,6 +226,7 @@ function Infobar() {
         }
     }
 
+    var prefixes = ["", "k", "M", "G", "T", "P", "E", "Z", "Y"];
 	this.draw = function(pen) {
 		pen.fillStyle = "#000";
 		ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
@@ -252,7 +253,15 @@ function Infobar() {
 		var counter = 20;
 		pen.font = "10px courier";
 		for (i in this.tattr) {
-		    txt = i + ": " + Math.round(this.tattr[i]*10)/10;
+            var val = this.tattr[i];
+            var po = 0;
+            while (val > 1000) {
+                val = val/1000;
+                po++;
+            }
+            var pre = prefixes[po];
+            if (pre == undefined) pre = "???";
+		    var txt = i + ": " + Math.round(val*10)/10 + pre;
 		    ink.text(x, y + counter, txt, pen);
 		    counter += 15;
 		}
