@@ -1,4 +1,4 @@
-function Button(pos, txt, onClick) {
+function Button(pos, txt, context, functionName) {
 	this.tPos = pos;
 	this.base = new baseObj(this, 15);
 	var textsize = 14;
@@ -6,7 +6,8 @@ function Button(pos, txt, onClick) {
 	this.hover = false;
 	this.down = false;
 	
-	this.onClick = onClick;
+	this.context = context;
+    this.functionName = functionName;
 
 	this.draw = function(pen) {
 		//Draw box
@@ -34,7 +35,8 @@ function Button(pos, txt, onClick) {
 
 	this.click = function()
 	{
-		this.onClick();
+        if(this.context[this.functionName])
+            this.context[this.functionName]();
 	};
 	
 	this.mouseover = function()
@@ -74,14 +76,12 @@ function Infobar() {
 	//Std centered button position
 	var posb = new temporalPos(((width-bW)/2)-(buttonW/2)+bW,200,buttonW,30,0);
 
-
-	this.added = function()
+    //Upgrade button
+    this.added = function()
     {
-        //Upgrade button
-	var root = this.base.rootNode;
-        this.upgradeb = new Button(posb, "Upgrade!", root.upgradeSel.bind(root)) ;
+        this.upgradeb = new Button(posb, "Upgrade!", this.base.rootNode, "upgradeSel");
         this.base.addObject(this.upgradeb);
-    }
+    };
 	
 	this.updateAttr = function (obj) {
 		this.tattr = obj.attr;

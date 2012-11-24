@@ -31,6 +31,9 @@ function Engine(pen, bufferCanvas) {
 
     this.engine = this; //eng also works fine
 
+    this.infobar = new Infobar();
+    this.base.addObject(this.infobar);
+    
     this.currentBugs = 10;
     this.maxBugs = 150;
     this.bugIncrease = 10;
@@ -230,7 +233,4 @@ function Engine(pen, bufferCanvas) {
 	    return this.selectedObj.base.type;
 	   
     }
-	
-	this.infobar = new Infobar();
-    this.base.addObject(this.infobar);
 }
