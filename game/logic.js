@@ -22,7 +22,7 @@ function Engine(pen, bufferCanvas) {
     this.bufferCanvas = bufferCanvas;
 
     this.id = 0;
-    this.money = 100;
+    this.money = 10000;
     this.health = 100;
 
     this.lastTowerHover = null;
@@ -224,4 +224,17 @@ function Engine(pen, bufferCanvas) {
 	    this.selectedTower.tryUpgrade();
 	    return;
     }
+
+    this.changeSelConn = function(connection) {
+	    this.selectedConnection = connection;
+	    return;
+    }
+
+    this.pushSelConn= function(dir) {
+	    //Push in dir direction
+	    if (dir == "to") {
+		    
+	    }
+    }
+
 }

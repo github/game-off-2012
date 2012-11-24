@@ -20,9 +20,9 @@ function Bug(startPath, difficulty) {
     this.bugRelPathPos = Math.floor(Math.random()* tileSize) +1;
     this.delay = this.bugRelPathPos+1;
     var laserTime = 0.5;
-    var cooldownfull = 2;
+    var cooldownfull = (Math.random() * 2) + 2;
     var cooldown = cooldownfull;
-    var damage = 3;
+    var damage = Math.random() * 3;
 
     this.attack = function () {
 	if (cooldown < 0) {

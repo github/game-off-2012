@@ -14,7 +14,11 @@ function Tower_Range(baseTower) {
     };
 }
 
-function Tower_Laser(xs, ys, xe, ye, duration) {
+function Tower_Laser(xs, ys, xe, ye, duration, buglaser) {
+    if (typeof(buglaser) === "undefined") {
+	    buglaser = false;
+    }
+
     this.xs = xs;
     this.ys = ys;
     this.xe = xe;
@@ -34,7 +38,11 @@ function Tower_Laser(xs, ys, xe, ye, duration) {
             this.base.destroySelf();
             return;
         }
-        color = "rgba(255,0,255," + timeleft/duration + ")";
+	if (buglaser) {
+		color = "rgba(255,0,0," + timeleft/duration + ")";
+	} else {
+		color = "rgba(0,0,255," + timeleft/duration + ")";
+	}
     };
 
     this.draw = function (pen) {
@@ -190,6 +198,9 @@ function Tower(baseTile) {
             this.attack();
             nextFireIn = 1/this.attr.speed;
         }
+	if (this.attr.hp < 0) {
+		this.die();
+	}
     };
 
     this.click = function()
