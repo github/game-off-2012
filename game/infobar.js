@@ -66,7 +66,7 @@ function Button(pos, txt, type, callback) {
 
 function Infobar() {
 	//Make new tPos and offset it
-	this.tPos = new temporalPos(bW, 0, 150, bH/2, 0);
+	this.tPos = new temporalPos(bW, 0, 150, bH * 0.8, 0);
 	this.base = new baseObj(this, 14);
 	this.tattr = null;
 
@@ -91,6 +91,13 @@ function Infobar() {
 		pen.fillStyle = "#000";
 		ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
         
+		pen.fillStyle = "transparent";
+		
+		pen.strokeStyle = "orange";
+        pen.lineWidth = 1;
+		
+		ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
+		
 		pen.fillStyle = "#0f0";
 		pen.font = "15px courier";
         

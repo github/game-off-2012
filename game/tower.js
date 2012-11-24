@@ -101,7 +101,7 @@ function Tower(baseTile) {
         hp:             Math.random() * 100 + 10,
         speed:          Math.random() * 1   + 1,
         mutate:         Math.random() * 50,
-        mutatestrength: Math.random() / 10,
+        mutatestrength: Math.random() * 50,
         upload:         Math.random(),
         download:       Math.random(),
         hitcount:       0,
@@ -156,11 +156,11 @@ function Tower(baseTile) {
         for (at in a) {
             if (invalid(a[at])) this.die();
             if (at == "hitcount") continue;
-            if (at == "mutate") {
+            if (at == "mutate" || at == "mutatestrength") {
                 // Avoid exponetial increase in all tower stats if mutate mutation was calculated just like all the other values.
-                a[at] += (Math.random() - 0.5) * a.mutatestrength;
+                a[at] += (Math.random() - 0.5) * a.mutatestrength / 500;
             } else {
-                a[at] += (Math.random() - 0.5) * a.mutatestrength * a[at];
+                a[at] += (Math.random() - 0.5) * a.mutatestrength / 500 * a[at];
             }
         }
         
