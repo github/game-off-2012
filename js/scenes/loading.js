@@ -10,9 +10,9 @@ Crafty.scene("loading", function () {
     // Creates the sprite for the player
     Crafty.sprite(32, "images/sprite_sheet.png", {
         wall: [0, 13],
-        player: [0, 2],
+        player: [0, 8],
         redBox: [0, 11],
-        blueBox: [0 , 10],
+        blueBox: [0, 10],
         whiteBox: [0, 9],
         purpleBox: [0, 12],
         portal: [0, 12]
