@@ -10,15 +10,15 @@ function loadMap(level, loadComplete) {
       for (var j = 0; j < map[0].length; j++) {
         var curr = map[i][j];
         var item = " ";
-        if (curr == 'B')
+        if (curr == 'B' || curr == 'b')
           item = "blue";
-        else if (curr == 'W')
+        else if (curr == 'W' || curr == 'w')
           item = "white";
-        else if (curr == 'P')
+        else if (curr == 'P' || curr == 'p')
           item = "purple";
-        else if (curr == 'R')
+        else if (curr == 'R' || curr == 'r')
           item = "red";
-        else if (curr == 'X')
+        else if (curr == 'X' || curr == 'x')
           item = "wall";
         else if (curr == 'F')
           item = "portal";
