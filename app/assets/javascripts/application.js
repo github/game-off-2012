@@ -7,6 +7,7 @@
 //= require config
 //= require_directory ./objects
 //= require ./utils
+//= require_directory ./components/mixins
 //= require_directory ./components
 //= require_directory ./scenes
 //= require ./main

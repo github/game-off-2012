@@ -3,7 +3,6 @@
  * CSS
  * Sound files
  * Mobile*
-* Add the controls to the menu screen
 * Balance.
 * Analytics.
 * Global high score.

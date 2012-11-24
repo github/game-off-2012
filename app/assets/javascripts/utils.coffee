@@ -18,3 +18,8 @@ window.Utils =
       x: rad * Math.cos(convertedAngle)
       y: rad * Math.sin(convertedAngle)
     }
+
+String.prototype.format = ->
+  args = arguments
+  return this.replace /{(\d+)}/g, (match, number) ->
+    if typeof args[number] != 'undefined' then args[number] else match
