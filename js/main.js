@@ -85,6 +85,9 @@
     mit.start_btn_clicked = 1;
     mit.game_started = 0;
 
+    mit.Backgrounds.common_bg_speed = 1;
+    mit.Backgrounds.ground_bg_move_speed = 8;
+
     mit.Pappu.drawStatic(ctx);
     mit.ax = 0; mit.ay = 0;
     mit.vx = 0; mit.vy = 0;
@@ -162,6 +165,10 @@
     ui.start_game.html('re-start');
     ui.tweet.html('tweet score');
     ui.fb.html('post on fb');
+
+    // Stop background
+    mit.Backgrounds.common_bg_speed = 0;
+    mit.Backgrounds.ground_bg_move_speed = 0;
 
     mit.game_over = 1;
     mit.start_btn_clicked = 0;

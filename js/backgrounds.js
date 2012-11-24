@@ -3,6 +3,7 @@
   mit.Backgrounds = {
 
     // Speeds and Velocities of Backgrounds
+    common_bg_speed: 1,
 
     cloud_bg_move_speed: 2,
     cloud_bg_vx: 0,
@@ -13,10 +14,10 @@
     fronttree_bg_move_speed: 6,
     fronttree_bg_vx: 0,
 
-    ground_bg_move_speed: 10,
+    ground_bg_move_speed: 8,
     ground_bg_vx: 0,
 
-    grass_bg_move_speed: 10,
+    grass_bg_move_speed: 8,
     grass_bg_vx: 0,
 
     log_x: 40,
@@ -41,7 +42,7 @@
         this.cloud_bg_vx = 0;
       }
 
-      this.cloud_bg_vx -= this.cloud_bg_move_speed;
+      this.cloud_bg_vx -= this.cloud_bg_move_speed * this.common_bg_speed;
     },
 
     drawBackTrees: function(ctx) {
@@ -60,7 +61,7 @@
       }
 
       if (mit.game_started)
-        this.backtree_bg_vx -= this.backtree_bg_move_speed;
+        this.backtree_bg_vx -= this.backtree_bg_move_speed * this.common_bg_speed;
     },
 
     drawFrontTrees: function(ctx) {
@@ -79,7 +80,7 @@
       }
 
       if (mit.game_started)
-        this.fronttree_bg_vx -= this.fronttree_bg_move_speed;
+        this.fronttree_bg_vx -= this.fronttree_bg_move_speed * this.common_bg_speed;
     },
 
     drawGround: function(ctx) {
@@ -98,7 +99,7 @@
       }
 
       if (mit.game_started)
-        this.ground_bg_vx -= this.ground_bg_move_speed;
+        this.ground_bg_vx -= this.ground_bg_move_speed * this.common_bg_speed;
     },
 
     drawGrass: function(ctx) {
@@ -117,7 +118,7 @@
       }
 
       if (mit.game_started)
-        this.grass_bg_vx -= this.grass_bg_move_speed;
+        this.grass_bg_vx -= this.grass_bg_move_speed * this.common_bg_speed;
     },
 
     drawInitLog: function(ctx) {
@@ -130,7 +131,7 @@
       ctx.drawImage(log, this.log_x, this.log_y);
 
       if (mit.game_started) {
-        this.log_x -= this.grass_bg_move_speed;
+        this.log_x -= this.grass_bg_move_speed * this.common_bg_speed;
       }
     },
 
