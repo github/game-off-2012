@@ -11,6 +11,10 @@ body {
     margin: 0px;
     padding: 0px;
 }
+canvas {
+    display: block;
+    margin: auto auto;
+}
 #scripts {
     display: none;
 }
@@ -70,8 +74,11 @@ body {
     var bufferCanvas = canvas.cloneNode();
     var pen = canvas.getContext("2d");
     function initCanvas() {
-        width = window.innerWidth;
-        height = window.innerHeight - 5;
+// Someday...
+//         width = window.innerWidth;
+//         height = window.innerHeight - 5;
+        width = wTiles * tileSize + 150;
+        height = hTiles * tileSize;
         bW = width - 150;
         bH = height;
         canvas.width = width;

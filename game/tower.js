@@ -197,9 +197,9 @@ function Tower(baseTile) {
             this.attack();
             nextFireIn = 1/this.attr.speed;
         }
-	if (this.attr.hp < 0) {
-		this.die();
-	}
+        if (this.attr.hp < 0) {
+            this.die();
+        }
     };
 
     this.click = function()
