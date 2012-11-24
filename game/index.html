@@ -85,8 +85,8 @@ canvas {
         canvas.height = height;
         bufferCanvas.width = width;
         bufferCanvas.height = height;
-        if (eng && eng.resize) {
-            eng.resize({width: width, height: height});
+        if (eng && eng.triggerResize) {
+            eng.triggerResize({width: width, height: height});
         }
     }
     $(document).ready(function () {
@@ -111,35 +111,10 @@ canvas {
         $(window).resize(initCanvas);
         initCanvas();
 
-        function getMousePos(e) {
-            var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canvas.offsetLeft;
-            var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canvas.offsetTop;
-
-            return {x: mX + 0.5, y: mY + 0.5};
-        }
-        
-        $("#myCanvas").mousemove(function (e) {
-            var mouse = getMousePos(e);
-            
-            eng.mX = mouse.x;
-            eng.mY = mouse.y;
-        });
-        $("#myCanvas").mouseout(function () {
-            eng.mX = -1;
-            eng.mY = -1;
-        });
-        $("#myCanvas").mousedown(function (e) {
-            var mouse = getMousePos(e);
-            
-            eng.mdX = mouse.x;
-            eng.mdY = mouse.y;
-        });
-        $("#myCanvas").mouseup(function (e) {
-            var mouse = getMousePos(e);
-            
-            eng.muX = mouse.x;
-            eng.muY = mouse.y;
-        });
+        $("#myCanvas").mousemove(eng.triggerMousemove.bind(eng));
+        $("#myCanvas").mouseout(eng.triggerMouseout.bind(eng));
+        $("#myCanvas").mousedown(eng.triggerMousedown.bind(eng));
+        $("#myCanvas").mouseup(eng.triggerMouseup.bind(eng));
     });
 }());
 </script>
