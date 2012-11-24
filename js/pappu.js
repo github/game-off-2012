@@ -5,8 +5,8 @@
   mit.Pappu = {
     x: 50,
     y: 10,
-    w: 60,
-    h: 60,
+    w: 50,
+    h: 50,
 
     rotate_angle: 0,
 
@@ -35,7 +35,8 @@
 
         // Sprite Frame Change Speed.
         // This will affect the flap speed.
-        mit.Pappu.change_per_frame = 1;
+        // 1.6 is the perfect value!
+        mit.Pappu.change_per_frame = 1.6;
 
         // X Pos
         mit.Pappu.x = 33;
@@ -62,7 +63,7 @@
       // Rotation on Flying
       if (mit.flying_up) {
         if (this.rotate_angle > -15) {
-          this.rotate_angle--;
+          this.rotate_angle -= 2;
         }
 
         ctx.save();
@@ -87,7 +88,7 @@
       }
       else {
         if (this.rotate_angle < 30) {
-          this.rotate_angle++;
+          this.rotate_angle += 2;
         }
 
         ctx.save();
