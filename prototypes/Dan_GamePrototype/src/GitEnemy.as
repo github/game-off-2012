@@ -19,18 +19,31 @@ package
 		[Embed(source = "GitEnemy.png")]
 		private var ImgEnemy:Class;
 		private var tween:TweenMax;
+		private var enteredScreen:Boolean = false;
 		
-		public function GitEnemy() 
+		public function GitEnemy(choice:int = 0) 
 		{
 			//mngr = new DebugPathDisplay();
 			//pathToFollow = new FlxPath();
 			//mngr.add(pathToFollow);
-			
-			super(0, 0, ImgEnemy);
-			tween = new TweenMax(this, 5, {bezier:[{x:0, y:240}, {x:320, y:240}], orientToBezier:[["x", "y", "angle", 0, 0.01]], ease:Linear.easeNone } );
+			var spawnCoords:FlxPoint = CreateTween.GetStartCoords(choice);
+			super(spawnCoords.x, spawnCoords.y, ImgEnemy);
+			tween = CreateTween.GenerateTween(this,choice);
 		}
 		
 		override public function update():void {
+			if (tween.currentProgress == 1) 
+			{
+				this.kill();
+			}
+			if (this.onScreen() && !enteredScreen) 
+			{
+				enteredScreen = true;
+			}
+			else if (!this.onScreen() && enteredScreen) 
+			{
+				this.kill();
+			}
 			//FlxG.log(this.angle);
 			/*if (x > 200) {
 				tween.kill();
