@@ -54,3 +54,88 @@
 
   }
 }
+
+
+.ControlerScheme{
+  font-family: "Courier New", monospace;
+  h3{
+    //border-bottom: 1px solid #ddd;
+    margin: 5px 0;
+  }
+
+  &:hover{
+    .keyboard{
+      color: #999;
+    }
+  }
+  &:active{
+    .keyboard{
+      color: #555;
+    }
+  }
+
+
+  .keyboard{
+    border: 1px solid white;
+
+    border-radius: 3px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+    padding-bottom: 5px;
+
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+
+    &.left{
+      padding-right: 5px;
+      margin:0 20px 0 15px;
+      text-align: left;
+    }
+    &.right{
+      padding-left: 5px;
+      text-align: right;
+
+    }
+  }
+
+  &.awsd{
+    .keyboard{
+      display: inline-block;
+      text-align: center;
+      font-family: "Courier New",monospace;
+    }
+
+    .left{
+      &::before{
+        content: "A"
+      }
+    }
+
+    .right{
+      &::before{
+        content: "D"
+      }
+    }
+  }
+
+  &.hjkl{
+    .keyboard{
+      display: inline-block;
+      text-align: center;
+      font-family: "Courier New",monospace;
+    }
+
+    .left{
+      &::before{
+        content: "H"
+      }
+    }
+
+    .right{
+      &::before{
+        content: "L"
+      }
+    }
+  }
+}

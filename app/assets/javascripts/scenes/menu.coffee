@@ -27,6 +27,8 @@ Crafty.scene "menu", ->
   Crafty.e("2D, DOM, Text, Title").text("Release Cycles").attr(x: -160, y: -100, w: 320, h: 100)
   loading = Crafty.e("2D, DOM, Text").text("Loading...").attr(x: -30, y: 50)
 
+
+  Crafty.e("Controls").attr(x: -50, y: 120)
   Crafty.e("Mute")
 
   #hack to fix loading of wavs
