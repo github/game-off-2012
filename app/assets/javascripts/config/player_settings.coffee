@@ -3,5 +3,5 @@ Config.settings =
   musicVolume: 0.3
   sfxVolume: 0.5
   narratorVolume: 0.5
-  firstTrack: true
+  heardFirstTrack: false
   score: 0

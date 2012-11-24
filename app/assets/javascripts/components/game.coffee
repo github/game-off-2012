@@ -7,10 +7,12 @@ Crafty.c "Game",
 
   init: ->
     @requires("Delay")
+    @attr(tries: 0)
     @reset()
 
   start: ->
     @attr(stopped: false)
+    @tries += 1
     @tick()
     @rollActionIn(Config.obstacles.intervals.atStart)
     @

@@ -1,10 +1,14 @@
 class window.Music
+
+  @heardFirstTrack: ->
+    Settings.get("heardFirstTrack") == true
+
   constructor: ->
     @firstTrack()
 
   firstTrack: ->
-    if Settings.get("firstTrack")
-      Settings.set("firstTrack", false)
+    if not Music.heardFirstTrack()
+      Settings.set("heardFirstTrack", true)
       @track = Config.sounds.music[0]
     else
       @randomTrack()

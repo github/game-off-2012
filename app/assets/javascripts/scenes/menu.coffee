@@ -36,7 +36,10 @@ Crafty.scene "menu", ->
   Crafty.audio.add("crash.wav", "sounds/crash.wav")
   mixpanel.track("view menu")
   started_loading = Date.now()
-  Crafty.load(_.flatten(Config.sounds), =>
-    mixpanel.track("finished loading", load_time: Date.now() - started_loading)
+  assets = if Music.heardFirstTrack() then Config.allAssets else Config.initialAssets
+  Crafty.load(assets, =>
+    mixpanel.track("finished loading", load_time: Date.now() - started_loading, smallAssets: !Music.heardFirstTrack())
     loaded()
   )
+  if assets == Config.initialAssets
+    Crafty.load(Config.seconderyAssets)

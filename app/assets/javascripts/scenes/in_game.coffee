@@ -42,7 +42,7 @@ Crafty.scene("in_game", ->
     ready_go  ->
       game.start()
       player.enableControl()
-    mixpanel.track("restart game")
+    mixpanel.track("restart game", tries: game.tries)
 
   gameover = =>
     center.hide()

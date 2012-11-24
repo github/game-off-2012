@@ -23,3 +23,7 @@ Config.sounds =
       "sounds/crash.wav"
       "sounds/faster.wav"
     ]
+
+Config.allAssets = _.flatten(Config.sounds)
+Config.seconderyAssets = _.rest(Config.sounds.music)
+Config.initialAssets = _.difference(Config.allAssets, Config.seconderyAssets)

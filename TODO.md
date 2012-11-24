@@ -9,6 +9,3 @@
 * Slow upgrade.
 * Circle upgrade.
 * Mutations (change direction, shake, zoom).
-
-
-
