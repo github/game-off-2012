@@ -41,6 +41,7 @@ function Engine(pen, bufferCanvas) {
     this.selectedObj = null;
     this.infobar = new Infobar();
     this.base.addObject(this.infobar);
+    //this.infobar.init();
 
     generatePath(this);
     

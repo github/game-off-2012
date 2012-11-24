@@ -76,9 +76,14 @@ function Infobar() {
 	//Std centered button position
 	var posb = new temporalPos(((width-bW)/2)-(buttonW/2)+bW,200,buttonW,30,0);
 
-	//Upgrade button
-	this.upgradeb = new Button(posb, "Upgrade!", "Tower", upgradeTowerButtonClick) ;
-	this.base.addObject(this.upgradeb);
+	
+	//this.init = function () {
+		//Upgrade button
+		//this.upgradeb = new Button(posb, "Upgrade!", "Tower", function() {alert("Hello");}) ;
+		this.upgradeb = new Button(posb, "Upgrade!", "Tower", this.base.rootNode.upgradeSel()) ;
+		this.base.addObject(this.upgradeb);
+	//}
+
 
 
 	this.updateAttr = function (obj) {
@@ -120,10 +125,11 @@ function Infobar() {
 	}
 
 	this.update = function (dt) {
+		/*
 		if (this.upgradeb.activated == true) {
 			this.base.parent.upgradeSel();
 			this.upgradeb.reset();
-		}
+		}*/
 		return;
 	}
 
