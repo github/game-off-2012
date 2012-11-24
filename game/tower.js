@@ -14,7 +14,7 @@ function Tower_Range(baseTower) {
     };
 }
 
-function Tower_Laser(xs, ys, xe, ye, duration) {
+function Tower_Laser(xs, ys, xe, ye, duration, buglaser) {
     this.xs = xs;
     this.ys = ys;
     this.xe = xe;
@@ -25,8 +25,11 @@ function Tower_Laser(xs, ys, xe, ye, duration) {
 
     var timeleft = duration;
     var color = "rgba(255,0,255,1)";
-//     this.sound = new Audio("snd/Laser_Shoot.wav");
-//     this.sound.play();
+    this.sound = new Audio("snd/Laser_Shoot.wav");
+    this.sound.play();
+    if (typeof(buglaser) === "undefined") {
+	    buglaser = false;
+    }
 
     this.update = function (dt) {
         timeleft -= dt;
@@ -35,6 +38,9 @@ function Tower_Laser(xs, ys, xe, ye, duration) {
             return;
         }
         color = "rgba(255,0,255," + timeleft/duration + ")";
+	if (buglaser) {
+		color = "rgba(255,0,0," + timeleft/duration + ")";
+	}
     };
 
     this.draw = function (pen) {
@@ -190,6 +196,9 @@ function Tower(baseTile) {
             this.attack();
             nextFireIn = 1/this.attr.speed;
         }
+	if (this.attr.hp < 0) {
+		this.die();
+	}
     };
 
     this.click = function()

@@ -19,9 +19,30 @@ function Bug(startPath, difficulty) {
 
     this.bugRelPathPos = Math.floor(Math.random()* tileSize) +1;
     this.delay = this.bugRelPathPos+1;
+    var laserTime = 0.5;
+    var cooldownfull = 2;
+    var cooldown = cooldownfull;
+    var damage = 3;
+
+    this.attack = function () {
+	if (cooldown < 0) {
+		var target = findClosest(eng, "Tower", this.tPos.getCenter(), 100);        
+		if (!target) {
+			return;
+		}
+		target.attr.hp -= damage;
+		
+		var cent1 = this.tPos.getCenter();
+		var cent2 = target.tPos.getCenter();
+
+		this.base.addObject(new Tower_Laser(cent1.x, cent1.y, cent2.x, cent2.y, laserTime, true));
+		cooldown = cooldownfull;
+	}
+    }
 
     this.update = function (dt) {
         this.tPos.update(dt);
+	cooldown -= dt;
 
         var cur = this.curPath;
         var next = this.curPath.nextPath;
@@ -54,6 +75,8 @@ function Bug(startPath, difficulty) {
             eng.money += this.value;
         }                        
         this.color = "#" + hexPair(Math.floor(255 -((this.hp / this.maxHP) * 255))) +  "0000";
+
+	this.attack();
     };
 
     this.draw = function (pen) {
