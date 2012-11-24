@@ -101,9 +101,9 @@ function Engine(pen, bufferCanvas) {
         
         for (var key in allUnderMouse)
             if(allUnderMouse[key] !== topMost)
-                allUnderMouse[key].base.raiseEvent(eventName, { x: mX, y: mY, topMost: false });
+                allUnderMouse[key].base.call(eventName, { x: mX, y: mY, topMost: false });
 
-        topMost.base.raiseEvent(eventName, { x: mX, y: mY, topMost: true });
+        topMost.base.call(eventName, { x: mX, y: mY, topMost: true });
 
         return allUnderMouse;
     }
@@ -142,7 +142,7 @@ function Engine(pen, bufferCanvas) {
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
                     if (vecToRect({ x: this.muX, y: this.muY }, this.prevMouseDown[i].tPos).magSq() == 0) {
-                        this.prevMouseDown[i].base.raiseEvent("click", { x: this.muX, y: this.muY });
+                        this.prevMouseDown[i].base.call("click", { x: this.muX, y: this.muY });
                     }
                 }
             }
@@ -161,7 +161,7 @@ function Engine(pen, bufferCanvas) {
             if (this.prevMouseOver && this.prevMouseOver.length > 0) {
                 for (var i = 0; i < this.prevMouseOver.length; i++) {
                     if (vecToRect({ x: mX, y: mY }, this.prevMouseOver[i].tPos).magSq() != 0) {
-                        this.prevMouseOver[i].base.raiseEvent("mouseout", { x: mX, y: mY });
+                        this.prevMouseOver[i].base.call("mouseout", { x: mX, y: mY });
                     }
                 }
             }
@@ -170,7 +170,7 @@ function Engine(pen, bufferCanvas) {
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
                     //if (vecToRect({ x: this.mX, y: this.mY }, this.prevMouseDown[i].tPos).magSq() == 0) {
-                        this.prevMouseDown[i].base.raiseEvent("dragged", { x: this.mX, y: this.mY });
+                        this.prevMouseDown[i].base.call("dragged", { x: this.mX, y: this.mY });
                     //}
                 }
             }
