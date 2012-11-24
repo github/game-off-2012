@@ -38,7 +38,7 @@ function Engine(pen, bufferCanvas) {
 
     this.secondTimer = 1;
 
-    this.selectedTower = null;
+    this.selectedObj = null;
     this.infobar = new Infobar();
     this.base.addObject(this.infobar);
 
@@ -206,28 +206,27 @@ function Engine(pen, bufferCanvas) {
         ink.text(x, y + 60, "Bugs: " + eng.base.lengths.Bug, pen);  
     };
 
-    this.changeSelTower = function(tower) {
+    this.changeSel = function(obj) {
+
 	    //Change the selected tower
-	    this.selectedTower = tower;
-	    this.infobar.updateSelectedTower(tower);
+	    this.selectedObj = obj;
+	    this.infobar.updateAttr(obj);
 	    return;
     }
 
-    this.upgradeSelTower = function () {
-	    this.selectedTower.tryUpgrade();
+    this.upgradeSel = function () {
+	    this.selectedObj.tryUpgrade();
 	    return;
     }
 
-    this.changeSelConn = function(connection) {
-	    this.selectedConnection = connection;
-	    return;
+    this.getSelType = function () {
+	    if (!this.selectedObj) {
+		    return null;
+	    } 
+	    return this.selectedObj.base.type;
+	   
     }
 
-    this.pushSelConn= function(dir) {
-	    //Push in dir direction
-	    if (dir == "to") {
-		    
-	    }
-    }
+
 
 }

@@ -1,4 +1,5 @@
-function Button(pos, txt) {
+function Button(pos, txt, type, callback) {
+	//Type indicates to draw button when selected object is of type type
 	this.tPos = pos;
 	this.base = new baseObj(this, 15);
 	var textsize = 14;
@@ -7,6 +8,10 @@ function Button(pos, txt) {
 	this.activated = false;
 
 	this.draw = function(pen) {
+		if (!this.drawMe) {
+			return;
+		}
+
 		//Draw box
 		if (this.clicked == true) {
 			pen.fillStyle = "#eeeeee";
@@ -27,17 +32,25 @@ function Button(pos, txt) {
 	}
 
 	this.update = function () {
+		if (this.base.rootNode.getSelType() != type) {
+			this.drawMe = false;
+		} else {
+			this.drawMe = true;
+		}
+
 		return;
 	}
 
 	this.reset = function() {
-		this.activated = false;
+		//this.activated = false;
 		return;
 	}
 
 	this.mousedown = function(e) {
 		this.clicked = true;
-		this.activated = true;
+		//this.activated = true;
+		callback();
+
 	}
 
 	this.mouseup = function (e) {
@@ -58,13 +71,18 @@ function Infobar() {
 	this.tattr = null;
 
 	var buttonW = 100;
-	var pos = new temporalPos(((width-bW)/2)-(buttonW/2)+bW,200,buttonW,30,0);
-	this.upgradeb = new Button(pos, "Upgrade!") ;
+
+
+	//Std centered button position
+	var posb = new temporalPos(((width-bW)/2)-(buttonW/2)+bW,200,buttonW,30,0);
+
+	//Upgrade button
+	this.upgradeb = new Button(posb, "Upgrade!", "Tower", upgradeTowerButtonClick) ;
 	this.base.addObject(this.upgradeb);
 
 
-	this.updateSelectedTower = function (tower) {
-		this.tattr = tower.attr;
+	this.updateAttr = function (obj) {
+		this.tattr = obj.attr;
 		return;
 	}
 		
@@ -83,27 +101,27 @@ function Infobar() {
 		pen.fillStyle = "#0f0";
 		pen.font = "15px courier";
         
-        var x = this.tPos.x + 10;
-        var y = this.tPos.y + 15;
-        
-        if (this.tattr == null) {
-            ink.text(x, y, "[no selction]", pen);
-            return;
-        }
-        
-        ink.text(x, y, "Tower", pen);
-        var counter = 20;
-        pen.font = "10px courier";
-        for (i in this.tattr) {
-            txt = i + ": " + Math.round(this.tattr[i]*10)/10;
-            ink.text(x, y + counter, txt, pen);
-            counter += 15;
-        }
+		var x = this.tPos.x + 10;
+		var y = this.tPos.y + 15;
+		
+		if (this.tattr == null) {
+		    ink.text(x, y, "[no selction]", pen);
+		    return;
+		}
+		
+		ink.text(x, y, "Tower", pen);
+		var counter = 20;
+		pen.font = "10px courier";
+		for (i in this.tattr) {
+		    txt = i + ": " + Math.round(this.tattr[i]*10)/10;
+		    ink.text(x, y + counter, txt, pen);
+		    counter += 15;
+		}
 	}
 
 	this.update = function (dt) {
 		if (this.upgradeb.activated == true) {
-			this.base.parent.upgradeSelTower();
+			this.base.parent.upgradeSel();
 			this.upgradeb.reset();
 		}
 		return;

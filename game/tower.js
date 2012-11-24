@@ -213,7 +213,7 @@ function Tower(baseTile) {
         if (!added) {
             this.base.addObject(towerRange);
             //this.base.addObject(tooltip);
-            this.base.rootNode.changeSelTower(this);
+            this.base.rootNode.changeSel(this);
             added = true;
         }
     };
@@ -253,5 +253,12 @@ function Tower(baseTile) {
     };*/
     // Yes, this is supposed to be here.
     this.mutate();
+}
+
+function upgradeTowerButtonClick(base) {
+	//this.base = new baseObj(this, 0);
+
+	base.rootNode.upgradeSel();
+	return;
 }
 
