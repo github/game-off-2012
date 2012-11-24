@@ -103,30 +103,34 @@ canvas {
         eng = new Engine(pen, bufferCanvas); //this.base.rootNode.holder will also get eng... but... yeah...
         window.reqAnim(eng.run.bind(eng));
 
-        $("#myCanvas").mousemove(function (e) {
+        function getMousePos(e) {
             var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canvas.offsetLeft;
             var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canvas.offsetTop;
 
-            eng.mX = mX;
-            eng.mY = mY;
+            return {x: mX + 0.5, y: mY + 0.5};
+        }
+        
+        $("#myCanvas").mousemove(function (e) {
+            var mouse = getMousePos(e);
+            
+            eng.mX = mouse.x;
+            eng.mY = mouse.y;
         });
         $("#myCanvas").mouseout(function () {
             eng.mX = -1;
             eng.mY = -1;
         });
         $("#myCanvas").mousedown(function (e) {
-            var cX = defined(e.offsetX) ? e.offsetX : e.pageX - canvas.offsetLeft;
-            var cY = defined(e.offsetY) ? e.offsetY : e.pageY - canvas.offsetTop;
-
-            eng.mdX = cX;
-            eng.mdY = cY;
+            var mouse = getMousePos(e);
+            
+            eng.mdX = mouse.x;
+            eng.mdY = mouse.y;
         });
         $("#myCanvas").mouseup(function (e) {
-            var cX = defined(e.offsetX) ? e.offsetX : e.pageX - canvas.offsetLeft;
-            var cY = defined(e.offsetY) ? e.offsetY : e.pageY - canvas.offsetTop;
-
-            eng.muX = cX;
-            eng.muY = cY;
+            var mouse = getMousePos(e);
+            
+            eng.muX = mouse.x;
+            eng.muY = mouse.y;
         });
     });
 }());
