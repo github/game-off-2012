@@ -5,10 +5,10 @@
   mit.Pappu = {
     x: 50,
     y: 10,
-    w: 50,
-    h: 50,
+    w: 60,
+    h: 60,
 
-    rotate_angle: 15,
+    rotate_angle: 0,
 
     sprite: {},
 
@@ -35,7 +35,7 @@
 
         // Sprite Frame Change Speed.
         // This will affect the flap speed.
-        mit.Pappu.change_per_frame = 5;
+        mit.Pappu.change_per_frame = 1;
 
         // X Pos
         mit.Pappu.x = 33;
@@ -48,16 +48,20 @@
       if (utils.isInt(cur_sprite_frame)) {
         var source_y = cur_sprite_frame * 60;
       }
+
       else {
-        var old_sprite_frame = parseInt(this.fly_frame_count/this.change_per_frame)%this.change_per_frame;
+        //var old_sprite_frame = parseInt(this.fly_frame_count/this.change_per_frame)%this.change_per_frame;
+
+        // Ultra smooth animations
+        var old_sprite_frame = parseInt(this.fly_frame_count/this.change_per_frame)
         var source_y = old_sprite_frame * 60;
       }
-
+      
       // console.log(cur_sprite_frame, source_x);
 
       // Rotation on Flying
       if (mit.flying_up) {
-        if (this.rotate_angle > 15) {
+        if (this.rotate_angle > -15) {
           this.rotate_angle--;
         }
 
@@ -82,7 +86,7 @@
         ctx.restore();
       }
       else {
-        if (this.rotate_angle < 35) {
+        if (this.rotate_angle < 30) {
           this.rotate_angle++;
         }
 
