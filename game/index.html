@@ -11,16 +11,14 @@ body {
     margin: 0px;
     padding: 0px;
 }
-canvas {
-    margin-left : auto;
-    margin-right : auto;
-    display : block;
+#scripts {
+    display: none;
 }
 </style>
 </head>
 <body>
 <canvas id="myCanvas"></canvas>
-
+<div id="scripts">
 <script src="lib/jquery.min.js"></script><!-- //ajax.googleapis.com/ajax/libs/jquery/1.8.2/ -->
 
 <!-- MUST BE FIRST OR ELSE THINGS WILL CRASH! -->
@@ -58,17 +56,32 @@ canvas {
     var wTiles = 20;
     var hTiles = 16;
     var tileSize = 32;
-    var width = wTiles * tileSize + 150;
-    var height = hTiles * tileSize;
-    var bW = width - 150;
-    var bH = height;
-
-    var gameTimeAccumulated = 0;
+    // UUUUGUGGGGGGGGGGGGGGGGGGGGGHTH
+    // I just had an anurismmmmmm
+    // somMOEbonDDDY canUELLL a NODCOTER!!
+    var width;
+    var height;
+    var bW;
+    var bH;
     var eng;
 
+(function() {
+    var canvas = document.getElementById("myCanvas");
+    var bufferCanvas = canvas.cloneNode();
+    var pen = canvas.getContext("2d");
+    function initCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight - 5;
+        bW = width - 150;
+        bH = height;
+        canvas.width = width;
+        canvas.height = height;
+        bufferCanvas.width = width;
+        bufferCanvas.height = height;
+    }
+    $(window).resize(initCanvas);
     $(document).ready(function () {
-        $("#myCanvas").attr("width", width);
-        $("#myCanvas").attr("height", height);
+        initCanvas();
         window.reqAnim = (function () {
             return window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
@@ -80,15 +93,12 @@ canvas {
             };
         })();
 
-        var canvas = document.getElementById("myCanvas");
-        var bufferCanvas = canvas.cloneNode();
-        var pen = canvas.getContext("2d");
         eng = new Engine(pen, bufferCanvas); //this.base.rootNode.holder will also get eng... but... yeah...
         window.reqAnim(eng.run.bind(eng));
 
         $("#myCanvas").mousemove(function (e) {
-            var mX = defined(e.offsetX) ? e.offsetX : e.pageX - document.getElementById("myCanvas").offsetLeft;
-            var mY = defined(e.offsetY) ? e.offsetY : e.pageY - document.getElementById("myCanvas").offsetTop;
+            var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canvas.offsetLeft;
+            var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canvas.offsetTop;
 
             eng.mX = mX;
             eng.mY = mY;
@@ -98,21 +108,22 @@ canvas {
             eng.mY = -1;
         });
         $("#myCanvas").mousedown(function (e) {
-            var cX = defined(e.offsetX) ? e.offsetX : e.pageX - document.getElementById("myCanvas").offsetLeft;
-            var cY = defined(e.offsetY) ? e.offsetY : e.pageY - document.getElementById("myCanvas").offsetTop;
+            var cX = defined(e.offsetX) ? e.offsetX : e.pageX - canvas.offsetLeft;
+            var cY = defined(e.offsetY) ? e.offsetY : e.pageY - canvas.offsetTop;
 
             eng.mdX = cX;
             eng.mdY = cY;
         });
         $("#myCanvas").mouseup(function (e) {
-            var cX = defined(e.offsetX) ? e.offsetX : e.pageX - document.getElementById("myCanvas").offsetLeft;
-            var cY = defined(e.offsetY) ? e.offsetY : e.pageY - document.getElementById("myCanvas").offsetTop;
+            var cX = defined(e.offsetX) ? e.offsetX : e.pageX - canvas.offsetLeft;
+            var cY = defined(e.offsetY) ? e.offsetY : e.pageY - canvas.offsetTop;
 
             eng.muX = cX;
             eng.muY = cY;
         });
     });
+}());
 </script>
-
+</div>
 </body>
 </html>
