@@ -89,6 +89,11 @@ function Infobar() {
 		return;
 	}
 		
+        
+    this.mouseout = function()
+    {
+        var breakHere = 2;
+    }
 
 	this.draw = function(pen) {
 		pen.fillStyle = "#000";
