@@ -155,7 +155,7 @@ function Engine(pen, bufferCanvas) {
 
         this.base.removeAllType("Tower_Range");
 
-        if (this.mY > 0 && this.mY < bH && this.mX > 0 && this.mX < bW) {
+        if (this.mY > 0 && this.mX > 0) {
             var curMouseOver = throwMouseEventAt(mX, mY, "mouseover", this);
             //Can actually find mouseout more efficiently... as we have previous and current mouseover...            
             if (this.prevMouseOver && this.prevMouseOver.length > 0) {

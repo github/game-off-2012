@@ -253,8 +253,5 @@ function baseObj(holder, zindex) {
         //if (holder.draw)
           //  holder.draw(pen);
     };
-
-
-
-
+    
 }
