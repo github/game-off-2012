@@ -180,13 +180,6 @@ function Engine(pen, bufferCanvas) {
 
         this.secondTimer -= dt;
 
-        if (this.secondTimer < 0) {
-            this.secondTimer = 1;
-
-            this.maxBugs += this.bugIncrease;
-            
-        }
-
 	//Make fancy background
 	if (curFrameCounter % 100 == 0) {
 		this.base.addObject(new FancyBackground(this.pen));
