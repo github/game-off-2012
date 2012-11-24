@@ -43,23 +43,20 @@ function Engine(pen, bufferCanvas) {
 
     generatePath(this);
     
-    //https://developer.mozilla.org/en-US/docs/DOM/window.requestAnimationFrame
-    var firstStart = Date.now();
 
     this.lastFPS = 60;
 
+
+    //https://developer.mozilla.org/en-US/docs/DOM/window.requestAnimationFrame
+    var firstStart = Date.now();
     var curFrameCounter = 0;
     var lastFPSUpdate = firstStart;
     var gameTimeAccumulated = 0;
-
     this.run = function (timestamp) {
         var updateAmount = timestamp - firstStart;
         firstStart = timestamp;
 
-        if (!timestamp)
-            updateAmount = 1000 / 30;
-
-        updateAmount = Math.min(updateAmount, 100); //Cap it at 1000
+        updateAmount = Math.min(updateAmount, 100);
 
         curFrameCounter++;
         if (lastFPSUpdate + 1000 < timestamp) {
@@ -71,7 +68,6 @@ function Engine(pen, bufferCanvas) {
         gameTimeAccumulated += updateAmount;
 
         var newObjects = this.base.update(updateAmount / 1000);
-        //var newObjects = this.base.raiseEvent("update", updateAmount / 1000);
 
         for (var key in newObjects)
             this.base.addObject(newObjects[key]);
