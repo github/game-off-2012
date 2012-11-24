@@ -220,4 +220,17 @@ function Engine(pen) {
 	    this.selectedTower.tryUpgrade();
 	    return;
     }
+
+    this.changeSelConn = function(connection) {
+	    this.selectedConnection = connection;
+	    return;
+    }
+
+    this.pushSelConn= function(dir) {
+	    //Push in dir direction
+	    if (dir == "to") {
+		    
+	    }
+    }
+
 }
