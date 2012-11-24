@@ -213,7 +213,7 @@ function Tower(baseTile) {
         if (!added) {
             this.base.addObject(towerRange);
             //this.base.addObject(tooltip);
-            this.base.rootNode.changeSelTower(this);
+            this.base.rootNode.changeSel(this);
             added = true;
         }
     };

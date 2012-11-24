@@ -38,9 +38,7 @@ function Engine(pen, bufferCanvas) {
 
     this.secondTimer = 1;
 
-    this.selectedTower = null;
-    this.infobar = new Infobar();
-    this.base.addObject(this.infobar);
+    this.selectedObj = null;
 
     generatePath(this);
     
@@ -86,6 +84,7 @@ function Engine(pen, bufferCanvas) {
         var allUnderMouse = [];
 
         for (var type in eng.base.allChildren) {
+			if(type == "Button")
             mergeToArray(findAllWithin(eng, type, { x: mX, y: mY }, 0), allUnderMouse);
         }
 
@@ -187,13 +186,11 @@ function Engine(pen, bufferCanvas) {
             
         }
 
-	//Make fancy background
-	if (curFrameCounter % 100 == 0) {
-		this.base.addObject(new FancyBackground(this.pen));
-	}
-	
-
-    };   
+		//Make fancy background
+		if (curFrameCounter % 100 == 0) {
+			this.base.addObject(new FancyBackground(this.pen));
+		}	
+	};   
    
 /** Function */
     this.draw = function () {
@@ -213,28 +210,28 @@ function Engine(pen, bufferCanvas) {
         ink.text(x, y + 60, "Bugs: " + eng.base.lengths.Bug, pen);  
     };
 
-    this.changeSelTower = function(tower) {
+    this.changeSel = function(obj) {
+
 	    //Change the selected tower
-	    this.selectedTower = tower;
-	    this.infobar.updateSelectedTower(tower);
+	    this.selectedObj = obj;
+	    this.infobar.updateAttr(obj);
 	    return;
     }
 
-    this.upgradeSelTower = function () {
-	    this.selectedTower.tryUpgrade();
+    this.upgradeSel = function () {
+		if(this.selectedObj)
+			this.selectedObj.tryUpgrade();
 	    return;
     }
 
-    this.changeSelConn = function(connection) {
-	    this.selectedConnection = connection;
-	    return;
+    this.getSelType = function () {
+	    if (!this.selectedObj) {
+		    return null;
+	    } 
+	    return this.selectedObj.base.type;
+	   
     }
-
-    this.pushSelConn= function(dir) {
-	    //Push in dir direction
-	    if (dir == "to") {
-		    
-	    }
-    }
-
+	
+	this.infobar = new Infobar();
+    this.base.addObject(this.infobar);
 }
