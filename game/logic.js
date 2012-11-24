@@ -47,6 +47,7 @@ function Engine(pen, bufferCanvas) {
 
     var curFrameCounter = 0;
     var lastFPSUpdate = firstStart;
+    var gameTimeAccumulated = 0;
 
     this.run = function (timestamp) {
         var updateAmount = timestamp - firstStart;
