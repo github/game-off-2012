@@ -36,8 +36,6 @@ function Engine(pen, bufferCanvas) {
     this.bugIncrease = 10;
     this.bugDifficulty = 1;
 
-    this.secondTimer = 1;
-
     this.selectedObj = null;
 
     generatePath(this);
@@ -175,15 +173,6 @@ function Engine(pen, bufferCanvas) {
                     //}
                 }
             }
-        }
-
-        this.secondTimer -= dt;
-
-        if (this.secondTimer < 0) {
-            this.secondTimer = 1;
-
-            this.maxBugs += this.bugIncrease;
-            
         }
 
 		//Make fancy background
