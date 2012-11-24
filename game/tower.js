@@ -263,10 +263,3 @@ function Tower(baseTile) {
     this.mutate();
 }
 
-function upgradeTowerButtonClick(base) {
-	//this.base = new baseObj(this, 0);
-
-	base.rootNode.upgradeSel();
-	return;
-}
-

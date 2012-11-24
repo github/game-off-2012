@@ -1,22 +1,23 @@
-function Button(pos, txt, type, callback) {
-	//Type indicates to draw button when selected object is of type type
+function Button(pos, txt, onClick) {
 	this.tPos = pos;
 	this.base = new baseObj(this, 15);
 	var textsize = 14;
 
-	this.clicked = false;
-	this.activated = false;
+	this.hover = false;
+	this.down = false;
+	
+	this.onClick = onClick;
 
 	this.draw = function(pen) {
-		if (!this.drawMe) {
-			return;
-		}
-
 		//Draw box
-		if (this.clicked == true) {
-			pen.fillStyle = "#eeeeee";
-		} else {
-			pen.fillStyle = "#cccccc";
+		if (this.down) {
+			pen.fillStyle = "white";
+		} 
+		else if(this.hover){
+			pen.fillStyle = "gray";
+		} 
+		else {
+			pen.fillStyle = "dimgray";
 		}
 		ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
 		
@@ -31,37 +32,34 @@ function Button(pos, txt, type, callback) {
 		return;
 	}
 
-	this.update = function () {
-		if (this.base.rootNode.getSelType() != type) {
-			this.drawMe = false;
-		} else {
-			this.drawMe = true;
-		}
-
-		return;
-	}
-
-	this.reset = function() {
-		//this.activated = false;
-		return;
-	}
-
-	this.mousedown = function(e) {
-		this.clicked = true;
-		//this.activated = true;
-		callback();
-
-	}
-
-	this.mouseup = function (e) {
-		this.clicked = false;
-	}
-
-
-	this.mouseout = function (e) {
-		return;
-	}
-
+	this.click = function()
+	{
+		this.onClick();
+	};
+	
+	this.mouseover = function()
+	{
+        //console.log("mouseover");
+		this.hover = true;
+	};
+	
+	this.mouseout = function()
+	{
+        //console.log("out");
+		this.hover = false;
+	};
+	
+	this.mousedown = function()
+	{
+        //console.log("down");
+		this.down = true;
+	};
+	
+	this.mouseup = function()
+	{
+        //console.log("up");
+		this.down = false;
+	};
 }
 
 function Infobar() {
@@ -76,11 +74,15 @@ function Infobar() {
 	//Std centered button position
 	var posb = new temporalPos(((width-bW)/2)-(buttonW/2)+bW,200,buttonW,30,0);
 
-	//Upgrade button
-	this.upgradeb = new Button(posb, "Upgrade!", "Tower", upgradeTowerButtonClick) ;
-	this.base.addObject(this.upgradeb);
 
-
+	this.added = function()
+    {
+        //Upgrade button
+	var root = this.base.rootNode;
+        this.upgradeb = new Button(posb, "Upgrade!", root.upgradeSel.bind(root)) ;
+        this.base.addObject(this.upgradeb);
+    }
+	
 	this.updateAttr = function (obj) {
 		this.tattr = obj.attr;
 		return;
@@ -118,13 +120,4 @@ function Infobar() {
 		    counter += 15;
 		}
 	}
-
-	this.update = function (dt) {
-		if (this.upgradeb.activated == true) {
-			this.base.parent.upgradeSel();
-			this.upgradeb.reset();
-		}
-		return;
-	}
-
 }

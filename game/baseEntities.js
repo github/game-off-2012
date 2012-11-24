@@ -88,7 +88,10 @@ function baseObj(holder, zindex) {
         obj.base.parent = this.holder;
         obj.base.setRootNode(this.rootNode);
 
-        addToArray(this, obj, "children", "lengths");        
+        addToArray(this, obj, "children", "lengths");
+
+        if(obj.added)
+            obj.added();
     };
 
     function removeFromArray(baseObj, obj, array, arrayLengths) {
@@ -181,6 +184,20 @@ function baseObj(holder, zindex) {
 
         return returnedValues;
     };
+    
+    this.call = function(name, arguments)
+    {
+        var returnedValues = [];
+
+        //Well if it exists it is clearly a function :D
+        //(read http://stackoverflow.com/questions/5999998/how-can-i-check-if-a-javascript-variable-is-function-type
+        //before fixing this in order to implement the most efficient solution to checking if something is a function
+        //for different browsers).
+        if (holder[name])
+            mergeToArray(holder[name](arguments), returnedValues);
+
+        return returnedValues;
+    }
 
     this.update = function (dt) {
         var returnedValues = [];
