@@ -1,39 +1,63 @@
 window.game = {};
 game.events = _.clone(Backbone.Events);
-var activeView;
+game.audio = {
+  effects : {
+    click : $('audio.click')[0],
+    whip  : $('audio.whip')[0]
+  }
+};
+
+game.mute = true;
+
+game.refreshView = function(view) {
+  $('.container').html(game.activeView.el);
+};
 
 game.events.on("start", function() {
-  console.log('insert song select view');
-  var song = new SongView({
-    model: songs.first()
+  game.activeView.destroy();
+  game.activeView = new SongsView({
+    collection: songs
   });
-  $('.container').html(song.el);
+  game.refreshView();
 });
 
 game.events.on("howto", function() {
-  console.log('insert how to play view');
+  game.activeView.destroy();
+  game.activeView = new HowtoView();
+  game.refreshView();
 });
 
 game.events.on("highscores", function() {
-  console.log('insert highscores view');
+  game.activeView.destroy();
+  game.activeView = new HighScoreView();
+  game.refreshView();
 });
 
 game.events.on("credits", function() {
-  console.log('insert credits view');
-  activeView.destroy();
-  var credits = new CreditsView();
-  activeView = credits;
-  $('.container').html(credits.el);
+  game.activeView.destroy();
+  game.activeView = new CreditsView();
+  game.refreshView();
 });
 
 game.events.on("menu", function() {
-  console.log('menu view');
-  if(activeView) {
-    activeView.destroy();
+  if(game.activeView) game.activeView.destroy();
+  game.activeView = new MenuView();
+  game.refreshView();
+  game.events.trigger('playSound', 'whip');
+});
+
+game.events.on("loadSong", function(song) {
+  game.activeView.destroy();
+  game.activeView = new SongView({
+    model : song
+  });
+  game.refreshView();
+});
+
+game.events.on("playSound", function(sound) {
+  if(!game.mute){
+    game.audio.effects[sound].play();
   }
-  var menu = new MenuView();
-  activeView = menu;
-  $('.container').html(menu.el);
 });
 
 game.events.trigger('menu');

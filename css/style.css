@@ -9,6 +9,7 @@
 	width: 640px;
 	height: 480px;
 	position: relative;
+	margin: 30px;
 }
 
 .menu img {
@@ -42,6 +43,7 @@
 .song canvas{
 	position: absolute;
 	top: 0;
+	background-image: url('../img/background.png');
 }
 
 .song .paused {

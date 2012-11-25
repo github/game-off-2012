@@ -9,6 +9,17 @@
     <div class="container">
     </div>
 
+    <audio class="click" src="audio/effects/click.wav">
+    <audio class="whip" src="audio/effects/whip.wav">
+
+    <script>
+      var newImg = function(url) {
+        var img = new Image();
+        img.src = url;
+        return img;
+      }
+    </script>
+
     <script type="text/template" id="menu-template">
       <img src="img/logo.png"/>
       <ul class="menu">
@@ -34,6 +45,25 @@
       <small>Press esc to return to main menu</small>
     </script>
 
+    <script type="text/template" id="highscore-template">
+      <h2>High Scores</h2>
+      <small>Press esc to return to main menu</small>
+    </script>
+
+    <script type="text/template" id="howto-template">
+      <h2>How to Play</h2>
+      <small>Press esc to return to main menu</small>
+    </script>
+
+    <script type="text/template" id="songs-template">
+      <h2>Choose a song</h2>
+      <ul></ul>
+    </script>
+
+    <script type="text/template" id="song-list-item-template">
+      <%= name %>
+    </script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
     <script src="src/requestAnimationFrame.js"></script>
     <script src="vendor/documentcloud/underscore/underscore-min.js"></script>
@@ -41,8 +71,13 @@
     <script src="models/Song.js"></script>
     <script src="collections/Songs.js"></script>
     <script src="views/MenuView.js"></script>
+    <script src="views/ScreenView.js"></script>
     <script src="views/SongView.js"></script>
+    <script src="views/SongListItemView.js"></script>
+    <script src="views/SongsView.js"></script>
     <script src="views/CreditsView.js"></script>
+    <script src="views/HighScoreView.js"></script>
+    <script src="views/HowtoView.js"></script>
     <script src="data/songs.js"></script>
     <script src="app.js"></script>
   </body>
