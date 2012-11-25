@@ -3,7 +3,8 @@
  * CSS
  * Sound files
  * Mobile*
-* Fix pause bug
+* Fix pause bug (our own tweening system for track).
+* Fix color fade bug.
 * Balance.
 * Global high score.
 * Slow upgrade.
