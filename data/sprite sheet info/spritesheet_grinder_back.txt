@@ -1,0 +1,2 @@
+grinder_back_1 = 0 0 418 30
+grinder_back_2 = 0 31 418 30

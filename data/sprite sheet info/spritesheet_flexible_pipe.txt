@@ -1,0 +1,3 @@
+flexible_pipe_1 = 0 0 110 41
+flexible_pipe_2 = 0 42 99 41
+flexible_pipe_3 = 0 84 86 41

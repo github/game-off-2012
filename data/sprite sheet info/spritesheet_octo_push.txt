@@ -1,0 +1,2 @@
+octo_push_1 = 0 0 50 86
+octo_push_2 = 51 0 50 86
