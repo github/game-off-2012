@@ -2,65 +2,122 @@
 <html>
 <head>
 <title>
-Tower Defence by Kevin Nash
+Tower Defence by Justin, Kevin, Quentin and Wesley
 </title>
 <style type="text/css">
 body {
-    background-color : #000000;
+    -webkit-user-select: none;
+    background: black;
+    margin: 0px;
+    padding: 0px;
 }
 canvas {
-    border : 2px solid #FF0000;
-    margin-left : auto;
-    margin-right : auto;
-    display : block
+    display: block;
+    margin: auto auto;
+}
+#scripts {
+    display: none;
 }
 </style>
 </head>
 <body>
 <canvas id="myCanvas"></canvas>
-<script src="jquery.min.js"></script><!-- //ajax.googleapis.com/ajax/libs/jquery/1.8.2/ -->
-<script src="logic.js"></script>
-<script src="graphics.js"></script>
+<div id="scripts">
+<script src="lib/jquery.min.js"></script><!-- //ajax.googleapis.com/ajax/libs/jquery/1.8.2/ -->
+
+<!-- MUST BE FIRST OR ELSE THINGS WILL CRASH! -->
+<script>
+    //Set DFlag.flagName to set debug flags.
+    //Try to only do this in debug.js
+    var DFlag = {};
+</script>
+
+<script src="debug.js"></script>
+<script src="fail.js"></script>
+<script src="type.js"></script>
+<script src="sound.js"></script>
+
+<script src="baseGeometry.js"></script>
+
+<script src="commonFncs.js"></script>
+<script src="commonGeometry.js"></script>
+
+<script src="baseEntities.js"></script>
+<script src="infobar.js"></script>
+<script src="tower.js"></script>
+<script src="path.js"></script>
+<script src="bug.js"></script>
 <script src="entities.js"></script>
+
+<script src="quadtree.js"></script>
+<script src="quadtreeQueries.js"></script>
+
+<script src="graphics.js"></script>
+
+<script src="pathGeneration.js"></script>
+
+<script src="logic.js"></script>
 <script>
     var wTiles = 20;
     var hTiles = 16;
     var tileSize = 32;
-    var width = wTiles * tileSize;
-    var height = hTiles * tileSize + 200;
-    var bW = width;
-    var bH = height - 200;
-    $(document).ready(function() {
-        $("#myCanvas").attr("width", width);
-        $("#myCanvas").attr("height", height);
-        window.reqAnim = (function(){
-            return  window.requestAnimationFrame || 
-            window.webkitRequestAnimationFrame   || 
-            window.mozRequestAnimationFrame      || 
-            window.oRequestAnimationFrame        || 
-            window.msRequestAnimationFrame       || 
-            function( callback ){
-                window.setTimeout(callback, 1000 / 60);
-            };
-        })();
-        
-        canvas = document.getElementById("myCanvas");
+    // UUUUGUGGGGGGGGGGGGGGGGGGGGGHTH
+    // I just had an anurismmmmmm
+    // somMOEbonDDDY canUELLL a NODCOTER!!
+    var width;
+    var height;
+    var bW;
+    var bH;
+    var eng;
+    (function() {
+        var canvas = document.getElementById("myCanvas");
+        var bufferCanvas = canvas.cloneNode();
         var pen = canvas.getContext("2d");
-        eng = new Engine(pen);
-        window.reqAnim(eng.run.bind(eng));
-        
-        $("#myCanvas").mousemove(function(e) {
-            eng.mX = e.offsetX;
-            eng.mY = e.offsetY;
+        function initCanvas() {
+    // Someday...
+            minWidth = wTiles * tileSize + 150;
+            minHeight = hTiles * tileSize;
+            width = Math.max(window.innerWidth, minWidth);
+            height = Math.max(window.innerHeight - 5, minHeight);
+            bW = width - 150;
+            bH = height;
+            canvas.width = width;
+            canvas.height = height;
+            bufferCanvas.width = width;
+            bufferCanvas.height = height;
+            if (eng && eng.triggerResize) {
+                eng.triggerResize({width: width, height: height});
+            }
+        }
+        $(document).ready(function () {
+            initCanvas();
+            window.reqAnim = (function () {
+                return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.oRequestAnimationFrame ||
+                window.msRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(function() {
+                        callback(Date.now());
+                    }, 1000 / 60);
+                };
+            })();
+
+            eng = new Engine(pen, bufferCanvas);
+            //this.base.rootNode.holder will also get eng... but... yeah...
+            window.reqAnim(eng.run.bind(eng));
+            
+            $(window).resize(initCanvas);
+            initCanvas();
+
+            $("#myCanvas").mousemove(eng.triggerMousemove.bind(eng));
+            $("#myCanvas").mouseout(eng.triggerMouseout.bind(eng));
+            $("#myCanvas").mousedown(eng.triggerMousedown.bind(eng));
+            $("#myCanvas").mouseup(eng.triggerMouseup.bind(eng));
         });
-        $("#myCanvas").mouseout(function() {
-            eng.mX = -1;
-            eng.mY = -1;
-        });
-        $("#myCanvas").click(function(e) {
-            eng.click(e);
-        });
-    });
+    }());
 </script>
+</div>
 </body>
 </html>

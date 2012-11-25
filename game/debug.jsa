@@ -1,0 +1,23 @@
+//Debug flags. ALL SHOULD BE FALSE BY DEFAULT!
+
+DFlag.debug = true;
+
+DFlag.logn = {};
+
+DFlag.logn.findClosest = {};
+DFlag.logn.findClosest.total = 0;
+DFlag.logn.findClosest.max = 0;
+
+DFlag.logn.findAllWithin = {};
+DFlag.logn.findAllWithin.total = 0;
+DFlag.logn.findAllWithin.max = 0;
+
+
+DFlag.quadtree = {};
+
+DFlag.quadtree.leafCount = 0;
+DFlag.quadtree.leafDepthWeighted = 0;
+DFlag.quadtree.leafObjectCount = 0;
+
+
+DFlag.zindexCheck = true;
