@@ -38,11 +38,11 @@ function Tower_Laser(xs, ys, xe, ye, duration, buglaser) {
             this.base.destroySelf();
             return;
         }
-        if (buglaser) {
-            color = "rgba(255,0,0," + timeleft/duration + ")";
-        } else {
-            color = "rgba(0,0,255," + timeleft/duration + ")";
-        }
+	if (buglaser) {
+		color = "rgba(255,0,0," + timeleft/duration + ")";
+	} else {
+		color = "rgba(0,0,255," + timeleft/duration + ")";
+	}
     };
 
     this.draw = function (pen) {
@@ -58,7 +58,7 @@ function Tower_Connection(t1, t2) {
     this.tPos = new temporalPos(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y, 0, 0);
     this.base = new baseObj(this, 11);
     this.hover = false;
-    var color = "rgba(0, 0, 255, 0.1)";
+    var color = "rgba(0, 0, 255, 0.2)";
     
     this.update = function(dt) {
         var a1 = t1.attr;
@@ -75,7 +75,7 @@ function Tower_Connection(t1, t2) {
         if (this.hover) {
             color = "rgba(0, 0, 255, 0.9)";
         } else {
-            color = "rgba(0, 0, 255, 0.1)";
+            color = "rgba(0, 0, 255, 0.2)";
         }
     }
     
@@ -110,8 +110,6 @@ function Tower(baseTile) {
 
     this.hover = false;
     this.selected = false;
-    
-    this.targetStrategy = "Closest";
     
     var laserTime = 0.5;
     var nextFireIn = 1/this.attr.speed;
@@ -204,8 +202,7 @@ function Tower(baseTile) {
         }
     };
 
-    this.click = function()
-    {
+    this.click = function() {
         this.tryUpgrade();
     };
 
