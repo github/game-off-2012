@@ -77,34 +77,6 @@ function Engine(pen, bufferCanvas) {
         window.reqAnim(this.run.bind(this));
     };
 
-    function throwMouseEventAt(mX, mY, eventName, eng) {
-        var allUnderMouse = [];
-
-        for (var type in eng.base.allChildren) {
-            mergeToArray(findAllWithin(eng, type, { x: mX, y: mY }, 0), allUnderMouse);
-        }
-
-        if (allUnderMouse.length == 0)
-            return;
-
-        var topMost = allUnderMouse[0];
-
-        //*sigh* so inefficient... but for now its fine
-        for (var key in allUnderMouse)
-            if (allUnderMouse[key].base.zindex > topMost.base.zindex ||
-                       (allUnderMouse[key].base.zindex == topMost.base.zindex &&
-                       allUnderMouse[key].base.zoffset > topMost.base.zoffset))
-                topMost = allUnderMouse[key];
-        
-        for (var key in allUnderMouse)
-            if(allUnderMouse[key] !== topMost)
-                allUnderMouse[key].base.call(eventName, { x: mX, y: mY, topMost: false });
-
-        topMost.base.call(eventName, { x: mX, y: mY, topMost: true });
-
-        return allUnderMouse;
-    }
-
 /** Function */
     this.update = function (dt) {
         mX = this.mX;
@@ -126,6 +98,92 @@ function Engine(pen, bufferCanvas) {
             }
         }
 
+        this.handleMouseEvents();
+
+        this.base.removeAllType("Tower_Range");
+
+
+        if (this.resizeEvent) {
+            this.base.raiseEvent("resize", this.resizeEvent);
+            this.resizeEvent = null;
+        }
+
+        //Make fancy background
+        if (curFrameCounter % 100 == 0) {
+            this.base.addObject(new FancyBackground(this.pen));
+        }
+    };
+
+    this.resizeEvent = null;
+    this.triggerResize = function(e) {
+        this.resizeEvent = e;
+    }
+
+    function getMousePos(e) {
+        var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canvas.offsetLeft;
+        var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canvas.offsetTop;
+
+        return { x: mX + 0.5, y: mY + 0.5 };
+    }
+
+    this.triggerMousemove = function (e) {
+        var pos = getMousePos(e);
+
+        this.mX = pos.x;
+        this.mY = pos.y;
+    }
+
+    this.triggerMouseout = function (e) {
+        var pos = getMousePos(e);
+
+        this.mX = -1;
+        this.mY = -1;
+    }
+
+    this.triggerMousedown = function (e) {
+        var pos = getMousePos(e);
+
+        this.mdX = pos.x;
+        this.mdY = pos.y;
+    }
+
+    this.triggerMouseup = function (e) {
+        var pos = getMousePos(e);
+
+        this.muX = pos.x;
+        this.muY = pos.y;
+    }
+
+    function throwMouseEventAt(mX, mY, eventName, eng) {
+        var allUnderMouse = [];
+
+        for (var type in eng.base.allChildren) {
+            mergeToArray(findAllWithin(eng, type, { x: mX, y: mY }, 0), allUnderMouse);
+        }
+
+        if (allUnderMouse.length == 0)
+            return;
+
+        var topMost = allUnderMouse[0];
+
+        //*sigh* so inefficient... but for now its fine
+        for (var key in allUnderMouse)
+            if (allUnderMouse[key].base.zindex > topMost.base.zindex ||
+                       (allUnderMouse[key].base.zindex == topMost.base.zindex &&
+                       allUnderMouse[key].base.zoffset > topMost.base.zoffset))
+                topMost = allUnderMouse[key];
+
+        for (var key in allUnderMouse)
+            if (allUnderMouse[key] !== topMost)
+                allUnderMouse[key].base.callMerge(eventName, { x: mX, y: mY, topMost: false });
+
+        topMost.base.callMerge(eventName, { x: mX, y: mY, topMost: true });
+
+        return allUnderMouse;
+    }
+
+    //Called in update and uses async flags set when we get events
+    this.handleMouseEvents = function() {
         if (this.mdX > 0 && this.mdY > 0) {
             var curMouseDown = throwMouseEventAt(this.mdX, this.mdY, "mousedown", this);
             this.prevMouseDown = curMouseDown;
@@ -139,7 +197,7 @@ function Engine(pen, bufferCanvas) {
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
                     if (vecToRect({ x: this.muX, y: this.muY }, this.prevMouseDown[i].tPos).magSq() == 0) {
-                        this.prevMouseDown[i].base.call("click", { x: this.muX, y: this.muY });
+                        this.prevMouseDown[i].base.callMerge("click", { x: this.muX, y: this.muY });
                     }
                 }
             }
@@ -150,15 +208,13 @@ function Engine(pen, bufferCanvas) {
             this.muY = -1;
         }
 
-        this.base.removeAllType("Tower_Range");
-
         if (this.mY > 0 && this.mX > 0) {
             var curMouseOver = throwMouseEventAt(mX, mY, "mouseover", this);
             //Can actually find mouseout more efficiently... as we have previous and current mouseover...            
             if (this.prevMouseOver && this.prevMouseOver.length > 0) {
                 for (var i = 0; i < this.prevMouseOver.length; i++) {
                     if (vecToRect({ x: mX, y: mY }, this.prevMouseOver[i].tPos).magSq() != 0) {
-                        this.prevMouseOver[i].base.call("mouseout", { x: mX, y: mY });
+                        this.prevMouseOver[i].base.callMerge("mouseout", { x: mX, y: mY });
                     }
                 }
             }
@@ -166,31 +222,15 @@ function Engine(pen, bufferCanvas) {
 
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
-                    //if (vecToRect({ x: this.mX, y: this.mY }, this.prevMouseDown[i].tPos).magSq() == 0) {
-                        this.prevMouseDown[i].base.call("dragged", { x: this.mX, y: this.mY });
-                    //}
+                    this.prevMouseDown[i].base.callMerge("dragged", { x: this.mX, y: this.mY });
                 }
             }
-        }
-        
-        if (resizeEvent) {
-            console.log(resizeEvent);
-            this.base.raiseEvent("resize", resizeEvent);
-            resizeEvent = null;
-        }
 
-		//Make fancy background
-		if (curFrameCounter % 100 == 0) {
-			this.base.addObject(new FancyBackground(this.pen));
-		}	
-	};
-//     this.resize = function(e){};
-    var resizeEvent;
-    this.resize = function(e) {
-        console.log(e);
-        resizeEvent = e;
+            this.mY = -1;
+            this.mX = -1;
+        }
     }
-   
+
 /** Function */
     this.draw = function () {
         pen = this.pen;
