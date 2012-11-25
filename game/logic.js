@@ -6,15 +6,13 @@
 //mouseover
 //mouseout
 
-/********************************* CODE START *********************************/
-
 function Engine(pen, bufferCanvas) {
-    this.mX = -1;
-    this.mY = -1;    
-    this.mdX = -1; //Mouse down
-    this.mdY = -1;
-    this.muX = -1; //Mouse up
-    this.muY = -1;
+    var mX = -1;
+    var mY = -1;    
+    var mdX = -1; //Mouse down
+    var mdY = -1;
+    var muX = -1; //Mouse up
+    var muY = -1;
 
     this.pen = pen;
     this.bPen = bufferCanvas.getContext("2d");
@@ -79,9 +77,6 @@ function Engine(pen, bufferCanvas) {
 
 /** Function */
     this.update = function (dt) {
-        mX = this.mX;
-        mY = this.mY;
-
         this.curQuadTree = new QuadTree(this.base.allChildren);
 
         if (eng.base.lengths["Path_Start"] > 0
@@ -120,8 +115,9 @@ function Engine(pen, bufferCanvas) {
     }
 
     function getMousePos(e) {
-        var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canvas.offsetLeft;
-        var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canvas.offsetTop;
+        // Canvas is fullscreen now, so pageX is our x position.
+        var mX = defined(e.offsetX) ? e.offsetX : e.pageX;
+        var mY = defined(e.offsetY) ? e.offsetY : e.pageY;
 
         return { x: mX + 0.5, y: mY + 0.5 };
     }
@@ -129,29 +125,29 @@ function Engine(pen, bufferCanvas) {
     this.triggerMousemove = function (e) {
         var pos = getMousePos(e);
 
-        this.mX = pos.x;
-        this.mY = pos.y;
+        mX = pos.x;
+        mY = pos.y;
     }
 
     this.triggerMouseout = function (e) {
         var pos = getMousePos(e);
 
-        this.mX = -1;
-        this.mY = -1;
+        mX = -1;
+        mY = -1;
     }
 
     this.triggerMousedown = function (e) {
         var pos = getMousePos(e);
 
-        this.mdX = pos.x;
-        this.mdY = pos.y;
+        mdX = pos.x;
+        mdY = pos.y;
     }
 
     this.triggerMouseup = function (e) {
         var pos = getMousePos(e);
 
-        this.muX = pos.x;
-        this.muY = pos.y;
+        muX = pos.x;
+        muY = pos.y;
     }
 
     function throwMouseEventAt(mX, mY, eventName, eng) {
@@ -184,31 +180,31 @@ function Engine(pen, bufferCanvas) {
 
     //Called in update and uses async flags set when we get events
     this.handleMouseEvents = function() {
-        if (this.mdX > 0 && this.mdY > 0) {
-            var curMouseDown = throwMouseEventAt(this.mdX, this.mdY, "mousedown", this);
+        if (mdX > 0 && mdY > 0) {
+            var curMouseDown = throwMouseEventAt(mdX, mdY, "mousedown", this);
             this.prevMouseDown = curMouseDown;
-            this.mdX = -1;
-            this.mdY = -1;
+            mdX = -1;
+            mdY = -1;
         }
 
-        if (this.muX > 0 && this.muY > 0) {
-            var curMouseUp = throwMouseEventAt(this.muX, this.muY, "mouseup", this);
+        if (muX > 0 && muY > 0) {
+            var curMouseUp = throwMouseEventAt(muX, muY, "mouseup", this);
 
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
-                    if (vecToRect({ x: this.muX, y: this.muY }, this.prevMouseDown[i].tPos).magSq() == 0) {
-                        this.prevMouseDown[i].base.callMerge("click", { x: this.muX, y: this.muY });
+                    if (vecToRect({ x: muX, y: muY }, this.prevMouseDown[i].tPos).magSq() == 0) {
+                        this.prevMouseDown[i].base.callMerge("click", { x: muX, y: muY });
                     }
                 }
             }
 
             this.prevMouseDown = null;
 
-            this.muX = -1;
-            this.muY = -1;
+            muX = -1;
+            muY = -1;
         }
 
-        if (this.mY > 0 && this.mX > 0) {
+        if (mY > 0 && mX > 0) {
             var curMouseOver = throwMouseEventAt(mX, mY, "mouseover", this);
             //Can actually find mouseout more efficiently... as we have previous and current mouseover...            
             if (this.prevMouseOver && this.prevMouseOver.length > 0) {
@@ -222,12 +218,12 @@ function Engine(pen, bufferCanvas) {
 
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
-                    this.prevMouseDown[i].base.callMerge("dragged", { x: this.mX, y: this.mY });
+                    this.prevMouseDown[i].base.callMerge("dragged", { x: mX, y: mY });
                 }
             }
 
-            this.mY = -1;
-            this.mX = -1;
+            mY = -1;
+            mX = -1;
         }
     }
 

@@ -69,53 +69,54 @@ canvas {
     var bW;
     var bH;
     var eng;
-
-    var canvas = document.getElementById("myCanvas");
-    var bufferCanvas = canvas.cloneNode();
-    var pen = canvas.getContext("2d");
-    function initCanvas() {
-// Someday...
-        minWidth = wTiles * tileSize + 150;
-        minHeight = hTiles * tileSize;
-        width = Math.max(window.innerWidth, minWidth);
-        height = Math.max(window.innerHeight - 5, minHeight);
-        bW = width - 150;
-        bH = height;
-        canvas.width = width;
-        canvas.height = height;
-        bufferCanvas.width = width;
-        bufferCanvas.height = height;
-        if (eng && eng.triggerResize) {
-            eng.triggerResize({width: width, height: height});
+    (function() {
+        var canvas = document.getElementById("myCanvas");
+        var bufferCanvas = canvas.cloneNode();
+        var pen = canvas.getContext("2d");
+        function initCanvas() {
+    // Someday...
+            minWidth = wTiles * tileSize + 150;
+            minHeight = hTiles * tileSize;
+            width = Math.max(window.innerWidth, minWidth);
+            height = Math.max(window.innerHeight - 5, minHeight);
+            bW = width - 150;
+            bH = height;
+            canvas.width = width;
+            canvas.height = height;
+            bufferCanvas.width = width;
+            bufferCanvas.height = height;
+            if (eng && eng.triggerResize) {
+                eng.triggerResize({width: width, height: height});
+            }
         }
-    }
-    $(document).ready(function () {
-        initCanvas();
-        window.reqAnim = (function () {
-            return window.requestAnimationFrame ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            window.oRequestAnimationFrame ||
-            window.msRequestAnimationFrame ||
-            function (callback) {
-                window.setTimeout(function() {
-                    callback(Date.now());
-                }, 1000 / 60);
-            };
-        })();
+        $(document).ready(function () {
+            initCanvas();
+            window.reqAnim = (function () {
+                return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.oRequestAnimationFrame ||
+                window.msRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(function() {
+                        callback(Date.now());
+                    }, 1000 / 60);
+                };
+            })();
 
-        eng = new Engine(pen, bufferCanvas);
-        //this.base.rootNode.holder will also get eng... but... yeah...
-        window.reqAnim(eng.run.bind(eng));
-        
-        $(window).resize(initCanvas);
-        initCanvas();
+            eng = new Engine(pen, bufferCanvas);
+            //this.base.rootNode.holder will also get eng... but... yeah...
+            window.reqAnim(eng.run.bind(eng));
+            
+            $(window).resize(initCanvas);
+            initCanvas();
 
-        $("#myCanvas").mousemove(eng.triggerMousemove.bind(eng));
-        $("#myCanvas").mouseout(eng.triggerMouseout.bind(eng));
-        $("#myCanvas").mousedown(eng.triggerMousedown.bind(eng));
-        $("#myCanvas").mouseup(eng.triggerMouseup.bind(eng));
-    });
+            $("#myCanvas").mousemove(eng.triggerMousemove.bind(eng));
+            $("#myCanvas").mouseout(eng.triggerMouseout.bind(eng));
+            $("#myCanvas").mousedown(eng.triggerMousedown.bind(eng));
+            $("#myCanvas").mouseup(eng.triggerMouseup.bind(eng));
+        });
+    }());
 </script>
 </div>
 </body>
