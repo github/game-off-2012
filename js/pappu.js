@@ -11,6 +11,7 @@
     rotate_angle: 0,
 
     sprite: {},
+    sound: '',
 
     // Rate of sprite frame change
     // per animation frame.
@@ -20,6 +21,8 @@
     max_fly_frame_count: 10,
 
     init: function() {
+      this.sound = document.getElementById("flap");
+
       // Initializing Pappu Sprite, lolzzz..!
       this.sprite = new Image();
       this.sprite.src = 'img/pappu.png';
@@ -62,6 +65,8 @@
 
       // Rotation on Flying
       if (mit.flying_up) {
+        this.sound.play();
+
         if (this.rotate_angle > -15) {
           this.rotate_angle -= 2;
         }
