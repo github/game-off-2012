@@ -81,7 +81,7 @@
 
       if (this.branches[this.branches.length-1]) {
         pos.x = this.branches[this.branches.length-1].x;
-        pos.x += utils.randomNumber(300, 600);
+        pos.x += utils.randomNumber(500, 2000);
       }
       else {
         // First
