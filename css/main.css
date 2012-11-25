@@ -32,6 +32,8 @@ body {
 }
 
 footer {
+	font-size: 18px;
+	font-weight: normal;
 	color: #E6E6E6;
 	margin: 50px auto;
 	max-width: 1000px;
