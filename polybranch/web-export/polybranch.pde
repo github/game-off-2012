@@ -32,14 +32,14 @@ void setup(){
   background(255);
   //testTree = new Tree(5, bob);
   g = new Game();
-  g.display();
+  //g.display();
   Layer layer = new Layer(16, width, height);
 }
 
 void draw(){
   background(255);
   g.update();
-  drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY,easedDistance), width/2, 16, 6);
+  
 }
 
 //testtesttest
@@ -73,10 +73,10 @@ float myAngleBetween (PVector myPVector1, PVector myPVector2) {
 }
 
 
-void drawPolygon(float cX, float cY, float r, int numSides, float weight){
+void drawPolygon(float cX, float cY, float r, int numSides, float weight, color cIn){
   float a = TWO_PI / numSides;
   noFill();
-  stroke(0);
+  stroke(cIn);
   strokeWeight(weight);
   beginShape();
   for(int i = 0; i < numSides; i++){
@@ -93,15 +93,20 @@ float easeInExpo(float x, float t, float b, float c, float d) {
 class Branch{
   PVector[] verticies = new PVector[3];
   color col;
-  Branch(PVector a, PVector b, PVector c, color colIn){
+  int hu,sat,br,alph;
+  Branch(PVector a, PVector b, PVector c){
     verticies[0] = a;
     verticies[1] = b;
     verticies[2] = c;
-    col = colIn;
+    hu = 0;
+    sat = 0;
+    br = (int)random(50,200);
+    alph = 255;
   }
   
   public void render(float oX, float oY, float w, float h, float easedDist){
-      fill(col);
+      alph = (easedDist > 1) ? (int)map(easedDist, 1, 4, 255, 0) : 255;
+      fill(br,alph);
       noStroke();
       triangle(verticies[0].x*easedDist+(oX-(w)/2), verticies[0].y*easedDist+(oY-h/2),
                 verticies[1].x*easedDist+(oX-(w)/2), verticies[1].y*easedDist+(oY-h/2),
@@ -135,9 +140,8 @@ class Layer{
     tree = new Tree(11, new Branch(
                 new PVector(aX, aY),
                 new PVector(bX, bY),
-                new PVector(lerp(aX,layerWidth/2,0.7), lerp(aY,layerHeight/2,0.7)),
-                color(random(50,100))));
-    drawPolygon(layerWidth/2, layerHeight/2, layerWidth/2 - ringWeight/2, 16, ringWeight);
+                new PVector(lerp(aX,layerWidth/2,0.7), lerp(aY,layerHeight/2,0.7))));
+    //drawPolygon(layerWidth/2, layerHeight/2, layerWidth/2 - ringWeight/2, 16, ringWeight, color(255,0,0,0.5));
     
   }
   
@@ -161,7 +165,9 @@ class Layer{
     
     //image(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
     tree.render(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), layerWidth*easedDistance, layerHeight*easedDistance, easedDistance);
-    drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY,easedDistance), (layerWidth*easedDistance)/2 - (ringWeight*easedDistance)/2, 16, ringWeight*easedDistance);
+    
+    color c = (easedDistance > 1) ? color(0,0,255) : color(0);
+    drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY,easedDistance), (layerWidth*easedDistance)/2 - (ringWeight*easedDistance)/2, 16, ringWeight*easedDistance, c);
   }
 
 }
@@ -199,8 +205,7 @@ class Tree{
             branches[index] = new Branch(
                       new PVector(trunkIn.verticies[2].x, trunkIn.verticies[2].y),
                       new PVector(lerp(trunkIn.verticies[2].x, trunkIn.verticies[1].x, 0.3), lerp(trunkIn.verticies[2].y, trunkIn.verticies[1].y, 0.3)),
-                      new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))),
-                      color(random(50,100)));
+                      new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))));
                       index ++;
                       populateBranches(branches[index-1], (random(1)));
                 //check if the min or max angle fit inside the area
@@ -226,8 +231,7 @@ class Tree{
             branches[index] = new Branch(
                       new PVector(lerp(trunkIn.verticies[2].x, trunkIn.verticies[0].x, 0.3), lerp(trunkIn.verticies[2].y, trunkIn.verticies[0].y, 0.3)),
                       new PVector(trunkIn.verticies[2].x, trunkIn.verticies[2].y),
-                      new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))),
-                      color(random(100,200)));
+                      new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))));
                       index ++;
                       populateBranches(branches[index-1], (random(1)));
           }else if(dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-HALF_PI)), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-HALF_PI)), width/2, height/2) < width / 2 ||
@@ -260,13 +264,15 @@ class Tree{
 class Game{
   ArrayList layers;
   String origin;
-  
+  boolean drawnPlayer;
   
   float speed;
 
   Game(){
     origin = "I EXIST";
     layers = new ArrayList();
+    
+    drawnPlayer = false;
    
     speed = 0.003;
     
@@ -286,6 +292,8 @@ class Game{
   }
   
   public void update(){
+    drawnPlayer = false;
+    
     for(int i = 0; i < layers.size(); i++){
       Layer layer = (Layer) layers.get(i);
       if(layer.easedDistance > 4 && i == layers.size()-1){
@@ -294,16 +302,23 @@ class Game{
         layer.reset();
       }else{
         layer.updateDist(speed);
+        if(layer.easedDistance >= 1 && !drawnPlayer){
+          drawPolygon(lerp(width/2, originX, 1), lerp(height/2, originY,1), width/2, 16, 6, color(255,0,0,128));
+          stroke(0);
+          fill(0,100);
+          ellipse(width/2,height/2,40,40);
+          drawnPlayer = true;
+        }
         layer.render();
       }
     }
   }
   
-  public void display(){
-    for(int i = 0; i < layers.size(); i++){
-      Layer layer = (Layer) layers.get(i);
-      layer.render();
-    }
-  }
+//  public void display(){
+//    for(int i = 0; i < layers.size(); i++){
+//      Layer layer = (Layer) layers.get(i);
+//      layer.render();
+//    }
+//  }
 }
 

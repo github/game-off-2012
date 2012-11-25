@@ -32,14 +32,14 @@ void setup(){
   background(255);
   //testTree = new Tree(5, bob);
   g = new Game();
-  g.display();
+  //g.display();
   Layer layer = new Layer(16, width, height);
 }
 
 void draw(){
   background(255);
   g.update();
-  drawPolygon(lerp(width/2, originX, 1), lerp(height/2, originY,1), width/2, 16, 6, color(255,0,0,128));
+  
 }
 
 //testtesttest
