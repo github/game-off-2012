@@ -166,7 +166,7 @@ function baseObj(holder, zindex) {
             this.children[type] = {};
     };
 
-    this.raiseEvent = function (name, arguments) {
+    this.raiseEvent = function (name, args) {
         var returnedValues = [];
 
         //Well if it exists it is clearly a function :D
@@ -174,18 +174,19 @@ function baseObj(holder, zindex) {
         //before fixing this in order to implement the most efficient solution to checking if something is a function
         //for different browsers).
         if (holder[name])
-            mergeToArray(holder[name](arguments), returnedValues);
+            mergeToArray(holder[name](args), returnedValues);
 
         this.loopThroughAllTypes(function (child) {
             if (child.base) {
-                mergeToArray(child.base.raiseEvent(name, arguments), returnedValues);
+                mergeToArray(child.base.raiseEvent(name, args), returnedValues);
             }
         });
 
         return returnedValues;
     };
-    
-    this.call = function(name, arguments)
+
+    //Calls and returns the returned array (or an empty array)    
+    this.callMerge = function (name, args)
     {
         var returnedValues = [];
 
@@ -194,7 +195,7 @@ function baseObj(holder, zindex) {
         //before fixing this in order to implement the most efficient solution to checking if something is a function
         //for different browsers).
         if (holder[name])
-            mergeToArray(holder[name](arguments), returnedValues);
+            mergeToArray(holder[name](args), returnedValues);
 
         return returnedValues;
     }

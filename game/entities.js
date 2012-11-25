@@ -43,7 +43,7 @@
 
 function Path_End(x, y, w, h) {
     this.tPos = new temporalPos(x, y, w, h, 0, 0);
-    this.base = new baseObj(this, 1);
+    this.base = new baseObj(this, 2);
 
     this.update = function (dt) {
         this.tPos.update(dt);
@@ -82,7 +82,7 @@ function Path_Line(pathBase) {
 
     //Our shape is a lie! (its off, not that it really matters)
     this.tPos = pathBase.tPos;
-    this.base = new baseObj(this, 2);
+    this.base = new baseObj(this, 3);
 
     this.update = function (dt) {
         this.tPos.update(dt);
@@ -107,7 +107,7 @@ function Path_Line(pathBase) {
 }
 function Path(x, y, w, h) {
     this.tPos = new temporalPos(x, y, w, h, 0, 0);
-    this.base = new baseObj(this, 1);
+    this.base = new baseObj(this, 2);
     this.pathLine = null;
 
     this.update = function (dt) {

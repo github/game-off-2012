@@ -38,11 +38,11 @@ function Tower_Laser(xs, ys, xe, ye, duration, buglaser) {
             this.base.destroySelf();
             return;
         }
-	if (buglaser) {
-		color = "rgba(255,0,0," + timeleft/duration + ")";
-	} else {
-		color = "rgba(0,0,255," + timeleft/duration + ")";
-	}
+        if (buglaser) {
+            color = "rgba(255,0,0," + timeleft/duration + ")";
+        } else {
+            color = "rgba(0,0,255," + timeleft/duration + ")";
+        }
     };
 
     this.draw = function (pen) {
@@ -110,6 +110,8 @@ function Tower(baseTile) {
 
     this.hover = false;
     this.selected = false;
+    
+    this.targetStrategy = "Closest";
     
     var laserTime = 0.5;
     var nextFireIn = 1/this.attr.speed;
@@ -197,9 +199,9 @@ function Tower(baseTile) {
             this.attack();
             nextFireIn = 1/this.attr.speed;
         }
-	if (this.attr.hp < 0) {
-		this.die();
-	}
+        if (this.attr.hp < 0) {
+            this.die();
+        }
     };
 
     this.click = function()
