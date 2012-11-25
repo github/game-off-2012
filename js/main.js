@@ -116,6 +116,8 @@
     mit.ForkUtils.forks = [];
     // Nuke all branches
     mit.BranchUtils.branches = [];
+    // Nuke all collectibles
+    mit.CollectibleUtils.collecs = [];
   };
 
   ui.start_game.on('mousedown', function() {
@@ -234,17 +236,21 @@
     // Send over Pakias (Enemies)
     // mit.PakiaUtils.render(ctx);
 
+    // Collectibles
+     mit.CollectibleUtils.draw(ctx);
+
     if (mit.game_started) {
 
-      // Draw Forks
+      // Drawin stuff
       mit.ForkUtils.draw(ctx);
-      // Draw Branches
       mit.BranchUtils.draw(ctx);
+      mit.CollectibleUtils.draw(ctx);
 
       // Check Collisions with pappu
       mit.ForkUtils.checkCollision();
       mit.BranchUtils.checkCollision();
       mit.PakiaUtils.checkCollision();
+      mit.CollectibleUtils.checkCollision();
 
       // Send over Pakias (Enemies)
       if (mit.score > 199)

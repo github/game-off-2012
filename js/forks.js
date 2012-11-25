@@ -28,27 +28,27 @@
 
     // Get Handle Bounds
     this.getHandleBounds =  function() {
-      var bounds = {};
+      var b = {};
 
-      bounds.start_x = this.x;
-      bounds.start_y = this.y;
-      bounds.end_x = this.x + this.w;
-      bounds.end_y = this.y + this.h;
+      b.start_x = this.x;
+      b.start_y = this.y;
+      b.end_x   = this.x + this.w;
+      b.end_y   = this.y + this.h;
 
       //console.log(bounds);
-      return bounds;
+      return b;
     };
 
     // Get Head Bounds
     this.getHeadBounds = function() {
-      var bounds = {};
+      var b = {};
 
-      bounds.start_x = this.head_x;
-      bounds.start_y = this.head_y;
-      bounds.end_x = this.head_x + this.head_w;
-      bounds.end_y = this.head_y + this.head_h;
+      b.start_x = this.head_x;
+      b.start_y = this.head_y;
+      b.end_x   = this.head_x + this.head_w;
+      b.end_y   = this.head_y + this.head_h;
 
-      return bounds;
+      return b;
     };
   };
 

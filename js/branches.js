@@ -32,25 +32,25 @@
     this.escape_h;
 
     this.getBounds = function() {
-      var bounds = {};
+      var b = {};
 
-      bounds.start_x = this.x;
-      bounds.start_y = this.y;
-      bounds.end_x = this.x + this.w;
-      bounds.end_y = this.y + this.h;
+      b.start_x = this.x;
+      b.start_y = this.y;
+      b.end_x   = this.x + this.w;
+      b.end_y   = this.y + this.h;
 
-      return bounds;
+      return b;
     };
 
     this.getEscapeBounds = function() {
-      var bounds = {};
+      var b = {};
 
-      bounds.start_x = this.escape_x;
-      bounds.start_y = this.escape_y;
-      bounds.end_x = this.escape_x + this.escape_w;
-      bounds.end_y = this.escape_y + this.escape_h;
+      b.start_x = this.escape_x;
+      b.start_y = this.escape_y;
+      b.end_x   = this.escape_x + this.escape_w;
+      b.end_y   = this.escape_y + this.escape_h;
 
-      return bounds;
+      return b;
     };
   };
 
