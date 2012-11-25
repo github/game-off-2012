@@ -143,6 +143,17 @@ function FancyBackground(pen) {
 	var textH = Math.floor(Math.random() * 5) + 10;
 	var direction = "left";
 	var speed = (Math.random() * 10)+ 50;
+
+	//Prerender text
+	var subcanvas = document.createElement("canvas");
+	subcanvas.setAttribute('width', 100);
+	subcanvas.setAttribute('height', 20);
+
+	var subcancon = subcanvas.getContext('2d');
+	subcancon.font = textH + "px courier";
+	subcancon.fillStyle = "rgba(0,255,0,0.3)";
+	ink.text(0, textH, txt, subcancon);
+
 	
 	this.tPos = new temporalPos(bW, Math.floor(Math.random()*bH), pen.measureText(txt), textH);
 	
@@ -159,10 +170,7 @@ function FancyBackground(pen) {
 	}
 	
 	this.draw = function(pen) {
-		pen.fillStyle = "rgba(0,255,0,0.3)";
-		ink.text(this.tPos.x, this.tPos.y, txt, pen);
-
-
+		pen.drawImage(subcanvas, this.tPos.x, this.tPos.y);
 		return;
 	}
 }
