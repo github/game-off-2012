@@ -69,7 +69,6 @@ canvas {
     var bH;
     var eng;
 
-(function() {
     var canvas = document.getElementById("myCanvas");
     var bufferCanvas = canvas.cloneNode();
     var pen = canvas.getContext("2d");
@@ -116,7 +115,6 @@ canvas {
         $("#myCanvas").mousedown(eng.triggerMousedown.bind(eng));
         $("#myCanvas").mouseup(eng.triggerMouseup.bind(eng));
     });
-}());
 </script>
 </div>
 </body>
