@@ -36,7 +36,14 @@ footer {
 	font-weight: normal;
 	color: #E6E6E6;
 	margin: 50px auto;
+	padding: 0 0 20px;
 	max-width: 1000px;
+}
+footer h3 {
+	margin-top: 20px;
+}
+footer p {
+	margin-bottom: 10px;
 }
 footer a {
 	color: #FF6767;
