@@ -101,7 +101,7 @@
     mit.game_started = 0;
 
     mit.Backgrounds.common_bg_speed = 1;
-    mit.Backgrounds.ground_bg_move_speed = 8;
+    mit.Backgrounds.ground_bg_move_speed = 9;
 
     // Reset all accelerations and make
     // pappu stationary

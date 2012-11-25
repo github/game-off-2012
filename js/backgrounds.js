@@ -5,19 +5,19 @@
     // Speeds and Velocities of Backgrounds
     common_bg_speed: 1,
 
-    cloud_bg_move_speed: 2,
+    cloud_bg_move_speed: 4,
     cloud_bg_vx: 0,
 
-    backtree_bg_move_speed: 3,
+    backtree_bg_move_speed: 5,
     backtree_bg_vx: 0,
 
-    fronttree_bg_move_speed: 6,
+    fronttree_bg_move_speed: 7,
     fronttree_bg_vx: 0,
 
-    ground_bg_move_speed: 8,
+    ground_bg_move_speed: 9,
     ground_bg_vx: 0,
 
-    grass_bg_move_speed: 8,
+    grass_bg_move_speed: 9,
     grass_bg_vx: 0,
 
     log_x: 40,

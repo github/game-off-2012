@@ -6,6 +6,10 @@
     this.type = 'angry';
     this.sound = document.getElementById("jump1");
 
+    // Cheating on a bit with the physics
+    // cant have same gravity for pappu and pakias :(
+    this.gravity = 0.3;
+
     this.x;
     this.y;
     this.w;
@@ -22,7 +26,7 @@
 
     this.generateRandomVelocity = function() {
       this.vx = -12;
-      this.vy = utils.randomNumber(-27,-20);
+      this.vy = utils.randomNumber(-18,-10);
     };
 
     this.getBounds = function() {
@@ -114,7 +118,7 @@
         this.cur_pakia = this.pakias[utils.randomNumber(0,2)];
       }
 
-      this.cur_pakia.vy += mit.gravity;
+      this.cur_pakia.vy += this.cur_pakia.gravity;
 
       this.cur_pakia.x += this.cur_pakia.vx;
       this.cur_pakia.y += this.cur_pakia.vy;
