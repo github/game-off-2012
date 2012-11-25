@@ -147,7 +147,7 @@
           forks = this.forks,
           count = this.count;
 
-      if (forks.length < count && mit.start_btn_clicked) {
+      if (forks.length < count) {
         
         for (var i = 0; i < count - forks.length; i++) {
           var fork = new mit.Fork();

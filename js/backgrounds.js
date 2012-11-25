@@ -42,7 +42,7 @@
         this.cloud_bg_vx = 0;
       }
 
-      this.cloud_bg_vx -= this.cloud_bg_move_speed * this.common_bg_speed;
+      this.cloud_bg_vx -= this.cloud_bg_move_speed;
     },
 
     drawBackTrees: function(ctx) {

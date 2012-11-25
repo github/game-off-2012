@@ -76,20 +76,6 @@
         ctx.translate(this.x, this.y);
         ctx.translate(this.w/2, this.h/2);
         ctx.rotate(utils.toRadian(this.rotate_angle));
-
-        ctx.drawImage(
-          this.sprite,
-          0,
-          source_y,
-          this.w,
-          60,
-          -this.w/2,
-          -this.h/2,
-          this.w,
-          60
-        );
-
-        ctx.restore();
       }
       else {
         if (this.rotate_angle < 30) {
@@ -101,8 +87,9 @@
         ctx.translate(this.x, this.y);
         ctx.translate(this.w/2, this.h/2);
         ctx.rotate(utils.toRadian(this.rotate_angle));
-      
-        ctx.drawImage(
+      }
+
+      ctx.drawImage(
           this.sprite,
           0,
           source_y,
@@ -114,17 +101,43 @@
           60
         );
 
-        ctx.restore();
-      }
+      ctx.restore();
     },
 
     drawStatic: function(ctx) {
+      var cur_sprite_frame = this.fly_frame_count / this.change_per_frame;
+      
+      if (utils.isInt(cur_sprite_frame)) {
+        var source_y = cur_sprite_frame * 60;
+      }
+
+      else {
+        //var old_sprite_frame = parseInt(this.fly_frame_count/this.change_per_frame)%this.change_per_frame;
+
+        // Ultra smooth animations
+        var old_sprite_frame = parseInt(this.fly_frame_count/this.change_per_frame)
+        var source_y = old_sprite_frame * 60;
+      }
+
+
       this.y = mit.Backgrounds.log_y-42;
 
-      ctx.drawImage(
+      /*ctx.drawImage(
         this.sprite,
         0,
         0,
+        this.w,
+        60,
+        this.x,
+        this.y,
+        this.w,
+        60
+      );*/
+      
+      ctx.drawImage(
+        this.sprite,
+        0,
+        source_y,
         this.w,
         60,
         this.x,

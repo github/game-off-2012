@@ -81,7 +81,7 @@
 
       if (this.branches[this.branches.length-1]) {
         pos.x = this.branches[this.branches.length-1].x;
-        pos.x += utils.randomNumber(500, 2000);
+        pos.x += utils.randomNumber(300, 600);
       }
       else {
         // First
@@ -89,11 +89,20 @@
       }
 
       var forks = mit.ForkUtils.forks;
-      var last_fork = [forks.length-1];
+      /*var last_fork = forks[forks.length-1];
       
       if (last_fork) {
-        if (Math.abs(pos.x - last_fork.x) < 300)
+
+        if (Math.abs(pos.x - last_fork.x) < 300) {
           pos.x = last_fork.x + 300;
+        }
+      }*/
+
+      if (forks.length) {
+        forks.forEach(function(fork) {
+          if (Math.abs(pos.x - fork.x) < 300)
+            pos.x = fork.x + 300;
+        });
       }
 
       return pos;

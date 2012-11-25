@@ -1,4 +1,5 @@
 (function() {
+
   // rAF
   window.requestAnimationFrame = function() {
     return window.requestAnimationFrame ||
@@ -11,11 +12,21 @@
       }
   }();
 
+  // cAF
+  window.cancelAnimationFrame = function() {
+    return window.cancelAnimationFrame ||
+      window.webkitCancelAnimationFrame ||
+      window.mozCancelAnimationFrame ||
+      window.msCancelAnimationFrame ||
+      window.oCancelAnimationFrame ||
+      function(f) {
+        window.setTimeout(f,1e3/60);
+      }
+  }();
 
-  window.mit = window.mit || {};
 
   var config = mit.config = {
-    fork_count: 6
+
   };
 
   var ui = mit.ui = {
@@ -80,20 +91,31 @@
 
   // Start Button
   var startGame = function() {
+    // Hide the Start Screen
     ui.start_screen.fadeOut();
 
+    // Start btn has been clicked
+    // Game hasnt started. Game will
+    // start on flight.
     mit.start_btn_clicked = 1;
     mit.game_started = 0;
 
     mit.Backgrounds.common_bg_speed = 1;
     mit.Backgrounds.ground_bg_move_speed = 8;
 
+    // Reset all accelerations and make
+    // pappu stationary
     mit.Pappu.drawStatic(ctx);
     mit.ax = 0; mit.ay = 0;
     mit.vx = 0; mit.vy = 0;
 
     // reset score
     mit.score = 0;
+
+    // Nuke all forks
+    mit.ForkUtils.forks = [];
+    // Nuke all branches
+    mit.BranchUtils.branches = [];
   };
 
   ui.start_game.on('mousedown', function() {
@@ -191,7 +213,7 @@
     // Draw Grass on Main Canvas
     mit.Backgrounds.drawGrass(ctx);
 
-    if (mit.flying_up)
+    if (mit.flying_up || !mit.game_started)
       mit.Pappu.updateFlyFrameCount();
     else
       mit.Pappu.updateFlyFrameCount(0);
@@ -205,7 +227,7 @@
     }
 
     //mit.ForkUtils.draw(ctx);
-    //mit.BranchUtils.draw(ctx, 4);
+    //mit.BranchUtils.draw(ctx);
 
     //mit.ForkUtils.checkCollision();
 
