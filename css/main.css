@@ -39,6 +39,9 @@ footer {
 footer a {
 	color: #FF6767;
 }
+footer a:visited {
+	color: #7FFF67;
+}
 footer a:hover {
 	color: #67DBFF;
 }
