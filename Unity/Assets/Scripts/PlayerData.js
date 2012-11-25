@@ -4,7 +4,7 @@ class PlayerData {
 	static var stargazers: int = 0;
 	static var totalCoins: int = 0;
 	
-	static var bonusClones: int = 3;
+	static var bonusClones: int = 0;
 	static var bonusTimeSlowDown: int = 0;
 	static var bonusJumps: int = 0;
 	static var bonusMagnet: int = 0;

@@ -308,6 +308,7 @@ function OnTriggerEnter(other: Collider) {
 		currentGroundWidth = other.transform.localScale.x;
 		currentGroundPosition = groundPosition;
 		onGround = true;
+		hasDestroyedEnemyBonusJump = false;
 		nbBonusJumpsRemaining = nbBonusJumps;
 	}
 	
