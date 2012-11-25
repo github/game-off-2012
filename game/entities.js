@@ -142,7 +142,7 @@ function FancyBackground(pen) {
 	}
 	var textH = Math.floor(Math.random() * 5) + 10;
 	var direction = "left";
-	var speed = (Math.random() * 10)+ 50;
+	var speed = (textH*8)+ 25;
 
 	//Prerender text
 	var subcanvas = document.createElement("canvas");
