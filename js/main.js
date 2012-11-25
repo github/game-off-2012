@@ -217,11 +217,11 @@
       // Draw Forks
       mit.ForkUtils.draw(ctx);
       // Draw Branches
-      mit.BranchUtils.draw(ctx);
+      //mit.BranchUtils.draw(ctx);
 
       // Check Collisions with pappu
       mit.ForkUtils.checkCollision();
-      mit.BranchUtils.checkCollision();
+      //mit.BranchUtils.checkCollision();
       mit.PakiaUtils.checkCollision();
 
       // Send over Pakias (Enemies)
