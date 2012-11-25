@@ -9,15 +9,15 @@ package
 
 
 
-	public class GithubJam extends FlxGame
+	public class Puller extends FlxGame
 
 	{
 
-		public function GithubJam()
+		public function Puller()
 
 		{
 
-			super(320,240,MenuState,2, 60, 60);
+			super(320,240,PlayState,2, 60, 60);
 			forceDebugger = true;
 		}
 

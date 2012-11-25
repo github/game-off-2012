@@ -18,6 +18,7 @@
     <class path="src" />
     <class path="..\..\lib\flod\Flod 4.1" />
     <class path="..\..\lib\flixel" />
+    <class path="..\..\lib\greensock-as3" />
   </classpaths>
   <!-- Build options -->
   <build>

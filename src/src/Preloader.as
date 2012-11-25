@@ -8,7 +8,7 @@ package
 		
 		public function Preloader()
 		{
-			className = "GithubJam";
+			className = "Puller";
 			super();
 		}
 		

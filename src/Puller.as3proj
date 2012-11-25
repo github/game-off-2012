@@ -18,6 +18,7 @@
     <class path="src" />
     <class path="..\lib\flod\Flod 4.1" />
     <class path="..\lib\flixel" />
+    <class path="..\lib\greensock-as3" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -72,7 +73,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="src\GithubJam.as" />
+    <compile path="src\Puller.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
