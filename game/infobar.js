@@ -299,15 +299,16 @@ function Infobar(pos) {
 		pen.fillStyle = "#0f0";
 		pen.font = "15px courier";
         
-		var x = this.tPos.x + 10;
+		var xs = this.tPos.x + 10;
+        var xe = this.tPos.x + this.tPos.w - 10;
 		var y = this.tPos.y + 15;
 		
 		if (this.tattr == null) {
-		    ink.text(x, y, "[no selction]", pen);
+		    ink.text(xs, y, "[no selction]", pen);
 		    return;
 		}
 		
-		ink.text(x, y, "Tower", pen);
+		ink.text(xs, y, "Tower", pen);
 		var counter = 20;
 		pen.font = "10px courier";
 		for (i in this.tattr) {
@@ -319,8 +320,12 @@ function Infobar(pos) {
             }
             var pre = prefixes[po];
             if (pre == undefined) pre = "???";
-		    var txt = i + ": " + Math.round(val*10)/10 + pre;
-		    ink.text(x, y + counter, txt, pen);
+            var nametxt = i.charAt(0).toUpperCase() + i.substr(1).toLowerCase();
+		    var valtxt = Math.round(val*10)/10 + pre;
+            pen.textAlign = 'left';
+		    ink.text(xs, y + counter, nametxt, pen);
+            pen.textAlign = 'right';
+            ink.text(xe, y + counter, valtxt, pen);
 		    counter += 15;
 		}
 	}

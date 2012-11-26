@@ -13,7 +13,10 @@
     this.bufferCanvas = bufferCanvas;
 
     this.id = 0;
-    this.money = 10000;
+    this.money = 160;
+    if (DFlag.lotsamoney) {
+        this.money = 10000;
+    }
     this.health = 100;
 
     this.lastTowerHover = null;
@@ -234,7 +237,7 @@
         var x = bW + 10;
         var y = bH - 75;
         ink.text(x, y, "Health: " + this.health, pen);
-        ink.text(x, y + 15, "Money: $" + this.money, pen);
+        ink.text(x, y + 15, "Money: $" + Math.round(this.money*100)/100, pen);
         ink.text(x, y + 30, "Time passed: " + gameTimeAccumulated, pen);
         ink.text(x, y + 45, "FPS: " + this.lastFPS, pen);
         ink.text(x, y + 60, "Bugs: " + eng.base.lengths.Bug, pen);  
