@@ -293,14 +293,16 @@ function Infobar(pos) {
 
 	this.base.addObject(this.attributeChoosers.target_Strategy);
 
+    /*
 	this.attributeChoosers.attack_type = new AttributeChooser(
             new temporalPos(pos.x, pos.y + 250, pos.w,
                 countElements(attackTypes) * 28),
             attackTypes,
             "attack_type");
+            */
 
     //We will soon no longer let them choose their attack strategy!
-	this.base.addObject(this.attributeChoosers.attack_type);
+	//this.base.addObject(this.attributeChoosers.attack_type);
 
     //Add our buttons, should really be done just in the constructor with our given pos information
 	this.added = function () {
@@ -350,7 +352,7 @@ function Infobar(pos) {
 	        ink.text(xs, y, "[no selction]", pen);
 	        return;
 	    }
-        
+
 	    ink.text(xs, y, formatToDisplay(getRealType(this.obj)), pen);
 	    var yPos = y + 20;
 	    var xPos = xs;
@@ -379,13 +381,21 @@ function Infobar(pos) {
 	            yPos += 5;
 
 	            pen.textAlign = 'center';
+	            pen.font = "14px courier";
 	            ink.text((xs + xe) / 2, yPos, formatToDisplay(attrName), pen);
-	            yPos += 15;
+	            pen.font = "10px courier";
+	            yPos += 20;
 	            xPos += 5;
+
+	            if (!defined(this.attributeChoosers[attrName])) {
+	                pen.textAlign = 'left';
+	                ink.text(xPos, yPos, formatToDisplay(getRealType(val)), pen);
+	                yPos += 15;
+	            }
+
 	            for (var subAttr in val) {
 	                tryPrintAsNumber(val[subAttr], subAttr);
 	            }
-	            xPos -= 5;
 
 	            //See if its an attribute which we have a attribute chooser for
 	            if (defined(this.attributeChoosers[attrName])) {
@@ -394,6 +404,8 @@ function Infobar(pos) {
 	                yPos += this.attributeChoosers[attrName].tPos.h;
 	                yPos += 20; //idk really why this is needed
 	            }
+
+	            xPos -= 5;
 
 	            //Even so we still need to position the attribute choosers
 	        }
@@ -405,5 +417,5 @@ function Infobar(pos) {
 
 
 
-	}           //End of draw
+	}             //End of draw
 }

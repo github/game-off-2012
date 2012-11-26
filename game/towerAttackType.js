@@ -13,6 +13,7 @@ function damageToTime(damage) {
 //Aoe
 //Slow
 //Arcing (delay arcs also)
+//DOT
 
 function applyDamage(target, attacker, damage) {
     target.attr.hp -= damage;

@@ -31,7 +31,9 @@ function roundToDecimal(value, decimalPlaces) {
 }
 
 function underscoresToSpaces(text) {
-    return text.replace("_", " ");
+    if (typeof text != "string")
+        fail("Only pass us text!");
+    return text.replace(/_/g, " ");
 }
 
 //http://stackoverflow.com/questions/4878756/javascript-how-to-capitalize-first-letter-of-each-word-like-a-2-word-city

@@ -125,7 +125,8 @@ function Tower(baseTile) {
         for (at in a) {
             if(typeof a[at] != "number")
                 continue;
-            //Seriously... WTF. This is shit.
+            //Seriously... WTF. This code used to mean if you did:
+            //attr.daf += 1 it causes the object to be deleted.
             if (invalid(a[at]))
             {
                 if(a[at] < 0)
