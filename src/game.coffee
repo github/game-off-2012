@@ -62,14 +62,17 @@ class Game
     @map.setActive(true)
     
     #The Camera
-    @camera = new Camera(@world,30 ,5,@inputHandler)
+    @camera = new Camera('undefined',30 ,5,@inputHandler)
     
     @level = null
     
+    
+    
     @levels = [
-      new Level("board", @world, @screen,STORAGE.getRessource("test"), STORAGE.getRessource("spritesheet"), @inputHandler, @),
-      new Level("board", @world, @screen,STORAGE.getRessource("test2"), STORAGE.getRessource("spritesheet"), @inputHandler, @)
+      new TestLevel("board", STORAGE.getRessource("test")),
+      new TestLevel("board", STORAGE.getRessource("test2"))
     ]
+    @camera.world = @levels[0].world
     
     @run()
     
@@ -83,9 +86,6 @@ class Game
     @camera.setActive(true)
     @level = @levels[index]
     impress().goto("game")
- 
-  beginContacts:(begin, manifold)=>
-    console.log("contact")
     
   run: =>
     @tick()
@@ -93,17 +93,13 @@ class Game
     window.requestAnimFrame(@run)
     
   tick: ->
-    @world.Step(1 / 60, 10, 10)
-    @world.ClearForces()
-    
     @map.tick() if @map.isActive()
-    @camera.tick() if @camera.isActive()
     @level.tick() if @level?
+    @camera.tick() if @camera.isActive()
   
   render: ->
-    @screen.clear()
-    @world.DrawDebugData()
+    #@screen.clear()
     @level.draw(@camera.getXoffset(), 0) if @level?
-    @screen.draw()
+    #@screen.draw()
     @map.draw() if @map.isActive()
 
