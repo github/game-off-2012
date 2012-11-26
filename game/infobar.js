@@ -91,6 +91,7 @@ function RadioButton(pos, txt, context, functionName, callData, prevRadioButton)
         }
     };
     
+    //May be called multiple times
     this.pressed = function() {
         this.toggled = true;
         if(this.context[this.functionName])
@@ -204,6 +205,57 @@ function Docked(dockedLeft, dockedRight, dockedTop, dockedBottom) {
     };
 }
 
+//Attributes should be an object, like targetStrategys
+function AttributeChooser(tPos, attributes, attributeName) {
+    this.base = new baseObj(this, 15); //Should not hardcode zorder
+
+    this.tPos = tPos;
+
+    var numAttributes = countElements(attributes);
+
+    var eachHeight = tPos.h / (numAttributes + 2);
+    var eachWidth = tPos.w * 0.8;
+
+    var xPos = tPos.x + tPos.w * 0.1;
+    var yPos = tPos.y + eachHeight;
+
+    var currentButton = null;
+
+    this.attributes = attributes;
+
+    var radioButtons = {};
+
+    for (var key in attributes) {
+        currentButton = new RadioButton(
+            new temporalPos(xPos, yPos, eachWidth, eachHeight),
+            key, this, "setAttribute", key, currentButton);
+        radioButtons[key] = currentButton;        
+        this.base.addObject(currentButton);
+        yPos += eachHeight;
+    }
+
+    this.setAttribute = function (newValue) {
+        var selected = this.base.rootNode.selectedObj;
+        if (!selected)
+            return;
+        selected[attributeName] = this.attributes[newValue];
+        selected[attributeName + "currentName"] = newValue;
+    };
+
+    this.loadAttribute = function () {
+        var selected = this.base.rootNode.selectedObj;
+        if (!selected)
+            return;
+
+        for (var key in radioButtons) {
+            if (key == selected[attributeName + "currentName"])
+                radioButtons[key].pressed();
+            else
+                radioButtons[key].unpressed();
+        }
+    }
+}
+
 function Infobar(pos) {
 	this.base = new baseObj(this, 14);
 	this.tattr = null;
@@ -216,73 +268,28 @@ function Infobar(pos) {
 
 	this.base.addObject(new Docked(0, 1, 0, 0));
 
-    //Upgrade button
-    this.added = function () {
-        //Std centered button position
-        this.upgradeb = new Button(
+	this.targetChooser = new AttributeChooser(
+            new temporalPos(pos.x, pos.y + 250, pos.w, 150),
+            targetStrategies,
+            "targetStrategy");
+
+	this.base.addObject(this.targetChooser);
+
+    //Add our buttons, should really be done just in the constructor with our given pos information
+	this.added = function () {
+	    //Std centered button position
+	    this.upgradeb = new Button(
             new temporalPos(((width - bW) / 2) - (buttonW / 2) + bW, 200, buttonW, 30, 0),
             "Upgrade!", this.base.rootNode, "upgradeSel");
-        this.upgradeb.base.addObject(new Docked(0, 1, 1, 0));
-        this.base.addObject(this.upgradeb);
+	    this.upgradeb.base.addObject(new Docked(0, 1, 1, 0));
+	    this.base.addObject(this.upgradeb);
+	};
 
-
-        var radioButton = new RadioButton(
-            new temporalPos(((width - bW) / 2) - (buttonW / 2) + bW, 250, buttonW, 30, 0),
-            "+Range", this, "setType", "Range", radioButton);
-        this.base.addObject(radioButton);
-        this.targetStrategyButtons[radioButton.callData] = radioButton;
-
-        var radioButton = new RadioButton(
-            new temporalPos(((width - bW) / 2) - (buttonW / 2) + bW, 300, buttonW, 30, 0),
-            "+Damage", this, "setType", "Damage", radioButton);
-        this.base.addObject(radioButton);
-        this.targetStrategyButtons[radioButton.callData] = radioButton;
-
-        var radioButton = new RadioButton(
-            new temporalPos(((width - bW) / 2) - (buttonW / 2) + bW, 350, buttonW, 30, 0),
-            "+Mutate", this, "setType", "Mutate", radioButton);
-        this.base.addObject(radioButton);
-        this.targetStrategyButtons[radioButton.callData] = radioButton;
-
-    };
-	
 	this.updateAttr = function (obj) {
-		this.tattr = obj.attr;
-        var newRadio = this.targetStrategyButtons[obj.targetStrategy];
-        if(newRadio) {
-            if(!newRadio.toggled)
-                newRadio.toggle();
-            this.setType(obj.targetStrategy);
-        }
-        else {
-            for(var key in this.targetStrategyButtons)
-                this.targetStrategyButtons[key].unpressed();
-        }
-		return;
+	    this.tattr = obj.attr;
+	    this.targetChooser.loadAttribute();
+	    return;
 	}
-    
-    this.setType = function(type) {
-        var selected = this.base.rootNode.selectedObj;
-        if(!selected)
-            return;
-        
-        selected.targetStrategy = type;
-        
-        if(type == "Range") {
-            selected.attr.range += 100;
-            selected.attr.speed -= 1;
-        } 
-        else if (type == "Damage") {
-            selected.attr.damage += 30;
-            selected.attr.speed -= 1;
-        }
-        else if (type == "Mutate") {
-            selected.attr.mutate += 50;
-            selected.attr.mutatestrength += 50;
-            selected.attr.speed -= 1;
-            selected.attr.damage -= 30;
-        }
-    }
 
     var prefixes = ["", "k", "M", "G", "T", "P", "E", "Z", "Y"];
 	this.draw = function(pen) {

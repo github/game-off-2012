@@ -116,6 +116,8 @@ function Tower(baseTile) {
     this.hover = false;
     this.selected = false;
     
+    this.targetStrategy = targetStrategies.Closest;
+
     var laserTime = 0.5;
     var nextFireIn = 1/this.attr.speed;
     var mutateCounter = 1/this.attr.mutate;
@@ -191,11 +193,11 @@ function Tower(baseTile) {
     }
 
     this.attack = function() {
-        var target = findClosest(eng, "Bug", this.tPos.getCenter(), this.attr.range + 0.01);        
-        if (!target) {
+        var target = this.targetStrategy(this);
+               
+        if(!target)
             return;
-        }
-        
+                
         target.hp -= this.attr.damage;
         this.attr.hitcount += 1;
         

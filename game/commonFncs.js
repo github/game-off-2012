@@ -43,6 +43,14 @@ function getAnElement(object) {
     return null;
 }
 
+//Don't use this often! If you really need the count (length) you should keep track of it
+function countElements(object) {
+    var count = 0;
+    for (var key in object)
+        count++;
+    return count;
+}
+
 function sortArrayByProperty(a, prop) {
     a.sort(cmp)
     function cmp(a, b) {
