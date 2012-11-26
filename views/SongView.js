@@ -15,8 +15,13 @@ SongView = Backbone.View.extend({
     this.score = 0;
     this.combo = 0;
     this.sprites = new Array();
-    this.sprites['marker'] = new Image();
-    this.sprites['marker'].src = 'img/marker.png';
+    this.sprites = {
+      background_boxes_1 : newImg('img/background_boxes_1.png'),
+      background_boxes_2 : newImg('img/background_boxes_2.png'),
+      background_boxes_3 : newImg('img/background_boxes_3.png'),
+      background_conveyer_belts : newImg('img/background_conveyer_belts.png'),
+      marker: newImg('img/marker.png')
+    };
     this.queues = _.clone(this.model.get('queues'));
     this.active   = [[],[],[],[]];
     this.inactive = [[],[],[],[]];
@@ -46,7 +51,7 @@ SongView = Backbone.View.extend({
       _.each(this.queues, function(queue, i){
           if (queue[0] <= (this.getTime() + 1000)){
             queue.shift();
-            this.active[i].push({top:0, type:(i+1)});
+            this.active[i].push({top:0, type:i});
           }
       }, this);
     }
@@ -135,8 +140,8 @@ SongView = Backbone.View.extend({
     this.context.fillStyle = color;
     _.each(type, function(queues){
       _.each(queues, function(marker){
-        this.context.drawImage(this.sprites['marker'],
-          (marker.type * 120), marker.top);
+        this.context.drawImage(this.sprites.marker,
+          (marker.type * 94 + 70), marker.top);
       }, this)
     }, this);
   },
@@ -146,11 +151,16 @@ SongView = Backbone.View.extend({
     requestAnimationFrame(this.animate);
     this.clear();
 
+    this.context.drawImage(this.sprites.background_conveyer_belts,0,0);
+    this.context.drawImage(this.sprites.background_boxes_1,0,0);
+    this.context.drawImage(this.sprites.background_boxes_2,0,0);
+    this.context.drawImage(this.sprites.background_boxes_3,0,0);
+
     this.context.fillStyle = 'gray';
-    this.context.fillRect(120, 0, 20, this.canvas.height);
-    this.context.fillRect(240, 0, 20, this.canvas.height);
-    this.context.fillRect(360, 0, 20, this.canvas.height);
-    this.context.fillRect(480, 0, 20, this.canvas.height);
+    this.context.fillRect(70, 0, 20, this.canvas.height);
+    this.context.fillRect(165, 0, 20, this.canvas.height);
+    this.context.fillRect(258, 0, 20, this.canvas.height);
+    this.context.fillRect(353, 0, 20, this.canvas.height);
     this.context.fillRect(0, 335, this.canvas.width, 5);
     this.context.fillRect(0, 360, this.canvas.width, 5);
     

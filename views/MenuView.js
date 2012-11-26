@@ -23,6 +23,7 @@ MenuView = Backbone.View.extend({
   select: function (event) {
     $('.selected').removeClass('selected');
     $(event.target).addClass('selected');
+    game.events.trigger('playSound', 'click');
   },
 
   selectNext: function () {
@@ -31,6 +32,7 @@ MenuView = Backbone.View.extend({
       $('.selected').removeClass('selected');
       next.addClass('selected');
     }
+    game.events.trigger('playSound', 'click');
   },
 
   selectPrev: function () {
@@ -39,6 +41,7 @@ MenuView = Backbone.View.extend({
       $('.selected').removeClass('selected');
       prev.addClass('selected');
     }
+    game.events.trigger('playSound', 'click');
   },
 
   choose: function () {
