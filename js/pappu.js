@@ -219,7 +219,10 @@
 
       var self = this;
 
-      self.clones.forEach(function(clone) {
+      self.clones.forEach(function(clone, index) {
+        if (clone.x > mit.W || clone.y < 0 || clone.y > mit.H)
+          self.clones.splice(index, 1);
+
         clone.x += utils.randomNumber(5, 10);
         clone.y += utils.randomNumber(-20, 20);
 
