@@ -147,48 +147,103 @@ function RadioButton(pos, txt, context, functionName, callData, prevRadioButton)
 	};
 }
 
-function Infobar() {
+//Doesn't work... basically should calculate offsets to sides
+//and then insure they are kept when resize is called.
+
+//Docks its parent in reference to its grandparent (its parent's parent).
+//For not docking is absolute... but it could just as easily be made percentage based (like a hybrid).
+function Docked(dockedLeft, dockedRight, dockedTop, dockedBottom) {
+    this.base = new baseObj(this);
+
+    this.enabled = false;
+    this.dockedLeft = dockedLeft;
+    this.dockedRight = dockedRight;
+    this.dockedTop = dockedTop;
+    this.dockedBottom = dockedBottom;
+
+    this.added = function () {
+        if (this.base.parent && this.base.parent.base.parent)
+            this.parentAdded();
+    };
+
+    this.parentAdded = function () {
+        //dockingObject docks in reference to dockReference
+        var dockReference = this.base.parent.base.parent.tPos;
+        var dockingObject = this.base.parent.tPos;
+
+        //Get original distances to from every side (and store them)
+        this.leftDistance = dockingObject.x - dockReference.x;
+        this.topDistance = dockingObject.y - dockReference.y;
+
+        this.rightDistance = dockReference.w - this.leftDistance - dockingObject.w;
+        this.bottomDistance = dockReference.h - this.topDistance - dockingObject.h;
+
+        this.enabled = true;
+    };
+
+    this.resize = function () {
+        var dockReference = this.base.parent.base.parent.tPos;
+        var dockingObject = this.base.parent.tPos;
+
+        //Insure original distances to every side our parent is docked on remains the same
+        if (this.enabled) {
+            if (this.dockedLeft)
+                dockingObject.x = dockReference.x + this.leftDistance;
+
+            if (this.dockedTop)
+                dockingObject.y = dockReference.y + this.topDistance;
+
+            if (this.dockedRight)
+                dockingObject.x = dockReference.x + dockReference.w - this.rightDistance - dockingObject.w;
+                //dockingObject.w = dockReference.w - this.leftDistance - this.rightDistance;
+
+            if (this.dockedBottom)
+                dockingObject.y = dockReference.y + dockReference.h - this.bottomDistance - dockingObject.h;
+                //dockingObject.h = dockReference.h - this.topDistance - this.bottomDistance;
+        }
+    };
+}
+
+function Infobar(pos) {
 	this.base = new baseObj(this, 14);
 	this.tattr = null;
+
+	this.tPos = pos;
 
     this.targetStrategyButtons = {};
     
 	var buttonW = 100;
-    
-    this.resize = function(e) {
-        console.log(e);
-        this.tPos = new temporalPos(e.width - 150, 0, 150, e.height * 0.8, 0)
-    }
-    
+
+	this.base.addObject(new Docked(0, 1, 0, 0));
+
     //Upgrade button
-    this.added = function()
-    {
-        	//Std centered button position
+    this.added = function () {
+        //Std centered button position
         this.upgradeb = new Button(
-            new temporalPos(((width-bW)/2)-(buttonW/2)+bW,200,buttonW,30,0), 
+            new temporalPos(((width - bW) / 2) - (buttonW / 2) + bW, 200, buttonW, 30, 0),
             "Upgrade!", this.base.rootNode, "upgradeSel");
-            
+        this.upgradeb.base.addObject(new Docked(0, 1, 1, 0));
         this.base.addObject(this.upgradeb);
-            
-        
+
+
         var radioButton = new RadioButton(
-            new temporalPos(((width-bW)/2)-(buttonW/2)+bW,250,buttonW,30,0), 
+            new temporalPos(((width - bW) / 2) - (buttonW / 2) + bW, 250, buttonW, 30, 0),
             "+Range", this, "setType", "Range", radioButton);
         this.base.addObject(radioButton);
         this.targetStrategyButtons[radioButton.callData] = radioButton;
-        
+
         var radioButton = new RadioButton(
-            new temporalPos(((width-bW)/2)-(buttonW/2)+bW,300,buttonW,30,0), 
+            new temporalPos(((width - bW) / 2) - (buttonW / 2) + bW, 300, buttonW, 30, 0),
             "+Damage", this, "setType", "Damage", radioButton);
         this.base.addObject(radioButton);
         this.targetStrategyButtons[radioButton.callData] = radioButton;
-        
+
         var radioButton = new RadioButton(
-            new temporalPos(((width-bW)/2)-(buttonW/2)+bW,350,buttonW,30,0), 
+            new temporalPos(((width - bW) / 2) - (buttonW / 2) + bW, 350, buttonW, 30, 0),
             "+Mutate", this, "setType", "Mutate", radioButton);
         this.base.addObject(radioButton);
         this.targetStrategyButtons[radioButton.callData] = radioButton;
-        
+
     };
 	
 	this.updateAttr = function (obj) {

@@ -92,7 +92,13 @@ function baseObj(holder, zindex) {
 
         if(obj.added)
             obj.added();
-    };
+
+        //Hmm... I don't like this loop, too specific
+        obj.base.loopThroughAllTypes(function (child) {
+            if (child.parentAdded)
+                child.parentAdded();
+        });
+    };    
 
     function removeFromArray(baseObj, obj, array, arrayLengths) {
         if (!assertDefined(baseObj) || 

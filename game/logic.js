@@ -1,10 +1,12 @@
-﻿function Engine(pen, bufferCanvas) {
+﻿function Engine(pen, bufferCanvas, pos) {
     var mX = -1;
     var mY = -1;    
     var mdX = -1; //Mouse down
     var mdY = -1;
     var muX = -1; //Mouse up
     var muY = -1;
+
+    this.tPos = pos;
 
     this.pen = pen;
     this.bPen = bufferCanvas.getContext("2d");
@@ -20,7 +22,10 @@
 
     this.engine = this; //eng also works fine
 
-    this.infobar = new Infobar();
+    this.infobar = new Infobar(
+            new temporalPos(pos.w - 150, 0, 150, pos.h * 0.8, 0)
+        );
+
     this.base.addObject(this.infobar);
     
     this.currentBugs = 10;
