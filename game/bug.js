@@ -13,6 +13,7 @@ function Bug(startPath, difficulty) {
         attSpeed:       2,
         speed:          20,
         hitcount:       0,
+        value:          5,
     };
 
     var cen = { x: startPath.tPos.x, y: startPath.tPos.y };
@@ -36,7 +37,6 @@ function Bug(startPath, difficulty) {
 
     this.bugRelPathPos = Math.floor(Math.random()* tileSize) +1;
     this.delay = this.bugRelPathPos + 1;
-    this.laserTime = 0.5;
 
     this.update = function (dt) {
         this.tPos.update(dt);

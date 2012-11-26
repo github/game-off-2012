@@ -8,6 +8,11 @@ function doAttack(object) {
         return;
 
     var hit = object.attr.attack_type.run(object, target);
+
+    var array = [];
+    mergeToArray(hit, array);
+
+    return array;
 };
 
 //The reason this is its own object is because the attack cycle will
@@ -21,8 +26,15 @@ function AttackCycle() {
     }
 
     //Going to be more than just doAttack!
-    this.triggerAttack = function() {
-        doAttack(this.base.parent);
+    this.triggerAttack = function () {
+        var targets = doAttack(this.base.parent);
+
+        for (var key in targets) {
+            var target = targets[key];
+            if (target && target.attr.hp < 0 && getRealType(target) != "Tower") {
+                this.base.rootNode.money += target.attr.value;
+            }
+        }
     };
 };
 
