@@ -4,11 +4,11 @@ function Pointer(owner, name) {
     this.owner = owner;
     this.name = name;
 
-    this.getValue = function () {
+    this.get = function () {
         return this.owner[this.name];
     }
 
-    this.setValue = function (newValue) {
+    this.set = function (newValue) {
         this.owner[this.name] = newValue;
     }
 }
@@ -22,11 +22,11 @@ function Pointer(owner, name) {
 function ConstantPointer(value) {
     this.value = value;
 
-    this.getValue = function () {
+    this.get = function () {
         return this.value;
     }
 
-    this.setValue = function (newValue) {
+    this.set = function (newValue) {
         this.value = newValue;
     }
 }

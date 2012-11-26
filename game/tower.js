@@ -77,9 +77,12 @@ function Tower(baseTile) {
 
     this.laserTime = 0.5;
 
-    //Why are these local?
-
-    var towerRange = new Circle(this.tPos.getCenter(), this.attr.range, this.color, "transparent", 11);
+    
+    var towerRange = new Circle(
+        this.tPos.getCenter(), 
+        new Pointer(this.attr, "range"), 
+        new Pointer(this, "color"), 
+        "transparent", 11);
     //var tooltip = new ToolTip(this, this.attr);
     var added = false;
     
@@ -151,15 +154,6 @@ function Tower(baseTile) {
         var a = this.attr;
         this.color = rgba(255 - a.hp, a.range, a.damage, 0.5)
     }
-
-    this.update = function (dt) {        
-        //Hmm... I wish hooking up values with other values was built into the
-        //language (like pointers... but fitting both the case of constants and stuff).
-        if(added) {
-            towerRange.radius = this.attr.range;
-            towerRange.color = this.color;
-        }
-    };
 
     this.click = function() {
         this.tryUpgrade();
