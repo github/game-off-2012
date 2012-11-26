@@ -23,7 +23,20 @@ function temporalPos(x, y, w, h, dx, dy) {
     };
     this.getCenter = function () {
         return new Vector(this.x + this.w / 2, this.y + this.h / 2 );
-    };    
+    };
+
+    this.setSpeed = function (speed) {
+        var initialSpeedSq = this.dx * this.dx + this.dy * this.dy;
+
+        if (initialSpeedSq == 0 || speed == 0) {
+            this.dx = 0;
+            this.dy = 0;
+        }
+        else {
+            this.dx *= Math.sqrt((speed * speed) / initialSpeedSq);
+            this.dy *= Math.sqrt((speed * speed) / initialSpeedSq);
+        }
+    };
 }
 
 var Vector = (function () {
@@ -64,6 +77,9 @@ var Vector = (function () {
         this.x += otherVec.x;
         this.y += otherVec.y;
         return this;
+    }
+    p.setMag = function (magnitude) {
+        this.norm().mult(magnitude);
     }
     return Vector;
 } ());

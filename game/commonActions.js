@@ -72,6 +72,20 @@ function UpdateTicker(objWithDelay, tickDelayName, parentTickFunctionName, inver
     }
 }
 
+//Could also just be an UpdateTicker that calls base.destroySelf
+function Lifetime(lifetime) {
+    this.base = new baseObj(this);
+
+    this.lifetime = lifetime;
+
+    this.update = function (dt) {
+        this.lifetime -= dt;
+
+        if (this.lifetime < 0)
+            this.base.parent.base.destroySelf();
+    }
+}
+
 function Selectable() {
     this.base = new baseObj(this);
 
@@ -116,5 +130,26 @@ function HoverIndicator(objectPointed) {
             pen.lineWidth = 1;
             ink.rect(p.x, p.y, p.w, p.h, pen);
         }
+    }
+}
+
+function SlowEffect(magnitude) {
+    this.base = new baseObj(this, 15);
+    this.magnitude = magnitude;
+
+    this.added = function () {
+        this.base.parent.attr.speed *= this.magnitude;
+    }
+
+    this.die = function () {
+        this.base.parent.attr.speed /= this.magnitude;
+    }
+
+    this.draw = function (pen) {
+        var p = this.base.parent.tPos;
+        pen.fillStyle = "dodgerblue";
+        pen.strokeStyle = "white";
+        pen.lineWidth = 1;
+        ink.circ(p.getCenter().x, p.getCenter().y, p.w / 2, pen);
     }
 }
