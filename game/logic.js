@@ -26,10 +26,15 @@
     this.engine = this; //eng also works fine
 
     this.infobar = new Infobar(
-            new temporalPos(pos.w - 150, 0, 150, pos.h * 0.8, 0)
+            new temporalPos(pos.w - 150, 0, 150, pos.h * 0.8)
         );
 
     this.base.addObject(this.infobar);
+
+    this.towerbar = new Towerbar(
+            new temporalPos(0, pos.h - 150, pos.w - 150, 150)
+        );
+    this.base.addObject(this.towerbar);
     
     this.currentBugs = 10;
     this.maxBugs = 150;
@@ -93,7 +98,6 @@
         }
 
         this.handleMouseEvents();
-
 
         if (this.resizeEvent) {
             this.base.raiseEvent("resize", this.resizeEvent);
@@ -168,9 +172,9 @@
 
         for (var key in allUnderMouse)
             if (allUnderMouse[key] !== topMost)
-                allUnderMouse[key].base.callMerge(eventName, { x: mX, y: mY, topMost: false });
+                allUnderMouse[key].base.callRaise(eventName, { x: mX, y: mY, topMost: false });
 
-        topMost.base.callMerge(eventName, { x: mX, y: mY, topMost: true });
+        topMost.base.callRaise(eventName, { x: mX, y: mY, topMost: true });
 
         return allUnderMouse;
     }
@@ -190,8 +194,9 @@
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
                     if (vecToRect({ x: muX, y: muY }, this.prevMouseDown[i].tPos).magSq() == 0) {
-                        this.prevMouseDown[i].base.callMerge("click", { x: muX, y: muY });
+                        this.prevMouseDown[i].base.callRaise("click", { x: muX, y: muY });
                     }
+                    this.prevMouseDown[i].base.callRaise("dragEnd", { x: muX, y: muY });
                 }
             }
 
@@ -207,7 +212,7 @@
             if (this.prevMouseOver && this.prevMouseOver.length > 0) {
                 for (var i = 0; i < this.prevMouseOver.length; i++) {
                     if (vecToRect({ x: mX, y: mY }, this.prevMouseOver[i].tPos).magSq() != 0) {
-                        this.prevMouseOver[i].base.callMerge("mouseout", { x: mX, y: mY });
+                        this.prevMouseOver[i].base.callRaise("mouseout", { x: mX, y: mY });
                     }
                 }
             }
@@ -215,7 +220,7 @@
 
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
-                    this.prevMouseDown[i].base.callMerge("dragged", { x: mX, y: mY });
+                    this.prevMouseDown[i].base.callRaise("dragged", { x: mX, y: mY });
                 }
             }
 
@@ -238,12 +243,44 @@
         ink.text(x, y + 15, "Money: $" + Math.round(this.money*100)/100, pen);
         ink.text(x, y + 30, "Time passed: " + gameTimeAccumulated, pen);
         ink.text(x, y + 45, "FPS: " + this.lastFPS, pen);
-        ink.text(x, y + 60, "Bugs: " + eng.base.lengths.Bug, pen);  
+        ink.text(x, y + 60, "Bugs: " + eng.base.lengths.Bug, pen);
     };
 
-    this.changeSel = function(obj) {
-        this.selectedObj = obj;
-        this.infobar.updateAttr(obj);
+    //All selected stuff should probably be in its own object
+    var currentRangeDisplayed = null;
+    var hoverIndicator = new HoverIndicator(); //currentRangeDisplayed should probably be done like this
+    this.base.addObject(hoverIndicator);
+
+    this.changeSel = function (obj) {
+        if (obj == this.selectedObj)
+            return;
+
+        if (currentRangeDisplayed) {
+            currentRangeDisplayed.base.destroySelf();
+            currentRangeDisplayed = null;
+        }
+
+        hoverIndicator.objectPointer = obj;
+
+        if (obj && obj.attr) {
+            //Hooks up our tower range to our actual attributes (but not our center)
+            //so we don't need to maintain it.
+            currentRangeDisplayed = new Circle(
+                obj.tPos.getCenter(),
+                new Pointer(obj.attr, "range"),
+                new Pointer(obj, "color"),
+                "transparent", 11);
+
+            this.base.addObject(currentRangeDisplayed);
+
+            this.selectedObj = obj;
+            this.infobar.updateAttr(obj);
+        }
+        else {
+            this.selectedObj = null;
+            this.infobar.clearDisplay();
+        }
+
         return;
     }
 
@@ -252,11 +289,11 @@
             this.selectedObj.tryUpgrade();
         return;
     }
-
+    
     this.getSelType = function () {
         if (!this.selectedObj) {
             return null;
-        } 
+        }
         return this.selectedObj.base.type;
     }
 }

@@ -17,7 +17,7 @@ function AttackCycle() {
     this.attackCounter = 0;
 
     this.added = function () {
-        this.base.addObject(new UpdateTicker(this.base.parent.attr, "speed", "triggerAttack", true));
+        this.base.addObject(new UpdateTicker(this.base.parent.attr, "attSpeed", "triggerAttack", true));
     }
 
     //Going to be more than just doAttack!
@@ -30,8 +30,11 @@ function Mortality() {
     this.base = new baseObj(this);
 
     this.update = function () {
-        if (this.base.parent.attr.hp < 0)
-            this.base.parent.die();
+        if (this.base.parent.attr.hp < 0) {
+            var sound = new Sound("snd/die.wav");
+            sound.play();
+            this.base.parent.base.destroySelf();
+        }
     }
 }
 
@@ -65,6 +68,53 @@ function UpdateTicker(objWithDelay, tickDelayName, parentTickFunctionName, inver
                 this.base.parent[parentTickFunctionName]();
                 this.currentCount = 0;
             }
+        }
+    }
+}
+
+function Selectable() {
+    this.base = new baseObj(this);
+
+    this.ignoreNext = false;
+
+    //Magical hacks
+    this.topMost = false;
+    //I use mouseup because click doesn't have topMost because I don't want to implement it
+    this.parent_mouseup = function (e) {
+        this.topMost = e.topMost;
+    }
+
+    this.parent_click = function () {
+        if (this.ignoreNext) {
+            this.ignoreNext = false;
+            return;
+        }
+        if (this.topMost)
+            this.base.rootNode.changeSel(this.base.parent);
+    }
+
+    this.parent_die = function () {
+        if(this.base.rootNode.selectedObj == this.base.parent)
+            this.base.rootNode.changeSel(null);
+    }
+}
+
+function HoverIndicator(objectPointed) {
+    this.base = new baseObj(this, 20);
+
+    this.objectPointer = objectPointed;
+
+    this.draw = function (pen) {
+        if (this.objectPointer && this.objectPointer.tPos) {
+            var p = this.objectPointer.tPos;
+            //pen.fillStyle = this.color;
+            //pen.strokeStyle = "lightblue";
+            //ink.rect(p.x, p.y, p.w, p.h, pen);
+
+            pen.fillStyle = "rgba(255, 255, 255, 0.25)";
+            pen.strokeStyle = "yellow";
+            pen.lineWidth = 1;
+            ink.rect(p.x, p.y, p.w, p.h, pen);
         }
     }
 }

@@ -1,14 +1,20 @@
 var targetStrategies = {
     Closest: function Closest () {
         this.extra_Range = 0; //Just to demonstrate what is possible, will be removed later
-        this.run = function (tower) {
-            var target = findClosest(tower.base.rootNode, "Bug", tower.tPos.getCenter(), tower.attr.range + this.extra_Range);
+        this.run = function (attacker) {
+            var targetType = getRealType(attacker) == "Bug" ? "Tower" : "Bug";
+
+            var target = findClosest(attacker.base.rootNode, targetType,
+                            attacker.tPos.getCenter(), attacker.attr.range + this.extra_Range);
             return target;
         }
     },
     Random: function Random () {
-        this.run = function (tower) {
-            var targets = findAllWithin(tower.base.rootNode, "Bug", tower.tPos.getCenter(), tower.attr.range);
+        this.run = function (attacker) {
+            var targetType = getRealType(attacker) == "Bug" ? "Tower" : "Bug";
+
+            var targets = findAllWithin(attacker.base.rootNode, targetType, 
+                            attacker.tPos.getCenter(), attacker.attr.range);
         
             if(targets.length == 0)
                 return;

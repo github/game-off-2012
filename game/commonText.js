@@ -1,6 +1,6 @@
 var prefixes = ["", "k", "M", "G", "T", "P", "E", "Z", "Y"];
 //Prefixes the number with prefixes to reduce its size
-function prefixNumber(number) {
+function prefixNumber(number, decimalPlaces) {
     //Math.floor(Math.log(val) / Math.log(1000))
     //will also get "pos"
     var pos = 0;
@@ -11,7 +11,23 @@ function prefixNumber(number) {
     var pre = prefixes[pos];
     if (pre == undefined) pre = "???";
 
+    if (defined(decimalPlaces))
+        number = roundToDecimal(number, decimalPlaces);
+
     return pre + number;
+}
+
+var decimalTable = { 0: 1, 1: 10, 2: 100, 3: 1000, 4: 10000, 5: 100000, 6: 1000000 };
+function roundToDecimal(value, decimalPlaces) {
+    var decimalValue;
+    if (decimalPlaces <= 6) {
+        decimalValue = decimalTable[decimalPlaces]
+    } else {
+        decimalValue = 1;
+        while (decimalPlaces > 0)
+            decimalValue *= 10;
+    }
+    return Math.round(value * decimalValue) / decimalValue;
 }
 
 function underscoresToSpaces(text) {

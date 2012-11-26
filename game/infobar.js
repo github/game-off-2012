@@ -214,7 +214,7 @@ function AttributeChooser(tPos, attributes, attributeName) {
     this.attributeName = attributeName;
 
     this.radioButtons = {};
-
+    
     var radioButtons = this.radioButtons;
     var currentButton = null;
     for (var key in attributes) {
@@ -299,7 +299,8 @@ function Infobar(pos) {
             attackTypes,
             "attack_type");
 
-	this.base.addObject(this.attributeChoosers.attack_type);
+    //We no longer let them choose their attack strategy!
+	//this.base.addObject(this.attributeChoosers.attack_type);
 
     //Add our buttons, should really be done just in the constructor with our given pos information
 	this.added = function () {
@@ -309,15 +310,21 @@ function Infobar(pos) {
             "Upgrade!", this.base.rootNode, "upgradeSel");
 	    this.upgradeb.base.addObject(new Docked(0, 1, 1, 0));
 	    this.base.addObject(this.upgradeb);
+
+	    this.clearDisplay();
 	};
 
 	this.updateAttr = function (obj) {
+	    this.base.setAttributeRecursive("hidden", false);
 	    this.tattr = obj.attr;
-        for(var key in this.attributeChoosers)
-            this.attributeChoosers[key].loadAttribute();
+	    for (var key in this.attributeChoosers)
+	        this.attributeChoosers[key].loadAttribute();
 	    return;
 	}
 
+	this.clearDisplay = function () {
+	    this.base.setAttributeRecursive("hidden", true);
+	}
 
 	this.draw = function (pen) {
 	    pen.fillStyle = "#000";
@@ -354,8 +361,7 @@ function Infobar(pos) {
 	            if (typeof val != "number")
 	                return false;
 
-	            val = Math.round(val * 10) / 10;
-	            var valtxt = prefixNumber(val);
+	            var valtxt = prefixNumber(val, 1);
 
 	            var nametxt = formatToDisplay(name);
 
@@ -397,5 +403,5 @@ function Infobar(pos) {
 
 
 
-	}          //End of draw
+	}           //End of draw
 }

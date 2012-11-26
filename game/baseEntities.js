@@ -132,7 +132,8 @@ function baseObj(holder, zindex) {
     };
 
     this.destroySelf = function () {
-        if (this.parent && this.parent) { //Else there is no way to destroy ourself
+        if (this.parent) { //Else there is no way to destroy ourself
+            this.holder.base.callRaise("die");
             this.parent.base.removeObject(this.holder);
 
             //Also destroy our children (keeps allChildren working properly)
@@ -206,6 +207,30 @@ function baseObj(holder, zindex) {
         return returnedValues;
     }
 
+    //Calls the function, then raises an event called "parent_" + name
+    //to all of its children. Does not collect the return values as this
+    //concept is being phased out as it is not really OO sound.
+    this.callRaise = function (name, args) {
+        if(holder[name])
+            holder[name](args);
+
+        this.loopThroughAllTypes(function (child) {
+            if (child.base) {
+                child.base.raiseEvent("parent_" + name, args);
+            }
+        });
+    }
+
+    this.setAttributeRecursive = function (attributeName, value) {
+        this.holder[attributeName] = value;
+
+        this.loopThroughAllTypes(function (child) {
+            if (child.base) {
+                child.base.setAttributeRecursive(attributeName, value);
+            }
+        });
+    }
+
     this.update = function (dt) {
         var returnedValues = [];
 
@@ -251,7 +276,7 @@ function baseObj(holder, zindex) {
             for (var key in childWithZIndex[y].array) {
                 var child = childWithZIndex[y].array[key];
                 pen.save();
-                if (child.draw)
+                if (child.draw && !child.hidden)
                     child.draw(pen);
                 pen.restore();
             }

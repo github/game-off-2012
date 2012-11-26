@@ -42,6 +42,8 @@ function Tower_Connection(t1, t2) {
 
 // FRIGGIN UGLY, waiting for mouseup fix...
 //Don't wait, the time is now (fix it yourself, I am busy).
+//Oh the fix was actually really easy... don't know why you didnt just add it
+//all you needed was a drag end to be triggered. Thought you wanted more/there was less implemented.
 var towerDragStartMouseDown;
 //All mutate stuff is copy-pasta from our mother project (for now)
 function Tower(baseTile) {
@@ -53,7 +55,7 @@ function Tower(baseTile) {
         range:          Math.random() * 200 + 100,
         damage:         Math.random() * 30  + 1,
         hp:             Math.random() * 100 + 10,
-        speed:          Math.random() * 1   + 1,        
+        attSpeed:       Math.random() * 1   + 1,        
         mutate:         Math.random() * 50,
         mutatestrength: Math.random() * 50,
         upload:         Math.random() * 50,
@@ -72,20 +74,13 @@ function Tower(baseTile) {
 
     this.base.addObject(new Mortality());
 
+    this.base.addObject(new Selectable());
+
     this.hover = false;
     this.selected = false;
 
     this.laserTime = 0.5;
 
-    
-    var towerRange = new Circle(
-        this.tPos.getCenter(), 
-        new Pointer(this.attr, "range"), 
-        new Pointer(this, "color"), 
-        "transparent", 11);
-    //var tooltip = new ToolTip(this, this.attr);
-    var added = false;
-    
     this.draw = function (pen) {
         var p = this.tPos;
         pen.save();
@@ -99,13 +94,12 @@ function Tower(baseTile) {
     this.tryUpgrade = function () {
         if (eng.money >= 100) {
             this.attr.damage *= 2;
-            this.attr.speed *= 2;
+            this.attr.attSpeed *= 2;
             eng.money -= 100;
         }
     };
     
     this.die = function() {
-        this.base.destroySelf();
         var c = this.connections;
         for (var i = 0; i < c.length; i++) {
             c[i].base.destroySelf();
@@ -127,7 +121,14 @@ function Tower(baseTile) {
         for (at in a) {
             if(typeof a[at] != "number")
                 continue;
-            if (invalid(a[at])) this.die();
+            //Seriously... WTF. This is shit.
+            if (invalid(a[at]))
+            {
+                if(a[at] < 0)
+                    this.die();
+                else
+                    fail("Invalid attribute in attr of object (you likely have a typo).");
+            }
             if (at == "hitcount") continue;
             if (at == "mutate" || at == "mutatestrength") {
                 // Avoid exponetial increase in all tower stats if mutate mutation was calculated just like all the other values.
@@ -159,27 +160,16 @@ function Tower(baseTile) {
         this.tryUpgrade();
     };
 
-    this.mouseover = function(e) {
+    this.mouseover = function(e) {        
         // Only required because of issue #29
         for (var i = 0; i < this.connections.length; i++) {
             this.connections[i].hover = true;
-        }
-        if (!added) {
-            this.base.addObject(towerRange);
-            //this.base.addObject(tooltip);
-            this.base.rootNode.changeSel(this);
-            added = true;
         }
     };
     
     this.mouseout = function(e) {
         for (var i = 0; i < this.connections.length; i++) {
             this.connections[i].hover = false;
-        }
-        if (added) {
-            this.base.removeObject(towerRange);
-            //this.base.removeObject(tooltip);
-            added = false;
         }
     };
     
@@ -190,7 +180,6 @@ function Tower(baseTile) {
     
     this.mouseup = function(e) {
         var dst = towerDragStartMouseDown;
-        console.log("mouseup event! Found tower: ", this, dst, this == dst);
         if (!dst) return;
         if (eng.money < 50) return;
         eng.money -= 50;
@@ -199,20 +188,7 @@ function Tower(baseTile) {
         this.connections.push(conn);
         dst.connections.push(conn);
     };
-/*    this.dragged = function(e){
-        var eng = this.base.rootNode;
-        var dst = findClosest(eng, "Tower", e, 0);
-        var curTile = findClosest(eng, "Tile", e, 0);
-        if (curTile !== this.baseTile) {
-            var towerOnCurTile = findClosest(eng, "Tower", e, 0);
-            var pathOnCurTile = findClosest(eng, "Path", e, 0);
-            if (!towerOnCurTile && !pathOnCurTile) {
-                var p = curTile.tPos;
-                this.baseTile = curTile;
-                this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0); //maybe I shouldn't new it
-            }
-        }
-    };*/
+
     // Yes, this is supposed to be here.
     this.mutate();
 }

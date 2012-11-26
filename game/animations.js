@@ -1,9 +1,12 @@
-function MakeBugLaser(tower, bug) {
-    var cent1 = tower.tPos.getCenter();
-    var cent2 = bug.tPos.getCenter();
+function MakeLaser(shooter, target, time) {
+    var cent1 = shooter.tPos.getCenter();
+    var cent2 = target.tPos.getCenter();
 
-    var line = new Line(cent1, cent2, "rgba(255,0,0,0)", 12);
-    line.base.addObject(new AlphaDecay(bug.laserTime, 1, 0));
+    var color = getRealType(shooter) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
+    var laserTime = time;
+
+    var line = new Line(cent1, cent2, color, 12);
+    line.base.addObject(new AlphaDecay(laserTime, 1, 0));
 
     this.sound = new Sound("snd/Laser_Shoot.wav");
     this.sound.play();

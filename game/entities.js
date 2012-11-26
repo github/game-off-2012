@@ -4,6 +4,8 @@
     this.tPos = new temporalPos(x, y, w, h, 0, 0);
     this.base = new baseObj(this, 1);
 
+    this.base.addObject(new Selectable());
+
     this.update = function (dt) {
         this.tPos.update(dt);
     };
@@ -29,14 +31,17 @@
         this.hover = false;
     };
 
-    this.click = function(e) {
+    this.click = function (e) {
         var eng = this.base.rootNode;
         var towerOnTile = findClosest(eng, "Tower", e, 0);
         var pathOnTile = findClosest(eng, "Path", e, 0);
 
         if (!towerOnTile && !pathOnTile && eng.money - 50 >= 0) {
             eng.money -= 50;
-            eng.base.addObject(new Tower(this));
+            var towerToAdd = new Tower(this);
+            eng.base.addObject(towerToAdd);
+            this.base.rootNode.changeSel(towerToAdd);
+            getAnElement(this.base.children.Selectable).ignoreNext = true;
         }
     };
 }

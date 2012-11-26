@@ -6,6 +6,7 @@ function Bug(startPath, difficulty) {
     this.color = "yellow";
     var r = 4;
 
+
     var sound = new Sound("snd/die.wav");
 
     var cen = { x: startPath.tPos.x, y: startPath.tPos.y };
@@ -15,38 +16,30 @@ function Bug(startPath, difficulty) {
     this.tPos = new temporalPos(cen.x - r, cen.y - r, r * 2, r * 2, this.speed, 0);
     this.base = new baseObj(this, 10);
 
+
+    this.attr = {
+        range:          100,
+        damage:         1 + difficulty/4,
+        hp:             Math.floor(20 * 3 * difficulty),
+        attSpeed:       2,
+        hitcount:       0,
+    };
+
+    this.attr.target_Strategy = new targetStrategies.Closest();
+    this.attr.attack_type = new attackTypes.Normal();
+
+    this.base.addObject(new AttackCycle());
+
+    this.base.addObject(new Mortality());
+
     this.curPath = startPath;
 
     this.bugRelPathPos = Math.floor(Math.random()* tileSize) +1;
     this.delay = this.bugRelPathPos + 1;
     this.laserTime = 0.5;
-    var laserTime = this.laserTime;
-    var cooldownfull = 2;
-    var cooldown = cooldownfull;
-    var damage = 1 + difficulty/4;
-
-    this.attack = function () {
-        if (cooldown < 0) {
-            var target = findClosest(eng, "Tower", this.tPos.getCenter(), 100);
-            if (!target) {
-                return;
-            }
-            target.attr.hp -= damage;
-
-            var cent1 = this.tPos.getCenter();
-            var cent2 = target.tPos.getCenter();
-
-            //A more modular approach to adding lasers (important when/if we have
-            //more complex animations)
-            this.base.addObject(MakeBugLaser(this, target));
-
-            cooldown = cooldownfull;
-        }
-    }
 
     this.update = function (dt) {
         this.tPos.update(dt);
-	cooldown -= dt;
 
         var cur = this.curPath;
         var next = this.curPath.nextPath;
@@ -67,20 +60,12 @@ function Bug(startPath, difficulty) {
                 this.curPath = next;
             }
 
-
             if (next instanceof Path_End) {
                 this.destroyAtBase();
             }
         }
-
-        if (this.hp < 0) {
-	    sound.play();
-            this.base.destroySelf();
-            eng.money += this.value;
-        }                        
+                     
         this.color = "#" + hexPair(Math.floor(255 -((this.hp / this.maxHP) * 255))) +  "0000";
-
-	this.attack();
     };
 
     this.draw = function (pen) {
