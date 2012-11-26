@@ -296,19 +296,25 @@ function Infobar(pos) {
                 countElements(targetStrategies) * 28),
             targetStrategies,
             "target_Strategy");
-
 	this.base.addObject(this.attributeChoosers.target_Strategy);
-
     
 	this.attributeChoosers.attack_type = new AttributeChooser(
             new temporalPos(pos.x, pos.y + 250, pos.w,
                 countElements(attackTypes) * 28),
             attackTypes,
-            "attack_type");
-            
-
+            "attack_type");            
     //We will soon no longer let them choose their attack strategy!
 	this.base.addObject(this.attributeChoosers.attack_type);
+
+
+	this.attributeChoosers.bug_attack_type = new AttributeChooser(
+            new temporalPos(pos.x, pos.y + 250, pos.w,
+                countElements(bugAttackTypes) * 28),
+            bugAttackTypes,
+            "bug_attack_type");
+	//We will soon no longer let them choose their attack strategy!
+	this.base.addObject(this.attributeChoosers.bug_attack_type);
+
 
     //Add our buttons, should really be done just in the constructor with our given pos information
 	this.added = function () {

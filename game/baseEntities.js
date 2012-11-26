@@ -82,7 +82,7 @@ function baseObj(holder, zindex) {
     };
 
     this.addObject = function (obj) {
-        if (!assertDefined("addObject", obj, obj.base))
+        if (!assertDefined("addObject", obj) || !assertDefined("addObject", obj.base))
             return;
 
         obj.base.parent = this.holder;
