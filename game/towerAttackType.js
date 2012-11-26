@@ -107,6 +107,8 @@ var attackTypes = {
     },
 };
 
+
+
 function drawAttributes(user, pen) {
     drawTiled(pen,
         function (obj, pen, pos) {
