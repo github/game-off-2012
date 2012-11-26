@@ -8,6 +8,8 @@
     w: 50,
     h: 50,
 
+    invincible: 0,
+
     rotate_angle: 0,
 
     sprite: {},
@@ -44,6 +46,10 @@
         // X Pos
         mit.Pappu.x = 33;
       };
+    },
+
+    undoInvincible: function() {
+      mit.Pappu.invincible = 0;
     },
 
     draw: function(ctx) {
@@ -87,6 +93,10 @@
         ctx.translate(this.x, this.y);
         ctx.translate(this.w/2, this.h/2);
         ctx.rotate(utils.toRadian(this.rotate_angle));
+      }
+
+      if (this.invincible) {
+        ctx.globalAlpha = 0.4;
       }
 
       ctx.drawImage(

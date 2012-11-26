@@ -196,6 +196,9 @@
 
     mit.game_over = 1;
     mit.start_btn_clicked = 0;
+
+    // Pappu if invincible will be no morez
+    mit.Pappu.invincible = 0;
   };
 
 
@@ -237,7 +240,7 @@
     // mit.PakiaUtils.render(ctx);
 
     // Collectibles
-     mit.CollectibleUtils.draw(ctx);
+    // mit.CollectibleUtils.draw(ctx);
 
     if (mit.game_started) {
 
@@ -247,9 +250,11 @@
       mit.CollectibleUtils.draw(ctx);
 
       // Check Collisions with pappu
-      mit.ForkUtils.checkCollision();
-      mit.BranchUtils.checkCollision();
-      mit.PakiaUtils.checkCollision();
+      if (!mit.Pappu.invincible) {
+        mit.ForkUtils.checkCollision();
+        mit.BranchUtils.checkCollision();
+        mit.PakiaUtils.checkCollision();
+      }
       mit.CollectibleUtils.checkCollision();
 
       // Send over Pakias (Enemies)

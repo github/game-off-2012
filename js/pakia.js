@@ -161,7 +161,12 @@
       var pappu_bounds = mit.Pappu.getBounds();
       var pakia_bounds = this.cur_pakia.getBounds();
 
-      if (utils.intersect(pappu_bounds, pakia_bounds)) {
+      if (
+        pappu_bounds.end_x     >  pakia_bounds.start_x+20 &&
+        pakia_bounds.end_x-20  >  pappu_bounds.start_x    &&
+        pappu_bounds.end_y     >  pakia_bounds.start_y+20 &&
+        pakia_bounds.end_y-20  >  pappu_bounds.start_y
+      ) {
         mit.gameOver();
       }
     }
