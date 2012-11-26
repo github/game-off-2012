@@ -94,8 +94,6 @@
 
         this.handleMouseEvents();
 
-        this.base.removeAllType("Tower_Range");
-
 
         if (this.resizeEvent) {
             this.base.raiseEvent("resize", this.resizeEvent);

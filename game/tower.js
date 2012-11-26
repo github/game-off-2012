@@ -1,19 +1,5 @@
-function Tower_Range(baseTower) {
-    this.baseTower = baseTower;
-    this.tPos = baseTower.tPos;
-    this.base = new baseObj(this, 11);
 
-    this.draw = function (pen) {
-        var p = this.baseTower.tPos.getCenter();
-        var range = this.baseTower.attr.range;
-        if (range < 1) range = 1;
-        pen.lineWidth = 2;
-        pen.fillStyle = "transparent";
-        pen.strokeStyle = this.baseTower.color;
-        ink.circ(p.x, p.y, range, pen);
-    };
-}
-
+//Should probably use a Line to draw itself instead of doing it by itself
 function Tower_Connection(t1, t2) {
     var p1 = getRectCenter(t1.tPos);
     var p2 = getRectCenter(t2.tPos);
@@ -80,16 +66,20 @@ function Tower(baseTile) {
 
     this.connections = [];
 
+    this.base.addObject(new AttackCycle());
+
+    this.base.addObject(new UpdateTicker(this.attr, "mutate", "mutate", true));
+
+    this.base.addObject(new Mortality());
+
     this.hover = false;
     this.selected = false;
 
     this.laserTime = 0.5;
 
     //Why are these local?
-    var laserTime = this.laserTime;
-    var nextFireIn = 1/this.attr.speed;
-    var mutateCounter = 1/this.attr.mutate;
-    var towerRange = new Tower_Range(this);
+
+    var towerRange = new Circle(this.tPos.getCenter(), this.attr.range, this.color, "transparent", 11);
     //var tooltip = new ToolTip(this, this.attr);
     var added = false;
     
@@ -132,7 +122,7 @@ function Tower(baseTile) {
         var a = this.attr;
         
         for (at in a) {
-            if(typeof a[at] != "Number")
+            if(typeof a[at] != "number")
                 continue;
             if (invalid(a[at])) this.die();
             if (at == "hitcount") continue;
@@ -162,29 +152,12 @@ function Tower(baseTile) {
         this.color = rgba(255 - a.hp, a.range, a.damage, 0.5)
     }
 
-    this.attack = function() {
-        var target = this.attr.target_Strategy.run(this);
-               
-        if(!target)
-            return;
-        
-        var hit = this.attr.attack_type.run(this, target);
-    };
-
-    this.update = function (dt) {
-        mutateCounter -= dt;
-        if (mutateCounter < 0) {
-            this.mutate();
-            mutateCounter = 1000/this.attr.mutate;
-        }
-        
-        nextFireIn -= dt;
-        if (nextFireIn < 0) {
-            this.attack();
-            nextFireIn = 1/this.attr.speed;
-        }
-        if (this.attr.hp < 0) {
-            this.die();
+    this.update = function (dt) {        
+        //Hmm... I wish hooking up values with other values was built into the
+        //language (like pointers... but fitting both the case of constants and stuff).
+        if(added) {
+            towerRange.radius = this.attr.range;
+            towerRange.color = this.color;
         }
     };
 

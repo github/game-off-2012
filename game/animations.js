@@ -25,8 +25,8 @@ function Line(xs, ys, xe, ye, lasercolor, zorder) {
     this.xe = xe;
     this.ye = ye;
 
-    this.base = new baseObj(this, zorder); //Base should always be before tPos
     this.tPos = new temporalPos(xs, ys, xe - xs, ye - ys, 0, 0);    
+    this.base = new baseObj(this, zorder);    
     
     this.color = lasercolor;
 
@@ -40,7 +40,29 @@ function Line(xs, ys, xe, ye, lasercolor, zorder) {
     };
 }
 
+function Circle(center, radius, color, fillColor, zorder) {
+    this.center = center;
+    this.radius = radius;
+    this.color = color;
+    this.fillColor = fillColor;
 
+    //this.tPos = {x:0, y:0, h:0, y};  //We lie about this because it doesn't matter
+    this.base = new baseObj(this, zorder);    
+
+    this.draw = function (pen) {
+        var p = this.center;
+        var radius = this.radius;
+        var color = this.color;
+
+        if (radius < 1) radius = 1;
+
+        pen.lineWidth = 2;
+        pen.fillStyle = this.fillColor;
+        pen.strokeStyle = this.color;
+
+        ink.circ(p.x, p.y, radius, pen);
+    };
+}
 
 function AlphaDecay(lifetime, startAlpha, endAlpha) {
     this.base = new baseObj(this);
