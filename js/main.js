@@ -245,7 +245,7 @@
     // Collectibles
     // mit.CollectibleUtils.draw(ctx);
 
-    mit.Pappu.createClones(ctx);
+    // mit.Pappu.createClones(3);
 
     if (mit.game_started) {
 
