@@ -51,6 +51,20 @@ function countElements(object) {
     return count;
 }
 
+
+function hasAtleastXElements(object, x) {
+    if (!x)
+        return true;
+
+    for (var key in object) {
+        x--;
+        if (!x)
+            return true;
+    }
+
+    return false;
+}
+
 function sortArrayByProperty(a, prop) {
     a.sort(cmp)
     function cmp(a, b) {
@@ -66,6 +80,14 @@ function sortArrayByProperty(a, prop) {
             return 0;
         }
     }
+}
+
+//I could make ones for every single color piece... but using regex to set
+//RGBA is retarded and incredibly inefficient, so I am just copy and pasting
+//an answer from stack overlow...
+//http://stackoverflow.com/questions/8177964/in-javascript-how-can-i-set-rgba-without-specifying-the-rgb
+function setAlpha(color, newAlpha) {
+    return color.replace(/[^,]+(?=\))/, newAlpha);
 }
 
 //This is reference code for Quentin, don't touch this code.

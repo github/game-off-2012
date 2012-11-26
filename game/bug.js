@@ -18,26 +18,30 @@ function Bug(startPath, difficulty) {
     this.curPath = startPath;
 
     this.bugRelPathPos = Math.floor(Math.random()* tileSize) +1;
-    this.delay = this.bugRelPathPos+1;
-    var laserTime = 0.5;
+    this.delay = this.bugRelPathPos + 1;
+    this.laserTime = 0.5;
+    var laserTime = this.laserTime;
     var cooldownfull = 2;
     var cooldown = cooldownfull;
     var damage = 1 + difficulty/4;
 
     this.attack = function () {
-	if (cooldown < 0) {
-		var target = findClosest(eng, "Tower", this.tPos.getCenter(), 100);        
-		if (!target) {
-			return;
-		}
-		target.attr.hp -= damage;
-		
-		var cent1 = this.tPos.getCenter();
-		var cent2 = target.tPos.getCenter();
+        if (cooldown < 0) {
+            var target = findClosest(eng, "Tower", this.tPos.getCenter(), 100);
+            if (!target) {
+                return;
+            }
+            target.attr.hp -= damage;
 
-		this.base.addObject(new Tower_Laser(cent1.x, cent1.y, cent2.x, cent2.y, laserTime, true));
-		cooldown = cooldownfull;
-	}
+            var cent1 = this.tPos.getCenter();
+            var cent2 = target.tPos.getCenter();
+
+            //A more modular approach to adding lasers (important when/if we have
+            //more complex animations)
+            this.base.addObject(MakeBugLaser(this, target));
+
+            cooldown = cooldownfull;
+        }
     }
 
     this.update = function (dt) {

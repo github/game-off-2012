@@ -14,44 +14,6 @@ function Tower_Range(baseTower) {
     };
 }
 
-function Tower_Laser(xs, ys, xe, ye, duration, buglaser) {
-    if (typeof(buglaser) === "undefined") {
-	    buglaser = false;
-    }
-
-    this.xs = xs;
-    this.ys = ys;
-    this.xe = xe;
-    this.ye = ye;
-
-    this.tPos = new temporalPos(xs, ys, xe - xs, ye - ys, 0, 0);
-    this.base = new baseObj(this, 12);
-
-    var timeleft = duration;
-    var color = "rgba(255,0,255,1)";
-    this.sound = new Sound("snd/Laser_Shoot.wav");
-    this.sound.play();
-
-    this.update = function (dt) {
-        timeleft -= dt;
-        if (timeleft <= 0.00001) {
-            this.base.destroySelf();
-            return;
-        }
-	if (buglaser) {
-		color = "rgba(255,0,0," + timeleft/duration + ")";
-	} else {
-		color = "rgba(0,0,255," + timeleft/duration + ")";
-	}
-    };
-
-    this.draw = function (pen) {
-        pen.strokeStyle = color;
-        pen.lineWidth = 2;
-        ink.line(this.xs, this.ys, this.xe, this.ye, pen);
-    };  
-}
-
 function Tower_Connection(t1, t2) {
     var p1 = getRectCenter(t1.tPos);
     var p2 = getRectCenter(t2.tPos);
@@ -93,6 +55,7 @@ function Tower_Connection(t1, t2) {
 }
 
 // FRIGGIN UGLY, waiting for mouseup fix...
+//Don't wait, the time is now (fix it yourself, I am busy).
 var towerDragStartMouseDown;
 //All mutate stuff is copy-pasta from our mother project (for now)
 function Tower(baseTile) {
@@ -104,21 +67,26 @@ function Tower(baseTile) {
         range:          Math.random() * 200 + 100,
         damage:         Math.random() * 30  + 1,
         hp:             Math.random() * 100 + 10,
-        speed:          Math.random() * 1   + 1,
+        speed:          Math.random() * 1   + 1,        
         mutate:         Math.random() * 50,
         mutatestrength: Math.random() * 50,
         upload:         Math.random() * 50,
         download:       Math.random() * 50,
         hitcount:       0,
     };
+
+    this.attr.target_Strategy = new targetStrategies.Closest();
+    this.attr.attack_type = new attackTypes.Normal();
+
     this.connections = [];
 
     this.hover = false;
     this.selected = false;
-    
-    this.targetStrategy = targetStrategies.Closest;
 
-    var laserTime = 0.5;
+    this.laserTime = 0.5;
+
+    //Why are these local?
+    var laserTime = this.laserTime;
     var nextFireIn = 1/this.attr.speed;
     var mutateCounter = 1/this.attr.mutate;
     var towerRange = new Tower_Range(this);
@@ -164,6 +132,8 @@ function Tower(baseTile) {
         var a = this.attr;
         
         for (at in a) {
+            if(typeof a[at] != "Number")
+                continue;
             if (invalid(a[at])) this.die();
             if (at == "hitcount") continue;
             if (at == "mutate" || at == "mutatestrength") {
@@ -193,18 +163,12 @@ function Tower(baseTile) {
     }
 
     this.attack = function() {
-        var target = this.targetStrategy(this);
+        var target = this.attr.target_Strategy.run(this);
                
         if(!target)
             return;
-                
-        target.hp -= this.attr.damage;
-        this.attr.hitcount += 1;
         
-        var cent1 = this.tPos.getCenter();
-        var cent2 = target.tPos.getCenter();
-
-        this.base.addObject(new Tower_Laser(cent1.x, cent1.y, cent2.x, cent2.y, laserTime));
+        var hit = this.attr.attack_type.run(this, target);
     };
 
     this.update = function (dt) {

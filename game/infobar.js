@@ -208,47 +208,64 @@ function Docked(dockedLeft, dockedRight, dockedTop, dockedBottom) {
 //Attributes should be an object, like targetStrategys
 function AttributeChooser(tPos, attributes, attributeName) {
     this.base = new baseObj(this, 15); //Should not hardcode zorder
-
     this.tPos = tPos;
-
-    var numAttributes = countElements(attributes);
-
-    var eachHeight = tPos.h / (numAttributes + 2);
-    var eachWidth = tPos.w * 0.8;
-
-    var xPos = tPos.x + tPos.w * 0.1;
-    var yPos = tPos.y + eachHeight;
-
-    var currentButton = null;
-
+        
     this.attributes = attributes;
+    this.attributeName = attributeName;
 
-    var radioButtons = {};
+    this.radioButtons = {};
 
+    var radioButtons = this.radioButtons;
+    var currentButton = null;
     for (var key in attributes) {
+        var typeName = attributes[key].name;
+        //Initial position doesn't matter, as we resize right away
         currentButton = new RadioButton(
-            new temporalPos(xPos, yPos, eachWidth, eachHeight),
+            new temporalPos(0, 0, 0, 0),
             key, this, "setAttribute", key, currentButton);
-        radioButtons[key] = currentButton;        
+        radioButtons[typeName] = currentButton;        
         this.base.addObject(currentButton);
-        yPos += eachHeight;
+    }
+
+    this.added = function () {
+        this.resize();
+    };
+
+    this.resize = function () {
+        var tPos = this.tPos;
+        var numAttributes = countElements(attributes);
+
+        var eachHeight = tPos.h / (numAttributes);
+        var eachWidth = tPos.w * 0.8;
+        var radioButtons = this.radioButtons;
+
+        var yPos = tPos.y;
+        var xPos = tPos.x + tPos.w * 0.1;
+
+        for (var key in radioButtons) {
+            radioButtons[key].tPos.y = yPos;
+            radioButtons[key].tPos.x = xPos;
+            radioButtons[key].tPos.w = eachWidth;
+            radioButtons[key].tPos.h = eachHeight;
+            yPos += eachHeight;
+        }
     }
 
     this.setAttribute = function (newValue) {
         var selected = this.base.rootNode.selectedObj;
         if (!selected)
             return;
-        selected[attributeName] = this.attributes[newValue];
-        selected[attributeName + "currentName"] = newValue;
+        selected.attr[attributeName] = new this.attributes[newValue]();
     };
 
     this.loadAttribute = function () {
         var selected = this.base.rootNode.selectedObj;
+        var attributeName = this.attributeName;
         if (!selected)
             return;
 
         for (var key in radioButtons) {
-            if (key == selected[attributeName + "currentName"])
+            if (key == getRealType(selected.attr[attributeName]))
                 radioButtons[key].pressed();
             else
                 radioButtons[key].unpressed();
@@ -262,18 +279,27 @@ function Infobar(pos) {
 
 	this.tPos = pos;
 
-    this.targetStrategyButtons = {};
-    
 	var buttonW = 100;
 
 	this.base.addObject(new Docked(0, 1, 0, 0));
 
-	this.targetChooser = new AttributeChooser(
-            new temporalPos(pos.x, pos.y + 250, pos.w, 150),
-            targetStrategies,
-            "targetStrategy");
+	this.attributeChoosers = {};	
 
-	this.base.addObject(this.targetChooser);
+	this.attributeChoosers.target_Strategy = new AttributeChooser(
+            new temporalPos(pos.x, pos.y + 250, pos.w, 
+                countElements(targetStrategies) * 28),
+            targetStrategies,
+            "target_Strategy");
+
+	this.base.addObject(this.attributeChoosers.target_Strategy);
+
+	this.attributeChoosers.attack_type = new AttributeChooser(
+            new temporalPos(pos.x, pos.y + 250, pos.w,
+                countElements(attackTypes) * 28),
+            attackTypes,
+            "attack_type");
+
+	this.base.addObject(this.attributeChoosers.attack_type);
 
     //Add our buttons, should really be done just in the constructor with our given pos information
 	this.added = function () {
@@ -287,53 +313,89 @@ function Infobar(pos) {
 
 	this.updateAttr = function (obj) {
 	    this.tattr = obj.attr;
-	    this.targetChooser.loadAttribute();
+        for(var key in this.attributeChoosers)
+            this.attributeChoosers[key].loadAttribute();
 	    return;
 	}
 
-    var prefixes = ["", "k", "M", "G", "T", "P", "E", "Z", "Y"];
-	this.draw = function(pen) {
-		pen.fillStyle = "#000";
-		ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-        
-		pen.fillStyle = "transparent";
-		
-		pen.strokeStyle = "orange";
-        pen.lineWidth = 1;
-		
-		ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-		
-		pen.fillStyle = "#0f0";
-		pen.font = "15px courier";
-        
-		var xs = this.tPos.x + 10;
-        var xe = this.tPos.x + this.tPos.w - 10;
-		var y = this.tPos.y + 15;
-		
-		if (this.tattr == null) {
-		    ink.text(xs, y, "[no selction]", pen);
-		    return;
-		}
-		
-		ink.text(xs, y, "Tower", pen);
-		var counter = 20;
-		pen.font = "10px courier";
-		for (i in this.tattr) {
-            var val = this.tattr[i];
-            var po = 0;
-            while (val > 1000) {
-                val = val/1000;
-                po++;
-            }
-            var pre = prefixes[po];
-            if (pre == undefined) pre = "???";
-            var nametxt = i.charAt(0).toUpperCase() + i.substr(1).toLowerCase();
-		    var valtxt = Math.round(val*10)/10 + pre;
-            pen.textAlign = 'left';
-		    ink.text(xs, y + counter, nametxt, pen);
-            pen.textAlign = 'right';
-            ink.text(xe, y + counter, valtxt, pen);
-		    counter += 15;
-		}
-	}
+
+	this.draw = function (pen) {
+	    pen.fillStyle = "#000";
+	    ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
+
+	    pen.fillStyle = "transparent";
+
+	    pen.strokeStyle = "orange";
+	    pen.lineWidth = 1;
+
+	    ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
+
+	    pen.fillStyle = "#0f0";
+	    pen.font = "15px courier";
+
+	    var xs = this.tPos.x + 10;
+	    var xe = this.tPos.x + this.tPos.w - 10;
+	    var y = this.tPos.y + 15;
+
+	    if (this.tattr == null) {
+	        ink.text(xs, y, "[no selction]", pen);
+	        return;
+	    }
+
+	    ink.text(xs, y, "Tower", pen);
+	    var yPos = y + 20;
+	    var xPos = xs;
+
+	    pen.font = "10px courier";
+	    for (attrName in this.tattr) {
+	        var val = this.tattr[attrName];
+
+	        function tryPrintAsNumber(val, name) {
+	            if (typeof val != "number")
+	                return false;
+
+	            val = Math.round(val * 10) / 10;
+	            var valtxt = prefixNumber(val);
+
+	            var nametxt = formatToDisplay(name);
+
+	            pen.textAlign = 'left';
+	            ink.text(xPos, yPos, nametxt, pen);
+	            pen.textAlign = 'right';
+	            ink.text(xe, yPos, valtxt, pen);
+	            yPos += 15;
+	            return true;
+	        }
+
+	        if (!tryPrintAsNumber(val, attrName)) {
+	            yPos += 5;
+
+	            pen.textAlign = 'center';
+	            ink.text((xs + xe) / 2, yPos, formatToDisplay(attrName), pen);
+	            yPos += 15;
+	            xPos += 5;
+	            for (var subAttr in val) {
+	                tryPrintAsNumber(val[subAttr], subAttr);
+	            }
+	            xPos -= 5;
+
+	            //See if its an attribute which we have a attribute chooser for
+	            if (defined(this.attributeChoosers[attrName])) {
+	                this.attributeChoosers[attrName].tPos.y = yPos;
+	                this.attributeChoosers[attrName].resize();
+	                yPos += this.attributeChoosers[attrName].tPos.h;
+	                yPos += 20; //idk really why this is needed
+	            }
+
+	            //Even so we still need to position the attribute choosers
+	        }
+
+	    } //End of attribute loop
+
+	    this.upgradeb.tPos.y = yPos;
+	    yPos += 20;
+
+
+
+	}          //End of draw
 }

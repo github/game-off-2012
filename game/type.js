@@ -27,6 +27,9 @@ function defined() {
 
 //Well this looks kinda expensive, so try not to use it?
 function getRealType(object) {
+    if (!assertDefined(object))
+        return "undefined";
+
     //http://stackoverflow.com/questions/332422/how-do-i-get-the-name-of-an-objects-type-in-javascript    
     var funcNameRegex = /function (.{1,})\(/;
     var results = (funcNameRegex).exec((object).constructor.toString());
