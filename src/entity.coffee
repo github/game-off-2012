@@ -1,5 +1,6 @@
 class Entity
-  constructor: (@x, @y) ->
+  constructor: () ->
+    @died = false
   
   render:(screen)->
   
@@ -10,18 +11,51 @@ class Entity
     
   setY:(y)->
     @y = y
+  
+  hurt:(damage)->
     
+  hasDied:->
+    @died
+    
+  die:->
+    @died = true
+    
+
+class Tower extends Entity
+  constructor:(@hp)->super
+  
+  hurt:(damage)->
+    @hp -= damage
+    if @hp <= 0
+      @die()
+
 class TestEntity extends Entity
-  constructor:(@x, @y)->  
-    super(@x, @y)
+  constructor:->
+    super()  
     @tile = 16
+    @stop =  false
+    @ap = 2
+    @tickcount = 0
+    
+  collide:(entity)->
+    if entity instanceof Tower
+        entity.hurt(@ap)
+        @attackE = entity
+        @stop = true
     
   render:(screen)->
     screen.render @x, @y, @tile
     
   tick:->
-    
-  
+    @tickcount++
+    if @attackE?
+      
+      if @attackE.hasDied()
+        @stop = false
+        @attackE = null
+        
+      if @tickcount % 60 == 0 and @attackE? 
+        @attackE.hurt(@ap)
   
 class Model
   constructor:(@world) ->
@@ -70,13 +104,17 @@ class PlayerModel extends Model
     @fixDef.shape = new b2PolygonShape
     @fixDef.shape.SetAsBox(@width, @height)
     
+    @sensorDef = new b2FixtureDef
+    @sensorDef.shape = new b2PolygonShape
+    @sensorDef.shape.SetAsBox(@width+20/@scale, @height+20/@scale)
+    @sensorDef.isSensor = true
     
     @body = @world.CreateBody(@bodyDef)
     @body.SetFixedRotation(true)
-    @body.ShouldCollide(false)
     
     
     @fixDef = @body.CreateFixture(@fixDef)
+    @body.CreateFixture(@sensorDef)
     
   getScreenX:->
     (@body.GetPosition().x-@width)*@scale
@@ -86,3 +124,6 @@ class PlayerModel extends Model
     
   tick:->
     @body.SetLinearVelocity(new b2Vec2(5, @body.GetLinearVelocity().y));
+  
+  wakeUp:->
+    @body.SetAwake(true)  
