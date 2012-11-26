@@ -8,8 +8,6 @@ class Level
     #List for entities
     @entities = new List()
     @screen = new Screen(@id, STORAGE.getRessource("spritesheet"))
-    @xOffset = 0
-    @yOffset = 0
   
   initGfx:->
     @canvas = document.getElementById(@id)
@@ -64,7 +62,7 @@ class Level
     
   beginContact:(contact, manifold)->
     
-  draw:(@xOffset, @yOffset)->
+  draw:(xOffset, yOffset)->
     @ctx.clearRect(0, 0, WIDTH, HEIGHT)
     @ctx.drawImage(@level.background,xOffset, yOffset, 128, 128, 0, 0, 640, 480)
     @screen.clear()
