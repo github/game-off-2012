@@ -1,4 +1,4 @@
-class Entity
+  class Entity
   constructor: () ->
     @died = false
   
@@ -87,6 +87,8 @@ class PlayerModel extends Model
     @height = 12/@scale
     @width = 12/@scale
     
+    @stopped = false
+    
     @fixDef = new b2FixtureDef
     @fixDef.density = 0.1
     @fixDef.friction = 0.3
@@ -116,6 +118,11 @@ class PlayerModel extends Model
     @fixDef = @body.CreateFixture(@fixDef)
     @body.CreateFixture(@sensorDef)
     
+  setStopped:(@stopped)->
+    
+  hasStopped:->
+    @stopped
+    
   getScreenX:->
     (@body.GetPosition().x-@width)*@scale
     
@@ -123,7 +130,10 @@ class PlayerModel extends Model
     (@body.GetPosition().y-@height)*@scale
     
   tick:->
-    @body.SetLinearVelocity(new b2Vec2(5, @body.GetLinearVelocity().y));
+    if @stopped == false
+      @body.SetLinearVelocity(new b2Vec2(5, @body.GetLinearVelocity().y))
+    else
+      @body.SetLinearVelocity(new b2Vec2(0, @body.GetLinearVelocity().y))
   
   wakeUp:->
     @body.SetAwake(true)  
