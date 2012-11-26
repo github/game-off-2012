@@ -314,9 +314,11 @@ function Infobar(pos) {
 	    this.clearDisplay();
 	};
 
+	this.obj = null;
 	this.updateAttr = function (obj) {
 	    this.base.setAttributeRecursive("hidden", false);
 	    this.tattr = obj.attr;
+	    this.obj = obj;
 	    for (var key in this.attributeChoosers)
 	        this.attributeChoosers[key].loadAttribute();
 	    return;
@@ -348,8 +350,8 @@ function Infobar(pos) {
 	        ink.text(xs, y, "[no selction]", pen);
 	        return;
 	    }
-
-	    ink.text(xs, y, "Tower", pen);
+        
+	    ink.text(xs, y, formatToDisplay(getRealType(this.obj)), pen);
 	    var yPos = y + 20;
 	    var xPos = xs;
 

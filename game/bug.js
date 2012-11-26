@@ -32,6 +32,8 @@ function Bug(startPath, difficulty) {
 
     this.base.addObject(new Mortality());
 
+    this.base.addObject(new Selectable());
+
     this.curPath = startPath;
 
     this.bugRelPathPos = Math.floor(Math.random()* tileSize) +1;
@@ -65,7 +67,7 @@ function Bug(startPath, difficulty) {
             }
         }
                      
-        this.color = "#" + hexPair(Math.floor(255 -((this.hp / this.maxHP) * 255))) +  "0000";
+        this.color = "#" + hexPair(Math.floor(255 -((this.attr.hp / this.maxHP) * 255))) +  "0000";
     };
 
     this.draw = function (pen) {
