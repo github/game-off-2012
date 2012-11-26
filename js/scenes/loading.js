@@ -20,7 +20,7 @@ Crafty.scene("loading", function () {
     
     // Simulate a load time for now to make sure this works
     setTimeout(function () {
-      Crafty.scene("main"); //when everything is loaded, run the main scene
+      Crafty.scene("9001"); //when everything is loaded, run the main scene
     }, 500);
   });
 

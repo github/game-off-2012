@@ -124,7 +124,7 @@ Crafty.c("CharacterInteractions", {
           }
           collisionDetector.destroy();
         });
-
+        
         this.bind("RemoveBox", function(direction) {
             // Figure out what direction we are pushing
             this._pushDestX = this.x + direction[0] * gameBoard.tileSize;

@@ -12,6 +12,7 @@ var gameBoard = {
   removeKey: 70,    // F is the remove key
   colorKey: 69,     // E is the take / give color key
   standardAnimationLength: 50,   // Number of frames to play animations
+  nextMap: '',
 
   getHeight: function () {
     return this.height * this.tileSize;
@@ -19,6 +20,14 @@ var gameBoard = {
   
   getWidth: function () {
     return this.width * this.tileSize;
+  },
+  
+  setMap: function(name) {
+    this.nextMap = name;
+  },
+  
+  getMap: function() {
+    return this.nextMap;
   }
 }
 

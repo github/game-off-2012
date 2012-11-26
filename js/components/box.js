@@ -22,7 +22,7 @@ Crafty.c('Box', {
     return neighbors;
   },
 
-  PushableBox: function() {
+  Box: function() {
       return this;
   }
 });
@@ -41,6 +41,24 @@ Crafty.c('PushableBox', {
     },
     
     PushableBox: function() {
+        return this;
+    }
+});
+
+/**
+* Finishable Box
+* Adds a listener to the push trigger.  
+*/
+Crafty.c('FinishableBox', {
+    init: function() {
+      
+    },
+    
+    finish: function() {
+        console.log(this.nextMapKey);
+    },
+    
+    FinishableBox: function() {
         return this;
     }
 });

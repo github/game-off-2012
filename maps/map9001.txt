@@ -1,9 +1,9 @@
 XXXXXXXXXXXXXXXX
-XS             X
 X              X
 X              X
-X   BR         X
-X    B PR      X
+X              X
+X   Br         X
+X    B pr      X
 X              X
 X      W       X
 X              X
@@ -12,8 +12,8 @@ X              X
 X              X
 X              X
 X              X
-X             FX
+X       S     FX
 XXXXXXXXXXXXXXXX
 ----------------
 title: Level 1: The Journey Begins
-nextMap: map1.txt
+nextMap: 0

@@ -83,7 +83,9 @@ Crafty.c("Moveable", {
       
         // Start timing frames
         this._lastFrame = new Date().getTime();
-          
+        
+        this.checkForFinish(this._destX, this._destY);
+        
         // Start moving
         this._moving = true;
         return true;
@@ -99,6 +101,20 @@ Crafty.c("Moveable", {
       }
       collisionDetector.destroy();
       return true;
+    },
+    
+    // Check for finish tile
+    checkForFinish: function(xLoc, yLoc) {
+      var collisionDetector = Crafty.e("2D, Collision").attr({ x: xLoc, y: yLoc, w: 1, h: 1 });
+      if(collisionDetector.hit("FinishableBox")) {
+        collisionDetector.destroy();
+        console.log(gameBoard.getMap());
+        // loadMap(gameBoard.getMap(), function(){
+        //   
+        // });
+      Crafty.scene(gameBoard.getMap()); //when everything is loaded, run the main scene
+      }
+      collisionDetector.destroy();
     },
 
     // Normalize direction
