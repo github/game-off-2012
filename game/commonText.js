@@ -14,7 +14,7 @@ function prefixNumber(number, decimalPlaces) {
     if (defined(decimalPlaces))
         number = roundToDecimal(number, decimalPlaces);
 
-    return pre + number;
+    return number + pre;
 }
 
 var decimalTable = { 0: 1, 1: 10, 2: 100, 3: 1000, 4: 10000, 5: 100000, 6: 1000000 };
