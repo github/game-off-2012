@@ -50,8 +50,6 @@ class LevelGenerator
     @background = document.createElement("canvas")
     @ctx = @background.getContext("2d")
     
-    #Get graphical-context
-    console.log(@data)
     for i in [0..@data.layers.length-1]
       name = @data.layers[i].name
       if name == 'scene'
@@ -62,9 +60,7 @@ class LevelGenerator
         
       if name == 'sensors'
         @createModel(@world, @data.layers[i])
-        
    #Method creates Scene out of SceneLayer
-      #LoadS the spites
    createScene:(data, layer)->
     #RawTileData
     tiles = layer.data
@@ -141,7 +137,7 @@ class LevelGenerator
       #SetUser Data if setted
       body.UserData = obj.properties.userdata if obj.properties.userdata? 
       body.CreateFixture(fixDef)
-         
+      
 class Camera
   constructor:(@world,@scale,@screenscale,@inputHandler)->
     @active = false
