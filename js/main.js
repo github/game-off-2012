@@ -199,6 +199,9 @@
 
     // Pappu if invincible will be no morez
     mit.Pappu.invincible = 0;
+
+    // Nuke all clones
+    mit.Pappu.clones.length = 0;
   };
 
 
@@ -242,12 +245,15 @@
     // Collectibles
     // mit.CollectibleUtils.draw(ctx);
 
+    mit.Pappu.createClones(ctx);
+
     if (mit.game_started) {
 
       // Drawin stuff
       mit.ForkUtils.draw(ctx);
       mit.BranchUtils.draw(ctx);
       mit.CollectibleUtils.draw(ctx);
+      mit.Pappu.drawClones(ctx);
 
       // Check Collisions with pappu
       if (!mit.Pappu.invincible) {
@@ -256,6 +262,7 @@
         mit.PakiaUtils.checkCollision();
       }
       mit.CollectibleUtils.checkCollision();
+      mit.Pappu.checkCloneCollision();
 
       // Send over Pakias (Enemies)
       if (mit.score > 199)

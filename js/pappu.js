@@ -9,6 +9,7 @@
     h: 50,
 
     invincible: 0,
+    clones: [],
 
     rotate_angle: 0,
 
@@ -189,14 +190,105 @@
     },
 
     getBounds: function() {
-      var bounds = {};
+      var b = {};
 
-      bounds.start_x = this.x;
-      bounds.start_y = this.y;
-      bounds.end_x = this.x + this.w;
-      bounds.end_y = this.y + this.h;
+      b.start_x = this.x;
+      b.start_y = this.y;
+      b.end_x   = this.x + this.w;
+      b.end_y   = this.y + this.h;
 
-      return bounds;
+      return b;
+    },
+
+    createClones: function(count) {
+      // This method will be usually called
+      // when pappu gathers a 'clone' collectible.
+
+      var pappu_clone;
+
+      for (var i = 0; i < count; i++) {
+        pappu_clone = Object.create(mit.Pappu);
+
+        this.clones.push(pappu_clone);
+      }
+
+      return;
+    },
+
+    drawClones: function(ctx) {
+
+      var self = this;
+
+      self.clones.forEach(function(clone) {
+        clone.x += utils.randomNumber(5, 10);
+        clone.y += utils.randomNumber(-20, 20);
+
+        clone.draw(ctx);
+      });
+
+      return;
+    },
+
+    checkCloneCollision: function() {
+
+      var self = this;
+      var branches = mit.BranchUtils.branches;
+      var forks = mit.ForkUtils.forks;
+      var pakias = mit.PakiaUtils.pakias;
+
+      // Check collisions with branches
+      branches.forEach(function(branch, branch_index) {
+        var branch_bound = branch.getBounds();
+
+        self.clones.forEach(function(clone) {
+          var clone_bound = clone.getBounds();
+
+          if (utils.intersect(branch_bound, clone_bound)) {
+            branches.splice(branch_index, 1);
+          }
+        });
+
+        return;
+      });
+
+      // Check collisions with forks
+      forks.forEach(function(fork, fork_index) {
+        var fork_head_bound = fork.getHeadBounds();
+        var fork_handle_bound = fork.getHandleBounds();
+
+        self.clones.forEach(function(clone) {
+          var clone_bound = clone.getBounds();
+
+          if (utils.intersect(fork_head_bound, clone_bound)) {
+            forks.splice(fork_index, 1);
+          }
+
+          if (utils.intersect(fork_handle_bound, clone_bound)) {
+            forks.splice(fork_index, 1);
+          }
+        });
+
+        return;
+      });
+
+      // Check collisions with pakias
+      pakias.forEach(function(pakia, pakia_index) {
+        var pakia_bound = pakia.getBounds();
+
+        self.clones.forEach(function(clone) {
+          var clone_bound = clone.getBounds();
+
+          if (utils.intersect(pakia_bound, clone_bound)) {
+            mit.PakiaUtils.cur_pakia = false;
+          }
+
+          return;
+        });
+
+        return;
+      });
+
+      return;
     }
   };
 

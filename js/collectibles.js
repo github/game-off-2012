@@ -99,7 +99,8 @@
 
     count: 2,
 
-    types: ['coin', 'clone', 'invincible'],
+    //types: ['coin', 'clone', 'invincible'],
+    types: ['clone'],
 
     sub_types: {
       coin: [50, 100, 500, 1000]
@@ -237,6 +238,8 @@
             break;
 
           case 'clone':
+            mit.Pappu.createClones(3);
+            break;
 
           case 'invincible':
             mit.Pappu.invincible = 1;
