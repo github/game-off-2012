@@ -299,8 +299,8 @@ function Infobar(pos) {
             attackTypes,
             "attack_type");
 
-    //We no longer let them choose their attack strategy!
-	//this.base.addObject(this.attributeChoosers.attack_type);
+    //We will soon no longer let them choose their attack strategy!
+	this.base.addObject(this.attributeChoosers.attack_type);
 
     //Add our buttons, should really be done just in the constructor with our given pos information
 	this.added = function () {

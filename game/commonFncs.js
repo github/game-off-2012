@@ -91,7 +91,37 @@ function LN10(value) {
 //an answer from stack overlow...
 //http://stackoverflow.com/questions/8177964/in-javascript-how-can-i-set-rgba-without-specifying-the-rgb
 function setAlpha(color, newAlpha) {
+    if (!assertDefined(color, newAlpha))
+        return;
     return color.replace(/[^,]+(?=\))/, newAlpha);
+}
+
+//Great debate here over this topic:
+//http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-a-javascript-object
+function cloneObject(object) {
+    return jQuery.extend(true, {}, object);
+}
+
+//drawFnc takes array[x], pen, new temporalPos(xPos, yPos, width, height)
+function drawTiled(pen, drawFnc, array, tPosBox, xNum, yNum, percentBuffer) {
+    var width = tPosBox.w / (xNum);
+    var height = tPosBox.h / (yNum);
+
+    var xPos = tPosBox.x + width * percentBuffer;
+    var yPos = tPosBox.y + height * percentBuffer;
+
+    var drawnWidth = width * (1 - 2 * percentBuffer);
+    var drawnHeight = height * (1 - 2 * percentBuffer);
+
+    for (var key in array) {
+        if (xPos > tPosBox.x + tPosBox.w) {
+            xPos = tPosBox.x + width * percentBuffer;
+            yPos += height;
+        }
+
+        if(drawFnc(array[key], pen, new temporalPos(xPos, yPos, drawnWidth, drawnHeight)))
+            xPos += width;
+    }
 }
 
 //This is reference code for Quentin, don't touch this code.

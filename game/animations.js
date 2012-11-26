@@ -14,19 +14,6 @@ function MakeLaser(shooter, target, time) {
     return line;
 }
 
-function MakeTowerLaser(tower, bug) {
-    var cent1 = tower.tPos.getCenter();
-    var cent2 = bug.tPos.getCenter();
-
-    var line = new Line(cent1, cent2, "rgba(0,0,255,0)", 12);
-    line.base.addObject(new AlphaDecay(tower.laserTime, 1, 0));
-
-    this.sound = new Sound("snd/Laser_Shoot.wav");
-    this.sound.play();
-
-    return line;
-}
-
 function Line(start, end, color, zorder) {
     this.pStart = forcePointer(start);
     this.pEnd = forcePointer(end);
@@ -88,6 +75,28 @@ function AlphaDecay(lifetime, startAlpha, endAlpha) {
         var currentAlpha = startAlpha + (endAlpha - startAlpha) * (this.currentTime / this.lifetime);
 
         this.base.parent.color = setAlpha(this.base.parent.color, currentAlpha);
+
+        if (this.currentTime > this.lifetime) {
+            this.base.parent.base.destroySelf();
+        }
+    }
+}
+
+function AlphaDecayPointer(lifetime, startAlpha, endAlpha, pColor) {
+    this.base = new baseObj(this);
+
+    this.lifetime = lifetime;
+    this.startAlpha = startAlpha;
+    this.endAlpha = endAlpha;
+
+    this.currentTime = 0;
+
+    this.update = function (dt) {
+        this.currentTime += dt;
+
+        var currentAlpha = startAlpha + (endAlpha - startAlpha) * (this.currentTime / this.lifetime);
+
+        pColor.set(setAlpha(pColor.get(), currentAlpha));
 
         if (this.currentTime > this.lifetime) {
             this.base.parent.base.destroySelf();

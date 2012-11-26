@@ -32,17 +32,7 @@
     };
 
     this.click = function (e) {
-        var eng = this.base.rootNode;
-        var towerOnTile = findClosest(eng, "Tower", e, 0);
-        var pathOnTile = findClosest(eng, "Path", e, 0);
-
-        if (!towerOnTile && !pathOnTile && eng.money - 50 >= 0) {
-            eng.money -= 50;
-            var towerToAdd = new Tower(this);
-            eng.base.addObject(towerToAdd);
-            this.base.rootNode.changeSel(towerToAdd);
-            getAnElement(this.base.children.Selectable).ignoreNext = true;
-        }
+        tryPlaceTower(new Tower(this), this);
     };
 }
 

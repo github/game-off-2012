@@ -61,6 +61,7 @@ function Tower(baseTile) {
         upload:         Math.random() * 50,
         download:       Math.random() * 50,
         hitcount:       0,
+        value:          50,
     };
 
     this.attr.target_Strategy = new targetStrategies.Closest();
@@ -88,6 +89,8 @@ function Tower(baseTile) {
         pen.strokeStyle = "lightblue";
         ink.rect(p.x, p.y, p.w, p.h, pen);        
         pen.restore();
+
+        drawAttributes(this, pen);
     };
 
     // WTF - yeah man, this code is the bomb
@@ -116,6 +119,7 @@ function Tower(baseTile) {
             return false
         }
         
+        //a and at are too small for proper variable names
         var a = this.attr;
         
         for (at in a) {
@@ -193,3 +197,18 @@ function Tower(baseTile) {
     this.mutate();
 }
 
+function tryPlaceTower(tower, tile)
+{
+    var eng = tile.base.rootNode;
+    var e = tile.tPos.getCenter();
+    var towerOnTile = findClosest(eng, "Tower", e, 0);
+    var pathOnTile = findClosest(eng, "Path", e, 0);
+
+    if (!towerOnTile && !pathOnTile && eng.money - tower.attr.value >= 0) {
+        eng.money -= tower.attr.value;   
+        tower.tPos = tile.tPos;         
+        eng.base.addObject(tower);
+        eng.changeSel(tower);
+        getAnElement(tile.base.children.Selectable).ignoreNext = true;
+    }
+};

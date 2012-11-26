@@ -28,7 +28,8 @@ function TowerDragger(pos, towerGeneratorFnc) {
     this.dragEnd = function (e) {
         this.dragPos = null;
         var tileDrop = findClosest(this.base.rootNode, "Tile", e, 0);
-        tileDrop.click(e);
+        if (tileDrop)
+            tryPlaceTower(this.towerGeneratorFnc(), tileDrop);
     }
 }
 
@@ -39,17 +40,34 @@ function Towerbar(pos) {
 	this.tPos = pos;
 
 	var buttonW = 100;
+    //Scaled exactly to 150 by 674...
+	drawTiled(this,
+        function (obj, refObj, pos) {
+            var towerDragger = new TowerDragger(
+                new temporalPos(pos.x, pos.y, pos.w, pos.h),
+                function () {
+                    var fakeTile = {};
+                    fakeTile.tPos = new temporalPos(0, 0, 0, 0);
+                    var tower = new Tower(fakeTile);
 
-    var towerDraggedTest = new TowerDragger(
-            new temporalPos(pos.x + 20, pos.y + 20, 20, 20),
-            function() {
-                var fakeTile = {};
-                fakeTile.tPos = new temporalPos(0, 0, 0, 0);
-                return new Tower(fakeTile);
-            }
-        );
+                    tower.attr.attack_type = new obj();
+                    return tower;
+                }
+            );
 
-    this.base.addObject(towerDraggedTest);
+            refObj.base.addObject(towerDragger);
+
+            return true;
+        },
+        attackTypes,
+        new temporalPos(
+            pos.x + 65,
+            pos.y,
+            600,
+            150),
+        8, 2,
+        0.1);
+  
 
 	this.draw = function (pen) {
 	    pen.fillStyle = "#000";
