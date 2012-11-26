@@ -17,6 +17,7 @@
         } else {
             pen.strokeStyle = "#123456";
         }
+        pen.lineWidth = 1;
         ink.rect(p.x, p.y, p.w, p.h, pen);
     };
 
