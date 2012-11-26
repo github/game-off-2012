@@ -99,8 +99,8 @@
 
     count: 2,
 
-    //types: ['coin', 'clone', 'invincible'],
-    types: ['clone'],
+    types: ['coin', 'clone', 'invincible'],
+    //types: ['clone'],
 
     sub_types: {
       coin: [50, 100, 500, 1000]
