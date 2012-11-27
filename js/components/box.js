@@ -169,6 +169,7 @@ Crafty.c('ColorBox', {
 * This is a box that can have color taken or given to it
 */
 Crafty.c('ColorableBox', {
+    _wasRemovable: false,
     _transferableColor: null,
 
     init: function() {
@@ -190,7 +191,11 @@ Crafty.c('ColorableBox', {
             var oldColor = this.colorString();
             this.trigger('setBoxColor', "white");
             this.trigger('removeText');
-            this.removeComponent("RemovableBox");
+            if(this.has("RemovableBox")) {
+                this._wasRemovable = true;
+                this.removeComponent("RemovableBox");
+            } else
+                this._wasRemovable = false;
             this._transferableColor = null;
             return oldColor;
         }
@@ -202,7 +207,8 @@ Crafty.c('ColorableBox', {
     // Returns the old color of the box (null if none)
     giveColor: function(color) {
         var oldColor = this._transferableColor;
-        if(!this.has("RemovableBox")) this.addComponent("RemovableBox");
+        this.trigger('removeText');
+        if(this._wasRemovable) this.addComponent("RemovableBox");
         this.trigger('setBoxColor', color);
         this._transferableColor = color;
         return oldColor;
