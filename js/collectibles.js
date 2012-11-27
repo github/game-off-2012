@@ -24,6 +24,10 @@
     // Collectible Type - read above
     this.type;
 
+    // Sound
+    this.sound = document.getElementById("ting");
+    this.sound.volume = 0.35;
+
     // Some collectible types may have subtypes
     // like coins of 50, 100, 500, 1000 and so on ...
     this.sub_type;
@@ -239,7 +243,7 @@
 
       if (utils.intersect(pappu_bounds, collec_bounds)) {
         // Pappu haz collected!
-
+        collec.sound.play();
         // Determine type and perform action accordingly
         switch (collec.type) {
 
