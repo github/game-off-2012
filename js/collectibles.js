@@ -82,13 +82,19 @@
     };
 
     this.drawClone = function(ctx) {
-      ctx.fillStyle = 'red';
-      ctx.fillRect(this.x, this.y, this.w, this.h);
+      ctx.drawImage(
+        mit.CollectibleUtils.clone_img,
+        this.x,
+        this.y
+      );
     };
 
     this.drawInvincible = function(ctx) {
-      ctx.fillStyle = 'lightBlue';
-      ctx.fillRect(this.x, this.y, this.w, this.h);
+      ctx.drawImage(
+        mit.CollectibleUtils.invincible_img,
+        this.x,
+        this.y
+      );
     };
   };
 
@@ -99,7 +105,7 @@
 
     count: 2,
 
-    types: ['coin', 'clone', 'invincible'],
+    types: ['clone'],
     //types: ['clone'],
 
     sub_types: {
@@ -107,7 +113,11 @@
     },
 
     init: function() {
+      this.clone_img = new Image();
+      this.clone_img.src = 'img/berries.png';
 
+      this.invincible_img = new Image();
+      this.invincible_img.src = 'img/apple.png';
     },
 
     getCoinColor: function(sub_type) {
