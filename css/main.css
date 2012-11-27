@@ -195,3 +195,15 @@ canvas#game_bg {
 	top: 50%; left: 50%;
 	margin-top: -24px; margin-left: -37px;
 }
+
+/* Share Buttons */
+#share_btns {
+	max-width: 400px;
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+.share-button {
+	float: left;
+	margin-right: 10px;
+}
