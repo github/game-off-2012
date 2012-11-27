@@ -46,7 +46,7 @@ function generateSlope(position: Vector2, width: int, goingUp: boolean) : float 
 	obj.transform.Rotate(Vector3(0, 0, angle));
 	generateSprite("commit", Vector2(position.x, position.y));
 	generateSprite("commit", Vector2(position.x + width, position.y + (goingUp ? 1 : -1) * width * 0.5));
-	return goingUp ? position.y + width / 2 : position.y - width / 2;
+	return goingUp ? position.y + width / 2.0 : position.y - width / 2.0;
 }
 
 function generateJumpingWatcher(xFrom: float, xTo: float, y: float) {
@@ -369,7 +369,8 @@ function generateSlopeZone(from: int, to: int) {
 		}
 		
 		if (!forksRoundGenerated) {
-			generateRectangleCommit(Vector2(i + from, fromY - i * 0.5), step, 'down', 0, Mathf.Round(Random.Range(1, 4)));
+			var length: int = Mathf.Min((to - from) - i, 10);
+			generateRectangleCommit(Vector2(i + from, fromY - i * 0.5), length, 'down', 0, Mathf.Round(Random.Range(1, 4)));
 		}
 	}
 	generatedUntil = to;

@@ -187,7 +187,6 @@ function updateSpeed() {
 	} else {
 		speed = 8 + 0.1 * (sprite.position.x - 900) / 100.0;
 	}
-	
 }
 
 function processCollisions() {
@@ -437,6 +436,7 @@ function playerDied() {
 		dragAndDropStartingPosition = sprite.position;
 		dragAndDropStartingTime = Time.time;
 		releaseNewCloneHelp.renderer.enabled = true;
+		magnetObject.collider.enabled = false;
 		level.setCloneMode(true);
 	} else {
 		isDying = true;
@@ -449,6 +449,8 @@ function unlockDragAndDrop() {
 	if (Time.time < dragAndDropStartingTime + 1) {
 		return;
 	}
+	hasCollidedWeakZone = false;
+	hasCollidedTouchAndDie = false;
 	releaseNewCloneHelp.renderer.enabled = false;
 	this.collider.enabled = true;
 	dragAndDropMode = false;
@@ -458,6 +460,9 @@ function unlockDragAndDrop() {
 	this.renderer.enabled = true;
 	fallSpeed = 0;
 	currentSpeedMult = 0;
+	if (PlayerData.isMagnet()) {
+		magnetObject.collider.enabled = true;
+	}
 }
 
 function triggerSlowDown() {

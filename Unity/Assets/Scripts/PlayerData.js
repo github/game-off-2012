@@ -33,6 +33,7 @@ class PlayerData {
 		totalCoins += coins;
 		coins = 0;
 		stargazers = 0;
+		saveState();
 	}
 	
 	static function isMagnet() {
@@ -85,10 +86,27 @@ class PlayerData {
 		} else {
 			bonusMagnet++;
 		}
+		saveState();
 	}
 	
 	static function pay(cost: int) {
 		totalCoins -= cost;
+	}
+	
+	static function saveState() {
+		PlayerPrefs.SetInt("totalCoins", totalCoins);
+		PlayerPrefs.SetInt("bonusClones", bonusClones);
+		PlayerPrefs.SetInt("bonusTimeSlowDown", bonusTimeSlowDown);
+		PlayerPrefs.SetInt("bonusJumps", bonusJumps);
+		PlayerPrefs.SetInt("bonusMagnet", bonusMagnet);
+	}
+	
+	static function loadState() {
+		totalCoins = PlayerPrefs.GetInt("totalCoins");
+		bonusClones = PlayerPrefs.GetInt("bonusClones");
+		bonusTimeSlowDown = PlayerPrefs.GetInt("bonusTimeSlowDown");
+		bonusJumps = PlayerPrefs.GetInt("bonusJumps");
+		bonusMagnet = PlayerPrefs.GetInt("bonusMagnet");
 	}
 	
 }

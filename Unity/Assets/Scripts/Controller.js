@@ -10,20 +10,24 @@ function Start () {
 }
 
 function Update () {
-	if (Input.GetKeyDown ("space") || Input.GetMouseButtonDown(0)) {
-		if (!isJumping) {
-        	player.triggerJump();
-        }
-        isJumping = true;
-	}
-	if (Input.GetKeyUp ("space") || Input.GetMouseButtonUp(0)) {
-		if (isJumping) {
-        	player.triggerStopJump();
-        }
-        isJumping = false;
-	}
-	
-	if (Input.GetKeyUp ("s") || Input.GetMouseButtonUp(1)) {
-		player.triggerSlowDown();
+	if (Time.timeScale > 0) {
+		if (Input.GetKeyDown ("space") || Input.GetMouseButtonDown(0)) {
+			if (Input.mousePosition.x < 580 || Input.mousePosition.y < 420) { // if we are not clicking on pause...
+				if (!isJumping) {
+		        	player.triggerJump();
+		        }
+		        isJumping = true;
+			}
+		}
+		if (Input.GetKeyUp ("space") || Input.GetMouseButtonUp(0)) {
+			if (isJumping) {
+	        	player.triggerStopJump();
+	        }
+	        isJumping = false;
+		}
+		
+		if (Input.GetKeyUp ("s") || Input.GetMouseButtonUp(1)) {
+			player.triggerSlowDown();
+		}
 	}
 }
