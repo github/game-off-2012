@@ -24,7 +24,6 @@
       }
   }();
 
-
   var config = mit.config = {
 
   };

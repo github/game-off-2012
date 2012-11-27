@@ -14,6 +14,35 @@
   box-sizing: border-box;
 }
 
+/* Loading */
+#loading {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: #FF6767;
+	z-index: 10;
+}
+
+#loading #barCont {
+	width: 400px;
+	height: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -10px 0 0 -200px;
+	background: black;
+}
+
+#loading #bar {
+	width: 0;
+	height: 20px;
+	position: absolute;
+	left: 0;
+	background: #F3FF67;
+}
+
 html, body {
   width: 100%; height: 100%;
 }
