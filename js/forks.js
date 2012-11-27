@@ -202,6 +202,12 @@
 
         fork.x -= mit.Backgrounds.ground_bg_move_speed;
 
+        // Out of view port, no need to draw
+        if (fork.x > mit.W) {
+          // console.log('out of view port');
+          return;
+        }
+
         if (fork.edge === 'top') {
           // ctx.lineTo(fork.x, 0);
 

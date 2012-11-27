@@ -152,6 +152,10 @@
         }
         branch.x -= mit.Backgrounds.ground_bg_move_speed;
 
+        // Out of view port, no need to draw
+        if (branch.x > mit.W)
+          return;
+
         // Escape Positions
         branch.escape_x = branch.x;
 
