@@ -105,7 +105,7 @@
 
     count: 2,
 
-    types: ['clone'],
+    types: ['coin', 'clone', 'invincible'],
     //types: ['clone'],
 
     sub_types: {
