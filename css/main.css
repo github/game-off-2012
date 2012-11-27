@@ -213,3 +213,8 @@ canvas#game_bg {
 	float: left;
 	margin-right: 10px;
 }
+
+#disqus_thread {
+	max-width: 1000px;
+	margin: 0 auto;
+}

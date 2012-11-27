@@ -120,20 +120,20 @@
       switch (sub_type) {
         case 50:
           // Yellow (first)
-          return {x: 38, y: 0};
+          return {x: 0, y: 0};
 
         case 100:
           // Pink (second)
-          return {x: 76, y: 0};
+          return {x: 38, y: 0};
 
         case 500:
           // Red (third)
           // Pink (second)
-          return {x: 114, y: 0};
+          return {x: 76, y: 0};
 
         case 1000:
           // Blue (last)
-          return {x: 152, y: 0};
+          return {x: 114, y: 0};
       }
 
     },
