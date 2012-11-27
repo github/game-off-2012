@@ -1,12 +1,16 @@
-* Compatibility
+* Compatibility [Firefox]
  * Browser
  * CSS
  * Sound files
- * Mobile*
-* Fix pause bug (our own tweening system for track).
-* Fix color fade bug.
-* Balance.
-* Global high score.
+ * message for IE
+* Fix pause bug (our own tweening system for track). (YB)
+* Fix color fade bug. (SD)
+* Balance. (SD)
+* Global high score. (SD)
+
+Ze Future 
+* Mobile
 * Slow upgrade.
 * Circle upgrade.
 * Mutations (change direction, shake, zoom).
+
