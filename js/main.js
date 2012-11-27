@@ -51,11 +51,6 @@
   var W = canvas.width = ui.body.width();
   var H = canvas.height = ui.body.height();
 
-  // Music
-  var music = document.getElementById("start");
-  music.volume = 0.2;
-  music.play();
-
   // Width x Height capped to 1000 x 500
   if (canvas.width > 1000) {
     W = canvas.width = 1000;
@@ -79,7 +74,7 @@
   bg_canvas.width = canvas.width;
   bg_canvas.height = canvas.height;
 
-
+  var music = document.getElementById("start");
   /*
     Game Start Screen and Lolz
   */
@@ -92,6 +87,11 @@
 
   // Start Button
   var startGame = function() {
+    // Play the awesome music! Really awesome
+    music.volume = 0.2;
+    music.play();
+    flap.pause();
+
     // Hide the Start Screen
     ui.start_screen.fadeOut();
 
