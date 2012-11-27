@@ -46,7 +46,6 @@ function LevelManager(bugStart) {
             }
         }
 
-
         if (this.counter <= 0 && this.bugsleft > 0) {
             this.base.addObject(new Bug(bugStart, 1));
             this.counter = currWv.delay;
@@ -54,8 +53,5 @@ function LevelManager(bugStart) {
             //alert(this.bugsleft);
         }
         this.counter -= dt;
-
-        
-
     }
 }
