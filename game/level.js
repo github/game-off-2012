@@ -7,6 +7,7 @@ function LevelData(b, d, l, nwi) {
 
 function WaveVisualizer(wvpos, ldata) {
     this.base = new baseObj(this, 9);
+    this.color = "green";
 
     this.update = function(dt) {
         return;
@@ -17,6 +18,8 @@ function WaveVisualizer(wvpos, ldata) {
     }
 
     this.moveTo = function(x, y) {
+        this.color = "yellow";
+        
         wvpos.x = x;
         wvpos.y = y;
     }
@@ -24,10 +27,11 @@ function WaveVisualizer(wvpos, ldata) {
     this.resetTo = function(x, y, wvinfo) {
         ldata = wvinfo;
         this.moveTo(x, y);
+        this.color = "green";
     }
 
     this.draw = function (pen) {
-        pen.fillStyle = "green";
+        pen.fillStyle = this.color;
         ink.rect(wvpos.x, wvpos.y, wvpos.w, wvpos.h, pen);
         pen.fillStyle = "blue";
         pen.font = "10px courier";
