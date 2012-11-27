@@ -23,9 +23,15 @@ body {
   font-family: 'Happy Sans', cursive;
 }
 
+h1 {
+	text-align: center;
+	color: #fff;
+	margin-top: 20px;
+}
+
 .container {
 	position: relative;
-	margin: 50px auto;
+	margin: 20px auto 50px;
 	width: auto;
 	max-width: 1000px;
 	height: 500px;
