@@ -57,8 +57,9 @@ function loadMap(level, loadComplete) {
           Crafty.e("2D, DOM, solid, " + item).attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
           
         if (curr == 'S')
-          Crafty.e("Player, 2D, DOM, player, Movement, Collision, Phil")
+          Crafty.e("Player, 2D, Canvas, player, Movement, Collision, Phil, SpriteColor")
             .attr({ x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize })
+            .spriteColor("FFFFFF", 0.0)
             .Moveable(200); // Character speed
       }
     }

@@ -129,13 +129,6 @@ Crafty.c('RemovableBox', {
 * Applies a sprite for the colored boxes
 */
 Crafty.c('ColorBox', {
-    _colorTextMap: {
-        white: "#DFDFDF",
-        blue: "#4D45E6",
-        red: "#DD0000",
-        purple: "#DFDFDF"
-    },
-    
     _colorString: "whiteBox", // Default is white
 
     init: function() {
@@ -148,7 +141,7 @@ Crafty.c('ColorBox', {
 
             // Change the color of any attached fancy text
             this.trigger('setTextCSS', {
-                color: this._colorTextMap[color]
+                color: gameBoard.colorTextMap[color]
             });
         });
     },

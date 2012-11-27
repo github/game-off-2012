@@ -13,6 +13,20 @@ var gameBoard = {
   colorKey: 69,     // E is the take / give color key
   standardAnimationLength: 50,   // Number of frames to play animations
   nextMap: '',
+  
+  colorTextMap: {
+    white: "#AFAFAF",
+    blue: "#4D45E6",
+    red: "#DD0000",
+    purple: "#DFDFDF"
+  },
+  
+  colorMap: {
+    white: "#DFDFDF",
+    blue: "#000051",
+    red: "#730001",
+    purple: "#5a005a"
+  },
 
   getHeight: function () {
     return this.height * this.tileSize;

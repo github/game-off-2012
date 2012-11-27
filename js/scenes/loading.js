@@ -22,10 +22,13 @@ Crafty.scene("loading", function () {
         portal: [0, 12]
     });
     
-    // Simulate a load time for now to make sure this works
-    setTimeout(function () {
-      Crafty.scene("9001"); //when everything is loaded, run the main scene
-    }, 500);
+    // Loads the sprite color module from an external source
+    Crafty.modules({ SpriteColor: 'RELEASE' }, function () {
+        // Simulate a load time for now to make sure this works
+        setTimeout(function () {
+          Crafty.scene("9001"); //when everything is loaded, run the main scene
+        }, 500);
+    });
   });
 
   //black background with some loading text

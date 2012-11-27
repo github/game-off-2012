@@ -161,6 +161,17 @@ Crafty.c("CharacterInteractions", {
                 }
             }
             collisionDetector.destroy();
+            this.trigger("ChangePlayerColor", this._holdingColor);
+        });
+        
+        this.bind("ChangePlayerColor", function(color) {
+            if(this.has("SpriteColor")) {
+                if(color == null) {
+                    this.spriteColor("#FFFFFF", 0.0);
+                } else {
+                    this.spriteColor(gameBoard.colorMap[color], 0.5);
+                }
+            }
         });
     }
  });
