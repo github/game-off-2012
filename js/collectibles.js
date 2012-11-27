@@ -62,23 +62,15 @@
 
     this.drawCoin = function(ctx) {
       // Get coin color based on sub type
-      var color = mit.CollectibleUtils.getCoinColor(this.sub_type);
+      var pos = mit.CollectibleUtils.getCoinSpritePos(this.sub_type);
 
-      ctx.beginPath();
-
-      ctx.fillStyle = color;
-
-      ctx.arc(
-        this.x,
-        this.y,
-        this.w/2,
-        0,
-        2*Math.PI,
-        false
+      ctx.drawImage(
+        mit.CollectibleUtils.coin_img,
+        pos.x, pos.y,
+        38, 38,
+        this.x, this.y,
+        38, 38
       );
-
-      ctx.fill();
-      ctx.closePath();
     };
 
     this.drawClone = function(ctx) {
@@ -113,6 +105,9 @@
     },
 
     init: function() {
+      this.coin_img = new Image();
+      this.coin_img.src = 'img/coins.png';
+
       this.clone_img = new Image();
       this.clone_img.src = 'img/berries.png';
 
@@ -120,20 +115,25 @@
       this.invincible_img.src = 'img/apple.png';
     },
 
-    getCoinColor: function(sub_type) {
+    getCoinSpritePos: function(sub_type) {
 
       switch (sub_type) {
         case 50:
-          return 'yellow';
+          // Yellow (first)
+          return {x: 38, y: 0};
 
         case 100:
-          return 'blue';
+          // Pink (second)
+          return {x: 76, y: 0};
 
         case 500:
-          return 'orange';
+          // Red (third)
+          // Pink (second)
+          return {x: 114, y: 0};
 
         case 1000:
-          return 'purple';
+          // Blue (last)
+          return {x: 152, y: 0};
       }
 
     },
