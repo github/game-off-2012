@@ -33,6 +33,11 @@ function Button(pos, txt, context, functionName, callData) {
 		ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+textsize+4, txt, pen);
 		return;
 	}
+	
+	this.added = function() {
+        this.resize = Dock(this, "none", "center");
+	}
+	
 
 	this.click = function() {
         if(this.context[this.functionName])
@@ -91,6 +96,10 @@ function RadioButton(pos, txt, context, functionName, callData, prevRadioButton)
         }
     };
     
+    this.added = function() {
+        this.resize = Dock(this, "center", "none");
+    }
+    
     //May be called multiple times
     this.pressed = function() {
         this.toggled = true;
@@ -148,60 +157,35 @@ function RadioButton(pos, txt, context, functionName, callData, prevRadioButton)
 	};
 }
 
-//Doesn't work... basically should calculate offsets to sides
-//and then insure they are kept when resize is called.
-
-//Docks its parent in reference to its grandparent (its parent's parent).
-//For not docking is absolute... but it could just as easily be made percentage based (like a hybrid).
-function Docked(dockedLeft, dockedRight, dockedTop, dockedBottom) {
-    this.base = new baseObj(this);
-
-    this.enabled = false;
-    this.dockedLeft = dockedLeft;
-    this.dockedRight = dockedRight;
-    this.dockedTop = dockedTop;
-    this.dockedBottom = dockedBottom;
-
-    this.added = function () {
-        if (this.base.parent && this.base.parent.base.parent)
-            this.parentAdded();
-    };
-
-    this.parentAdded = function () {
-        //dockingObject docks in reference to dockReference
-        var dockReference = this.base.parent.base.parent.tPos;
-        var dockingObject = this.base.parent.tPos;
-
-        //Get original distances to from every side (and store them)
-        this.leftDistance = dockingObject.x - dockReference.x;
-        this.topDistance = dockingObject.y - dockReference.y;
-
-        this.rightDistance = dockReference.w - this.leftDistance - dockingObject.w;
-        this.bottomDistance = dockReference.h - this.topDistance - dockingObject.h;
-
-        this.enabled = true;
-    };
-
-    this.resize = function () {
-        var dockReference = this.base.parent.base.parent.tPos;
-        var dockingObject = this.base.parent.tPos;
-
-        //Insure original distances to every side our parent is docked on remains the same
-        if (this.enabled) {
-            if (this.dockedLeft)
-                dockingObject.x = dockReference.x + this.leftDistance;
-
-            if (this.dockedTop)
-                dockingObject.y = dockReference.y + this.topDistance;
-
-            if (this.dockedRight)
-                dockingObject.x = dockReference.x + dockReference.w - this.rightDistance - dockingObject.w;
-                //dockingObject.w = dockReference.w - this.leftDistance - this.rightDistance;
-
-            if (this.dockedBottom)
-                dockingObject.y = dockReference.y + dockReference.h - this.bottomDistance - dockingObject.h;
-                //dockingObject.h = dockReference.h - this.topDistance - this.bottomDistance;
+function Dock(item, dockX, dockY) {
+    var parent = item.base.parent.tPos;
+    var obj = item.tPos;
+    
+    var left = obj.x - parent.x;
+    var top = obj.y - parent.y;
+    return function () {
+        console.log(parent, obj);
+        
+        if (dockX == "left") {
+            obj.x = parent.x;
+        } else if (dockX == "right") {
+            obj.x = parent.w - obj.w;
+        } else if (dockX == "center") {
+            obj.x = (parent.w - obj.w) / 2;
+        } else {
+            obj.x = parent.x + left;
         }
+        
+        if (dockY == "top") {
+            obj.y = parent.y
+        } else if (dockY == "bottom") {
+            obj.y = parent.h - obj.h;
+        } else if (dockY == "center") {
+            obj.y = (parent.h - obj.h) / 2
+        } else {
+            obj.y = parent.y + top;
+        }
+        console.log(parent, obj);
     };
 }
 
@@ -280,6 +264,7 @@ function AttributeChooser(tPos, attributes, attributeName) {
 }
 
 function Infobar(pos) {
+    console.log("Infobar;;;")
 	this.base = new baseObj(this, 14);
 	this.tattr = null;
 
@@ -287,7 +272,7 @@ function Infobar(pos) {
 
 	var buttonW = 100;
 
-	this.base.addObject(new Docked(0, 1, 0, 0));
+// 	this.base.addObject(new Docked().dockX(-1));
 
 	this.attributeChoosers = {};	
 
@@ -322,10 +307,11 @@ function Infobar(pos) {
 	    this.upgradeb = new Button(
             new temporalPos(((width - bW) / 2) - (buttonW / 2) + bW, 200, buttonW, 30, 0),
             "Upgrade!", this.base.rootNode, "upgradeSel");
-	    this.upgradeb.base.addObject(new Docked(0, 1, 1, 0));
+// 	    this.upgradeb.base.addObject(new Docked(0, 1, 1, 0));
 	    this.base.addObject(this.upgradeb);
 
-	    this.clearDisplay();
+        this.clearDisplay();
+        this.resize = Dock(this, "right", "top");
 	};
 
 	this.obj = null;
@@ -343,6 +329,7 @@ function Infobar(pos) {
 	}
 
 	this.draw = function (pen) {
+        console.log(this.tPos);
 	    pen.fillStyle = "#000";
 	    ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
 
@@ -430,4 +417,5 @@ function Infobar(pos) {
 
 
 	}             //End of draw
+	console.log("End of infobar", this, pos);
 }

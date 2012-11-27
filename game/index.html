@@ -36,26 +36,15 @@ canvas {
 <script src="fail.js"></script>
 <script src="type.js"></script>
 <script src="sound.js"></script>
+<script src="color.js"></script>
 
 <script src="baseGeometry.js"></script>
 
 <script src="commonFncs.js"></script>
-<script src="commonText.js"></script>
 <script src="commonGeometry.js"></script>
-<script src="commonActions.js"></script>
-
-<script src="pointer.js"></script>
-
-<script src="targetStrategy.js"></script>
-<script src="towerAttackType.js"></script>
-
-<script src="animations.js"></script>
 
 <script src="baseEntities.js"></script>
-
 <script src="infobar.js"></script>
-<script src="towerBar.js"></script>
-
 <script src="tower.js"></script>
 <script src="path.js"></script>
 <script src="bug.js"></script>
@@ -116,10 +105,7 @@ canvas {
                 };
             })();
 
-            width = Math.max(window.innerWidth, minWidth);
-            height = Math.max(window.innerHeight - 5, minHeight);
-
-            eng = new Engine(pen, bufferCanvas, new temporalPos(0, 0, width, height, 0, 0));
+            eng = new Engine(pen, bufferCanvas);
             //this.base.rootNode.holder will also get eng... but... yeah...
             window.reqAnim(eng.run.bind(eng));
             

@@ -230,6 +230,11 @@
             mX = -1;
         }
     }
+    
+    this.resize = function(e) {
+        this.tPos.w = e.width;
+        this.tPos.h = e.height;
+    }
 
     this.draw = function () {
         pen = this.pen;
