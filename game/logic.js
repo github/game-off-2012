@@ -35,6 +35,7 @@
             new temporalPos(0, pos.h - 150, pos.w - 150, 150)
         );
     this.base.addObject(this.towerbar);
+
     
     this.currentBugs = 10;
     this.maxBugs = 150;
@@ -44,6 +45,9 @@
     this.selectedObj = null;
 
     generatePath(this);
+    var bugStart = getAnElement(this.engine.base.children["Path_Start"]);
+    this.lvMan = new LevelManager(bugStart);
+    this.base.addObject(this.lvMan);
     
 
     this.lastFPS = 60;
@@ -83,6 +87,7 @@
     this.update = function (dt) {
         this.curQuadTree = new QuadTree(this.base.allChildren);
 
+	/*
         if (eng.base.lengths["Path_Start"] > 0
                 && (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] === 0)) {
             this.bugDifficulty += 0.1;
@@ -95,7 +100,7 @@
             if (this.currentBugs > this.maxBugs) {
                 this.currentBugs = this.maxBugs;
             }
-        }
+        }*/
 
         this.handleMouseEvents();
 
