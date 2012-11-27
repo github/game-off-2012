@@ -97,6 +97,7 @@
         pakia.generateRandomVelocity();
 
         pakia.type = this.types[i];
+        pakia.type = this.types[0];
 
         if (pakia.type == 'angry')
           pakia.sound = this.sounds[0];
@@ -125,7 +126,10 @@
       // console.log(this.cur_pakia.x)
 
       // Reset positions
-      if (this.cur_pakia.x + this.cur_pakia.w < 0) {
+      if (
+        this.cur_pakia.x + this.cur_pakia.w < 0 ||
+        this.cur_pakia.y > mit.H
+        ) {
         this.cur_pakia.generateRandomPos();
 
         this.cur_pakia.generateRandomVelocity();
@@ -167,8 +171,40 @@
         pappu_bounds.end_y     >  pakia_bounds.start_y+20 &&
         pakia_bounds.end_y-20  >  pappu_bounds.start_y
       ) {
-        mit.gameOver();
+
+        // Depending upon the type of the pakia
+        switch (this.cur_pakia.type) {
+          case 'angry':
+            mit.gameOver();
+            break;
+
+          case 'sad':
+            // Pull
+
+            if (!this.cur_pakia.has_stuck) {
+              mit.vy += 20;
+              this.cur_pakia.y += 20;
+              this.cur_pakia.vx = 0;
+            }
+
+            this.cur_pakia.has_stuck = 1;
+
+            break;
+
+          case 'happy':
+            // Push
+
+            if (this.cur_pakia.vy < 0)
+              mit.vy -= 10;
+            else
+              mit.vy += 10;
+
+            break;
+        }
+
       }
+
+      return;
     }
 
   };

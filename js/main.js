@@ -286,7 +286,7 @@
       mit.Pappu.checkCloneCollision();
 
       // Send over Pakias (Enemies)
-      if (mit.score > 199)
+      if (mit.score > 9)
         mit.PakiaUtils.render(ctx);
 
       // Update score
@@ -311,6 +311,10 @@
 
       mit.Pappu.x += mit.vx;
       mit.Pappu.y += mit.vy;
+
+      if (mit.vy > mit.v_cap) {
+        mit.vy = mit.v_cap;
+      }
     
       mit.Pappu.draw(ctx);
     }
