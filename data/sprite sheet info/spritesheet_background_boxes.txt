@@ -1,0 +1,3 @@
+background_boxes_1 = 0 543 633 288
+background_boxes_2 = 0 0 640 286
+background_boxes_3 = 0 287 640 255
