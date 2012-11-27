@@ -193,7 +193,7 @@
     mit.flying_up = 1;
   }, false);
 
-  window.addEventListener('touchcancel', function(e) {
+  window.addEventListener('touchend', function(e) {
     if (!mit.start_btn_clicked)
       return;
 
