@@ -97,7 +97,7 @@
         pakia.generateRandomVelocity();
 
         pakia.type = this.types[i];
-        pakia.type = this.types[0];
+        // pakia.type = this.types[0];
 
         if (pakia.type == 'angry')
           pakia.sound = this.sounds[0];
