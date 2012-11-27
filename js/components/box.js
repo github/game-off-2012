@@ -166,7 +166,7 @@ Crafty.c('ColorBox', {
     },
 
     colorComponentString: function() {
-        return this._colorString + "Box";
+        return this._colorString + "Box" + (this.has("PushableBox") ? "" : "Unmovable" );
     }
 });
 

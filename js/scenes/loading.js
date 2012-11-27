@@ -15,6 +15,10 @@ Crafty.scene("loading", function () {
         blueBox: [0, 10],
         whiteBox: [0, 9],
         purpleBox: [0, 12],
+        redBoxUnmovable: [1, 11],
+        blueBoxUnmovable: [1, 10],
+        whiteBoxUnmovable: [1, 9],
+        purpleBoxUnmovable: [1, 12],
         portal: [0, 12]
     });
     
