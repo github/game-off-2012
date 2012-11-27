@@ -103,7 +103,7 @@ Crafty.c('RemovableBox', {
             // Skip it if we've already checked it, if its not a color, or its not the same color
             if(removableNeighbors[neighbor.x + "," + neighbor.y] 
                 || !neighbor.has("ColorBox") 
-                || neighbor.colorComponentString() != this.colorComponentString())
+                || neighbor.colorString() != this.colorString())
                 continue;
             else {
                 removableNeighbors[neighbor.x + "," + neighbor.y] = neighbor;
