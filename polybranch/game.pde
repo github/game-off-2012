@@ -43,7 +43,7 @@ class Game{
           drawPolygon(lerp(width/2, originX, 1), lerp(height/2, originY,1), width/2, 16, 6, color(255,0,0,128));
           stroke(0);
           fill(0,100);
-          ellipse(width/2,height/2,40,40);
+          ellipse(width/2,height/2,playerR*2,playerR*2);
           drawnPlayer = true;
         }
         layer.render();

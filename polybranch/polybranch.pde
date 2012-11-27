@@ -11,7 +11,11 @@ PVector[] tris = {
 //                color(random(100,200)));
       
 int originX;
-int originY;          
+int originY;
+
+float playerR;
+int playerX;
+int playerY;
                 
 Tree testTree;
 
@@ -24,6 +28,12 @@ void setup(){
   //frameRate(30);
   originX = width/2;
   originY = height/2;
+  
+  //player vars
+  playerR = 20;
+  playerX = width/2;
+  playerY = width/2;
+  
   imageMode(CENTER);
   rectMode(CENTER);
   ellipseMode(CENTER);
@@ -39,6 +49,7 @@ void setup(){
 void draw(){
   background(255);
   g.update();
+  println(frameRate);
   
 }
 

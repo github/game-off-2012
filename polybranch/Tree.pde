@@ -79,10 +79,20 @@ class Tree{
 
   }
   
+  void checkCollisions(){
+    for(int i = 0; i < branches.length; i++){
+      if(branches[i] != null){
+        //branches[i].render(context);
+        branches[i].playerOverlap();
+      }
+    }
+  }
+  
   void render(float oX, float oY, float w, float h, float easedDist){
     for(int i = 0; i < branches.length; i++){
       if(branches[i] != null){
         //branches[i].render(context);
+        branches[i].setPos(oX, oY, w, h, easedDist);
         branches[i].render(oX, oY, w, h, easedDist);
       }
     }

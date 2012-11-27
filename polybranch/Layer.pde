@@ -36,6 +36,9 @@ class Layer{
 //      reset();
 //    }
     easedDistance = easeInExpo(distance, distance, 0,1,1);
+    if(easedDistance > 0.95 && easedDistance < 1.05){
+      tree.checkCollisions();
+    }
     
   }
   
