@@ -181,6 +181,27 @@
   }, false);
 
 
+  // Game play on touch too!
+  window.addEventListener('touchstart', function(e) {
+    if (!mit.start_btn_clicked)
+      return;
+
+    if (!mit.game_started)
+      mit.game_started = 1;
+
+    mit.ay = -1.5;
+    mit.flying_up = 1;
+  }, false);
+
+  window.addEventListener('touchend', function(e) {
+    if (!mit.start_btn_clicked)
+      return;
+
+    mit.ay = 0;
+    mit.flying_up = 0;
+  }, false);
+
+
   /*
     Performing some game over tasks
   */
