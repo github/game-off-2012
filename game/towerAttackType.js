@@ -107,6 +107,28 @@ var attackTypes = {
     },
 };
 
+
+var bugAttackTypes = {
+    Normal: function normal() {
+        this.run = function (tower, target) {
+            applyDamage(target, tower, tower.attr.damage);
+
+            tower.base.addObject(MakeLaser(tower, target, damageToTime(tower.attr.damage)));
+
+            return target;
+        },
+        this.draw = function (pen, tPos) {
+            //Draw text
+            pen.fillStyle = "#000000";
+            pen.font = tPos.h + "px arial";
+            pen.textAlign = 'left';
+
+            ink.text(tPos.x, tPos.y, "N", pen);
+        }
+    }
+};
+
+
 function drawAttributes(user, pen) {
     drawTiled(pen,
         function (obj, pen, pos) {

@@ -7,7 +7,9 @@ function doAttack(object) {
     if (!target)
         return;
 
-    var hit = object.attr.attack_type.run(object, target);
+    var attackType = object.attr.attack_type || object.attr.bug_attack_type;
+
+    var hit = attackType.run(object, target);
 
     var array = [];
     mergeToArray(hit, array);
@@ -140,7 +142,7 @@ function HoverIndicator(objectPointed) {
             pen.fillStyle = "rgba(255, 255, 255, 0.25)";
             pen.strokeStyle = "yellow";
             pen.lineWidth = 1;
-            ink.rect(p.x, p.y, p.w, p.h, pen);
+            ink.circ(p.getCenter().x, p.getCenter().y, p.w / 2, pen);
         }
     }
 }

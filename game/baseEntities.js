@@ -82,7 +82,7 @@ function baseObj(holder, zindex) {
     };
 
     this.addObject = function (obj) {
-        if (!assertDefined("addObject", obj, obj.base))
+        if (!assertDefined("addObject", obj) || !assertDefined("addObject", obj.base))
             return;
 
         obj.base.parent = this.holder;
@@ -117,7 +117,10 @@ function baseObj(holder, zindex) {
     this.loopThroughAllTypes = function (funcToExecute) {
         for (var type in this.children)
             for (var id in this.children[type])
-                funcToExecute(this.children[type][id]);
+                if (funcToExecute(this.children[type][id])) {
+                    return;
+                }
+
     };
 
     this.removeObject = function (obj) {
@@ -180,7 +183,7 @@ function baseObj(holder, zindex) {
         //(read http://stackoverflow.com/questions/5999998/how-can-i-check-if-a-javascript-variable-is-function-type
         //before fixing this in order to implement the most efficient solution to checking if something is a function
         //for different browsers).
-        if (holder[name])
+        if (holder[name] && !holder.hidden)
             mergeToArray(holder[name](args), returnedValues);
 
         this.loopThroughAllTypes(function (child) {
@@ -201,7 +204,7 @@ function baseObj(holder, zindex) {
         //(read http://stackoverflow.com/questions/5999998/how-can-i-check-if-a-javascript-variable-is-function-type
         //before fixing this in order to implement the most efficient solution to checking if something is a function
         //for different browsers).
-        if (holder[name])
+        if (holder[name] && !holder.hidden)
             mergeToArray(holder[name](args), returnedValues);
 
         return returnedValues;
@@ -211,7 +214,7 @@ function baseObj(holder, zindex) {
     //to all of its children. Does not collect the return values as this
     //concept is being phased out as it is not really OO sound.
     this.callRaise = function (name, args) {
-        if(holder[name])
+        if(holder[name] && !holder.hidden)
             holder[name](args);
 
         this.loopThroughAllTypes(function (child) {
@@ -229,6 +232,26 @@ function baseObj(holder, zindex) {
                 child.base.setAttributeRecursive(attributeName, value);
             }
         });
+    }
+
+    //Unfortunately this has to be recursive
+    this.canHandleEvent = function (eventName) {
+        if (holder[eventName])
+            return true;
+
+
+        eventName = "parent_" + eventName;
+        var childrenHandleIt = false;
+        this.loopThroughAllTypes(function (child) {
+            if (child.base) {
+                if (child.base.canHandleEvent(eventName)) {
+                    childrenHandleIt = true;
+                    return true;
+                }
+            }
+        });
+
+        return childrenHandleIt;
     }
 
     this.update = function (dt) {

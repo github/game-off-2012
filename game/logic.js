@@ -172,8 +172,10 @@
         for (var key in allUnderMouse)
             if (allUnderMouse[key].base.zindex > topMost.base.zindex ||
                        (allUnderMouse[key].base.zindex == topMost.base.zindex &&
-                       allUnderMouse[key].base.zoffset > topMost.base.zoffset))
-                topMost = allUnderMouse[key];
+                       allUnderMouse[key].base.zoffset > topMost.base.zoffset)) {
+                if (allUnderMouse[key].base.canHandleEvent(eventName))
+                    topMost = allUnderMouse[key];
+            }
 
         for (var key in allUnderMouse)
             if (allUnderMouse[key] !== topMost)

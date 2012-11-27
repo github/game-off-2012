@@ -25,7 +25,7 @@ function Bug(startPath, difficulty) {
 
 
     this.attr.target_Strategy = new targetStrategies.Closest();
-    this.attr.attack_type = new attackTypes.Normal();
+    this.attr.bug_attack_type = new attackTypes.Normal();
 
     this.base.addObject(new AttackCycle());
 
