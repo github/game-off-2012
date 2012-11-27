@@ -35,7 +35,8 @@
     start_screen: $('#start_screen'),
     start_game: $('#start_game'),
     tweet: $('#tweet'),
-    fb: $('#fb')
+    fb: $('#fb'),
+    fps_count: $('#fps_count')
   };
 
   /*
@@ -241,6 +242,13 @@
 
   };
 
+  mit.last_time = new Date();
+  setInterval(function() {
+    mit.ui.fps_count.html(mit.fps.toFixed(0) + ' FPS');
+  }, 1000);
+
+  // Initializations
+  mit.Backgrounds.init(ctx);
 
   (function renderGame() {
     window.requestAnimationFrame(renderGame);
@@ -338,6 +346,12 @@
       mit.Pappu.drawStatic(ctx);
     }
 
+    // Calculate FPS
+    mit.cur_time = new Date;
+    mit.fps = 1e3 / (mit.cur_time - mit.last_time);
+    mit.last_time = mit.cur_time;
+
+    return;
   }());
 
 }());

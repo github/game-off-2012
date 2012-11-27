@@ -23,20 +23,63 @@
     log_x: 40,
     log_y: 0,
 
-    init: function() {
-      // Lets LOLZ
+    sky_gradient: {},
+
+    init: function(ctx) {
+      // Sky Gradient
+      this.sky_gradient = ctx.createLinearGradient(0, 0, 0, mit.H);  
+      this.sky_gradient.addColorStop(0, '#06c4f4');
+      this.sky_gradient.addColorStop(1, '#7bd4f6');
+
+
+      // Clouds
+      this.cloud_img = new Image();
+      this.cloud_img.src = 'img/clouds.png';
+
+      this.cloud_img.width = mit.W;
+      this.cloud_img.height = mit.H;
+
+
+      // Back Trees
+      this.back_trees_img = new Image();
+      this.back_trees_img.src = 'img/back_trees.png';
+
+      this.back_trees_img.width = mit.W;
+      this.back_trees_img.height = mit.H;
+
+
+      // Front Trees
+      this.front_trees_img = new Image();
+      this.front_trees_img.src = 'img/front_trees.png';
+
+      this.front_trees_img.width = mit.W;
+      this.front_trees_img.height = mit.H;
+
+
+      // Ground
+      this.ground_img = new Image();
+      this.ground_img.src = 'img/ground.png';
+
+      this.ground_img.width = mit.W;
+      this.ground_img.height = mit.H;
+
+
+      // Grass
+      this.grass_img = new Image();
+      this.grass_img.src = 'img/grass.png';
+
+      this.grass_img.width = mit.W;
+      this.grass_img.height = mit.H;
+
+
+      // Log on which pappu sits
+      this.log_img = new Image();
+      this.log_img.src = 'img/log.png';
     },
 
     drawClouds: function(ctx) {
-      // Clouds
-      var clouds = new Image();
-      clouds.src = 'img/clouds.png';
-
-      clouds.width = mit.W;
-      clouds.height = mit.H;
-
-      ctx.drawImage(clouds, this.cloud_bg_vx, 0, mit.W, mit.H);
-      ctx.drawImage(clouds, mit.W + this.cloud_bg_vx, 0, mit.W, mit.H);
+      ctx.drawImage(this.cloud_img, this.cloud_bg_vx, 0, mit.W, mit.H);
+      ctx.drawImage(this.cloud_img, mit.W + this.cloud_bg_vx, 0, mit.W, mit.H);
 
       if (-this.cloud_bg_vx >= mit.W) {
         this.cloud_bg_vx = 0;
@@ -46,15 +89,8 @@
     },
 
     drawBackTrees: function(ctx) {
-      // Back Trees
-      var back_trees = new Image();
-      back_trees.src = 'img/back_trees.png';
-
-      back_trees.width = mit.W;
-      back_trees.height = mit.H;
-
-      ctx.drawImage(back_trees, this.backtree_bg_vx, 0, mit.W, mit.H);
-      ctx.drawImage(back_trees, mit.W + this.backtree_bg_vx, 0, mit.W, mit.H);
+      ctx.drawImage(this.back_trees_img, this.backtree_bg_vx, 0, mit.W, mit.H);
+      ctx.drawImage(this.back_trees_img, mit.W + this.backtree_bg_vx, 0, mit.W, mit.H);
 
       if (-this.backtree_bg_vx >= mit.W) {
         this.backtree_bg_vx = 0;
@@ -65,15 +101,8 @@
     },
 
     drawFrontTrees: function(ctx) {
-      // Front Trees
-      var front_trees = new Image();
-      front_trees.src = 'img/front_trees.png';
-
-      front_trees.width = mit.W;
-      front_trees.height = mit.H;
-
-      ctx.drawImage(front_trees, this.fronttree_bg_vx, 0, mit.W, mit.H);
-      ctx.drawImage(front_trees, mit.W + this.fronttree_bg_vx, 0, mit.W, mit.H);
+      ctx.drawImage(this.front_trees_img, this.fronttree_bg_vx, 0, mit.W, mit.H);
+      ctx.drawImage(this.front_trees_img, mit.W + this.fronttree_bg_vx, 0, mit.W, mit.H);
 
       if (-this.fronttree_bg_vx >= mit.W) {
         this.fronttree_bg_vx = 0;
@@ -84,15 +113,8 @@
     },
 
     drawGround: function(ctx) {
-      // Ground
-      var ground = new Image();
-      ground.src = 'img/ground.png';
-
-      ground.width = mit.W;
-      ground.height = mit.H;
-
-      ctx.drawImage(ground, this.ground_bg_vx, 0, mit.W, mit.H);
-      ctx.drawImage(ground, mit.W + this.ground_bg_vx, 0, mit.W, mit.H);
+      ctx.drawImage(this.ground_img, this.ground_bg_vx, 0, mit.W, mit.H);
+      ctx.drawImage(this.ground_img, mit.W + this.ground_bg_vx, 0, mit.W, mit.H);
 
       if (-this.ground_bg_vx >= mit.W) {
         this.ground_bg_vx = 0;
@@ -103,15 +125,9 @@
     },
 
     drawGrass: function(ctx) {
-      // Grass
-      var grass = new Image();
-      grass.src = 'img/grass.png';
 
-      grass.width = mit.W;
-      grass.height = mit.H;
-
-      ctx.drawImage(grass, this.grass_bg_vx, 0, mit.W, mit.H);
-      ctx.drawImage(grass, mit.W + this.grass_bg_vx, 0, mit.W, mit.H);
+      ctx.drawImage(this.grass_img, this.grass_bg_vx, 0, mit.W, mit.H);
+      ctx.drawImage(this.grass_img, mit.W + this.grass_bg_vx, 0, mit.W, mit.H);
 
       if (-this.grass_bg_vx >= mit.W) {
         this.grass_bg_vx = 0;
@@ -123,12 +139,9 @@
 
     drawInitLog: function(ctx) {
 
-      var log = new Image();
-      log.src = 'img/log.png';
+      this.log_y = mit.H-(this.log_img.height+45);
 
-      this.log_y = mit.H-(log.height+45);
-
-      ctx.drawImage(log, this.log_x, this.log_y);
+      ctx.drawImage(this.log_img, this.log_x, this.log_y);
 
       if (mit.game_started) {
         this.log_x -= this.grass_bg_move_speed * this.common_bg_speed;
@@ -140,11 +153,8 @@
     draw: function(ctx) {
 
       // Draw Linear Gradient for real/pure BG (sky/water)
-      var gradient = ctx.createLinearGradient(0, 0, 0, mit.H);  
-      gradient.addColorStop(0, '#06c4f4');
-      gradient.addColorStop(1, '#7bd4f6');
       ctx.save();
-      ctx.fillStyle = gradient;
+      ctx.fillStyle = this.sky_gradient;
       ctx.fillRect(0, 0, mit.W, mit.H);
       ctx.restore();
 
@@ -172,8 +182,5 @@
     }
 
   };
-
-  // Initializations
-  mit.Backgrounds.init();
 
 }());
