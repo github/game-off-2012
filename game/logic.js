@@ -46,7 +46,10 @@
 
     generatePath(this);
     var bugStart = getAnElement(this.engine.base.children["Path_Start"]);
-    this.lvMan = new LevelManager(bugStart);
+
+    //Level/Wave generator
+    var lmpos = new temporalPos(pos.w-400, 0, 100, pos.h*0.05);
+    this.lvMan = new LevelManager(bugStart, lmpos);
     this.base.addObject(this.lvMan);
     
 
