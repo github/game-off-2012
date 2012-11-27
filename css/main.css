@@ -193,13 +193,13 @@ canvas#game_bg {
 }
 
 .controls {
-	width: 74px;
+	width: 130px;
 	height: 48px;
 	background: url(../img/controls.png) no-repeat top center;
 	margin: 10px auto;
 	position: absolute;
 	top: 50%; left: 50%;
-	margin-top: -24px; margin-left: -37px;
+	margin-top: -24px; margin-left: -60px;
 }
 
 /* Share Buttons */
