@@ -235,6 +235,11 @@
     checkCloneCollision: function() {
 
       var self = this;
+
+      // super optimization :P
+      if (!self.clones.length)
+        return;
+      
       var branches = mit.BranchUtils.branches;
       var forks = mit.ForkUtils.forks;
       var pakias = mit.PakiaUtils.pakias;

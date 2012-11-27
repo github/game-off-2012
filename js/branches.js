@@ -177,9 +177,14 @@
 
     // Check collisions with branches
     checkCollision: function() {
-      var first_branch = this.branches[0],
-          // Get Pappu Bounds
-          pappu_bounds = mit.Pappu.getBounds(),
+      var first_branch = this.branches[0];
+
+      // Useless optimization
+      if (first_branch.x > mit.W/2)
+        return;
+
+      // Get Pappu Bounds
+      var pappu_bounds = mit.Pappu.getBounds(),
           // Get Nearest Branch's Top Part's Bounds
           branch_bounds = first_branch.getBounds();
 

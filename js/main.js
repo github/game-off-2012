@@ -169,8 +169,7 @@
   // Flying up ?
   mit.flying_up = 0;
 
-  // Game play on mouse clicks too!
-  window.addEventListener('mousedown', function(e) {
+  mit.ascend = function() {
     if (!mit.start_btn_clicked)
       return;
 
@@ -179,35 +178,49 @@
 
     mit.ay = -1.5;
     mit.flying_up = 1;
-  }, false);
+  };
 
-  window.addEventListener('mouseup', function(e) {
+  mit.descend = function() {
     if (!mit.start_btn_clicked)
       return;
 
     mit.ay = 0;
     mit.flying_up = 0;
+  };
+
+  // Game play on mouse clicks too!
+  window.addEventListener('mousedown', function(e) {
+    mit.ascend();
+  }, false);
+
+  window.addEventListener('mouseup', function(e) {
+    mit.descend();
   }, false);
 
 
   // Game play on touch too!
   window.addEventListener('touchstart', function(e) {
-    if (!mit.start_btn_clicked)
-      return;
-
-    if (!mit.game_started)
-      mit.game_started = 1;
-
-    mit.ay = -1.5;
-    mit.flying_up = 1;
+    mit.ascend();
   }, false);
 
   window.addEventListener('touchend', function(e) {
-    if (!mit.start_btn_clicked)
-      return;
+    mit.descend();
+  }, false);
 
-    mit.ay = 0;
-    mit.flying_up = 0;
+
+  // ... and keyzz...
+  window.addEventListener('keydown', function(e) {
+
+    if (e.keyCode === 38) {
+      mit.ascend();
+    }
+
+  }, false);
+
+  window.addEventListener('keyup', function(e) {
+
+    mit.descend();
+
   }, false);
 
 
