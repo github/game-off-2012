@@ -35,7 +35,6 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
 function Towerbar(pos) {
 	this.base = new baseObj(this, 14);
-	this.tattr = null;
 
 	this.tPos = pos;
 
@@ -51,6 +50,9 @@ function Towerbar(pos) {
                     var tower = new Tower(fakeTile);
 
                     tower.attr.attack_type = new obj();
+
+                    tower.recolor();
+
                     return tower;
                 }
             );

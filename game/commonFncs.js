@@ -102,6 +102,11 @@ function cloneObject(object) {
     return jQuery.extend(true, {}, object);
 }
 
+function mergeObject(objectOne, objectTwo) {
+    return jQuery.extend(true, objectOne, objectTwo);
+}
+
+
 //drawFnc takes array[x], pen, new temporalPos(xPos, yPos, width, height)
 function drawTiled(pen, drawFnc, array, tPosBox, xNum, yNum, percentBuffer) {
     var width = tPosBox.w / (xNum);

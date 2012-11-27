@@ -281,7 +281,6 @@ function AttributeChooser(tPos, attributes, attributeName) {
 
 function Infobar(pos) {
 	this.base = new baseObj(this, 14);
-	this.tattr = null;
 
 	this.tPos = pos;
 
@@ -331,7 +330,6 @@ function Infobar(pos) {
 	this.obj = null;
 	this.updateAttr = function (obj) {
 	    this.base.setAttributeRecursive("hidden", false);
-	    this.tattr = obj.attr;
 	    this.obj = obj;
 	    for (var key in this.attributeChoosers)
 	        this.attributeChoosers[key].loadAttribute();
@@ -360,7 +358,7 @@ function Infobar(pos) {
 	    var xe = this.tPos.x + this.tPos.w - 10;
 	    var y = this.tPos.y + 15;
 
-	    if (this.tattr == null) {
+	    if (!this.obj || !this.obj.attr) {
 	        ink.text(xs, y, "[no selction]", pen);
 	        return;
 	    }
@@ -370,8 +368,8 @@ function Infobar(pos) {
 	    var xPos = xs;
 
 	    pen.font = "10px courier";
-	    for (attrName in this.tattr) {
-	        var val = this.tattr[attrName];
+	    for (var attrName in this.obj.attr) {
+	        var val = this.obj.attr[attrName];
 
 	        function tryPrintAsNumber(val, name) {
 	            if (typeof val != "number")

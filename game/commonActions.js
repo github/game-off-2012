@@ -9,6 +9,9 @@ function doAttack(object) {
 
     var attackType = object.attr.attack_type || object.attr.bug_attack_type;
 
+    if (attackType.applyAttrMods)
+        attackType.applyAttrMods(object.attr);
+
     var hit = attackType.run(object, target);
 
     var array = [];
@@ -29,7 +32,11 @@ function AttackCycle() {
 
     //Going to be more than just doAttack!
     this.triggerAttack = function () {
+        var originalAttr = cloneObject(this.base.parent.attr);
+
         var targets = doAttack(this.base.parent);
+
+        mergeObject(this.base.parent.attr, originalAttr);
 
         for (var key in targets) {
             var target = targets[key];

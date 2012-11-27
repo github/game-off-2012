@@ -40,13 +40,13 @@ var attackTypes = {
     },
     Aoe: function area_of_effect() {
         this.radius = 15;
-        this.percent_damage = 50;
+        this.percent_damage = 1;
         this.run = function (tower, target) {
             var targets = findAllWithin(tower.base.rootNode, "Bug", target.tPos.getCenter(), this.radius);
 
             var hit = [];
 
-            var damage = tower.attr.damage * this.percent_damage / 100;
+            var damage = tower.attr.damage;
 
             for (var key in targets) {
                 applyDamage(targets[key], tower, damage);
@@ -79,6 +79,9 @@ var attackTypes = {
             pen.textAlign = 'left';
 
             ink.text(tPos.x, tPos.y, "A", pen);
+        },
+        this.applyAttrMods = function(attr) {
+            attr.damage *= this.percent_damage / 100
         }
     },
     Slow: function slow() {        

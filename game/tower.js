@@ -82,6 +82,11 @@ function Tower(baseTile) {
 
     this.laserTime = 0.5;
 
+    this.added = function() {
+        // Yes, this is supposed to be here.
+        this.recolor();
+    };
+
     this.draw = function (pen) {
         var p = this.tPos;
         pen.save();
@@ -151,6 +156,13 @@ function Tower(baseTile) {
     };
     
     this.recolor = function() {
+        var attackType = this.attr.attack_type;
+
+        var originalAttr = cloneObject(this.attr);
+
+        if (attackType.applyAttrMods)
+            attackType.applyAttrMods(this.attr);
+
         function rgba(r, g, b, a) {
             function color(n) {
                 return Math.round(n);
@@ -158,7 +170,12 @@ function Tower(baseTile) {
             return "rgba(" + color(r) + "," + color(g) + "," + color(b) + "," + Math.round(a * 100) / 100 + ")";
         }
         var a = this.attr;
-        this.color = rgba(255 - a.hp, a.range, a.damage, 0.5)
+        this.color = rgba(255 - a.hp, a.range, a.damage, 0.5);
+
+        if(a.damage < 1)
+            this.color = "blue";
+
+        mergeObject(this.attr, originalAttr);
     }
 
     this.click = function() {
@@ -192,10 +209,10 @@ function Tower(baseTile) {
         this.base.addObject(conn);
         this.connections.push(conn);
         dst.connections.push(conn);
-    };
+    };    
 
     // Yes, this is supposed to be here.
-    this.mutate();
+    this.recolor();
 }
 
 function tryPlaceTower(tower, tile)
