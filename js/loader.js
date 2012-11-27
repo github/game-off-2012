@@ -61,6 +61,7 @@
 
   var loading = document.getElementById("bar");
   var loader = document.getElementById("loading");
+  var loadText = document.getElementById("loadText");
 
   for(var i = 0; i < audio.length; i++) {
     var file = audio[i];
@@ -68,6 +69,7 @@
       counter++;
       var percent = Math.floor((counter/size*100));
       loading.style.width = percent + "%";
+      loadText.innerHTML = "Loading... " + percent + "%";
     });
   }
 
@@ -78,6 +80,7 @@
 
       var percent = Math.floor(((counter + audio.length)/size*100));
       loading.style.width = percent + "%";
+      loadText.innerHTML = "Loading... " + percent + "%";
       if(percent >= 100)
         $("#loading").fadeOut();
     };

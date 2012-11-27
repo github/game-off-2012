@@ -52,10 +52,15 @@ body {
   font-family: 'Happy Sans', cursive;
 }
 
-h1 {
+h1, #loadText {
 	text-align: center;
 	color: #fff;
 	margin-top: 20px;
+}
+
+#loadText {
+	line-height: 380px;
+	font-size: 30px;
 }
 
 #fps_count {
