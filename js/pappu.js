@@ -176,7 +176,7 @@
       // Crossed Sides ?
       // `c` stands for crossed
 
-      var ctop = (this.y < 0);
+      var ctop = (this.y < 0 - this.h);
       var cbtm = (this.y > mit.H);
       var cleft = (this.x < 0);
       var crgt = (this.x > mit.W);

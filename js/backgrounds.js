@@ -237,7 +237,7 @@
         this.ground_bg_vx = 0;
       }
 
-       console.log(-this.ground_bg_vx);
+      // console.log(-this.ground_bg_vx);
 
       return;
     },
