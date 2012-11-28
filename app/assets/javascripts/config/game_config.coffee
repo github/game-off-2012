@@ -39,7 +39,7 @@ Config.obstacles =
     increaseBy: 5
   intervals:
     atStart: 2000
-    initial: 1500
+    initial: 1700
     reduceBy: 100
     minimum: 750
   tweenDuration:
@@ -47,15 +47,15 @@ Config.obstacles =
     change: 3
     minimum: 10
   effect:
-    divisor: 1.15
-    threshold: 0.5
+    divisor: 1.2
+    threshold: 0.01
 
 Config.actions      =  ["Pull", "Push", "Fork", "Merge", "Pull", "Push", "Merge", "Pull", "Push"]
 Config.actionValues =
   Pull:  25
   Push:  25
   Merge: 15
-  Fork:  18
+  Fork:  15
 
 Config.actionValues.MAX   = _.max(Config.actionValues)
 Config.cycle.centerRadius = (Config.cycle.outerRadius.base + Config.cycle.innerRadius.base) / 2 + 15
