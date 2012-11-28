@@ -9,20 +9,19 @@ function Player(game, x, y, speed, ySpeed) {
 	this.colors = ["#E67373", "#ECEC85", "#9DE970", "#708EE9"]//red, yellow, green, blue
 	//this.keys=[['A','S'],['D','F'],['J','K'],['L',';']]
 	this.branchState = 0
-	this.branchStates = [1, 2, 4]
-	this.keyMaps = {
-		1 : [['A', 'F'], ['A', 'F'], ['A', 'F'], ['A', 'F']],
-		2 : [['A', 'F'], ['A', 'F'], ['J', ';'], ['J', ';']],
-		4 : [['A', 'S'], ['D', 'F'], ['J', 'K'], ['L', ';']]
-	}
+	this.branchStates = [1, 4]
+	//this.keyMaps = {
+	//	1 : [['A', 'F'], ['A', 'F'], ['A', 'F'], ['A', 'F']],
+	//	4 : [['A', 'S'], ['D', 'F'], ['J', 'K'], ['L', ';']]
+	//}
 	this.lines = []
 	for (var i = 0; i < this.lineCount; i++) {
-		this.lines.push(new Line(this.game, this.colors[i], this.x + i * this.lineRadius * 2, this.y, this.lineRadius, this.keyMaps[this.branchStates[this.branchState]][i], this.speed, this.ySpeed))
+		this.lines.push(new Line(this.game, global_controls.colors[i], this.x + i * this.lineRadius * 2, this.y, this.lineRadius, global_controls.keyMaps[this.branchStates[this.branchState]][i], this.speed, this.ySpeed))
 	}
-	//bad
+	//bad - start with 2 lines
 	this.lines[2].isDead = true
 	this.lines[3].isDead = true
-
+	
 	this.physics = function(timeDelta) {
 		var dead = 0
 		for (var i = 0; i < this.lines.length; i++) {
@@ -31,7 +30,7 @@ function Player(game, x, y, speed, ySpeed) {
 				dead += 1
 			}
 		}
-		if (dead === 2) {
+		/*if (dead === 2) {
 			if (this.branchState > 1)
 				this.branchState = 1
 			this.branchStates = [1, 4]
@@ -40,13 +39,14 @@ function Player(game, x, y, speed, ySpeed) {
 			if (this.branchState > 0)
 				this.branchState = 0
 			this.branchStates = [1]
-		}
+		}*/
 		for (var i = 0; i < this.lines.length; i++) {
 			var line = this.lines[i]
-			line.keys = this.keyMaps[this.branchStates[this.branchState]][i]
+			line.keys = global_controls.keyMaps[this.branchStates[this.branchState]][i]
 			line.physics(timeDelta)
 		}
 	}
+	
 	this.setLineSpeed = function(speed) {
 		for (var i = 0; i < this.lines.length; i++) {
 			var line = this.lines[i]
@@ -89,7 +89,7 @@ function Player(game, x, y, speed, ySpeed) {
 			var k = keyAccess[i]
 			if (keys[k].lines.length > 1) {
 				for (var j = 1; j < keys[k].lines.length; j++) {
-					keys[k].lines[j].tarX = keys[k].lines[j].r * 2 + keys[k].lines[j].x
+					keys[k].lines[j].tarX = keys[k].lines[j].r * 1.25 * j + keys[k].lines[j].x
 				}
 			}
 		}
@@ -144,7 +144,7 @@ function Player(game, x, y, speed, ySpeed) {
 		if (this.branchState === 0) {//bring pieces back together
 			this.merge()
 		} 
-		else if (this.branchState === 1) {//separate
+		/*else if (this.branchState === 1) {//separate
 			var moveCnt = 1
 			var numLeftOf = 0
 			if (alive === 2) {
@@ -158,6 +158,9 @@ function Player(game, x, y, speed, ySpeed) {
 		} else if (this.branchState === 2) {//split all
 			this.splitAll()
 
+		}*/
+		else{
+			this.splitAll()
 		}
 
 	}.bind(this)])

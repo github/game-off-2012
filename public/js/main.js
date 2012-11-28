@@ -17,6 +17,7 @@ function init() {
 	canvas.width = 800
 	canvas.height = 600
 	game = new Game(canvas)
+	global_controls = new Controls()
 	var hud = new HUD(game, true)
 	game.addObject("hud", hud)
 	hud.draw(game.ctx)

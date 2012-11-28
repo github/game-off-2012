@@ -4,9 +4,6 @@ function HUD(game, pre) {
 	this.score = 0
 	this.multiplier = 4
 	this.gameOver = false
-	this.draw = function(ctx) {
-
-	}
 	this.physics = function(timeDelta) {
 		var player = this.game.objects["player"]
 		var lines = player.lines

@@ -14,7 +14,6 @@
 		<link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/css/style.css">
         
-        <script src="/js/jquery-1.8.2.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -29,7 +28,10 @@
         	<source src="/audio/background.ogg"></source>
         	<source src="/audio/background.mp3"></source>
         </audio>
+        <div class="controls-text">Edit Controls (click) <a onclick="global_controls.reset()">reset</a></div>
+        <div id='controls'></div>
         <script src="/js/util.js"></script>
+        <script src="/js/controls.js"></script>
         <script src="/js/hud.js"></script>
         <script src="/js/powerups.js"></script>
         <script src="/js/line.js"></script>

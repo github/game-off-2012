@@ -40,8 +40,6 @@ function Powerup(parent, x, y, type) {
 			var player = this.parent.game.objects["player"]
 			if (!player.hasCol(this.color)) {
 				player.getCol(this.color).revive()
-				if (player.branchState !== 2)
-					player.merge()
 			} else {
 				player.setLineSpeed(player.speed - 2)
 				this.powerTimer = setTimeout(function(player) {
@@ -55,8 +53,6 @@ function Powerup(parent, x, y, type) {
 			var player = this.parent.game.objects["player"]
 			if (!player.hasCol(this.color)) {
 				player.getCol(this.color).revive()
-				if (player.branchState !== 2)
-					player.merge()
 			} else {
 				player.setLineSpeed(player.speed + 2)
 				this.powerTimer = setTimeout(function(player) {
@@ -70,8 +66,6 @@ function Powerup(parent, x, y, type) {
 			var player = this.parent.game.objects["player"]
 			if (!player.hasCol(this.color)) {
 				player.getCol(this.color).revive()
-				if (player.branchState !== 2)
-					player.merge()
 			} else {
 				player.setLineRadius(player.lineRadius + 3)
 				this.powerTimer = setTimeout(function(player) {
@@ -85,8 +79,6 @@ function Powerup(parent, x, y, type) {
 			var player = this.parent.game.objects["player"]
 			if (!player.hasCol(this.color)) {
 				player.getCol(this.color).revive()
-				if (player.branchState !== 2)
-					player.merge()
 			} else {
 				player.setLineRadius(player.lineRadius - 3)
 				this.powerTimer = setTimeout(function(player) {
