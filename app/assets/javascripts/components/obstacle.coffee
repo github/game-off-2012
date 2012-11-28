@@ -25,9 +25,12 @@ Crafty.c "Obstacle",
     @y = coords.y
 
   shiftRadius: (radiusChange)->
+    absChange = Math.abs(radiusChange)
     @radius += radiusChange
     @radius = Math.min(@_max, Math.max(@_min, @radius))
-    change = 1 + ((Math.abs(radiusChange) / Config.actionValues.MAX) / Config.gfx.track.hueChangeDivisor)
+    change = 1 + ((absChange / Config.actionValues.MAX) / Config.gfx.track.hueChangeDivisor)
+    @attr(z: @z + absChange)
+
 
     coords = Utils.polarCnv(@radius, @angle)
     setTimeout((=> @color(Utils.change_hue(@_color, change))), 1)
@@ -38,8 +41,10 @@ Crafty.c "Obstacle",
     @_speed = Math.max(@_speed, Config.obstacles.tweenDuration.minimum)
 
   reset: ->
+    @attr(z: Config.gfx.segmentsInitialIndex)
     @_speed = Config.obstacles.tweenDuration.inital
     @radius = @_startRadius
+    @_colorUp = Math.random() > 0.5 ? true : false
     @_position()
     @color(@_baseColor)
 

@@ -48,7 +48,7 @@ Config.obstacles =
     minimum: 10
   effect:
     divisor: 1.2
-    threshold: 0.01
+    threshold: 2
 
 Config.actions      =  ["Pull", "Push", "Fork", "Merge", "Pull", "Push", "Merge", "Pull", "Push"]
 Config.actionValues =

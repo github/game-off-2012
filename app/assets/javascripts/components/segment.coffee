@@ -38,9 +38,6 @@ Crafty.c("Segment",
     return if value < Config.obstacles.effect.threshold
     @[action](value)
 
-    @_inner.attr(z: index)
-    @_outer.attr(z: index)
-
     @prev.perform(action, value / Config.obstacles.effect.divisor, 'next', index - 1) unless cameFrom == 'prev'
     @next.perform(action, value / Config.obstacles.effect.divisor, 'prev', index - 1) unless cameFrom == 'next'
 
