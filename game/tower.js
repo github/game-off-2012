@@ -47,8 +47,8 @@ TowerStats = {
         attSpeed:       1,        
         mutate:         0,
         mutatestrength: 0,
-        upload:         0,
-        download:       0,
+        upload:         1,
+        download:       1,
         hitcount:       0,
         value:          50,
     };
@@ -60,19 +60,19 @@ function Tower(baseTile) {
     this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0);
     this.base = new baseObj(this, 10);
     this.attr = {
-        range:          TowerStats.range + Math.random() * 200,
-        damage:         TowerStats.damage + Math.random() * 30,
-        hp:             TowerStats.hp + Math.random() * 100,
-        attSpeed:       TowerStats.attSpeed + Math.random() * 1,
-        mutate:         TowerStats.mutate + Math.random() * 50,
-        mutatestrength: TowerStats.mutatestrength + Math.random() * 50,
-        upload:         TowerStats.upload + Math.random() * 50,
-        download:       TowerStats.download + Math.random() * 50,
+        range:          TowerStats.range,
+        damage:         TowerStats.damage,
+        hp:             TowerStats.hp,
+        attSpeed:       TowerStats.attSpeed,
+        mutate:         TowerStats.mutate,
+        mutatestrength: TowerStats.mutatestrength,
+        upload:         TowerStats.upload,
+        download:       TowerStats.download,
         hitcount:       TowerStats.hitcount,
         value:          TowerStats.value,
     };
 
-    this.alleles = [];
+    this.alleles = {};
 
     this.attr.target_Strategy = new targetStrategies.Closest();
     this.attr.attack_types = [];
@@ -81,25 +81,49 @@ function Tower(baseTile) {
     this.connections = [];
 
     this.base.addObject(new AttackCycle());
-    this.base.addObject(new UpdateTicker(this.attr, "mutate", "mutate", true));
+    //this.base.addObject(new UpdateTicker(this.attr, "mutate", "mutate", true));
     this.base.addObject(new Selectable());
-
-    this.added = function() {
-        if(baseTile)
-        {
-            this.addAllele(new Allele({range: 1000, damage: -1}));
-            this.addAllele(new Allele({range: 100, damage: -1}));
-            //this.addAllele(new Allele({attSpeed: 100}));  
-            this.addAllele(new Allele({attack: allAttackTypes.Normal}));
-        }
+    
+    this.added = function() {        
         // Yes, this is supposed to be here.
         this.recolor();        
     };
 
-    this.addAllele = function(allele) {
-        this.alleles.push(allele);
-        allele.apply(this);
+    this.addAllele = function(group, allele) {
+        if(!assertDefined(group, allele))
+            return;
+
+        if(this.alleles[group])
+            this.alleles[group].apply(this, true);
+
+        this.alleles[group] = allele;
+            
+        this.alleles[group].apply(this, false);
     };
+
+    this.clearAlleles = function()
+    {
+        for(var alleleGroup in this.alleles)        
+            if(this.alleles[alleleGroup])
+            {
+                this.alleles[alleleGroup].apply(this, true); 
+                delete this.alleles[alleleGroup];       
+            }
+    };
+
+    //Hackish way to check if we are from breeder
+    if(baseTile)
+    {
+        var fillChance = 0.5;
+        for(var alGroup in AllAlleleGroups)
+        {
+            if(Math.random() < fillChance)
+            {
+                this.addAllele(alGroup, new Allele(AllAlleleGroups[alGroup]()));
+            }
+        }
+    }
+
 
     this.draw = function (pen) {
         var p = this.tPos;

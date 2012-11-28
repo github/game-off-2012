@@ -391,23 +391,12 @@ function Infobar(pos) {
 	                    var totalWidth = ourWidth + 6;
 	                    var totalHeight = 15;
 	                    var totalStat = Math.max(baseStat, 0);
-	                    var factor = 1 * totalWidth * 0.5 / 2;
-	                    var direction = val < totalStat ? -1 : +1;
+	                    var factor = 1 * totalWidth * 0.5 / 10;	                    
 	                    startX += totalWidth * 0.5;
 
-	                    //addBarPart(val - baseStat);
-	                    for (var key in obj.alleles) {
-	                        var allele = obj.alleles[key];
-	                        for (var key in allele.delta) {
-	                            if (key == name) {
-	                                var impact = allele.delta[key];
-	                                startX += addBarPart(impact) * (impact < 0 ? -1 : 1);
-	                            }
-	                        }
-	                    }
-
 	                    function addBarPart(val) {
-	                        var curWidth = (Math.log(Math.abs(val) / baseStat + 2) - 1) *
+	                        var direction = val < 0 ? -1 : +1;
+	                        var curWidth = (Math.log(Math.abs(val) / baseStat + 2)) *
                                 factor * direction;
 	                        if (val > 0) {
 	                            pen.fillStyle = "Green";
@@ -420,6 +409,17 @@ function Infobar(pos) {
 	                        }
 	                        return curWidth;
 	                    }
+
+	                    //addBarPart(val - baseStat);
+	                    for (var key in obj.alleles) {
+	                        var allele = obj.alleles[key];
+	                        for (var key in allele.delta) {
+	                            if (key == name) {
+	                                var impact = allele.delta[key];
+	                                startX += addBarPart(impact) * (impact < 0 ? -1 : 1);
+	                            }
+	                        }
+	                    }	                    
 	                }
 
 	                pen.color = "Green";

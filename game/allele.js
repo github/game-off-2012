@@ -13,15 +13,22 @@ TowerStats = {
     };
     */
 
+var AllAlleleGroups =
+{
+//Should likely have better names
+    one: function () { return { range: 10}; },
+    two: function () { return {range: Math.random() * 20}; },
+    three: function () { return {range: 100, damage: -1}; },
+};
 
 function Allele(delta)
 {
     this.delta = delta;
-    this.apply = function (target) {
+    this.apply = function (target, unapply) {
         for (var key in this.delta) {
             var curChange = this.delta[key];
-            if (defined(target.attr[key])) {
-                target.attr[key] += curChange;
+            if (defined(target.attr[key])) {                
+                target.attr[key] += curChange * (unapply ? -1 : 1);
             }
             //Then its a attack_type or target strategy
             else if (key == "attack") {
@@ -33,7 +40,7 @@ function Allele(delta)
                 target.attr.target_Strategy = new curChange();
             }
         }
-    }
+    }    
 }
 
 function TowerBreeder(pos) {
@@ -56,27 +63,20 @@ function TowerBreeder(pos) {
 
     this.breed = function () {
         var maxLength = 0;
-        for (var key in this.towers) {
-            maxLength = Math.max(maxLength, this.towers[key].alleles.length);
-        }
-
-        var resultantAlleles = [];
-        for (var i = 0; i < maxLength; i++) {
-            var alleleChoices = [];
-            for (var key in this.towers) {
-                var curAllele = this.towers[key].alleles[i];
-                if (curAllele)
-                    alleleChoices.push(curAllele);
-            }
-            var choosen = alleleChoices[Math.floor(Math.random() * alleleChoices.length)];
-            resultantAlleles.push(choosen);
+        
+        var resultantAlleles = {};
+        for(var alleleGroup in AllAlleleGroups)
+        {
+            var alleleParent = this.towers[Math.floor(Math.random() * this.towers.length)];
+            if(alleleParent.alleles[alleleGroup])
+                resultantAlleles[alleleGroup] = alleleParent.alleles[alleleGroup];
         }
 
         var notTile = [];
         notTile.tPos = { x: 0, y: 0, w: tileSize, h: tileSize };
         var newTower = new Tower(notTile);
         for (var key in resultantAlleles)
-            newTower.addAllele(resultantAlleles[key]);
+            newTower.addAllele(key, resultantAlleles[key]);
         placingTower = newTower;
         placingTower.recolor();
     }
