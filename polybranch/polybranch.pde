@@ -47,8 +47,20 @@ void draw(){
       player.velY -= 0.3;
     }
   }else if(player.velY != 0.0){
-    float brakes = (player.velY > 0) ? -0.5 : 0.5;
-    player.velY += brakes;
+    if(player.velY > 0){
+      player.velY -= 0.5;
+      if(player.velY < 0){
+        player.velY = 0;
+      }
+    }else if(player.velY < 0){
+      player.velY += 0.5;
+      if(player.velY > 0){
+        player.velY = 0;
+      } 
+    }
+   
+//    float brakes = (player.velY > 0) ? -0.5 : 0.5;
+//    player.velY += brakes;
   }
   if(keys[2] || keys[3]){
     if(keys[2]){
@@ -60,8 +72,20 @@ void draw(){
       player.velX -= 0.3;
     }
   }else if(player.velX != 0.0){
-    float brakes = (player.velX > 0) ? -0.5 : 0.5;
-    player.velX += brakes;
+    if(player.velX > 0){
+      player.velX -= 0.5;
+      if(player.velX < 0){
+        player.velX = 0;
+      }
+    }else if(player.velX < 0){
+      player.velX += 0.5;
+      if(player.velX > 0){
+        player.velX = 0;
+      } 
+    }
+    
+    //    float brakes = (player.velX > 0) ? -0.5 : 0.5;
+//    player.velX += brakes;
   }
   
   

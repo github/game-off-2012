@@ -45,6 +45,8 @@ class Layer{
   public void reset(){
     distance = 0;
     easedDistance = 0;
+    
+    tree.reset();
   }
   
   public void render(){

@@ -48,7 +48,7 @@ class Branch{
   }
   
   public void render(float oX, float oY, float w, float h, float easedDist){
-      //alph = (easedDist > 1) ? (int)map(easedDist, 1, 4, 255, 0) : 255;
+      alph = (easedDist > 2) ? (int)map(easedDist, 2, 8, 255, 0) : 255;
       fill(br,alph);
       noStroke();
       triangle(easedVerticies[0].x, easedVerticies[0].y,

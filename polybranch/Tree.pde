@@ -85,9 +85,20 @@ class Tree{
 
   }
   
+  void reset(){
+    index = 1;
+//    for(int i = 0; i < numBranches; i++){
+//        branches[i].br = (int)random(50,200);
+//        branches[i].verticies[0].x = 0;
+//        branches[i].verticies[0].y = 0;
+//        
+//    }
+    //populateRandomBranches(branches[0], (random(1)));
+  }
+  
   void checkCollisions(){
     for(int i = 0; i < numBranches; i++){
-      if(branches[i] != null){
+      if(branches[i].verticies[0].x != 0 && branches[i].verticies[0].y != 0){
         //branches[i].render(context);
         branches[i].playerOverlap();
       }
@@ -96,7 +107,7 @@ class Tree{
   
   void render(float oX, float oY, float w, float h, float easedDist){
     for(int i = 0; i < numBranches; i++){
-      if(branches[i] != null){
+      if(branches[i].verticies[0].x != 0 && branches[i].verticies[0].y != 0){
         //branches[i].render(context);
         branches[i].setPos(oX, oY, w, h, easedDist);
         branches[i].render(oX, oY, w, h, easedDist);
