@@ -82,7 +82,7 @@ h3 {
 }
 
 .twitter_share{
-	display: inline-block;
+	text-align: center;
 	margin: auto;
 	margin-top: 20px;
 }
