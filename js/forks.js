@@ -197,7 +197,7 @@
       forks.forEach(function(fork, index) {
 
         if (fork.x + fork.w < 0) {
-          forks.shift();
+          forks.splice(index, 1);
         }
 
         fork.x -= mit.Backgrounds.ground_bg_move_speed;

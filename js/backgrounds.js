@@ -20,6 +20,9 @@
     grass_bg_move_speed: 9,
     grass_bg_vx: 0,
 
+    combined_bg_move_speed: 5,
+    combined_bg_vx: 0,
+
     log_x: 40,
     log_y: 0,
 
@@ -75,6 +78,11 @@
       // Log on which pappu sits
       this.log_img = new Image();
       this.log_img.src = 'img/log.png';
+
+
+      // Combined BG Image
+      this.bg_combined_img = new Image();
+      this.bg_combined_img.src = 'img/bg_combined.png';
     },
 
     drawClouds: function(ctx) {
@@ -148,24 +156,51 @@
       }
     },
 
+    drawCombinedBG: function(ctx) {
+      ctx.drawImage(this.bg_combined_img, this.ground_bg_vx, 0, mit.W, mit.H);
+      ctx.drawImage(this.bg_combined_img, mit.W + this.ground_bg_vx, 0, mit.W, mit.H);
+
+      if (-this.combined_bg_vx >= mit.W) {
+        this.combined_bg_vx = 0;
+      }
+
+      if (mit.game_started)
+        this.combined_bg_vx -= this.combined_bg_move_speed * this.common_bg_speed;
+    },
+
     // Draw Awesome Backgrounds
     // Backgrounds have been made for 1000x500 dimensions
     draw: function(ctx) {
 
-      // Draw Linear Gradient for real/pure BG (sky/water)
-      ctx.save();
-      ctx.fillStyle = this.sky_gradient;
-      ctx.fillRect(0, 0, mit.W, mit.H);
-      ctx.restore();
+      if (mit.game_started) {
+        if (!this.fps || this.fps === 5000)
+          this.fps = mit.fps;
+      }
+      else {
+        this.fps = 5000;
+      }
 
-      // Clouds
-      this.drawClouds(ctx);
-      
-      // Back Small Trees
-      this.drawBackTrees(ctx);
 
-      // Front Big Trees
-      this.drawFrontTrees(ctx);
+      if (this.fps > 55) {
+
+        // Draw Linear Gradient for real/pure BG (sky/water)
+        ctx.save();
+        ctx.fillStyle = this.sky_gradient;
+        ctx.fillRect(0, 0, mit.W, mit.H);
+        ctx.restore();
+
+        // Clouds
+        this.drawClouds(ctx);
+        
+        // Back Small Trees
+        this.drawBackTrees(ctx);
+
+        // Front Big Trees
+        this.drawFrontTrees(ctx);
+      }
+      else {
+        this.drawCombinedBG(ctx);
+      }
 
       // Drawing the initial wood log on which
       // Pappu gonna sit and bask in the cool and cozy

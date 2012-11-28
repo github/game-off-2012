@@ -235,6 +235,7 @@
     // Stop background
     mit.Backgrounds.common_bg_speed = 0;
     mit.Backgrounds.ground_bg_move_speed = 0;
+    mit.Backgrounds.fps = 0;
 
     mit.game_over = 1;
     mit.start_btn_clicked = 0;
