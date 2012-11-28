@@ -279,7 +279,7 @@
     // mit.ForkUtils.drawDigs(ctx);
 
     // Draw Grass on Main Canvas
-    mit.Backgrounds.drawGrass(ctx);
+    // mit.Backgrounds.drawGrass(ctx);
 
     if (mit.flying_up || !mit.game_started)
       mit.Pappu.updateFlyFrameCount();
