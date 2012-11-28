@@ -10,8 +10,26 @@ Jumping watchers can be destroyed by jumping on them. If you do so, you will be 
 
 By collecting commits, add new features to hotfix. The more features you have, the more likely you will progress in the game.
 
-## Snapshots
+## Screenshots
 
 ### Menu
 
 ![alt text](http://sdrdis.github.com/hotfix/images/menu.jpg "Menu")
+
+### Beginning of the game
+
+![alt text](http://sdrdis.github.com/hotfix/images/screenshot-1.jpg "Beginning of the game")
+
+### Game over screen
+
+![alt text](http://sdrdis.github.com/hotfix/images/screenshot-2.jpg "Game over screen")
+
+You are ranked by the number of stargazers you collected.
+
+### The store
+
+![alt text](http://sdrdis.github.com/hotfix/images/screenshot-3.jpg "The store")
+
+Buy new features for Hotfix.
+
+## Enemies and obstables
