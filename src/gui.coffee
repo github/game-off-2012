@@ -76,3 +76,32 @@ class Map
     @ctx.drawImage(@mapgen.background, 0, 0, 640, 480)
     for text in @texts
       text.draw(@ctx)
+
+class CloneEntry
+  constructor:(@id,@name,@startPoints)->
+    @points = @startPoints
+    @div = document.getElementById(@name)
+  getPoints:->
+    @points
+  addPoint:->
+    @points = @points + 1
+  removePoint:->
+    @points = @points - 1
+  tick:->
+    @div = @points
+
+class CloneMenu
+  constructor:(@id,@game,@totalPoints)->
+	  @div = document.getElementById('total')
+	  @entities =[
+	    new CloneEntry(0,"archer",0),
+	    new CloneEntry(1,"soldier",0),
+	    new CloneEntry(2,"spy",0),
+	    new CloneEntry(3,"canon",0),
+	    new CloneEntry(4,"hero",0)
+	  ]
+  tick:->
+    @div = @totalPoints
+  addPoint:->
+    @totalPoints = @totalPoints + 1
+  
