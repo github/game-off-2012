@@ -148,13 +148,14 @@ SongView = Backbone.View.extend({
       sprite.render(this.context);
     }, this)
 
+/*
     this.context.fillStyle = 'gray';
     this.context.fillRect(70, 0, 20, this.canvas.height);
     this.context.fillRect(165, 0, 20, this.canvas.height);
     this.context.fillRect(258, 0, 20, this.canvas.height);
     this.context.fillRect(353, 0, 20, this.canvas.height);
     this.context.fillRect(0, 335, this.canvas.width, 5);
-    this.context.fillRect(0, 360, this.canvas.width, 5);
+    this.context.fillRect(0, 360, this.canvas.width, 5);*/
     
     this.renderMarker(this.active, 'green');
     this.renderMarker(this.inactive, 'darkgray');

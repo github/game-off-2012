@@ -16,7 +16,8 @@ var sprites = {
       [0, 0, 640, 314],
       [641, 309, 613, 305],
       [641, 0, 632, 308]
-    ]
+    ],
+    continuous: true
   }),
 
   machine_back : new Sprite({
@@ -44,7 +45,23 @@ var sprites = {
     frames:[
       [0, 0, 71, 111],
       [72, 0, 52, 120]
-    ]
+    ],
+    destX : 560,
+    destY : 335,
+    continuous: true
+  }),
+
+  flexible_pipe : new Sprite({
+    filename: 'spritesheet_flexible_pipe.png',
+    frames:[
+      [0, 0, 110, 41],
+      [0, 42, 99, 41],
+      [0, 84, 86, 41]
+    ],
+    destX : 450,
+    destY : 0,
+    continuous: true,
+    duration : 500
   })
 };
 
