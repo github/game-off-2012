@@ -16,7 +16,8 @@ var sprites = {
       [0, 0, 640, 314],
       [641, 309, 613, 305],
       [641, 0, 632, 308]
-    ]
+    ],
+    continuous: true
   }),
 
   machine_back : new Sprite({
@@ -44,7 +45,10 @@ var sprites = {
     frames:[
       [0, 0, 71, 111],
       [72, 0, 52, 120]
-    ]
+    ],
+    destX : 560,
+    destY : 335,
+    continuous: true
   })
 };
 
