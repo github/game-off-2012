@@ -12,6 +12,9 @@ DFlag.logn.findAllWithin = {};
 DFlag.logn.findAllWithin.total = 0;
 DFlag.logn.findAllWithin.max = 0;
 
+DFlag.logn.findClosestGeneric = {};
+DFlag.logn.findClosestGeneric.total = 0;
+DFlag.logn.findClosestGeneric.max = 0;
 
 DFlag.quadtree = {};
 
@@ -21,3 +24,7 @@ DFlag.quadtree.leafObjectCount = 0;
 
 
 DFlag.zindexCheck = true;
+
+DFlag.disableSounds = true;
+
+DFlag.lotsamoney = true;
