@@ -83,7 +83,7 @@ Crafty.c("Movement", {
         });
 
         // Clears the key stack
-        this.bind("StopMovement",function(e) {
+        this.bind("StopMovement", function() {
             this._directions = [];
         });
     },

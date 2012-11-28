@@ -47,6 +47,7 @@ function loadMap(level, loadComplete) {
         }
       }
       loadComplete();
+      Crafty.trigger("StopMovement");
   });
 }
 
