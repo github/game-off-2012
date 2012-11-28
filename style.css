@@ -80,3 +80,9 @@ h3 {
 .obstacle .label {
 	margin-left: 140px;
 }
+
+.twitter_share{
+	display: inline-block;
+	margin: auto;
+	margin-top: 20px;
+}
