@@ -58,7 +58,8 @@
   var size = Obj.size(images);
   size += audio.length;
 
-  var counter = 0;
+  var counter = 0,
+      percent = 0;
 
   var loading = document.getElementById("bar");
   var loader = document.getElementById("loading");
@@ -68,18 +69,20 @@
     var file = audio[i];
     file.addEventListener("loadeddata", function() {
       counter++;
-      var percent = Math.floor((counter/size*100));
+      percent = Math.floor((counter/size*100));
       loading.style.width = percent + "%";
       loadText.innerHTML = "Loading... " + percent + "%";
+      if(percent >= 100)
+        $("#loading").fadeOut();
     });
   }
 
   for(var src in images) {
     image[src] = new Image();
     image[src].onload = function() {
-      ++counter;
+      counter++;
 
-      var percent = Math.floor(((counter)/size*100));
+      percent = Math.floor(((counter)/size*100));
       loading.style.width = percent + "%";
       loadText.innerHTML = "Loading... " + percent + "%";
       if(percent >= 100)
@@ -88,4 +91,3 @@
 
     image[src].src = images[src];
   }
-
