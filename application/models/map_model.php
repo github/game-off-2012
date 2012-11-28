@@ -1,4 +1,6 @@
 <?php
+// TODO: Can this construct an associative array and then json encode it
+// instead of manually putting together a string?
 class Map_model extends CI_Model {
     
     function get_map($level)
@@ -37,7 +39,7 @@ class Map_model extends CI_Model {
             while (!feof($f)) {
                 $line = chop(fgets($f, 4096));
                 $explosion = explode(':', $line, 2);
-                $lineTemp = '"'.$explosion[0].'": "'.$explosion[1].'",';
+                $lineTemp = '"'.$explosion[0].'": "'.trim($explosion[1]).'",';
                 $object .= $lineTemp;
             }
             $object = substr($object, 0, -1);
