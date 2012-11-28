@@ -359,6 +359,8 @@ function Infobar(pos) {
 
 	    var baseStats = getRealType(this.obj) == "Tower" ? TowerStats : TowerStats;
 
+	    var obj = this.obj;
+
 	    pen.font = "10px courier";
 	    for (var attrName in this.obj.attr) {
 	        var value = this.obj.attr[attrName];
@@ -388,9 +390,36 @@ function Infobar(pos) {
 	                    var startY = yPos - 10;
 	                    var totalWidth = ourWidth + 6;
 	                    var totalHeight = 15;
-	                    var totalStat = Math.max(baseStat, val);
-	                    var curWidth = (baseStat / totalStat) * totalWidth;
-	                    ink.rect(startX, startY, curWidth, totalHeight, pen);
+	                    var totalStat = Math.max(baseStat, 0);
+	                    var factor = 1 * totalWidth * 0.5 / 2;
+	                    var direction = val < totalStat ? -1 : +1;
+	                    startX += totalWidth * 0.5;
+
+	                    //addBarPart(val - baseStat);
+	                    for (var key in obj.alleles) {
+	                        var allele = obj.alleles[key];
+	                        for (var key in allele.delta) {
+	                            if (key == name) {
+	                                var impact = allele.delta[key];
+	                                startX += addBarPart(impact) * (impact < 0 ? -1 : 1);
+	                            }
+	                        }
+	                    }
+
+	                    function addBarPart(val) {
+	                        var curWidth = (Math.log(Math.abs(val) / baseStat + 2) - 1) *
+                                factor * direction;
+	                        if (val > 0) {
+	                            pen.fillStyle = "Green";
+	                            ink.rect(startX, startY, curWidth, totalHeight * 0.5, pen);
+	                        }
+	                        else {
+	                            pen.fillStyle = "Red";
+	                            ink.rect(startX, startY + totalHeight * 0.5, curWidth,
+                                    totalHeight * 0.5, pen);
+	                        }
+	                        return curWidth;
+	                    }
 	                }
 
 	                pen.color = "Green";
@@ -444,5 +473,5 @@ function Infobar(pos) {
 
 
 
-	}                               //End of draw
+	}                                              //End of draw
 }

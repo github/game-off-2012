@@ -72,6 +72,8 @@ function Tower(baseTile) {
         value:          TowerStats.value,
     };
 
+    this.alleles = [];
+
     this.attr.target_Strategy = new targetStrategies.Closest();
     this.attr.attack_types = [];
     this.attr.attack_types.push(new allAttackTypes.Normal());
@@ -83,8 +85,17 @@ function Tower(baseTile) {
     this.base.addObject(new Selectable());
 
     this.added = function() {
+        this.addAllele(new Allele({range: 1000, damage: -1}));
+        this.addAllele(new Allele({range: 100, damage: -1}));
+        this.addAllele(new Allele({attSpeed: 100}));
+
         // Yes, this is supposed to be here.
-        this.recolor();
+        this.recolor();        
+    };
+
+    this.addAllele = function(allele) {
+        this.alleles.push(allele);
+        allele.apply(this);
     };
 
     this.draw = function (pen) {
