@@ -19,7 +19,7 @@ function initialize() {
 	cloneGUI(Color.black, Vector3(-outlineWidthSqrt * 0.001, outlineWidthSqrt * 0.001, 0));
 	cloneGUI(Color.black, Vector3(outlineWidthSqrt * 0.001, -outlineWidthSqrt * 0.001, 0));
 	cloneGUI(Color.black, Vector3(-outlineWidthSqrt * 0.001, -outlineWidthSqrt * 0.001, 0));
-	cloneGUI(Color.white, Vector3(0, 0, 0));
+	cloneGUI(Color.white, Vector3(0, 0, -1));
 	GameObject.Destroy(initialState);
 	initialized = true;
 }
