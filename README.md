@@ -100,3 +100,34 @@ Using free versions of [Unity3D](http://unity3d.com/) and the [Orthello framewor
 
 <a href="http://www.jamendo.com/fr/track/120999/16-cracked" target="_blank">16 Cracked</a>
   				By <a href="http://www.jamendo.com/fr/artist/7979/ben-drake" target="_blank">Ben Drake</a>
+          
+<a href="http://www.jamendo.com/fr/track/244388/dumb-dance-" target="_blank">Dumb Dance</a>
+  				By <a href="http://www.jamendo.com/fr/artist/343713/exit-project" target="_blank">EXIT project</a>
+          
+<a href="http://www.jamendo.com/fr/track/240683/the-gateway" target="_blank">The Gateway</a>
+  				By <a href="http://www.jamendo.com/fr/artist/343428/klez" target="_blank">klez</a>
+          
+<a href="http://www.jamendo.com/fr/track/26127/the-futureman-can" target="_blank">The FutureMan Can</a>
+  				By <a href="http://www.jamendo.com/fr/artist/3769/kangaroo-musique" target="_blank">Kangaroo MusiQue</a>
+          
+### Sounds
+
+Hurt, Pad, and stargazer sound : Sébastien Drouyer
+
+Clone: <a href="http://www.freesound.org/people/fins/sounds/133280/" target="_blank">game pick up object</a> By <a href="http://www.freesound.org/people/fins/" target="_blank">fins</a>
+
+Falling: <a href="http://www.freesound.org/people/silversatyr/sounds/113366/" target="_blank">fall2</a> By <a href="http://www.freesound.org/people/silversatyr/" target="_blank">silversatyr</a>
+
+Flick: <a href="http://www.freesound.org/people/batchku/sounds/10482/" target="_blank">Flick_ff-2_003</a> By <a href="http://www.freesound.org/people/batchku/" target="_blank">batchku</a>
+
+Jump: <a href="http://www.freesound.org/people/odeean/sounds/139476/" target="_blank">sound_jump</a> By <a href="http://www.freesound.org/people/odeean/" target="_blank">odeean</a>
+
+Missile: <a href="http://www.freesound.org/people/elmomo/sounds/755/" target="_blank">missile01</a> By <a href="http://www.freesound.org/people/elmomo/" target="_blank">elmomo</a>
+
+Pop: <a href="http://www.freesound.org/people/oldedgar/sounds/97978/" target="_blank">Pop!</a> By <a href="http://www.freesound.org/people/oldedgar/" target="_blank">oldedgar</a>
+
+## License
+
+Code and images (all except in the orthello folder) are by Sébastien Drouyer
+
+All other artworks not created by Sébastien Drouyer can be under specific license (non-commercial notably). Click the links in order to check the license.
