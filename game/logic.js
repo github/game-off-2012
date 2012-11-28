@@ -39,9 +39,13 @@
     this.base.addObject(this.infobar);
 
     this.towerbar = new Towerbar(
-            new temporalPos(0, pos.h - 150, pos.w - 150, 150)
+            new temporalPos(0, pos.h - 150, pos.w - 350, 150)
         );
     this.base.addObject(this.towerbar);
+    this.towerbreeder = new TowerBreeder(
+            new temporalPos(pos.w - 350, pos.h - 150, 200, 150)
+        );
+    this.base.addObject(this.towerbreeder);
 
     
     this.currentBugs = 10;
@@ -139,28 +143,28 @@
     }
 
     this.triggerMousemove = function (e) {
-        var pos = getMousePos(e); this.crtlKey = e.ctrlKey;
+        var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
 
         mX = pos.x;
         mY = pos.y;
     }
 
     this.triggerMouseout = function (e) {
-        var pos = getMousePos(e); this.crtlKey = e.ctrlKey;
+        var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
 
         mX = -1;
         mY = -1;
     }
 
     this.triggerMousedown = function (e) {
-        var pos = getMousePos(e); this.crtlKey = e.ctrlKey;
+        var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
 
         mdX = pos.x;
         mdY = pos.y;
     }
 
     this.triggerMouseup = function (e) {
-        var pos = getMousePos(e); this.crtlKey = e.ctrlKey;
+        var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
 
         muX = pos.x;
         muY = pos.y;
@@ -283,7 +287,6 @@
     //this.base.addObject(hoverIndicator);
 
     this.selectedBucket = [];
-    var curHoverIndicator = null;
 
     this.changeSel = function (obj) {
         if (obj == this.selectedObj)
@@ -292,11 +295,6 @@
         if (currentRangeDisplayed) {
             currentRangeDisplayed.base.destroySelf();
             currentRangeDisplayed = null;
-        }
-
-        if (curHoverIndicator) {
-            curHoverIndicator.base.destroySelf();
-            curHoverIndicator = null;
         }
 
         if (obj && obj.attr) {
@@ -313,14 +311,30 @@
             this.selectedObj = obj;
             this.infobar.updateAttr(obj);
 
-            curHoverIndicator = new HoverIndicator();
-            obj.base.addObject(curHoverIndicator);
-
-            if (!this.ctrlKey)
+            if (!this.ctrlKey) {
+                for (var key in this.selectedBucket) {
+                    var selected = this.selectedBucket[key];
+                    for (var key in selected.base.children.HoverIndicator) {
+                        var selIndi = selected.base.children.HoverIndicator[key];
+                        selIndi.base.destroySelf();
+                    }
+                }
                 this.selectedBucket = [];
+            }
             this.selectedBucket.push(obj);
+            obj.base.addObject(new HoverIndicator());
+            this.towerbreeder.towers = this.selectedBucket;
         }
         else {
+            for (var key in this.selectedBucket) {
+                var selected = this.selectedBucket[key];
+                for (var key in selected.base.children.HoverIndicator) {
+                    var selIndi = selected.base.children.HoverIndicator[key];
+                    selIndi.base.destroySelf();
+                }
+            }
+            this.selectedBucket = [];
+
             this.selectedObj = null;
             this.infobar.clearDisplay();
         }

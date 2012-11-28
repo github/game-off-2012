@@ -55,7 +55,7 @@ TowerStats = {
 
 //All mutate stuff is copy-pasta from our mother project (for now)
 function Tower(baseTile) {
-    var p = baseTile.tPos;
+    var p = baseTile ? baseTile.tPos : {x: 0, y: 0, w : tileSize, h: tileSize};
     this.baseTile = baseTile;
     this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0);
     this.base = new baseObj(this, 10);
@@ -85,10 +85,13 @@ function Tower(baseTile) {
     this.base.addObject(new Selectable());
 
     this.added = function() {
-        this.addAllele(new Allele({range: 1000, damage: -1}));
-        this.addAllele(new Allele({range: 100, damage: -1}));
-        this.addAllele(new Allele({attSpeed: 100}));
-
+        if(baseTile)
+        {
+            this.addAllele(new Allele({range: 1000, damage: -1}));
+            this.addAllele(new Allele({range: 100, damage: -1}));
+            //this.addAllele(new Allele({attSpeed: 100}));  
+            this.addAllele(new Allele({attack: allAttackTypes.Normal}));
+        }
         // Yes, this is supposed to be here.
         this.recolor();        
     };
@@ -167,16 +170,6 @@ function Tower(baseTile) {
     };
     
     this.recolor = function() {
-        var attackType = this.attr.attack_types[0];
-
-        var originalAttr = cloneObject(this.attr);
-
-        if(!attackType)
-            fail("darn it");
-
-        if (attackType.applyAttrMods)
-            attackType.applyAttrMods(this.attr);
-
         function rgba(r, g, b, a) {
             function color(n) {
                 return Math.round(n);
@@ -188,8 +181,6 @@ function Tower(baseTile) {
 
         if(a.damage < 1)
             this.color = "blue";
-
-        mergeObject(this.attr, originalAttr);
     }
 
     this.mouseover = function(e) {        

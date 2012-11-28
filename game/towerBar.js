@@ -27,7 +27,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
     this.mousedown = function (e) {
         if (this.dragPos) {
-            if (!this.base.rootNode.crtlKey) {
+            if (!this.base.rootNode.ctrlKey) {
                 this.dragPos = null;
                 delete this.base.rootNode.globalMouseMove[this.base.id];
                 delete this.base.rootNode.globalMouseDown[this.base.id];

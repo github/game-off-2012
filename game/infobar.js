@@ -35,7 +35,7 @@ function Button(pos, txt, context, functionName, callData) {
 	}
 	
 	this.added = function() {
-        this.resize = Dock(this, "none", "center");
+        //this.resize = Dock(this, "none", "center");
 	}
 	
 
