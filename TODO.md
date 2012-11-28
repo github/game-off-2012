@@ -4,8 +4,6 @@
  * Sound files
  * message for IE
 * Add event per cycle so we can build a funnel (YB)
-* Text in middle bug
-* Start button bug
 * Fix pause bug (our own tweening system for track). (YB)
 * Fix color fade bug. (SD)
 * Balance. (SD)
