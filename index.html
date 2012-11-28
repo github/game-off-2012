@@ -12,14 +12,6 @@
     <audio class="click" src="audio/effects/click.wav">
     <audio class="whip" src="audio/effects/whip.wav">
 
-    <script>
-      var newImg = function(url) {
-        var img = new Image();
-        img.src = url;
-        return img;
-      }
-    </script>
-
     <script type="text/template" id="menu-template">
       <img src="img/logo.png"/>
       <ul class="menu">
@@ -68,6 +60,7 @@
     <script src="src/requestAnimationFrame.js"></script>
     <script src="vendor/documentcloud/underscore/underscore-min.js"></script>
     <script src="vendor/documentcloud/backbone/backbone-min.js"></script>
+    <script src="models/Sprite.js"></script>
     <script src="models/Song.js"></script>
     <script src="collections/Songs.js"></script>
     <script src="views/MenuView.js"></script>
@@ -78,6 +71,7 @@
     <script src="views/CreditsView.js"></script>
     <script src="views/HighScoreView.js"></script>
     <script src="views/HowtoView.js"></script>
+    <script src="data/sprites.js"></script>
     <script src="data/songs.js"></script>
     <script src="app.js"></script>
   </body>
