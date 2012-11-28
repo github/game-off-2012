@@ -20,5 +20,5 @@ Config.gfx =
       "DLC #1", "DLC #2", "DLC #3", "DLC #4",
       "Hotfix #1", "Hotfix #2", "Hotfix #3", "Hotfix #4",
       "Content Patch #1", "Content Patch #2", "Content Patch #3", "Content Patch #4",
-      "Exit"
+      "Exit", "Thailand", "Mexico", "New Zealand", "Space", "James Cameron", "Final Level"
     ]
