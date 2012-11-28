@@ -268,3 +268,7 @@ canvas#game_bg {
 	max-width: 1000px;
 	margin: 0 auto;
 }
+
+#disqus_thread a {
+	color: red;
+}
