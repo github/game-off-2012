@@ -13,3 +13,5 @@ By collecting commits, add new features to hotfix. The more features you have, t
 ## Snapshots
 
 ### Menu
+
+![alt text](http://sdrdis.github.com/hotfix/images/menu.jpg "Menu")
