@@ -189,18 +189,20 @@
       var fork_img = this.fork_img,
           dig_img = this.dig_img,
           fork_head_img = this.fork_head_img,
-          forks = this.forks;
+          forks = this.forks,
+          dead_forks = 0;
 
       this.create();
       
       // Loop over forks and draw each of them
       forks.forEach(function(fork, index) {
 
-        if (fork.x + fork.w < 0) {
-          forks.splice(index, 1);
-        }
-
         fork.x -= mit.Backgrounds.ground_bg_move_speed;
+
+        if (fork.x + fork.w < 0) {
+          ++dead_forks;
+          return;
+        }
 
         // Out of view port, no need to draw
         if (fork.x > mit.W) {
@@ -258,6 +260,12 @@
         }
 
       });
+
+      if (dead_forks) {
+        forks.splice(0, dead_forks);
+      }
+
+      return;
     },
 
     // Forks have black digs in grounds

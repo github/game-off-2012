@@ -139,7 +139,8 @@
 
     draw: function(ctx) {
       var branches = this.branches,
-          branch_img = this.branch_img;
+          branch_img = this.branch_img,
+          dead_branch = 0;
 
       this.create();
 
@@ -147,10 +148,13 @@
 
       // Loop over branches and draw each of them
       branches.forEach(function(branch, index) {
-        if (branch.x < 0) {
-          branches.splice(index, 1);
-        }
+
         branch.x -= mit.Backgrounds.ground_bg_move_speed;
+
+        if (branch.x < 0) {
+          dead_branch++;
+          return;
+        }
 
         // Out of view port, no need to draw
         if (branch.x > mit.W)
@@ -173,6 +177,12 @@
         );
         ctx.restore();
       });
+
+      if (dead_branch) {
+        branches.splice(0, dead_branch);
+      }
+
+      return;
     },
 
     // Check collisions with branches
