@@ -1,4 +1,5 @@
 var canvas = document.getElementById("canv")
+var selecting=false
 var keyListeners = []
 var keyState = {};
 var keyMap = {

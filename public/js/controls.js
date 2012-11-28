@@ -24,17 +24,32 @@ function Controls(){
 				key.my.row=i
 				key.my.col=k
 				function keyClick(e){
+					if(selecting){
+						alert("please type either a number or letter")
+						return
+					}
+					selecting=true
 					this.innerHTML="_"
 					var self = this
 					var oldKeydown = window.onkeydown
+					global_controls.keyMaps[4][self.my.row][self.my.col]=""
 					window.onkeydown=function(e){
 						var valid = new RegExp("\\w")
 						var tar=String.fromCharCode(e.which)
-						if(valid.test(tar) && global_controls.notUsed(tar)){
-							self.innerHTML=tar
-							global_controls.keyMaps[4][self.my.row][self.my.col]=tar
-							localStorage.keyMaps=JSON.stringify(global_controls.keyMaps)
-							window.onkeydown=oldKeydown
+						if(valid.test(tar)){
+							if(global_controls.notUsed(tar)){
+								self.innerHTML=tar
+								global_controls.keyMaps[4][self.my.row][self.my.col]=tar
+								localStorage.keyMaps=JSON.stringify(global_controls.keyMaps)
+								window.onkeydown=oldKeydown
+								selecting=false
+							}
+							else{
+								alert("That key is already in use,\ntry again")
+							}
+						}
+						else{
+							alert("please type either a number or letter")
 						}
 					}
 				}
