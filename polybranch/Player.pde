@@ -3,6 +3,7 @@ class Player{
   PVector pos;
   float r;
   int speed;
+  float velX, velY;
   
   Player(){
     pos = new PVector(width/2,height/2);
@@ -15,5 +16,6 @@ class Player{
     pos.y = width/2;
     r = 20;
     speed = 6;
+    velX = velY = 0;
   }
 }

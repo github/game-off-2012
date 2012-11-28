@@ -37,18 +37,37 @@ void setup(){
 }
 
 void draw(){
-  if(keys[0]){
-    originY += player.speed;
+  if(keys[0] || keys[1]){
+    if(keys[0]){
+      //originY += player.speed;
+      player.velY += 0.3;
+    }
+    if(keys[1]){
+      //originY -= player.speed;
+      player.velY -= 0.3;
+    }
+  }else if(player.velY != 0.0){
+    float brakes = (player.velY > 0) ? -0.5 : 0.5;
+    player.velY += brakes;
   }
-  if(keys[1]){
-    originY -= player.speed;
+  if(keys[2] || keys[3]){
+    if(keys[2]){
+      //originX += player.speed;
+      player.velX += 0.3;
+    }
+    if(keys[3]){
+      //originX -= player.speed;
+      player.velX -= 0.3;
+    }
+  }else if(player.velX != 0.0){
+    float brakes = (player.velX > 0) ? -0.5 : 0.5;
+    player.velX += brakes;
   }
-  if(keys[2]){
-    originX += player.speed;
-  }
-  if(keys[3]){
-    originX -= player.speed;
-  }
+  
+  
+  originX += player.velX;
+  originY += player.velY;
+  
   if(dist(player.pos.x, player.pos.y, originX, originY) > (height/2 - player.r - 8)){
     float a = myAngleBetween(player.pos, new PVector(originX, originY))-PI;
     originX = (int)(player.pos.x + (height/2 - player.r - 8) * cos(a));
@@ -83,15 +102,19 @@ void keyPressed(){
 void keyReleased(){
   if (keyCode == UP || key == 'w' || key == 'W') {
     keys[0] = false;
+    //player.velY = 0;
   }
   if (keyCode == DOWN || key == 's' || key == 'S') {
     keys[1] = false;
+    //player.velY = 0;
   }
   if (keyCode == LEFT || key == 'a' || key == 'A') {
     keys[2] = false;
+    //player.velX = 0;
   }
   if (keyCode == RIGHT || key == 'd' || key == 'D') {
     keys[3] = false;
+    //player.velX = 0;
   }
 }
 

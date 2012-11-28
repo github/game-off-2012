@@ -6,15 +6,19 @@ class Tree{
   Tree(int numBranchesIn, Branch trunk){
     numBranches = numBranchesIn;
     branches = new Branch[16];
+    
+    for(int i = 0; i < branches.length; i++){
+      branches[i] = new Branch();
+    }
+    
     branches[index] = trunk;
     index ++;
     trunkLen = dist(lerp(trunk.verticies[0].x, trunk.verticies[1].x, 0.5), lerp(trunk.verticies[0].y, trunk.verticies[1].y, 0.5), trunk.verticies[2].x, trunk.verticies[2].y);
-    this.populateBranches(branches[0], (random(1)));
-    //this.render(context);
+    this.populateRandomBranches(branches[0], (random(1)));
     //println("trunks is "+trunkLen);
   }
   
-  void populateBranches(Branch trunkIn, float sides){
+  void populateRandomBranches(Branch trunkIn, float sides){
       int side;
       if(sides > 0.2){
        side = 2; 
@@ -31,16 +35,16 @@ class Tree{
           //check if the random angle will fit inside the circle
           if(dist((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle)),width/2,height/2) < width/2){
             //println(index);
-            branches[index] = new Branch(
-                      new PVector(trunkIn.verticies[2].x, trunkIn.verticies[2].y),
-                      new PVector(lerp(trunkIn.verticies[2].x, trunkIn.verticies[1].x, 0.3), lerp(trunkIn.verticies[2].y, trunkIn.verticies[1].y, 0.3)),
-                      new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))));
+            
+                      branches[index].verticies[0].set(trunkIn.verticies[2].x, trunkIn.verticies[2].y, 0);
+                      branches[index].verticies[1].set(lerp(trunkIn.verticies[2].x, trunkIn.verticies[1].x, 0.3), lerp(trunkIn.verticies[2].y, trunkIn.verticies[1].y, 0.3), 0);
+                      branches[index].verticies[2].set((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle)), 0);
                       index ++;
-                      populateBranches(branches[index-1], (random(1)));
+                      populateRandomBranches(branches[index-1], (random(1)));
                 //check if the min or max angle fit inside the area
           }else if(dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0])+HALF_PI)), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0])+HALF_PI)),width/2,height/2) < width/2 || 
                       dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0]))), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0]))),width/2,height/2) < width/2){
-            populateBranches(trunkIn, 1);
+            populateRandomBranches(trunkIn, 1);
           }//otherwise don't do it.
         
         }
@@ -62,20 +66,20 @@ class Tree{
                       new PVector(trunkIn.verticies[2].x, trunkIn.verticies[2].y),
                       new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))));
                       index ++;
-                      populateBranches(branches[index-1], (random(1)));
+                      populateRandomBranches(branches[index-1], (random(1)));
           }else if(dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-HALF_PI)), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-HALF_PI)), width/2, height/2) < width / 2 ||
                     dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1]))), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1]))), width/2, height/2) < width / 2){
-            populateBranches(trunkIn, 0);
+            populateRandomBranches(trunkIn, 0);
           }
         
         }
       }
       //if(index < numBranches){
 //        if(side == 2){
-//          populateBranches(branches[index-1], int(random(3)));
-//          populateBranches(branches[index-2], int(random(3)));
+//          populateRandomBranches(branches[index-1], int(random(3)));
+//          populateRandomBranches(branches[index-2], int(random(3)));
 //        }else{
-//          populateBranches(branches[index-1], int(random(3)));
+//          populateRandomBranches(branches[index-1], int(random(3)));
 //        }
       //}
 
