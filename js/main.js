@@ -328,7 +328,7 @@
       mit.Pappu.checkCloneCollision();
 
       // Send over Pakias (Enemies)
-      if (mit.score > 199)
+      if (mit.score > 99)
         mit.PakiaUtils.render(ctx);
 
       // Update score

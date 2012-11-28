@@ -71,9 +71,9 @@
       ctx.drawImage(
         mit.CollectibleUtils.coin_img,
         pos.x, pos.y,
-        38, 38,
+        30, 30,
         this.x, this.y,
-        38, 38
+        30, 30
       );
     };
 
@@ -128,16 +128,16 @@
 
         case 100:
           // Pink (second)
-          return {x: 38, y: 0};
+          return {x: 30, y: 0};
 
         case 500:
           // Red (third)
           // Pink (second)
-          return {x: 76, y: 0};
+          return {x: 60, y: 0};
 
         case 1000:
           // Blue (last)
-          return {x: 114, y: 0};
+          return {x: 90, y: 0};
       }
 
     },
