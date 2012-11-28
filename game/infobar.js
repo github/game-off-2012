@@ -347,13 +347,17 @@ function Infobar(pos) {
 	    var y = this.tPos.y + 15;
 
 	    if (!this.obj || !this.obj.attr) {
-	        ink.text(xs, y, "[no selction]", pen);
+	        ink.text(xs, y, "[no selection]", pen);
 	        return;
 	    }
 
 	    ink.text(xs, y, formatToDisplay(getRealType(this.obj)), pen);
 	    var yPos = y + 20;
 	    var xPos = xs;
+
+	    var ourWidth = xe - xs;
+
+	    var baseStats = getRealType(this.obj) == "Tower" ? TowerStats : TowerStats;
 
 	    pen.font = "10px courier";
 	    for (var attrName in this.obj.attr) {
@@ -375,6 +379,22 @@ function Infobar(pos) {
 
 	                var nametxt = formatToDisplay(name);
 
+	                var baseStat = baseStats[name];
+
+	                if (defined(baseStat)) {
+	                    pen.color = "White";
+	                    pen.fillStyle = "Purple";
+	                    var startX = xPos - 3;
+	                    var startY = yPos - 10;
+	                    var totalWidth = ourWidth + 6;
+	                    var totalHeight = 15;
+	                    var totalStat = Math.max(baseStat, val);
+	                    var curWidth = (baseStat / totalStat) * totalWidth;
+	                    ink.rect(startX, startY, curWidth, totalHeight, pen);
+	                }
+
+	                pen.color = "Green";
+	                pen.fillStyle = "Green";
 	                pen.textAlign = 'left';
 	                ink.text(xPos, yPos, nametxt, pen);
 	                pen.textAlign = 'right';
@@ -424,5 +444,5 @@ function Infobar(pos) {
 
 
 
-	}                   //End of draw
+	}                               //End of draw
 }

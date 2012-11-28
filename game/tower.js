@@ -40,6 +40,19 @@ function Tower_Connection(t1, t2) {
     }
 }
 
+TowerStats = {
+        range:          100,
+        damage:         1,
+        hp:             10,
+        attSpeed:       1,        
+        mutate:         0,
+        mutatestrength: 0,
+        upload:         0,
+        download:       0,
+        hitcount:       0,
+        value:          50,
+    };
+
 //All mutate stuff is copy-pasta from our mother project (for now)
 function Tower(baseTile) {
     var p = baseTile.tPos;
@@ -47,16 +60,16 @@ function Tower(baseTile) {
     this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0);
     this.base = new baseObj(this, 10);
     this.attr = {
-        range:          Math.random() * 200 + 100,
-        damage:         Math.random() * 30  + 1,
-        hp:             Math.random() * 100 + 10,
-        attSpeed:       Math.random() * 1   + 1,        
-        mutate:         Math.random() * 50,
-        mutatestrength: Math.random() * 50,
-        upload:         Math.random() * 50,
-        download:       Math.random() * 50,
-        hitcount:       0,
-        value:          50,
+        range:          TowerStats.range + Math.random() * 200,
+        damage:         TowerStats.damage + Math.random() * 30,
+        hp:             TowerStats.hp + Math.random() * 100,
+        attSpeed:       TowerStats.attSpeed + Math.random() * 1,
+        mutate:         TowerStats.mutate + Math.random() * 50,
+        mutatestrength: TowerStats.mutatestrength + Math.random() * 50,
+        upload:         TowerStats.upload + Math.random() * 50,
+        download:       TowerStats.download + Math.random() * 50,
+        hitcount:       TowerStats.hitcount,
+        value:          TowerStats.value,
     };
 
     this.attr.target_Strategy = new targetStrategies.Closest();
