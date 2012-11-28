@@ -90,7 +90,7 @@ The magnet pull commits towards you, allowing you to earn more of them.
 
 ### Developper / designer / author of Hotfix
 
-[https://twitter.com/sdrdis Sébastien Drouyer]
+[Sébastien Drouyer](https://twitter.com/sdrdis)
 
 ### Frameworks
 
