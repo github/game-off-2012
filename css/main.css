@@ -187,6 +187,7 @@ canvas#game_bg {
 
 .options {
 	height: 400px;
+	background-image: url(../img/stand.png);
 	background-position: bottom center;
 	width: 225px;
 	background-repeat: no-repeat;
@@ -197,12 +198,14 @@ canvas#game_bg {
 
 .options:before {
 	content: '';
+	background-image: url(../img/dig.png);
+	background-repeat: no-repeat;
 	position: absolute;
 	width: 47px;
 	height: 49px;
-	bottom: 0;
+	bottom: -1px;
 	left: 50%;
-	margin-left: -29px;
+	margin-left: -27px;
 	z-index: -1;
 }
 
