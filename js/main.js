@@ -31,6 +31,7 @@
   var ui = mit.ui = {
     body: $('body'),
     score_board: $('#score_board'),
+    high_score: $('#highScore'),
     start_screen: $('#start_screen'),
     start_game: $('#start_game'),
     tweet: $('#tweet'),
@@ -140,6 +141,11 @@
 
   // Score Board
   mit.score = 0;
+  mit.highScore = JSON.parse(localStorage.getItem("highScore"));
+  if(mit.highScore)
+    ui.high_score.text("Your highscore is "+ mit.highScore);
+  else
+    ui.high_score.text("Your highscore is "+ 0);
 
   ui.score_board.css('width', canvas.width + 'px');
   ui.score_board.css('height', canvas.height + 'px');
@@ -342,6 +348,13 @@
       // Update score
       mit.score = mit.score += 0.1;
       ui.score_board.text(parseInt(mit.score));
+
+      if(mit.score > mit.highScore) {
+        mit.highScore = parseInt(mit.score);
+        localStorage.setItem("highScore", JSON.stringify(parseInt(mit.score)));
+
+        ui.high_score.text("Your highscore is "+ mit.highScore);
+      }
 
       // Acceleration + Gravity
       // mit.ay = mit.ay + mit.gravity;

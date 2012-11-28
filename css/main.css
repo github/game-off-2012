@@ -168,18 +168,18 @@ canvas#game_bg {
 	font-weight: normal;
 	color: #945430;
 	text-align: center;
-  text-shadow: 3px 3px 0px white;
 	margin: 0;
 	padding: 0;
 }
 
-#credits {
+#credits, #highScore {
 	font: 36px 'Happy Sans', cursive;
 	color: white;
 	padding: 0;
 	text-align: center;
-	margin: -10px 0 0;
+	margin: -10px 0 10px;
 }
+
 #credits a {
 	color: #FFEEAA;
 	text-decoration: none;
