@@ -94,4 +94,4 @@ The magnet pull commits towards you, allowing you to earn more of them.
 
 ### Frameworks
 
-Using free versions of [http://unity3d.com/ Unity3d] and the [http://www.wyrmtale.com/orthello Orthello framework].
+Using free versions of [Unity3D](http://unity3d.com/) and the [Orthello framework](http://www.wyrmtale.com/orthello).
