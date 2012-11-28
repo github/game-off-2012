@@ -94,23 +94,16 @@ function Selectable() {
     }
 }
 
-function HoverIndicator(objectPointed) {
+function HoverIndicator() {
     this.base = new baseObj(this, 20);
 
-    this.objectPointer = objectPointed;
-
     this.draw = function (pen) {
-        if (this.objectPointer && this.objectPointer.tPos) {
-            var p = this.objectPointer.tPos;
-            //pen.fillStyle = this.color;
-            //pen.strokeStyle = "lightblue";
-            //ink.rect(p.x, p.y, p.w, p.h, pen);
+        var p = this.base.parent.tPos;
 
-            pen.fillStyle = "rgba(255, 255, 255, 0.25)";
-            pen.strokeStyle = "yellow";
-            pen.lineWidth = 1;
-            ink.circ(p.getCenter().x, p.getCenter().y, p.w / 2, pen);
-        }
+        pen.fillStyle = "rgba(255, 255, 255, 0.25)";
+        pen.strokeStyle = "yellow";
+        pen.lineWidth = 1;
+        ink.circ(p.getCenter().x, p.getCenter().y, p.w / 2, pen);
     }
 }
 

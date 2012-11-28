@@ -21,15 +21,26 @@ function TowerDragger(pos, towerGeneratorFnc) {
         }
     }
 
-    this.dragged = function (e) {
+    this.mousemove = function (e) {
         this.dragPos = e;
     }
 
-    this.dragEnd = function (e) {
-        this.dragPos = null;
-        var tileDrop = findClosest(this.base.rootNode, "Tile", e, 0);
-        if (tileDrop)
-            tryPlaceTower(this.towerGeneratorFnc(), tileDrop);
+    this.mousedown = function (e) {
+        if (this.dragPos) {
+            if (!this.base.rootNode.crtlKey) {
+                this.dragPos = null;
+                delete this.base.rootNode.globalMouseMove[this.base.id];
+                delete this.base.rootNode.globalMouseDown[this.base.id];
+            }
+            var tileDrop = findClosest(this.base.rootNode, "Tile", e, 0);
+            if (tileDrop)
+                tryPlaceTower(this.towerGeneratorFnc(), tileDrop);
+        }
+        else {
+            this.dragPos = e;
+            this.base.rootNode.globalMouseMove[this.base.id] = this;
+            this.base.rootNode.globalMouseDown[this.base.id] = this;
+        }
     }
 }
 

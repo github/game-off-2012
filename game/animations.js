@@ -15,8 +15,8 @@ function MakeLaser(shooter, target, time) {
 }
 
 function Line(start, end, color, zorder) {
-    this.pStart = forcePointer(start);
-    this.pEnd = forcePointer(end);
+    this.start = start;
+    this.end = end;
 
     //We do not maintain tPos!
     this.tPos = new temporalPos(start.x, start.y, end.x - start.x, end.y - start.y, 0, 0);
@@ -28,8 +28,8 @@ function Line(start, end, color, zorder) {
         pen.strokeStyle = this.color;
         pen.lineWidth = 2;
 
-        var s = this.pStart.get();
-        var e = this.pEnd.get();
+        var s = this.start;
+        var e = this.end;
 
         ink.line(s.x, s.y, e.x, e.y, pen);
     };

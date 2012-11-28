@@ -30,10 +30,6 @@
     this.mouseout = function() {
         this.hover = false;
     };
-
-    this.click = function (e) {
-        tryPlaceTower(new Tower(this), this);
-    };
 }
 
 function FancyBackground(pen) {

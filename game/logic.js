@@ -6,11 +6,18 @@
     var muX = -1; //Mouse up
     var muY = -1;
 
+    //Only valid when handling mouse events (just check when it is set)
+    this.ctrlKey = false;
+
     this.tPos = pos;
 
     this.pen = pen;
     this.bPen = bufferCanvas.getContext("2d");
     this.bufferCanvas = bufferCanvas;
+
+    //Put yourself in here (index global id) to get global mouse moves
+    this.globalMouseMove = {};
+    this.globalMouseDown = {};
 
     this.id = 0;
     this.money = 160;
@@ -90,19 +97,19 @@
     this.update = function (dt) {
         this.curQuadTree = new QuadTree(this.base.allChildren);
 
-	/*
+        /*
         if (eng.base.lengths["Path_Start"] > 0
-                && (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] === 0)) {
-            this.bugDifficulty += 0.1;
-            while (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] < this.currentBugs) {
-                var bugStart = getAnElement(eng.base.children["Path_Start"]);
-                var newBug = new Bug(bugStart, this.bugDifficulty);
-                this.base.addObject(newBug);
-            }
-            this.currentBugs += this.bugIncrease;
-            if (this.currentBugs > this.maxBugs) {
-                this.currentBugs = this.maxBugs;
-            }
+        && (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] === 0)) {
+        this.bugDifficulty += 0.1;
+        while (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] < this.currentBugs) {
+        var bugStart = getAnElement(eng.base.children["Path_Start"]);
+        var newBug = new Bug(bugStart, this.bugDifficulty);
+        this.base.addObject(newBug);
+        }
+        this.currentBugs += this.bugIncrease;
+        if (this.currentBugs > this.maxBugs) {
+        this.currentBugs = this.maxBugs;
+        }
         }*/
 
         this.handleMouseEvents();
@@ -127,33 +134,33 @@
         // Canvas is fullscreen now, so pageX is our x position.
         var mX = defined(e.offsetX) ? e.offsetX : e.pageX;
         var mY = defined(e.offsetY) ? e.offsetY : e.pageY;
-
+        
         return { x: mX + 0.5, y: mY + 0.5 };
     }
 
     this.triggerMousemove = function (e) {
-        var pos = getMousePos(e);
+        var pos = getMousePos(e); this.crtlKey = e.ctrlKey;
 
         mX = pos.x;
         mY = pos.y;
     }
 
     this.triggerMouseout = function (e) {
-        var pos = getMousePos(e);
+        var pos = getMousePos(e); this.crtlKey = e.ctrlKey;
 
         mX = -1;
         mY = -1;
     }
 
     this.triggerMousedown = function (e) {
-        var pos = getMousePos(e);
+        var pos = getMousePos(e); this.crtlKey = e.ctrlKey;
 
         mdX = pos.x;
         mdY = pos.y;
     }
 
     this.triggerMouseup = function (e) {
-        var pos = getMousePos(e);
+        var pos = getMousePos(e); this.crtlKey = e.ctrlKey;
 
         muX = pos.x;
         muY = pos.y;
@@ -190,10 +197,15 @@
     }
 
     //Called in update and uses async flags set when we get events
-    this.handleMouseEvents = function() {
+    this.handleMouseEvents = function () {
         if (mdX > 0 && mdY > 0) {
+            for (var key in this.globalMouseDown) {
+                this.globalMouseMove[key].base.callRaise("mousedown", { x: mdX, y: mdY });
+            }
+
             var curMouseDown = throwMouseEventAt(mdX, mdY, "mousedown", this);
             this.prevMouseDown = curMouseDown;
+            
             mdX = -1;
             mdY = -1;
         }
@@ -217,6 +229,10 @@
         }
 
         if (mY > 0 && mX > 0) {
+            for (var key in this.globalMouseMove) {
+                this.globalMouseMove[key].base.callRaise("mousemove", { x: mX, y: mY });
+            }
+
             var curMouseOver = throwMouseEventAt(mX, mY, "mouseover", this);
             //Can actually find mouseout more efficiently... as we have previous and current mouseover...            
             if (this.prevMouseOver && this.prevMouseOver.length > 0) {
@@ -232,7 +248,7 @@
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
                     this.prevMouseDown[i].base.callRaise("dragged", { x: mX, y: mY });
                 }
-            }
+            }            
 
             mY = -1;
             mX = -1;
@@ -258,13 +274,16 @@
         ink.text(x, y + 15, "Money: $" + Math.round(this.money*100)/100, pen);
         ink.text(x, y + 30, "Time passed: " + gameTimeAccumulated, pen);
         ink.text(x, y + 45, "FPS: " + this.lastFPS, pen);
-        ink.text(x, y + 60, "Bugs: " + eng.base.lengths.Bug, pen);
+        ink.text(x, y + 60, "Bugs: " + eng.base.allLengths.Bug, pen);
+        ink.text(x, y + 75, "Ctrl: " + this.ctrlKey, pen);
     };
 
     //All selected stuff should probably be in its own object
     var currentRangeDisplayed = null;
-    var hoverIndicator = new HoverIndicator(); //currentRangeDisplayed should probably be done like this
-    this.base.addObject(hoverIndicator);
+    //this.base.addObject(hoverIndicator);
+
+    this.selectedBucket = [];
+    var curHoverIndicator = null;
 
     this.changeSel = function (obj) {
         if (obj == this.selectedObj)
@@ -275,7 +294,10 @@
             currentRangeDisplayed = null;
         }
 
-        hoverIndicator.objectPointer = obj;
+        if (curHoverIndicator) {
+            curHoverIndicator.base.destroySelf();
+            curHoverIndicator = null;
+        }
 
         if (obj && obj.attr) {
             //Hooks up our tower range to our actual attributes (but not our center)
@@ -290,6 +312,13 @@
 
             this.selectedObj = obj;
             this.infobar.updateAttr(obj);
+
+            curHoverIndicator = new HoverIndicator();
+            obj.base.addObject(curHoverIndicator);
+
+            if (!this.ctrlKey)
+                this.selectedBucket = [];
+            this.selectedBucket.push(obj);
         }
         else {
             this.selectedObj = null;

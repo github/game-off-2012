@@ -40,11 +40,6 @@ function Tower_Connection(t1, t2) {
     }
 }
 
-// FRIGGIN UGLY, waiting for mouseup fix...
-//Don't wait, the time is now (fix it yourself, I am busy).
-//Oh the fix was actually really easy... don't know why you didnt just add it
-//all you needed was a drag end to be triggered. Thought you wanted more/there was less implemented.
-var towerDragStartMouseDown;
 //All mutate stuff is copy-pasta from our mother project (for now)
 function Tower(baseTile) {
     var p = baseTile.tPos;
@@ -71,15 +66,8 @@ function Tower(baseTile) {
     this.connections = [];
 
     this.base.addObject(new AttackCycle());
-
     this.base.addObject(new UpdateTicker(this.attr, "mutate", "mutate", true));
-
     this.base.addObject(new Selectable());
-
-    this.hover = false;
-    this.selected = false;
-
-    this.laserTime = 0.5;
 
     this.added = function() {
         // Yes, this is supposed to be here.
@@ -196,26 +184,36 @@ function Tower(baseTile) {
             this.connections[i].hover = false;
         }
     };
-    
-    this.mousedown = function(e) {
-        towerDragStartMouseDown = this;
-        this.selected = true;
-    };
-    
-    this.mouseup = function(e) {
-        var dst = towerDragStartMouseDown;
-        if (!dst) return;
-        if (this == dst) return;
-        if (eng.money < 50) return;
-        eng.money -= 50;
-        var conn = new Tower_Connection(this, dst);
-        this.base.addObject(conn);
-        this.connections.push(conn);
-        dst.connections.push(conn);
-    };    
 
-    // Yes, this is supposed to be here.
-    this.recolor();
+    this.startDrag = null;
+    this.tempIndicator = null;
+    this.mousedown = function(e) {
+        this.startDrag = e;
+        tempIndicator = new Line(this.startDrag, e, "green", 15);
+        this.base.addObject(tempIndicator);
+        this.base.rootNode.globalMouseMove[this.base.id] = this;
+    };
+
+    this.mousemove = function(e)
+    {
+        tempIndicator.end = e;
+    }
+
+    this.dragEnd = function(e){
+        this.base.removeObject(tempIndicator);
+        this.startDrag = null;
+
+        var towerSelected = findClosest(this.base.rootNode, "Tower", e, 0);
+        if(towerSelected && towerSelected != this)
+        {
+            if (eng.money < 50) return;
+            eng.money -= 50;
+            var conn = new Tower_Connection(this, towerSelected);
+            this.base.addObject(conn);
+            this.connections.push(conn);
+            towerSelected.connections.push(conn);
+        }
+    };
 }
 
 function tryPlaceTower(tower, tile)
