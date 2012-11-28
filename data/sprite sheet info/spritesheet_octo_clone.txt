@@ -1,2 +1,2 @@
-octo_clone_1 = 0 0 71 111
-octo_clone_2 = 72 0 52 120
+octo_clone_1 = 0 0 71 120
+octo_clone_2 = 72 0 71 120
