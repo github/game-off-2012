@@ -196,8 +196,8 @@
       // Loop over forks and draw each of them
       forks.forEach(function(fork, index) {
 
-        if (fork.x < 0) {
-          forks.splice(index, 1);
+        if (fork.x + fork.w < 0) {
+          forks.shift();
         }
 
         fork.x -= mit.Backgrounds.ground_bg_move_speed;

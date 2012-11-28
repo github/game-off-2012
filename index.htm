@@ -32,16 +32,44 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
       <source src="sound/pappu-pakia2.3.ogg"  type="audio/ogg">
       <source src="sound/pappu-pakia2.3.mp3"  type="audio/mp3">
     </audio>
-    <audio id="angry_jump" type="audio/ogg" src="sound/jump1.ogg" preload="auto"></audio>
-    <audio id="sad_jump" type="audio/ogg" src="sound/jump2.ogg" preload="auto"></audio>
-    <audio id="happy_jump" type="audio/ogg" src="sound/jump3.ogg" preload="auto"></audio>
-    <audio id="flap" type="audio/ogg" src="sound/flap.ogg" preload="auto"></audio>
-    <audio id="ting" type="audio/ogg" src="sound/ting.ogg" preload="auto"></audio>
+    
+    <audio id="angry_jump" preload="auto">
+      <source src="sound/jump1.ogg" type="audio/ogg">
+      <source src="sound/jump1.mp3" type="audio/mp3">
+    </audio>
+    
+    <audio id="sad_jump" preload="auto">
+      <source src="sound/jump2.ogg" type="audio/ogg">
+      <source src="sound/jump2.mp3" type="audio/mp3">
+    </audio>
+    
+    <audio id="happy_jump" preload="auto">
+      <source src="sound/jump3.ogg" type="audio/ogg">
+      <source src="sound/jump3.mp3" type="audio/mp3">
+    </audio>
+    
+    <audio id="flap" preload="auto">
+      <source src="sound/flap.ogg" type="audio/ogg">
+      <source src="sound/flap.mp3" type="audio/mp3">
+    </audio>
+    
+    <audio id="ting" preload="auto">
+      <source src="sound/ting.ogg" type="audio/ogg">
+      <source src="sound/ting.mp3" type="audio/mp3">
+    </audio>
 
     <canvas id="game_bg"></canvas>
     <canvas id="game_main"></canvas>
 
     <div id="score_board">0</div>
+    
+    <!-- Loading Screen -->
+    <div id="loading">
+      <p id="loadText">Loading...</p>
+      <div id="barCont">
+        <div id="bar"></div>
+      </div>
+    </div>
 
     <!-- Start Screen -->
     <div id="start_screen">
@@ -253,6 +281,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
   <script src="js/collectibles.js"></script>
   <script src="js/pappu.js"></script>
   <script src="js/pakia.js"></script>
+  <script src="js/loader.js"></script>
   <script src="js/main.js"></script>
 
 <script type="text/javascript">
