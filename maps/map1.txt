@@ -1,19 +1,36 @@
+16,16
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
 XXXXXXXXXXXXXXXX
-XS             X
-XXXXXXXXXXXX   X
-XXXXXXXXXXXX   X
-XXXXXXXXXXXX   X
-XXXXXXXXXXXX   X
-XXXXXXXXXXXX   X
-XXXXXXXXXXXX   X
-XXXXXXXXXXXB   X
-XXXXXXXXXXXX   X
-XXXXXXXXXXXX   X
-XXXXXXXXXXXX   X
+XS%%%%%%%%%%%%%X
+XXXXXXXXXXXX%%%X
+XXXXXXXXXXXX%%%X
+XXXXXXXXXXXX%%%X
+XXXXXXXXXXXX%%%X
+XXXXXXXXXXXX%%%X
+XXXXXXXXXXXX%%%X
+XXXXXXXXXXXB%%%X
+XXXXXXXXXXXX%%%X
+XXXXXXXXXXXX%%%X
+XXXXXXXXXXXX%%%X
 XXXXXXXXXXXXXBXX
 XXXXXXXXXXXXXBXX
 XXXXXXXXXXXXXFXX
 XXXXXXXXXXXXXXXX
-----------------
+METADATA
 title: Level 3: The Journey Ends
 nextMap: 9001

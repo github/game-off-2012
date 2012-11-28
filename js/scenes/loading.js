@@ -26,7 +26,7 @@ Crafty.scene("loading", function () {
     Crafty.modules({ SpriteColor: 'RELEASE' }, function () {
         // Simulate a load time for now to make sure this works
         setTimeout(function () {
-          Crafty.scene("9001"); //when everything is loaded, run the main scene
+          Crafty.scene("0"); //when everything is loaded, run the main scene
         }, 500);
     });
   });
