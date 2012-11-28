@@ -43,11 +43,12 @@ function applyAttack(attackTemplate) {
     }
 }
 
-function startAttack(attackType, attackTemplate) {
-    if(!assertDefined(attackType, attackTemplate))
+function startAttack(attackTemplate) {
+    if(!assertDefined(attackTemplate))
         return;
 
     var eng = attackTemplate.attacker.base.rootNode;
+    var attackType = attackTemplate.attackType;
 
     attackTemplate.target = attackTemplate.attacker.attr.target_Strategy.run(attackTemplate.attacker);
 
@@ -59,14 +60,16 @@ function startAttack(attackType, attackTemplate) {
     }
 }
 
-function AttackTemplate(attacker, target, damage, baseAttacker, currentAttPos)
+function AttackTemplate(attackType, attacker, target, damage, baseAttacker, currentAttPos)
 {
+    this.attackType = attackType;
+
     this.attacker = attacker; 
     this.target = target; 
     this.damage = damage; 
 
     this.baseAttacker = baseAttacker;
-    this.currentAttPos = currentAttPos;
+    this.currentAttPos = currentAttPos;    
 }
 
 //Attacks shouldn't modify the attacker's attribute (unless that is really the goal)
@@ -92,7 +95,8 @@ var allAttackTypes = {
             var damage = attackTemplate.damage;
 
             this.color = getRealType(attacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
-
+            
+            //AlphaDecay destroys us
             var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
             this.base.addObject(new AlphaDecay(damageToTime(attacker.attr.damage), 1, 0));
 
@@ -107,6 +111,56 @@ var allAttackTypes = {
             {
                 line.color = this.color;
             };
+        };
+    },
+    Bullet: function bullet() {
+        this.bullet_speed = 50;
+        this.drawGlyph = function (pen, tPos) {
+            //Draw text
+            pen.fillStyle = "#000000";
+            pen.font = tPos.h + "px arial";
+            pen.textAlign = 'left';
+
+            ink.text(tPos.x, tPos.y, "B", pen);
+        };
+        this.AttackNode = function(attackTemplate)
+        {
+            this.base = new baseObj(this, 15);         
+            this.attackTemplate = attackTemplate;
+
+            var attacker = attackTemplate.attacker;
+            var target = attackTemplate.target;
+            var damage = attackTemplate.damage;
+
+            this.color = "Orange";
+
+            var bulletSpeed = attackTemplate.attackType.bullet_speed;
+
+            var dis = attacker.tPos.getCenter();
+            dis.sub(target.tPos.getCenter());
+            dis = Math.sqrt(dis.magSq());
+
+            var us = this;
+            function onImpact()
+            {
+                applyAttack(attackTemplate);
+                us.base.destroySelf();
+            }
+
+            var bullet = new Circle(attacker.tPos.getCenter(), 5, "White", "Orange", 15);
+            var motionDelay = new MotionDelay(attacker.tPos.getCenter(), target.tPos.getCenter(),
+                                    dis / bulletSpeed, onImpact);
+            bullet.base.addObject(motionDelay);
+
+            this.base.addObject(bullet);
+
+            this.sound = new Sound("snd/Laser_Shoot.wav");
+            this.sound.play();            
+
+            this.update = function()
+            {
+                motionDelay.end = target.tPos.getCenter();
+            }
         };
     },
     /*

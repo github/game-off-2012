@@ -14,8 +14,7 @@ function AttackCycle() {
         var attackTypes = attacker.attr.attack_types || attacker.attr.bug_attack_types;
 
         if (attackTypes && attackTypes.length > 0) {
-            startAttack(attackTypes[0],
-                new AttackTemplate(attacker, null, attacker.attr.damage, attacker, 0));
+            startAttack(new AttackTemplate(attackTypes[0], attacker, null, attacker.attr.damage, attacker, 0));
         }
     };
 };
@@ -156,6 +155,9 @@ function MotionDelay(start, end, time, callback) {
             this.base.destroySelf();
             return;
         }
+
+        var start = this.start;
+        var end = this.end;        
 
         var progress = this.time / this.baseTime;
 
