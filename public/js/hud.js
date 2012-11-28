@@ -116,13 +116,16 @@ function HUD(game, pre) {
 	}
 
 	this.drawKey = function(ctx, key, colors, x, y) {
+		var oldFont = ctx.font
+		ctx.font="20px monospace"
 		var oldFill = ctx.fillStyle
 		for (var i = 0; i < colors.length; i++) {
 			ctx.fillStyle = colors[i]
 			this.coolBlock(ctx, x + i * 26 / colors.length, y, 26 / colors.length, 36)
 		}
 		ctx.fillStyle = oldFill
-		ctx.fillText(key, x + 6 + (key === ';' ? 2 : 0), y + 23)
+		ctx.fillText(key, x + 7 + (key === ';' ? 2 : 0), y + 23)
+		ctx.font=oldFont
 	}
 
 	this.coolBlock = function(ctx, x, y, width, height) {
