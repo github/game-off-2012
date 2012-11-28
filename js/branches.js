@@ -151,7 +151,7 @@
 
         branch.x -= mit.Backgrounds.ground_bg_move_speed;
 
-        if (branch.x < 0) {
+        if (branch.x + branch.w < 0) {
           dead_branch++;
           return;
         }
