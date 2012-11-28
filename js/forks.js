@@ -132,8 +132,8 @@
 
       if (branches.length) {
         branches.forEach(function(branch) {
-          if (Math.abs(pos.x - branch.x) < 300)
-            pos.x = branch.x + 300;
+          if (Math.abs(pos.x - branch.x) < 400)
+            pos.x = branch.x + 400;
         });
       }
 

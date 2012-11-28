@@ -337,7 +337,7 @@
     // Backgrounds have been made for 1000x500 dimensions
     draw: function(ctx) {
 
-      if (mit.game_started) {
+      if (mit.start_btn_clicked) {
         if (!this.fps || this.fps === 5000)
           this.fps = mit.fps;
       }

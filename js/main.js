@@ -332,7 +332,7 @@
         mit.PakiaUtils.render(ctx);
 
       // Update score
-      mit.score = mit.score += 0.05;
+      mit.score = mit.score += 0.1;
       ui.score_board.text(parseInt(mit.score));
 
       // Acceleration + Gravity
