@@ -13,6 +13,8 @@
 .WithTransition{
     text-shadow: 0 5px #444;
     -webkit-transition: font-size 300ms ease-in-out, margin-top 300ms ease-in-out;
+    transition: font-size 300ms ease-in-out, margin-top 300ms ease-in-out;
+    -moz-transition: font-size 300ms ease-in-out, margin-top 300ms ease-in-out;
 }
 
 .StartGFXTitle{

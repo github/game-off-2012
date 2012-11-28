@@ -1,6 +1,4 @@
 * Compatibility [Firefox]
- * Browser
- * CSS
  * Sound files
  * message for IE
 * Add event per cycle so we can build a funnel (YB)

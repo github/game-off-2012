@@ -1,3 +1,5 @@
 .Obstacle{
   -webkit-transition: background-color 200ms;
+  -moz-transition: background-color 200ms;
+  transition: background-color 200ms;
 }
