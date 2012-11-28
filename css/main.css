@@ -37,6 +37,14 @@ h1 {
 	color: white;
 }
 
+.gads {
+	text-align: center;
+	max-width: 1000px;
+	margin: 20px auto;
+	padding: 10px;
+	border: 1px solid #747474;
+}
+
 .container {
 	position: relative;
 	margin: 20px auto 50px;
@@ -49,7 +57,7 @@ footer {
 	font-size: 18px;
 	font-weight: normal;
 	color: #E6E6E6;
-	margin: 50px auto;
+	margin: 20px auto;
 	padding: 0 0 20px;
 	max-width: 1000px;
 }
