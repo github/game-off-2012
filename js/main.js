@@ -222,7 +222,7 @@
 
     if (e.keyCode === 38) {
       mit.descend();
-
+      
       e.preventDefault();
     }
   }, false);
@@ -320,16 +320,16 @@
 
       // Check Collisions with pappu
       if (!mit.Pappu.invincible) {
-        //mit.ForkUtils.checkCollision();
-        //mit.BranchUtils.checkCollision();
-        //mit.PakiaUtils.checkCollision();
+        mit.ForkUtils.checkCollision();
+        mit.BranchUtils.checkCollision();
+        mit.PakiaUtils.checkCollision();
       }
-      //mit.CollectibleUtils.checkCollision();
-      //mit.Pappu.checkCloneCollision();
+      mit.CollectibleUtils.checkCollision();
+      mit.Pappu.checkCloneCollision();
 
       // Send over Pakias (Enemies)
-      //if (mit.score > 199)
-      //  mit.PakiaUtils.render(ctx);
+      if (mit.score > 199)
+        mit.PakiaUtils.render(ctx);
 
       // Update score
       mit.score = mit.score += 0.4;
