@@ -35,7 +35,7 @@ function Line(start, end, color, zorder) {
     };
 }
 
-function Circle(center, radius, color, fillColor, zorder) {
+function PCircle(center, radius, color, fillColor, zorder) {
     this.pCenter = forcePointer(center);
     this.pRadius = forcePointer(radius);
     this.pColor = forcePointer(color);
@@ -49,6 +49,30 @@ function Circle(center, radius, color, fillColor, zorder) {
         var radius = this.pRadius.get();
         var color = this.pColor.get();
         var fillColor = this.pFillColor.get();
+
+        if (radius < 1) radius = 1;
+
+        pen.lineWidth = 2;
+        pen.fillStyle = fillColor;
+        pen.strokeStyle = color;
+
+        ink.circ(p.x, p.y, radius, pen);
+    };
+}
+
+function Circle(center, radius, color, fillColor, zorder) {    
+    this.radius = radius;
+    this.color = color;
+    this.fillColor = fillColor;
+
+    this.tPos = { x: center.x, y: center.y, h: 0, w: 0 };  //We lie about this because it doesn't matter
+    this.base = new baseObj(this, zorder);
+
+    this.draw = function (pen) {
+        var p = this.tPos;
+        var radius = this.radius;
+        var color = this.color;
+        var fillColor = this.fillColor;
 
         if (radius < 1) radius = 1;
 

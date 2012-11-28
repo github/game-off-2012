@@ -15,17 +15,122 @@ function damageToTime(damage) {
 //Arcing (delay arcs also)
 //DOT
 
-function applyDamage(target, attacker, damage) {
-    target.attr.hp -= damage;
-    attacker.attr.hitcount ++;
+function applyAttack(attackTemplate) {
+    var target = attackTemplate.target;
+    var attacker = attackTemplate.attacker;
+    var damage = attackTemplate.damage;
+    var baseAttacker = attackTemplate.baseAttacker;
+
+    if(!assertDefined(target, attacker, damage, baseAttacker))
+        return;
+
+    target.attr.hp -= damage;    
+
+    var newAttackType = baseAttacker.attr.attack_types[attackTemplate.currentAttPos + 1];
+
+    if(newAttackType)
+    {
+        startAttack(newAttackType, attackTemplate);
+    }
+
+    if(target.attr.hp < 0)
+    {
+        var sound = new Sound("snd/die.wav");
+        target.base.destroySelf();
+
+        if(getRealType(target) != "Tower")
+            attacker.base.rootNode.money += target.attr.value;
+    }
 }
 
-var attackTypes = {
-    Normal: function normal() {
-        this.run = function (tower, target) {
-            applyDamage(target, tower, tower.attr.damage);
+function startAttack(attackType, attackTemplate) {
+    if(!assertDefined(attackType, attackTemplate))
+        return;
 
-            tower.base.addObject(MakeLaser(tower, target, damageToTime(tower.attr.damage)));
+    var eng = attackTemplate.attacker.base.rootNode;
+
+    attackTemplate.target = attackTemplate.attacker.attr.target_Strategy.run(attackTemplate.attacker);
+
+    if(attackTemplate.target)
+    {
+        var attackNode = new attackType.AttackNode(attackTemplate);
+
+        eng.base.addObject(attackNode);
+    }
+}
+
+function AttackTemplate(attacker, target, damage, baseAttacker, currentAttPos)
+{
+    this.attacker = attacker; 
+    this.target = target; 
+    this.damage = damage; 
+
+    this.baseAttacker = baseAttacker;
+    this.currentAttPos = currentAttPos;
+}
+
+//Attacks shouldn't modify the attacker's attribute (unless that is really the goal)
+//If the attack does partial damage then it should create a copy and pass that on.
+var allAttackTypes = {
+    Normal: function normal() {
+        this.extraAttr = 5;        
+        this.drawGlyph = function (pen, tPos) {
+            //Draw text
+            pen.fillStyle = "#000000";
+            pen.font = tPos.h + "px arial";
+            pen.textAlign = 'left';
+
+            ink.text(tPos.x, tPos.y, "N", pen);
+        };
+        this.AttackNode = function(attackTemplate)
+        {
+            this.base = new baseObj(this, 15);         
+            this.attackTemplate = attackTemplate;
+
+            var attacker = attackTemplate.attacker;
+            var target = attackTemplate.target;
+            var damage = attackTemplate.damage;
+
+            this.color = getRealType(attacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
+
+            var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
+            this.base.addObject(new AlphaDecay(damageToTime(attacker.attr.damage), 1, 0));
+
+            this.base.addObject(line);
+
+            applyAttack(this.attackTemplate);
+
+            this.sound = new Sound("snd/Laser_Shoot.wav");
+            this.sound.play();
+        
+            this.update = function()
+            {
+                line.color = this.color;
+            };
+        };
+    },
+    /*
+    Bullet: function bullet() {
+        this.bullet_speed = 100;
+        this.run = function (tower, target) {
+            var bullet = new Circle(tower.tPos.getCenter(), 5, "White", "Orange", 15);
+
+            var dis = tower.tPos.getCenter();
+            dis.sub(target.tPos.getCenter());
+            dis = Math.sqrt(dis.magSq());
+
+            bullet.base.addObject(
+                    new MotionDelay(tower.tPos.getCenter(), target.tPos.getCenter(),
+                                    dis / this.bullet_speed, 
+                                        function hit()
+                                        {
+                                            applyDamage(target, tower, tower.attr.damage);
+                                            bullet.base.destroySelf();
+                                        }
+                                    )
+                                 );
+            
+            tower.base.rootNode.base.addObject(bullet);
 
             return target;
         },
@@ -35,7 +140,7 @@ var attackTypes = {
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
 
-            ink.text(tPos.x, tPos.y, "N", pen);
+            ink.text(tPos.x, tPos.y, "B", pen);
         }
     },
     Aoe: function area_of_effect() {
@@ -62,8 +167,8 @@ var attackTypes = {
 
             var line = new Line(tower.tPos.getCenter(), target.tPos.getCenter(), "rgba(0,255,0,255)", 13);
 
-            aoeCircle.base.addObject(new AlphaDecayPointer(1, 0.2, 0, aoeCircle.pColor));
-            aoeCircle.base.addObject(new AlphaDecayPointer(1, 0.5, 0, aoeCircle.pFillColor));
+            aoeCircle.base.addObject(new AlphaDecayPointer(1, 0.2, 0, new Pointer(aoeCircle, "color")));
+            aoeCircle.base.addObject(new AlphaDecayPointer(1, 0.5, 0, new Pointer(aoeCircle, "fillColor")));
 
             line.base.addObject(new AlphaDecay(1, 1, 0));
 
@@ -108,36 +213,24 @@ var attackTypes = {
             ink.text(tPos.x, tPos.y, "S", pen);
         }
     },
+    */
 };
 
-
+//Not needed anymore... but if you have a radio option for something this
+//is how you would set up the underlying attack types for it
 var bugAttackTypes = {
-    Normal: function normal() {
-        this.run = function (tower, target) {
-            applyDamage(target, tower, tower.attr.damage);
-
-            tower.base.addObject(MakeLaser(tower, target, damageToTime(tower.attr.damage)));
-
-            return target;
-        },
-        this.draw = function (pen, tPos) {
-            //Draw text
-            pen.fillStyle = "#000000";
-            pen.font = tPos.h + "px arial";
-            pen.textAlign = 'left';
-
-            ink.text(tPos.x, tPos.y, "N", pen);
-        }
-    }
+    Normal: allAttackTypes.Normal
 };
 
 
 function drawAttributes(user, pen) {
-    drawTiled(pen,
+    makeTiled(pen,
         function (obj, pen, pos) {
             if (typeof obj == "number")
                 return false;
-            obj.draw(pen, pos);
+            if(!obj.drawGlyph)
+                fail("not good");
+            obj.drawGlyph(pen, pos);
             return true;
         },
         user.attr,

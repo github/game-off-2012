@@ -25,11 +25,10 @@ function Bug(startPath, difficulty) {
 
 
     this.attr.target_Strategy = new targetStrategies.Closest();
-    this.attr.bug_attack_type = new attackTypes.Normal();
+    this.attr.attack_types = [];
+    this.attr.attack_types.push(new allAttackTypes.Normal());
 
     this.base.addObject(new AttackCycle());
-
-    this.base.addObject(new Mortality());
 
     this.base.addObject(new Selectable());
 

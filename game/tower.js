@@ -65,15 +65,14 @@ function Tower(baseTile) {
     };
 
     this.attr.target_Strategy = new targetStrategies.Closest();
-    this.attr.attack_type = new attackTypes.Normal();
+    this.attr.attack_types = [];
+    this.attr.attack_types.push(new allAttackTypes.Normal());
 
     this.connections = [];
 
     this.base.addObject(new AttackCycle());
 
     this.base.addObject(new UpdateTicker(this.attr, "mutate", "mutate", true));
-
-    this.base.addObject(new Mortality());
 
     this.base.addObject(new Selectable());
 
@@ -156,9 +155,12 @@ function Tower(baseTile) {
     };
     
     this.recolor = function() {
-        var attackType = this.attr.attack_type;
+        var attackType = this.attr.attack_types[0];
 
         var originalAttr = cloneObject(this.attr);
+
+        if(!attackType)
+            fail("darn it");
 
         if (attackType.applyAttrMods)
             attackType.applyAttrMods(this.attr);

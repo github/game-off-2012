@@ -7,7 +7,7 @@ function assertDefined(functionName) {
 
     for(var i = 0; i < arguments.length; i++)
     {
-        if (typeof arguments[i] === "undefined") {
+        if (nullOrUndefined(arguments[i])) {
             fail("Variable is required but is undefined in " + functionName);
             allDefined = false;
         }

@@ -8,7 +8,7 @@ var targetStrategies = {
                             attacker.tPos.getCenter(), attacker.attr.range + this.extra_Range);
             return target;
         },
-        this.draw = function(pen, tPos) {
+        this.drawGlyph = function(pen, tPos) {
             //Draw text
             pen.fillStyle = "#000000";
             pen.font = tPos.h + "px arial";

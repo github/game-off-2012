@@ -38,9 +38,22 @@ function Towerbar(pos) {
 
 	this.tPos = pos;
 
+	var attackCombinations = [];
+	var uniqueNum = 1;
+
+	for (var key in allAttackTypes) {
+	    var attackTypes = {}; //Obj needed for now, it goes away when added (because we turn it into an array)
+	    attackTypes[uniqueNum++] = (allAttackTypes[key]);
+	    attackCombinations.push(attackTypes);
+	}
+
+	//var superCombo = { 0: allAttackTypes.Aoe, 1: allAttackTypes.Aoe };
+
+	//attackCombinations.push(superCombo);
+
 	var buttonW = 100;
     //Scaled exactly to 150 by 674...
-	drawTiled(this,
+	makeTiled(this,
         function (obj, refObj, pos) {
             var towerDragger = new TowerDragger(
                 new temporalPos(pos.x, pos.y, pos.w, pos.h),
@@ -49,7 +62,9 @@ function Towerbar(pos) {
                     fakeTile.tPos = new temporalPos(0, 0, 0, 0);
                     var tower = new Tower(fakeTile);
 
-                    tower.attr.attack_type = new obj();
+                    tower.attr.attack_types = [];
+                    for (var attackType in obj)                    
+                        tower.attr.attack_types.push(new obj[attackType]());
 
                     tower.recolor();
 
@@ -61,7 +76,7 @@ function Towerbar(pos) {
 
             return true;
         },
-        attackTypes,
+        attackCombinations,
         new temporalPos(
             pos.x + 65,
             pos.y,

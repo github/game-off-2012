@@ -282,6 +282,7 @@ function Infobar(pos) {
             "target_Strategy");
 	this.base.addObject(this.attributeChoosers.target_Strategy);
     
+    /*
 	this.attributeChoosers.attack_type = new AttributeChooser(
             new temporalPos(pos.x, pos.y + 250, pos.w,
                 countElements(attackTypes) * 28),
@@ -289,7 +290,7 @@ function Infobar(pos) {
             "attack_type");            
     //We will soon no longer let them choose their attack strategy!
 	this.base.addObject(this.attributeChoosers.attack_type);
-
+    */
 
 	this.attributeChoosers.bug_attack_type = new AttributeChooser(
             new temporalPos(pos.x, pos.y + 250, pos.w,
@@ -298,6 +299,7 @@ function Infobar(pos) {
             "bug_attack_type");
 	//We will soon no longer let them choose their attack strategy!
 	this.base.addObject(this.attributeChoosers.bug_attack_type);
+    
 
 
     //Add our buttons, should really be done just in the constructor with our given pos information
@@ -355,56 +357,65 @@ function Infobar(pos) {
 
 	    pen.font = "10px courier";
 	    for (var attrName in this.obj.attr) {
-	        var val = this.obj.attr[attrName];
+	        var value = this.obj.attr[attrName];
 
-	        function tryPrintAsNumber(val, name) {
-	            if (typeof val != "number")
-	                return false;
-
-	            var valtxt = prefixNumber(val, 1);
-
-	            var nametxt = formatToDisplay(name);
-
-	            pen.textAlign = 'left';
-	            ink.text(xPos, yPos, nametxt, pen);
-	            pen.textAlign = 'right';
-	            ink.text(xe, yPos, valtxt, pen);
-	            yPos += 15;
-	            return true;
+	        var arrayAttr = value;
+	        if (getRealType(arrayAttr) != "Array") {
+	            arrayAttr = [];
+	            arrayAttr.push(value);
 	        }
 
-	        if (!tryPrintAsNumber(val, attrName)) {
-	            yPos += 5;
+	        for (var key in arrayAttr) {
+	            var val = arrayAttr[key];
+	            function tryPrintAsNumber(val, name) {
+	                if (typeof val != "number")
+	                    return false;
 
-	            pen.textAlign = 'center';
-	            pen.font = "14px courier";
-	            ink.text((xs + xe) / 2, yPos, formatToDisplay(attrName), pen);
-	            pen.font = "10px courier";
-	            yPos += 20;
-	            xPos += 5;
+	                var valtxt = prefixNumber(val, 1);
 
-	            if (!defined(this.attributeChoosers[attrName])) {
+	                var nametxt = formatToDisplay(name);
+
 	                pen.textAlign = 'left';
-	                ink.text(xPos, yPos, formatToDisplay(getRealType(val)), pen);
+	                ink.text(xPos, yPos, nametxt, pen);
+	                pen.textAlign = 'right';
+	                ink.text(xe, yPos, valtxt, pen);
 	                yPos += 15;
+	                return true;
 	            }
 
-	            for (var subAttr in val) {
-	                tryPrintAsNumber(val[subAttr], subAttr);
+	            if (!tryPrintAsNumber(val, attrName)) {
+	                yPos += 5;
+
+	                pen.textAlign = 'center';
+	                pen.font = "14px courier";
+	                ink.text((xs + xe) / 2, yPos, formatToDisplay(attrName), pen);
+	                pen.font = "10px courier";
+	                yPos += 20;
+	                xPos += 5;
+
+	                if (!defined(this.attributeChoosers[attrName])) {
+	                    pen.textAlign = 'left';
+	                    ink.text(xPos, yPos, formatToDisplay(getRealType(val)), pen);
+	                    yPos += 15;
+	                }
+
+	                for (var subAttr in val) {
+	                    tryPrintAsNumber(val[subAttr], subAttr);
+	                }
+
+	                //See if its an attribute which we have a attribute chooser for
+	                if (defined(this.attributeChoosers[attrName])) {
+	                    this.attributeChoosers[attrName].tPos.y = yPos;
+	                    this.attributeChoosers[attrName].resize();
+	                    yPos += this.attributeChoosers[attrName].tPos.h;
+	                    yPos += 20; //idk really why this is needed
+	                }
+
+	                xPos -= 5;
+
+	                //Even so we still need to position the attribute choosers
 	            }
-
-	            //See if its an attribute which we have a attribute chooser for
-	            if (defined(this.attributeChoosers[attrName])) {
-	                this.attributeChoosers[attrName].tPos.y = yPos;
-	                this.attributeChoosers[attrName].resize();
-	                yPos += this.attributeChoosers[attrName].tPos.h;
-	                yPos += 20; //idk really why this is needed
-	            }
-
-	            xPos -= 5;
-
-	            //Even so we still need to position the attribute choosers
-	        }
+	        } //End of looping through arrays within attributes
 
 	    } //End of attribute loop
 
@@ -413,5 +424,5 @@ function Infobar(pos) {
 
 
 
-	}             //End of draw
+	}                   //End of draw
 }

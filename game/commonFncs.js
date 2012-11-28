@@ -107,8 +107,8 @@ function mergeObject(objectOne, objectTwo) {
 }
 
 
-//drawFnc takes array[x], pen, new temporalPos(xPos, yPos, width, height)
-function drawTiled(pen, drawFnc, array, tPosBox, xNum, yNum, percentBuffer) {
+//makeTileFnc takes array[x], pen, new temporalPos(xPos, yPos, width, height)
+function makeTiled(pen, makeTileFnc, array, tPosBox, xNum, yNum, percentBuffer) {
     var width = tPosBox.w / (xNum);
     var height = tPosBox.h / (yNum);
 
@@ -119,13 +119,21 @@ function drawTiled(pen, drawFnc, array, tPosBox, xNum, yNum, percentBuffer) {
     var drawnHeight = height * (1 - 2 * percentBuffer);
 
     for (var key in array) {
-        if (xPos > tPosBox.x + tPosBox.w) {
-            xPos = tPosBox.x + width * percentBuffer;
-            yPos += height;
+        var subArray = array[key];
+        if (getRealType(subArray) != "Array") {
+            subArray = []
+            subArray.push(array[key]);
         }
+        for (var key in subArray) {
+            var value = subArray[key];
+            if (xPos > tPosBox.x + tPosBox.w) {
+                xPos = tPosBox.x + width * percentBuffer;
+                yPos += height;
+            }
 
-        if(drawFnc(array[key], pen, new temporalPos(xPos, yPos, drawnWidth, drawnHeight)))
-            xPos += width;
+            if (makeTileFnc(value, pen, new temporalPos(xPos, yPos, drawnWidth, drawnHeight)))
+                xPos += width;
+        }
     }
 }
 

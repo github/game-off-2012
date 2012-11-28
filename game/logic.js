@@ -280,7 +280,7 @@
         if (obj && obj.attr) {
             //Hooks up our tower range to our actual attributes (but not our center)
             //so we don't need to maintain it.
-            currentRangeDisplayed = new Circle(
+            currentRangeDisplayed = new PCircle(
                 obj.tPos.getCenter(),
                 new Pointer(obj.attr, "range"),
                 new Pointer(obj, "color"),

@@ -1,25 +1,3 @@
-function doAttack(object) {
-    if (!assertDefined(object, object.attr))
-        return;
-
-    var target = object.attr.target_Strategy.run(object);
-
-    if (!target)
-        return;
-
-    var attackType = object.attr.attack_type || object.attr.bug_attack_type;
-
-    if (attackType.applyAttrMods)
-        attackType.applyAttrMods(object.attr);
-
-    var hit = attackType.run(object, target);
-
-    var array = [];
-    mergeToArray(hit, array);
-
-    return array;
-};
-
 //The reason this is its own object is because the attack cycle will
 //shortly (hopefully become much more complex than just calling doAttack.
 function AttackCycle() {
@@ -32,32 +10,15 @@ function AttackCycle() {
 
     //Going to be more than just doAttack!
     this.triggerAttack = function () {
-        var originalAttr = cloneObject(this.base.parent.attr);
+        var attacker = this.base.parent;
+        var attackTypes = attacker.attr.attack_types || attacker.attr.bug_attack_types;
 
-        var targets = doAttack(this.base.parent);
-
-        mergeObject(this.base.parent.attr, originalAttr);
-
-        for (var key in targets) {
-            var target = targets[key];
-            if (target && target.attr.hp < 0 && getRealType(target) != "Tower") {
-                this.base.rootNode.money += target.attr.value;
-            }
+        if (attackTypes && attackTypes.length > 0) {
+            startAttack(attackTypes[0],
+                new AttackTemplate(attacker, null, attacker.attr.damage, attacker, 0));
         }
     };
 };
-
-function Mortality() {
-    this.base = new baseObj(this);
-
-    this.update = function () {
-        if (this.base.parent.attr.hp < 0) {
-            var sound = new Sound("snd/die.wav");
-            sound.play();
-            this.base.parent.base.destroySelf();
-        }
-    }
-}
 
 //I foresee this function dying in a deep dark hole due to its
 //(theoretical) major impacts on speed... but w/e, its cool
@@ -172,5 +133,33 @@ function SlowEffect(magnitude) {
         pen.strokeStyle = "white";
         pen.lineWidth = 1;
         ink.circ(p.getCenter().x, p.getCenter().y, p.w / 2, pen);
+    }
+}
+
+//(Should really be a tween property class)
+//Creates an animations of its parent from start to end
+//and then calls callback
+function MotionDelay(start, end, time, callback) {
+    this.base = new baseObj(this);
+
+    this.start = start;
+    this.end = end;
+    this.time = time;
+    this.baseTime = time;
+
+    this.callback = callback;
+
+    this.update = function (dt) {
+        this.time -= dt;
+        if (this.time < 0) {
+            callback();
+            this.base.destroySelf();
+            return;
+        }
+
+        var progress = this.time / this.baseTime;
+
+        this.base.parent.tPos.x = start.x * progress + end.x * (1 - progress);
+        this.base.parent.tPos.y = start.y * progress + end.y * (1 - progress);
     }
 }
