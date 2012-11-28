@@ -1,64 +1,135 @@
-Here at GitHub, we're no strangers to hosting or sponsoring hackathons. With the growing number of games and game development resources on GitHub, we thought it was about time to throw our very own game jam!
+Note: under the [Hotfix game](http://sdrdis.github.com/hotfix/), you can find a styled version of the text below.
 
-## The Challenge
+## Description
 
-You have the entire month of November to create a **web-based** game *loosely* built around one or more of the following themes:
+Help Hotfix collect stargazers and avoid enemies. Collect commits to upgrade hotfix and add new features.
 
-* forking (or forks)
-* branching (or branches)
-* cloning (or clones)
-* pushing
-* pulling
+## Controls
 
-What do we mean by **loosely** based on these concepts? We literally mean, *loosely* based. Some examples might be a FPS where you throw forks at water balloons, an educational game about DNA cloning, or perhaps a platformer where you push and pull objects.
+Click or press space to jump. The longer you hold, the longer the jump (there is a upper threshold of course).
 
-Your game. Your rules. You can participate as an individual or as a team. You're encouraged to use open source libraries, frameworks, graphics, and sounds.
+Jumping watchers can be destroyed by jumping on them. If you do so, you will be able to double jump.
 
-## Prizes
+By collecting commits, add new features to hotfix. The more features you have, the more likely you will progress in the game.
 
-We have 5 shiny new iPads with Retina displays (64GB wifi models) to give to our winners (or Apple Store Credit equivalent). Runners up will receive GitHub swag of their choice ($100 credit for the [GitHub Shop](http://shop.github.com/)). If you have a team submission, we'll give you Apple Store credit equal to the value of the iPad. You can split it with your teammates as appropriate.
+## Screenshots
 
-All of the winners and runners up will be showcased on our blog.
+### Menu
 
-<img src="http://i.imgur.com/lxZrD.png" style="border:0;">
+![alt text](http://sdrdis.github.com/hotfix/images/menu.jpg "Menu")
 
-### Everyone's a winner!
+### Beginning of the game
 
-All participants will receive a limited edition [Coderwall](http://www.coderwall.com) badge as shown above. Winners and runners up will also get their own special version of it.
+![alt text](http://sdrdis.github.com/hotfix/images/screenshot-1.jpg "Beginning of the game")
 
-## Judging
+### Game over screen
 
-We have a number of awesome judges who graciously volunteered to take a look at all the entries!
+![alt text](http://sdrdis.github.com/hotfix/images/screenshot-2.jpg "Game over screen")
 
-* [David Czarnecki](http://twitter.com/CzarneckiD), Lead Engineer at Agora Games
-* [Eric Preisz](https://twitter.com/epreisz), CEO of GarageGames
-* [Matt Hackett](https://twitter.com/#!/richtaur), Co-founder of Lost Decade Games
-* [Lee Reilly](http://twitter.com/leereilly), Gamer Dad and Software Developer at GitHub
-* [Romana Ramzan](https://twitter.com/Manak/), Denki's Player Champion. PhD Researcher. Organiser of Scottish Game Jam.
+You are ranked by the number of stargazers you collected.
 
-## Rules
+### The store
 
-* To qualify for entry as an **individual** you must fork the [github/game-off-2012](https://github.com/github/game-off-2012) repository to your individual account
-* To qualify for entry as a **team** you must fork the [github/game-off-2012](https://github.com/github/game-off-2012) to a [free organization account](https://github.com/settings/organizations)
-* All entries must be web-based i.e. playable in a browser. HTML5, WebGL, Unity, Torque 3D, Node JS, Flash is all possible - just be sure the source is made available on your fork.
-* You must be over the age of 13
+![alt text](http://sdrdis.github.com/hotfix/images/screenshot-3.jpg "The store")
 
-## Instructions
+Buy new features for Hotfix.
 
-* If you don't already have a GitHub account, [sign up now](https://github.com/signup/free) - it's free!
-* Fork the [github/game-off-2012](https://github.com/github/game-off-2012) repository to your individual account (or to a free organization account)
-* Be sure to follow @github on Twitter for updates
-* Make sure your code is pushed to the master branch of before Dec 1st!
-* Make sure you have a README file with a brief description, what open source projects (if any) you used, and a screenshot.
-* Your repo should have a brief description and a URL where the game is playable entered into the fields shown below (this will make our judging process easier):
+## Enemies and obstables
 
-![](https://img.skitch.com/20121010-x2ecpu95fi91us6hbfehg2dgit.png)
+### Poisonned forks
 
-Winners will be announced before Christmas :santa:
+![alt text](http://sdrdis.github.com/hotfix/images/forks.png "Poisonned forks")
 
-# Comments / Questions / Help
+Poisonned forks appear on the branches at the beginning of the game. If you touch them, you are dead.
 
-* New to Git, GitHub, and/or version control? Check out our [help documentation](https://help.github.com/) to get started!
-* Questions about Git/GitHub? Please email support@github.com and be sure to include 'GitHub Game Off' in the subject.
-* Questions specific to the GitHub Game Off? Please [create an issue](https://github.com/github/game-off-2012/issues/new). That will be the offical FAQ.
-* The official Twitter hashtag is [#ggo12](https://twitter.com/search/realtime?q=%23ggo12).
+### Round forks
+
+![alt text](http://sdrdis.github.com/hotfix/images/round-forks.png "Poisonned forks")
+
+Round forks appear often between branches. If you touch them, you are dead.
+
+### Jumping watchers
+
+![alt text](http://sdrdis.github.com/hotfix/images/jumping-watchers.png "Jumping watchers")
+
+Once upon a time, in the World Wide Web gitdom, there were watchers. They were replaced by stargazers so now they seek revenge.
+
+You are dead if you touch them, unless you jump on them. If you do so, you will be able to double jump.
+
+### Forker watchers
+
+![alt text](http://sdrdis.github.com/hotfix/images/forker-watchers.png "Forker watchers")
+
+They are an evolved form of watchers: they throw forks. The forks are poisonned, so you die if you touch them.
+
+## Features
+
+### Clones
+
+![alt text](http://sdrdis.github.com/hotfix/images/clones.png "Clones")
+
+Buy extra clones of Hotfix to continue playing when you are hit or are falling.
+
+### Time machine
+
+![alt text](http://sdrdis.github.com/hotfix/images/time-machine.png "Time machine")
+
+Running out of time ? The time machine allows you to slow down time. Press S to activate (will only work if you bought the feature).
+
+### Extra jumps
+
+![alt text](http://sdrdis.github.com/hotfix/images/extra-jumps.png "Extra jumps")
+
+It is always convenient to be able to jump again when you are falling.
+
+### Magnet
+
+![alt text](http://sdrdis.github.com/hotfix/images/magnet.png "Magnet")
+
+The magnet pull commits towards you, allowing you to earn more of them.
+
+## Credits
+
+### Developper / designer / author of Hotfix
+
+[Sébastien Drouyer](https://twitter.com/sdrdis)
+
+### Frameworks
+
+Using free versions of [Unity3D](http://unity3d.com/) and the [Orthello framework](http://www.wyrmtale.com/orthello).
+
+### Musics
+
+<a href="http://www.jamendo.com/fr/track/120999/16-cracked" target="_blank">16 Cracked</a>
+  				By <a href="http://www.jamendo.com/fr/artist/7979/ben-drake" target="_blank">Ben Drake</a>
+          
+<a href="http://www.jamendo.com/fr/track/244388/dumb-dance-" target="_blank">Dumb Dance</a>
+  				By <a href="http://www.jamendo.com/fr/artist/343713/exit-project" target="_blank">EXIT project</a>
+          
+<a href="http://www.jamendo.com/fr/track/240683/the-gateway" target="_blank">The Gateway</a>
+  				By <a href="http://www.jamendo.com/fr/artist/343428/klez" target="_blank">klez</a>
+          
+<a href="http://www.jamendo.com/fr/track/26127/the-futureman-can" target="_blank">The FutureMan Can</a>
+  				By <a href="http://www.jamendo.com/fr/artist/3769/kangaroo-musique" target="_blank">Kangaroo MusiQue</a>
+          
+### Sounds
+
+Hurt, Pad, and stargazer sound : Sébastien Drouyer
+
+Clone: <a href="http://www.freesound.org/people/fins/sounds/133280/" target="_blank">game pick up object</a> By <a href="http://www.freesound.org/people/fins/" target="_blank">fins</a>
+
+Falling: <a href="http://www.freesound.org/people/silversatyr/sounds/113366/" target="_blank">fall2</a> By <a href="http://www.freesound.org/people/silversatyr/" target="_blank">silversatyr</a>
+
+Flick: <a href="http://www.freesound.org/people/batchku/sounds/10482/" target="_blank">Flick_ff-2_003</a> By <a href="http://www.freesound.org/people/batchku/" target="_blank">batchku</a>
+
+Jump: <a href="http://www.freesound.org/people/odeean/sounds/139476/" target="_blank">sound_jump</a> By <a href="http://www.freesound.org/people/odeean/" target="_blank">odeean</a>
+
+Missile: <a href="http://www.freesound.org/people/elmomo/sounds/755/" target="_blank">missile01</a> By <a href="http://www.freesound.org/people/elmomo/" target="_blank">elmomo</a>
+
+Pop: <a href="http://www.freesound.org/people/oldedgar/sounds/97978/" target="_blank">Pop!</a> By <a href="http://www.freesound.org/people/oldedgar/" target="_blank">oldedgar</a>
+
+## License
+
+Code and images (all except in the orthello and Standard Assets folder) are by Sébastien Drouyer and are under MIT License.
+
+All other artworks not created by Sébastien Drouyer can be under specific license (non-commercial notably). Click the links in order to check the license.
