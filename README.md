@@ -36,19 +36,19 @@ Buy new features for Hotfix.
 
 ### Poisonned forks
 
-![alt text](http://sdrdis.github.com/hotfix/images/forks.jpg "Poisonned forks")
+![alt text](http://sdrdis.github.com/hotfix/images/forks.png "Poisonned forks")
 
 Poisonned forks appear on the branches at the beginning of the game. If you touch them, you are dead.
 
 ### Round forks
 
-![alt text](http://sdrdis.github.com/hotfix/images/round-forks.jpg "Poisonned forks")
+![alt text](http://sdrdis.github.com/hotfix/images/round-forks.png "Poisonned forks")
 
 Round forks appear often between branches. If you touch them, you are dead.
 
 ### Jumping watchers
 
-![alt text](http://sdrdis.github.com/hotfix/images/jumping-watchers.jpg "Jumping watchers")
+![alt text](http://sdrdis.github.com/hotfix/images/jumping-watchers.png "Jumping watchers")
 
 Once upon a time, in the World Wide Web gitdom, there were watchers. They were replaced by stargazers so now they seek revenge.
 
@@ -56,6 +56,11 @@ You are dead if you touch them, unless you jump on them. If you do so, you will 
 
 ### Forker watchers
 
-![alt text](http://sdrdis.github.com/hotfix/images/forker-watchers.jpg "Forker watchers")
+![alt text](http://sdrdis.github.com/hotfix/images/forker-watchers.png "Forker watchers")
 
 They are an evolved form of watchers: they throw forks. The forks are poisonned, so you die if you touch them.
+
+## Features
+
+### Clones
+
