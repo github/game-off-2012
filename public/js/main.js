@@ -27,10 +27,10 @@ function startGame() {
 	keyListeners = []
 	game.play = false
 	game = new Game(canvas)
-	var player = new Player(game, null, null, null, game.speed)
-	var spawner = new BlockSpawner(game, game.speed)
-	var hud = new HUD(game)
-	var power_spawner = new PowerupSpawner(game)
+	player = new Player(game, null, null, null, game.speed)
+	spawner = new BlockSpawner(game, game.speed)
+	hud = new HUD(game)
+	power_spawner = new PowerupSpawner(game)
 	game.addObject("spawner", spawner)
 	game.addObject("player", player)
 	game.addObject("power_spawn", power_spawner)
