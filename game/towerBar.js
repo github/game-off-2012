@@ -1,4 +1,6 @@
 
+//Make list with lits of alleles to create default tower types.
+
 function TowerDragger(pos, towerGeneratorFnc) {
     this.tPos = pos;
     this.base = new baseObj(this, 20);

@@ -19,6 +19,7 @@ var AllAlleleGroups =
     one: function () { return { range: 10}; },
     two: function () { return {range: Math.random() * 20}; },
     three: function () { return {range: 100, damage: -1}; },
+//Make some for all of the attack types and target strategies.
 };
 
 function Allele(delta)
@@ -68,15 +69,15 @@ function TowerBreeder(pos) {
         for(var alleleGroup in AllAlleleGroups)
         {
             var alleleParent = this.towers[Math.floor(Math.random() * this.towers.length)];
-            if(alleleParent.alleles[alleleGroup])
-                resultantAlleles[alleleGroup] = alleleParent.alleles[alleleGroup];
+            if(alleleParent.genes.alleles[alleleGroup])
+                resultantAlleles[alleleGroup] = alleleParent.genes.alleles[alleleGroup];
         }
 
         var notTile = [];
         notTile.tPos = { x: 0, y: 0, w: tileSize, h: tileSize };
         var newTower = new Tower(notTile);
         for (var key in resultantAlleles)
-            newTower.addAllele(key, resultantAlleles[key]);
+            newTower.genes.addAllele(key, resultantAlleles[key]);
         placingTower = newTower;
         placingTower.recolor();
     }

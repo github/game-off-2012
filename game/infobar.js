@@ -411,8 +411,8 @@ function Infobar(pos) {
 	                    }
 
 	                    //addBarPart(val - baseStat);
-	                    for (var key in obj.alleles) {
-	                        var allele = obj.alleles[key];
+	                    for (var key in obj.genes.alleles) {
+	                        var allele = obj.genes.alleles[key];
 	                        for (var key in allele.delta) {
 	                            if (key == name) {
 	                                var impact = allele.delta[key];

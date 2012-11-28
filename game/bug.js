@@ -23,6 +23,8 @@ function Bug(startPath, difficulty) {
     this.tPos = new temporalPos(cen.x - r, cen.y - r, r * 2, r * 2, this.attr.speed, 0);
     this.base = new baseObj(this, 10);
 
+    this.genes = new Genes();
+    this.base.addObject(this.genes);
 
     this.attr.target_Strategy = new targetStrategies.Closest();
     this.attr.attack_types = [];

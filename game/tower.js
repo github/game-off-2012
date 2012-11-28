@@ -72,7 +72,8 @@ function Tower(baseTile) {
         value:          TowerStats.value,
     };
 
-    this.alleles = {};
+    this.genes = new Genes();
+    this.base.addObject(this.genes);
 
     this.attr.target_Strategy = new targetStrategies.Closest();
     this.attr.attack_types = [];
@@ -89,27 +90,6 @@ function Tower(baseTile) {
         this.recolor();        
     };
 
-    this.addAllele = function(group, allele) {
-        if(!assertDefined(group, allele))
-            return;
-
-        if(this.alleles[group])
-            this.alleles[group].apply(this, true);
-
-        this.alleles[group] = allele;
-            
-        this.alleles[group].apply(this, false);
-    };
-
-    this.clearAlleles = function()
-    {
-        for(var alleleGroup in this.alleles)        
-            if(this.alleles[alleleGroup])
-            {
-                this.alleles[alleleGroup].apply(this, true); 
-                delete this.alleles[alleleGroup];       
-            }
-    };
 
     //Hackish way to check if we are from breeder
     if(baseTile)
@@ -119,7 +99,7 @@ function Tower(baseTile) {
         {
             if(Math.random() < fillChance)
             {
-                this.addAllele(alGroup, new Allele(AllAlleleGroups[alGroup]()));
+                this.genes.addAllele(alGroup, new Allele(AllAlleleGroups[alGroup]()));
             }
         }
     }
