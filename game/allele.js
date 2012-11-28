@@ -16,6 +16,10 @@ TowerStats = {
 var AllAlleleGroups =
 {
 //Should likely have better names
+//EACH ONE OF THESE SHOULD HAVE MORE THAN ONE PHENOTYPE!
+//(Ex, one could be +10 range, of +5 range (moderate bonus)
+//two could be +1000 range of +50 damage (major bonus)
+//three could be... etc
     one: function () { return { range: 10}; },
     two: function () { return {range: Math.random() * 20}; },
     three: function () { return {range: 100, damage: -1}; },
