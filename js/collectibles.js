@@ -116,7 +116,7 @@
       this.clone_img.src = 'img/berries.png';
 
       this.invincible_img = new Image();
-      this.invincible_img.src = 'img/apple.png';
+      this.invincible_img.src = 'img/star.png';
     },
 
     getCoinSpritePos: function(sub_type) {

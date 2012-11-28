@@ -101,7 +101,7 @@
     mit.game_started = 0;
 
     mit.Backgrounds.common_bg_speed = 1;
-    mit.Backgrounds.ground_bg_move_speed = 9;
+    mit.Backgrounds.ground_bg_move_speed = 7;
 
     // Reset all accelerations and make
     // pappu stationary
@@ -159,7 +159,7 @@
   // 
   // You can console.log velocities in drawing methods
   // and from there decide what to set as the cap.
-  mit.v_cap = 7.5;
+  mit.v_cap = 6.5;
 
   // Accelaration x,y
   mit.ax = 0;
@@ -222,7 +222,7 @@
 
     if (e.keyCode === 38) {
       mit.descend();
-      
+
       e.preventDefault();
     }
   }, false);
@@ -332,7 +332,7 @@
         mit.PakiaUtils.render(ctx);
 
       // Update score
-      mit.score = mit.score += 0.4;
+      mit.score = mit.score += 0.05;
       ui.score_board.text(parseInt(mit.score));
 
       // Acceleration + Gravity

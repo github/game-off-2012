@@ -148,12 +148,12 @@
         this.createPakias();
       }
 
-      if (mit.score.toFixed(2) % 50 === 0 || this.cur_pakia) {
+      if (mit.score.toFixed(2) % 20 === 0 || this.cur_pakia) {
         this.reflow(ctx);
         this.repaint(ctx);
       }
 
-      if (mit.score.toFixed(2) % 50 === 0 && this.cur_pakia) {
+      if (mit.score.toFixed(2) % 20 === 0 && this.cur_pakia) {
         this.cur_pakia.sound.play();
       }
     },

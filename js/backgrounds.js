@@ -5,28 +5,32 @@
     // Speeds and Velocities of Backgrounds
     common_bg_speed: 1,
 
-    cloud_bg_move_speed: 4,
+    cloud_bg_move_speed: 2,
     cloud_bg_vx: 0,
 
-    backtree_bg_move_speed: 5,
+    backtree_bg_move_speed: 3,
     backtree_bg_vx: 0,
 
-    fronttree_bg_move_speed: 7,
+    fronttree_bg_move_speed: 5,
     fronttree_bg_vx: 0,
 
-    ground_bg_move_speed: 9,
+    ground_bg_move_speed: 7,
     ground_bg_vx: 0,
 
-    grass_bg_move_speed: 9,
+    grass_bg_move_speed: 7,
     grass_bg_vx: 0,
 
-    combined_bg_move_speed: 5,
+    combined_bg_move_speed: 3,
     combined_bg_vx: 0,
 
     log_x: 40,
     log_y: 0,
 
     sky_gradient: {},
+
+    first_speed_inc: 0,
+    second_speed_inc: 0,
+    third_speed_inc: 0,
 
     init: function(ctx) {
       // Sky Gradient
@@ -375,6 +379,39 @@
 
       // Draw Ground now!
       this.drawGround(ctx);
+
+
+      // Increasing speed based on points
+      if (mit.score > 200 && !this.first_speed_inc) {
+        this.cloud_bg_move_speed++;
+        this.backtree_bg_move_speed++;
+        this.fronttree_bg_move_speed++;
+        this.ground_bg_move_speed++;
+        this.combined_bg_move_speed++;
+
+        this.first_speed_inc = 1;
+      }
+
+      if (mit.score > 1000 && !this.second_speed_inc) {
+        this.cloud_bg_move_speed++;
+        this.backtree_bg_move_speed++;
+        this.fronttree_bg_move_speed++;
+        this.ground_bg_move_speed++;
+        this.combined_bg_move_speed++;
+
+        this.second_speed_inc = 1;
+      }
+
+      if (mit.score > 3000 && !this.third_speed_inc) {
+        this.cloud_bg_move_speed++;
+        this.backtree_bg_move_speed++;
+        this.fronttree_bg_move_speed++;
+        this.ground_bg_move_speed++;
+        this.combined_bg_move_speed++;
+
+        this.third_speed_inc = 1;
+      }
+
     }
 
   };

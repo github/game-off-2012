@@ -28,14 +28,14 @@
 
   var images = {
     angry_pakia : "img/angry_pakia.png",
-    apple : "img/apple.png",
+    apple : "img/star.png",
     back_trees : "img/back_trees.png",
     berries : "img/berries.png",
     branch : "img/branch.png",
     clouds : "img/clouds.png",
     coins : "img/coins.png",
     controls : "img/controls.png",
-    dig : "img/dig.png",
+    //dig : "img/dig.png",
     fork_handle : "img/fork_handle.png",
     fork_head : "img/fork_head.png",
     front_trees : "img/front_trees.png",
@@ -48,7 +48,8 @@
     plank_mid : "img/plank_mid.png",
     plank_top : "img/plank_top.png",
     sad_pakia : "img/sad_pakia.png",
-    stand : "img/stand.png"
+    stand : "img/stand.png",
+    bg_combined: "img/bg_combined.png"
   };
 
   var image = {};
