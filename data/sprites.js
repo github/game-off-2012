@@ -49,6 +49,19 @@ var sprites = {
     destX : 560,
     destY : 335,
     continuous: true
+  }),
+
+  flexible_pipe : new Sprite({
+    filename: 'spritesheet_flexible_pipe.png',
+    frames:[
+      [0, 0, 110, 41],
+      [0, 42, 99, 41],
+      [0, 84, 86, 41]
+    ],
+    destX : 450,
+    destY : 0,
+    continuous: true,
+    duration : 500
   })
 };
 
