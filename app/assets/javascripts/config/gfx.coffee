@@ -4,7 +4,7 @@ Config.gfx =
     reduceBy: 0.2
     color: "#7f7f7f"
     interval:
-      initial: 10
+      initial: 12
       reduceBy: 1
       minimum: 2
 

@@ -34,7 +34,8 @@ Config.obstacles =
     innerRadius: 15
     outerRadius: 350
   changeWhere:
-    initial: 60
+    initial: 50
+    randomBy: 20
     increaseBy: 5
   intervals:
     atStart: 2000

@@ -59,7 +59,8 @@ Crafty.scene("in_game", ->
     player.enableControl()
     game.onAction( (action) =>
       Narrator.play(action)
-      track.currentSegment(Config.obstacles.changeWhere.initial + Config.obstacles.changeWhere.increaseBy * game.cycles).perform(action)
+      segmentsAheadToChange = Config.obstacles.changeWhere.initial + (Math.random() * Config.obstacles.changeWhere.randomBy) + (Config.obstacles.changeWhere.increaseBy * game.cycles)
+      track.currentSegment(Math.floor(segmentsAheadToChange)).perform(action)
     ).start()
     pause.bindKeyboard()
 
