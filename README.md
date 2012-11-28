@@ -128,6 +128,6 @@ Pop: <a href="http://www.freesound.org/people/oldedgar/sounds/97978/" target="_b
 
 ## License
 
-Code and images (all except in the orthello folder) are by Sébastien Drouyer
+Code and images (all except in the orthello and Standard Assets folder) are by Sébastien Drouyer and are under MIT License.
 
 All other artworks not created by Sébastien Drouyer can be under specific license (non-commercial notably). Click the links in order to check the license.
