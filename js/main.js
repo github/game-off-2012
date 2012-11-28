@@ -126,6 +126,8 @@
     return false;
   });
 
+
+
   // startGame();
 
   // Share links
@@ -213,6 +215,12 @@
     if (e.keyCode === 38) {
       mit.ascend();
 
+      e.preventDefault();
+    }
+
+    if (e.keyCode === 32) {
+      startGame();
+      
       e.preventDefault();
     }
 
