@@ -168,10 +168,6 @@ function Tower(baseTile) {
         mergeObject(this.attr, originalAttr);
     }
 
-    this.click = function() {
-        this.tryUpgrade();
-    };
-
     this.mouseover = function(e) {        
         // Only required because of issue #29
         for (var i = 0; i < this.connections.length; i++) {
