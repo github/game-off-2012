@@ -69,6 +69,10 @@ h3 {
 	margin-top: 30px;
 }
 
+h4 {
+	font-size: 14px;
+}
+
 .obstacle {
 	overflow: hidden;
 }
