@@ -54,7 +54,7 @@ class Layer{
     //image(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
     tree.render(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), layerWidth*easedDistance, layerHeight*easedDistance, easedDistance);
     
-    color c = (easedDistance > 1) ? color(0,0,255) : color(0);
+    color c = (easedDistance > 1) ? color(0,0,255) : color(100);
     drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY,easedDistance), (layerWidth*easedDistance)/2 - (ringWeight*easedDistance)/2, 16, ringWeight*easedDistance, c);
   }
 

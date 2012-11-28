@@ -4,21 +4,14 @@ PVector[] tris = {
       new PVector(0,100)
     };
     
-//Branch bob = new Branch(
-//                new PVector(200, 500),
-//                new PVector(300, 500),
-//                new PVector(250, 300),
-//                color(random(100,200)));
+boolean[] keys = new boolean[4];
       
 int originX;
 int originY;
-
-float playerR;
-int playerX;
-int playerY;
                 
 Tree testTree;
 
+Player player;
 Game g;
 
 PVector focalPoint;
@@ -29,10 +22,6 @@ void setup(){
   originX = width/2;
   originY = height/2;
   
-  //player vars
-  playerR = 20;
-  playerX = width/2;
-  playerY = width/2;
   
   imageMode(CENTER);
   rectMode(CENTER);
@@ -41,30 +30,69 @@ void setup(){
   noStroke();
   background(255);
   //testTree = new Tree(5, bob);
+  
+  player = new Player();
   g = new Game();
-  //g.display();
   Layer layer = new Layer(16, width, height);
 }
 
 void draw(){
-  background(255);
-  g.update();
-  println(frameRate);
+  if(keys[0]){
+    originY += player.speed;
+  }
+  if(keys[1]){
+    originY -= player.speed;
+  }
+  if(keys[2]){
+    originX += player.speed;
+  }
+  if(keys[3]){
+    originX -= player.speed;
+  }
+  if(dist(player.pos.x, player.pos.y, originX, originY) > (height/2 - player.r - 8)){
+    float a = myAngleBetween(player.pos, new PVector(originX, originY))-PI;
+    originX = (int)(player.pos.x + (height/2 - player.r - 8) * cos(a));
+    originY = (int)(player.pos.y + (height/2 - player.r - 8) * sin(a));
+  }
   
+  background(255);
+  g.update();  
 }
+
 
 //testtesttest
 void mousePressed(){
-  //background(255);
-  //testTree = new Tree(15, bob);
-  //Layer layer = new Layer(16, width, height);
-  //Layer layer2 = new Layer(16, int(width*0.8), int(height*0.8));
-  //layer2.render();
-  //layer.render();
-  
-  //g = new Game();
-  //g.display();
-  println(frameRate);
+ player.speed++;
+}
+
+void keyPressed(){
+  if (keyCode == UP || key == 'w' || key == 'W') {
+    keys[0] = true;
+  }
+  if (keyCode == DOWN || key == 's' || key == 'S') {
+    keys[1] = true;
+  }
+  if (keyCode == LEFT || key == 'a' || key == 'A') {
+    keys[2] = true;
+  }
+  if (keyCode == RIGHT || key == 'd' || key == 'D') {
+    keys[3] = true;
+  }
+}
+
+void keyReleased(){
+  if (keyCode == UP || key == 'w' || key == 'W') {
+    keys[0] = false;
+  }
+  if (keyCode == DOWN || key == 's' || key == 'S') {
+    keys[1] = false;
+  }
+  if (keyCode == LEFT || key == 'a' || key == 'A') {
+    keys[2] = false;
+  }
+  if (keyCode == RIGHT || key == 'd' || key == 'D') {
+    keys[3] = false;
+  }
 }
 
 void mouseMoved(){

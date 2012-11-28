@@ -4,21 +4,14 @@ PVector[] tris = {
       new PVector(0,100)
     };
     
-//Branch bob = new Branch(
-//                new PVector(200, 500),
-//                new PVector(300, 500),
-//                new PVector(250, 300),
-//                color(random(100,200)));
+boolean[] keys = new boolean[4];
       
 int originX;
 int originY;
-
-float playerR;
-int playerX;
-int playerY;
                 
 Tree testTree;
 
+Player player;
 Game g;
 
 PVector focalPoint;
@@ -29,10 +22,6 @@ void setup(){
   originX = width/2;
   originY = height/2;
   
-  //player vars
-  playerR = 20;
-  playerX = width/2;
-  playerY = width/2;
   
   imageMode(CENTER);
   rectMode(CENTER);
@@ -41,30 +30,69 @@ void setup(){
   noStroke();
   background(255);
   //testTree = new Tree(5, bob);
+  
+  player = new Player();
   g = new Game();
-  //g.display();
   Layer layer = new Layer(16, width, height);
 }
 
 void draw(){
-  background(255);
-  g.update();
-  println(frameRate);
+  if(keys[0]){
+    originY += player.speed;
+  }
+  if(keys[1]){
+    originY -= player.speed;
+  }
+  if(keys[2]){
+    originX += player.speed;
+  }
+  if(keys[3]){
+    originX -= player.speed;
+  }
+  if(dist(player.pos.x, player.pos.y, originX, originY) > (height/2 - player.r - 8)){
+    float a = myAngleBetween(player.pos, new PVector(originX, originY))-PI;
+    originX = (int)(player.pos.x + (height/2 - player.r - 8) * cos(a));
+    originY = (int)(player.pos.y + (height/2 - player.r - 8) * sin(a));
+  }
   
+  background(255);
+  g.update();  
 }
+
 
 //testtesttest
 void mousePressed(){
-  //background(255);
-  //testTree = new Tree(15, bob);
-  //Layer layer = new Layer(16, width, height);
-  //Layer layer2 = new Layer(16, int(width*0.8), int(height*0.8));
-  //layer2.render();
-  //layer.render();
-  
-  //g = new Game();
-  //g.display();
-  println(frameRate);
+ player.speed++;
+}
+
+void keyPressed(){
+  if (keyCode == UP || key == 'w' || key == 'W') {
+    keys[0] = true;
+  }
+  if (keyCode == DOWN || key == 's' || key == 'S') {
+    keys[1] = true;
+  }
+  if (keyCode == LEFT || key == 'a' || key == 'A') {
+    keys[2] = true;
+  }
+  if (keyCode == RIGHT || key == 'd' || key == 'D') {
+    keys[3] = true;
+  }
+}
+
+void keyReleased(){
+  if (keyCode == UP || key == 'w' || key == 'W') {
+    keys[0] = false;
+  }
+  if (keyCode == DOWN || key == 's' || key == 'S') {
+    keys[1] = false;
+  }
+  if (keyCode == LEFT || key == 'a' || key == 'A') {
+    keys[2] = false;
+  }
+  if (keyCode == RIGHT || key == 'd' || key == 'D') {
+    keys[3] = false;
+  }
 }
 
 void mouseMoved(){
@@ -106,6 +134,23 @@ class Branch{
   PVector[] easedVerticies = new PVector[3];
   color col;
   int hu,sat,br,alph;
+  
+  Branch(){
+    verticies[0] = new PVector(0,0);
+    verticies[1] = new PVector(0,0);
+    verticies[2] = new PVector(0,0);
+    
+    //initialized eased verticies as blanks
+    easedVerticies[0] = new PVector(0,0);
+    easedVerticies[1] = new PVector(0,0);
+    easedVerticies[2] = new PVector(0,0);
+    
+    hu = 0;
+    sat = 0;
+    br = (int)random(50,200);
+    alph = 255;
+  }
+  
   Branch(PVector a, PVector b, PVector c){
     verticies[0] = a;
     verticies[1] = b;
@@ -142,19 +187,17 @@ class Branch{
   
   //collision detection functions
   public void playerOverlap(){
-    if(dist(playerX,playerY,easedVerticies[0].x,easedVerticies[0].y) < playerR ||
-        dist(playerX,playerY,easedVerticies[1].x,easedVerticies[1].y) < playerR ||
-        dist(playerX,playerY,easedVerticies[2].x,easedVerticies[2].y) < playerR){
+    if(dist(player.pos.x,player.pos.y,easedVerticies[0].x,easedVerticies[0].y) < player.r ||
+        dist(player.pos.x,player.pos.y,easedVerticies[1].x,easedVerticies[1].y) < player.r ||
+        dist(player.pos.x,player.pos.y,easedVerticies[2].x,easedVerticies[2].y) < player.r){
       //return true;
       br = 0;
-      println("hit!!!");
-    }else if(PointInTriangle(playerX,playerY,easedVerticies[2].x,easedVerticies[2].y,easedVerticies[1].x,easedVerticies[1].y,easedVerticies[0].x,easedVerticies[0].y)){
+    }else if(PointInTriangle(player.pos.x,player.pos.y,easedVerticies[2].x,easedVerticies[2].y,easedVerticies[1].x,easedVerticies[1].y,easedVerticies[0].x,easedVerticies[0].y)){
       //return true;
       br = 0;
-      println("hit!!!");
-    }else if(circleLineIntersect(playerX,playerY, playerR, easedVerticies[0].x,easedVerticies[0].y, easedVerticies[1].x,easedVerticies[1].y) ||
-              circleLineIntersect(playerX,playerY, playerR, easedVerticies[1].x,easedVerticies[1].y, easedVerticies[2].x,easedVerticies[2].y) ||
-              circleLineIntersect(playerX,playerY, playerR, easedVerticies[2].x,easedVerticies[2].y, easedVerticies[0].x,easedVerticies[0].y)){
+    }else if(circleLineIntersect(player.pos.x,player.pos.y, player.r, easedVerticies[0].x,easedVerticies[0].y, easedVerticies[1].x,easedVerticies[1].y) ||
+              circleLineIntersect(player.pos.x,player.pos.y, player.r, easedVerticies[1].x,easedVerticies[1].y, easedVerticies[2].x,easedVerticies[2].y) ||
+              circleLineIntersect(player.pos.x,player.pos.y, player.r, easedVerticies[2].x,easedVerticies[2].y, easedVerticies[0].x,easedVerticies[0].y)){
       //return true;
       br = 0;
     }else{
@@ -283,17 +326,38 @@ class Layer{
     //image(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
     tree.render(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), layerWidth*easedDistance, layerHeight*easedDistance, easedDistance);
     
-    color c = (easedDistance > 1) ? color(0,0,255) : color(0);
+    color c = (easedDistance > 1) ? color(0,0,255) : color(100);
     drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY,easedDistance), (layerWidth*easedDistance)/2 - (ringWeight*easedDistance)/2, 16, ringWeight*easedDistance, c);
   }
 
 }
+class Player{
+  
+  PVector pos;
+  float r;
+  int speed;
+  
+  Player(){
+    pos = new PVector(width/2,height/2);
+    r = 20;
+    speed = 6;
+  }
+  
+  public void reset(){
+    pos.x = width/2;
+    pos.y = width/2;
+    r = 20;
+    speed = 6;
+  }
+}
 class Tree{
   Branch branches[];
+  int numBranches;
   int index = 0;
   float trunkLen;
-  Tree(int numLimbs, Branch trunk){
-    branches = new Branch[numLimbs];
+  Tree(int numBranchesIn, Branch trunk){
+    numBranches = numBranchesIn;
+    branches = new Branch[16];
     branches[index] = trunk;
     index ++;
     trunkLen = dist(lerp(trunk.verticies[0].x, trunk.verticies[1].x, 0.5), lerp(trunk.verticies[0].y, trunk.verticies[1].y, 0.5), trunk.verticies[2].x, trunk.verticies[2].y);
@@ -310,7 +374,7 @@ class Tree{
         side = int(random(2));
       }
       
-      if((side == 1 || side == 2) && index < branches.length){
+      if((side == 1 || side == 2) && index < numBranches){
         float angle = myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0])+random(HALF_PI);
         float len = dist(trunkIn.verticies[2].x, trunkIn.verticies[2].y, trunkIn.verticies[0].x, trunkIn.verticies[0].y) * 0.7;
         
@@ -336,7 +400,7 @@ class Tree{
       }
       
       
-      if((side == 0 || side == 2) && index < branches.length){
+      if((side == 0 || side == 2) && index < numBranches){
         
         float angle = myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-random(HALF_PI);
         float len = dist(trunkIn.verticies[2].x, trunkIn.verticies[2].y, trunkIn.verticies[1].x, trunkIn.verticies[1].y) * 0.7;
@@ -358,7 +422,7 @@ class Tree{
         
         }
       }
-      //if(index < branches.length){
+      //if(index < numBranches){
 //        if(side == 2){
 //          populateBranches(branches[index-1], int(random(3)));
 //          populateBranches(branches[index-2], int(random(3)));
@@ -370,7 +434,7 @@ class Tree{
   }
   
   void checkCollisions(){
-    for(int i = 0; i < branches.length; i++){
+    for(int i = 0; i < numBranches; i++){
       if(branches[i] != null){
         //branches[i].render(context);
         branches[i].playerOverlap();
@@ -379,7 +443,7 @@ class Tree{
   }
   
   void render(float oX, float oY, float w, float h, float easedDist){
-    for(int i = 0; i < branches.length; i++){
+    for(int i = 0; i < numBranches; i++){
       if(branches[i] != null){
         //branches[i].render(context);
         branches[i].setPos(oX, oY, w, h, easedDist);
@@ -430,10 +494,10 @@ class Game{
       }else{
         layer.updateDist(speed);
         if(layer.easedDistance >= 1 && !drawnPlayer){
-          drawPolygon(lerp(width/2, originX, 1), lerp(height/2, originY,1), width/2, 16, 6, color(255,0,0,128));
-          stroke(0);
-          fill(0,100);
-          ellipse(width/2,height/2,playerR*2,playerR*2);
+          noStroke();
+          fill(50,255);
+          ellipse(width/2,height/2,player.r*2,player.r*2);
+          drawPolygon(lerp(width/2, originX, 1), lerp(height/2, originY,1), width/2, 16, 6, color(0,0,0));
           drawnPlayer = true;
         }
         layer.render();

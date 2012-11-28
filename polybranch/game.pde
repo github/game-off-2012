@@ -40,10 +40,10 @@ class Game{
       }else{
         layer.updateDist(speed);
         if(layer.easedDistance >= 1 && !drawnPlayer){
-          drawPolygon(lerp(width/2, originX, 1), lerp(height/2, originY,1), width/2, 16, 6, color(255,0,0,128));
-          stroke(0);
-          fill(0,100);
-          ellipse(width/2,height/2,playerR*2,playerR*2);
+          noStroke();
+          fill(50,255);
+          ellipse(width/2,height/2,player.r*2,player.r*2);
+          drawPolygon(lerp(width/2, originX, 1), lerp(height/2, originY,1), width/2, 16, 6, color(0,0,0));
           drawnPlayer = true;
         }
         layer.render();

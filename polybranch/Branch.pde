@@ -5,6 +5,23 @@ class Branch{
   PVector[] easedVerticies = new PVector[3];
   color col;
   int hu,sat,br,alph;
+  
+  Branch(){
+    verticies[0] = new PVector(0,0);
+    verticies[1] = new PVector(0,0);
+    verticies[2] = new PVector(0,0);
+    
+    //initialized eased verticies as blanks
+    easedVerticies[0] = new PVector(0,0);
+    easedVerticies[1] = new PVector(0,0);
+    easedVerticies[2] = new PVector(0,0);
+    
+    hu = 0;
+    sat = 0;
+    br = (int)random(50,200);
+    alph = 255;
+  }
+  
   Branch(PVector a, PVector b, PVector c){
     verticies[0] = a;
     verticies[1] = b;
@@ -41,19 +58,17 @@ class Branch{
   
   //collision detection functions
   public void playerOverlap(){
-    if(dist(playerX,playerY,easedVerticies[0].x,easedVerticies[0].y) < playerR ||
-        dist(playerX,playerY,easedVerticies[1].x,easedVerticies[1].y) < playerR ||
-        dist(playerX,playerY,easedVerticies[2].x,easedVerticies[2].y) < playerR){
+    if(dist(player.pos.x,player.pos.y,easedVerticies[0].x,easedVerticies[0].y) < player.r ||
+        dist(player.pos.x,player.pos.y,easedVerticies[1].x,easedVerticies[1].y) < player.r ||
+        dist(player.pos.x,player.pos.y,easedVerticies[2].x,easedVerticies[2].y) < player.r){
       //return true;
       br = 0;
-      println("hit!!!");
-    }else if(PointInTriangle(playerX,playerY,easedVerticies[2].x,easedVerticies[2].y,easedVerticies[1].x,easedVerticies[1].y,easedVerticies[0].x,easedVerticies[0].y)){
+    }else if(PointInTriangle(player.pos.x,player.pos.y,easedVerticies[2].x,easedVerticies[2].y,easedVerticies[1].x,easedVerticies[1].y,easedVerticies[0].x,easedVerticies[0].y)){
       //return true;
       br = 0;
-      println("hit!!!");
-    }else if(circleLineIntersect(playerX,playerY, playerR, easedVerticies[0].x,easedVerticies[0].y, easedVerticies[1].x,easedVerticies[1].y) ||
-              circleLineIntersect(playerX,playerY, playerR, easedVerticies[1].x,easedVerticies[1].y, easedVerticies[2].x,easedVerticies[2].y) ||
-              circleLineIntersect(playerX,playerY, playerR, easedVerticies[2].x,easedVerticies[2].y, easedVerticies[0].x,easedVerticies[0].y)){
+    }else if(circleLineIntersect(player.pos.x,player.pos.y, player.r, easedVerticies[0].x,easedVerticies[0].y, easedVerticies[1].x,easedVerticies[1].y) ||
+              circleLineIntersect(player.pos.x,player.pos.y, player.r, easedVerticies[1].x,easedVerticies[1].y, easedVerticies[2].x,easedVerticies[2].y) ||
+              circleLineIntersect(player.pos.x,player.pos.y, player.r, easedVerticies[2].x,easedVerticies[2].y, easedVerticies[0].x,easedVerticies[0].y)){
       //return true;
       br = 0;
     }else{

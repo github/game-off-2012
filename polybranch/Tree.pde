@@ -1,9 +1,11 @@
 class Tree{
   Branch branches[];
+  int numBranches;
   int index = 0;
   float trunkLen;
-  Tree(int numLimbs, Branch trunk){
-    branches = new Branch[numLimbs];
+  Tree(int numBranchesIn, Branch trunk){
+    numBranches = numBranchesIn;
+    branches = new Branch[16];
     branches[index] = trunk;
     index ++;
     trunkLen = dist(lerp(trunk.verticies[0].x, trunk.verticies[1].x, 0.5), lerp(trunk.verticies[0].y, trunk.verticies[1].y, 0.5), trunk.verticies[2].x, trunk.verticies[2].y);
@@ -20,7 +22,7 @@ class Tree{
         side = int(random(2));
       }
       
-      if((side == 1 || side == 2) && index < branches.length){
+      if((side == 1 || side == 2) && index < numBranches){
         float angle = myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0])+random(HALF_PI);
         float len = dist(trunkIn.verticies[2].x, trunkIn.verticies[2].y, trunkIn.verticies[0].x, trunkIn.verticies[0].y) * 0.7;
         
@@ -46,7 +48,7 @@ class Tree{
       }
       
       
-      if((side == 0 || side == 2) && index < branches.length){
+      if((side == 0 || side == 2) && index < numBranches){
         
         float angle = myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-random(HALF_PI);
         float len = dist(trunkIn.verticies[2].x, trunkIn.verticies[2].y, trunkIn.verticies[1].x, trunkIn.verticies[1].y) * 0.7;
@@ -68,7 +70,7 @@ class Tree{
         
         }
       }
-      //if(index < branches.length){
+      //if(index < numBranches){
 //        if(side == 2){
 //          populateBranches(branches[index-1], int(random(3)));
 //          populateBranches(branches[index-2], int(random(3)));
@@ -80,7 +82,7 @@ class Tree{
   }
   
   void checkCollisions(){
-    for(int i = 0; i < branches.length; i++){
+    for(int i = 0; i < numBranches; i++){
       if(branches[i] != null){
         //branches[i].render(context);
         branches[i].playerOverlap();
@@ -89,7 +91,7 @@ class Tree{
   }
   
   void render(float oX, float oY, float w, float h, float easedDist){
-    for(int i = 0; i < branches.length; i++){
+    for(int i = 0; i < numBranches; i++){
       if(branches[i] != null){
         //branches[i].render(context);
         branches[i].setPos(oX, oY, w, h, easedDist);
