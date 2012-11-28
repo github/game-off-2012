@@ -13,7 +13,7 @@ a {
     font-size: 2em;
 }
 
-a:visited{
+a:visited {
 	text-decoration: none;
 	color: black;
 }
@@ -53,4 +53,7 @@ a.bigbtn:active {
 
 #credits h1{
 	width: 300px;
+}
+#cloneMenu {
+	background:green;
 }
