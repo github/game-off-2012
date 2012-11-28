@@ -203,6 +203,7 @@ function Tower(baseTile) {
     this.mouseup = function(e) {
         var dst = towerDragStartMouseDown;
         if (!dst) return;
+        if (this == dst) return;
         if (eng.money < 50) return;
         eng.money -= 50;
         var conn = new Tower_Connection(this, dst);
