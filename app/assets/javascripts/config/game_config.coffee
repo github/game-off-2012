@@ -1,5 +1,5 @@
 Config.cycle =
-  segments: 72
+  segments: 120
   outerRadius:
     base: 200
     minimum: 0
@@ -23,39 +23,38 @@ Config.player =
       maximum: 2.2
     angular:
       initial: 1
-      increase: 0.1
+      increase: 0.08
       maximum: 3
 
 Config.obstacles =
   width:
-    innerRadius: 20
-    outerRadius: 40
+    innerRadius: 25
+    outerRadius: 25
   height:
-    innerRadius: 20
+    innerRadius: 15
     outerRadius: 350
   changeWhere:
-    initial: 40
-    increaseBy: 3
+    initial: 60
+    increaseBy: 5
   intervals:
     atStart: 2000
     initial: 1500
-    reduceBy: 250
-    minimum: 500
+    reduceBy: 100
+    minimum: 750
   tweenDuration:
     inital: 100
     change: 3
     minimum: 10
   effect:
-    divisor: 1.2
-    threshold: 1
+    divisor: 1.15
+    threshold: 0.5
 
 Config.actions      =  ["Pull", "Push", "Fork", "Merge", "Pull", "Push", "Merge", "Pull", "Push"]
 Config.actionValues =
-  Pull:  30
-  Push:  30
+  Pull:  25
+  Push:  25
   Merge: 15
-  Fork:  15
-  MAX: 30
+  Fork:  18
 
-# calculated configurations
+Config.actionValues.MAX   = _.max(Config.actionValues)
 Config.cycle.centerRadius = (Config.cycle.outerRadius.base + Config.cycle.innerRadius.base) / 2 + 15

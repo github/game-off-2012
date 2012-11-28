@@ -1,7 +1,6 @@
 Crafty.c "Game",
 
   _delay: 1
-  _actionDelay: Config.obstacles.intervals.initial
   _actions: Config.actions
   time: 0
 
@@ -30,11 +29,12 @@ Crafty.c "Game",
 
   levelUp: ->
     Utils.showText(Config.gfx.cyclesTitles[@cycles])
+    @_actionDelay = Math.max(Config.obstacles.intervals.minimum, @_actionDelay - Config.obstacles.intervals.reduceBy)
     @attr(cycles: @cycles + 1)
 
-  rollActionIn: (delayOverride = @_actionDelay) ->
-    @delay((=> @currentAction = null), delayOverride * 3/4)
-    @delay((=> @rollAction()), delayOverride)
+  rollActionIn: ->
+    @delay((=> @currentAction = null), @_actionDelay * 3/4)
+    @delay((=> @rollAction()), @_actionDelay)
 
   rollAction: ->
     return if @stopped
@@ -50,4 +50,5 @@ Crafty.c "Game",
 
   reset: ->
     @attr(time: 0, cycles: 0, currentAction: "")
+    @_actionDelay = Config.obstacles.intervals.initial
     @
