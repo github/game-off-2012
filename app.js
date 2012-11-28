@@ -7,18 +7,42 @@ game.audio = {
   }
 };
 
+var Router = Backbone.Router.extend({
+
+  routes: {
+    "choose_song" : "choose_song",
+    "song/:name"    : "song",
+  },
+
+  choose_song: function() {
+    game.chooseSong();
+  },
+
+  song: function(name) {
+    game.loadSong(songs.where({filename: name})[0]);
+  }
+
+});
+
+game.router = new Router;
+
 game.mute = true;
 
 game.refreshView = function(view) {
   $('.container').html(game.activeView.el);
 };
 
-game.events.on("start", function() {
+game.chooseSong = function() {
+  game.router.navigate("choose_song");
   game.activeView.destroy();
   game.activeView = new SongsView({
     collection: songs
   });
   game.refreshView();
+};
+
+game.events.on("start", function() {
+  game.chooseSong();
 });
 
 game.events.on("howto", function() {
@@ -46,12 +70,17 @@ game.events.on("menu", function() {
   game.events.trigger('playSound', 'whip');
 });
 
-game.events.on("loadSong", function(song) {
+game.loadSong = function(song) {
+  game.router.navigate("song/" + song.get('filename'));
   game.activeView.destroy();
   game.activeView = new SongView({
     model : song
   });
   game.refreshView();
+}
+
+game.events.on("loadSong", function(song) {
+  game.loadSong(song);
 });
 
 game.events.on("playSound", function(sound) {
@@ -61,3 +90,5 @@ game.events.on("playSound", function(sound) {
 });
 
 game.events.trigger('menu');
+
+Backbone.history.start();

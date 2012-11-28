@@ -15,13 +15,6 @@ SongView = Backbone.View.extend({
     this.score = 0;
     this.combo = 0;
     this.sprites = new Array();
-    this.sprites = {
-      background_boxes_1 : newImg('img/background_boxes_1.png'),
-      background_boxes_2 : newImg('img/background_boxes_2.png'),
-      background_boxes_3 : newImg('img/background_boxes_3.png'),
-      background_conveyer_belts : newImg('img/background_conveyer_belts.png'),
-      marker: newImg('img/marker.png')
-    };
     this.queues = _.clone(this.model.get('queues'));
     this.active   = [[],[],[],[]];
     this.inactive = [[],[],[],[]];
@@ -140,7 +133,7 @@ SongView = Backbone.View.extend({
     this.context.fillStyle = color;
     _.each(type, function(queues){
       _.each(queues, function(marker){
-        this.context.drawImage(this.sprites.marker,
+        this.context.drawImage(markers['marker_clone'].img,
           (marker.type * 94 + 70), marker.top);
       }, this)
     }, this);
@@ -151,10 +144,9 @@ SongView = Backbone.View.extend({
     requestAnimationFrame(this.animate);
     this.clear();
 
-    this.context.drawImage(this.sprites.background_conveyer_belts,0,0);
-    this.context.drawImage(this.sprites.background_boxes_1,0,0);
-    this.context.drawImage(this.sprites.background_boxes_2,0,0);
-    this.context.drawImage(this.sprites.background_boxes_3,0,0);
+    _.each(sprites, function(sprite){
+      sprite.render(this.context);
+    }, this)
 
     this.context.fillStyle = 'gray';
     this.context.fillRect(70, 0, 20, this.canvas.height);
