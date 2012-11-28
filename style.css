@@ -1,0 +1,82 @@
+body {
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+	background-color: #f0f0ff;
+	color: black;
+	text-align: center;
+}
+a:link, a:visited {
+	color: #000;
+}
+a:active, a:hover {
+	color: #666;
+}
+p.header {
+	font-size: small;
+}
+p.header span {
+	font-weight: bold;
+}
+p.footer {
+	font-size: x-small;
+}
+div.content {
+	margin: auto;
+	width: 640px;
+	margin-top: 25px;
+}
+div.missing {
+	margin: auto;
+	position: relative;
+	top: 50%;
+	width: 193px;
+}
+div.missing a {
+	height: 63px;
+	position: relative;
+	top: -31px;
+}
+div.missing img {
+	border-width: 0px;
+}
+div#unityPlayer {
+	cursor: default;
+	height: 480px;
+	width: 640px;
+	border:1px solid #d0d0dd;
+	box-shadow: 0px 5px 20px #d0d0dd;
+}
+
+.under_text {
+	text-align: justify;
+}
+
+.under_text img {
+	border:1px solid #d0d0dd;
+}
+
+h2{
+	background: url(images/running-1.png) top left no-repeat;
+	font-size: 18px;
+	padding-top: 10px;
+	line-height: 20px;
+	padding-left: 35px;
+	border-bottom: 2px solid #d0d0dd;
+}
+
+h3 {
+	font-size: 16px;
+	margin-bottom: 5px;
+	margin-top: 30px;
+}
+
+.obstacle {
+	overflow: hidden;
+}
+
+.obstacle img {
+	float: left;
+}
+
+.obstacle .label {
+	margin-left: 140px;
+}
