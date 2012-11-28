@@ -1,8 +1,5 @@
 Config.cycle =
   segments: 72
-  colors:
-    base: "#2A678C"
-  centerRadius: null # calculated
   outerRadius:
     base: 200
     minimum: 0
@@ -16,8 +13,7 @@ Config.cycle =
     maximum: 180
 
 Config.player =
-  size: 8
-  color: "#ffffff"
+  size: 7
   initialAngle: 270
   radiusModification: -15
   speed:

@@ -1,6 +1,6 @@
 Crafty.c "Obstacle",
   _startRadius: 0
-  _baseColor: Config.cycle.colors.base
+  _baseColor: Config.gfx.track.baseColor
 
   init: ->
     @requires("2D, DOM, Color, Delay, Tweener")
@@ -27,7 +27,7 @@ Crafty.c "Obstacle",
   shiftRadius: (radiusChange)->
     @radius += radiusChange
     @radius = Math.min(@_max, Math.max(@_min, @radius))
-    change = 1 + ((Math.abs(radiusChange) / Config.actionValues.MAX) / 10)
+    change = 1 + ((Math.abs(radiusChange) / Config.actionValues.MAX) / Config.gfx.track.hueChangeDivisor)
 
     coords = Utils.polarCnv(@radius, @angle)
     setTimeout((=> @color(Utils.change_hue(@_color, change))), 1)

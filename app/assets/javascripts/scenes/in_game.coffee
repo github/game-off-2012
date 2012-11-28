@@ -15,7 +15,7 @@ Crafty.scene("in_game", ->
     gameover()
   )
 
-  track  = Crafty.e("Track").player(player).Track().color(Config.cycle.colors.base)
+  track  = Crafty.e("Track").player(player).Track().color(Config.gfx.track.baseColor)
 
   Crafty.e("Mute")
 

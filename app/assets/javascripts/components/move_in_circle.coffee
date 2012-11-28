@@ -21,7 +21,7 @@ Crafty.c "MoveInCircle",
     @origin("center")
     @disableControl()
     @enableControl()
-    @color(Config.player.color)
+    @color(Config.gfx.player.color)
     @attr(h:Config.player.size, w:Config.player.size)
 
 
