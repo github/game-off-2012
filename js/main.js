@@ -214,12 +214,14 @@
       mit.ascend();
     }
 
+    e.preventDefault();
+
   }, false);
 
   window.addEventListener('keyup', function(e) {
 
     mit.descend();
-
+    e.preventDefault();
   }, false);
 
 
