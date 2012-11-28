@@ -25,12 +25,16 @@ function applyAttack(attackTemplate) {
         return;
 
     target.attr.hp -= damage;    
+    baseAttacker.attr.hitcount++;
 
     var newAttackType = baseAttacker.attr.attack_types[attackTemplate.currentAttPos + 1];
 
     if(newAttackType)
     {
-        startAttack(newAttackType, attackTemplate);
+        attackTemplate.attackType = newAttackType;
+        attackTemplate.attacker = attackTemplate.target;
+        attackTemplate.currentAttPos++;
+        startAttack(attackTemplate);
     }
 
     if(target.attr.hp < 0)
@@ -47,10 +51,15 @@ function startAttack(attackTemplate) {
     if(!assertDefined(attackTemplate))
         return;
 
+    if(!assertDefined(attackTemplate.attacker))
+        return;
+
     var eng = attackTemplate.attacker.base.rootNode;
     var attackType = attackTemplate.attackType;
 
-    attackTemplate.target = attackTemplate.attacker.attr.target_Strategy.run(attackTemplate.attacker);
+    var realAttacker = attackTemplate.baseAttacker;
+    var prevTarget = attackTemplate.target;
+    attackTemplate.target = realAttacker.attr.target_Strategy.run(realAttacker, prevTarget);
 
     if(attackTemplate.target)
     {
@@ -91,14 +100,15 @@ var allAttackTypes = {
             this.attackTemplate = attackTemplate;
 
             var attacker = attackTemplate.attacker;
+            var realAttacker = attackTemplate.baseAttacker;
             var target = attackTemplate.target;
             var damage = attackTemplate.damage;
 
-            this.color = getRealType(attacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
+            this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
             
             //AlphaDecay destroys us
             var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
-            this.base.addObject(new AlphaDecay(damageToTime(attacker.attr.damage), 1, 0));
+            this.base.addObject(new AlphaDecay(damageToTime(realAttacker.attr.damage), 1, 0));
 
             this.base.addObject(line);
 
@@ -128,6 +138,7 @@ var allAttackTypes = {
             this.base = new baseObj(this, 15);         
             this.attackTemplate = attackTemplate;
 
+            var realAttacker = attackTemplate.baseAttacker;
             var attacker = attackTemplate.attacker;
             var target = attackTemplate.target;
             var damage = attackTemplate.damage;
@@ -143,7 +154,9 @@ var allAttackTypes = {
             var us = this;
             function onImpact()
             {
-                applyAttack(attackTemplate);
+                //A hackish way to check if both still exist
+                if(target.base.rootNode == attacker.base.rootNode)
+                    applyAttack(attackTemplate);
                 us.base.destroySelf();
             }
 
@@ -164,39 +177,6 @@ var allAttackTypes = {
         };
     },
     /*
-    Bullet: function bullet() {
-        this.bullet_speed = 100;
-        this.run = function (tower, target) {
-            var bullet = new Circle(tower.tPos.getCenter(), 5, "White", "Orange", 15);
-
-            var dis = tower.tPos.getCenter();
-            dis.sub(target.tPos.getCenter());
-            dis = Math.sqrt(dis.magSq());
-
-            bullet.base.addObject(
-                    new MotionDelay(tower.tPos.getCenter(), target.tPos.getCenter(),
-                                    dis / this.bullet_speed, 
-                                        function hit()
-                                        {
-                                            applyDamage(target, tower, tower.attr.damage);
-                                            bullet.base.destroySelf();
-                                        }
-                                    )
-                                 );
-            
-            tower.base.rootNode.base.addObject(bullet);
-
-            return target;
-        },
-        this.draw = function (pen, tPos) {
-            //Draw text
-            pen.fillStyle = "#000000";
-            pen.font = tPos.h + "px arial";
-            pen.textAlign = 'left';
-
-            ink.text(tPos.x, tPos.y, "B", pen);
-        }
-    },
     Aoe: function area_of_effect() {
         this.radius = 15;
         this.percent_damage = 1;

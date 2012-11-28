@@ -36,9 +36,12 @@
 
 
 function findClosest(engine, type, target, maxDistance) {
-    if (!assertDefined("findClosest", engine, type, target))
+    if (!engine.curQuadTree) //I want to crash... but this is legitimate.
         return null;
 
+    if (!assertDefined("findClosest", engine, type, target))
+        return null;
+    
     if (!engine.curQuadTree.objTrees[type])
         return null;
 
@@ -180,7 +183,7 @@ function findClosestGeneric(quadtree, array, targetFunction, targetDistance, min
     for (var id in quadtree.ids) {
         returnedObj = array[id];
 
-        if (!returnedObj) {
+        if (!returnedObj || returnedObj.hidden) {
             continue; //THIS SHOULDN'T HAPPEN! IT IS EVIDENCE OF A BUG!
         }
 

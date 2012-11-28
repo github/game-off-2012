@@ -47,9 +47,9 @@ function Towerbar(pos) {
 	    attackCombinations.push(attackTypes);
 	}
 
-	//var superCombo = { 0: allAttackTypes.Aoe, 1: allAttackTypes.Aoe };
+	var superCombo = { 0: allAttackTypes.Bullet, 1: allAttackTypes.Normal };
 
-	//attackCombinations.push(superCombo);
+	attackCombinations.push(superCombo);
 
 	var buttonW = 100;
     //Scaled exactly to 150 by 674...
