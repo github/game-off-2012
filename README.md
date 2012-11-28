@@ -64,3 +64,34 @@ They are an evolved form of watchers: they throw forks. The forks are poisonned,
 
 ### Clones
 
+![alt text](http://sdrdis.github.com/hotfix/images/clones.png "Clones")
+
+Buy extra clones of Hotfix to continue playing when you are hit or are falling.
+
+### Time machine
+
+![alt text](http://sdrdis.github.com/hotfix/images/time-machine.png "Time machine")
+
+Running out of time ? The time machine allows you to slow down time. Press S to activate (will only work if you bought the feature).
+
+### Extra jumps
+
+![alt text](http://sdrdis.github.com/hotfix/images/extra-jumps.png "Extra jumps")
+
+It is always convenient to be able to jump again when you are falling.
+
+### Magnet
+
+![alt text](http://sdrdis.github.com/hotfix/images/magnet.png "Magnet")
+
+The magnet pull commits towards you, allowing you to earn more of them.
+
+## Credits
+
+### Developper / designer / author of Hotfix
+
+[https://twitter.com/sdrdis Sébastien Drouyer]
+
+### Frameworks
+
+Using free versions of [http://unity3d.com/ Unity3d] and the [http://www.wyrmtale.com/orthello Orthello framework].
