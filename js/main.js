@@ -274,7 +274,7 @@
     // Draw Digs (holds forks)
     // I am fine without Digs, but Kushagra
     // just WANTS me to do this extra work :/
-    mit.ForkUtils.drawDigs(ctx);
+    // mit.ForkUtils.drawDigs(ctx);
 
     // Draw Grass on Main Canvas
     mit.Backgrounds.drawGrass(ctx);

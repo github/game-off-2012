@@ -44,19 +44,19 @@
 
 
       // Back Trees
-      this.back_trees_img = new Image();
-      this.back_trees_img.src = 'img/back_trees.png';
+      this.backtree_img = new Image();
+      this.backtree_img.src = 'img/back_trees.png';
 
-      this.back_trees_img.width = mit.W;
-      this.back_trees_img.height = mit.H;
+      this.backtree_img.width = mit.W;
+      this.backtree_img.height = mit.H;
 
 
       // Front Trees
-      this.front_trees_img = new Image();
-      this.front_trees_img.src = 'img/front_trees.png';
+      this.fronttree_img = new Image();
+      this.fronttree_img.src = 'img/front_trees.png';
 
-      this.front_trees_img.width = mit.W;
-      this.front_trees_img.height = mit.H;
+      this.fronttree_img.width = mit.W;
+      this.fronttree_img.height = mit.H;
 
 
       // Ground
@@ -81,68 +81,202 @@
 
 
       // Combined BG Image
-      this.bg_combined_img = new Image();
-      this.bg_combined_img.src = 'img/bg_combined.png';
+      this.combined_bg_img = new Image();
+      this.combined_bg_img.src = 'img/bg_combined.png';
     },
 
     drawClouds: function(ctx) {
-      ctx.drawImage(this.cloud_img, this.cloud_bg_vx, 0, mit.W, mit.H);
-      ctx.drawImage(this.cloud_img, mit.W + this.cloud_bg_vx, 0, mit.W, mit.H);
+      var cloud_bg_vx_abs = Math.abs(this.cloud_bg_vx);
+
+      ctx.drawImage(
+        this.cloud_img,
+
+        cloud_bg_vx_abs,
+        0,
+        mit.W + this.cloud_bg_vx,
+        mit.H,
+
+        0, 0,
+        mit.W + this.cloud_bg_vx,
+        mit.H
+      );
+
+      ctx.drawImage(
+        this.cloud_img,
+
+        0, 0,
+        cloud_bg_vx_abs,
+        mit.H,
+
+        mit.W + this.cloud_bg_vx,
+        0,
+        cloud_bg_vx_abs,
+        mit.H
+      );
+
+      this.cloud_bg_vx -= this.cloud_bg_move_speed;
 
       if (-this.cloud_bg_vx >= mit.W) {
         this.cloud_bg_vx = 0;
       }
 
-      this.cloud_bg_vx -= this.cloud_bg_move_speed;
+      return;
     },
 
     drawBackTrees: function(ctx) {
-      ctx.drawImage(this.back_trees_img, this.backtree_bg_vx, 0, mit.W, mit.H);
-      ctx.drawImage(this.back_trees_img, mit.W + this.backtree_bg_vx, 0, mit.W, mit.H);
+      var backtree_bg_vx_abs = Math.abs(this.backtree_bg_vx);
+
+      ctx.drawImage(
+        this.backtree_img,
+
+        backtree_bg_vx_abs,
+        0,
+        mit.W + this.backtree_bg_vx,
+        mit.H,
+
+        0, 0,
+        mit.W + this.backtree_bg_vx,
+        mit.H
+      );
+
+      ctx.drawImage(
+        this.backtree_img,
+
+        0, 0,
+        backtree_bg_vx_abs,
+        mit.H,
+
+        mit.W + this.backtree_bg_vx,
+        0,
+        backtree_bg_vx_abs,
+        mit.H
+      );
+
+      if (mit.game_started)
+        this.backtree_bg_vx -= this.backtree_bg_move_speed * this.common_bg_speed;
 
       if (-this.backtree_bg_vx >= mit.W) {
         this.backtree_bg_vx = 0;
       }
 
-      if (mit.game_started)
-        this.backtree_bg_vx -= this.backtree_bg_move_speed * this.common_bg_speed;
+      return;
     },
 
     drawFrontTrees: function(ctx) {
-      ctx.drawImage(this.front_trees_img, this.fronttree_bg_vx, 0, mit.W, mit.H);
-      ctx.drawImage(this.front_trees_img, mit.W + this.fronttree_bg_vx, 0, mit.W, mit.H);
+      var fronttree_bg_vx_abs = Math.abs(this.fronttree_bg_vx);
+
+      ctx.drawImage(
+        this.fronttree_img,
+
+        fronttree_bg_vx_abs,
+        0,
+        mit.W + this.fronttree_bg_vx,
+        mit.H,
+
+        0, 0,
+        mit.W + this.fronttree_bg_vx,
+        mit.H
+      );
+
+      ctx.drawImage(
+        this.fronttree_img,
+
+        0, 0,
+        fronttree_bg_vx_abs,
+        mit.H,
+
+        mit.W + this.fronttree_bg_vx,
+        0,
+        fronttree_bg_vx_abs,
+        mit.H
+      );
+
+      if (mit.game_started)
+        this.fronttree_bg_vx -= this.fronttree_bg_move_speed * this.common_bg_speed;
 
       if (-this.fronttree_bg_vx >= mit.W) {
         this.fronttree_bg_vx = 0;
       }
 
-      if (mit.game_started)
-        this.fronttree_bg_vx -= this.fronttree_bg_move_speed * this.common_bg_speed;
+      return;
     },
 
     drawGround: function(ctx) {
-      ctx.drawImage(this.ground_img, this.ground_bg_vx, 0, mit.W, mit.H);
-      ctx.drawImage(this.ground_img, mit.W + this.ground_bg_vx, 0, mit.W, mit.H);
+      var ground_bg_vx_abs = Math.abs(this.ground_bg_vx);
+
+      ctx.drawImage(
+        this.ground_img,
+
+        ground_bg_vx_abs,
+        0,
+        mit.W + this.ground_bg_vx,
+        mit.H,
+
+        0, 0,
+        mit.W + this.ground_bg_vx,
+        mit.H
+      );
+
+      ctx.drawImage(
+        this.ground_img,
+
+        0, 0,
+        ground_bg_vx_abs,
+        mit.H,
+
+        mit.W + this.ground_bg_vx,
+        0,
+        ground_bg_vx_abs,
+        mit.H
+      );
+
+      if (mit.game_started)
+        this.ground_bg_vx -= this.ground_bg_move_speed * this.common_bg_speed;
 
       if (-this.ground_bg_vx >= mit.W) {
         this.ground_bg_vx = 0;
       }
 
-      if (mit.game_started)
-        this.ground_bg_vx -= this.ground_bg_move_speed * this.common_bg_speed;
+      return;
     },
 
     drawGrass: function(ctx) {
+      var grass_bg_vx_abs = Math.abs(this.grass_bg_vx);
 
-      ctx.drawImage(this.grass_img, this.grass_bg_vx, 0, mit.W, mit.H);
-      ctx.drawImage(this.grass_img, mit.W + this.grass_bg_vx, 0, mit.W, mit.H);
+      ctx.drawImage(
+        this.grass_img,
+
+        grass_bg_vx_abs,
+        0,
+        mit.W + this.grass_bg_vx,
+        mit.H,
+
+        0, 0,
+        mit.W + this.grass_bg_vx,
+        mit.H
+      );
+
+      ctx.drawImage(
+        this.grass_img,
+
+        0, 0,
+        grass_bg_vx_abs,
+        mit.H,
+
+        mit.W + this.grass_bg_vx,
+        0,
+        grass_bg_vx_abs,
+        mit.H
+      );
+
+      if (mit.game_started)
+        this.grass_bg_vx -= this.grass_bg_move_speed * this.common_bg_speed;
 
       if (-this.grass_bg_vx >= mit.W) {
         this.grass_bg_vx = 0;
       }
 
-      if (mit.game_started)
-        this.grass_bg_vx -= this.grass_bg_move_speed * this.common_bg_speed;
+      return;
     },
 
     drawInitLog: function(ctx) {
@@ -157,15 +291,40 @@
     },
 
     drawCombinedBG: function(ctx) {
-      ctx.drawImage(this.bg_combined_img, this.ground_bg_vx, 0, mit.W, mit.H);
-      ctx.drawImage(this.bg_combined_img, mit.W + this.ground_bg_vx, 0, mit.W, mit.H);
+      var combined_bg_vx_abs = Math.abs(this.combined_bg_vx);
+
+      ctx.drawImage(
+        this.combined_bg_img,
+
+        combined_bg_vx_abs,
+        0,
+        mit.W + this.combined_bg_vx,
+        mit.H,
+
+        0, 0,
+        mit.W + this.combined_bg_vx,
+        mit.H
+      );
+
+      ctx.drawImage(
+        this.combined_bg_img,
+
+        0, 0,
+        combined_bg_vx_abs,
+        mit.H,
+
+        mit.W + this.combined_bg_vx,
+        0,
+        combined_bg_vx_abs,
+        mit.H
+      );
+
+      if (mit.game_started)
+        this.combined_bg_vx -= this.combined_bg_move_speed * this.common_bg_speed;
 
       if (-this.combined_bg_vx >= mit.W) {
         this.combined_bg_vx = 0;
       }
-
-      if (mit.game_started)
-        this.combined_bg_vx -= this.combined_bg_move_speed * this.common_bg_speed;
     },
 
     // Draw Awesome Backgrounds

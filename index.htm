@@ -285,17 +285,21 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
   <script src="js/loader.js"></script>
   <script src="js/main.js"></script>
 
-  <script type="text/javascript">
-// if theres adblock hide gads container
-setTimeout(function() {
+  <script>
+  // if theres adblock hide gads container
+  setTimeout(function() {
 
-  if (typeof window.google_ad_block === 'undefined')
-    $('.gads').remove();
+    if (typeof window.google_ad_block === 'undefined')
+      $('.gads').remove();
 
-}, 1000);
+  }, 1000);
+
+  if (location.hostname.indexOf('localhost') === 0) {
+    $('.gads, #disqus_thread').remove();
+  }
   </script>
 
-<script type="text/javascript">
+<script>
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-36603798-1']);
