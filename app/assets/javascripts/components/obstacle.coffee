@@ -27,12 +27,11 @@ Crafty.c "Obstacle",
   shiftRadius: (radiusChange)->
     @radius += radiusChange
     @radius = Math.min(@_max, Math.max(@_min, @radius))
+    change = 1 + ((Math.abs(radiusChange) / Config.actionValues.MAX) / 10)
 
     coords = Utils.polarCnv(@radius, @angle)
-    @color(Utils.increase_brightness(@_baseColor, Math.abs(radiusChange)))
+    setTimeout((=> @color(Utils.change_hue(@_color, change))), 1)
     @addTween({x:coords.x, y:coords.y}, 'easeInOutCubic', @_speed)
-    clearTimeout(@timeout) if @timeout
-    @timeout = setTimeout((=> @color(@_baseColor)), @_speed * 20)
 
   upgrade: ->
     @_speed -= Config.obstacles.tweenDuration.change

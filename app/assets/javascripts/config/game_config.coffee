@@ -59,6 +59,7 @@ Config.actionValues =
   Push:  30
   Merge: 15
   Fork:  15
+  MAX: 30
 
 # calculated configurations
 Config.cycle.centerRadius = (Config.cycle.outerRadius.base + Config.cycle.innerRadius.base) / 2 + 15
