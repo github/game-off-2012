@@ -24,7 +24,7 @@ Crafty.c("Moveable", {
         this._lastFrame = 0;
         this._moving = false;
 
-        // This is where the magic happens.  On each frame, get the elapsed time
+    // This is where the magic happens.  On each frame, get the elapsed time
     // and move the character towards its destination
     this.bind("EnterFrame",function(e) {
             if(!this._moving) return false;
@@ -49,6 +49,10 @@ Crafty.c("Moveable", {
                 this.x = this._destX;
                 this.y = this._destY;
             }
+
+            // If we're done moving, players can check to see if they're done with the level
+            if(this._moving == false)
+                this.trigger("CheckForFinish", [this.x, this.y]);
         });
     },
   
@@ -83,9 +87,7 @@ Crafty.c("Moveable", {
       
         // Start timing frames
         this._lastFrame = new Date().getTime();
-        
-        this.checkForFinish(this._destX, this._destY);
-        
+
         // Start moving
         this._moving = true;
         return true;
@@ -101,16 +103,6 @@ Crafty.c("Moveable", {
       }
       collisionDetector.destroy();
       return true;
-    },
-    
-    // Check for finish tile
-    checkForFinish: function(xLoc, yLoc) {
-      var collisionDetector = Crafty.e("2D, Collision").attr({ x: xLoc, y: yLoc, w: 1, h: 1 });
-      if(collisionDetector.hit("FinishableBox")) {
-        collisionDetector.destroy();
-        Crafty.scene(gameBoard.getMap()); //when everything is loaded, run the main scene
-      }
-      collisionDetector.destroy();
     },
 
     // Normalize direction

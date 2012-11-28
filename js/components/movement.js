@@ -81,6 +81,11 @@ Crafty.c("Movement", {
                 this._facing = this._directions[this._directions.length - 1];
             }
         });
+
+        // Clears the key stack
+        this.bind("StopMovement",function(e) {
+            this._directions = [];
+        });
     },
   
     applyTrigger: function(action) {

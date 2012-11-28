@@ -56,6 +56,15 @@ Crafty.c("Phil", {
                     if(!direction[0] && !direction[1]) {
                         this.stop();
                     }
+                })
+                // Check for finish tile
+                .bind("CheckForFinish", function(location) {
+                    var collisionDetector = Crafty.e("2D, Collision").attr({ x: location[0], y: location[1], w: 1, h: 1 });
+                    if(collisionDetector.hit("FinishableBox")) {
+                        collisionDetector.destroy();
+                        Crafty.scene(gameBoard.getMap()); //when everything is loaded, run the main scene
+                    }
+                    collisionDetector.destroy();
                 });
         
         return this;
