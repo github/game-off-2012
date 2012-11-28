@@ -79,7 +79,7 @@
     image[src].onload = function() {
       ++counter;
 
-      var percent = Math.floor(((counter + audio.length)/size*100));
+      var percent = Math.floor(((counter)/size*100));
       loading.style.width = percent + "%";
       loadText.innerHTML = "Loading... " + percent + "%";
       if(percent >= 100)
