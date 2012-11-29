@@ -115,8 +115,14 @@
     reflow: function(ctx) {
 
       if (!this.cur_pakia) {
+        // cur_pakia is one thats currently visible
+        // that is, in the air!
+
         // Object by Reference!
         this.cur_pakia = this.pakias[utils.randomNumber(0,2)];
+
+        this.cur_pakia.generateRandomPos();
+        this.cur_pakia.generateRandomVelocity();
       }
 
       this.cur_pakia.vy += this.cur_pakia.gravity;
@@ -133,7 +139,14 @@
         this.cur_pakia.generateRandomPos();
 
         this.cur_pakia.generateRandomVelocity();
-        
+
+        // Important! since JS's game's all about
+        // objects by reference.
+        if (this.cur_pakia.has_stuck)
+          delete this.cur_pakia.has_stuck;
+
+        // wont set the referenced pointer to
+        // false, so we're safe :D
         this.cur_pakia = false;
       }
     },

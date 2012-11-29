@@ -233,7 +233,7 @@
         ground_bg_vx_abs,
         mit.H
       );
-      
+
       if (mit.game_started)
         this.ground_bg_vx -= this.ground_bg_move_speed * this.common_bg_speed;
 
@@ -346,7 +346,7 @@
       }
 
 
-      if (this.fps > 55) {
+      if (this.fps > 56) {
 
         // Draw Linear Gradient for real/pure BG (sky/water)
         ctx.save();
