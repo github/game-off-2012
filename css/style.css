@@ -63,20 +63,20 @@
 	z-index: 100;
 }
 
-#pause, #game-over {
+#pause, #game-over, #clear {
 	position: absolute;
 	display: none;
 	z-index: 100;
 }
 
-#game-over {
+#game-over, #clear {
 	color : red;
 	font-size: 30px;
 	top: 210px;
 	left: 300px;
 }
 
-#go {
+#go, #clear {
 	display: none;
 }
 
@@ -84,4 +84,8 @@
 #pause {
 	top : 120px;
 	left: 300px;
+}
+
+#clear {
+	color : blue;
 }

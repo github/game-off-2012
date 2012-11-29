@@ -15,6 +15,7 @@ SongView = Backbone.View.extend({
     this.score = 0;
     this.combo = 0;
     this.gameOver = false;
+    this.finished = false;
     this.sprites = new Array();
     this.queues = _.clone(this.model.get('queues'));
     this.active   = [[],[],[],[]];
@@ -26,6 +27,7 @@ SongView = Backbone.View.extend({
     $(document).bind('keyup', this.handleKeyUp);
     this.nextInterval = window.setInterval(this.getNext, 10);
     this.moveInterval = window.setInterval(this.moveMarkers, 1000/224);
+    this.endInterval = window.setInterval(_.bind(this.checkEnd, this), 1000);
     this.animate();
     window.setTimeout(_.bind(function(){
       this.$el.find('#ready').hide();
@@ -60,13 +62,27 @@ SongView = Backbone.View.extend({
     }
   },
 
+  clearAllIntervals: function() {
+    window.clearInterval(this.nextInterval);
+    window.clearInterval(this.moveInterval);
+    window.clearInterval(this.endInterval);
+  },
+
   checkGameOver: function () {
     if (this.score <= -2500){
       this.gameOver = true;
-      this.audio.pause()
+      this.audio.pause();
+      this.clearAllIntervals();
       this.$el.find('#game-over').show();
-      window.clearInterval(this.nextInterval);
-      window.clearInterval(this.moveInterval);
+    }
+  },
+
+  checkEnd: function () {
+    if (this.getTime() >= this.model.get('end')){
+      this.finished = true;
+      this.audio.pause();
+      this.clearAllIntervals();
+      this.$el.find('#clear').show();
     }
   },
 
@@ -75,7 +91,6 @@ SongView = Backbone.View.extend({
       _.each(this.active, function(queue){
         _.each(queue, function(marker, i){
           if(marker.top > 440){
-            console.log(marker.top)
             this.missed.push(queue.splice(i, 1));
             this.score -= 500;
             this.checkGameOver();
@@ -135,7 +150,7 @@ SongView = Backbone.View.extend({
   },
 
   pause: function () {
-    if(!this.gameOver){
+    if(!this.gameOver && !this.finished){
       this.$el.find('#pause').toggle();
       if(this.audio.paused){
         this.audio.play();
@@ -162,7 +177,7 @@ SongView = Backbone.View.extend({
 
   animate: function() {
 
-    if(!this.gameOver){
+    if(!this.gameOver && !this.finished){
       requestAnimationFrame(this.animate);
 
       this.clear();
