@@ -119,6 +119,9 @@
     mit.BranchUtils.branches = [];
     // Nuke all collectibles
     mit.CollectibleUtils.collecs = [];
+    // Nuke all pakias and cur_pakia
+    mit.PakiaUtils.pakias = [];
+    mit.PakiaUtils.cur_pakia = false;
   };
 
   ui.start_game.on('mousedown', function() {
