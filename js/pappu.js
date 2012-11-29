@@ -27,26 +27,25 @@
       this.sound = document.getElementById("flap");
 
       // Initializing Pappu Sprite, lolzzz..!
-      this.sprite = new Image();
-      this.sprite.src = 'img/pappu.png';
+      // this.sprite = new Image();
+      // this.sprite.src = 'img/pappu.png';
+      this.sprite = mit.image.pappu;
 
-      this.sprite.onload = function() {
-        //pappu.w = pappu.sprite.width;
-        mit.Pappu.w = mit.Pappu.sprite.width;
-        mit.Pappu.h = 60;
+      //pappu.w = pappu.sprite.width;
+      mit.Pappu.w = mit.Pappu.sprite.width;
+      mit.Pappu.h = 60;
 
-        // Sprite Frame Count
-        mit.Pappu.max_fly_frame_count = 8;
-        mit.Pappu.max_fly_frame_count--;
+      // Sprite Frame Count
+      mit.Pappu.max_fly_frame_count = 8;
+      mit.Pappu.max_fly_frame_count--;
 
-        // Sprite Frame Change Speed.
-        // This will affect the flap speed.
-        // 1.6 is the perfect value!
-        mit.Pappu.change_per_frame = 1.6;
+      // Sprite Frame Change Speed.
+      // This will affect the flap speed.
+      // 1.6 is the perfect value!
+      mit.Pappu.change_per_frame = 1.6;
 
-        // X Pos
-        mit.Pappu.x = 33;
-      };
+      // X Pos
+      mit.Pappu.x = 33;
     },
 
     undoInvincible: function() {

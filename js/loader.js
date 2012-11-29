@@ -30,7 +30,6 @@
 
   var images = {
     angry_pakia : "img/angry_pakia.png",
-    apple : "img/star.png",
     backtrees : "img/back_trees.png",
     berries : "img/berries.png",
     bg_combined: "img/bg_combined.png",
@@ -51,7 +50,8 @@
     plank_mid : "img/plank_mid.png",
     plank_top : "img/plank_top.png",
     sad_pakia : "img/sad_pakia.png",
-    stand : "img/stand.png"
+    stand : "img/stand.png",
+    star : "img/star.png"
   };
 
   mit.image = {};

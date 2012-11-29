@@ -109,14 +109,17 @@
     },
 
     init: function() {
-      this.coin_img = new Image();
-      this.coin_img.src = 'img/coins.png';
+      // this.coin_img = new Image();
+      // this.coin_img.src = 'img/coins.png';
+      this.coin_img = mit.image.coins;
 
-      this.clone_img = new Image();
-      this.clone_img.src = 'img/berries.png';
+      // this.clone_img = new Image();
+      // this.clone_img.src = 'img/berries.png';
+      this.clone_img = mit.image.berries;
 
-      this.invincible_img = new Image();
-      this.invincible_img.src = 'img/star.png';
+      // this.invincible_img = new Image();
+      // this.invincible_img.src = 'img/star.png';
+      this.invincible_img = mit.image.star;
     },
 
     getCoinSpritePos: function(sub_type) {

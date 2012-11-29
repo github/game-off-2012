@@ -75,14 +75,17 @@
 
       // Loading All Pakia Images
 
-      this.pakia_img.sad = new Image();
-      this.pakia_img.sad.src = 'img/sad_pakia.png';
+      // this.pakia_img.sad = new Image();
+      // this.pakia_img.sad.src = 'img/sad_pakia.png';
+      this.pakia_img.sad = mit.image.sad_pakia;
 
-      this.pakia_img.happy = new Image();
-      this.pakia_img.happy.src = 'img/happy_pakia.png';
+      // this.pakia_img.happy = new Image();
+      // this.pakia_img.happy.src = 'img/happy_pakia.png';
+      this.pakia_img.happy = mit.image.happy_pakia;
 
-      this.pakia_img.angry = new Image();
-      this.pakia_img.angry.src = 'img/angry_pakia.png';
+      // this.pakia_img.angry = new Image();
+      // this.pakia_img.angry.src = 'img/angry_pakia.png';
+      this.pakia_img.angry = mit.image.angry_pakia;
     },
 
     createPakias: function() {

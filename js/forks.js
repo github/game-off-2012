@@ -74,16 +74,18 @@
       // Loading Images
 
       // Fork handle
-      this.fork_img = new Image();
-      this.fork_img.src = 'img/fork_handle.png';
+      // this.fork_img = new Image();
+      // this.fork_img.src = 'img/fork_handle.png';
+      this.fork_img = mit.image.fork_handle;
 
       // Fork Head
-      this.fork_head_img = new Image();
-      this.fork_head_img.src = 'img/fork_head.png';
+      // this.fork_head_img = new Image();
+      // this.fork_head_img.src = 'img/fork_head.png';
+      this.fork_head_img = mit.image.fork_head;
 
       // Dig Image
-      this.dig_img = new Image();
-      this.dig_img.src = 'img/dig.png';
+      // this.dig_img = new Image();
+      // this.dig_img.src = 'img/dig.png';
     },
 
     /*

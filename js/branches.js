@@ -64,8 +64,10 @@
 
     init: function() {
       // Load Images
-      this.branch_img = new Image();
-      this.branch_img.src = 'img/branch.png';
+      // this.branch_img = new Image();
+      // this.branch_img.src = 'img/branch.png';
+
+      this.branch_img = mit.image.branch;
     },
 
     /*

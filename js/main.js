@@ -269,6 +269,8 @@ mit.main = function() {
     ui.tweet.html('tweet score');
     ui.fb.html('post on fb');
 
+    mit.descend();
+
     // Stop background
     mit.Backgrounds.common_bg_speed = 0;
     mit.Backgrounds.ground_bg_move_speed = 0;
