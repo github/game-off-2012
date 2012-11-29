@@ -59,7 +59,9 @@ game.events.on("highscores", function() {
 
 game.events.on("credits", function() {
   game.activeView.destroy();
-  game.activeView = new CreditsView();
+  game.activeView = new CreditsView({
+    collection: songs
+  });
   game.refreshView();
 });
 
