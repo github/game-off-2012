@@ -33,13 +33,13 @@ Sprite = Backbone.Model.extend({
   render : function(context) {
     if(this.get('frames').length) {
       var f = this.get('frames')[this.current_frame];
-      context.drawImage(
-        this.img,
-        f[0], f[1], f[2], f[3],
-        this.get('destX'), this.get('destY'), f[2], f[3]
-      );
+	  context.drawImage(
+		this.img,
+		f[0], f[1], f[2], f[3],
+		this.get('destX'), this.get('destY'), f[2], f[3]
+	  );
     } else {
-      context.drawImage(this.img, this.get('srcX'), this.get('srcX'));
+      context.drawImage(this.img, this.get('destX'), this.get('destY'));
     }
   }
 });
