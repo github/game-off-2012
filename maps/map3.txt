@@ -1,0 +1,36 @@
+16,16
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXB--S--R
+XXXXXXXXXXX---XX
+XXXXXXXXXXXb-rXX
+XXXXXXXXXX----XX
+XXXXXXXXXX-2-1XX
+XXXXXXXXXX-2X1XX
+XXXXXXXXXX-2X1XX
+XXXXXXXXXXRWFWBX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+METADATA
+title: Level 4: Colored Tiles!
+nextMap: 4
