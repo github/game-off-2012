@@ -1,3 +1,6 @@
+/* @pjs globalKeyEvents=true; 
+ */
+
 PVector[] tris = {
       new PVector(200,200),
       new PVector(400,200),
@@ -40,7 +43,7 @@ void setup(){
 }
 
 void draw(){
-  println(g.score);
+  println("LEVEL "+g.level+"  SCORE:"+g.score+"  SPEED "+g.speed);
   if(keys[0] || keys[1]){
     if(keys[0]){
       //originY += player.speed;
@@ -171,13 +174,13 @@ void keyReleased(){
   }
 }
 
-void mouseMoved(){
-  originX = mouseX;
-  originY = mouseY;
-  //if(dist(int(mouseX),int(mouseY), int(width/2), int(height/2)) < width/2){
-    
-  //}
-}
+//void mouseMoved(){
+//  originX = mouseX;
+//  originY = mouseY;
+//  //if(dist(int(mouseX),int(mouseY), int(width/2), int(height/2)) < width/2){
+//    
+//  //}
+//}
 
 
 //utility functions!

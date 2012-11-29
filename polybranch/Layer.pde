@@ -185,7 +185,7 @@ class Layer{
                   new PVector(aX, aY),
                   new PVector(bX, bY),
                   new PVector(lerp(aX,width/2,0.7), lerp(aY,width/2,0.7)));
-      
+      trunkLen = dist(lerp(branches[0].verticies[0].x, branches[0].verticies[1].x, 0.5), lerp(branches[0].verticies[0].y, branches[0].verticies[1].y, 0.5), branches[0].verticies[2].x, branches[0].verticies[2].y);
       populateRandomBranches(branches[0], 2);
     }
     

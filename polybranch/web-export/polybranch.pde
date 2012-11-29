@@ -1,3 +1,6 @@
+/* @pjs globalKeyEvents=true; 
+ */
+
 PVector[] tris = {
       new PVector(200,200),
       new PVector(400,200),
@@ -40,7 +43,7 @@ void setup(){
 }
 
 void draw(){
-  println(g.score);
+  println("LEVEL "+g.level+"  SCORE:"+g.score+"  SPEED "+g.speed);
   if(keys[0] || keys[1]){
     if(keys[0]){
       //originY += player.speed;
@@ -171,13 +174,13 @@ void keyReleased(){
   }
 }
 
-void mouseMoved(){
-  originX = mouseX;
-  originY = mouseY;
-  //if(dist(int(mouseX),int(mouseY), int(width/2), int(height/2)) < width/2){
-    
-  //}
-}
+//void mouseMoved(){
+//  originX = mouseX;
+//  originY = mouseY;
+//  //if(dist(int(mouseX),int(mouseY), int(width/2), int(height/2)) < width/2){
+//    
+//  //}
+//}
 
 
 //utility functions!
@@ -223,7 +226,7 @@ class Branch{
     
     hu = 0;
     sat = 0;
-    br = (int)random(50,200);
+    br = (int)random(100,200);
     alph = 255;
   }
   
@@ -268,14 +271,17 @@ class Branch{
         dist(player.pos.x,player.pos.y,easedVerticies[2].x,easedVerticies[2].y) < player.r){
       //return true;
       br = 0;
+      g.gameOver();
     }else if(PointInTriangle(player.pos.x,player.pos.y,easedVerticies[2].x,easedVerticies[2].y,easedVerticies[1].x,easedVerticies[1].y,easedVerticies[0].x,easedVerticies[0].y)){
       //return true;
       br = 0;
+      g.gameOver();
     }else if(circleLineIntersect(player.pos.x,player.pos.y, player.r, easedVerticies[0].x,easedVerticies[0].y, easedVerticies[1].x,easedVerticies[1].y) ||
               circleLineIntersect(player.pos.x,player.pos.y, player.r, easedVerticies[1].x,easedVerticies[1].y, easedVerticies[2].x,easedVerticies[2].y) ||
               circleLineIntersect(player.pos.x,player.pos.y, player.r, easedVerticies[2].x,easedVerticies[2].y, easedVerticies[0].x,easedVerticies[0].y)){
       //return true;
       br = 0;
+      g.gameOver();
     }else{
       //return false;
     }
@@ -371,7 +377,11 @@ class Layer{
     float bY = (layerHeight/2) + (layerHeight/2 - ringWeight/2) * sin((TWO_PI/numSides)*(startVertex-1));
     
     
-    tree = new Tree(0);
+//    tree = new Tree(11, new Branch(
+//                new PVector(aX, aY),
+//                new PVector(bX, bY),
+//                new PVector(lerp(aX,layerWidth/2,0.7), lerp(aY,layerHeight/2,0.7))));
+    tree = new Tree();
     //drawPolygon(layerWidth/2, layerHeight/2, layerWidth/2 - ringWeight/2, numSides, ringWeight, color(255,0,0,0.5));
     
   }
@@ -382,10 +392,9 @@ class Layer{
 //      reset();
 //    }
     easedDistance = easeInExpo(distance, distance, 0,1,1);
-    if(easedDistance > 0.95 && easedDistance <= 1){
+    if(easedDistance >= 0.999 && easedDistance <= 1.02){
       tree.checkCollisions();
     }else if(easedDistance > 1 && !passed && (tree.branches[0].verticies[0].x != 0 && tree.branches[0].verticies[0].y != 0)){
-      
       passed = true;
       g.score += 100;
     }
@@ -432,6 +441,14 @@ class Layer{
       trunkLen = dist(lerp(trunk.verticies[0].x, trunk.verticies[1].x, 0.5), lerp(trunk.verticies[0].y, trunk.verticies[1].y, 0.5), trunk.verticies[2].x, trunk.verticies[2].y);
       this.populateRandomBranches(branches[0], (random(1)));
       //println("trunks is "+trunkLen);
+    }
+    
+    Tree(){
+      numBranches = 0;
+      branches = new Branch[16];
+      for(int i = 0; i < branches.length; i++){
+        branches[i] = new Branch();
+      }
     }
     
     void populateRandomBranches(Branch trunkIn, float sides){
@@ -522,7 +539,7 @@ class Layer{
                   new PVector(aX, aY),
                   new PVector(bX, bY),
                   new PVector(lerp(aX,width/2,0.7), lerp(aY,width/2,0.7)));
-      
+      trunkLen = dist(lerp(branches[0].verticies[0].x, branches[0].verticies[1].x, 0.5), lerp(branches[0].verticies[0].y, branches[0].verticies[1].y, 0.5), branches[0].verticies[2].x, branches[0].verticies[2].y);
       populateRandomBranches(branches[0], 2);
     }
     
@@ -574,6 +591,7 @@ class Game{
   String origin;
   boolean drawnPlayer;
   int score;
+  int level;
   
   int numBranches;
   
@@ -588,8 +606,8 @@ class Game{
     
     drawnPlayer = false;
     
-    numBranches = 4;
-   
+    numBranches = 6;
+    level = 1;
     speed = 0.0025;
     
     //make 6 layers
@@ -608,6 +626,7 @@ class Game{
     //println("game has "+layers.size());
   }
   
+  
   public void update(){
     drawnPlayer = false;
     
@@ -616,7 +635,9 @@ class Game{
       if(layer.easedDistance > 8 && i == layers.size()-1){
         layers.add(0, layer);
         layers.remove(layers.size()-1);
+        checkLevel();
         layer.reset();
+        
       }else{
         layer.updateDist(speed);
         if(layer.easedDistance >= 1 && !drawnPlayer){
@@ -629,6 +650,50 @@ class Game{
         layer.render();
       }
     }
+  }
+  
+  void checkLevel(){
+    if(score > 18000){
+      level = 8;
+      numBranches = 13;
+      //speed = 0.004;
+    }else if(score > 12000){
+      level = 7;
+      numBranches = 12;
+      //speed = 0.004;
+    }else if(score > 8000){
+      level = 6;
+      numBranches = 11;
+      //speed = 0.004;
+    }else if(score > 5000){
+      level = 5;
+      numBranches = 10;
+      //speed = 0.004;
+    }else if(score > 3000){
+      level = 4;
+      numBranches = 9;
+      //speed = 0.004;
+    }else if(score > 1500){
+      level = 3;
+      numBranches = 8;
+      //speed = 0.0035;
+    }else if(score > 500){
+      level = 2;
+      numBranches = 7;
+      //speed = 0.003;
+    }else{
+      level = 1;
+      numBranches = 6;
+      //speed = 0.0025;
+    }
+    
+    if(score < 30000){
+      speed = map(score, 0,30000, 0.0025,0.009);
+    }
+  }
+  
+  public void gameOver(){
+    noLoop();
   }
   
 

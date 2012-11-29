@@ -18,7 +18,7 @@ class Branch{
     
     hu = 0;
     sat = 0;
-    br = (int)random(50,200);
+    br = (int)random(100,200);
     alph = 255;
   }
   
