@@ -31,10 +31,11 @@ function applyAttack(attackTemplate) {
 
     if(newAttackType)
     {
-        attackTemplate.attackType = newAttackType;
-        attackTemplate.attacker = attackTemplate.target;
-        attackTemplate.currentAttPos++;
-        startAttack(attackTemplate);
+        var newAttTemplate = cloneObject(attackTemplate); //Clone it just incase it has its own attributes
+        newAttTemplate.attackType = newAttackType;
+        newAttTemplate.attacker = attackTemplate.target;
+        newAttTemplate.currentAttPos++;
+        startAttack(newAttTemplate);
     }
 
     if(target.attr.hp < 0)
@@ -177,8 +178,8 @@ var allAttackTypes = {
         };
     },
     Chain: function chain_lightning() {
-        this.chain_chance = 0.5;
-        this.repeat_delay = 0.1;
+        this.chain_chance = 0.8;
+        this.repeat_delay = 0.3;
         this.drawGlyph = function (pen, tPos) {
             //Draw text
             pen.fillStyle = "#000000";
@@ -254,6 +255,76 @@ var allAttackTypes = {
                     //Resurrect ourself
                     eng.base.addObject(new attackTemplate.attackType.AttackNode(this.attackTemplate));
                 }
+            };
+        };
+    },
+    Pulse: function pulse() {
+        this.percent_damage = 0.3;
+        this.effect_range = 50;
+        this.charge_time = 1;
+        this.drawGlyph = function (pen, tPos) {
+            //Draw text
+            pen.fillStyle = "#000000";
+            pen.font = tPos.h + "px arial";
+            pen.textAlign = 'left';
+
+            ink.text(tPos.x, tPos.y, "P", pen);
+        };
+        this.AttackNode = function(attackTemplate)
+        {
+            this.base = new baseObj(this, 15);         
+            this.attackTemplate = attackTemplate;
+
+            var attacker = attackTemplate.attacker;
+            var realAttacker = attackTemplate.baseAttacker;
+            var target = attackTemplate.target;
+            attackTemplate.damage *= attackTemplate.attackType.percent_damage;
+            var prevTarget = this.attackTemplate.target;
+
+            var effect_range = attackTemplate.attackType.effect_range;
+            var charge_time = attackTemplate.attackType.charge_time;
+            //We do our own targeting (we hit everything around the attacker)
+                            
+            //This is basically just a custom targeting strategy
+            var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
+            var targets = findAllWithin(attacker.base.rootNode, targetType, 
+                    attacker.tPos.getCenter(), effect_range);
+
+            this.targets = targets;
+
+            this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
+            
+            //AlphaDecay destroys us
+            var circle = new Circle(attacker.tPos.getCenter(), effect_range, this.color, this.color, 10);        
+            this.base.addObject(new AttributeTween(0.2, 1, charge_time, "charged", "alpha"));
+
+            this.base.addObject(circle);
+
+            
+            this.sound = new Sound("snd/Laser_Shoot.wav");
+            this.sound.play();
+        
+            this.alpha = 0;
+            this.update = function()
+            {
+                circle.color = setAlpha(circle.color, this.alpha);
+                circle.fillColor = setAlpha(circle.color, this.alpha);
+            };
+            
+            this.charged = function()
+            {
+                this.base.addObject(new SimpleCallback(0.1, "fire"));
+                circle.color = "rgba(255,255,255,200)";
+            };
+
+            this.fire = function()
+            {
+                for(var key in this.targets)
+                {
+                    this.attackTemplate.target = this.targets[key];
+                    applyAttack(this.attackTemplate);
+                }
+                this.base.destroySelf();
             };
         };
     },

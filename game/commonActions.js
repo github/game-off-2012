@@ -157,3 +157,52 @@ function MotionDelay(start, end, time, callback) {
         this.base.parent.tPos.y = start.y * progress + end.y * (1 - progress);
     }
 }
+
+function AttributeTween(start, end, time, callbackName, attributeName) {
+    this.base = new baseObj(this);
+
+    this.start = start;
+    this.end = end;
+    this.time = time;
+    this.baseTime = time;
+
+    this.callbackName = callbackName;
+
+    this.attributeName = attributeName;
+
+    this.update = function (dt) {
+        this.time -= dt;
+        if (this.time < 0) {
+            this.base.parent[this.callbackName]();
+            this.base.destroySelf();
+            return;
+        }
+
+        var start = this.start;
+        var end = this.end;
+
+        var progress = this.time / this.baseTime;
+
+        var attrName = this.attributeName;
+
+        this.base.parent[attrName] = start * progress + end * (1 - progress);
+    }
+}
+
+function SimpleCallback(time, callbackName) {
+    this.base = new baseObj(this);
+
+    this.time = time;
+    this.baseTime = time;
+
+    this.callbackName = callbackName;
+
+    this.update = function (dt) {
+        this.time -= dt;
+        if (this.time < 0) {
+            this.base.parent[this.callbackName]();
+            this.base.destroySelf();
+            return;
+        }
+    }
+}
