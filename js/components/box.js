@@ -115,7 +115,7 @@ Crafty.c('RemovableBox', {
             }
         }
 
-        // If the number of removable blocks is >= 2 then remove them
+        // If the number of removable blocks is >= 3 then remove them
         if(_.size(removableNeighbors) > 2) {
             _.each(removableNeighbors, function(neighborToDestroy, key){ 
                 neighborToDestroy.destroy();

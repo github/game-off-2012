@@ -33,4 +33,4 @@ XXXXXXXXXXXXXFXX
 XXXXXXXXXXXXXXXX
 METADATA
 title: Level 3: The Journey Ends
-nextMap: 1
+nextMap: 2
