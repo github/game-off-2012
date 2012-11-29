@@ -4,7 +4,7 @@ var songs = new Songs([
     artist:   'Bass Assassin',
     filename: '8-bit-detective',
     website: 'http://freemusicarchive.org/music/Bass_Assassin/Peony_Lantern_Split_EP/8bitDetective',
-    difficulty: '',
+    difficulty: 'medium',
     license:  'Creative Commons Attribution-NonCommercial',
 	end: 78000,
     queues: [
@@ -18,9 +18,10 @@ var songs = new Songs([
     name:     'Bass Assassin',
     artist:   'Bass Assassin',
     filename: 'bass-assassin',
-    website: '"BassAssassin" by Bass Assassin (http://freemusicarchive.org/music/Bass_Assassin/Peony_Lantern_Split_EP/BassAssassin)',
-    difficulty: '',
+    website: 'http://freemusicarchive.org/music/Bass_Assassin/Peony_Lantern_Split_EP/BassAssassin', 
+    difficulty: 'very easy',
     license:  'Creative Commons Attribution-NonCommercial',
+	end: 64000,
     queues: [
       [],
       [],
@@ -33,22 +34,23 @@ var songs = new Songs([
     artist:   'Jason Shaw',
     filename: 'night-rave',
     website: 'http://audionautix.com/index.html',
-    difficulty: '',
+    difficulty: 'easy',
     license:  'Creative Commons Attribution',
     queues: [
       [3500, 5000, 8000, 16750, 20500, 23500, 3400, 39000, 43000, 44750, 47750, 58750, 64000, 67000, 76500, 81500, 85500],
-      [11500, 15500, 17750, 27000, 31000, 35000, 41000, 51750, 55750, 59750, 70500, 74500, 77500, 83500, 89000],
+      [11500, 15500, 17750, 27000, 31000, 35000, 41000, 51750, 55750, 59750, 70500, 74500, 77500, 83500, 89500],
       [13500, 18750, 29000, 36000, 39000, 43000, 53750, 60750, 72500, 78500, 81500, 85500, ],
       [6500, 10000, 19750, 22000, 25500,37000, 41000, 46250, 49750, 61750, 65500, 69000, 79500, 83500]
     ]
   }),
   new Song({
     name:     'Tech Talk',
-    artist:   'Unknown',
+    artist:   'Jason Shaw',
     filename: 'tech-talk',
-    license:  '',
-    website: '',
-    difficulty: '',
+    license:  'Creative Commons Attribution',
+    website: 'http://audionautix.com/index.html',
+    difficulty: 'hard',
+	end: 88000,
     queues: [
       [],
       [],
@@ -57,12 +59,13 @@ var songs = new Songs([
     ]
   }),
   new Song({
-    name:     'Trick and or Treat',
-    artist:   'Unknown',
+    name:     'Trick and/or Treat (the candy raid is on!)',
+    artist:   'Nordloef',
     filename: 'trick-and-or-treat',
-    license:  '',
-    website: '',
-    difficulty: '',
+    license:  'Creative Commons Attribution-NonCommercial',
+    website: 'http://freemusicarchive.org/music/Nordloef/Microhorror_Compilation_Vol_1_Part_II_-_The_Lab/04Nordloef_-_trick_and_or_treat_the_candy_raid_is_on',
+    difficulty: 'very hard',
+	end: 71000,
     queues: [
       [],
       [],
