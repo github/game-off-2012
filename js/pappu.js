@@ -247,11 +247,19 @@
       branches.forEach(function(branch, branch_index) {
         var branch_bound = branch.getBounds();
 
+        var branch_broke = 0;
+
         self.clones.forEach(function(clone) {
+
+          if (branch_broke)
+            return;
+          
           var clone_bound = clone.getBounds();
 
           if (utils.intersect(branch_bound, clone_bound)) {
             branches.splice(branch_index, 1);
+
+            branch_broke = 1;
           }
         });
 
@@ -263,14 +271,25 @@
         var fork_head_bound = fork.getHeadBounds();
         var fork_handle_bound = fork.getHandleBounds();
 
+        var fork_broke = 0;
+
         self.clones.forEach(function(clone) {
+
+          if (fork_broke)
+            return;
+
           var clone_bound = clone.getBounds();
 
           if (
             utils.intersect(fork_head_bound, clone_bound) ||
             utils.intersect(fork_handle_bound, clone_bound)
           ) {
+
+            // 2 pakias could kill same fork
+            // hence just check whether it exists or not
             forks.splice(fork_index, 1);
+
+            fork_broke = 1;
           }
 
           return;
