@@ -95,6 +95,9 @@ function findClosest(engine, type, target, maxDistance) {
 
 
 function findAllWithin(engine, type, target, maxDistance) {
+    if (!engine.curQuadTree) //I want to crash... but this is legitimate.
+        return null;
+
     if (!assertDefined("findAllWithin", engine, type, target))
         return null;
 

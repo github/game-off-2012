@@ -7,8 +7,7 @@ function AttackCycle() {
     this.added = function () {
         this.base.addObject(new UpdateTicker(this.base.parent.attr, "attSpeed", "triggerAttack", true));
     }
-
-    //Going to be more than just doAttack!
+    
     this.triggerAttack = function () {
         var attacker = this.base.parent;
         var attackTypes = attacker.attr.attack_types || attacker.attr.bug_attack_types;

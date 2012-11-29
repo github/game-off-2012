@@ -43,8 +43,8 @@ function Tower_Connection(t1, t2) {
 TowerStats = {
         range:          100,
         damage:         10,
-        hp:             10,
-        attSpeed:       1,        
+        hp:             100,
+        attSpeed:       0.1,        
         mutate:         0,
         mutatestrength: 0,
         upload:         1,
@@ -77,7 +77,7 @@ function Tower(baseTile) {
 
     this.attr.target_Strategy = new targetStrategies.Closest();
     this.attr.attack_types = [];
-    this.attr.attack_types.push(new allAttackTypes.Normal());
+    this.attr.attack_types.push(new allAttackTypes.Laser());
 
     this.connections = [];
 

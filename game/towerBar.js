@@ -60,7 +60,7 @@ function Towerbar(pos) {
 	    attackCombinations.push(attackTypes);
 	}
 
-	var superCombo = { 0: allAttackTypes.Bullet, 1: allAttackTypes.Normal };
+	var superCombo = { 0: allAttackTypes.Bullet, 1: allAttackTypes.Laser };
 
 	attackCombinations.push(superCombo);
 

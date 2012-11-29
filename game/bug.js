@@ -10,7 +10,7 @@ function Bug(startPath, difficulty) {
         range:          100,
         damage:         1 + difficulty/4,
         hp:             Math.floor(20 * 3 * difficulty),
-        attSpeed:       2,
+        attSpeed:       0,
         speed:          20,
         hitcount:       0,
         value:          5,
@@ -28,7 +28,7 @@ function Bug(startPath, difficulty) {
 
     this.attr.target_Strategy = new targetStrategies.Closest();
     this.attr.attack_types = [];
-    this.attr.attack_types.push(new allAttackTypes.Normal());
+    this.attr.attack_types.push(new allAttackTypes.Laser());
 
     this.base.addObject(new AttackCycle());
 

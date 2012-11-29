@@ -1,14 +1,15 @@
 var targetStrategies = {
     Closest: function Closest () {
-        this.extra_Range = 0; //Just to demonstrate what is possible, will be removed later
+        //this.extra_Range = 0; //Just to demonstrate what is possible, will be removed later
         this.run = function (attacker, prevTarget) {
-            var targetType = getRealType(attacker) == "Bug" ? "Tower" : "Bug";
+            //Just trust me
+            var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
 
             if(prevTarget)
                 prevTarget.hidden = true;
             
             var target = findClosest(attacker.base.rootNode, targetType,
-                                attacker.tPos.getCenter(), attacker.attr.range + this.extra_Range);
+                                attacker.tPos.getCenter(), attacker.attr.range);
             
             if(prevTarget)
                 prevTarget.hidden = false;
@@ -26,7 +27,8 @@ var targetStrategies = {
     },
     Random: function Random () {
         this.run = function (attacker, prevTarget) {
-            var targetType = getRealType(attacker) == "Bug" ? "Tower" : "Bug";
+            //Just trust me
+            var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
 
             if(prevTarget)
                 prevTarget.hidden = true;
@@ -37,7 +39,7 @@ var targetStrategies = {
             if(prevTarget)
                 prevTarget.hidden = false;
 
-            if(targets.length == 0)
+            if(!(targets.length > 0))
                 return;
 
             var randomPos = Math.floor(Math.random() * targets.length);

@@ -58,8 +58,9 @@ function startAttack(attackTemplate) {
     var attackType = attackTemplate.attackType;
 
     var realAttacker = attackTemplate.baseAttacker;
+    var attacker = attackTemplate.attacker;
     var prevTarget = attackTemplate.target;
-    attackTemplate.target = realAttacker.attr.target_Strategy.run(realAttacker, prevTarget);
+    attackTemplate.target = realAttacker.attr.target_Strategy.run(attacker, prevTarget);
 
     if(attackTemplate.target)
     {
@@ -84,8 +85,7 @@ function AttackTemplate(attackType, attacker, target, damage, baseAttacker, curr
 //Attacks shouldn't modify the attacker's attribute (unless that is really the goal)
 //If the attack does partial damage then it should create a copy and pass that on.
 var allAttackTypes = {
-    Normal: function normal() {
-        this.extraAttr = 5;        
+    Laser: function laser() {
         this.drawGlyph = function (pen, tPos) {
             //Draw text
             pen.fillStyle = "#000000";
@@ -141,7 +141,7 @@ var allAttackTypes = {
             var realAttacker = attackTemplate.baseAttacker;
             var attacker = attackTemplate.attacker;
             var target = attackTemplate.target;
-            var damage = attackTemplate.damage;
+            var damage = attackTemplate.damage;            
 
             this.color = "Orange";
 
@@ -174,6 +174,85 @@ var allAttackTypes = {
             {
                 motionDelay.end = target.tPos.getCenter();
             }
+        };
+    },
+    Chain: function chain_lightning() {
+        this.chain_chance = 1.0;
+        this.drawGlyph = function (pen, tPos) {
+            //Draw text
+            pen.fillStyle = "#000000";
+            pen.font = tPos.h + "px arial";
+            pen.textAlign = 'left';
+
+            ink.text(tPos.x, tPos.y, "CL", pen);
+        };
+        this.AttackNode = function(attackTemplate)
+        {
+            this.base = new baseObj(this, 15);         
+            this.attackTemplate = attackTemplate;
+
+            var attacker = attackTemplate.attacker;
+            var realAttacker = attackTemplate.baseAttacker;
+            var target = attackTemplate.target;
+            var damage = attackTemplate.damage;
+
+            this.chain_chance = attackTemplate.attackType.chain_chance;
+
+            this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
+            
+            //AlphaDecay destroys us
+            var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
+            this.base.addObject(new AlphaDecay(damageToTime(realAttacker.attr.damage), 1, 0));
+
+            this.base.addObject(line);
+
+            applyAttack(this.attackTemplate);
+
+            this.sound = new Sound("snd/Laser_Shoot.wav");
+            this.sound.play();
+        
+            this.update = function()
+            {
+                line.color = this.color;
+            };
+
+            this.die = function()
+            {
+                if(Math.random() < this.chain_chance)
+                {                    
+                    //This is basically just a custom targeting strategy
+                    this.attackTemplate.attacker = this.attackTemplate.target;
+                    var attacker = this.attackTemplate.target;
+                    var rootAttacker = this.attackTemplate.target;
+                    var prevTarget = this.attackTemplate.target;
+
+                    if(!this.attackTemplate.prevList)
+                        this.attackTemplate.prevList = [];
+                    this.attackTemplate.prevList.push(this.attackTemplate.target);
+
+                    //Make all previous targets hidden so we don't target them again
+                    for(var key in this.attackTemplate.prevList)
+                        this.attackTemplate.prevList[key].hidden = true;
+
+                    var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
+                    var targets = findAllWithin(attacker.base.rootNode, targetType, 
+                            attacker.tPos.getCenter(), attacker.attr.range);
+
+                    for(var key in this.attackTemplate.prevList)
+                        this.attackTemplate.prevList[key].hidden = false;
+
+                    if(!targets || !(targets.length > 0)) //Nothing left to chain to!
+                        return;
+
+                    var randomPos = Math.floor(Math.random() * targets.length);
+                    this.attackTemplate.target = targets[randomPos];
+
+
+                    var eng = this.attackTemplate.attacker.base.rootNode;
+                    //Resurrect ourself
+                    eng.base.addObject(new attackTemplate.attackType.AttackNode(this.attackTemplate));
+                }
+            };
         };
     },
     /*
@@ -253,7 +332,7 @@ var allAttackTypes = {
 //Not needed anymore... but if you have a radio option for something this
 //is how you would set up the underlying attack types for it
 var bugAttackTypes = {
-    Normal: allAttackTypes.Normal
+    Laser: allAttackTypes.Laser
 };
 
 
