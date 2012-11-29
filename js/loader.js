@@ -67,11 +67,25 @@
   var loader = document.getElementById("loading");
   var loadText = document.getElementById("loadText");
 
-  for(var i = 0; i < mit.audio.length; i++) {
-    var file = mit.audio[i];
+  if(!($.browser.webkit && !$.browser.chrome)) {
+    for(var i = 0; i < mit.audio.length; i++) {
+      var file = mit.audio[i];
 
-    if (isNaN(file.duration)) {
-      file.addEventListener("loadeddata", function() {
+      if (!isNaN(file.duration)) { 
+        file.addEventListener("loadeddata", function() {
+          counter++;
+          percent = Math.floor((counter/size*100));
+          loading.style.width = percent + "%";
+          loadText.innerHTML = "Loading... " + percent + "%";
+
+          if(percent >= 100) {
+            $("#loading").fadeOut();
+            mit.main();
+          }
+        });
+      }
+
+      else {
         counter++;
         percent = Math.floor((counter/size*100));
         loading.style.width = percent + "%";
@@ -82,21 +96,11 @@
           mit.main();
         }
 
-      });
-    }
-    else {
-      counter++;
-      percent = Math.floor((counter/size*100));
-      loading.style.width = percent + "%";
-      loadText.innerHTML = "Loading... " + percent + "%";
-
-      if(percent >= 100) {
-        $("#loading").fadeOut();
-        mit.main();
       }
-
     }
   }
+
+  else {counter += mit.audio.length}
 
   for(var src in images) {
     mit.image[src] = new Image();
