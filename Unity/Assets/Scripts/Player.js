@@ -59,11 +59,13 @@ private var clickOrPressSpaceHelp: GameObject;
 private var jumpOnAnEnemyHelp: GameObject;
 private var releaseNewCloneHelp: GameObject;
 
+private var lastSpark: float;
 
 private var startTime: float;
 
 function Start () {
 	startTime = Time.time;
+	lastSpark = Time.time;
 	sprite = this.GetComponent('OTAnimatingSprite') as OTAnimatingSprite;
 	timebonusObject = GameObject.Find('timebonus');
 	level = GameObject.Find('Game').GetComponent('Level') as Level;
@@ -145,6 +147,17 @@ function Update () {
 	processFall();
 	processSpeed();
 	processSlowDownBonus();
+	//processSparks();
+}
+
+function processSparks() {
+	if (currentAnimation == 'Sliding' && onGround) {
+		if (Time.time> lastSpark + (0.5 / speed) ) {
+			//Debug.Log('here');
+			generateParticles('spark', sprite.position, 1, 0, Vector2(0, 0), Vector2(0, 0));
+			lastSpark = Time.time;
+		}
+	}
 }
 
 function processDragAndDropMode() {
