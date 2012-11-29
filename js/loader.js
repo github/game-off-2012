@@ -1,4 +1,4 @@
-var Obj = {};
+  var Obj = {};
   Obj.size = function(obj) {
       var size = 0, key;
       for (key in obj) {
@@ -28,7 +28,6 @@ var Obj = {};
 
   var images = {
     angry_pakia : "img/angry_pakia.png",
-    //apple : "img/apple.png",
     apple : "img/star.png",
     back_trees : "img/back_trees.png",
     berries : "img/berries.png",
@@ -36,7 +35,7 @@ var Obj = {};
     clouds : "img/clouds.png",
     coins : "img/coins.png",
     controls : "img/controls.png",
-    dig : "img/dig.png",
+    //dig : "img/dig.png",
     fork_handle : "img/fork_handle.png",
     fork_head : "img/fork_head.png",
     front_trees : "img/front_trees.png",
@@ -49,8 +48,8 @@ var Obj = {};
     plank_mid : "img/plank_mid.png",
     plank_top : "img/plank_top.png",
     sad_pakia : "img/sad_pakia.png",
-    stand : "img/stand.png"
-    bg_combined: "img/bg_combined.png",
+    stand : "img/stand.png",
+    bg_combined: "img/bg_combined.png"
   };
 
   var image = {};
@@ -59,7 +58,8 @@ var Obj = {};
   var size = Obj.size(images);
   size += audio.length;
 
-  var counter = 0;
+  var counter = 0,
+      percent = 0;
 
   var loading = document.getElementById("bar");
   var loader = document.getElementById("loading");
@@ -80,9 +80,7 @@ var Obj = {};
     }
     else {
       counter++;
-      //console.log(counter);
-
-      var percent = Math.floor((counter/size*100));
+      percent = Math.floor((counter/size*100));
       loading.style.width = percent + "%";
       loadText.innerHTML = "Loading... " + percent + "%";
       if(percent >= 100)
@@ -93,10 +91,9 @@ var Obj = {};
   for(var src in images) {
     image[src] = new Image();
     image[src].onload = function() {
-      ++counter;
-      //console.log(counter);
+      counter++;
 
-      var percent = Math.floor(((counter)/size*100));
+      percent = Math.floor(((counter)/size*100));
       loading.style.width = percent + "%";
       loadText.innerHTML = "Loading... " + percent + "%";
       if(percent >= 100)
