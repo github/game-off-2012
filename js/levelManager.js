@@ -1,82 +1,86 @@
-function loadMap(level, loadComplete) {
-  var map = null;
-  $.get('map/load/'+level, function(data) {
-      mapData = jQuery.parseJSON(data);
+var levelManager = {
+    tileMap: {
+        B: function (x, y) { levelManager.createRemovableBox("blue", x, y); },
+        W: function (x, y) { levelManager.createPushableBox("white", x, y); },
+        R: function (x, y) { levelManager.createRemovableBox("red", x, y); },
+        P: function (x, y) { levelManager.createRemovableBox("purple", x, y); },
+        b: function (x, y) { levelManager.createPushableRemovableBox("blue", x, y); },
+        w: function (x, y) { levelManager.createPushableRemovableBox("white", x, y); },
+        r: function (x, y) { levelManager.createPushableRemovableBox("red", x, y); },
+        p: function (x, y) { levelManager.createPushableRemovableBox("purple", x, y); },
+        X: function (x, y) { levelManager.createWall(x, y); },
+        F: function (x, y) { levelManager.createFinishTile(x, y); },
+        S: function (x, y) { levelManager.createPlayer(x, y); },
+        "-": function (x, y) { levelManager.createFloor(x, y); },
+        "1": function (x, y) { levelManager.createColorFloor("blue", x, y); },
+        "2": function (x, y) { levelManager.createColorFloor("white", x, y); },
+        "3": function (x, y) { levelManager.createColorFloor("red", x, y); },
+        "4": function (x, y) { levelManager.createColorFloor("purple", x, y); }
+    },
+
+    createRemovableBox: function (color, x, y) {
+        Crafty.e("2D, DOM, RemovableBox, ColorableBox")
+        .ColorableBox(color)
+        .attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+    },
+    createPushableRemovableBox: function (color, x, y) {
+        Crafty.e("2D, DOM, RemovableBox, ColorableBox, PushableBox")
+        .ColorableBox(color)
+        .attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+    },
+    createPushableBox: function (color, x, y) {
+        Crafty.e("2D, DOM, ColorableBox, PushableBox")
+        .ColorableBox(color)
+        .attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+    },
+    createFinishTile: function (x, y) {
+        Crafty.e("2D, DOM, FinishableBox, portal").attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+    },
+    createWall: function (x, y) {
+        Crafty.e("2D, DOM, solid, wall").attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+    },
+    createPlayer: function (x, y) {
+        Crafty.e("Player, 2D, Canvas, player, Movement, Collision, Phil, SpriteColor")
+        .attr({ x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize, z:5 })
+        .spriteColor("FFFFFF", 0.0)
+        .Moveable(200); // Character speed
+    },
+    createFloor: function (x, y) {
+        Crafty.e("Floor")
+        .attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+    },
+    createColorFloor: function (color, x, y) {
+        Crafty.e("ColorFloor")
+        .attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize})
+        .ColorFloor(color);
+    },
+    
+    loadMap: function (level, loadComplete) {
       var map = null;
-      // Set the background to light gray
-      Crafty.background("#9F9F9F");
-      // get and update title
-      $('#levelTitle').text(mapData.metadata.title);
-      // get next map
-      var nextMap = mapData.metadata.nextMap;
-      gameBoard.setMap(nextMap);
-      
-      for (var a = 0; a < mapData.layers.length; a++) {
-        map = mapData.layers[a];
-        for (var i = 0; i < map.length; i++) {
-          for (var j = 0; j < map[0].length; j++) {
-            var curr = map[i][j];
-            var item = " ";
-            
-            var compareVal = curr ? curr.toUpperCase() : null;
-            item = getItem(compareVal);
-
-            if (curr !== ' ' && curr !== 'S' && curr !== 'F' && curr !== 'X' && curr !== 'W' && curr !== '-' && curr !== '1' && curr !== '2' && curr !== '3') {
-              var definitionString = "2D, DOM, RemovableBox, ColorableBox";
-              if (curr && curr != curr.toUpperCase())
-                  definitionString = definitionString + ", PushableBox";
-                  
-                  Crafty.e(definitionString)
-                  .ColorableBox(item)
-                  .attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+      $.get('map/load/'+level, function(data) {
+          mapData = jQuery.parseJSON(data);
+          var map = null;
+          // Set the background to light gray
+          Crafty.background("#9F9F9F");
+          // get and update title
+          $('#levelTitle').text(mapData.metadata.title);
+          // get next map
+          var nextMap = mapData.metadata.nextMap;
+          gameBoard.setMap(nextMap);
+          console.log("set", nextMap);
+          
+          for (var a = 0; a < mapData.layers.length; a++) {
+            map = mapData.layers[a];
+            for (var i = 0; i < map.length; i++) {
+              for (var j = 0; j < map[0].length; j++) {
+                if(levelManager.tileMap[map[i][j]])
+                    levelManager.tileMap[map[i][j]](j, i);
+              }
             }
-            if (curr == 'W')
-              Crafty.e("2D, DOM, PushableBox, ColorableBox")
-              .ColorableBox(item)
-              .attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
-            if (curr == '-' || curr == '2' || curr == '3')
-              Crafty.e("Floor")
-              .attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
-            if (curr == '1')
-              Crafty.e("ColorFloor")
-              .attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize})
-              .ColorFloor('red');
-            if (curr == 'F')
-              Crafty.e("2D, DOM, FinishableBox, " + item).attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize, nextMapKey: nextMap});
-            if (curr == 'X')
-              Crafty.e("2D, DOM, solid, " + item).attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
-            if (curr == 'S')
-              Crafty.e("Player, 2D, Canvas, player, Movement, Collision, Phil, SpriteColor")
-                .attr({ x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize, z:5 })
-                .spriteColor("FFFFFF", 0.0)
-                .Moveable(200); // Character speed
           }
-        }
-      }
-      loadComplete();
-      Crafty.trigger("StopMovement");
-  });
+          loadComplete();
+          Crafty.trigger("StopMovement");
+      });
+    }
 }
 
-function getMetadata(arrLine, attribute) {
-  var stringForm = arrLine.join('');
-  if (stringForm.match(new RegExp(attribute)))
-    return stringForm;
-  else
-    return null;
-}
-
-function getItem(compareVal) {
-  if (compareVal == 'B')
-    return "blue";
-  else if (compareVal == 'W')
-    return "white";
-  else if (compareVal == 'P')
-    return "purple";
-  else if (compareVal == 'R')
-    return "red";
-  else if (compareVal == 'X')
-    return "wall";
-  else if (compareVal == 'F')
-    return "portal";
-}
