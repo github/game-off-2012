@@ -80,6 +80,7 @@ function LevelManager(bugStart, lmpos) {
             this.doneWave = false;
             this.nwicounter = currWv.nextWaveIn;
             this.bugsleft = currWv.bugs;
+	    nextWvVis.resetTo(lmpos.x, lmpos.y+lmpos.h+(nextWv.nextWaveIn*30), nextWv);
         }
 
         if (this.bugsleft <= 0) {
@@ -88,7 +89,6 @@ function LevelManager(bugStart, lmpos) {
             if (this.nwicounter <= 0) {
                 //alert("Next wave incoming");
                 this.doneWave = true;
-                nextWvVis.resetTo(lmpos.x, lmpos.y+lmpos.h+(nextWv.nextWaveIn*30), nextWv);
             }
         }
 
