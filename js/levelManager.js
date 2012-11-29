@@ -64,6 +64,8 @@ var levelManager = {
           Crafty.background("#9F9F9F");
           // get and update title
           $('#levelTitle').text(mapData.metadata.title);
+          $('#levelText').text(mapData.metadata.text);
+          console.log(mapData.metadata.text);
           // get next map
           var nextMap = mapData.metadata.nextMap;
           gameBoard.setMap(nextMap);

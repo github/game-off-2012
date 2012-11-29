@@ -27,7 +27,8 @@
     <div id="container">
         <div id="cr-stage">
         </div>
-        <div id="levelTitle">Level 1: The Journey Begins</div>
+        <div id="levelTitle">Level 1: Moving blocks</div>
+        <div id="levelText">To pass this level, you will need to use the SPACEBAR to grab and move blocks.</div>
     </div>
     <div id="backgroundContainer"></div>
 </body>

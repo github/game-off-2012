@@ -34,3 +34,4 @@ XXXXXXXXXXXXXXXX
 METADATA
 title: Level 3: Pulling & Placing color
 nextMap: 3
+text: To pass this level, you will need to use the E key to steal colors from blocks and give them to other blocks.

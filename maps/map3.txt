@@ -34,3 +34,4 @@ XXXXXXXXXXXXXXXX
 METADATA
 title: Level 4: Colored Tiles!
 nextMap: 4
+text: To pass this level, you will need to slide colored blocks on rails with the same respective color.

@@ -34,3 +34,4 @@ XXXXXXXXXXXXXXXX
 METADATA
 title: Level 1: Moving blocks
 nextMap: 1
+text: To pass this level, you will need to use the SPACEBAR to grab and move blocks.

@@ -42,10 +42,22 @@ body {
 
 #levelTitle {
     position: relative;
-    left: 300px;
-    bottom: -20px;
+/*    left: 300px;*/
+    bottom: -15px;
     color: white;
     font-family: 'Scada', sans-serif;
     font-size:120%;
     letter-spacing: 3px;
+    text-align:center;
+}
+
+#levelText {
+    position: relative;
+/*    left: 300px;*/
+    bottom: -20px;
+    color: white;
+    font-family: 'Scada', sans-serif;
+    font-size:80%;
+    letter-spacing: 3px;
+    text-align:center;
 }

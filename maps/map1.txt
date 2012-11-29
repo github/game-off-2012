@@ -34,3 +34,4 @@ XXXXXXXXXXXXXXXX
 METADATA
 title: Level 2: Clearing Blocks
 nextMap: 2
+text: To pass this level, you will need to use the F key to clear blocks.
