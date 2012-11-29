@@ -1,3 +1,6 @@
 flexible_pipe_1 = 0 0 110 41
 flexible_pipe_2 = 0 42 110 41
 flexible_pipe_3 = 0 84 110 41
+flexible_pipe_4 = 111 0 110 41
+flexible_pipe_5 = 111 42 110 41
+flexible_pipe_6 = 111 84 110 41
