@@ -3,14 +3,21 @@
 This HTML5 Game (Pappu Pakia) has been happily made for the
 [Github Game Off 2012](https://github.com/blog/1303-github-game-off).
 
+## Credits
+
 Handsomely coded by [Rishabh](http://twitter.com/_rishabhp).
 Beautiful graphics by [Kushagra](http://twitter.com/solitarydesigns).
+
+## Sharing is Caring <3
 
 Some tricks and tips that we learnt while making this game has been
 shared on [CodeTheory](http://codetheory.in) and
 [CSSDeck](http://cssdeck.com/codecasts).
 
-No Libraries/Frameworks used. All Custom Code and Custom Physics.
+## Game Libraries Used
+
+No Gaming/Physics Libraries/Frameworks used. All Custom Code and Custom Physics.
+Only jQuery used for quick and few DOM manipulations.
 
 ## About
 
