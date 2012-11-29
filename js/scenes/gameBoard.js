@@ -33,3 +33,15 @@ Crafty.scene("3", function () {
     console.log('map 3 loaded');
   });
 });
+
+Crafty.scene("4", function () {
+  levelManager.loadMap(4, function(){
+    console.log('map 4 loaded');
+  });
+});
+
+Crafty.scene("100", function () {
+  levelManager.loadMap(100, function(){
+    console.log('map 100 loaded');
+  });
+});
