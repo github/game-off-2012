@@ -105,7 +105,7 @@
     //types: ['clone'],
 
     sub_types: {
-      coin: [50, 100, 500, 1000]
+      coin: [50, 100, 500]
     },
 
     init: function() {
