@@ -8,8 +8,10 @@ boolean[] keys = new boolean[4];
       
 int originX;
 int originY;
+
+boolean paused;
                 
-Tree testTree;
+//Tree testTree;
 
 Player player;
 Game g;
@@ -17,6 +19,7 @@ Game g;
 PVector focalPoint;
 
 void setup(){
+  paused = false;
   size(800,800);
   //frameRate(30);
   originX = width/2;
@@ -37,6 +40,7 @@ void setup(){
 }
 
 void draw(){
+  println(g.score);
   if(keys[0] || keys[1]){
     if(keys[0]){
       //originY += player.speed;
@@ -121,6 +125,31 @@ void keyPressed(){
   if (keyCode == RIGHT || key == 'd' || key == 'D') {
     keys[3] = true;
   }
+  
+  if(key == 'a'){
+    player.r -= 0.5;
+  }
+  if(key == 'z'){
+    player.r += 0.5;
+  }
+  
+  if(key == 's'){
+    g.numBranches ++;
+  }
+  if(key == 'x'){
+    g.numBranches --;
+  }
+  
+  if(key == 'p'){
+    if(paused){
+      loop();
+      paused = false;
+    }else{
+      noLoop();
+      paused = true;
+    }
+  }
+
 }
 
 void keyReleased(){

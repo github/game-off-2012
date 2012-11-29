@@ -2,16 +2,24 @@ class Game{
   ArrayList layers;
   String origin;
   boolean drawnPlayer;
+  int score;
+  
+  int numBranches;
+  
+  String state; //"notPlaying" "playing" "paused"
   
   float speed;
 
   Game(){
+    score = 0;
     origin = "I EXIST";
     layers = new ArrayList();
     
     drawnPlayer = false;
+    
+    numBranches = 4;
    
-    speed = 0.003;
+    speed = 0.0025;
     
     //make 6 layers
     for(int i = 0; i < 13; i++){
@@ -28,6 +36,7 @@ class Game{
     
     //println("game has "+layers.size());
   }
+  
   
   public void update(){
     drawnPlayer = false;
@@ -51,6 +60,12 @@ class Game{
       }
     }
   }
+  
+  public void gameOver(){
+    noLoop();
+  }
+  
+
   
 //  public void display(){
 //    for(int i = 0; i < layers.size(); i++){
