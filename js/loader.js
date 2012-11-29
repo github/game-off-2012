@@ -67,14 +67,25 @@
 
   for(var i = 0; i < audio.length; i++) {
     var file = audio[i];
-    file.addEventListener("loadeddata", function() {
+
+    if (isNaN(file.duration)) {
+      file.addEventListener("loadeddata", function() {
+        counter++;
+        percent = Math.floor((counter/size*100));
+        loading.style.width = percent + "%";
+        loadText.innerHTML = "Loading... " + percent + "%";
+        if(percent >= 100)
+          $("#loading").fadeOut();
+      });
+    }
+    else {
       counter++;
       percent = Math.floor((counter/size*100));
       loading.style.width = percent + "%";
       loadText.innerHTML = "Loading... " + percent + "%";
       if(percent >= 100)
         $("#loading").fadeOut();
-    });
+    }
   }
 
   for(var src in images) {
