@@ -141,11 +141,13 @@
 
   // Score Board
   mit.score = 0;
-  mit.highScore = JSON.parse(localStorage.getItem("highScore"));
-  if(mit.highScore)
-    ui.high_score.text("Your highscore is "+ mit.highScore);
-  else
-    ui.high_score.text("Your highscore is "+ 0);
+  try {
+
+    mit.highScore = JSON.parse(localStorage.getItem("highScore"));
+    if (mit.highScore)
+      ui.high_score.text("Your highscore is "+ mit.highScore);
+
+  } catch (e) {}
 
   ui.score_board.css('width', canvas.width + 'px');
   ui.score_board.css('height', canvas.height + 'px');
@@ -180,8 +182,10 @@
     if (!mit.start_btn_clicked)
       return;
 
-    if (!mit.game_started)
+    if (!mit.game_started) {
       mit.game_started = 1;
+      mit.game_over = 0;
+    }
 
     mit.ay = -1.5;
     mit.flying_up = 1;
@@ -247,6 +251,16 @@
   */
   mit.gameOver = function() {
     ui.start_screen.fadeIn();
+
+    // High Score
+    if (mit.score > mit.highScore) {
+      mit.highScore = parseInt(mit.score);
+      localStorage.setItem("highScore", JSON.stringify(parseInt(mit.score)));
+
+      ui.high_score.text("Your highscore is "+ mit.highScore);
+    }
+
+
     ui.start_game.html('re-start');
     ui.tweet.html('tweet score');
     ui.fb.html('post on fb');
@@ -346,14 +360,9 @@
         mit.PakiaUtils.render(ctx);
 
       // Update score
-      mit.score = mit.score += 0.1;
-      ui.score_board.text(parseInt(mit.score));
-
-      if(mit.score > mit.highScore) {
-        mit.highScore = parseInt(mit.score);
-        localStorage.setItem("highScore", JSON.stringify(parseInt(mit.score)));
-
-        ui.high_score.text("Your highscore is "+ mit.highScore);
+      if (!mit.game_over) {
+        mit.score = mit.score += 0.1;
+        ui.score_board.text(parseInt(mit.score));
       }
 
       // Acceleration + Gravity

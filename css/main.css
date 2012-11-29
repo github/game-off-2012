@@ -7,23 +7,12 @@
 	     url('../fonts/happy_sans-webfont.svg#webfont') format('svg');
 }
 
-@font-face{ 
-	font-family: 'Open Sans';
-	src: url('../fonts/OpenSans.eot');
-	src: url('../fonts/OpenSans.eot?#iefix') format('embedded-opentype'),
-	     url('../fonts/OpenSans.woff') format('woff'),
-	     url('../fonts/OpenSans.ttf') format('truetype'),
-	     url('../fonts/OpenSans.svg#webfont') format('svg');
-}
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
 * {
   margin: 0; padding: 0;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-}
-
-.os {
-	font-family: "Open Sans";
 }
 
 /* Loading */
@@ -61,13 +50,14 @@ html, body {
 
 body {
   background: #333;
-  font-family: 'Happy Sans', cursive;
+  font-family: 'Open Sans', Verdana;
 }
 
 h1, #loadText {
 	text-align: center;
 	color: #fff;
 	margin-top: 20px;
+	font-family: 'Happy Sans', cursive;
 }
 
 #loadText {
@@ -81,6 +71,7 @@ h1, #loadText {
 	right: 10px;
 	font-size: 20px;
 	color: white;
+	font-family: 'Happy Sans', cursive;
 }
 
 .gads {
@@ -100,7 +91,7 @@ h1, #loadText {
 }
 
 footer {
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: normal;
 	color: #E6E6E6;
 	margin: 20px auto;
@@ -155,6 +146,7 @@ canvas#game_bg {
 	text-align: left;
 	font-size: 30px;
 	font-weight: normal;
+	font-family: 'Happy Sans', cursive;
 
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -186,6 +178,7 @@ canvas#game_bg {
 	text-align: center;
 	margin: 0;
 	padding: 0;
+	text-shadow: 3px 3px 0px white;
 }
 
 #credits, #highScore {
