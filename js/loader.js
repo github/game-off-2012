@@ -29,7 +29,7 @@ var Obj = {};
   var images = {
     angry_pakia : "img/angry_pakia.png",
     //apple : "img/apple.png",
-    star : "img/star.png",
+    apple : "img/star.png",
     back_trees : "img/back_trees.png",
     berries : "img/berries.png",
     branch : "img/branch.png",
