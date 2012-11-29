@@ -74,7 +74,8 @@ SongView = Backbone.View.extend({
     if(!this.audio.paused){
       _.each(this.active, function(queue){
         _.each(queue, function(marker, i){
-          if(marker.top > 400){
+          if(marker.top > 440){
+            console.log(marker.top)
             this.missed.push(queue.splice(i, 1));
             this.score -= 500;
             this.checkGameOver();
@@ -125,7 +126,7 @@ SongView = Backbone.View.extend({
       this.combo += 1;
     }else if(this.active[queue].length > 0 &&
       this.active[queue][0].top > 366 &&
-      this.active[queue][0].top < 398){
+      this.active[queue][0].top < 440){
       this.inactive[queue].push(this.active[queue].shift());
       console.log('Perfect!');
       this.score += 1000;
