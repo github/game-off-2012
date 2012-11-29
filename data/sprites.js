@@ -173,8 +173,9 @@ var sprites = {
   })
 };
 
-var markers = {
-  marker_clone : new Sprite({
-    filename: 'marker_clone.png'
-  }),
-}
+var markers = [
+  new Sprite({filename: 'marker_fork.png'}),
+  new Sprite({filename: 'marker_push.png'}),
+  new Sprite({filename: 'marker_pull.png'}),
+  new Sprite({filename: 'marker_clone.png'})
+]
