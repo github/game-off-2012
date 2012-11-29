@@ -21,7 +21,7 @@ function loadMap(level, loadComplete) {
             var compareVal = curr ? curr.toUpperCase() : null;
             item = getItem(compareVal);
             
-            if (curr !== ' ' && curr !== 'S' && curr !== 'F' && curr !== 'X' && curr !== 'W' && curr !== '%') {
+            if (curr !== ' ' && curr !== 'S' && curr !== 'F' && curr !== 'X' && curr !== 'W' && curr !== '-') {
               var definitionString = "2D, DOM, RemovableBox, ColorableBox";
               if (curr && curr != curr.toUpperCase())
                   definitionString = definitionString + ", PushableBox";
