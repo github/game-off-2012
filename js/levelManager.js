@@ -83,6 +83,10 @@ var levelManager = {
           loadComplete();
           Crafty.trigger("StopMovement");
       });
+    },
+    
+    resetLevel: function () {
+      Crafty.scene(gameBoard.getMap() - 1);
     }
 }
 

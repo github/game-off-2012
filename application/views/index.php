@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Welcome to Fork It!</title>
+    <div id="levelReset" onclick="levelManager.resetLevel();">RESET</div>
     
     <!-- Resources -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>

@@ -40,6 +40,14 @@ body {
     margin-right: auto;
 }
 
+#levelReset {
+  position:absolute;
+  font-size: 20px;
+  top:200px;
+  right:300px;
+  color:red;
+}
+
 #levelTitle {
     position: relative;
 /*    left: 300px;*/
