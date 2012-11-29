@@ -49,7 +49,7 @@ html, body {
 }
 
 body {
-  background: #333;
+  background: #000 url(http://i.imgur.com/XgUk6.jpg) top center no-repeat fixed;
   font-family: 'Open Sans', Verdana;
 }
 
@@ -78,8 +78,6 @@ h1, #loadText {
 	text-align: center;
 	max-width: 1000px;
 	margin: 20px auto;
-	padding: 10px;
-	border: 1px solid #747474;
 }
 
 .container {
@@ -93,7 +91,7 @@ h1, #loadText {
 footer {
 	font-size: 13px;
 	font-weight: normal;
-	color: #E6E6E6;
+	color: #757571;
 	margin: 20px auto;
 	padding: 0 0 20px;
 	max-width: 1000px;
