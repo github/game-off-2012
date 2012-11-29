@@ -9,9 +9,7 @@ ___
 
 
 ### Description:
-ReWolt! is a HTML5 arcade tower-attack game.
-
-Why? Because we're bored from defense towers, we want to crush'em!
+ReWolt! is a HTML5 arcade tower-attack game, which is hacked by 3 yound developers from switzerland.
 
 ### Used Technologies: 
 * Box2Web
