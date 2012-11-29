@@ -26,7 +26,7 @@ var Router = Backbone.Router.extend({
 
 game.router = new Router;
 
-game.mute = true;
+game.mute = false;
 
 game.refreshView = function(view) {
   $('.container').html(game.activeView.el);

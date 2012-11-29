@@ -41,6 +41,9 @@
       <div id="go" class="game-text">
         GO!
       </div>
+      <div id="clear" class="game-text">
+        Stage Clear!
+      </div>
       <canvas></canvas>
       <audio></audio>
     </script>
@@ -68,7 +71,15 @@
     </script>
 
     <script type="text/template" id="song-list-item-template">
-      <%= name %>
+      <h3><%= name %><h3>
+      <dl>
+        <dt>Artist:</dt>
+        <dd><a href="<%= website %>"><%= artist %></a><dd>
+        <dt>Difficulty:</dt>
+        <dd><%= difficulty %></a><dd>
+        <dt>License:</dt>
+        <dd><%= license %></a><dd>
+      </dl>
     </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>

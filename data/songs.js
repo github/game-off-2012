@@ -6,7 +6,7 @@ var songs = new Songs([
     website: 'http://freemusicarchive.org/music/Bass_Assassin/Peony_Lantern_Split_EP/8bitDetective',
     difficulty: '',
     license:  'Creative Commons Attribution-NonCommercial',
-	end: 78000,
+	  end: 78000,
     queues: [
       [3500, 4750, 10250, 13500, 15250, 20500, 23750, 27500, 30500, 36750, 39000, 44000, 45750, 51000, 54750, 58000, 59750, 65000, 72000, 77250],
       [6750, 8500, 11750, 13500, 15250, 20500, 25500, 29250, 31500, 36000, 40000, 47750, 49500, 52750, 55750, 61750, 63500, 66750, 68500, 73750, 78000],
@@ -18,9 +18,10 @@ var songs = new Songs([
     name:     'Bass Assassin',
     artist:   'Bass Assassin',
     filename: 'bass-assassin',
-    website: '"BassAssassin" by Bass Assassin (http://freemusicarchive.org/music/Bass_Assassin/Peony_Lantern_Split_EP/BassAssassin)',
+    website: 'http://freemusicarchive.org/music/Bass_Assassin/Peony_Lantern_Split_EP/BassAssassin',
     difficulty: '',
     license:  'Creative Commons Attribution-NonCommercial',
+    end: 3000,
     queues: [
       [],
       [],
@@ -33,7 +34,7 @@ var songs = new Songs([
     artist:   'Jason Shaw',
     filename: 'night-rave',
     website: 'http://audionautix.com/index.html',
-    difficulty: '',
+    difficulty: 'Easy',
     license:  'Creative Commons Attribution',
     queues: [
       [3500, 5000, 8000, 16750, 20500, 23500, 3400, 39000, 43000, 44750, 47750, 58750, 64000, 67000, 76500, 81500, 85500],
