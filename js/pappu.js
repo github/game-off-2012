@@ -267,13 +267,14 @@
         self.clones.forEach(function(clone) {
           var clone_bound = clone.getBounds();
 
-          if (utils.intersect(fork_head_bound, clone_bound)) {
+          if (
+            utils.intersect(fork_head_bound, clone_bound) ||
+            utils.intersect(fork_handle_bound, clone_bound)
+          ) {
             forks.splice(fork_index, 1);
           }
 
-          if (utils.intersect(fork_handle_bound, clone_bound)) {
-            forks.splice(fork_index, 1);
-          }
+          return;
         });
 
         return;

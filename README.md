@@ -11,3 +11,27 @@ shared on [CodeTheory](http://codetheory.in) and
 [CSSDeck](http://cssdeck.com/codecasts).
 
 No Libraries/Frameworks used. All Custom Code and Custom Physics.
+
+## About
+
+Based on the compo's rules, the concepts
+that we tried to incorporate are fork, branch, push, pull, clone.
+
+You are pappu in the game, a little character. You need to
+click the mouse or tap (touch screen) to levitate else
+pappu will descend. If he hits the top or bottom boundaries
+that'll end the game.
+
+There will be some obstacles along the way like forks, branches
+and some enemies who are also known as "pakias". Hitting them
+will end the game. 3 types of pakias - sad (pull you),
+happy (push you), angry (kill you). Keep safe distance from
+them!
+
+There are some collectibles too! Coins for points (yellow for 50,
+pink for 100, red for 500, blue for 1000). Stars for invincibility
+for a short period. Berries spawning clones that'll destroy
+anything that comes in their way!
+
+Collisions are not super strict
+to make the gameplay a little less harder.
