@@ -2,7 +2,7 @@
 function fail(errorMessage) {
     if (DFlag.debug) {
         debugger;
-        throw errorMessage;
+        throw errorMessage ? errorMessage : "error";
     }
     else {
         console.log(errorMessage);

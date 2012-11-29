@@ -273,7 +273,8 @@ var allAttackTypes = {
         this.AttackNode = function(attackTemplate)
         {
             this.base = new baseObj(this, 15);         
-            this.attackTemplate = attackTemplate;
+            
+            this.attackTemplate = attackTemplate ;
 
             var attacker = attackTemplate.attacker;
             var realAttacker = attackTemplate.baseAttacker;
@@ -283,19 +284,11 @@ var allAttackTypes = {
 
             var effect_range = attackTemplate.attackType.effect_range;
             var charge_time = attackTemplate.attackType.charge_time;
-            //We do our own targeting (we hit everything around the attacker)
-                            
-            //This is basically just a custom targeting strategy
-            var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
-            var targets = findAllWithin(attacker.base.rootNode, targetType, 
-                    attacker.tPos.getCenter(), effect_range);
-
-            this.targets = targets;
 
             this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
-            
+
             //AlphaDecay destroys us
-            var circle = new Circle(attacker.tPos.getCenter(), effect_range, this.color, this.color, 10);        
+            var circle = new Circle(attacker.tPos.getCenter(), effect_range, this.color, this.color, 10);
             this.base.addObject(new AttributeTween(0.2, 1, charge_time, "charged", "alpha"));
 
             this.base.addObject(circle);
@@ -319,12 +312,95 @@ var allAttackTypes = {
 
             this.fire = function()
             {
+                attackTemplate = this.attackTemplate;
+
+                var attacker = attackTemplate.attacker;
+                var realAttacker = attackTemplate.baseAttacker;
+                var target = attackTemplate.target;
+                attackTemplate.damage *= attackTemplate.attackType.percent_damage;
+                var prevTarget = this.attackTemplate.target;
+                
+                var charge_time = attackTemplate.attackType.charge_time;
+                //We do our own targeting (we hit everything around the attacker)
+                            
+                //This is basically just a custom targeting strategy
+                var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
+                var targets = findAllWithin(attacker.base.rootNode, targetType, 
+                        attacker.tPos.getCenter(), effect_range);
+
+                this.targets = targets;
+
                 for(var key in this.targets)
                 {
                     this.attackTemplate.target = this.targets[key];
                     applyAttack(this.attackTemplate);
                 }
                 this.base.destroySelf();
+            };
+        };
+    },
+    DOT: function poison() {
+        this.repeat_chance = 0.8;
+        this.repeat_delay = 0.3;
+        this.percent_damage = 0.3;
+        this.drawGlyph = function (pen, tPos) {
+            //Draw text
+            pen.fillStyle = "#000000";
+            pen.font = tPos.h + "px arial";
+            pen.textAlign = 'left';
+
+            ink.text(tPos.x, tPos.y, "PO", pen);
+        };
+        this.AttackNode = function(attackTemplate)
+        {
+            this.base = new baseObj(this, 15);         
+            this.attackTemplate = attackTemplate;
+
+            var attacker = attackTemplate.attacker;
+            var realAttacker = attackTemplate.baseAttacker;
+            var target = attackTemplate.target;
+            var damage = attackTemplate.damage * attackTemplate.attackType.percent_damage;
+
+            this.repeat_chance = attackTemplate.attackType.repeat_chance;
+            this.repeat_delay = attackTemplate.attackType.repeat_delay;
+
+            this.color = "rgba(0, 255, 0, 0)";
+            
+            //AlphaDecay destroys us
+            var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);
+            this.base.addObject(new AttributeTween(1, 0, this.repeat_delay, "tick", "alpha"));
+
+            this.base.addObject(line);
+            
+            var poisonIndicator = new Circle(target.tPos.getCenter(), 4, this.color, this.color, 14);
+            this.base.addObject(poisonIndicator);            
+      
+            this.alpha = 0;
+            this.poisonAlpha = 0;
+            this.update = function()
+            {
+                line.color = setAlpha(line.color, this.alpha);                
+                poisonIndicator.color = setAlpha(poisonIndicator.color, this.poisonAlpha);
+                poisonIndicator.fillColor = setAlpha(poisonIndicator.fillColor, this.alpha);
+                poisonIndicator.tPos = target.tPos.getCenter();
+            };
+
+            this.nothing = function(){}
+
+            this.tick = function()
+            {
+                if(target.base.rootNode == this.base.rootNode &&
+                    Math.random() < this.repeat_chance)
+                {                    
+                    this.base.addObject(new AttributeTween(1, 0, this.repeat_delay * 0.5, "nothing", "poisonAlpha"));
+                    this.base.addObject(new SimpleCallback(this.repeat_delay, "tick"));
+
+                    applyAttack(this.attackTemplate);
+                }
+                else
+                {
+                    this.base.destroySelf();
+                }
             };
         };
     },

@@ -371,6 +371,10 @@ function Infobar(pos) {
 	            arrayAttr.push(value);
 	        }
 
+	        pen.color = "Green";
+	        pen.fillStyle = "Transparent";	        
+	        //ink.rect(xs, y, (xe - xs), 15, pen);
+
 	        for (var key in arrayAttr) {
 	            var val = arrayAttr[key];
 	            function tryPrintAsNumber(val, name) {

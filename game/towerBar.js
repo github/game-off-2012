@@ -91,11 +91,11 @@ function Towerbar(pos) {
         },
         attackCombinations,
         new temporalPos(
-            pos.x + 65,
+            pos.x + 15,
             pos.y,
-            600,
+            450,
             150),
-        8, 2,
+        6, 2,
         0.1);
   
 
