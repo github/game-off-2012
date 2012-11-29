@@ -213,7 +213,7 @@ Crafty.c('ColorableBox', {
             this.trigger('removeText');
             if(this.has("RemovableBox")) {
                 this._wasRemovable = true;
-                this.removeComponent("RemovableBox");
+                this.removeComponent("RemovableBox", false);
             } else
                 this._wasRemovable = false;
             this._transferableColor = null;
@@ -228,7 +228,8 @@ Crafty.c('ColorableBox', {
     giveColor: function(color) {
         var oldColor = this._transferableColor;
         this.trigger('removeText');
-        if(this._wasRemovable) this.addComponent("RemovableBox");
+        if(this._wasRemovable || this.has("RemovableBox"))
+            this.addComponent("RemovableBox");
         this.trigger('setBoxColor', color);
         this._transferableColor = color;
         return oldColor;
