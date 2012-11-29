@@ -16,7 +16,7 @@ var sprites = {
     destX : 0,
     destY : 60,
     continuous: true,
-    duration : 500
+    duration : 1500
   }),
 
   machine_back : new Sprite({
@@ -34,7 +34,7 @@ var sprites = {
     destX : 479,
     destY : 351,
     continuous: true,
-    duration : 500
+    duration : 1000
   }),
 
   dashboard : new Sprite({

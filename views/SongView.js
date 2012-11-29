@@ -20,8 +20,9 @@ SongView = Backbone.View.extend({
     this.inactive = [[],[],[],[]];
     this.missed   = [[],[],[],[]];
     this.context = this.canvas.getContext('2d');
-    _.bindAll(this, 'handleKey', 'animate', 'getNext', 'moveMarkers');
-    $(document).bind('keydown', this.handleKey);
+    _.bindAll(this, 'handleKeyDown', 'handleKeyUp', 'animate', 'getNext', 'moveMarkers');
+    $(document).bind('keydown', this.handleKeyDown);
+    $(document).bind('keyup', this.handleKeyUp);
     window.setInterval(this.getNext, 10);
     window.setInterval(this.moveMarkers, 1000/170);
     this.animate();
@@ -156,17 +157,34 @@ SongView = Backbone.View.extend({
     }
   },
 
-  handleKey: function(event) {
+  handleKeyDown: function(event) {
     switch (event.keyCode) {
       case 70: this.check(0);
+               sprites.octo_fork.set('current_frame', 1);
         break;
       case 71: this.check(1);
+               sprites.octo_push.set('current_frame', 1);
         break;
       case 72: this.check(2);
+               sprites.octo_pull.set('current_frame', 1);
         break;
       case 74: this.check(3);
+               sprites.octo_clone.set('current_frame', 1);
         break;
       case 80: this.pause();
+        break;
+    }
+  },
+
+  handleKeyUp: function(event) {
+    switch (event.keyCode) {
+      case 70: sprites.octo_fork.set('current_frame', 0);
+        break;
+      case 71: sprites.octo_push.set('current_frame', 0);
+        break;
+      case 72: sprites.octo_pull.set('current_frame', 0);
+        break;
+      case 74: sprites.octo_clone.set('current_frame', 0);
         break;
     }
   }
