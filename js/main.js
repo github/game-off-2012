@@ -76,6 +76,25 @@ mit.main = function() {
   bg_canvas.height = canvas.height;
 
   var music = document.getElementById("start");
+  music.volume = 0.2;
+  
+  var isMute = false;
+
+  // Mute the game if button is clicked
+  $("#mute").click(function() {
+    if(isMute == false) {
+      $(this).css("backgroundPosition", "0px -40px");
+      music.volume = 0;
+      isMute = true;
+    }
+
+    else {
+      $(this).css("backgroundPosition", "0px 0px");
+      music.volume = 0.2;
+      isMute = false;
+    }
+  });
+
   /*
     Game Start Screen and Lolz
   */
@@ -89,7 +108,6 @@ mit.main = function() {
   // Start Button
   var startGame = function() {
     // Play the awesome music! Really awesome
-    music.volume = 0.2;
     music.play();
     flap.pause();
 
