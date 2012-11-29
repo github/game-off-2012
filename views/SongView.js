@@ -25,7 +25,7 @@ SongView = Backbone.View.extend({
     $(document).bind('keydown', this.handleKeyDown);
     $(document).bind('keyup', this.handleKeyUp);
     this.nextInterval = window.setInterval(this.getNext, 10);
-    this.moveInterval = window.setInterval(this.moveMarkers, 1000/170);
+    this.moveInterval = window.setInterval(this.moveMarkers, 1000/224);
     this.animate();
     window.setTimeout(_.bind(function(){
       this.$el.find('#ready').hide();
@@ -54,7 +54,7 @@ SongView = Backbone.View.extend({
       _.each(this.queues, function(queue, i){
           if (queue[0] <= (this.getTime() + 1000)){
             queue.shift();
-            this.active[i].push({top:0, type:i});
+            this.active[i].push({top:-66, type:i});
           }
       }, this);
     }
@@ -63,6 +63,7 @@ SongView = Backbone.View.extend({
   checkGameOver: function () {
     if (this.score <= -2500){
       this.gameOver = true;
+      this.audio.pause()
       this.$el.find('#game-over').show();
       window.clearInterval(this.nextInterval);
       window.clearInterval(this.moveInterval);
@@ -106,43 +107,40 @@ SongView = Backbone.View.extend({
     }
   },
 
+  //marker 66px tall, 382
+
   check: function (queue) {
     if(this.active[queue].length > 0 && 
-      this.active[queue][0].top < 260){
+      this.active[queue][0].top < 334){
       console.log('early');
       this.score -= 500;
       this.checkGameOver();
       this.combo = 0;
     }else if(this.active[queue].length > 0 && 
-      this.active[queue][0].top < 330 &&
-      this.active[queue][0].top > 260){
+      this.active[queue][0].top < 334 &&
+      this.active[queue][0].top > 366){
       this.inactive[queue].push(this.active[queue].shift());
       console.log('ok');
       this.score += 500;
       this.combo += 1;
     }else if(this.active[queue].length > 0 &&
-      this.active[queue][0].top > 330 &&
-      this.active[queue][0].top < 370){
+      this.active[queue][0].top > 366 &&
+      this.active[queue][0].top < 398){
       this.inactive[queue].push(this.active[queue].shift());
       console.log('Perfect!');
       this.score += 1000;
-      this.combo += 1;
-    }else if(this.active[queue].length > 0 &&
-      this.active[queue][0].top > 370 && 
-      this.active[queue][0].top < 400){
-      this.inactive[queue].push(this.active[queue].shift());
-      console.log('ok');
-      this.score += 500;
       this.combo += 1;
     }
   },
 
   pause: function () {
-    this.$el.find('#pause').toggle();
-    if(this.audio.paused){
-      this.audio.play();
-    }else{
-      this.audio.pause();
+    if(!this.gameOver){
+      this.$el.find('#pause').toggle();
+      if(this.audio.paused){
+        this.audio.play();
+      }else{
+        this.audio.pause();
+      }
     }
   },
 
@@ -155,8 +153,8 @@ SongView = Backbone.View.extend({
     this.context.fillStyle = color;
     _.each(type, function(queues){
       _.each(queues, function(marker){
-        this.context.drawImage(markers['marker_clone'].img,
-          (marker.type * 94 + 70), marker.top);
+        this.context.drawImage(markers[marker.type].img,
+          (marker.type * 100 + 44), marker.top);
       }, this)
     }, this);
   },
