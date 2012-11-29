@@ -20,5 +20,3 @@ Why? Because we're bored from defense towers, we want to crush'em!
 * Bootstrap
 * Some js-libs (Zepto.js; animation.js; impress.js)
 * Travis
-
-Here's the prototype hosted: 
