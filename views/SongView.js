@@ -14,6 +14,7 @@ SongView = Backbone.View.extend({
     this.audio.load();
     this.score = 0;
     this.combo = 0;
+    this.gameOver = false;
     this.sprites = new Array();
     this.queues = _.clone(this.model.get('queues'));
     this.active   = [[],[],[],[]];
@@ -23,9 +24,17 @@ SongView = Backbone.View.extend({
     _.bindAll(this, 'handleKeyDown', 'handleKeyUp', 'animate', 'getNext', 'moveMarkers');
     $(document).bind('keydown', this.handleKeyDown);
     $(document).bind('keyup', this.handleKeyUp);
-    window.setInterval(this.getNext, 10);
-    window.setInterval(this.moveMarkers, 1000/170);
+    this.nextInterval = window.setInterval(this.getNext, 10);
+    this.moveInterval = window.setInterval(this.moveMarkers, 1000/170);
     this.animate();
+    window.setTimeout(_.bind(function(){
+      this.$el.find('#ready').hide();
+      this.$el.find('#go').show();
+      this.audio.play();
+    }, this), 1500);
+    window.setTimeout(_.bind(function(){
+      this.$el.find('#go').hide();
+    }, this), 2000);
   },
 
   render: function () { 
@@ -51,6 +60,15 @@ SongView = Backbone.View.extend({
     }
   },
 
+  checkGameOver: function () {
+    if (this.score <= -2500){
+      this.gameOver = true;
+      this.$el.find('#game-over').show();
+      window.clearInterval(this.nextInterval);
+      window.clearInterval(this.moveInterval);
+    }
+  },
+
   moveMarkers: function () {
     if(!this.audio.paused){
       _.each(this.active, function(queue){
@@ -58,6 +76,7 @@ SongView = Backbone.View.extend({
           if(marker.top > 400){
             this.missed.push(queue.splice(i, 1));
             this.score -= 500;
+            this.checkGameOver();
             this.combo = 0;
           }else{
             marker.top += 2;
@@ -92,6 +111,7 @@ SongView = Backbone.View.extend({
       this.active[queue][0].top < 260){
       console.log('early');
       this.score -= 500;
+      this.checkGameOver();
       this.combo = 0;
     }else if(this.active[queue].length > 0 && 
       this.active[queue][0].top < 330 &&
@@ -118,6 +138,7 @@ SongView = Backbone.View.extend({
   },
 
   pause: function () {
+    this.$el.find('#pause').toggle();
     if(this.audio.paused){
       this.audio.play();
     }else{
@@ -142,18 +163,20 @@ SongView = Backbone.View.extend({
 
   animate: function() {
 
-    requestAnimationFrame(this.animate);
+    if(!this.gameOver){
+      requestAnimationFrame(this.animate);
 
-    if(!this.audio.paused){
       this.clear();
 
       _.each(sprites, function(sprite){
         sprite.render(this.context);
       }, this)
-    
-      this.renderMarker(this.active, 'green');
-      this.renderMarker(this.inactive, 'darkgray');
-      this.renderMarker(this.missed, 'red');
+
+      if(!this.audio.paused){    
+        this.renderMarker(this.active, 'green');
+        this.renderMarker(this.inactive, 'darkgray');
+        this.renderMarker(this.missed, 'red');
+      }
     }
   },
 

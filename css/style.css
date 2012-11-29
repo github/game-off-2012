@@ -16,8 +16,6 @@
 	position: absolute;
 	left: 95px;
 	top: 30px;
-	-webkit-transition:all 1s ease;
-    -moz-transition:all 1s ease;
 }
 
 .menu ul {
@@ -25,7 +23,6 @@
 	margin-top: 220px;
 	width : 300px;
 	left: 170px;
-	font-family: 'Russo One', sans-serif;
 	font-size: 30px;
 }
 
@@ -46,6 +43,45 @@
 	background-image: url('../img/background.png');
 }
 
-.song .paused {
+.song .paused, .menu ul, .game-text {
 	font-family: 'Russo One', sans-serif;
+}
+
+#score-text, #combo-text, #ready, #go {
+	color: green;
+	position: absolute;
+	z-index: 100;
+	font-size: 30px;
+}
+
+#score-text {
+	top: 50px;
+}
+
+#ready, #go {
+	top: 210px;
+	z-index: 100;
+}
+
+#pause, #game-over {
+	position: absolute;
+	display: none;
+	z-index: 100;
+}
+
+#game-over {
+	color : red;
+	font-size: 30px;
+	top: 210px;
+	left: 300px;
+}
+
+#go {
+	display: none;
+}
+
+
+#pause {
+	top : 120px;
+	left: 300px;
 }

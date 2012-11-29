@@ -23,9 +23,24 @@
     </script>
 
     <script type="text/template" id="song-template">
-      <div>Time: <span id="time"></span></div>
-      <div>Score: <span id="score"></span></div>
-      <div>Combo: <span id="combo"></span></div>
+      <div id="score-text" class="game-text">Score: <span id="score"></span></div>
+      <div id="combo-text" class="game-text">Combo: <span id="combo"></span></div>
+      <div id="pause" class="game-text">
+        Paused
+        <ul>
+          <li>Main menu</li>
+          <li>Select Song</li>
+        <ul>
+      </div>
+      <div id="game-over" class="game-text">
+        Game Over
+      </div>
+      <div id="ready" class="game-text">
+        Ready...
+      </div>
+      <div id="go" class="game-text">
+        GO!
+      </div>
       <canvas></canvas>
       <audio></audio>
     </script>
