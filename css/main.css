@@ -7,11 +7,23 @@
 	     url('../fonts/happy_sans-webfont.svg#webfont') format('svg');
 }
 
+@font-face{ 
+	font-family: 'Open Sans';
+	src: url('../fonts/OpenSans.eot');
+	src: url('../fonts/OpenSans.eot?#iefix') format('embedded-opentype'),
+	     url('../fonts/OpenSans.woff') format('woff'),
+	     url('../fonts/OpenSans.ttf') format('truetype'),
+	     url('../fonts/OpenSans.svg#webfont') format('svg');
+}
+
 * {
   margin: 0; padding: 0;
-
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+.os {
+	font-family: "Open Sans";
 }
 
 /* Loading */
@@ -88,7 +100,7 @@ h1, #loadText {
 }
 
 footer {
-	font-size: 18px;
+	font-size: 12px;
 	font-weight: normal;
 	color: #E6E6E6;
 	margin: 20px auto;
@@ -96,12 +108,16 @@ footer {
 	max-width: 1000px;
 }
 footer h3 {
-	margin-top: 20px;
+	color: #fff;
+	margin-top: 30px;
+	font-size: 18px;
+	margin-bottom: 10px;
 }
 footer p {
 	margin-bottom: 10px;
 }
 footer a {
+	text-decoration: none;
 	color: #FF6767;
 }
 footer a:visited {
