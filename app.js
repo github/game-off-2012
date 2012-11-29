@@ -53,13 +53,17 @@ game.events.on("howto", function() {
 
 game.events.on("highscores", function() {
   game.activeView.destroy();
-  game.activeView = new HighScoreView();
+  game.activeView = new HighScoreView({
+    collection : songs
+  });
   game.refreshView();
 });
 
 game.events.on("credits", function() {
   game.activeView.destroy();
-  game.activeView = new CreditsView();
+  game.activeView = new CreditsView({
+    collection: songs
+  });
   game.refreshView();
 });
 
