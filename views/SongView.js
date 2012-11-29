@@ -117,6 +117,7 @@ SongView = Backbone.View.extend({
   },
 
   pause: function () {
+	  console.log(this.getTime());
     if(this.audio.paused){
       this.audio.play();
     }else{
