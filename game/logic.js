@@ -20,7 +20,7 @@
     this.globalMouseDown = {};
 
     this.id = 0;
-    this.money = 160;
+    this.money = 1600; //Default a much more reasonable value.
     if (DFlag.lotsamoney) {
         this.money = 10000;
     }
