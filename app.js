@@ -53,7 +53,9 @@ game.events.on("howto", function() {
 
 game.events.on("highscores", function() {
   game.activeView.destroy();
-  game.activeView = new HighScoreView();
+  game.activeView = new HighScoreView({
+    collection : songs
+  });
   game.refreshView();
 });
 

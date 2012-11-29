@@ -21,6 +21,9 @@ SongView = Backbone.View.extend({
     this.active   = [[],[],[],[]];
     this.inactive = [[],[],[],[]];
     this.missed   = [[],[],[],[]];
+    if(localStorage[this.model.get('filename')] === undefined){
+      localStorage[this.model.get('filename')] = 0;
+    }
     this.context = this.canvas.getContext('2d');
     _.bindAll(this, 'handleKeyDown', 'handleKeyUp', 'animate', 'getNext', 'moveMarkers');
     $(document).bind('keydown', this.handleKeyDown);
@@ -82,6 +85,12 @@ SongView = Backbone.View.extend({
       this.finished = true;
       this.audio.pause();
       this.clearAllIntervals();
+
+      if(this.score > localStorage[this.model.get('filename')]){
+        localStorage[this.model.get('filename')] = this.score;
+        this.$el.find('#clear').append('<div id="new-highscore">New high score!</div>');
+      }
+
       this.$el.find('#clear').show();
     }
   },
