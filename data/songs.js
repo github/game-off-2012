@@ -6,7 +6,7 @@ var songs = new Songs([
     website: 'http://freemusicarchive.org/music/Bass_Assassin/Peony_Lantern_Split_EP/8bitDetective',
     difficulty: 'medium',
     license:  'Creative Commons Attribution-NonCommercial',
-	end: 78000,
+	  end: 78000,
     queues: [
       [3500, 4750, 10250, 13500, 15250, 20500, 23750, 27500, 30500, 36750, 39000, 44000, 45750, 51000, 54750, 58000, 59750, 65000, 72000, 77250],
       [6750, 8500, 11750, 13500, 15250, 20500, 25500, 29250, 31500, 36000, 40000, 47750, 49500, 52750, 55750, 61750, 63500, 66750, 68500, 73750, 78000],
