@@ -253,7 +253,7 @@
 
           if (branch_broke)
             return;
-          
+
           var clone_bound = clone.getBounds();
 
           if (utils.intersect(branch_bound, clone_bound)) {
@@ -302,11 +302,19 @@
       pakias.forEach(function(pakia, pakia_index) {
         var pakia_bound = pakia.getBounds();
 
+        var pakia_dead = 0;
+
         self.clones.forEach(function(clone) {
+
+          if (pakia_dead)
+            return;
+
           var clone_bound = clone.getBounds();
 
           if (utils.intersect(pakia_bound, clone_bound)) {
             mit.PakiaUtils.cur_pakia = false;
+
+            pakia_dead = 1;
           }
 
           return;
