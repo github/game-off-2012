@@ -1,4 +1,4 @@
-  var Obj = {};
+var Obj = {};
   Obj.size = function(obj) {
       var size = 0, key;
       for (key in obj) {
@@ -28,14 +28,14 @@
 
   var images = {
     angry_pakia : "img/angry_pakia.png",
-    apple : "img/star.png",
+    apple : "img/apple.png",
     back_trees : "img/back_trees.png",
     berries : "img/berries.png",
     branch : "img/branch.png",
     clouds : "img/clouds.png",
     coins : "img/coins.png",
     controls : "img/controls.png",
-    //dig : "img/dig.png",
+    dig : "img/dig.png",
     fork_handle : "img/fork_handle.png",
     fork_head : "img/fork_head.png",
     front_trees : "img/front_trees.png",
@@ -48,8 +48,7 @@
     plank_mid : "img/plank_mid.png",
     plank_top : "img/plank_top.png",
     sad_pakia : "img/sad_pakia.png",
-    stand : "img/stand.png",
-    bg_combined: "img/bg_combined.png"
+    stand : "img/stand.png"
   };
 
   var image = {};
@@ -58,8 +57,7 @@
   var size = Obj.size(images);
   size += audio.length;
 
-  var counter = 0,
-      percent = 0;
+  var counter = 0;
 
   var loading = document.getElementById("bar");
   var loader = document.getElementById("loading");
@@ -80,7 +78,9 @@
     }
     else {
       counter++;
-      percent = Math.floor((counter/size*100));
+      //console.log(counter);
+
+      var percent = Math.floor((counter/size*100));
       loading.style.width = percent + "%";
       loadText.innerHTML = "Loading... " + percent + "%";
       if(percent >= 100)
@@ -91,9 +91,10 @@
   for(var src in images) {
     image[src] = new Image();
     image[src].onload = function() {
-      counter++;
+      ++counter;
+      //console.log(counter);
 
-      percent = Math.floor(((counter)/size*100));
+      var percent = Math.floor(((counter)/size*100));
       loading.style.width = percent + "%";
       loadText.innerHTML = "Loading... " + percent + "%";
       if(percent >= 100)
