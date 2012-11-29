@@ -152,6 +152,12 @@ canvas#game_bg {
 	user-select: none;
 }
 
+#invincible_timer {
+	width: 100px;
+	height: 20px;
+	background: white;
+}
+
 
 /* Start Screen */
 #start_screen {
