@@ -37,6 +37,10 @@ Crafty.c('PushableBox', {
     },
     
     push: function(direction) {
+        // Can only push to same color squares if its a colored box
+        if(this.has("ColorBox") && !this.canMoveToColorTile(direction))
+            return false;
+
         return this.EntityMove(direction);
     },
     
@@ -129,13 +133,13 @@ Crafty.c('RemovableBox', {
 * Applies a sprite for the colored boxes
 */
 Crafty.c('ColorBox', {
-    _colorString: "whiteBox", // Default is white
+    _colorString: "white", // Default is white
 
     init: function() {
-        this.requires("Box, " + this._colorString)
+        this.requires("Box, " + this.colorComponentString())
         // Sets the color of the box
         .bind('setBoxColor', function(color) {
-            this.removeComponent(this._colorString, false);
+            this.removeComponent(this.colorComponentString(), false);
             this._colorString = color;
             this.addComponent(this.colorComponentString());
 
@@ -160,6 +164,22 @@ Crafty.c('ColorBox', {
 
     colorComponentString: function() {
         return this._colorString + "Box" + (this.has("PushableBox") ? "" : "Unmovable" );
+    },
+    
+    canMoveToColorTile: function(direction) {
+        // Figure out our destination
+        var xLoc = this.x + direction[0] * gameBoard.tileSize;
+        var yLoc = this.y + direction[1] * gameBoard.tileSize;
+    
+        var collisionDetector = Crafty.e("2D, Collision").attr({ x: xLoc, y: yLoc, w: 1, h: 1 });
+        entitiesHit = collisionDetector.hit("ColorFloor");
+        if(entitiesHit.length > 0) {
+            collisionDetector.destroy();
+            if(entitiesHit[0].obj.colorString() != this.colorString())
+                return false;
+        }
+        collisionDetector.destroy();
+        return true;
     }
 });
 

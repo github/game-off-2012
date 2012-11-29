@@ -10,6 +10,7 @@
     <script type="text/javascript" src="js/crafty.js"></script>
     <script type="text/javascript" src="js/components/components.js"></script>
     <script type="text/javascript" src="js/components/box.js"></script>
+    <script type="text/javascript" src="js/components/floor.js"></script>
     <script type="text/javascript" src="js/components/movement.js"></script>
     <script type="text/javascript" src="js/components/player.js"></script>
     <script type="text/javascript" src="js/scenes/loading.js"></script>

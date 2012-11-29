@@ -20,8 +20,8 @@ function loadMap(level, loadComplete) {
             
             var compareVal = curr ? curr.toUpperCase() : null;
             item = getItem(compareVal);
-            
-            if (curr !== ' ' && curr !== 'S' && curr !== 'F' && curr !== 'X' && curr !== 'W' && curr !== '-') {
+
+            if (curr !== ' ' && curr !== 'S' && curr !== 'F' && curr !== 'X' && curr !== 'W' && curr !== '-' && curr !== '1' && curr !== '2' && curr !== '3') {
               var definitionString = "2D, DOM, RemovableBox, ColorableBox";
               if (curr && curr != curr.toUpperCase())
                   definitionString = definitionString + ", PushableBox";
@@ -34,13 +34,20 @@ function loadMap(level, loadComplete) {
               Crafty.e("2D, DOM, PushableBox, ColorableBox")
               .ColorableBox(item)
               .attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+            if (curr == '-' || curr == '2' || curr == '3')
+              Crafty.e("Floor")
+              .attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+            if (curr == '1')
+              Crafty.e("ColorFloor")
+              .attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize})
+              .ColorFloor('red');
             if (curr == 'F')
               Crafty.e("2D, DOM, FinishableBox, " + item).attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize, nextMapKey: nextMap});
             if (curr == 'X')
               Crafty.e("2D, DOM, solid, " + item).attr({x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
             if (curr == 'S')
               Crafty.e("Player, 2D, Canvas, player, Movement, Collision, Phil, SpriteColor")
-                .attr({ x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize })
+                .attr({ x: j*gameBoard.tileSize, y: i*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize, z:5 })
                 .spriteColor("FFFFFF", 0.0)
                 .Moveable(200); // Character speed
           }

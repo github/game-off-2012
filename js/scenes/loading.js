@@ -19,14 +19,19 @@ Crafty.scene("loading", function () {
         blueBoxUnmovable: [1, 10],
         whiteBoxUnmovable: [1, 9],
         purpleBoxUnmovable: [1, 12],
-        portal: [0, 12]
+        portal: [0, 12],
+        grayFloor: [2, 13],
+        redFloor: [2, 11],
+        blueFloor: [2, 10],
+        whiteFloor: [2, 9],
+        purpleFloor: [2, 12]
     });
     
     // Loads the sprite color module from an external source
     Crafty.modules({ SpriteColor: 'RELEASE' }, function () {
         // Simulate a load time for now to make sure this works
         setTimeout(function () {
-          Crafty.scene("0"); //when everything is loaded, run the main scene
+          Crafty.scene("9001"); //when everything is loaded, run the main scene
         }, 500);
     });
   });
