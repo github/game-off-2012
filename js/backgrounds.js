@@ -40,53 +40,60 @@
 
 
       // Clouds
-      this.cloud_img = new Image();
-      this.cloud_img.src = 'img/clouds.png';
+      // this.cloud_img = new Image();
+      // this.cloud_img.src = 'img/clouds.png';
+      this.cloud_img = mit.image.clouds;
 
       this.cloud_img.width = mit.W;
       this.cloud_img.height = mit.H;
 
 
       // Back Trees
-      this.backtree_img = new Image();
-      this.backtree_img.src = 'img/back_trees.png';
+      // this.backtree_img = new Image();
+      // this.backtree_img.src = 'img/back_trees.png';
+      this.backtree_img = mit.image.backtrees;
 
       this.backtree_img.width = mit.W;
       this.backtree_img.height = mit.H;
 
 
       // Front Trees
-      this.fronttree_img = new Image();
-      this.fronttree_img.src = 'img/front_trees.png';
+      // this.fronttree_img = new Image();
+      // this.fronttree_img.src = 'img/front_trees.png';
+      this.fronttree_img = mit.image.fronttrees;
 
       this.fronttree_img.width = mit.W;
       this.fronttree_img.height = mit.H;
 
 
       // Ground
-      this.ground_img = new Image();
-      this.ground_img.src = 'img/ground.png';
+      // this.ground_img = new Image();
+      // this.ground_img.src = 'img/ground.png';
+      this.ground_img = mit.image.ground;
 
       this.ground_img.width = mit.W;
       this.ground_img.height = mit.H;
 
 
       // Grass
-      this.grass_img = new Image();
-      this.grass_img.src = 'img/grass.png';
+      // this.grass_img = new Image();
+      // this.grass_img.src = 'img/grass.png';
+      this.grass_img = mit.image.grass;
 
       this.grass_img.width = mit.W;
       this.grass_img.height = mit.H;
 
 
       // Log on which pappu sits
-      this.log_img = new Image();
-      this.log_img.src = 'img/log.png';
+      // this.log_img = new Image();
+      // this.log_img.src = 'img/log.png';
+      this.log_img = mit.image.log;
 
 
       // Combined BG Image
-      this.combined_bg_img = new Image();
-      this.combined_bg_img.src = 'img/bg_combined.png';
+      // this.combined_bg_img = new Image();
+      // this.combined_bg_img.src = 'img/bg_combined.png';
+      this.combined_bg_img = mit.image.bg_combined;
     },
 
     drawClouds: function(ctx) {
