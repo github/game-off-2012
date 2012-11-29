@@ -142,25 +142,18 @@ SongView = Backbone.View.extend({
   animate: function() {
 
     requestAnimationFrame(this.animate);
-    this.clear();
 
-    _.each(sprites, function(sprite){
-      sprite.render(this.context);
-    }, this)
+    if(!this.audio.paused){
+      this.clear();
 
-/*
-    this.context.fillStyle = 'gray';
-    this.context.fillRect(70, 0, 20, this.canvas.height);
-    this.context.fillRect(165, 0, 20, this.canvas.height);
-    this.context.fillRect(258, 0, 20, this.canvas.height);
-    this.context.fillRect(353, 0, 20, this.canvas.height);
-    this.context.fillRect(0, 335, this.canvas.width, 5);
-    this.context.fillRect(0, 360, this.canvas.width, 5);*/
+      _.each(sprites, function(sprite){
+        sprite.render(this.context);
+      }, this)
     
-    this.renderMarker(this.active, 'green');
-    this.renderMarker(this.inactive, 'darkgray');
-    this.renderMarker(this.missed, 'red');
-
+      this.renderMarker(this.active, 'green');
+      this.renderMarker(this.inactive, 'darkgray');
+      this.renderMarker(this.missed, 'red');
+    }
   },
 
   handleKey: function(event) {
