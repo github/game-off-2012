@@ -44,7 +44,7 @@ TowerStats = {
         range:          100,
         damage:         10,
         hp:             100,
-        attSpeed:       0.1,        
+        attSpeed:       1,        
         mutate:         0,
         mutatestrength: 0,
         upload:         1,

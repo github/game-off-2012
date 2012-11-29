@@ -177,7 +177,8 @@ var allAttackTypes = {
         };
     },
     Chain: function chain_lightning() {
-        this.chain_chance = 1.0;
+        this.chain_chance = 0.5;
+        this.repeat_delay = 0.1;
         this.drawGlyph = function (pen, tPos) {
             //Draw text
             pen.fillStyle = "#000000";
@@ -197,12 +198,13 @@ var allAttackTypes = {
             var damage = attackTemplate.damage;
 
             this.chain_chance = attackTemplate.attackType.chain_chance;
+            this.repeat_delay = attackTemplate.attackType.repeat_delay;
 
             this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
             
             //AlphaDecay destroys us
             var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
-            this.base.addObject(new AlphaDecay(damageToTime(realAttacker.attr.damage), 1, 0));
+            this.base.addObject(new AlphaDecay(this.repeat_delay, 1, 0));
 
             this.base.addObject(line);
 
