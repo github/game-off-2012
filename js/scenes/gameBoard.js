@@ -21,3 +21,9 @@ Crafty.scene("1", function () {
     console.log('map 1 loaded');
   });
 });
+
+Crafty.scene("2", function () {
+  levelManager.loadMap(2, function(){
+    console.log('map 2 loaded');
+  });
+});

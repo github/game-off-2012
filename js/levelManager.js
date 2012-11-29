@@ -1,7 +1,7 @@
 var levelManager = {
     tileMap: {
         B: function (x, y) { levelManager.createRemovableBox("blue", x, y); },
-        W: function (x, y) { levelManager.createPushableBox("white", x, y); },
+        W: function (x, y) { levelManager.createRemovableBox("white", x, y); },
         R: function (x, y) { levelManager.createRemovableBox("red", x, y); },
         P: function (x, y) { levelManager.createRemovableBox("purple", x, y); },
         b: function (x, y) { levelManager.createPushableRemovableBox("blue", x, y); },
