@@ -1,2 +1,2 @@
-octo_legs_1 = 0 0 102 90
-octo_legs_2 = 103 0 97 100
+octo_legs_1 = 0 0 102 100
+octo_legs_2 = 103 0 102 100

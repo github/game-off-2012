@@ -1,4 +1,4 @@
-octo_face_blink = 86 0 84 26
-octo_face_happy = 0 0 85 43
-octo_face_idle = 0 84 85 37
-octo_face_ohno = 0 44 85 39
+octo_face_blink = 0 0 85 43
+octo_face_happy = 0 44 85 43
+octo_face_idle = 86 0 85 43
+octo_face_ohno = 86 44 85 43

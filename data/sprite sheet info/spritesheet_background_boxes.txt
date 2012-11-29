@@ -1,5 +1,5 @@
-background_boxes_1 = 0 620 633 297
-background_boxes_2 = 0 324 640 295
-background_boxes_3 = 0 0 640 323
-background_boxes_4 = 641 318 613 314
-background_boxes_5 = 641 0 632 317
+background_boxes_1 = 0 0 640 340
+background_boxes_2 = 0 341 640 340
+background_boxes_3 = 0 682 640 340
+background_boxes_4 = 641 0 640 340
+background_boxes_5 = 641 341 640 340
