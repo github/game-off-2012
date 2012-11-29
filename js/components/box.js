@@ -81,7 +81,7 @@ Crafty.c('RemovableBox', {
 
         // Initiate inner text to display the number
         // of blocks needed for removable.  Not sure if we want this?
-        this.FancyText("2");
+        this.FancyText("3");
         this.trigger('setTextCSS', {
             "text-align": "center",
             "font-size": "2em",
@@ -116,7 +116,7 @@ Crafty.c('RemovableBox', {
         }
 
         // If the number of removable blocks is >= 2 then remove them
-        if(_.size(removableNeighbors) > 1) {
+        if(_.size(removableNeighbors) > 2) {
             _.each(removableNeighbors, function(neighborToDestroy, key){ 
                 neighborToDestroy.destroy();
             });
