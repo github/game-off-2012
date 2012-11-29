@@ -32,9 +32,9 @@ Crafty.c "Game",
     @_actionDelay = Math.max(Config.obstacles.intervals.minimum, @_actionDelay - Config.obstacles.intervals.reduceBy)
     @attr(cycles: @cycles + 1)
 
-  rollActionIn: ->
-    @delay((=> @currentAction = null), @_actionDelay * 3/4)
-    @delay((=> @rollAction()), @_actionDelay)
+  rollActionIn: (value = null) ->
+    @delay((=> @currentAction = null), value || (@_actionDelay * 3/4))
+    @delay((=> @rollAction()), value || @_actionDelay)
 
   rollAction: ->
     return if @stopped

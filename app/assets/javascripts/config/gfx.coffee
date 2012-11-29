@@ -18,7 +18,7 @@ Config.gfx =
 
   track:
     baseColor: "#2A678C"
-    hueChangeDivisor: 12
+    hueChangeDivisor: 6
 
   cyclesTitles:
     [

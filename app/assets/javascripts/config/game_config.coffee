@@ -13,7 +13,7 @@ Config.cycle =
     maximum: 180
 
 Config.player =
-  size: 7
+  size: 8
   initialAngle: 270
   radiusModification: -15
   speed:
@@ -23,37 +23,37 @@ Config.player =
       maximum: 2.2
     angular:
       initial: 1
-      increase: 0.08
+      increase: 0.1
       maximum: 3
 
 Config.obstacles =
   width:
     innerRadius: 25
-    outerRadius: 25
+    outerRadius: 40
   height:
-    innerRadius: 15
+    innerRadius: 20
     outerRadius: 350
   changeWhere:
     initial: 50
     randomBy: 20
     increaseBy: 5
   intervals:
-    atStart: 2000
-    initial: 1700
+    atStart: 500
+    initial: 1400
     reduceBy: 100
-    minimum: 750
+    minimum: 500
   tweenDuration:
     inital: 100
     change: 3
     minimum: 10
   effect:
     divisor: 1.2
-    threshold: 2
+    threshold: 1
 
 Config.actions      =  ["Pull", "Push", "Fork", "Merge", "Pull", "Push", "Merge", "Pull", "Push"]
 Config.actionValues =
-  Pull:  25
-  Push:  25
+  Pull:  30
+  Push:  30
   Merge: 15
   Fork:  15
 
