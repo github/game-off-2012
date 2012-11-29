@@ -222,7 +222,4 @@
 
   };
 
-
-  mit.PakiaUtils.init();
-
 }());

@@ -270,6 +270,4 @@
 
   };
 
-  mit.CollectibleUtils.init();
-
 }());

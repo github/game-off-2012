@@ -1,3 +1,5 @@
+(function () {
+
   var Obj = {};
   Obj.size = function(obj) {
       var size = 0, key;
@@ -17,7 +19,7 @@
 
   // Preloading image stuff
 
-  var audio = [
+  mit.audio = [
     loadMusic, 
     loadAngry, 
     loadSad, 
@@ -26,7 +28,7 @@
     loadTing,
   ];
 
-  var images = {
+  mit.images = {
     angry_pakia : "img/angry_pakia.png",
     apple : "img/star.png",
     back_trees : "img/back_trees.png",
@@ -55,8 +57,8 @@
   var image = {};
 
   // Get the size of an Obj
-  var size = Obj.size(images);
-  size += audio.length;
+  var size = Obj.size(mit.images);
+  size += mit.audio.length;
 
   var counter = 0,
       percent = 0;
@@ -65,8 +67,8 @@
   var loader = document.getElementById("loading");
   var loadText = document.getElementById("loadText");
 
-  for(var i = 0; i < audio.length; i++) {
-    var file = audio[i];
+  for(var i = 0; i < mit.audio.length; i++) {
+    var file = mit.audio[i];
 
     if (isNaN(file.duration)) {
       file.addEventListener("loadeddata", function() {
@@ -74,8 +76,12 @@
         percent = Math.floor((counter/size*100));
         loading.style.width = percent + "%";
         loadText.innerHTML = "Loading... " + percent + "%";
-        if(percent >= 100)
+
+        if(percent >= 100) {
           $("#loading").fadeOut();
+          mit.main();
+        }
+
       });
     }
     else {
@@ -83,12 +89,16 @@
       percent = Math.floor((counter/size*100));
       loading.style.width = percent + "%";
       loadText.innerHTML = "Loading... " + percent + "%";
-      if(percent >= 100)
+
+      if(percent >= 100) {
         $("#loading").fadeOut();
+        mit.main();
+      }
+
     }
   }
 
-  for(var src in images) {
+  for(var src in mit.images) {
     image[src] = new Image();
     image[src].onload = function() {
       counter++;
@@ -96,9 +106,15 @@
       percent = Math.floor(((counter)/size*100));
       loading.style.width = percent + "%";
       loadText.innerHTML = "Loading... " + percent + "%";
-      if(percent >= 100)
+      
+      if(percent >= 100) {
         $("#loading").fadeOut();
+        mit.main();
+      }
+
     };
 
-    image[src].src = images[src];
+    image[src].src = mit.images[src];
   }
+
+}());

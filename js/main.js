@@ -1,4 +1,5 @@
-(function() {
+
+mit.main = function() {
 
   // rAF
   window.requestAnimationFrame = function() {
@@ -296,8 +297,15 @@
     mit.ui.fps_count.html(mit.fps.toFixed(0) + ' FPS');
   }, 1000);
 
+
   // Initializations
   mit.Backgrounds.init(ctx);
+  mit.ForkUtils.init();
+  mit.BranchUtils.init();
+  mit.CollectibleUtils.init();
+  mit.Pappu.init();
+  mit.PakiaUtils.init();
+
 
   (function renderGame() {
     window.requestAnimationFrame(renderGame);
@@ -405,4 +413,4 @@
     return;
   }());
 
-}());
+};

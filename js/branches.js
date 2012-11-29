@@ -216,6 +216,4 @@
 
   };
 
-  mit.BranchUtils.init();
-
 }());

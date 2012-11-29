@@ -326,6 +326,4 @@
 
   };
 
-  mit.ForkUtils.init();
-
 }());
