@@ -49,8 +49,8 @@ var Obj = {};
     plank_mid : "img/plank_mid.png",
     plank_top : "img/plank_top.png",
     sad_pakia : "img/sad_pakia.png",
-    bg_combined: "img/bg_combined.png",
     stand : "img/stand.png"
+    bg_combined: "img/bg_combined.png",
   };
 
   var image = {};
