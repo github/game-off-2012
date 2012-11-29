@@ -5,19 +5,19 @@
 */
 
 Crafty.scene("9001", function () {
-  loadMap(9001, function(){
+  levelManager.loadMap(9001, function(){
     console.log('map 9001 loaded');
   });
 });
 
 Crafty.scene("0", function () {
-  loadMap(0, function(){
+  levelManager.loadMap(0, function(){
     console.log('map 0 loaded');
   });
 });
 
 Crafty.scene("1", function () {
-  loadMap(1, function(){
+  levelManager.loadMap(1, function(){
     console.log('map 1 loaded');
   });
 });
