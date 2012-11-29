@@ -14,17 +14,27 @@ SongView = Backbone.View.extend({
     this.audio.load();
     this.score = 0;
     this.combo = 0;
+    this.gameOver = false;
     this.sprites = new Array();
     this.queues = _.clone(this.model.get('queues'));
     this.active   = [[],[],[],[]];
     this.inactive = [[],[],[],[]];
     this.missed   = [[],[],[],[]];
     this.context = this.canvas.getContext('2d');
-    _.bindAll(this, 'handleKey', 'animate', 'getNext', 'moveMarkers');
-    $(document).bind('keydown', this.handleKey);
-    window.setInterval(this.getNext, 10);
-    window.setInterval(this.moveMarkers, 1000/170);
+    _.bindAll(this, 'handleKeyDown', 'handleKeyUp', 'animate', 'getNext', 'moveMarkers');
+    $(document).bind('keydown', this.handleKeyDown);
+    $(document).bind('keyup', this.handleKeyUp);
+    this.nextInterval = window.setInterval(this.getNext, 10);
+    this.moveInterval = window.setInterval(this.moveMarkers, 1000/224);
     this.animate();
+    window.setTimeout(_.bind(function(){
+      this.$el.find('#ready').hide();
+      this.$el.find('#go').show();
+      this.audio.play();
+    }, this), 1500);
+    window.setTimeout(_.bind(function(){
+      this.$el.find('#go').hide();
+    }, this), 2000);
   },
 
   render: function () { 
@@ -44,9 +54,19 @@ SongView = Backbone.View.extend({
       _.each(this.queues, function(queue, i){
           if (queue[0] <= (this.getTime() + 1000)){
             queue.shift();
-            this.active[i].push({top:0, type:i});
+            this.active[i].push({top:-66, type:i});
           }
       }, this);
+    }
+  },
+
+  checkGameOver: function () {
+    if (this.score <= -2500){
+      this.gameOver = true;
+      this.audio.pause()
+      this.$el.find('#game-over').show();
+      window.clearInterval(this.nextInterval);
+      window.clearInterval(this.moveInterval);
     }
   },
 
@@ -57,6 +77,7 @@ SongView = Backbone.View.extend({
           if(marker.top > 400){
             this.missed.push(queue.splice(i, 1));
             this.score -= 500;
+            this.checkGameOver();
             this.combo = 0;
           }else{
             marker.top += 2;
@@ -86,42 +107,40 @@ SongView = Backbone.View.extend({
     }
   },
 
+  //marker 66px tall, 382
+
   check: function (queue) {
     if(this.active[queue].length > 0 && 
-      this.active[queue][0].top < 260){
+      this.active[queue][0].top < 334){
       console.log('early');
       this.score -= 500;
+      this.checkGameOver();
       this.combo = 0;
     }else if(this.active[queue].length > 0 && 
-      this.active[queue][0].top < 330 &&
-      this.active[queue][0].top > 260){
+      this.active[queue][0].top < 334 &&
+      this.active[queue][0].top > 366){
       this.inactive[queue].push(this.active[queue].shift());
       console.log('ok');
       this.score += 500;
       this.combo += 1;
     }else if(this.active[queue].length > 0 &&
-      this.active[queue][0].top > 330 &&
-      this.active[queue][0].top < 370){
+      this.active[queue][0].top > 366 &&
+      this.active[queue][0].top < 398){
       this.inactive[queue].push(this.active[queue].shift());
       console.log('Perfect!');
       this.score += 1000;
-      this.combo += 1;
-    }else if(this.active[queue].length > 0 &&
-      this.active[queue][0].top > 370 && 
-      this.active[queue][0].top < 400){
-      this.inactive[queue].push(this.active[queue].shift());
-      console.log('ok');
-      this.score += 500;
       this.combo += 1;
     }
   },
 
   pause: function () {
-	  console.log(this.getTime());
-    if(this.audio.paused){
-      this.audio.play();
-    }else{
-      this.audio.pause();
+    if(!this.gameOver){
+      this.$el.find('#pause').toggle();
+      if(this.audio.paused){
+        this.audio.play();
+      }else{
+        this.audio.pause();
+      }
     }
   },
 
@@ -134,47 +153,59 @@ SongView = Backbone.View.extend({
     this.context.fillStyle = color;
     _.each(type, function(queues){
       _.each(queues, function(marker){
-        this.context.drawImage(markers['marker_clone'].img,
-          (marker.type * 94 + 70), marker.top);
+        this.context.drawImage(markers[marker.type].img,
+          (marker.type * 100 + 44), marker.top);
       }, this)
     }, this);
   },
 
   animate: function() {
 
-    requestAnimationFrame(this.animate);
-    this.clear();
+    if(!this.gameOver){
+      requestAnimationFrame(this.animate);
 
-    _.each(sprites, function(sprite){
-      sprite.render(this.context);
-    }, this)
+      this.clear();
 
-/*
-    this.context.fillStyle = 'gray';
-    this.context.fillRect(70, 0, 20, this.canvas.height);
-    this.context.fillRect(165, 0, 20, this.canvas.height);
-    this.context.fillRect(258, 0, 20, this.canvas.height);
-    this.context.fillRect(353, 0, 20, this.canvas.height);
-    this.context.fillRect(0, 335, this.canvas.width, 5);
-    this.context.fillRect(0, 360, this.canvas.width, 5);*/
-    
-    this.renderMarker(this.active, 'green');
-    this.renderMarker(this.inactive, 'darkgray');
-    this.renderMarker(this.missed, 'red');
+      _.each(sprites, function(sprite){
+        sprite.render(this.context);
+      }, this)
 
+      if(!this.audio.paused){    
+        this.renderMarker(this.active, 'green');
+        this.renderMarker(this.inactive, 'darkgray');
+        this.renderMarker(this.missed, 'red');
+      }
+    }
   },
 
-  handleKey: function(event) {
+  handleKeyDown: function(event) {
     switch (event.keyCode) {
       case 70: this.check(0);
+               sprites.octo_fork.set('current_frame', 1);
         break;
       case 71: this.check(1);
+               sprites.octo_push.set('current_frame', 1);
         break;
       case 72: this.check(2);
+               sprites.octo_pull.set('current_frame', 1);
         break;
       case 74: this.check(3);
+               sprites.octo_clone.set('current_frame', 1);
         break;
       case 80: this.pause();
+        break;
+    }
+  },
+
+  handleKeyUp: function(event) {
+    switch (event.keyCode) {
+      case 70: sprites.octo_fork.set('current_frame', 0);
+        break;
+      case 71: sprites.octo_push.set('current_frame', 0);
+        break;
+      case 72: sprites.octo_pull.set('current_frame', 0);
+        break;
+      case 74: sprites.octo_clone.set('current_frame', 0);
         break;
     }
   }

@@ -16,7 +16,7 @@ var sprites = {
     destX : 0,
     destY : 60,
     continuous: true,
-    duration : 500
+    duration : 1500
   }),
 
   machine_back : new Sprite({
@@ -34,7 +34,7 @@ var sprites = {
     destX : 479,
     destY : 351,
     continuous: true,
-    duration : 500
+    duration : 1000
   }),
 
   dashboard : new Sprite({
@@ -50,9 +50,7 @@ var sprites = {
       [72, 0, 71, 120]
     ],
     destX : 560,
-    destY : 334,
-    continuous: true,
-    duration : 500
+    destY : 334
   }),
 
   octo_fork : new Sprite({
@@ -62,9 +60,7 @@ var sprites = {
       [0, 91, 500, 90]
     ],
     destX : 4,
-    destY : 300,
-    continuous: true,
-    duration : 500
+    destY : 300
   }),
 
   octo_pull : new Sprite({
@@ -74,9 +70,7 @@ var sprites = {
       [58, 0, 57, 249]
     ],
     destX : 435,
-    destY : 92,
-    continuous: true,
-    duration : 500
+    destY : 92
   }),
 
   octo_push : new Sprite({
@@ -86,9 +80,7 @@ var sprites = {
       [51, 0, 50, 86]
     ],
     destX : 475,
-    destY : 365,
-    continuous: true,
-    duration : 500
+    destY : 365
   }),
 
   octo_body : new Sprite({
@@ -101,13 +93,12 @@ var sprites = {
     filename: 'spritesheet_octo_face.png',
     frames:[
       [0, 0, 85, 43],
-	  [0, 44, 85, 43],
+      [0, 44, 85, 43],
       [86, 0, 85, 43],
       [86, 44, 85, 43]
     ],
     destX : 474,
-    destY : 277,
-	continuous: true
+    destY : 277
   }),
 
   music : new Sprite({
@@ -182,8 +173,9 @@ var sprites = {
   })
 };
 
-var markers = {
-  marker_clone : new Sprite({
-    filename: 'marker_clone.png'
-  }),
-}
+var markers = [
+  new Sprite({filename: 'marker_fork.png'}),
+  new Sprite({filename: 'marker_push.png'}),
+  new Sprite({filename: 'marker_pull.png'}),
+  new Sprite({filename: 'marker_clone.png'})
+]
