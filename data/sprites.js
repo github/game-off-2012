@@ -116,7 +116,7 @@ var sprites = {
     destX : 582,
     destY : 218,
     continuous: true,
-    duration : 500
+    duration : 1000
   }),
 
   grinder_back : new Sprite({
