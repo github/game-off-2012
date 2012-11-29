@@ -99,32 +99,35 @@
     drawClouds: function(ctx) {
       var cloud_bg_vx_abs = Math.abs(this.cloud_bg_vx);
 
-      ctx.drawImage(
-        this.cloud_img,
+      // fixing weird indexSizeError bugs for the most nonsensical browsers - opera and IE
+      try {
+        ctx.drawImage(
+          this.cloud_img,
 
-        cloud_bg_vx_abs,
-        0,
-        mit.W + this.cloud_bg_vx,
-        mit.H,
+          cloud_bg_vx_abs,
+          0,
+          mit.W + this.cloud_bg_vx,
+          mit.H,
 
-        0, 0,
-        mit.W + this.cloud_bg_vx,
-        mit.H
-      );
+          0, 0,
+          mit.W + this.cloud_bg_vx,
+          mit.H
+        );
 
-      ctx.drawImage(
-        this.cloud_img,
+        ctx.drawImage(
+          this.cloud_img,
 
-        0, 0,
-        cloud_bg_vx_abs,
-        mit.H,
+          0, 0,
+          cloud_bg_vx_abs,
+          mit.H,
 
-        mit.W + this.cloud_bg_vx,
-        0,
-        cloud_bg_vx_abs,
-        mit.H
-      );
-
+          mit.W + this.cloud_bg_vx,
+          0,
+          cloud_bg_vx_abs,
+          mit.H
+        );
+      }
+      catch(e) {}
       this.cloud_bg_vx -= this.cloud_bg_move_speed;
 
       if (-this.cloud_bg_vx >= mit.W) {
@@ -137,31 +140,35 @@
     drawBackTrees: function(ctx) {
       var backtree_bg_vx_abs = Math.abs(this.backtree_bg_vx);
 
-      ctx.drawImage(
-        this.backtree_img,
+      // fixing weird indexSizeError bugs for the most nonsensical browsers - opera and IE
+      try {
+        ctx.drawImage(
+          this.backtree_img,
 
-        backtree_bg_vx_abs,
-        0,
-        mit.W + this.backtree_bg_vx,
-        mit.H,
+          backtree_bg_vx_abs,
+          0,
+          mit.W + this.backtree_bg_vx,
+          mit.H,
 
-        0, 0,
-        mit.W + this.backtree_bg_vx,
-        mit.H
-      );
+          0, 0,
+          mit.W + this.backtree_bg_vx,
+          mit.H
+        );
 
-      ctx.drawImage(
-        this.backtree_img,
+        ctx.drawImage(
+          this.backtree_img,
 
-        0, 0,
-        backtree_bg_vx_abs,
-        mit.H,
+          0, 0,
+          backtree_bg_vx_abs,
+          mit.H,
 
-        mit.W + this.backtree_bg_vx,
-        0,
-        backtree_bg_vx_abs,
-        mit.H
-      );
+          mit.W + this.backtree_bg_vx,
+          0,
+          backtree_bg_vx_abs,
+          mit.H
+        );
+      }
+      catch(e) {}
 
       if (mit.game_started)
         this.backtree_bg_vx -= this.backtree_bg_move_speed * this.common_bg_speed;
@@ -175,33 +182,36 @@
 
     drawFrontTrees: function(ctx) {
       var fronttree_bg_vx_abs = Math.abs(this.fronttree_bg_vx);
+ 
+      // fixing weird indexSizeError bugs for the most nonsensical browsers - opera and IE
+      try {
+        ctx.drawImage(
+          this.fronttree_img,
 
-      ctx.drawImage(
-        this.fronttree_img,
+          fronttree_bg_vx_abs,
+          0,
+          mit.W + this.fronttree_bg_vx,
+          mit.H,
 
-        fronttree_bg_vx_abs,
-        0,
-        mit.W + this.fronttree_bg_vx,
-        mit.H,
+          0, 0,
+          mit.W + this.fronttree_bg_vx,
+          mit.H
+        );
 
-        0, 0,
-        mit.W + this.fronttree_bg_vx,
-        mit.H
-      );
+        ctx.drawImage(
+          this.fronttree_img,
 
-      ctx.drawImage(
-        this.fronttree_img,
+          0, 0,
+          fronttree_bg_vx_abs,
+          mit.H,
 
-        0, 0,
-        fronttree_bg_vx_abs,
-        mit.H,
-
-        mit.W + this.fronttree_bg_vx,
-        0,
-        fronttree_bg_vx_abs,
-        mit.H
-      );
-
+          mit.W + this.fronttree_bg_vx,
+          0,
+          fronttree_bg_vx_abs,
+          mit.H
+        );
+      }
+      catch(e) {}
       if (mit.game_started)
         this.fronttree_bg_vx -= this.fronttree_bg_move_speed * this.common_bg_speed;
 
@@ -214,32 +224,35 @@
 
     drawGround: function(ctx) {
       var ground_bg_vx_abs = Math.abs(this.ground_bg_vx);
+      // fixing weird indexSizeError bugs for the most nonsensical browsers - opera and IE
+      try {
+        ctx.drawImage(
+          this.ground_img,
 
-      ctx.drawImage(
-        this.ground_img,
+          ground_bg_vx_abs,
+          0,
+          mit.W + this.ground_bg_vx,
+          mit.H,
 
-        ground_bg_vx_abs,
-        0,
-        mit.W + this.ground_bg_vx,
-        mit.H,
+          0, 0,
+          mit.W + this.ground_bg_vx,
+          mit.H
+        );
 
-        0, 0,
-        mit.W + this.ground_bg_vx,
-        mit.H
-      );
+        ctx.drawImage(
+          this.ground_img,
 
-      ctx.drawImage(
-        this.ground_img,
+          0, 0,
+          ground_bg_vx_abs,
+          mit.H,
 
-        0, 0,
-        ground_bg_vx_abs,
-        mit.H,
-
-        mit.W + this.ground_bg_vx,
-        0,
-        ground_bg_vx_abs,
-        mit.H
-      );
+          mit.W + this.ground_bg_vx,
+          0,
+          ground_bg_vx_abs,
+          mit.H
+        );
+      }
+      catch(e) {}
 
       if (mit.game_started)
         this.ground_bg_vx -= this.ground_bg_move_speed * this.common_bg_speed;
@@ -255,32 +268,35 @@
 
     drawGrass: function(ctx) {
       var grass_bg_vx_abs = Math.abs(this.grass_bg_vx);
+      // fixing weird indexSizeError bugs for the most nonsensical browsers - opera and IE
+      try {
+        ctx.drawImage(
+          this.grass_img,
 
-      ctx.drawImage(
-        this.grass_img,
+          grass_bg_vx_abs,
+          0,
+          mit.W + this.grass_bg_vx,
+          mit.H,
 
-        grass_bg_vx_abs,
-        0,
-        mit.W + this.grass_bg_vx,
-        mit.H,
+          0, 0,
+          mit.W + this.grass_bg_vx,
+          mit.H
+        );
 
-        0, 0,
-        mit.W + this.grass_bg_vx,
-        mit.H
-      );
+        ctx.drawImage(
+          this.grass_img,
 
-      ctx.drawImage(
-        this.grass_img,
+          0, 0,
+          grass_bg_vx_abs,
+          mit.H,
 
-        0, 0,
-        grass_bg_vx_abs,
-        mit.H,
-
-        mit.W + this.grass_bg_vx,
-        0,
-        grass_bg_vx_abs,
-        mit.H
-      );
+          mit.W + this.grass_bg_vx,
+          0,
+          grass_bg_vx_abs,
+          mit.H
+        );
+      }
+      catch(e) {}
 
       if (mit.game_started)
         this.grass_bg_vx -= this.grass_bg_move_speed * this.common_bg_speed;
@@ -305,32 +321,35 @@
 
     drawCombinedBG: function(ctx) {
       var combined_bg_vx_abs = Math.abs(this.combined_bg_vx);
+      // fixing weird indexSizeError bugs for the most nonsensical browsers - opera and IE
+      try {
+        ctx.drawImage(
+          this.combined_bg_img,
 
-      ctx.drawImage(
-        this.combined_bg_img,
+          combined_bg_vx_abs,
+          0,
+          mit.W + this.combined_bg_vx,
+          mit.H,
 
-        combined_bg_vx_abs,
-        0,
-        mit.W + this.combined_bg_vx,
-        mit.H,
+          0, 0,
+          mit.W + this.combined_bg_vx,
+          mit.H
+        );
 
-        0, 0,
-        mit.W + this.combined_bg_vx,
-        mit.H
-      );
+        ctx.drawImage(
+          this.combined_bg_img,
 
-      ctx.drawImage(
-        this.combined_bg_img,
+          0, 0,
+          combined_bg_vx_abs,
+          mit.H,
 
-        0, 0,
-        combined_bg_vx_abs,
-        mit.H,
-
-        mit.W + this.combined_bg_vx,
-        0,
-        combined_bg_vx_abs,
-        mit.H
-      );
+          mit.W + this.combined_bg_vx,
+          0,
+          combined_bg_vx_abs,
+          mit.H
+        );
+      }
+      catch(e) {}
 
       if (mit.game_started)
         this.combined_bg_vx -= this.combined_bg_move_speed * this.common_bg_speed;
