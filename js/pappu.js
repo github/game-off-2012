@@ -181,8 +181,7 @@
       var crgt = (this.x > mit.W);
 
       // return true if crossed any sides
-      // if (ctop || cbtm || cleft || crgt) {
-      if (cbtm || cleft || crgt) {
+      if (ctop || cbtm || cleft || crgt) {
         return true;
       }
 
