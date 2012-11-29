@@ -8,12 +8,12 @@
 %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%R%
+%%%%%%%%%%%%%%B%
 %%%%%%%%%%%%%%R%
 %%%%%%%%%%%%%%R%
 %%%%%%%%%%%%%%R%
 %%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%F%
 %%%%%%%%%%%%%%%%
 XXXXXXXXXXXXXXXX
 XS%%%%%%%%%%%%%X
@@ -24,12 +24,12 @@ XXXXXXXXXXXX%%%X
 XXXXXXXXXXXX%%%X
 XXXXXXXXXXXX%%%X
 XXXXXXXXXXXX%%%X
-XXXXXXXXXXXX%%BX
+XXXXXXXXXXXX%%%X
 XXXXXXXXXX%%%%%X
 XXXXXXX%%%%%%%%X
 XXXX%%%%%%%%%%%X
 X%%%%%%%%%%%XB%X
-X%%%%%%%%%%%XBFX
+X%%%%%%%%%%%XB%X
 XXXXXXXXXXXXXXXX
 METADATA
 title: Level 2: The Journey Continues
