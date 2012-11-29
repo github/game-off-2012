@@ -118,7 +118,11 @@
 
       if (this.forks[this.forks.length-1]) {
         pos.x = this.forks[this.forks.length-1].x;
-        pos.x += utils.randomNumber(300,600);
+
+        if (mit.score > 2500)
+          pos.x += utils.randomNumber(300,600);
+        else
+          pos.x += utils.randomNumber(500,800);
       }
       else {
         pos.x = mit.W/1000 * 800;
@@ -134,8 +138,8 @@
 
       if (branches.length) {
         branches.forEach(function(branch) {
-          if (Math.abs(pos.x - branch.x) < 400)
-            pos.x = branch.x + 400;
+          if (Math.abs(pos.x - branch.x) < 500)
+            pos.x = branch.x + 500;
         });
       }
 

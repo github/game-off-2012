@@ -102,8 +102,8 @@
 
       if (forks.length) {
         forks.forEach(function(fork) {
-          if (Math.abs(pos.x - fork.x) < 400)
-            pos.x = fork.x + 400;
+          if (Math.abs(pos.x - fork.x) < 500)
+            pos.x = fork.x + 500;
         });
       }
 

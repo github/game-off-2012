@@ -369,7 +369,7 @@ mit.main = function() {
       mit.Pappu.checkCloneCollision();
 
       // Send over Pakias (Enemies)
-      if (mit.score > 99)
+      if (mit.score > 199)
         mit.PakiaUtils.render(ctx);
 
       // Update score
