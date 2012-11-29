@@ -42,7 +42,7 @@ function Tower_Connection(t1, t2) {
 
 TowerStats = {
         range:          100,
-        damage:         30,
+        damage:         3,
         hp:             100,
         attSpeed:       1,        
         mutate:         0,
