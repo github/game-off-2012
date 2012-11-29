@@ -6,7 +6,7 @@ function Tower_Connection(t1, t2) {
     this.tPos = new temporalPos(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y, 0, 0);
     this.base = new baseObj(this, 11);
     this.hover = false;
-    var color = "rgba(0, 255, 0, 0.2)";
+    var color = new Color().r(0).g(255).b(0).a(0.2);
     
     this.update = function(dt) {
         var a1 = t1.attr;
@@ -20,9 +20,9 @@ function Tower_Connection(t1, t2) {
             }
         }
         if (this.hover) {
-            color = "rgba(0, 255, 0, 0.9)";
+            color.a(0.9);
         } else {
-            color = "rgba(0, 255, 0, 0.2)";
+            color.a(0.2);
         }
         var cost = 1 * dt;
         if (eng.money < cost) {
@@ -34,7 +34,7 @@ function Tower_Connection(t1, t2) {
     
     this.draw = function(pen) {
         var p = this.tPos;
-        pen.strokeStyle = color;
+        pen.strokeStyle = color.str();
         pen.lineWidth = 2;
         ink.line(p1.x, p1.y, p2.x, p2.y, pen);
     }
@@ -85,20 +85,16 @@ function Tower(baseTile) {
     //this.base.addObject(new UpdateTicker(this.attr, "mutate", "mutate", true));
     this.base.addObject(new Selectable());
     
-    this.added = function() {        
-        // Yes, this is supposed to be here.
+    this.added = function() {
         this.recolor();        
     };
 
 
     //Hackish way to check if we are from breeder
-    if(baseTile)
-    {
+    if (baseTile) {
         var fillChance = 0.5;
-        for(var alGroup in AllAlleleGroups)
-        {
-            if(Math.random() < fillChance)
-            {
+        for (var alGroup in AllAlleleGroups) {
+            if (Math.random() < fillChance) {
                 this.genes.addAllele(alGroup, new Allele(AllAlleleGroups[alGroup]()));
             }
         }
@@ -108,7 +104,7 @@ function Tower(baseTile) {
     this.draw = function (pen) {
         var p = this.tPos;
         pen.save();
-        pen.fillStyle = this.color;
+        pen.fillStyle = color.str();
         pen.strokeStyle = "lightblue";
         ink.rect(p.x, p.y, p.w, p.h, pen);        
         pen.restore();
@@ -150,12 +146,12 @@ function Tower(baseTile) {
                 continue;
             //Seriously... WTF. This code used to mean if you did:
             //attr.daf += 1 it causes the object to be deleted.
-            if (invalid(a[at]))
-            {
-                if(a[at] < 0)
+            if (invalid(a[at])) {
+                if(a[at] < 0) {
                     this.die();
-                else
+                } else {
                     fail("Invalid attribute in attr of object (you likely have a typo).");
+                }
             }
             if (at == "hitcount") continue;
             if (at == "mutate" || at == "mutatestrength") {
@@ -173,18 +169,10 @@ function Tower(baseTile) {
         this.recolor();
     };
     
+    var color = new Color();
     this.recolor = function() {
-        function rgba(r, g, b, a) {
-            function color(n) {
-                return Math.round(n);
-            }
-            return "rgba(" + color(r) + "," + color(g) + "," + color(b) + "," + Math.round(a * 100) / 100 + ")";
-        }
         var a = this.attr;
-        this.color = rgba(255 - a.hp, a.range, a.damage, 0.5);
-
-        if(a.damage < 1)
-            this.color = "blue";
+        color.r(255 - a.hp).g(a.range).b(a.damage).a(0.5);
     }
 
     this.mouseover = function(e) {        
