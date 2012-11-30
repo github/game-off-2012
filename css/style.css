@@ -10,6 +10,7 @@
 	height: 480px;
 	position: relative;
 	margin: 30px;
+	background-image: url('../img/menu_background.png');
 }
 
 .menu img {
@@ -92,6 +93,7 @@
 
 .choctopus {
 	background-image: url('../img/choctopus_splash.png');
+	background-color: #603913;
 	position: absolute;
 	top: 0;
 	bottom: 0;
