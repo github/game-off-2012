@@ -3,10 +3,21 @@ function choose(choices)
 {
     var randomValue = Math.random();
 
-    var curValue = 0;
+    var realChoices = [];
     for(var chance in choices)
-        if(randomValue < chance)
-            return choices[chance];
+    {
+        var obj = {};
+        obj.chance = chance;
+        obj.choice = choices[chance];
+        realChoices.push(obj);
+    }
+
+    realChoices.sort(function (a, b) { return a.chance - b.chance; });
+
+    var curValue = 0;
+    for(var key in realChoices)
+        if(randomValue < realChoices[key].chance)
+            return realChoices[key].choice;
 }
 var AllAlleleGroups =
 {
@@ -15,9 +26,6 @@ var AllAlleleGroups =
     //(Ex, one could be +10 range, of +5 range (moderate bonus)
     //two could be +1000 range of +50 damage (major bonus)
     //three could be... etc
-    one: function () { return { range: 10 }; },
-    two: function () { return { range: Math.random() * 20 }; },
-    three: function () { return { range: 100, damage: -1 }; },
     //Make some for all of the attack types and target strategies.
     //Some major bonuses
     rangeBase: function () { return choose(

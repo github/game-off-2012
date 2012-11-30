@@ -35,8 +35,9 @@ function TowerDragger(pos, towerGeneratorFnc) {
                 delete this.base.rootNode.globalMouseDown[this.base.id];
             }
             var tileDrop = findClosest(this.base.rootNode, "Tile", e, 0);
-            if (tileDrop)
+            if (tileDrop) {
                 tryPlaceTower(this.towerGeneratorFnc(), tileDrop);
+            }
         }
         else {
             this.dragPos = e;
