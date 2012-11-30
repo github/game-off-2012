@@ -85,7 +85,7 @@ var CANVAS_WIDTH;
 var CANVAS_HEIGHT;
 var BOARD_WIDTH;
 var BOARD_HEIGHT;
-var eng;
+var ENG;
 (function() {
     var canvas = document.getElementById("myCanvas");
     var bufferCanvas = canvas.cloneNode(true);
@@ -102,8 +102,8 @@ var eng;
         canvas.height = CANVAS_HEIGHT;
         bufferCanvas.width = CANVAS_WIDTH;
         bufferCanvas.height = CANVAS_HEIGHT;
-        if (eng && eng.triggerResize) {
-            eng.triggerResize({width: CANVAS_WIDTH, height: CANVAS_HEIGHT});
+        if (ENG && ENG.triggerResize) {
+            ENG.triggerResize({width: CANVAS_WIDTH, height: CANVAS_HEIGHT});
         }
     }
     $(document).ready(function () {
@@ -124,17 +124,17 @@ var eng;
         CANVAS_WIDTH = Math.max(window.innerWidth, minWidth);
         CANVAS_HEIGHT = Math.max(window.innerHeight - 5, minHeight);
         
-        eng = new Engine(pen, bufferCanvas, new TemporalPos(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0));
-        //this.base.rootNode.holder will also get eng... but... yeah...
-        window.reqAnim(eng.run.bind(eng));
+        ENG = new Engine(pen, bufferCanvas, new TemporalPos(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0));
+        //this.base.rootNode.holder will also get ENG... but... yeah...
+        window.reqAnim(ENG.run.bind(ENG));
         
         $(window).resize(initCanvas);
         initCanvas();
         
-        $("#myCanvas").mousemove(eng.triggerMousemove.bind(eng));
-        $("#myCanvas").mouseout(eng.triggerMouseout.bind(eng));
-        $("#myCanvas").mousedown(eng.triggerMousedown.bind(eng));
-        $("#myCanvas").mouseup(eng.triggerMouseup.bind(eng));
+        $("#myCanvas").mousemove(ENG.triggerMousemove.bind(ENG));
+        $("#myCanvas").mouseout(ENG.triggerMouseout.bind(ENG));
+        $("#myCanvas").mousedown(ENG.triggerMousedown.bind(ENG));
+        $("#myCanvas").mouseup(ENG.triggerMouseup.bind(ENG));
     });    
 }());
 </script>

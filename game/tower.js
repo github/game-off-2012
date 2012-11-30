@@ -64,10 +64,10 @@ function Tower_Connection(t1, t2) {
             color.a(0.2);
         }
         var cost = 1 * dt;
-        if (eng.money < cost) {
+        if (ENG.money < cost) {
             this.base.destroySelf();
         } else {
-            eng.money -= cost;
+            ENG.money -= cost;
         }
     }
     
@@ -179,10 +179,10 @@ function Tower(baseTile) {
 
     // WTF - yeah man, this code is the bomb
     this.tryUpgrade = function () {
-        if (eng.money >= 100) {
+        if (ENG.money >= 100) {
             this.attr.damage *= 2;
             this.attr.attSpeed *= 2;
-            eng.money -= 100;
+            ENG.money -= 100;
         }
     };
     
@@ -274,8 +274,8 @@ function Tower(baseTile) {
         var towerSelected = findClosest(this.base.rootNode, "Tower", e, 0);
         if(towerSelected && towerSelected != this)
         {
-            if (eng.money < 50) return;
-            eng.money -= 50;
+            if (ENG.money < 50) return;
+            ENG.money -= 50;
             var conn = new Tower_Connection(this, towerSelected);
             this.base.addObject(conn);
             this.connections.push(conn);
@@ -286,21 +286,21 @@ function Tower(baseTile) {
 
 function tryPlaceTower(tower, tile)
 {
-    var eng = tile.base.rootNode;
+    var ENG = tile.base.rootNode;
     var e = tile.tPos.getCenter();
-    var towerOnTile = findClosest(eng, "Tower", e, 0);
-    var pathOnTile = findClosest(eng, "Path", e, 0);
+    var towerOnTile = findClosest(ENG, "Tower", e, 0);
+    var pathOnTile = findClosest(ENG, "Path", e, 0);
 
     var curCost = tile.base.rootNode.currentCost;
 
-    if (!towerOnTile && !pathOnTile && eng.money - curCost >= 0) {
-        eng.money -= curCost;   
+    if (!towerOnTile && !pathOnTile && ENG.money - curCost >= 0) {
+        ENG.money -= curCost;   
 
         tile.base.rootNode.currentCost *= 2;
 
         tower.tPos = tile.tPos;         
-        eng.base.addObject(tower);
-        eng.changeSel(tower);
+        ENG.base.addObject(tower);
+        ENG.changeSel(tower);
         getAnElement(tile.base.children.Selectable).ignoreNext = true;
     }
 };

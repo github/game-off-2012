@@ -31,7 +31,7 @@
 
     this.base = new BaseObj(this);
 
-    this.engine = this; //eng also works fine
+    this.engine = this; //ENG also works fine
 
     this.infobar = new Infobar(
             new TemporalPos(pos.w - 250, 0, 250, pos.h * 0.8)
@@ -103,11 +103,11 @@
         this.curQuadTree = new QuadTree(this.base.allChildren);
 
         /*
-        if (eng.base.lengths["Path_Start"] > 0
-        && (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] === 0)) {
+        if (ENG.base.lengths["Path_Start"] > 0
+        && (!ENG.base.lengths["Bug"] || ENG.base.lengths["Bug"] === 0)) {
         this.bugDifficulty += 0.1;
-        while (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] < this.currentBugs) {
-        var bugStart = getAnElement(eng.base.children["Path_Start"]);
+        while (!ENG.base.lengths["Bug"] || ENG.base.lengths["Bug"] < this.currentBugs) {
+        var bugStart = getAnElement(ENG.base.children["Path_Start"]);
         var newBug = new Bug(bugStart, this.bugDifficulty);
         this.base.addObject(newBug);
         }
@@ -174,8 +174,8 @@
     function throwMouseEventAt(mX, mY, eventName, eng) {
         var allUnderMouse = [];
 
-        for (var type in eng.base.allChildren) {
-            mergeToArray(findAllWithin(eng, type, { x: mX, y: mY }, 0), allUnderMouse);
+        for (var type in ENG.base.allChildren) {
+            mergeToArray(findAllWithin(ENG, type, { x: mX, y: mY }, 0), allUnderMouse);
         }
 
         if (allUnderMouse.length == 0)
@@ -285,7 +285,7 @@
         ink.text(x, y + 15, "Money: $" + Math.round(this.money*100)/100, pen);
         ink.text(x, y + 30, "Time passed: " + gameTimeAccumulated, pen);
         ink.text(x, y + 45, "FPS: " + this.lastFPS, pen);
-        ink.text(x, y + 60, "Bugs: " + eng.base.allLengths.Bug, pen);
+        ink.text(x, y + 60, "Bugs: " + ENG.base.allLengths.Bug, pen);
         ink.text(x, y + 75, "Ctrl: " + this.ctrlKey, pen);
     };
 

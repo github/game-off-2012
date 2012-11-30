@@ -91,9 +91,9 @@ function Bug(startPath, difficulty) {
     this.destroyAtBase = function() {
         this.base.destroySelf();        
 
-        eng.health -= 5;
+        ENG.health -= 5;
 
-        if (eng.health < 0) {
+        if (ENG.health < 0) {
             window.location.reload();
         }
     };

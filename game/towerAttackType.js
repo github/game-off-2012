@@ -51,7 +51,7 @@ function startAttack(attackTemplate) {
     if(!assertDefined(attackTemplate.attacker))
         return;
 
-    var eng = attackTemplate.attacker.base.rootNode;
+    var ENG = attackTemplate.attacker.base.rootNode;
     var attackType = attackTemplate.attackType;
 
     var realAttacker = attackTemplate.baseAttacker;
@@ -63,7 +63,7 @@ function startAttack(attackTemplate) {
     {
         var attackNode = new attackType.AttackNode(attackTemplate);
 
-        eng.base.addObject(attackNode);
+        ENG.base.addObject(attackNode);
     }
 }
 
@@ -261,9 +261,9 @@ var allAttackTypes = {
                     this.attackTemplate.target = targets[randomPos];
 
 
-                    var eng = this.attackTemplate.attacker.base.rootNode;
+                    var ENG = this.attackTemplate.attacker.base.rootNode;
                     //Resurrect ourself
-                    eng.base.addObject(new attackTemplate.attackType.AttackNode(this.attackTemplate));
+                    ENG.base.addObject(new attackTemplate.attackType.AttackNode(this.attackTemplate));
                 }
             };
         };
