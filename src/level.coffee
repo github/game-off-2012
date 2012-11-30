@@ -163,6 +163,8 @@ class TestLevel extends Level
     
     ent = e.srcElement.attributes.entity.value
     
+    console.log(@clonepoints != 0)
+    
     if @clonepoints != 0
       if ent == "archer"
         @clonepoints--
@@ -171,8 +173,7 @@ class TestLevel extends Level
         e.setUserData(new Archer())
         @entities.add(e)
         @totalentitys++
-        
-     if ent == "warrior"
+      if ent == "warrior"
         @clonepoints--
         @cloneMenu.setTotal(@clonepoints)
         e = new EntityModel(@world, 2-@camera.getXoffset()-12, 30, 24, 1.5, 0x02, 0x01|0x04|0x08)
