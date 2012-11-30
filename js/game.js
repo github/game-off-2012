@@ -50,4 +50,9 @@ var gameBoard = {
 $(document).ready(function () {
   Crafty.init(gameBoard.getWidth(), gameBoard.getHeight());
   Crafty.scene("loading");
+  
+  // Disable space bar page scrolling
+  window.onkeydown = function(e) { 
+    return !(e.keyCode == 32);
+  };
 });
