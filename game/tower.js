@@ -37,7 +37,7 @@ function Tower_Connection(t1, t2) {
                 groups.push(group);
 
             var group = pickRandom(groups);
-            var al = AllAlleleGroups[group];
+            var al = t1.genes.alleles[group];
 
             that.base.addObject(new Tower_Packet(t1, t2, group, al));
         }
