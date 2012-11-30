@@ -1,37 +1,37 @@
 16,16
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
 XXXXXXXXXXXXXXXX
-X--------------X
-X--------------X
-X--------------X
-X--------BWX---X
-X-------BPrX---X
-X--------WWX---X
-X---S----XXX---X
-X--------XPX---X
-X--------WWX---X
-X---------PX---X
-X-------XWPX---X
-X---------WX---X
-X-------X-RX---X
-X-------XRFXb--X
 XXXXXXXXXXXXXXXX
-----------------
-----------------
-----------------
-----------------
---------1---X13-
-------------X13-
-------------113-
-------------133-
-------------133-
-------------111-
-------------331-
-------------111-
---------33--133-
----------3--133-
-------------133-
-----------------
+XXXXXXXXXB--S--R
+XXXXXXXXXXX---XX
+XXXXXXXXXXXb-rXX
+XXXXXXXXXX----XX
+XXXXXXXXXX-2-1XX
+XXXXXXXXXX-2X1XX
+XXXXXXXXXX-2X1XX
+XXXXXXXXXXRWFWBX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
 METADATA
-title: Level 5: Getting Tricky
-nextMap: 100
-text: This level combines all of the skills you have learned so far.
+title: Level 5: Colored Tiles!
+nextMap: 5
+text: Boxes can only be moved on floors that are neutral colored (Gray) or of the same color as the box.

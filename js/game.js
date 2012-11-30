@@ -13,6 +13,7 @@ var gameBoard = {
   colorKey: 69,     // E is the take / give color key
   standardAnimationLength: 50,   // Number of frames to play animations
   nextMap: '',
+  currentMap: '',
   
   colorTextMap: {
     white: "#AFAFAF",

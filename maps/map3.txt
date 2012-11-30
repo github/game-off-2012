@@ -16,22 +16,22 @@
 ----------------
 ----------------
 XXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXX
-XXXXXXXXXB--S--R
-XXXXXXXXXXX---XX
-XXXXXXXXXXXb-rXX
-XXXXXXXXXX----XX
-XXXXXXXXXX-2-1XX
-XXXXXXXXXX-2X1XX
-XXXXXXXXXX-2X1XX
-XXXXXXXXXXRWFWBX
-XXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXX
+X--------------X
+X--------------X
+X--------------X
+X-------------pX
+X----------XXXXX
+X----------XXXXX
+X----------XXXXX
+X----------XXXPX
+X-------------bX
+XBB------------X
+XrPW-----------X
+XBB-----------BX
+X-----------XWXX
+X------RS---XRFX
 XXXXXXXXXXXXXXXX
 METADATA
-title: Level 4: Colored Tiles!
+title: Level 4: Advanced Color Swapping
 nextMap: 4
-text: To pass this level, you will need to slide colored blocks on rails with the same respective color.
+text: You'll need to take and give colors to blocks again.  Think in advance of what blocks need to go where!

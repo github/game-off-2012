@@ -90,6 +90,7 @@ var levelManager = {
                 // get next map
                 var nextMap = mapData.metadata.nextMap;
                 gameBoard.setMap(nextMap);
+                gameBoard.currentMap = level;
                 console.log("set", nextMap);
               
                 for (var a = 0; a < mapData.layers.length; a++) {
@@ -109,7 +110,7 @@ var levelManager = {
     },
     
     resetLevel: function () {
-      Crafty.scene(gameBoard.getMap() - 1);
+      Crafty.scene(gameBoard.currentMap);
     }
 }
 
