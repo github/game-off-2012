@@ -94,6 +94,20 @@ SongView = Backbone.View.extend({
   },
 
   checkEnd: function () {
+
+    if(this.score >= 0 && this.score < 5000){
+      sprites.octo_face.set('current_frame', 0);
+    }
+    if(this.score > 5000 && this.score < 10000){
+      sprites.octo_face.set('current_frame', 2);
+    }
+    if(this.score > 10000){
+      sprites.octo_face.set('current_frame', 1);
+    }
+    if(this.score < 0){
+      sprites.octo_face.set('current_frame', 3);
+    }
+
     if (this.getTime() >= this.model.get('end')){
       this.finished = true;
       this.audio.pause();
