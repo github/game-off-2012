@@ -34,7 +34,7 @@
     this.engine = this; //eng also works fine
 
     this.infobar = new Infobar(
-            new TemporalPos(pos.w - 250, 0, 250, pos.h * 0.8)
+            new TemporalPos(pos.w - 250, 0, 250, pos.h)
         );
 
     this.base.addObject(this.infobar);
@@ -43,10 +43,11 @@
             new TemporalPos(0, pos.h - 150, pos.w - 250, 150)
         );
     this.base.addObject(this.towerbar);
-    this.towerbreeder = new TowerBreeder(
-            new TemporalPos(pos.w - 250, pos.h - 150, 200, 150)
-        );
-    this.base.addObject(this.towerbreeder);
+
+//    this.towerbreeder = new TowerBreeder(
+//            new TemporalPos(pos.w - 250, pos.h - 150, 200, 150)
+//        );
+//    this.base.addObject(this.towerbreeder);
 
     this.gameInfoBar = new GameInfoBar(
             new TemporalPos(0, pos.h - 240, pos.w - 260, 80)
@@ -320,7 +321,7 @@
             }
             this.selectedBucket.push(obj);
             obj.base.addObject(new HoverIndicator());
-            this.towerbreeder.towers = this.selectedBucket;
+            //this.towerbreeder.towers = this.selectedBucket;
         }
         else {
             for (var key in this.selectedBucket) {

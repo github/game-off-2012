@@ -41,7 +41,7 @@ function UpdateTicker(objWithDelay, tickDelayName, parentTickFunctionName, inver
 
         if (this.inverseRate) {
             if (this.objWithDelay[this.tickDelayName] < 0) {
-                objDelay = Math.exp(this.objWithDelay[this.tickDelayName]) / Math.E;
+                objDelay = Math.E / Math.exp(this.objWithDelay[this.tickDelayName]);
             }
             else {
                 objDelay = 1 / this.objWithDelay[this.tickDelayName];

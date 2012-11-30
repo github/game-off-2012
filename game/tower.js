@@ -24,6 +24,9 @@ function Tower_Connection(t1, t2) {
     this.base = new BaseObj(this, 11);
     this.hover = false;
 
+    this.t1 = t1;
+    this.t2 = t2;
+
     var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11, {1: 0.1, 2: 0.3, 3: 0.5, 4: 0.7, 5: 0.9});
     this.base.addObject(line);
 
@@ -31,12 +34,12 @@ function Tower_Connection(t1, t2) {
 
     var delta = t2.tPos.getCenter();
     delta.sub(t1.tPos.getCenter());
-    delta.setMag(t2.tPos.w);
+    delta.setMag(t2.tPos.w * 0.5);
 
     pos.w = 20;
     pos.h = 20;
 
-    pos.sub(delta);
+    //pos.sub(delta);
     pos.sub({x: pos.w * 0.5, y: pos.h * 0.5});
     
     this.deleteButton = new Button(pos, "-", 
@@ -93,17 +96,11 @@ function Tower_Connection(t1, t2) {
         
         this.deleteButton.hidden = !this.base.parent.hover;
 
-        if (this.hover) {
+        if (this.base.parent.hover) {
             line.color = setColorPart(line.color, 3, 0.9);            
 
         } else {
             line.color = setColorPart(line.color, 3, 0.2);
-        }
-        var cost = 1 * dt;
-        if (eng.money < cost) {
-            this.base.destroySelf();
-        } else {
-            eng.money -= cost;
         }
     }
 }
@@ -293,6 +290,10 @@ function Tower(baseTile) {
         var towerSelected = findClosest(this.base.rootNode, "Tower", e, 0);
         if(towerSelected && towerSelected != this)
         {
+            for (var i = 0; i < this.connections.length; i++)
+                if(this.connections[i].t2 == towerSelected)
+                    return;
+
             if (eng.money < 50) return;
             eng.money -= 50;
             var conn = new Tower_Connection(this, towerSelected);

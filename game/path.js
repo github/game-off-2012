@@ -1,7 +1,7 @@
 
 function Path_End(x, y, w, h) {
     this.tPos = new TemporalPos(x, y, w, h, 0, 0);
-    this.base = new BaseObj(this, 2);
+    this.base = new BaseObj(this, 5);
     
     this.update = function (dt) {
         this.tPos.update(dt);
@@ -17,7 +17,7 @@ function Path_End(x, y, w, h) {
 
 function Path_Start(x, y, w, h) {
     this.tPos = new TemporalPos(x, y, w, h, 0, 0);
-    this.base = new BaseObj(this, 1);
+    this.base = new BaseObj(this, 5);
     
     //This is set after we are made
     //this.nextPath
@@ -66,7 +66,7 @@ function Path_Line(pathBase) {
 
 function Path(x, y, w, h) {
     this.tPos = new TemporalPos(x, y, w, h, 0, 0);
-    this.base = new BaseObj(this, 2);
+    this.base = new BaseObj(this, 3);
     this.pathLine = null;
     
     this.update = function (dt) {
