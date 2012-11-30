@@ -29,22 +29,22 @@
 
     this.lastTowerHover = null;
 
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
     this.engine = this; //eng also works fine
 
     this.infobar = new Infobar(
-            new temporalPos(pos.w - 250, 0, 250, pos.h * 0.8)
+            new TemporalPos(pos.w - 250, 0, 250, pos.h * 0.8)
         );
 
     this.base.addObject(this.infobar);
 
     this.towerbar = new Towerbar(
-            new temporalPos(0, pos.h - 150, pos.w - 350, 150)
+            new TemporalPos(0, pos.h - 150, pos.w - 350, 150)
         );
     this.base.addObject(this.towerbar);
     this.towerbreeder = new TowerBreeder(
-            new temporalPos(pos.w - 350, pos.h - 150, 200, 150)
+            new TemporalPos(pos.w - 350, pos.h - 150, 200, 150)
         );
     this.base.addObject(this.towerbreeder);
 
@@ -60,7 +60,7 @@
     var bugStart = getAnElement(this.engine.base.children["Path_Start"]);
 
     //Level/Wave generator
-    var lmpos = new temporalPos(pos.w-400, 0, 100, pos.h*0.05);
+    var lmpos = new TemporalPos(pos.w-400, 0, 100, pos.h*0.05);
     this.lvMan = new LevelManager(bugStart, lmpos);
     this.base.addObject(this.lvMan);
     

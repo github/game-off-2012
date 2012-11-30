@@ -124,7 +124,7 @@ var eng;
         width = Math.max(window.innerWidth, minWidth);
         height = Math.max(window.innerHeight - 5, minHeight);
         
-        eng = new Engine(pen, bufferCanvas, new temporalPos(0, 0, width, height, 0, 0));
+        eng = new Engine(pen, bufferCanvas, new TemporalPos(0, 0, width, height, 0, 0));
         //this.base.rootNode.holder will also get eng... but... yeah...
         window.reqAnim(eng.run.bind(eng));
         

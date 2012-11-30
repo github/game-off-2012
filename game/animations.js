@@ -19,8 +19,8 @@ function Line(start, end, color, zorder) {
     this.end = end;
 
     //We do not maintain tPos!
-    this.tPos = new temporalPos(start.x, start.y, end.x - start.x, end.y - start.y, 0, 0);
-    this.base = new baseObj(this, zorder);
+    this.tPos = new TemporalPos(start.x, start.y, end.x - start.x, end.y - start.y, 0, 0);
+    this.base = new BaseObj(this, zorder);
 
     this.color = color;
 
@@ -42,7 +42,7 @@ function PCircle(center, radius, color, fillColor, zorder) {
     this.pFillColor = forcePointer(fillColor);
 
     this.tPos = {x:0, y:0, h:0, w:0};  //We lie about this because it doesn't matter
-    this.base = new baseObj(this, zorder);    
+    this.base = new BaseObj(this, zorder);    
 
     this.draw = function (pen) {
         var p = this.pCenter.get();
@@ -66,7 +66,7 @@ function Circle(center, radius, color, fillColor, zorder) {
     this.fillColor = fillColor;
 
     this.tPos = { x: center.x, y: center.y, h: 0, w: 0 };  //We lie about this because it doesn't matter
-    this.base = new baseObj(this, zorder);
+    this.base = new BaseObj(this, zorder);
 
     this.draw = function (pen) {
         var p = this.tPos;
@@ -85,7 +85,7 @@ function Circle(center, radius, color, fillColor, zorder) {
 }
 
 function AlphaDecay(lifetime, startAlpha, endAlpha) {
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
     this.lifetime = lifetime;
     this.startAlpha = startAlpha;
@@ -107,7 +107,7 @@ function AlphaDecay(lifetime, startAlpha, endAlpha) {
 }
 
 function AlphaDecayPointer(lifetime, startAlpha, endAlpha, pColor) {
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
     this.lifetime = lifetime;
     this.startAlpha = startAlpha;

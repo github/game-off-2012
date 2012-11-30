@@ -94,7 +94,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new baseObj(this, 15);         
+            this.base = new BaseObj(this, 15);         
             this.attackTemplate = attackTemplate;
 
             var ourStats = attackTemplate.attackType;
@@ -137,7 +137,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new baseObj(this, 15);         
+            this.base = new BaseObj(this, 15);         
             this.attackTemplate = attackTemplate;
 
             var ourStats = attackTemplate.attackType;
@@ -200,7 +200,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new baseObj(this, 15);         
+            this.base = new BaseObj(this, 15);         
             this.attackTemplate = attackTemplate;
 
             var attacker = attackTemplate.attacker;
@@ -282,7 +282,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {         
-            this.base = new baseObj(this, 15);
+            this.base = new BaseObj(this, 15);
             
             this.attackTemplate = attackTemplate ;
 
@@ -367,7 +367,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new baseObj(this, 15);         
+            this.base = new BaseObj(this, 15);         
             this.attackTemplate = attackTemplate;
 
             var ourStats = attackTemplate.attackType;
@@ -435,7 +435,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new baseObj(this, 15);         
+            this.base = new BaseObj(this, 15);         
             this.attackTemplate = attackTemplate;
 
             var attacker = attackTemplate.attacker;
@@ -485,7 +485,7 @@ function drawAttributes(user, pen) {
             return true;
         },
         user.attr,
-        new temporalPos(
+        new TemporalPos(
             user.tPos.x + user.tPos.w * 0.15,
             user.tPos.y + user.tPos.h * 0.4,
             user.tPos.w * 0.85,

@@ -6,7 +6,7 @@ function LevelData(b, d, l, nwi) {
 }
 
 function WaveVisualizer(wvpos, ldata) {
-    this.base = new baseObj(this, 9);
+    this.base = new BaseObj(this, 9);
     this.color = "green";
 
     this.update = function(dt) {
@@ -45,7 +45,7 @@ function WaveVisualizer(wvpos, ldata) {
 
 
 function LevelManager(bugStart, lmpos) {
-    this.base = new baseObj(this, 10);
+    this.base = new BaseObj(this, 10);
     
     //Should get rid of these
     this.bugIncrease = 10;
@@ -65,7 +65,7 @@ function LevelManager(bugStart, lmpos) {
     var currWv = new LevelData(0,0,0,0);
 
     //Next wave graphic indicator
-    var nextWvVis = new WaveVisualizer(new temporalPos(lmpos.x, lmpos.y+lmpos.h+(nextWv.nextWaveIn*30), 100, 50), nextWv);
+    var nextWvVis = new WaveVisualizer(new TemporalPos(lmpos.x, lmpos.y+lmpos.h+(nextWv.nextWaveIn*30), 100, 50), nextWv);
     this.base.addObject(nextWvVis);
 
 

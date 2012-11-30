@@ -22,8 +22,8 @@ function Bug(startPath, difficulty) {
     cen.x += Math.floor((startPath.tPos.w - 2*r) * Math.random()) + r;
     cen.y += Math.floor((startPath.tPos.h - 2*r) * Math.random()) + r;
 
-    this.tPos = new temporalPos(cen.x - r, cen.y - r, r * 2, r * 2, this.attr.speed, 0);
-    this.base = new baseObj(this, 10);
+    this.tPos = new TemporalPos(cen.x - r, cen.y - r, r * 2, r * 2, this.attr.speed, 0);
+    this.base = new BaseObj(this, 10);
 
     this.genes = new Genes();
     this.base.addObject(this.genes);

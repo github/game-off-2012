@@ -1,5 +1,5 @@
 function AllelePointSystem(pos) {
-    this.base = new baseObj(this, 15);
+    this.base = new BaseObj(this, 15);
     this.tPos = pos;
 
     this.pointIndicator = new Label(cloneObject(pos), "");

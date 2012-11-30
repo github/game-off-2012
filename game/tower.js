@@ -1,7 +1,7 @@
 function Tower_Packet(t1, t2, group, allele) {
-    this.base = new baseObj(this, 12);
+    this.base = new BaseObj(this, 12);
     // Who gives a fuck?
-    this.tpos = new temporalPos(0, 0, 1, 1, 0, 0);
+    this.tpos = new TemporalPos(0, 0, 1, 1, 0, 0);
     var p1 = getRectCenter(t1.tPos);
     var p2 = getRectCenter(t2.tPos);
     var dis = p1.clone().sub(p2).mag();
@@ -21,8 +21,8 @@ function Tower_Packet(t1, t2, group, allele) {
 function Tower_Connection(t1, t2) {
     var p1 = getRectCenter(t1.tPos);
     var p2 = getRectCenter(t2.tPos);
-    this.tPos = new temporalPos(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y, 0, 0);
-    this.base = new baseObj(this, 11);
+    this.tPos = new TemporalPos(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y, 0, 0);
+    this.base = new BaseObj(this, 11);
     this.hover = false;
     t1.prevHitCount = t1.attr.hitcount;
     t2.prevHitCount = t2.attr.hitcount;
@@ -95,8 +95,8 @@ TowerStats = {
 function Tower(baseTile) {
     var p = baseTile ? baseTile.tPos : {x: 0, y: 0, w : tileSize, h: tileSize};
     this.baseTile = baseTile;
-    this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0);
-    this.base = new baseObj(this, 10);
+    this.tPos = new TemporalPos(p.x, p.y, p.w, p.h, 0, 0);
+    this.base = new BaseObj(this, 10);
     this.attr = {
         range:          TowerStats.range,
         damage:         TowerStats.damage,

@@ -1,4 +1,4 @@
-function temporalPos(x, y, w, h, dx, dy) {
+function TemporalPos(x, y, w, h, dx, dy) {
     this.x = x;
     this.y = y;
 

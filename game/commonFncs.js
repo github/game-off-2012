@@ -107,7 +107,7 @@ function mergeObject(objectOne, objectTwo) {
 }
 
 
-//makeTileFnc takes array[x], pen, new temporalPos(xPos, yPos, width, height)
+//makeTileFnc takes array[x], pen, new TemporalPos(xPos, yPos, width, height)
 function makeTiled(pen, makeTileFnc, array, tPosBox, xNum, yNum, percentBuffer) {
     var width = tPosBox.w / (xNum);
     var height = tPosBox.h / (yNum);
@@ -131,7 +131,7 @@ function makeTiled(pen, makeTileFnc, array, tPosBox, xNum, yNum, percentBuffer) 
                 yPos += height;
             }
 
-            if (makeTileFnc(value, pen, new temporalPos(xPos, yPos, drawnWidth, drawnHeight)))
+            if (makeTileFnc(value, pen, new TemporalPos(xPos, yPos, drawnWidth, drawnHeight)))
                 xPos += width;
         }
     }

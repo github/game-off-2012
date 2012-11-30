@@ -260,13 +260,13 @@ function Allele(delta)
 }
 
 function TowerBreeder(pos) {
-    this.base = new baseObj(this, 15);
+    this.base = new BaseObj(this, 15);
 
     this.towers = [];
 
     this.tPos = pos;
 
-    this.base.addObject(new Button(new temporalPos(pos.x + 140, pos.y + 10, 50, 30), "Breed",
+    this.base.addObject(new Button(new TemporalPos(pos.x + 140, pos.y + 10, 50, 30), "Breed",
             this, "breed", null));
 
     var placingTower = null;
@@ -327,7 +327,7 @@ function TowerBreeder(pos) {
                 return true;
             },
             this.towers,
-            new temporalPos(
+            new TemporalPos(
                 pos.x,
                 pos.y,
                 pos.w - 50,
