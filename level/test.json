@@ -68,6 +68,7 @@
                         }],
                  "properties":
                     {
+                     "category":"0x08",
                      "density":"1",
                      "friction":"1",
                      "restitution":"0.2",
@@ -77,46 +78,6 @@
                  "width":0,
                  "x":193,
                  "y":17
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "width":32,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "height":16,
-         "name":"sensors",
-         "objects":[
-                {
-                 "height":0,
-                 "name":"s1",
-                 "polygon":[
-                        {
-                         "x":0,
-                         "y":0
-                        }, 
-                        {
-                         "x":10,
-                         "y":0
-                        }, 
-                        {
-                         "x":10,
-                         "y":48
-                        }, 
-                        {
-                         "x":0,
-                         "y":48
-                        }],
-                 "properties":
-                    {
-                     "sensor":"true"
-                    },
-                 "type":"static",
-                 "width":0,
-                 "x":48,
-                 "y":48
                 }],
          "opacity":1,
          "type":"objectgroup",

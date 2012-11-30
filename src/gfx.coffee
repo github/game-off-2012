@@ -95,7 +95,7 @@ class LevelGenerator
       shape.SetAsArray(obj.polygon)
       #Could be red out of map-->addlater
       fixDef = new b2FixtureDef
-
+      
       if obj.properties?
         p = obj.properties
         if p.density?
@@ -120,6 +120,10 @@ class LevelGenerator
       fixDef.shape = shape
       
       bodyDef = new b2BodyDef
+      #Set Mask if used
+      if obj.name == 'tower'
+        fixDef.filter.categoryBits = 0x08
+        fixDef.filter.maskBits = 0x01
       
       type = 0
       
