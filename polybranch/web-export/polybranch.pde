@@ -39,11 +39,13 @@ void setup(){
   
   player = new Player();
   g = new Game();
-  Layer layer = new Layer(16, width, height);
+  //Layer layer = new Layer(16, width, height);
 }
 
 void draw(){
-  println("LEVEL "+g.level+"  SCORE:"+g.score+"  SPEED "+g.speed);
+  if(frameCount % 30 == 0){
+    println("LEVEL "+g.level+"  SCORE:"+g.score+"  SPEED "+g.speed);
+  }
   if(keys[0] || keys[1]){
     if(keys[0]){
       //originY += player.speed;
@@ -214,6 +216,9 @@ class Branch{
   color col;
   int hu,sat,br,alph;
   
+  int minBr = 50;
+  int maxBr = 90;
+  
   Branch(){
     verticies[0] = new PVector(0,0);
     verticies[1] = new PVector(0,0);
@@ -226,7 +231,7 @@ class Branch{
     
     hu = 0;
     sat = 0;
-    br = (int)random(100,200);
+    br = (int)random(minBr,maxBr);
     alph = 255;
   }
   
@@ -242,7 +247,7 @@ class Branch{
     
     hu = 0;
     sat = 0;
-    br = (int)random(50,200);
+    br = (int)random(minBr,maxBr);
     alph = 255;
   }
   
@@ -257,8 +262,18 @@ class Branch{
   
   public void render(float oX, float oY, float w, float h, float easedDist){
       alph = (easedDist > 2) ? (int)map(easedDist, 2, 8, 255, 0) : 255;
-      fill(br,alph);
-      noStroke();
+      if(easedDist <= 0.8){
+        fill(map(easedDist, 0.0, 0.8, 230, br),alph);
+        stroke(0, map(easedDist, 0.0, 0.8, 0, 255));
+      }else if(easedDist <= 1.02){
+        stroke(0,alph);
+        fill(br,alph);
+      }else{
+        stroke(255,alph);
+        fill(300-br,alph);
+      }
+      
+      strokeWeight(0.4);
       triangle(easedVerticies[0].x, easedVerticies[0].y,
                 easedVerticies[1].x, easedVerticies[1].y,
                 easedVerticies[2].x, easedVerticies[2].y);
@@ -362,26 +377,30 @@ class Layer{
   float easedDistance;
   boolean passed = false;
   
-  Layer(int numSidesIn, int w, int h){
+  Layer(int numSidesIn, int w, int h, boolean active){
     numSides = numSidesIn;
     layerWidth = w;
     layerHeight = h;
     distance = 1;
 
-    startVertex = int(random(0, numSides));
+    if(active){
+      startVertex = int(random(0, numSides));
+    
+      float aX = (layerWidth/2) + (layerWidth/2 - ringWeight/2) * cos((TWO_PI/numSides)*startVertex);
+      float aY = (layerHeight/2) + (layerHeight/2 - ringWeight/2) * sin((TWO_PI/numSides)*startVertex);
+      float bX = (layerWidth/2) + (layerWidth/2 - ringWeight/2) * cos((TWO_PI/numSides)*(startVertex-1));
+      float bY = (layerHeight/2) + (layerHeight/2 - ringWeight/2) * sin((TWO_PI/numSides)*(startVertex-1));
+      
+      tree = new Tree(11, new Branch(
+                  new PVector(aX, aY),
+                  new PVector(bX, bY),
+                  new PVector(lerp(aX,layerWidth/2,0.7), lerp(aY,layerHeight/2,0.7))));
+    }else{
+      tree = new Tree();
+    }
+
     
     
-    float aX = (layerWidth/2) + (layerWidth/2 - ringWeight/2) * cos((TWO_PI/numSides)*startVertex);
-    float aY = (layerHeight/2) + (layerHeight/2 - ringWeight/2) * sin((TWO_PI/numSides)*startVertex);
-    float bX = (layerWidth/2) + (layerWidth/2 - ringWeight/2) * cos((TWO_PI/numSides)*(startVertex-1));
-    float bY = (layerHeight/2) + (layerHeight/2 - ringWeight/2) * sin((TWO_PI/numSides)*(startVertex-1));
-    
-    
-//    tree = new Tree(11, new Branch(
-//                new PVector(aX, aY),
-//                new PVector(bX, bY),
-//                new PVector(lerp(aX,layerWidth/2,0.7), lerp(aY,layerHeight/2,0.7))));
-    tree = new Tree();
     //drawPolygon(layerWidth/2, layerHeight/2, layerWidth/2 - ringWeight/2, numSides, ringWeight, color(255,0,0,0.5));
     
   }
@@ -417,7 +436,8 @@ class Layer{
     //image(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
     tree.render(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), layerWidth*easedDistance, layerHeight*easedDistance, easedDistance);
     
-    color c = (easedDistance > 1) ? color(0,0,255) : color(100);
+    //color c = (easedDistance > 1) ? color(0,0,255) : color(100);
+    color c = color(100);
     drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY,easedDistance), (layerWidth*easedDistance)/2 - (ringWeight*easedDistance)/2, numSides, ringWeight*easedDistance, c);
   }
   
@@ -595,7 +615,6 @@ class Game{
   
   int numBranches;
   
-  String state; //"notPlaying" "playing" "paused"
   
   float speed;
 
@@ -612,7 +631,11 @@ class Game{
     
     //make 6 layers
     for(int i = 0; i < 13; i++){
-      layers.add(new Layer(16, width, height));
+      if(i < 4){
+        layers.add(new Layer(16, width, height, true));
+      }else{
+        layers.add(new Layer(16, width, height, false));
+      }
     }
     //set the distance var for these 6 layers
     for(int i = layers.size(); i > 0; i--){
@@ -641,15 +664,19 @@ class Game{
       }else{
         layer.updateDist(speed);
         if(layer.easedDistance >= 1 && !drawnPlayer){
-          noStroke();
-          fill(50,255);
-          ellipse(width/2,height/2,player.r*2,player.r*2);
-          drawPolygon(lerp(width/2, originX, 1), lerp(height/2, originY,1), width/2, 16, 6, color(0,0,0));
-          drawnPlayer = true;
+          drawPlayer();
         }
         layer.render();
       }
     }
+  }
+  
+  void drawPlayer(){
+    noStroke();
+    fill(50,200);
+    ellipse(width/2,height/2,player.r*2,player.r*2);
+    drawPolygon(lerp(width/2, originX, 1), lerp(height/2, originY,1), width/2, 16, 6, color(0,0,0));
+    drawnPlayer = true;
   }
   
   void checkLevel(){
@@ -693,6 +720,7 @@ class Game{
   }
   
   public void gameOver(){
+    drawPlayer();
     noLoop();
   }
   

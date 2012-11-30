@@ -6,6 +6,9 @@ class Branch{
   color col;
   int hu,sat,br,alph;
   
+  int minBr = 50;
+  int maxBr = 90;
+  
   Branch(){
     verticies[0] = new PVector(0,0);
     verticies[1] = new PVector(0,0);
@@ -18,7 +21,7 @@ class Branch{
     
     hu = 0;
     sat = 0;
-    br = (int)random(100,200);
+    br = (int)random(minBr,maxBr);
     alph = 255;
   }
   
@@ -34,7 +37,7 @@ class Branch{
     
     hu = 0;
     sat = 0;
-    br = (int)random(50,200);
+    br = (int)random(minBr,maxBr);
     alph = 255;
   }
   
@@ -49,8 +52,18 @@ class Branch{
   
   public void render(float oX, float oY, float w, float h, float easedDist){
       alph = (easedDist > 2) ? (int)map(easedDist, 2, 8, 255, 0) : 255;
-      fill(br,alph);
-      noStroke();
+      if(easedDist <= 0.8){
+        fill(map(easedDist, 0.0, 0.8, 230, br),alph);
+        stroke(0, map(easedDist, 0.0, 0.8, 0, 255));
+      }else if(easedDist <= 1.02){
+        stroke(0,alph);
+        fill(br,alph);
+      }else{
+        stroke(255,alph);
+        fill(300-br,alph);
+      }
+      
+      strokeWeight(0.4);
       triangle(easedVerticies[0].x, easedVerticies[0].y,
                 easedVerticies[1].x, easedVerticies[1].y,
                 easedVerticies[2].x, easedVerticies[2].y);

@@ -7,6 +7,8 @@ PVector[] tris = {
       new PVector(0,100)
     };
     
+PFont font;
+
 boolean[] keys = new boolean[4];
       
 int originX;
@@ -28,22 +30,27 @@ void setup(){
   originX = width/2;
   originY = height/2;
   
+  font = loadFont("WireOne-150.vlw");
+  textFont(font, 150);
   
   imageMode(CENTER);
   rectMode(CENTER);
   ellipseMode(CENTER);
+  textAlign(CENTER);
   focalPoint = new PVector(width/2,height/2);
   noStroke();
-  background(255);
+  background(230);
   //testTree = new Tree(5, bob);
   
   player = new Player();
   g = new Game();
-  Layer layer = new Layer(16, width, height);
+  //Layer layer = new Layer(16, width, height);
 }
 
 void draw(){
-  println("LEVEL "+g.level+"  SCORE:"+g.score+"  SPEED "+g.speed);
+  if(frameCount % 30 == 0){
+    println("LEVEL "+g.level+"  SCORE:"+g.score+"  SPEED "+g.speed);
+  }
   if(keys[0] || keys[1]){
     if(keys[0]){
       //originY += player.speed;
@@ -105,7 +112,7 @@ void draw(){
     originY = (int)(player.pos.y + (height/2 - player.r - 8) * sin(a));
   }
   
-  background(255);
+  background(235);
   g.update();  
 }
 
