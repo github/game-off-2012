@@ -88,7 +88,7 @@ var bH;
 var eng;
 (function() {
     var canvas = document.getElementById("myCanvas");
-    var bufferCanvas = canvas.cloneNode();
+    var bufferCanvas = canvas.cloneNode(true);
     var pen = canvas.getContext("2d");
     function initCanvas() {
         // Someday...
