@@ -38,7 +38,7 @@ function Bug(startPath, difficulty) {
 
     this.curPath = startPath;
 
-    this.bugRelPathPos = Math.floor(Math.random()* tileSize) +1;
+    this.bugRelPathPos = Math.floor(Math.random()* TILE_SIZE) +1;
     this.delay = this.bugRelPathPos + 1;
 
     this.update = function (dt) {

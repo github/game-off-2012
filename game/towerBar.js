@@ -17,7 +17,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
         this.displayedTower.draw(pen);
 
         if (this.dragPos) {
-            this.displayedTower.tPos = new TemporalPos(this.dragPos.x, this.dragPos.y, tileSize, tileSize);
+            this.displayedTower.tPos = new TemporalPos(this.dragPos.x, this.dragPos.y, TILE_SIZE, TILE_SIZE);
             this.displayedTower.base.raiseEvent("resize");
             this.displayedTower.draw(pen);
         }

@@ -55,7 +55,7 @@ function FancyBackground(pen) {
 	ink.text(0, textH, txt, subcancon);
 
 	
-	this.tPos = new TemporalPos(bW, Math.floor(Math.random()*bH), pen.measureText(txt), textH);
+	this.tPos = new TemporalPos(BOARD_WIDTH, Math.floor(Math.random()*BOARD_HEIGHT), pen.measureText(txt), textH);
 	
 
 	this.update = function(dt) {

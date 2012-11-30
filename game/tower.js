@@ -93,7 +93,7 @@ TowerStats = {
     };
 
 function Tower(baseTile) {
-    var p = baseTile ? baseTile.tPos : {x: 0, y: 0, w : tileSize, h: tileSize};
+    var p = baseTile ? baseTile.tPos : {x: 0, y: 0, w : TILE_SIZE, h: TILE_SIZE};
     this.baseTile = baseTile;
     this.tPos = new TemporalPos(p.x, p.y, p.w, p.h, 0, 0);
     this.base = new BaseObj(this, 10);

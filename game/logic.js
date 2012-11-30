@@ -275,12 +275,12 @@
         pen = this.pen;
         
         pen.fillStyle = "black";
-        ink.rect(0, 0, width, height, pen);
+        ink.rect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, pen);
         
         pen.font = "10px courier";
         pen.fillStyle = "#0F0";
-        var x = bW + 10;
-        var y = bH - 75;
+        var x = BOARD_WIDTH + 10;
+        var y = BOARD_HEIGHT - 75;
         ink.text(x, y, "Health: " + this.health, pen);
         ink.text(x, y + 15, "Money: $" + Math.round(this.money*100)/100, pen);
         ink.text(x, y + 30, "Time passed: " + gameTimeAccumulated, pen);

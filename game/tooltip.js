@@ -24,7 +24,7 @@ function ToolTip(basetile, attr) {
 
 	//Make new tPos and offset it
 	this.tPos = new TemporalPos(p.x, p.y, p.w, p.h, 0, 0);
-	this.tPos.x += tileSize-2;
+	this.tPos.x += TILE_SIZE-2;
 	this.tPos.w = 110;
 	this.tPos.h = 80;
 

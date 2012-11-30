@@ -287,7 +287,7 @@ function TowerBreeder(pos) {
         }
 
         var notTile = [];
-        notTile.tPos = { x: 0, y: 0, w: tileSize, h: tileSize };
+        notTile.tPos = { x: 0, y: 0, w: TILE_SIZE, h: TILE_SIZE };
         var newTower = new Tower(notTile);
         for (var key in resultantAlleles)
             newTower.genes.addAllele(key, resultantAlleles[key]);

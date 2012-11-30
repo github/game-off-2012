@@ -78,13 +78,13 @@ canvas {
 
 <script src="logic.js"></script>
 <script>
-var wTiles = 16;
-var hTiles = 16;
-var tileSize = 32;
-var width;
-var height;
-var bW;
-var bH;
+var NUM_TILES_X = 16;
+var NUM_TILES_Y = 16;
+var TILE_SIZE = 32;
+var CANVAS_WIDTH;
+var CANVAS_HEIGHT;
+var BOARD_WIDTH;
+var BOARD_HEIGHT;
 var eng;
 (function() {
     var canvas = document.getElementById("myCanvas");
@@ -92,18 +92,18 @@ var eng;
     var pen = canvas.getContext("2d");
     function initCanvas() {
         // Someday...
-        minWidth = wTiles * tileSize + 150;
-        minHeight = hTiles * tileSize;
-        width = Math.max(window.innerWidth, minWidth);
-        height = Math.max(window.innerHeight - 5, minHeight);
-        bW = width - 150;
-        bH = height;
-        canvas.width = width;
-        canvas.height = height;
-        bufferCanvas.width = width;
-        bufferCanvas.height = height;
+        minWidth = NUM_TILES_X * TILE_SIZE + 150;
+        minHeight = NUM_TILES_Y * TILE_SIZE;
+        CANVAS_WIDTH = Math.max(window.innerWidth, minWidth);
+        CANVAS_HEIGHT = Math.max(window.innerHeight - 5, minHeight);
+        BOARD_WIDTH = CANVAS_WIDTH - 150;
+        BOARD_HEIGHT = CANVAS_HEIGHT;
+        canvas.width = CANVAS_WIDTH;
+        canvas.height = CANVAS_HEIGHT;
+        bufferCanvas.width = CANVAS_WIDTH;
+        bufferCanvas.height = CANVAS_HEIGHT;
         if (eng && eng.triggerResize) {
-            eng.triggerResize({width: width, height: height});
+            eng.triggerResize({width: CANVAS_WIDTH, height: CANVAS_HEIGHT});
         }
     }
     $(document).ready(function () {
@@ -121,10 +121,10 @@ var eng;
             };
         })();
         
-        width = Math.max(window.innerWidth, minWidth);
-        height = Math.max(window.innerHeight - 5, minHeight);
+        CANVAS_WIDTH = Math.max(window.innerWidth, minWidth);
+        CANVAS_HEIGHT = Math.max(window.innerHeight - 5, minHeight);
         
-        eng = new Engine(pen, bufferCanvas, new TemporalPos(0, 0, width, height, 0, 0));
+        eng = new Engine(pen, bufferCanvas, new TemporalPos(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0));
         //this.base.rootNode.holder will also get eng... but... yeah...
         window.reqAnim(eng.run.bind(eng));
         
