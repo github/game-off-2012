@@ -25,8 +25,8 @@ class Archer extends Entity
     super()  
     @tile = 16
     @stop = false
-    @ap = 2
-    @hp = 4
+    @ap = 3
+    @hp = 2
     @tickcount = 0
     
   collide:(entity)->
@@ -91,7 +91,7 @@ class BadWarrior extends Entity
     @tickcount = 0
     
   collide:(entity)->
-    if entity instanceof Entity ands entity !instanceof BadWarrior
+    if entity instanceof Entity and entity !instanceof BadWarrior and entity !instanceof BadArcher
         @tickcount = 0
         entity.hurt(@ap)
         @attackE = entity
@@ -111,6 +111,35 @@ class BadWarrior extends Entity
       if @tickcount % 60 == 0 and @attackE? 
         @attackE.hurt(@ap)
 
+class BadArcher extends Entity
+  constructor:->
+    super()  
+    @tile = 18
+    @stop = false
+    @ap = 3
+    @hp = 2
+    @tickcount = 0
+    
+  collide:(entity)->
+    if entity instanceof Entity and entity !instanceof BadWarrior and entity !instanceof BadArcher
+        @tickcount = 0
+        entity.hurt(@ap)
+        @attackE = entity
+        @stop = true
+        console.log(@stop)
+        
+  render:(screen)->
+    screen.render @x, @y, @tile
+    
+  tick:->
+    @tickcount++
+    if @attackE?
+      if @attackE.hasDied()
+        @stop = false
+        @attackE = null
+        
+      if @tickcount % 60 == 0 and @attackE? 
+        @attackE.hurt(@ap)
 #base-model-class
 class Model
   constructor:(@world)->
