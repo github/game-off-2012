@@ -13,11 +13,11 @@ function Genes() {
             return;
 
         if (this.alleles[group])
-            this.alleles[group].apply(holder, true);
+            this.alleles[group].unapply(holder);
 
         this.alleles[group] = allele;
 
-        this.alleles[group].apply(holder, false);
+        this.alleles[group].apply(holder);
     };
 
     //Should only be called if you are fuly replacing the targetting strategy and attack types
@@ -28,7 +28,8 @@ function Genes() {
 
         for (var alleleGroup in this.alleles)
             if (this.alleles[alleleGroup]) {
-                this.alleles[alleleGroup].apply(holder, true);
+                this.alleles[alleleGroup].unapply(holder);
+                // Is this really what you want to do?
                 delete this.alleles[alleleGroup];
             }
 
