@@ -1,0 +1,4 @@
+grinder_front_1 = 0 0 439 27
+grinder_front_2 = 0 28 439 27
+grinder_front_3 = 0 56 439 27
+grinder_front_4 = 0 84 439 27
