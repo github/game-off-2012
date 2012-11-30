@@ -90,6 +90,8 @@ function Bug(startPath) {
         this.tPos.setSpeed(this.attr.speed);
         
 
+        this.color = getInnerColorFromAttrs(this.attr);
+
         this.self.tPos.x = this.tPos.getCenter().x;
         this.self.tPos.y = this.tPos.getCenter().y;
 

@@ -188,14 +188,10 @@ function Tower(baseTile) {
             this.attr.currentHp = this.attr.hp;
     }
 
-    this.update = function()
-    {
-        this.color = this.rColor.str();
-    }
-
     this.draw = function (pen) {
         var p = this.tPos;
         pen.save();
+        this.color = getInnerColorFromAttrs(this.attr);
         pen.fillStyle = getInnerColorFromAttrs(this.attr);
         pen.strokeStyle = getOuterColorFromAttrs(this.attr);
         ink.rect(p.x, p.y, p.w, p.h, pen);        
