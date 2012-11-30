@@ -30,6 +30,12 @@ Crafty.c("Movement", {
 
         // Trigger a movement in the direction
         this.bind("KeyDown",function(e) {
+            var ar=new Array(33,34,35,36,37,38,39,40);
+            var key = e.which;
+            if($.inArray(key,ar) > -1) {
+                e.preventDefault();
+            }
+                
             if(this._keys[e.key] && this.movementEnabled) {
                 var direction = this._keys[e.key];
                 // Add the direction to the movement stack
