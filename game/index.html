@@ -78,6 +78,7 @@ canvas {
 
 <script src="logic.js"></script>
 <script>
+// We should try and get rid of these someday.
 var NUM_TILES_X = 16;
 var NUM_TILES_Y = 16;
 var TILE_SIZE = 32;
@@ -91,7 +92,6 @@ var ENG;
     var bufferCanvas = canvas.cloneNode(true);
     var pen = canvas.getContext("2d");
     function initCanvas() {
-        // Someday...
         minWidth = NUM_TILES_X * TILE_SIZE + 150;
         minHeight = NUM_TILES_Y * TILE_SIZE;
         CANVAS_WIDTH = Math.max(window.innerWidth, minWidth);
