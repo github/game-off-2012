@@ -35,16 +35,23 @@
 			
 			<div class="step" id="game" style="width:850px;" data-x="3000" data-y="0" data-scale="1">
 				<div id="cloneMenu" style="float:left; height:480px; width:200px;">
-					<div id="total"></div>
-					<div id="archer" class="trops"><input type="button" value="+" onclick=""> 1 <input type="button" value="-"></div>
-					<div id="soldier" class="trops"></div>
-					<div id="spy" class="trops"></div>
-					<div id="canon" class="trops"></div>
-					<div id="hero" class="trops"></div>
-				</div>
+						<div id="total">0</div>
+						<div id="archer">
+							Archer
+							<button class=".btn">
+							+
+							</button>
+						</div>
+						<div id="soldier">
+							Soldier
+							<button class=".btn">
+								+
+							</button>
+						</div>
+					</div>
 				<canvas id="board" style="background-color: #92dcff;width: 640px;height: 480px; float:right;">
 				</canvas>
-			</div>
+				</div>
 			
 			<div class="step" id="credits" data-x="2400" data-y="-1000">
 				<h1>Rewolt is developed by the devnil-dev-team.</h1>
@@ -55,6 +62,6 @@
 				impress().init();
 			</script>
 			<script src="js/game.js" type="text/javascript" charset="utf-8"></script>
-		</div>
+			</div>
 	</body>
 </html>
