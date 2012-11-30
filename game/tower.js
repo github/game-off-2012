@@ -1,3 +1,21 @@
+function Tower_Packet(t1, t2, group, allele) {
+    this.base = new baseObj(this, 12);
+    // Who gives a fuck?
+    this.tpos = new temporalPos(0, 0, 1, 1, 0, 0);
+    var p1 = getRectCenter(t1.tPos);
+    var p2 = getRectCenter(t2.tPos);
+    var dis = p1.clone().sub(p2).mag();
+    var packet = new Circle(p1, 2, "yellow", "yellow", 15);
+    var motionDelay = new MotionDelay(p1, p2, dis / 10, apply);
+    this.base.addObject(packet);
+    packet.base.addObject(motionDelay);
+    
+    var that = this;
+    function apply() {
+        t2.genes.addAllele(group, allele);
+        that.base.destroySelf();
+    }
+}
 
 //Should probably use a Line to draw itself instead of doing it by itself
 function Tower_Connection(t1, t2) {
@@ -6,19 +24,40 @@ function Tower_Connection(t1, t2) {
     this.tPos = new temporalPos(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y, 0, 0);
     this.base = new baseObj(this, 11);
     this.hover = false;
+    t1.prevHitCount = t1.attr.hitcount;
+    t2.prevHitCount = t2.attr.hitcount;
     var color = new Color().r(0).g(255).b(0).a(0.2);
     
-    this.update = function(dt) {
-        var a1 = t1.attr;
-        var a2 = t2.attr;
-        // Should have same properties; a1 vs a2 for loop should not matter.
-        for (at in a1) {
-            if (a1[at] > a2[at]) {
-                a2[at] += Math.min(a1[at] - a2[at], a1.download/10, a2.upload/10, a2[at]) * dt;
-            } else if (a1[at] < a2[at]) {
-                a1[at] += Math.min(a2[at] - a1[at], a1.upload/10, a2.download/10, a1[at]) * dt;
+    var that = this;
+    function dataTransfer(t1, t2) {
+        function sendRandomPacket(t1, t2) {
+            for (var group in AllAlleleGroups) {
+                // This is forward-skewed. Oh well.
+                if (Math.random() > 0.9) {
+                    var al = t1.genes.alleles[group];
+                    that.base.addObject(new Tower_Packet(t1, t2, group, al));
+                    return;
+                }
             }
+            
         }
+        if (t1.prevHitCount === undefined) {
+            t1.prevHitCount = t1.attr.hitcount;
+            return;
+        }
+        var killDelta = t1.attr.hitcount - t1.prevHitCount;
+        while (Math.floor(killDelta / 10) > 0) {
+            sendRandomPacket(t1, t2);
+            t1.prevHitCount += 10;
+            killDelta = t1.attr.hitcount - t1.prevHitCount;
+        }
+        t1.prevHitCount = t1.attr.hitcount - killDelta;
+    }
+    
+    this.update = function(dt) {
+        dataTransfer(t1, t2);
+        dataTransfer(t2, t1);
+        
         if (this.hover) {
             color.a(0.9);
         } else {

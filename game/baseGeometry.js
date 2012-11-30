@@ -81,5 +81,8 @@ var Vector = (function () {
     p.setMag = function (magnitude) {
         this.norm().mult(magnitude);
     }
+    p.clone = function() {
+        return new Vector(this.x, this.y);
+    }
     return Vector;
 } ());
