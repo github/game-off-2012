@@ -1,0 +1,150 @@
+* {
+	margin: 0;
+	border: 0;
+	padding: 0;
+}
+
+.container {
+	background-color: darkgray;
+	width: 640px;
+	height: 480px;
+	position: relative;
+	margin: 30px;
+	background-image: url('../img/menu_background.png');
+}
+
+.menu img {
+	position: absolute;
+	left: 75px;
+	top: 40px;
+}
+
+.menu ul {
+	position: absolute;
+	margin-top: 220px;
+	width : 300px;
+	left: 170px;
+	font-size: 30px;
+}
+
+.menu li {
+	list-style: none;
+	text-align: center;
+	color: black;
+}
+
+.menu .selected {
+	color :red;
+	font-size: 120%;
+}
+
+.song canvas{
+	position: absolute;
+	top: 0;
+	background-image: url('../img/background.png');
+}
+
+.song .paused, .menu ul, .game-text, .action, #status {
+	font-family: 'Galindo', cursive;
+}
+
+#score-text, #combo-text, #ready, #go {
+	color: green;
+	position: absolute;
+	z-index: 100;
+	font-size: 30px;
+}
+
+#score-text {
+	top: 50px;
+}
+
+#ready, #go {
+	top: 210px;
+	z-index: 100;
+}
+
+#pause, #game-over, #clear {
+	position: absolute;
+	display: none;
+	z-index: 100;
+}
+
+#game-over, #clear {
+	color : red;
+	font-size: 30px;
+	top: 210px;
+	left: 300px;
+}
+
+#go, #clear {
+	display: none;
+}
+
+
+#pause {
+	top : 120px;
+	left: 300px;
+}
+
+#clear {
+	color : blue;
+}
+
+.choctopus {
+	background-image: url('../img/choctopus_splash.png');
+	background-color: #603913;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.action, #status {
+	display: none;
+	position: absolute;
+	z-index: 1000;
+	top: 400px;
+}
+
+#forked {
+	left: 44px;
+}
+
+#pushed {
+	left: 144px;
+}
+
+#pulled {
+	left: 244px;
+}
+
+#cloned {
+	left: 344px;
+}
+
+#status {
+	top: 250px;
+	left: 250px;
+	font-size: 40px;
+}
+
+.flyin {
+  -webkit-animation: flyin 0.25s ease forwards;
+     -moz-animation: flyin 0.25s ease forwards;
+       -o-animation: flyin 0.25s ease forwards;
+          animation: flyin 0.25s ease forwards;
+
+  opacity: 0;
+  -webkit-transform: scale(2);
+  -webkit-filter: blur(4px);
+}
+
+@-webkit-keyframes flyin {
+   to { 
+     -webkit-filter: blur(0);
+     -webkit-transform: scale(1);
+     opacity: 1;
+   }
+}

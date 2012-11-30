@@ -1,64 +1,36 @@
-Here at GitHub, we're no strangers to hosting or sponsoring hackathons. With the growing number of games and game development resources on GitHub, we thought it was about time to throw our very own game jam!
+# Git-tastic Beat Factory
 
-## The Challenge
+## A funky rhythm game (currently Webkit only)
 
-You have the entire month of November to create a **web-based** game *loosely* built around one or more of the following themes:
+###Background
+GitHub users fork, push, pull, and clone everyday, but who makes sure those actions reach their correct destination? On the back end of GitHub, a git bot sorts those actions to the beat of his favorite tunes. Under the supervision of Url the unicorn, he must sort all the actions correctly, or Url will take his music away!
 
-* forking (or forks)
-* branching (or branches)
-* cloning (or clones)
-* pushing
-* pulling
+###How to Play
+Help git bot sort the fork, push, pull, and clone actions as they travel through the factory and down the conveyer belt by pressing the F, G, H, and J keys on your keyboard. The better your timing, the higher your score will be!
 
-What do we mean by **loosely** based on these concepts? We literally mean, *loosely* based. Some examples might be a FPS where you throw forks at water balloons, an educational game about DNA cloning, or perhaps a platformer where you push and pull objects.
+###About
 
-Your game. Your rules. You can participate as an individual or as a team. You're encouraged to use open source libraries, frameworks, graphics, and sounds.
+Written in JavaScript with [backbone.js](http://backbonejs.org/) and [underscore.js](http://underscorejs.org/)
 
-## Prizes
+####Song Credits:
 
-We have 5 shiny new iPads with Retina displays (64GB wifi models) to give to our winners (or Apple Store Credit equivalent). Runners up will receive GitHub swag of their choice ($100 credit for the [GitHub Shop](http://shop.github.com/)). If you have a team submission, we'll give you Apple Store credit equal to the value of the iPad. You can split it with your teammates as appropriate.
+'8 Bit Detective' by [Bass Assassin](http://freemusicarchive.org/music/Bass_Assassin/Peony_Lantern_Split_EP/8bitDetective)
+Creative Commons Attribution-NonCommercial
 
-All of the winners and runners up will be showcased on our blog.
+'Bass Assassin' by [Bass Assassin](http://freemusicarchive.org/music/Bass_Assassin/Peony_Lantern_Split_EP/BassAssassin)
+Creative Commons Attribution-NonCommercial'
 
-<img src="http://i.imgur.com/lxZrD.png" style="border:0;">
+'Night Rave' by [Jason Shaw](http://audionautix.com/index.html)
+Creative Commons Attribution
 
-### Everyone's a winner!
+'Tech Talk' by [Jason Shaw](http://audionautix.com/index.html)
+Creative Commons Attribution
 
-All participants will receive a limited edition [Coderwall](http://www.coderwall.com) badge as shown above. Winners and runners up will also get their own special version of it.
+'Trick and/or Treat (the candy raid is on!)' by [Nordloef](http://freemusicarchive.org/music/Nordloef/Microhorror_Compilation_Vol_1_Part_II_-_The_Lab/04Nordloef_-_trick_and_or_treat_the_candy_raid_is_on)
+Creative Commons Attribution-NonCommercial
 
-## Judging
+####Art Credits
 
-We have a number of awesome judges who graciously volunteered to take a look at all the entries!
+All sprite sheets and logos by [Stephanie Owens](http://steph-o.com)
+Creative Commons Attribution-NonCommercial
 
-* [David Czarnecki](http://twitter.com/CzarneckiD), Lead Engineer at Agora Games
-* [Eric Preisz](https://twitter.com/epreisz), CEO of GarageGames
-* [Matt Hackett](https://twitter.com/#!/richtaur), Co-founder of Lost Decade Games
-* [Lee Reilly](http://twitter.com/leereilly), Gamer Dad and Software Developer at GitHub
-* [Romana Ramzan](https://twitter.com/Manak/), Denki's Player Champion. PhD Researcher. Organiser of Scottish Game Jam.
-
-## Rules
-
-* To qualify for entry as an **individual** you must fork the [github/game-off-2012](https://github.com/github/game-off-2012) repository to your individual account
-* To qualify for entry as a **team** you must fork the [github/game-off-2012](https://github.com/github/game-off-2012) to a [free organization account](https://github.com/settings/organizations)
-* All entries must be web-based i.e. playable in a browser. HTML5, WebGL, Unity, Torque 3D, Node JS, Flash is all possible - just be sure the source is made available on your fork.
-* You must be over the age of 13
-
-## Instructions
-
-* If you don't already have a GitHub account, [sign up now](https://github.com/signup/free) - it's free!
-* Fork the [github/game-off-2012](https://github.com/github/game-off-2012) repository to your individual account (or to a free organization account)
-* Be sure to follow @github on Twitter for updates
-* Make sure your code is pushed to the master branch of before Dec 1st!
-* Make sure you have a README file with a brief description, what open source projects (if any) you used, and a screenshot.
-* Your repo should have a brief description and a URL where the game is playable entered into the fields shown below (this will make our judging process easier):
-
-![](https://img.skitch.com/20121010-x2ecpu95fi91us6hbfehg2dgit.png)
-
-Winners will be announced before Christmas :santa:
-
-# Comments / Questions / Help
-
-* New to Git, GitHub, and/or version control? Check out our [help documentation](https://help.github.com/) to get started!
-* Questions about Git/GitHub? Please email support@github.com and be sure to include 'GitHub Game Off' in the subject.
-* Questions specific to the GitHub Game Off? Please [create an issue](https://github.com/github/game-off-2012/issues/new). That will be the offical FAQ.
-* The official Twitter hashtag is [#ggo12](https://twitter.com/search/realtime?q=%23ggo12).
