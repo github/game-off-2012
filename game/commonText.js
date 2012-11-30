@@ -19,6 +19,9 @@ function prefixNumber(number, decimalPlaces) {
 
 var decimalTable = { 0: 1, 1: 10, 2: 100, 3: 1000, 4: 10000, 5: 100000, 6: 1000000 };
 function roundToDecimal(value, decimalPlaces) {
+    if (isNaN(value))
+        return 0;
+
     var decimalValue;
     if (decimalPlaces <= 6) {
         decimalValue = decimalTable[decimalPlaces]

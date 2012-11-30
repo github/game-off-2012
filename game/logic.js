@@ -118,6 +118,9 @@
         if (curFrameCounter % 100 == 0) {
             this.base.addObject(new FancyBackground(this.pen));
         }
+
+        if (currentRangeDisplayed && this.selectedObj)
+            currentRangeDisplayed.pCenter.set(this.selectedObj.tPos.getCenter());
     };
 
     this.resizeEvent = null;

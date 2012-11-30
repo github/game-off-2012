@@ -3,13 +3,14 @@ function Bug(startPath) {
     var r = 8;
 
     this.attr = {
-        range:          100,
-        damage:         0.25,
-        hp:             Math.floor(20 * 3),
-        currentHp:      Math.floor(20 * 3),
-        hpRegen:        0.1,
-        attSpeed:       1,
-        speed:          20,
+        //For balancing these need to be the same as the tower
+        range:          TowerStats.range,
+        damage:         TowerStats.damage,
+        hp:             TowerStats.hp,
+        currentHp:      TowerStats.currentHp,
+        hpRegen:        TowerStats.hpRegen,
+        attSpeed:       TowerStats.attSpeed,
+        speed:          40,
         hitCount:       0,
         kills:          0,
         value:          5,
@@ -25,7 +26,7 @@ function Bug(startPath) {
     this.genes = new Genes();
     this.base.addObject(this.genes);
 
-    this.attr.target_Strategy = new targetStrategies.Closest();
+    //this.attr.target_Strategy = new targetStrategies.Closest();
     this.attr.attack_types = [];
     //this.attr.attack_types.push(new allAttackTypes.Bullet());
 

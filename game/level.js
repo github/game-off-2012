@@ -1,34 +1,32 @@
-function LevelManager(bugStart, lmpos) {
+function LevelManager(bugStart) {
+
     var levels = [    
         { 
             5: [
-                    function(){return {attack: bugAttackTypes.BugBullet}; },
+                    function () { return { attack: bugAttackTypes.BugBullet }; },
+                    AllAlleleGroups.targetBase,
                     AllAlleleGroups.rangeBase,
                     function () { return { speed: 20 }; },
                ],
             waveTime: 10,
-            spawnDelay: 0.1,
+            spawnDelay: 0.1
         },    
         { 
             5: [
-                    function(){return {attack: bugAttackTypes.BugBullet}; },
+                    function () { return { attack: bugAttackTypes.BugBullet }; },
+                    AllAlleleGroups.targetBase,
                     AllAlleleGroups.rangeBase,
                     function () { return { speed: 30 }; },
                ],
             waveTime: 7,
-            spawnDelay: 0.1,
+            spawnDelay: 0.1
         }
     ];
+    
 
     this.base = new BaseObj(this, 10);
-    
-    //Should get rid of these
-    this.bugIncrease = 10;
-    this.bugDifficulty = 1;
-    this.bugDelay =0;
 
-    this.validGameConfig = false;
-    this.doneWave = true;
+    
     this.nwicounter = 0;
 
     this.curLevel = -1;
@@ -40,28 +38,20 @@ function LevelManager(bugStart, lmpos) {
     this.update = function (dt) {
         var eng = this.base.rootNode;
 
-        //Set next wave
-        if (this.doneWave == true) {
-            //Set current wave to next wave
-            currWv = nextWv;
-
-            //Make new wave
-            this.doneWave = false;
-            this.nwicounter = this.curLevelData.waveTime;
-            this.bugsleft = currWv.bugs;
-        }
-
         this.nwicounter -= dt;
 
         if (this.nwicounter < 0)
+        {
             this.curLevel++;
             this.curLevelData = levels[this.curLevel % levels.length];
             this.nwicounter = this.curLevelData.waveTime;
 
+            var attributeModifier = Math.atan((this.curLevel + 5) / 10) / Math.PI * 2;
+
             this.bugsToSpawn = [];
             for(var part in this.curLevelData)
             {
-                if(typeof part == "number")
+                if(!isNaN(part))
                 {
                     var bugAlleles = this.curLevelData[part];
                     for(var i = 0; i < part; i++)
@@ -69,6 +59,13 @@ function LevelManager(bugStart, lmpos) {
                         var bug = new Bug(bugStart);
                         for(var group in bugAlleles)
                             bug.genes.addAllele(group, new Allele(bugAlleles[group]()));
+                        for(var attrName in bug.attr)
+                        {                            
+                            if(typeof bug.attr[attrName] == "number")
+                            {
+                                bug.attr[attrName] *= attributeModifier;
+                            }
+                        }
                         this.bugsToSpawn.push(bug);
                     }
                 }
@@ -79,9 +76,12 @@ function LevelManager(bugStart, lmpos) {
         } //End of starting next level
 
         this.spawnCounter -= dt;
-        if(this.spawnCounter < 0)
+        if(this.spawnCounter < 0 && this.bugsToSpawn.length > 0)
         {
             this.spawnCounter = this.curLevelData.spawnDelay;
+
+            eng.base.addObject(this.bugsToSpawn[0]);
+            this.bugsToSpawn.splice(0, 1);
         }
 
     } //End of update
