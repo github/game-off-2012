@@ -68,7 +68,15 @@ class Game
   loadLevel:(index)->
     @level = @levels[index]
     impress().goto("game")
+  
+  win: ->
+    @running = false
+    impress().goto("won")
     
+  lose:->
+    @running = false
+    impress().goto("lost")
+  
   run: =>
     @tick() if @running
     @render() if @running

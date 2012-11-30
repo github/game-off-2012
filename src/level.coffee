@@ -7,6 +7,7 @@ class Level
     @initGfx()
     #List for entities
     @entities = new List()
+    @totalentitys = 0
     @screen = new Screen(@id, STORAGE.getRessource("spritesheet"))
   
   initGfx:->
@@ -47,16 +48,21 @@ class Level
     while((body = body.GetNext())!= null)
       if body.UserData instanceof Entity
         if body.UserData.hasDied()
-          @world.DestroyBody(body) 
+          @world.DestroyBody(body)
     
     for i in [0...@entities.size()]
       #console.log(@entities.get(i).getUserData())
       
       if typeof @entities.get(i) != 'undefined'
         if @entities.get(i).getUserData().hasDied()
-          if @entities.get(i).getUserData() instanceof BadWarrior or @entities.get(i).getUserData() instanceof BadArcher 
+          if @entities.get(i).getUserData() instanceof BadWarrior 
             @clonepoints++
+          if @entities.get(i).getUserData() instanceof Warrior or @entities.get(i).getUserData() instanceof Archer 
+            @totalentitys--
           @entities.del(i)
+          
+          
+    console.log(@totalentitys)
         
     
     for i in [0...@entities.size()]
@@ -90,7 +96,7 @@ class TestLevel extends Level
     super @id
     @level = new LevelGenerator(json, STORAGE.getRessource("spritesheet"), @world)
     
-    @clonepoints = 10
+    @clonepoints = 5
     
     #HowMuchCanBeSpawned
     @badWarriors = 40
@@ -115,6 +121,10 @@ class TestLevel extends Level
   
   tick:->
     super()
+    
+    if @totalentitys == 0 and @clonepoints == 0
+      @game.lose() 
+    
     @tickcount++
     
     if @tickcount %30 == 0
@@ -135,6 +145,9 @@ class TestLevel extends Level
     if !@tower.hasDied()
       @tower.setX(@towerbody.GetPosition().x*30)
       @tower.setY((@towerbody.GetPosition().y)*30+10)
+      
+    if @tower.hasDied()
+      @game.win()
       
     @cloneMenu.setTotal(@clonepoints)
       
@@ -157,6 +170,7 @@ class TestLevel extends Level
         e = new EntityModel(@world, 2-@camera.getXoffset()-12, 30, 200, 2, 0x02, 0x01|0x04|0x08)
         e.setUserData(new Archer())
         @entities.add(e)
+        @totalentitys++
         
      if ent == "warrior"
         @clonepoints--
@@ -164,6 +178,7 @@ class TestLevel extends Level
         e = new EntityModel(@world, 2-@camera.getXoffset()-12, 30, 24, 1.5, 0x02, 0x01|0x04|0x08)
         e.setUserData(new Warrior())
         @entities.add(e)
+        @totalentitys++
       
   
   beginContact:(contact, manifold)->
