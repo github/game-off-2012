@@ -1,8 +1,10 @@
+//= require modernizr
 //= require crafty
+//= require crafty_modules/crafty.tweener
 //= require underscore
 //= require store
 
-//= require crafty_modules/crafty.tweener
+//= require ./browser_compatibility
 
 //= require config
 //= require_directory ./objects
@@ -11,3 +13,4 @@
 //= require_directory ./components
 //= require_directory ./scenes
 //= require ./main
+

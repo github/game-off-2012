@@ -1,11 +1,14 @@
-* Compatibility [Firefox] (Sound files, message if not Chrome or FireFox).
-* Add event per cycle so we can build a funnel. (YB)
-* Fix pause bug (our own tweening system for track). (YB)
-* Global high score. (SD)
-
-Ze Future 
-* Mobile
-* Slow upgrade.
-* Circle upgrade.
-* Mutations (change direction, shake, zoom).
+Future Releases
+* Mobile Version
+* Global high scores
+* Power Ups
+ * Slow upgrade
+ * Revert Change
+ * Hotfix (invulnerability)
+* Circle upgrades - More types
+* Game Mutations
+ * change direction
+ * shake
+ * zoom
+ * player cloned
 

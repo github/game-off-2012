@@ -104,3 +104,4 @@ Crafty.c "MoveInCircle",
 
     @_trailInterval -= Config.gfx.trail.interval.reduceBy
     @_trailInterval = Math.max(@_trailInterval, Config.gfx.trail.interval.minimum)
+    @

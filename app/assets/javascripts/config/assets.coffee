@@ -20,9 +20,16 @@ Config.sounds =
 
   sfx:
     [
-      "sounds/crash.wav"
-      "sounds/faster.wav"
+      "sounds/crash.mp3"
     ]
+
+Config.soundExtension = "mp3"
+
+unless Modernizr.audio.mp3
+  _.each(Config.sounds, (array, groupKey) ->
+    Config.sounds[groupKey] = _.map(array, (o)->o.replace(".mp3",".ogg"))
+  )
+  Config.soundExtension = "ogg"
 
 Config.allAssets = _.flatten(Config.sounds)
 Config.seconderyAssets = _.rest(Config.sounds.music)

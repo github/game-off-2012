@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <title>Release Cycles</title>
   <meta name="description" content="An abstract racing game where you fight against the clock and the computer to get as far as you can in a products life-cycle."/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
   <%= render :partial => "layouts/og_meta_tags" %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
@@ -12,8 +15,12 @@
   <%= render :partial => "layouts/mixpanel" %>
 </head>
 <body>
+<!--[if lt IE 7]>
+    <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
 
 <%= yield %>
+<p class="browser-compatibility">Works best on WebKit •  <a href="http://www.google.com/chrome">Chrome</a> / <a href="http://www.apple.com/safari/">Safari</a></p>
 
 <footer>
   <p> Game created by <a href="https://github.com/RothschildGames/">Rothschild Games</a> - <a href="http://twitter.com/shayhdavidson">@shayhdavidson</a> & <a href="http://twitter.com/yonbergman">@yonbergman</a> </p>

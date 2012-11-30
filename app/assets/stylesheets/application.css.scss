@@ -57,5 +57,26 @@ footer{
   position: absolute;
   right: 10px;
   bottom: 10px;
-  
+
+}
+
+
+.browser-compatibility{
+  color: white;
+  margin: 0 auto;
+  width: 640px;
+  text-align: center;
+  font-family: "Courier New", monospace;
+  a{
+    text-decoration: none;
+    color: #ddd;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+
+  display: none;
+  .not-webkit &{
+    display: block;
+  }
 }

@@ -6,5 +6,4 @@ window.onload = ->
 
   Settings.load()
 
-
   Crafty.scene('menu')
