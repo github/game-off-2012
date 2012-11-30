@@ -1,0 +1,89 @@
+<!DOCTYPE HHTML>
+<html>
+	<head>
+		<title>Prototype</title>
+		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+		<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" charset="utf-8"/>
+		<script src="lib/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/bootstrap/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/animation.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/Box2dWeb-2.1.a.3.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<img style="width:0px; height:0px; display:none;" src="img/sprites.png" >
+		<div class="navbar navbar-inverse">
+			<div class="navbar-inner">
+				<a class="brand" href="#">ReWolt!</a>
+				<ul class="nav">
+					<li><a href="#/home">Home</a></li>
+					<li><a href="#/game">Play!</a></li>
+					<li><a href="#/entities">Entities Reference</a></li>
+					<li><a href="#/credits">Credits</a><li>
+				<ul>
+			</div>
+		</div>	
+		<div id="impress">
+			<div class="step" id="home" data-x="0" data-y="0" width="500">
+				<h1>Welcome to ReWolt,</h1>
+				<h1>the inverted tower defense game!</h1>
+			</div>
+			
+			<div class="step" id="map_screen" data-x="1200" data-y="0"> 
+					<a href="#/game">Game</a>
+					<canvas id="map" style="width: 640; height: 480;"></canvas>
+			</div>
+			
+			<div class="step" id="game" style="width:850px;" data-x="3000" data-y="0" data-scale="1">
+				<div id="cloneMenu" style="float:left; height:480px; width:200px;">
+						<table>
+							<tr>
+							<div style="float:left">Clone-Points: </div><div id="total">0</div>
+							</tr>
+							<tr>
+								<td>
+									Archer
+								</td>
+								<td>
+									<button class=".btn" entity="archer">
+									+
+									</button>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Warrior
+								</td>
+								<td>
+									<button class=".btn" entity="warrior">
+									+
+									</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+				<canvas id="board" style="background-color: #92dcff;width: 640px;height: 480px; float:right;">
+				</canvas>
+				</div>
+				
+				<div class="step" id="won" data-x="3000" data-y="0" data-z="-2000" width="500">
+				<h1>You won :D</h1>
+				<h1>Refresh for replay and click play in the navigation</h1>
+				</div>
+				
+				<div class="step" id="lost" data-x="3000" data-y="2000" width="500">
+				<h1>You lost :(</h1>
+				<h1>Refresh for replay and click play in the navigation</h1>
+				</div>
+			
+			<div class="step" id="credits" data-x="2400" data-y="-1000">
+				<h1>Rewolt is developed by the devnil-dev-team.</h1>
+			</div>
+			
+			<script src="lib/impress.js" type="text/javascript" charset="utf-8"></script>
+			<script type="text/javascript" charset="utf-8">
+				impress().init();
+			</script>
+			<script src="js/game.js" type="text/javascript" charset="utf-8"></script>
+			</div>
+	</body>
+</html>

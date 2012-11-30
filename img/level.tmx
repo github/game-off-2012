@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="16" tilewidth="8" tileheight="8">
+ <tileset firstgid="1" name="sprites" tilewidth="8" tileheight="8">
+  <image source="sprites.png" trans="ff00ff" width="64" height="64"/>
+ </tileset>
+ <layer name="scene" width="32" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBh4wArFtJInxm5cZlAqT6r9rDjkSDGDFHsZGMgPO3IBJeE1CkbBcAKMA4yZRvGIxgD03wHV
+  </data>
+ </layer>
+ <objectgroup name="static" width="32" height="16">
+  <object name="ground" type="static" x="1" y="88">
+   <properties>
+    <property name="density" value="1"/>
+    <property name="friction" value="1"/>
+    <property name="restitution" value="0"/>
+   </properties>
+   <polygon points="0,0 255,0 255,2 0,2"/>
+  </object>
+  <object name="tower" type="static" x="193" y="17">
+   <properties>
+    <property name="category" value="0x08"/>
+    <property name="density" value="1"/>
+    <property name="friction" value="1"/>
+    <property name="restitution" value="0.2"/>
+    <property name="userdata" value="Tower"/>
+   </properties>
+   <polygon points="0,0 5,0 5,72 0,72"/>
+  </object>
+ </objectgroup>
+</map>

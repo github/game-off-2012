@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="64" height="16" tilewidth="8" tileheight="8">
+ <tileset firstgid="1" name="sprites" tilewidth="8" tileheight="8">
+  <image source="sprites.png" width="64" height="64"/>
+ </tileset>
+ <layer name="scene" width="64" height="16">
+  <data encoding="base64" compression="zlib">
+   eJzt0MEJADAIBEGT/ou2Bh+HkMzA/j2rAIDfnGAbpjfeUMm/bu6SJL1RA5O4A4Q=
+  </data>
+ </layer>
+</map>

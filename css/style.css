@@ -1,0 +1,24 @@
+html{
+	background-color:#FFF;
+}
+
+h1{
+	font: 24px Georgia, Arial;
+}
+
+#home{
+	width: 800px;
+}
+
+#home h1{
+	font-size: 70px;
+	line-height: 60px;
+}
+
+#credits {
+	width: 500px;
+}
+
+#cloneMenu {
+	font-size: 16px;
+}
