@@ -13,7 +13,7 @@
    <properties>
     <property name="density" value="1"/>
     <property name="friction" value="1"/>
-    <property name="restitution" value="0.2"/>
+    <property name="restitution" value="0"/>
    </properties>
    <polygon points="0,0 255,0 255,2 0,2"/>
   </object>
