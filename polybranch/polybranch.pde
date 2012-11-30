@@ -40,7 +40,6 @@ void setup(){
   imageMode(CENTER);
   rectMode(CENTER);
   ellipseMode(CENTER);
-  textAlign(CENTER);
   shapeMode(CENTER);
   focalPoint = new PVector(width/2,height/2);
   noStroke();
@@ -164,13 +163,11 @@ void keyPressed(){
 //  }
   
   if(key == 'p'){
-    if(paused){
-      loop();
-      paused = false;
-    }else{
-      noLoop();
-      paused = true;
-    }
+    pause();
+  }
+  
+  if(key == 'r'){
+    newGame();
   }
 
 }
@@ -192,6 +189,20 @@ void keyReleased(){
     keys[3] = false;
     //player.velX = 0;
   }
+}
+
+public void pause(){
+  if(paused){
+    loop();
+    paused = false;
+  }else{
+    noLoop();
+    paused = true;
+  }
+}
+
+public void newGame(){
+  g.newGame();
 }
 
 //void mouseMoved(){

@@ -22,9 +22,9 @@ class Game{
     
     numBranches = 6;
     level = 1;
-    speed = 0.0025;
+    speed = speeds[0];
     
-    //make 6 layers
+    //make layers
     for(int i = 0; i < 13; i++){
 //      if(i < 4){
 //        layers.add(new Layer(16, width, height, "active"));
@@ -150,10 +150,32 @@ class Game{
 //    }
   }
   
+  public void newGame(){
+    score = 0;
+    numBranches = 6;
+    level = 1;
+    speed = speeds[0];
+    layers.clear();
+    originX = width/2;
+    originY = height/2;
+    for(int i = 0; i < 13; i++){
+      layers.add(new Layer(16, width, height, "inactive"));
+    }
+    //set the distance var for these 6 layers
+    for(int i = layers.size(); i > 0; i--){
+      Layer layer = (Layer) layers.get(i-1);
+      layer.distance = 1.3/layers.size()*i;
+      layer.easedDistance = easeInExpo(layer.distance, layer.distance, 0,1,1);
+    }
+    loop();
+    paused = false;
+  }
+  
   public void gameOver(){
     drawPlayer();
     println(g.level+" "+g.score);
     noLoop();
+    paused = true;
   }
   
 
