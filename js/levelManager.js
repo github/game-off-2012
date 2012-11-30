@@ -76,33 +76,36 @@ var levelManager = {
     },
     
     loadMap: function (level, loadComplete) {
-      var map = null;
-      $.get('map/load/'+level, function(data) {
-          mapData = jQuery.parseJSON(data);
-          var map = null;
-          // Set the background to light gray
-          Crafty.background("#9F9F9F");
-          // get and update title
-          $('#levelTitle').text(mapData.metadata.title);
-          $('#levelText').text(mapData.metadata.text);
-          console.log(mapData.metadata.text);
-          // get next map
-          var nextMap = mapData.metadata.nextMap;
-          gameBoard.setMap(nextMap);
-          console.log("set", nextMap);
-          
-          for (var a = 0; a < mapData.layers.length; a++) {
-            map = mapData.layers[a];
-            for (var i = 0; i < map.length; i++) {
-              for (var j = 0; j < map[0].length; j++) {
-                if(levelManager.tileMap[map[i][j]])
-                    levelManager.tileMap[map[i][j]](j, i);
-              }
-            }
-          }
-          loadComplete();
-          Crafty.trigger("StopMovement");
-      });
+        var map = null;
+        $.get('map/load/'+level, function(data) {
+            Crafty.scene(level.toString(), function () {
+                mapData = jQuery.parseJSON(data);
+                var map = null;
+                // Set the background to light gray
+                Crafty.background("#9F9F9F");
+                // get and update title
+                $('#levelTitle').text(mapData.metadata.title);
+                $('#levelText').text(mapData.metadata.text);
+                console.log(mapData.metadata.text);
+                // get next map
+                var nextMap = mapData.metadata.nextMap;
+                gameBoard.setMap(nextMap);
+                console.log("set", nextMap);
+              
+                for (var a = 0; a < mapData.layers.length; a++) {
+                    map = mapData.layers[a];
+                    for (var i = 0; i < map.length; i++) {
+                        for (var j = 0; j < map[0].length; j++) {
+                            if(levelManager.tileMap[map[i][j]])
+                                levelManager.tileMap[map[i][j]](j, i);
+                        }
+                    }
+                }
+                if(loadComplete) loadComplete();
+            });
+            Crafty.scene(level.toString());
+            Crafty.trigger("StopMovement");
+        });
     },
     
     resetLevel: function () {

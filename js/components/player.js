@@ -62,7 +62,7 @@ Crafty.c("Phil", {
                     var collisionDetector = Crafty.e("2D, Collision").attr({ x: location[0], y: location[1], w: 1, h: 1 });
                     if(collisionDetector.hit("FinishableBox")) {
                         collisionDetector.destroy();
-                        Crafty.scene(gameBoard.getMap()); //when everything is loaded, run the main scene
+                        levelManager.loadMap(gameBoard.getMap(), null);
                     }
                     collisionDetector.destroy();
                 });
