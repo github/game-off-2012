@@ -25,3 +25,4 @@ Game developers/designers/concepts:
   
 Misc:
 * [Draghia Cornel - Font](http://dccanim.deviantart.com/)
+* [inn0vat3 - Unity3D assistance](http://www.reddit.com/user/inn0vat3)
