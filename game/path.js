@@ -81,12 +81,19 @@ function Path(x, y, w, h) {
         
         return newObjs;
     };
-    
+
     this.draw = function (pen) {
         var p = this.tPos;
         pen.fillStyle = "transparent";
         pen.strokeStyle = "#123456";
         pen.lineWidth = 1;
         ink.rect(p.x, p.y, p.w, p.h, pen);
+
+
+        //Draw text
+        //pen.fillStyle = "#FFFFFF";
+        //pen.font = "12px arial";
+
+        //ink.text(this.tPos.x, this.tPos.y + 15, this.pathPos, pen);
     };
 }

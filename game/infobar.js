@@ -10,6 +10,8 @@ function Button(pos, txt, context, functionName, callData) {
     this.functionName = functionName;
     this.callData = callData;
 
+    txt = formatToDisplay(txt);
+
 	this.draw = function(pen) {
 		//Draw box
 		if (this.down) {
@@ -68,7 +70,9 @@ function RadioButton(pos, txt, context, functionName, callData, prevRadioButton)
 
 	this.hover = false;
 	this.down = false;
-	
+
+	txt = formatToDisplay(txt);
+
     this.radioGroup = [];
     if(prevRadioButton) {
         for(var key in prevRadioButton.radioGroup) {

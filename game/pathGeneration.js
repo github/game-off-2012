@@ -50,6 +50,7 @@ function generatePath(eng) {
     }
     var prevPos = { x: 0, y: 0 };
     var prevPath = null;
+    var pathPos = 1;
     while (true) {
         if (curPos.x == (wTiles - 1) || curPos.y == (hTiles - 1)) {
             curPath = new Path_End(curPos.x * tileSize, curPos.y * tileSize, tileSize, tileSize);
@@ -72,6 +73,7 @@ function generatePath(eng) {
             }
 
             prevPath = curPath;
+            curPath.pathPos = pathPos++;
 
             eng.base.addObject(curPath);
 
