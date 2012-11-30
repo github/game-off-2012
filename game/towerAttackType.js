@@ -15,7 +15,7 @@ function applyAttack(attackTemplate) {
     if(!assertDefined(target, attacker, damage, baseAttacker))
         return;
 
-    target.attr.hp -= damage;    
+    target.attr.current_hp -= damage;    
     baseAttacker.attr.hitcount++;
 
     var newAttackType = baseAttacker.attr.attack_types[attackTemplate.currentAttPos + 1];
@@ -29,7 +29,7 @@ function applyAttack(attackTemplate) {
         startAttack(newAttTemplate);
     }
 
-    if(target.attr.hp < 0)
+    if(target.attr.current_hp < 0)
     {
         var sound = new Sound("snd/die.wav");
         target.base.destroySelf();
@@ -262,8 +262,8 @@ var allAttackTypes = {
             ink.text(tPos.x, tPos.y, "P", pen);
         };
         this.AttackNode = function(attackTemplate)
-        {
-            this.base = new baseObj(this, 15);         
+        {         
+            this.base = new baseObj(this, 15);
             
             this.attackTemplate = attackTemplate ;
 
@@ -279,7 +279,7 @@ var allAttackTypes = {
             this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
 
             //AlphaDecay destroys us
-            var circle = new Circle(attacker.tPos.getCenter(), effect_range, this.color, this.color, 10);
+            var circle = new Circle(attacker.tPos.getCenter(), effect_range, this.color, this.color, 8);
             this.base.addObject(new AttributeTween(0.2, 0.6, charge_time, "charged", "alpha"));
 
             this.base.addObject(circle);
@@ -363,7 +363,7 @@ var allAttackTypes = {
 
             this.base.addObject(line);
             
-            var poisonIndicator = new Circle(target.tPos.getCenter(), 4, this.color, this.color, 14);
+            var poisonIndicator = new Circle(target.tPos.getCenter(), 8, this.color, this.color, 14);
             this.base.addObject(poisonIndicator);            
       
             this.alpha = 0;

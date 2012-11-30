@@ -9,6 +9,8 @@ var AllAlleleGroups =
     two: function () { return { range: Math.random() * 20}; },
     three: function () { return { range: 100, damage: -1}; },
 //Make some for all of the attack types and target strategies.
+
+//One per attribute
 };
 
 function Allele(delta)

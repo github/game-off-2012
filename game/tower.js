@@ -44,6 +44,8 @@ TowerStats = {
         range:          100,
         damage:         10,
         hp:             100,
+        current_hp:     100,
+        hp_regen:       1,
         attSpeed:       1,        
         mutate:         0,
         mutatestrength: 0,
@@ -63,6 +65,8 @@ function Tower(baseTile) {
         range:          TowerStats.range,
         damage:         TowerStats.damage,
         hp:             TowerStats.hp,
+        current_hp:     TowerStats.current_hp,
+        hp_regen:       TowerStats.hp_regen,
         attSpeed:       TowerStats.attSpeed,
         mutate:         TowerStats.mutate,
         mutatestrength: TowerStats.mutatestrength,
@@ -70,7 +74,7 @@ function Tower(baseTile) {
         download:       TowerStats.download,
         hitcount:       TowerStats.hitcount,
         value:          TowerStats.value,
-    };
+    };    
 
     this.genes = new Genes();
     this.base.addObject(this.genes);
@@ -85,10 +89,8 @@ function Tower(baseTile) {
     //this.base.addObject(new UpdateTicker(this.attr, "mutate", "mutate", true));
     this.base.addObject(new Selectable());
     
-    this.added = function() {
-        this.recolor();        
-    };
-
+    this.constantOne = 1;
+    this.base.addObject(new UpdateTicker(this, "constantOne", "regenTick"));
 
     //Hackish way to check if we are from breeder
     if (baseTile) {
@@ -98,6 +100,17 @@ function Tower(baseTile) {
                 this.genes.addAllele(alGroup, new Allele(AllAlleleGroups[alGroup]()));
             }
         }
+    }
+
+    this.added = function() {
+        this.recolor();        
+    };
+        
+    this.regenTick = function()
+    {
+        this.attr.current_hp += this.attr.hp_regen;
+        if(this.attr.current_hp > this.attr.hp)
+            this.attr.current_hp = this.attr.hp;
     }
 
     this.update = function()
@@ -176,7 +189,7 @@ function Tower(baseTile) {
     this.rColor = new Color();
     this.recolor = function() {
         var a = this.attr;
-        this.rColor = this.rColor.r(255 - a.hp).g(a.range).b(a.damage).a(0.5);
+        this.rColor = this.rColor.r(255 - a.current_hp).g(a.range).b(a.damage).a(0.5);
     }
 
     this.mouseover = function(e) {        

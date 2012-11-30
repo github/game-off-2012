@@ -35,7 +35,10 @@ function formatToDisplay(text) {
         fail("Only pass us text!");
     // Transforms "fooBar" to "Foo Bar"
     // http://stackoverflow.com/questions/5796383/insert-spaces-between-words-on-a-camel-cased-token
+
+    //Don't replace my code which does stuff
+    text = text.replace(/_/g, " ");
     text = text.replace(/([A-Z])/g, " $1");
-    text = text.charAt(0).toUpperCase() + text.substr(1);
+    text = text.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     return text;
 }

@@ -8,9 +8,11 @@ function Bug(startPath, difficulty) {
 
     this.attr = {
         range:          100,
-        damage:         1 + difficulty/4,
+        damage:         (1 + difficulty/4) * 0.25,
         hp:             Math.floor(20 * 3 * difficulty),
-        attSpeed:       0,
+        current_hp:     Math.floor(20 * 3 * difficulty),
+        hp_regen:       0.1,
+        attSpeed:       1,
         speed:          20,
         hitcount:       0,
         value:          5,
@@ -75,7 +77,7 @@ function Bug(startPath, difficulty) {
          
          this.tPos.setSpeed(this.attr.speed);
                      
-        this.color = "#" + hexPair(Math.floor(255 -((this.attr.hp / this.maxHP) * 255))) +  "0000";
+        this.color = "#" + hexPair(Math.floor(255 -((this.attr.current_hp / this.attr.hp) * 255))) +  "0000";
     };
 
     this.draw = function (pen) {
