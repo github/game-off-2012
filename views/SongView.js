@@ -159,12 +159,27 @@ SongView = Backbone.View.extend({
     }
   },
 
-  //marker 66px tall, 382
+  displayActionText: function (queue) {
+    switch (queue) {
+      case 0: this.$el.find("#forked").show().delay(250).fadeOut('fast');
+        break;
+      case 1: this.$el.find("#pushed").show().delay(250).fadeOut('fast');
+        break;
+      case 2: this.$el.find("#pulled").show().delay(250).fadeOut('fast');
+        break;
+      case 3: this.$el.find("#cloned").show().delay(250).fadeOut('fast');
+        break;
+    }
+  },
+
+  displayStatus: function (text) {
+    this.$el.find("#status").html(text).show().delay(250).fadeOut('fast');
+  },
 
   check: function (queue) {
     if(this.active[queue].length > 0 && 
       this.active[queue][0].top < 334){
-      console.log('early');
+      this.displayStatus('Early');
       this.score -= 500;
       this.checkGameOver();
       this.combo = 0;
@@ -172,14 +187,16 @@ SongView = Backbone.View.extend({
       this.active[queue][0].top < 334 &&
       this.active[queue][0].top > 366){
       this.inactive[queue].push(this.active[queue].shift());
-      console.log('ok');
+      this.displayActionText(queue);
+      this.displayStatus('Ok');
       this.score += 500;
       this.combo += 1;
     }else if(this.active[queue].length > 0 &&
       this.active[queue][0].top > 366 &&
       this.active[queue][0].top < 440){
       this.inactive[queue].push(this.active[queue].shift());
-      console.log('Perfect!');
+      this.displayActionText(queue);
+      this.displayStatus('Perfect!');
       this.score += 1000;
       this.combo += 1;
     }
