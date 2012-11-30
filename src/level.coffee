@@ -37,6 +37,8 @@ class Level
     contactListener.BeginContact = @beginContact
     @world.SetContactListener(contactListener)
     
+  getWorld:->@world
+    
   tick:->
     @world.Step(1 / 60, 10, 10)
     @world.ClearForces()
@@ -75,27 +77,33 @@ class TestLevel extends Level
     super @id
     @level = new LevelGenerator(json, STORAGE.getRessource("spritesheet"), @world)
     
-    @tower=new Tower(10)
+    body = @world.GetBodyList()
+    if body.UserData is "Tower" then @towerbody = body
+    while((body = body.GetNext()) != null)
+      if body.UserData is "Tower" then @towerbody = body
+    
+    
+    @tower=new Tower(10, new TowerGenerator(STORAGE.getRessource("towermodel")).getTowerModel()) 
+    @towerbody.UserData = @tower
     
     #Entities are added
     for i in [0...3]
       e = new PlayerModel(@world, (Math.random()*200)+50, 30)
       e.setUserData(new TestEntity())
       @entities.add(e)
-    
-    #Create Tower
-    body  = @world.GetBodyList()
-    if body.UserData == "Tower"
-      body.UserData = new Tower(10)
-      
-    while((body = body.GetNext())!= null)
-      if body.UserData == "Tower"
-        body.UserData = new Tower(50)  
+  
+  tick:->
+    super()
+    @tower.setX(@towerbody.GetPosition().x*30)
+    @tower.setY(@towerbody.GetPosition().y*30)
+  
+  draw:(xOffset, yOffset)->
+    super(xOffset, yOffset)
+    @tower.render(@ctx)
   
   beginContact:(contact, manifold)->
     entity1 = contact.GetFixtureA().GetBody().UserData
     entity2 = contact.GetFixtureB().GetBody().UserData
-    
     #If Tower
     if entity2 instanceof Tower
       entity1.collide(entity2)
