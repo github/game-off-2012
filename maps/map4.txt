@@ -33,5 +33,5 @@ XXXXXXXXXXXXXXXX
 ----------------
 METADATA
 title: Level 5: Getting Tricky
-nextMap: 100
+nextMap: 5
 text: This level combines all of the skills you have learned so far.
