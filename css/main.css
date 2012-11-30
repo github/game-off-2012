@@ -314,7 +314,6 @@ canvas#game_bg {
 
 div.comments-button a, div.chrome-button  a{
   background-color: #52a8e8;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #52a8e8), color-stop(100%, #377ad0));
   background-image: -webkit-linear-gradient(top, #52a8e8, #377ad0);
   background-image: -moz-linear-gradient(top, #52a8e8, #377ad0);
   background-image: -ms-linear-gradient(top, #52a8e8, #377ad0);
@@ -327,7 +326,7 @@ div.comments-button a, div.chrome-button  a{
   text-align: center;
   text-decoration: none;
   width: 112px;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 div.comments-button a:hover {
@@ -338,4 +337,25 @@ div.comments-button a:hover {
     background-image: -ms-linear-gradient(top, #3e9ee5 0%, #206bcb 100%);
     background-image: -o-linear-gradient(top, #3e9ee5 0%, #206bcb 100%);
     background-image: linear-gradient(top, #3e9ee5 0%, #206bcb 100%);
+}
+
+div.chrome-button {
+	float: none;
+	display: block;
+	margin: 0 auto;
+	width: 200px;
+}
+
+div.chrome-button a {
+	width: 200px;
+	display: block;
+	margin: 20px auto;
+	font-size: 13px;
+	padding: 10px;
+	background-image: -webkit-linear-gradient(top, #5587da, #4d7cd6);
+	background-image: -moz-linear-gradient(top, #5587da, #4d7cd6);
+	background-image: -ms-linear-gradient(top, #5587da, #4d7cd6);
+	background-image: -o-linear-gradient(top, #5587da, #4d7cd6);
+	background-image: linear-gradient(top, #5587da, #4d7cd6);
+	box-shadow: inset 0px 2px 0px rgba(255, 255, 255, 0.4);
 }
