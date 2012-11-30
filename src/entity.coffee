@@ -120,7 +120,7 @@ class Model
   hasStopped:->@stopped
 
 class EntityModel extends Model
-  constructor:(@world, @x, @y, @seewidth) ->
+  constructor:(@world, @x, @y, @seewidth, @speed) ->
     @scale = SCALE
     
     @height = 12/@scale
@@ -162,7 +162,7 @@ class EntityModel extends Model
   tick:->
     #@body.SetTransform(new b2Vec2(0, @body.GetPosition().y))
     if @stopped == false
-      @body.SetPosition(new b2Vec2(@body.GetPosition().x+(2/30), @body.GetPosition().y))
+      @body.SetPosition(new b2Vec2(@body.GetPosition().x+(@speed/30), @body.GetPosition().y))
       
   wakeUp:->@body.SetAwake(true)
 
