@@ -10,6 +10,7 @@
 	height: 480px;
 	position: relative;
 	margin: 30px;
+	background-image: url('../img/menu_background.png');
 }
 
 .menu img {
