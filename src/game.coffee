@@ -24,9 +24,9 @@ $ ->
   
   #Register some Loaders
   STORAGE.register(new il("img/sprites.png", "spritesheet"),
-    new jl("img/map.json", "map"),
     new jl("level/test.json", "test"),
-    new jl("level/level2.json", "test2"))
+    new jl("level/level2.json", "test2"),
+    new jl("img/towermodel.json", "towermodel"))
   
   game = new Game()
   @STORAGE.setOnFinish(game.init)
@@ -57,33 +57,16 @@ class Game
     #InputHandler
     @inputHandler = new InputHandler
     
-    #TestMap
-    @map = new Map("map", @, @inputHandler)
-    @map.setActive(true)
-    
     #The Camera
     @camera = new Camera('undefined',30 ,5,@inputHandler)
     
-    @level = null
-    
-    
-    
-    @levels = [
-      new TestLevel("board", STORAGE.getRessource("test")),
-      new TestLevel("board", STORAGE.getRessource("test2"))
-    ]
-    @camera.world = @levels[0].world
+    @level = new TestLevel("board", STORAGE.getRessource("test"))
+    @camera.setWorld(@level.getWorld())
+    @camera.setActive(true)
     
     @run()
-    
-  loadMap:->
-    @map.setActive(true)
-    @camera.setActive(false)
-    @level = null
  
   loadLevel:(index)->
-    @map.setActive(false)
-    @camera.setActive(true)
     @level = @levels[index]
     impress().goto("game")
     
@@ -93,7 +76,6 @@ class Game
     window.requestAnimFrame(@run)
     
   tick: ->
-    @map.tick() if @map.isActive()
     @level.tick() if @level?
     @camera.tick() if @camera.isActive()
   
@@ -101,5 +83,4 @@ class Game
     #@screen.clear()
     @level.draw(@camera.getXoffset(), 0) if @level?
     #@screen.draw()
-    @map.draw() if @map.isActive()
 
