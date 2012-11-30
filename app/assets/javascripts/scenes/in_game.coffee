@@ -19,18 +19,8 @@ Crafty.scene("in_game", ->
 
   Crafty.e("Mute")
 
-  pause = Crafty.e("Pause")
-
   player.bind("LevelUp", ->
     game.levelUp()
-  )
-
-  pause.bind("DoPause", ->
-    Crafty.pause(true)
-  )
-
-  pause.bind("DoUnpause", ->
-    Crafty.pause(false)
   )
 
   restart = =>
@@ -38,7 +28,6 @@ Crafty.scene("in_game", ->
     game.reset()
     center.show()
     player.reset()
-    pause.enable()
     ready_go  ->
       game.start()
       player.enableControl()
@@ -48,7 +37,6 @@ Crafty.scene("in_game", ->
     center.hide()
     game.stop()
     player.reset().disableControl()
-    pause.disable()
     SFX.play("crash")
     Narrator.play("conflict")
     mixpanel.track("game over", score: game.score(), cycles: game.cycles)
@@ -62,7 +50,6 @@ Crafty.scene("in_game", ->
       segmentsAheadToChange = Config.obstacles.changeWhere.initial + (Math.random() * Config.obstacles.changeWhere.randomBy) + (Config.obstacles.changeWhere.increaseBy * game.cycles)
       track.currentSegment(Math.floor(segmentsAheadToChange)).perform(action)
     ).start()
-    pause.bindKeyboard()
 
   ready_go = (cb) =>
     Utils.showText("Ready?")

@@ -14,6 +14,7 @@ Crafty.c "Game",
     @tries += 1
     @tick()
     @rollActionIn(Config.obstacles.intervals.atStart)
+    mixpanel.track("Cycle #{@cycles}")
     @
 
   stop: ->
@@ -31,6 +32,7 @@ Crafty.c "Game",
     Utils.showText(Config.gfx.cyclesTitles[@cycles])
     @_actionDelay = Math.max(Config.obstacles.intervals.minimum, @_actionDelay - Config.obstacles.intervals.reduceBy)
     @attr(cycles: @cycles + 1)
+    mixpanel.track("Cycle #{@cycles}")
 
   rollActionIn: (value = null) ->
     @delay((=> @currentAction = null), value || (@_actionDelay * 3/4))
