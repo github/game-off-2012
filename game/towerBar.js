@@ -93,8 +93,6 @@ function Towerbar(pos) {
                         tower.genes.addAllele("attack" + key, new Allele({ attack: attackType }));
                     }
 
-                    tower.recolor();
-
                     return tower;
                 }
             );

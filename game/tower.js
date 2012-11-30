@@ -166,10 +166,6 @@ function Tower(baseTile) {
         }
     }
 
-    this.added = function() {
-        this.recolor();        
-    };
-        
     this.generateAllele = function()
     {   
         var allAlls = [];
@@ -200,8 +196,8 @@ function Tower(baseTile) {
     this.draw = function (pen) {
         var p = this.tPos;
         pen.save();
-        pen.fillStyle = this.rColor.str();
-        pen.strokeStyle = "lightblue";
+        pen.fillStyle = getInnerColorFromAttrs(this.attr);
+        pen.strokeStyle = getOuterColorFromAttrs(this.attr);
         ink.rect(p.x, p.y, p.w, p.h, pen);        
         pen.restore();
 
@@ -265,13 +261,7 @@ function Tower(baseTile) {
         this.recolor();
     };
     
-    this.rColor = new Color();
-    this.recolor = function() {
-        var a = this.attr;
-        this.rColor = this.rColor.r(255 - a.currentHp).g(a.range).b(a.damage).a(1);
-    }
-
-    this.mouseover = function(e) {        
+    this.mouseover = function(e) {
         // Only required because of issue #29
         for (var i = 0; i < this.connections.length; i++) {
             this.connections[i].hover = true;

@@ -38,6 +38,10 @@ function Color() {
     }
 }
 
-function getColorFromAttrs(attr) {
-    
+function getInnerColorFromAttrs(attr) {
+    return "pink";
+}
+
+function getOuterColorFromAttrs(attr) {
+    return "yellow";
 }

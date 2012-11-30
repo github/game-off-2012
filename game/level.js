@@ -27,7 +27,7 @@ function LevelManager(bugStart) {
                     AllAlleleGroups.targetBase,
                     AllAlleleGroups.damageBase,
                     AllAlleleGroups.hpBase,
-                    function () { return { speed: 30 }; },
+                    function () { return { speed: 20 }; },
                ],
             waveTime: 7,
             spawnDelay: 0.1
@@ -40,7 +40,7 @@ function LevelManager(bugStart) {
                     AllAlleleGroups.hpBase,
                     AllAlleleGroups.hpRegenBase,
                     AllAlleleGroups.attSpeedBase,
-                    function () { return { speed: 30 }; },
+                    function () { return { speed: 20 }; },
                ],
             waveTime: 7,
             spawnDelay: 0.1
@@ -70,7 +70,7 @@ function LevelManager(bugStart) {
                     AllAlleleGroups.attack2,
                     AllAlleleGroups.specization1,
                     AllAlleleGroups.specization2,
-                    function () { return { speed: 30 }; },
+                    function () { return { speed: 15 }; },
                ],
             waveTime: 7,
             spawnDelay: 0.1

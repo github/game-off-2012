@@ -23,6 +23,9 @@ function Bug(startPath) {
     this.tPos = new TemporalPos(cen.x - r, cen.y - r, r * 2, r * 2, this.attr.speed, 0);
     this.base = new BaseObj(this, 10);
 
+    this.self = new Circle(cen, r, "blue", "black", 10);
+    this.base.addObject(this.self);
+
     this.genes = new Genes();
     this.base.addObject(this.genes);
 
@@ -38,6 +41,17 @@ function Bug(startPath) {
 
     this.bugRelPathPos = Math.floor(Math.random()* TILE_SIZE) +1;
     this.delay = this.bugRelPathPos + 1;
+
+    this.constantOne = 1;
+    this.base.addObject(new UpdateTicker(this, "constantOne", "regenTick"));
+
+    this.regenTick = function()
+    {
+        if(this.attr.hpRegen > 0)
+            this.attr.currentHp += this.attr.hpRegen;
+        if(this.attr.currentHp > this.attr.hp)
+            this.attr.currentHp = this.attr.hp;
+    }
 
     this.update = function (dt) {
         this.tPos.update(dt);
@@ -73,17 +87,16 @@ function Bug(startPath) {
             }
         }
          
-         this.tPos.setSpeed(this.attr.speed);
-                     
-        this.color = "#" + hexPair(Math.floor(255 -((this.attr.currentHp / this.attr.hp) * 255))) +  "0000";
-    };
+        this.tPos.setSpeed(this.attr.speed);
+        
 
-    this.draw = function (pen) {
-        var p = this.tPos;
-        pen.fillStyle = this.color;
-        pen.strokeStyle = "orange";
-        pen.lineWidth = 1;
-        ink.circ(p.x + p.w / 2, p.y + p.h / 2, p.w / 2, pen);
+        this.self.tPos.x = this.tPos.getCenter().x;
+        this.self.tPos.y = this.tPos.getCenter().y;
+
+        this.self.fillColor = getInnerColorFromAttrs(this.attr);
+        this.self.color = getOuterColorFromAttrs(this.attr);
+
+        //this.color = "#" + hexPair(Math.floor(255 -((this.attr.currentHp / this.attr.hp) * 255))) +  "0000";
     };
 
     this.destroyAtBase = function() {
