@@ -60,7 +60,7 @@ class Game
     #The Camera
     @camera = new Camera('undefined',30 ,5,@inputHandler)
     
-    @level = new TestLevel("board", STORAGE.getRessource("test"))
+    @level = new TestLevel("board", STORAGE.getRessource("test"), @camera)
     @camera.setWorld(@level.getWorld())
     @camera.setActive(true)
     
