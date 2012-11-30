@@ -93,8 +93,8 @@ class TestLevel extends Level
     @clonepoints = 10
     
     #HowMuchCanBeSpawned
-    @badWarriors = 20
-    @badArchers = 10
+    @badWarriors = 40
+    @badArchers = 20
     
     @tickcount = 0
     
