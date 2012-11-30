@@ -3,7 +3,7 @@
 
 function TowerDragger(pos, towerGeneratorFnc) {
     this.tPos = pos;
-    this.base = new baseObj(this, 20);
+    this.base = new BaseObj(this, 20);
 
     this.towerGeneratorFnc = towerGeneratorFnc;
 
@@ -17,7 +17,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
         this.displayedTower.draw(pen);
 
         if (this.dragPos) {
-            this.displayedTower.tPos = new temporalPos(this.dragPos.x, this.dragPos.y, tileSize, tileSize);
+            this.displayedTower.tPos = new TemporalPos(this.dragPos.x, this.dragPos.y, TILE_SIZE, TILE_SIZE);
             this.displayedTower.base.raiseEvent("resize");
             this.displayedTower.draw(pen);
         }
@@ -48,11 +48,11 @@ function TowerDragger(pos, towerGeneratorFnc) {
 }
 
 function Towerbar(pos) {
-	this.base = new baseObj(this, 14);
+	this.base = new BaseObj(this, 14);
 
 	this.tPos = pos;
 
-	this.costIndicator = new Label(new temporalPos(pos.x, pos.y, pos.w, pos.h), "Tower cost: 50");
+	this.costIndicator = new Label(new TemporalPos(pos.x, pos.y, pos.w, pos.h), "Tower cost: 50");
 	this.costIndicator.font = "20px arial";
 	this.costIndicator.color = "white";
 	this.base.addObject(this.costIndicator);
@@ -74,10 +74,10 @@ function Towerbar(pos) {
 	makeTiled(this,
         function (obj, refObj, pos) {
             var towerDragger = new TowerDragger(
-                new temporalPos(pos.x, pos.y, pos.w, pos.h),
+                new TemporalPos(pos.x, pos.y, pos.w, pos.h),
                 function (forDisplay) {
                     var fakeTile = {};
-                    fakeTile.tPos = new temporalPos(0, 0, 0, 0);
+                    fakeTile.tPos = new TemporalPos(0, 0, 0, 0);
                     var tower = new Tower(fakeTile);
 
                     if (forDisplay) {
@@ -104,7 +104,7 @@ function Towerbar(pos) {
             return true;
         },
         attackCombinations,
-        new temporalPos(
+        new TemporalPos(
             pos.x + 15,
             pos.y + 40,
             450,

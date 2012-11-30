@@ -1,5 +1,5 @@
 function Infobar(pos) {
-	this.base = new baseObj(this, 14);
+	this.base = new BaseObj(this, 14);
 	this.tattr = null;
 
 	this.tPos = pos;
@@ -13,7 +13,7 @@ function Infobar(pos) {
 
     /*
 	this.attributeChoosers.target_Strategy = new AttributeChooser(
-            new temporalPos(pos.x, pos.y + 250, pos.w, 
+            new TemporalPos(pos.x, pos.y + 250, pos.w, 
                 countElements(targetStrategies) * 28),
             targetStrategies,
             "target_Strategy");
@@ -22,7 +22,7 @@ function Infobar(pos) {
     
     /*
 	this.attributeChoosers.attack_type = new AttributeChooser(
-            new temporalPos(pos.x, pos.y + 250, pos.w,
+            new TemporalPos(pos.x, pos.y + 250, pos.w,
                 countElements(attackTypes) * 28),
             attackTypes,
             "attack_type");            
@@ -32,7 +32,7 @@ function Infobar(pos) {
 
     /*
 	this.attributeChoosers.bug_attack_type = new AttributeChooser(
-            new temporalPos(pos.x, pos.y + 250, pos.w,
+            new TemporalPos(pos.x, pos.y + 250, pos.w,
                 countElements(bugAttackTypes) * 28),
             bugAttackTypes,
             "bug_attack_type");
@@ -40,7 +40,7 @@ function Infobar(pos) {
 	this.base.addObject(this.attributeChoosers.bug_attack_type);
     */
 
-	this.allelePoints = new AllelePointSystem(new temporalPos(pos.x, pos.y, pos.w * 0.92, 190));
+	this.allelePoints = new AllelePointSystem(new TemporalPos(pos.x, pos.y, pos.w * 0.92, 190));
 	this.base.addObject(this.allelePoints);
 
     //Add our buttons, should really be done just in the constructor with our given pos information

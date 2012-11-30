@@ -257,16 +257,20 @@ function Allele(delta)
             //Can't unapply attacks and targets
         }
     }
+    this.getColor = function()
+    {
+        
+    }
 }
 
 function TowerBreeder(pos) {
-    this.base = new baseObj(this, 15);
+    this.base = new BaseObj(this, 15);
 
     this.towers = [];
 
     this.tPos = pos;
 
-    this.base.addObject(new Button(new temporalPos(pos.x + 140, pos.y + 10, 50, 30), "Breed",
+    this.base.addObject(new Button(new TemporalPos(pos.x + 140, pos.y + 10, 50, 30), "Breed",
             this, "breed", null));
 
     var placingTower = null;
@@ -281,13 +285,13 @@ function TowerBreeder(pos) {
         
         var resultantAlleles = {};
         for (var alleleGroup in AllAlleleGroups) {
-            var alleleParent = this.towers[Math.floor(Math.random() * this.towers.length)];
+            var alleleParent = pickRandom(this.towers);
             if(alleleParent.genes.alleles[alleleGroup])
                 resultantAlleles[alleleGroup] = alleleParent.genes.alleles[alleleGroup];
         }
 
         var notTile = [];
-        notTile.tPos = { x: 0, y: 0, w: tileSize, h: tileSize };
+        notTile.tPos = { x: 0, y: 0, w: TILE_SIZE, h: TILE_SIZE };
         var newTower = new Tower(notTile);
         for (var key in resultantAlleles)
             newTower.genes.addAllele(key, resultantAlleles[key]);
@@ -327,7 +331,7 @@ function TowerBreeder(pos) {
                 return true;
             },
             this.towers,
-            new temporalPos(
+            new TemporalPos(
                 pos.x,
                 pos.y,
                 pos.w - 50,

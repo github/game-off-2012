@@ -1,8 +1,8 @@
 ﻿function Tile(x, y, w, h) {
     this.hover = false;
 
-    this.tPos = new temporalPos(x, y, w, h, 0, 0);
-    this.base = new baseObj(this, 1);
+    this.tPos = new TemporalPos(x, y, w, h, 0, 0);
+    this.base = new BaseObj(this, 1);
 
     this.base.addObject(new Selectable());
 
@@ -33,7 +33,7 @@
 }
 
 function FancyBackground(pen) {
-	this.base = new baseObj(this, 0);
+	this.base = new BaseObj(this, 0);
 
 	var txt = "";
 	var possible = "01";
@@ -55,7 +55,7 @@ function FancyBackground(pen) {
 	ink.text(0, textH, txt, subcancon);
 
 	
-	this.tPos = new temporalPos(bW, Math.floor(Math.random()*bH), pen.measureText(txt), textH);
+	this.tPos = new TemporalPos(BOARD_WIDTH, Math.floor(Math.random()*BOARD_HEIGHT), pen.measureText(txt), textH);
 	
 
 	this.update = function(dt) {

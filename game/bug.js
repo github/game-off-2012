@@ -22,8 +22,8 @@ function Bug(startPath, difficulty) {
     cen.x += Math.floor((startPath.tPos.w - 2*r) * Math.random()) + r;
     cen.y += Math.floor((startPath.tPos.h - 2*r) * Math.random()) + r;
 
-    this.tPos = new temporalPos(cen.x - r, cen.y - r, r * 2, r * 2, this.attr.speed, 0);
-    this.base = new baseObj(this, 10);
+    this.tPos = new TemporalPos(cen.x - r, cen.y - r, r * 2, r * 2, this.attr.speed, 0);
+    this.base = new BaseObj(this, 10);
 
     this.genes = new Genes();
     this.base.addObject(this.genes);
@@ -38,7 +38,7 @@ function Bug(startPath, difficulty) {
 
     this.curPath = startPath;
 
-    this.bugRelPathPos = Math.floor(Math.random()* tileSize) +1;
+    this.bugRelPathPos = Math.floor(Math.random()* TILE_SIZE) +1;
     this.delay = this.bugRelPathPos + 1;
 
     this.update = function (dt) {
@@ -91,9 +91,9 @@ function Bug(startPath, difficulty) {
     this.destroyAtBase = function() {
         this.base.destroySelf();        
 
-        eng.health -= 5;
+        ENG.health -= 5;
 
-        if (eng.health < 0) {
+        if (ENG.health < 0) {
             window.location.reload();
         }
     };

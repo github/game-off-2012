@@ -1,5 +1,5 @@
 function AllelePointSystem(pos) {
-    this.base = new baseObj(this, 15);
+    this.base = new BaseObj(this, 15);
     this.tPos = pos;
 
     this.pointIndicator = new Label(cloneObject(pos), "");
@@ -42,7 +42,7 @@ function AllelePointSystem(pos) {
     this.trashButton.tPos.h = 26;
     this.trashButton.tPos.w *= 0.93;
     this.base.addObject(this.trashButton);
-
+    
     this.autoTrashButton = new RadioButton(cloneObject(pos), "Auto Trash Worse", this, "autoTrashToggle");
     this.autoTrashButton.tPos.h = 26;
     this.autoTrashButton.tPos.w *= 0.93;

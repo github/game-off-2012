@@ -1,42 +1,74 @@
+function Tower_Packet(t1, t2, group, allele) {
+    this.base = new BaseObj(this, 12);
+    // We don't really need it
+    this.tpos = new TemporalPos(0, 0, 1, 1, 0, 0);
+    var p1 = getRectCenter(t1.tPos);
+    var p2 = getRectCenter(t2.tPos);
+    var dis = p1.clone().sub(p2).mag();
+    var packet = new Circle(p1, 2, "yellow", "yellow", 15);
+    var motionDelay = new MotionDelay(p1, p2, dis / 10, apply);
+    this.base.addObject(packet);
+    packet.base.addObject(motionDelay);
+    
+    var that = this;
+    function apply() {
+        t2.genes.addAllele(group, allele);
+        that.base.destroySelf();
+    }
+}
 
 //Should probably use a Line to draw itself instead of doing it by itself
 function Tower_Connection(t1, t2) {
-    var p1 = getRectCenter(t1.tPos);
-    var p2 = getRectCenter(t2.tPos);
-    this.tPos = new temporalPos(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y, 0, 0);
-    this.base = new baseObj(this, 11);
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this, 11);
     this.hover = false;
-    var color = new Color().r(0).g(255).b(0).a(0.2);
+
+    var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11, {1: 1.0});
+    this.base.addObject(line);
+
+    t1.prevHitCount = t1.attr.hitcount;
+    t2.prevHitCount = t2.attr.hitcount;
     
-    this.update = function(dt) {
-        var a1 = t1.attr;
-        var a2 = t2.attr;
-        // Should have same properties; a1 vs a2 for loop should not matter.
-        for (at in a1) {
-            if (a1[at] > a2[at]) {
-                a2[at] += Math.min(a1[at] - a2[at], a1.download/10, a2.upload/10, a2[at]) * dt;
-            } else if (a1[at] < a2[at]) {
-                a1[at] += Math.min(a2[at] - a1[at], a1.upload/10, a2.download/10, a1[at]) * dt;
-            }
+    var that = this;
+    function dataTransfer(t1, t2) {
+        function sendRandomPacket(t1, t2) {
+            var groups = [];
+            for (var group in AllAlleleGroups)
+                groups.push(group);
+
+            var group = pickRandom(groups);
+
+            that.base.addObject(new Tower_Packet(t1, t2, group, al));
         }
-        if (this.hover) {
-            color.a(0.9);
-        } else {
-            color.a(0.2);
+
+        if (t1.prevHitCount === undefined) {
+            t1.prevHitCount = t1.attr.hitcount;
+            return;
         }
-        var cost = 1 * dt;
-        if (eng.money < cost) {
-            this.base.destroySelf();
-        } else {
-            eng.money -= cost;
+        var killDelta = t1.attr.hitcount - t1.prevHitCount;
+        while (Math.floor(killDelta / 10) > 0) {
+            sendRandomPacket(t1, t2);
+            t1.prevHitCount += 10;
+            killDelta = t1.attr.hitcount - t1.prevHitCount;
         }
+        t1.prevHitCount = t1.attr.hitcount - killDelta;
     }
     
-    this.draw = function(pen) {
-        var p = this.tPos;
-        pen.strokeStyle = color.str();
-        pen.lineWidth = 2;
-        ink.line(p1.x, p1.y, p2.x, p2.y, pen);
+    this.update = function(dt) {
+        dataTransfer(t1, t2);
+        dataTransfer(t2, t1);
+        
+        if (this.hover) {
+            line.color = setColorPart(line.color, 3, 0.9);
+        } else {
+            line.color = setColorPart(line.color, 3, 0.2);
+        }
+        var cost = 1 * dt;
+        if (ENG.money < cost) {
+            this.base.destroySelf();
+        } else {
+            ENG.money -= cost;
+        }
     }
 }
 
@@ -54,10 +86,10 @@ TowerStats = {
     };
 
 function Tower(baseTile) {
-    var p = baseTile ? baseTile.tPos : {x: 0, y: 0, w : tileSize, h: tileSize};
+    var p = baseTile ? baseTile.tPos : {x: 0, y: 0, w : TILE_SIZE, h: TILE_SIZE};
     this.baseTile = baseTile;
-    this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0);
-    this.base = new baseObj(this, 10);
+    this.tPos = new TemporalPos(p.x, p.y, p.w, p.h, 0, 0);
+    this.base = new BaseObj(this, 10);
     this.attr = {
         range:          TowerStats.range,
         damage:         TowerStats.damage,
@@ -106,7 +138,7 @@ function Tower(baseTile) {
         for (var alGroup in AllAlleleGroups)
             allAlls.push(alGroup);
 
-        var genAllGroup = allAlls[Math.floor(Math.random() * allAlls.length)];
+        var genAllGroup = pickRandom(allAlls);
 
         var allObj = {};
         allObj.group = genAllGroup;
@@ -140,10 +172,10 @@ function Tower(baseTile) {
 
     // WTF - yeah man, this code is the bomb
     this.tryUpgrade = function () {
-        if (eng.money >= 100) {
+        if (ENG.money >= 100) {
             this.attr.damage *= 2;
             this.attr.attSpeed *= 2;
-            eng.money -= 100;
+            ENG.money -= 100;
         }
     };
     
@@ -218,7 +250,7 @@ function Tower(baseTile) {
     this.tempIndicator = null;
     this.mousedown = function(e) {
         this.startDrag = e;
-        tempIndicator = new Line(this.startDrag, e, "green", 15);
+        tempIndicator = new Line(this.startDrag, e, "green", 15, {0: 1.0});
         this.base.addObject(tempIndicator);
         this.base.rootNode.globalMouseMove[this.base.id] = this;
     };
@@ -235,8 +267,8 @@ function Tower(baseTile) {
         var towerSelected = findClosest(this.base.rootNode, "Tower", e, 0);
         if(towerSelected && towerSelected != this)
         {
-            if (eng.money < 50) return;
-            eng.money -= 50;
+            if (ENG.money < 50) return;
+            ENG.money -= 50;
             var conn = new Tower_Connection(this, towerSelected);
             this.base.addObject(conn);
             this.connections.push(conn);
@@ -247,21 +279,21 @@ function Tower(baseTile) {
 
 function tryPlaceTower(tower, tile)
 {
-    var eng = tile.base.rootNode;
+    var ENG = tile.base.rootNode;
     var e = tile.tPos.getCenter();
-    var towerOnTile = findClosest(eng, "Tower", e, 0);
-    var pathOnTile = findClosest(eng, "Path", e, 0);
+    var towerOnTile = findClosest(ENG, "Tower", e, 0);
+    var pathOnTile = findClosest(ENG, "Path", e, 0);
 
     var curCost = tile.base.rootNode.currentCost;
 
-    if (!towerOnTile && !pathOnTile && eng.money - curCost >= 0) {
-        eng.money -= curCost;   
+    if (!towerOnTile && !pathOnTile && ENG.money - curCost >= 0) {
+        ENG.money -= curCost;   
 
         tile.base.rootNode.currentCost *= 2;
 
         tower.tPos = tile.tPos;         
-        eng.base.addObject(tower);
-        eng.changeSel(tower);
+        ENG.base.addObject(tower);
+        ENG.changeSel(tower);
         getAnElement(tile.base.children.Selectable).ignoreNext = true;
     }
 };

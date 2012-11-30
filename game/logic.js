@@ -29,27 +29,27 @@
 
     this.lastTowerHover = null;
 
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
-    this.engine = this; //eng also works fine
+    this.engine = this; //ENG also works fine
 
     this.infobar = new Infobar(
-            new temporalPos(pos.w - 250, 0, 250, pos.h * 0.8)
+            new TemporalPos(pos.w - 250, 0, 250, pos.h * 0.8)
         );
 
     this.base.addObject(this.infobar);
 
     this.towerbar = new Towerbar(
-            new temporalPos(0, pos.h - 150, pos.w - 250, 150)
+            new TemporalPos(0, pos.h - 150, pos.w - 250, 150)
         );
     this.base.addObject(this.towerbar);
     this.towerbreeder = new TowerBreeder(
-            new temporalPos(pos.w - 250, pos.h - 150, 200, 150)
+            new TemporalPos(pos.w - 250, pos.h - 150, 200, 150)
         );
     this.base.addObject(this.towerbreeder);
 
     this.gameInfoBar = new GameInfoBar(
-            new temporalPos(0, pos.h - 240, pos.w - 260, 80)
+            new TemporalPos(0, pos.h - 240, pos.w - 260, 80)
         );
     this.base.addObject(this.gameInfoBar);
 
@@ -65,7 +65,7 @@
     var bugStart = getAnElement(this.engine.base.children["Path_Start"]);
 
     //Level/Wave generator
-    var lmpos = new temporalPos(pos.w-400, 0, 100, pos.h*0.05);
+    var lmpos = new TemporalPos(pos.w-400, 0, 100, pos.h*0.05);
     this.lvMan = new LevelManager(bugStart, lmpos);
     this.base.addObject(this.lvMan);
     
@@ -164,8 +164,8 @@
     function throwMouseEventAt(mX, mY, eventName, eng) {
         var allUnderMouse = [];
 
-        for (var type in eng.base.allChildren) {
-            mergeToArray(findAllWithin(eng, type, { x: mX, y: mY }, 0), allUnderMouse);
+        for (var type in ENG.base.allChildren) {
+            mergeToArray(findAllWithin(ENG, type, { x: mX, y: mY }, 0), allUnderMouse);
         }
 
         if (allUnderMouse.length == 0)
@@ -265,6 +265,7 @@
         pen = this.pen;
 
         pen.fillStyle = "black";
+
         //Commenting out this line leads to funny results :D
         ink.rect(0, 0, width, height, pen);
     };

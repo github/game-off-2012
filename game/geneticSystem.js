@@ -1,5 +1,5 @@
 function Genes() {
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
     this.alleles = {};
 

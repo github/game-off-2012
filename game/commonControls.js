@@ -1,6 +1,6 @@
 function Button(pos, txt, context, functionName, callData) {
 	this.tPos = pos;
-	this.base = new baseObj(this, 15);
+	this.base = new BaseObj(this, 15);
 	var textsize = 14;
 
 	this.hover = false;
@@ -65,7 +65,7 @@ function Button(pos, txt, context, functionName, callData) {
 
 function Label(pos, text) {
     this.tPos = pos;
-    this.base = new baseObj(this, 15);
+    this.base = new BaseObj(this, 15);
     this.color = "red";
     this.font = "12px arial";
     var textsize = 14;
@@ -100,7 +100,7 @@ function Label(pos, text) {
 
 function RadioButton(pos, txt, context, functionName, callData, prevRadioButton){
     this.tPos = pos;
-	this.base = new baseObj(this, 15);
+	this.base = new BaseObj(this, 15);
 	var textsize = 14;
 
 	this.hover = false;
@@ -229,7 +229,7 @@ function Dock(item, dockX, dockY) {
 
 //Attributes should be an object, like targetStrategys
 function AttributeChooser(tPos, attributes, attributeName) {
-    this.base = new baseObj(this, 15); //Should not hardcode zorder
+    this.base = new BaseObj(this, 15); //Should not hardcode zorder
     this.tPos = tPos;
         
     this.attributes = attributes;
@@ -243,7 +243,7 @@ function AttributeChooser(tPos, attributes, attributeName) {
         var typeName = attributes[key].name;
         //Initial position doesn't matter, as we resize right away
         currentButton = new RadioButton(
-            new temporalPos(0, 0, 0, 0),
+            new TemporalPos(0, 0, 0, 0),
             key, this, "setAttribute", key, currentButton);
         radioButtons[typeName] = currentButton;        
         this.base.addObject(currentButton);

@@ -23,8 +23,8 @@ function ToolTip(basetile, attr) {
 	var p = basetile.tPos;
 
 	//Make new tPos and offset it
-	this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0);
-	this.tPos.x += tileSize-2;
+	this.tPos = new TemporalPos(p.x, p.y, p.w, p.h, 0, 0);
+	this.tPos.x += TILE_SIZE-2;
 	this.tPos.w = 110;
 	this.tPos.h = 80;
 
@@ -35,7 +35,7 @@ function ToolTip(basetile, attr) {
 	this.visibility = 1;
 	
 
-	this.base = new baseObj(this, 13);
+	this.base = new BaseObj(this, 13);
 
 	this.update = function(dt) {
 		if (this.hover == false) {

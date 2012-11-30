@@ -6,7 +6,7 @@ function LevelData(b, d, l, nwi) {
 }
 
 function LevelManager(bugStart, lmpos) {
-    this.base = new baseObj(this, 10);
+    this.base = new BaseObj(this, 10);
     
     //Should get rid of these
     this.bugIncrease = 10;
@@ -24,7 +24,6 @@ function LevelManager(bugStart, lmpos) {
 
     //Things in this wave
     this.currWv = new LevelData(0,0,0,0);
-
 
     this.update = function (dt) {
         var currWv = this.currWv;

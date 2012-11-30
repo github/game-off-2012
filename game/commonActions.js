@@ -1,7 +1,7 @@
 //The reason this is its own object is because the attack cycle will
 //shortly (hopefully become much more complex than just calling doAttack.
 function AttackCycle() {
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
     this.attackCounter = 0;
 
     this.added = function () {
@@ -23,7 +23,7 @@ function AttackCycle() {
 //(Actually... if these were to combine themselves and notice patterns they
 //could probably be much much more efficient than the naive implementation)
 function UpdateTicker(objWithDelay, tickDelayName, parentTickFunctionName, inverseRate) {
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
     
     this.objWithDelay = objWithDelay;
     this.tickDelayName = tickDelayName;
@@ -60,7 +60,7 @@ function UpdateTicker(objWithDelay, tickDelayName, parentTickFunctionName, inver
 
 //Could also just be an UpdateTicker that calls base.destroySelf
 function Lifetime(lifetime) {
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
     this.lifetime = lifetime;
 
@@ -73,7 +73,7 @@ function Lifetime(lifetime) {
 }
 
 function Selectable() {
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
     this.ignoreNext = false;
 
@@ -100,7 +100,7 @@ function Selectable() {
 }
 
 function HoverIndicator() {
-    this.base = new baseObj(this, 20);
+    this.base = new BaseObj(this, 20);
 
     this.draw = function (pen) {
         var p = this.base.parent.tPos;
@@ -113,7 +113,7 @@ function HoverIndicator() {
 }
 
 function SlowEffect(magnitude) {
-    this.base = new baseObj(this, 15);
+    this.base = new BaseObj(this, 15);
     this.magnitude = magnitude;
 
     this.added = function () {
@@ -137,7 +137,7 @@ function SlowEffect(magnitude) {
 //Creates an animations of its parent from start to end
 //and then calls callback
 function MotionDelay(start, end, time, callback) {
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
     this.start = start;
     this.end = end;
@@ -165,7 +165,7 @@ function MotionDelay(start, end, time, callback) {
 }
 
 function AttributeTween(start, end, time, callbackName, attributeName) {
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
     this.start = start;
     this.end = end;
@@ -196,7 +196,7 @@ function AttributeTween(start, end, time, callbackName, attributeName) {
 }
 
 function SimpleCallback(time, callbackName) {
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
     this.time = time;
     this.baseTime = time;

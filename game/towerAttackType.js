@@ -51,7 +51,7 @@ function startAttack(attackTemplate) {
     if(!assertDefined(attackTemplate.attacker))
         return;
 
-    var eng = attackTemplate.attacker.base.rootNode;
+    var ENG = attackTemplate.attacker.base.rootNode;
     var attackType = attackTemplate.attackType;
 
     var realAttacker = attackTemplate.baseAttacker;
@@ -63,7 +63,7 @@ function startAttack(attackTemplate) {
     {
         var attackNode = new attackType.AttackNode(attackTemplate);
 
-        eng.base.addObject(attackNode);
+        ENG.base.addObject(attackNode);
     }
 }
 
@@ -94,7 +94,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new baseObj(this, 15);         
+            this.base = new BaseObj(this, 15);         
             this.attackTemplate = attackTemplate;
 
             var ourStats = attackTemplate.attackType;
@@ -137,7 +137,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new baseObj(this, 15);         
+            this.base = new BaseObj(this, 15);         
             this.attackTemplate = attackTemplate;
 
             var ourStats = attackTemplate.attackType;
@@ -200,7 +200,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new baseObj(this, 15);         
+            this.base = new BaseObj(this, 15);         
             this.attackTemplate = attackTemplate;
 
             var attacker = attackTemplate.attacker;
@@ -261,9 +261,9 @@ var allAttackTypes = {
                     this.attackTemplate.target = targets[randomPos];
 
 
-                    var eng = this.attackTemplate.attacker.base.rootNode;
+                    var ENG = this.attackTemplate.attacker.base.rootNode;
                     //Resurrect ourself
-                    eng.base.addObject(new attackTemplate.attackType.AttackNode(this.attackTemplate));
+                    ENG.base.addObject(new attackTemplate.attackType.AttackNode(this.attackTemplate));
                 }
             };
         };
@@ -282,7 +282,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {         
-            this.base = new baseObj(this, 8);
+            this.base = new BaseObj(this, 8);
             
             this.attackTemplate = attackTemplate ;
 
@@ -367,7 +367,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new baseObj(this, 15);         
+            this.base = new BaseObj(this, 15);         
             this.attackTemplate = attackTemplate;
 
             var ourStats = attackTemplate.attackType;
@@ -435,7 +435,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new baseObj(this, 15);         
+            this.base = new BaseObj(this, 15);         
             this.attackTemplate = attackTemplate;
 
             var attacker = attackTemplate.attacker;
@@ -485,7 +485,7 @@ function drawAttributes(user, pen) {
             return true;
         },
         user.attr,
-        new temporalPos(
+        new TemporalPos(
             user.tPos.x + user.tPos.w * 0.15,
             user.tPos.y + user.tPos.h * 0.4,
             user.tPos.w * 0.85,

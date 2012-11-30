@@ -14,15 +14,18 @@ function MakeLaser(shooter, target, time) {
     return line;
 }
 
-function Line(start, end, color, zorder) {
+function Line(start, end, color, zorder, arrowHeadPercents) {
     this.start = start;
     this.end = end;
 
     //We do not maintain tPos!
-    this.tPos = new temporalPos(start.x, start.y, end.x - start.x, end.y - start.y, 0, 0);
-    this.base = new baseObj(this, zorder);
+    this.tPos = new TemporalPos(start.x, start.y, end.x - start.x, end.y - start.y, 0, 0);
+    this.base = new BaseObj(this, zorder);
 
     this.base.type = "Line" + zorder; //hack to fix z order problem
+
+    //Positions on line we add arrow heads.
+    this.arrowHeadPercents = arrowHeadPercents;
 
     this.color = color;
 
@@ -37,6 +40,18 @@ function Line(start, end, color, zorder) {
         var e = this.end;
 
         ink.line(s.x, s.y, e.x, e.y, pen);
+
+        for (var key in this.arrowHeadPercents) {
+            var percent = this.arrowHeadPercents[key];
+
+            var result = new Vector(s.x, s.y);
+            var delta = new Vector(e.x, e.y);
+            delta.sub(s);
+            delta.mult(percent);
+            result.add(delta);
+
+            ink.arrowHead(s.x, s.y, result.x, result.y, pen);
+        }
     };
 }
 
@@ -47,7 +62,7 @@ function PCircle(center, radius, color, fillColor, zorder) {
     this.pFillColor = forcePointer(fillColor);
 
     this.tPos = {x:0, y:0, h:0, w:0};  //We lie about this because it doesn't matter
-    this.base = new baseObj(this, zorder);
+    this.base = new BaseObj(this, zorder);
     this.base.type = "PCircle" + zorder; //hack to fix z order problem
 
     this.draw = function (pen) {
@@ -72,7 +87,8 @@ function Circle(center, radius, color, fillColor, zorder) {
     this.fillColor = fillColor;
 
     this.tPos = { x: center.x, y: center.y, h: 0, w: 0 };  //We lie about this because it doesn't matter
-    this.base = new baseObj(this, zorder);
+
+    this.base = new BaseObj(this, zorder);
     this.base.type = "Circle" + zorder; //hack to fix z order problem
 
     this.draw = function (pen) {
@@ -91,7 +107,7 @@ function Circle(center, radius, color, fillColor, zorder) {
     };
 }
 function AlphaDecay(lifetime, startAlpha, endAlpha) {
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
     this.lifetime = lifetime;
     this.startAlpha = startAlpha;
@@ -113,7 +129,7 @@ function AlphaDecay(lifetime, startAlpha, endAlpha) {
 }
 
 function AlphaDecayPointer(lifetime, startAlpha, endAlpha, pColor) {
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
     this.lifetime = lifetime;
     this.startAlpha = startAlpha;
