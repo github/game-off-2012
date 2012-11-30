@@ -260,9 +260,13 @@ function Allele(delta)
             //Can't unapply attacks and targets
         }
     }
-    this.getColor = function()
+    this.getInnerColor = function()
     {
-        
+        return "pink";
+    }
+    this.getOuterColor = function()
+    {
+        return "yellow";
     }
 }
 
@@ -273,8 +277,8 @@ function TowerBreeder(pos) {
 
     this.tPos = pos;
 
-    this.base.addObject(new Button(new TemporalPos(pos.x + 140, pos.y + 10, 50, 30), "Breed",
-            this, "breed", null));
+    //this.base.addObject(new Button(new TemporalPos(pos.x + 140, pos.y + 10, 50, 30), "Breed",
+      //      this, "breed", null));
 
     var placingTower = null;
 

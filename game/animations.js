@@ -91,6 +91,8 @@ function Circle(center, radius, color, fillColor, zorder) {
     this.base = new BaseObj(this, zorder);
     this.base.type = "Circle" + zorder; //hack to fix z order problem
 
+    this.lineWidth = 2;
+
     this.draw = function (pen) {
         var p = this.tPos;
         var radius = this.radius;
@@ -99,7 +101,7 @@ function Circle(center, radius, color, fillColor, zorder) {
 
         if (radius < 1) radius = 1;
 
-        pen.lineWidth = 2;
+        pen.lineWidth = this.lineWidth;
         pen.fillStyle = fillColor;
         pen.strokeStyle = color;
 

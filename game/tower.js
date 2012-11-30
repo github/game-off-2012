@@ -5,7 +5,8 @@ function Tower_Packet(t1, t2, group, allele) {
     var p1 = getRectCenter(t1.tPos);
     var p2 = getRectCenter(t2.tPos);
     var dis = p1.clone().sub(p2).mag();
-    var packet = new Circle(p1, 2, "yellow", "yellow", 15);
+    var packet = new Circle(p1, 3, allele.getInnerColor(), allele.getOuterColor(), 15);
+    packet.lineWidth = 1;
     var motionDelay = new MotionDelay(p1, p2, dis / 10, apply);
     this.base.addObject(packet);
     packet.base.addObject(motionDelay);
@@ -23,11 +24,28 @@ function Tower_Connection(t1, t2) {
     this.base = new BaseObj(this, 11);
     this.hover = false;
 
-    var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11, {1: 1.0});
+    var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11, {1: 0.1, 2: 0.3, 3: 0.5, 4: 0.7, 5: 0.9});
     this.base.addObject(line);
 
-    t1.prevhitCount = t1.attr.hitCount;
-    t2.prevhitCount = t2.attr.hitCount;
+    var pos = t2.tPos.getCenter();
+
+    var delta = t2.tPos.getCenter();
+    delta.sub(t1.tPos.getCenter());
+    delta.setMag(t2.tPos.w);
+
+    pos.w = 20;
+    pos.h = 20;
+
+    pos.sub(delta);
+    pos.sub({x: pos.w * 0.5, y: pos.h * 0.5});
+    
+    this.deleteButton = new Button(pos, "-", 
+        this, "deleteSelf", 50);
+    
+    this.base.addObject(this.deleteButton);
+
+    t1.prevhitCount = t1.attr.kills;
+    t2.prevhitCount = t2.attr.kills;
     
     var that = this;
     function dataTransfer(t1, t2) {
@@ -43,32 +61,49 @@ function Tower_Connection(t1, t2) {
         }
 
         if (t1.prevhitCount === undefined) {
-            t1.prevhitCount = t1.attr.hitCount;
+            t1.prevhitCount = t1.attr.kills;
             return;
         }
-        var killDelta = t1.attr.hitCount - t1.prevhitCount;
+        var killDelta = t1.attr.kills - t1.prevhitCount;
         while (Math.floor(killDelta / 1) > 0) {
             sendRandomPacket(t1, t2);
             t1.prevhitCount += 10;
-            killDelta = t1.attr.hitCount - t1.prevhitCount;
+            killDelta = t1.attr.kills - t1.prevhitCount;
         }
-        t1.prevhitCount = t1.attr.hitCount - killDelta;
+        t1.prevhitCount = t1.attr.kills - killDelta;
     }
     
+    this.deleteSelf = function()
+    {
+        var conns = this.base.parent.connections;
+
+        for(var key in conns) {
+            if(conns[key] == this) {
+                conns.splice(key, 1);
+                break;
+            }
+        }
+
+        this.base.destroySelf();
+    }
+
     this.update = function(dt) {
         dataTransfer(t1, t2);
-        dataTransfer(t2, t1);
+        //dataTransfer(t2, t1);
         
+        this.deleteButton.hidden = !this.base.parent.hover;
+
         if (this.hover) {
-            line.color = setColorPart(line.color, 3, 0.9);
+            line.color = setColorPart(line.color, 3, 0.9);            
+
         } else {
             line.color = setColorPart(line.color, 3, 0.2);
         }
         var cost = 1 * dt;
-        if (ENG.money < cost) {
+        if (eng.money < cost) {
             this.base.destroySelf();
         } else {
-            ENG.money -= cost;
+            eng.money -= cost;
         }
     }
 }
@@ -102,6 +137,7 @@ function Tower(baseTile) {
         upload:         TowerStats.upload,
         download:       TowerStats.download,
         hitCount:       TowerStats.hitCount,
+        kills:          0,
         value:          TowerStats.value,
     };    
 
@@ -174,10 +210,10 @@ function Tower(baseTile) {
 
     // WTF - yeah man, this code is the bomb
     this.tryUpgrade = function () {
-        if (ENG.money >= 100) {
+        if (eng.money >= 100) {
             this.attr.damage *= 2;
             this.attr.attSpeed *= 2;
-            ENG.money -= 100;
+            eng.money -= 100;
         }
     };
     
@@ -232,7 +268,7 @@ function Tower(baseTile) {
     this.rColor = new Color();
     this.recolor = function() {
         var a = this.attr;
-        this.rColor = this.rColor.r(255 - a.currentHp).g(a.range).b(a.damage).a(0.5);
+        this.rColor = this.rColor.r(255 - a.currentHp).g(a.range).b(a.damage).a(1);
     }
 
     this.mouseover = function(e) {        
@@ -263,39 +299,44 @@ function Tower(baseTile) {
     }
 
     this.dragEnd = function(e){
+        var eng = this.base.rootNode;
+
         this.base.removeObject(tempIndicator);
         this.startDrag = null;
 
         var towerSelected = findClosest(this.base.rootNode, "Tower", e, 0);
         if(towerSelected && towerSelected != this)
         {
-            if (ENG.money < 50) return;
-            ENG.money -= 50;
+            if (eng.money < 50) return;
+            eng.money -= 50;
             var conn = new Tower_Connection(this, towerSelected);
             this.base.addObject(conn);
             this.connections.push(conn);
             towerSelected.connections.push(conn);
+
+            eng.changeSel(this);
+            getAnElement(this.base.children.Selectable).ignoreNext = true;
         }
     };
 }
 
 function tryPlaceTower(tower, tile)
 {
-    var ENG = tile.base.rootNode;
+    var eng = tile.base.rootNode;
     var e = tile.tPos.getCenter();
-    var towerOnTile = findClosest(ENG, "Tower", e, 0);
-    var pathOnTile = findClosest(ENG, "Path", e, 0);
+    var towerOnTile = findClosest(eng, "Tower", e, 0);
+    var pathOnTile = findClosest(eng, "Path", e, 0);
 
     var curCost = tile.base.rootNode.currentCost;
 
-    if (!towerOnTile && !pathOnTile && ENG.money - curCost >= 0) {
-        ENG.money -= curCost;   
+    if (!towerOnTile && !pathOnTile && eng.money - curCost >= 0) {
+        eng.money -= curCost;   
 
         tile.base.rootNode.currentCost *= 2;
 
         tower.tPos = tile.tPos;         
-        ENG.base.addObject(tower);
-        ENG.changeSel(tower);
+        eng.base.addObject(tower);
+        eng.changeSel(tower);
         getAnElement(tile.base.children.Selectable).ignoreNext = true;
     }
 };

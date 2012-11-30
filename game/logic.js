@@ -1,4 +1,4 @@
-﻿function Engine(pen, bufferCanvas, pos) {
+﻿function engine(pen, bufferCanvas, pos) {
     var mX = -1;
     var mY = -1;    
     var mdX = -1; //Mouse down
@@ -31,7 +31,7 @@
 
     this.base = new BaseObj(this);
 
-    this.engine = this; //ENG also works fine
+    this.engine = this; //eng also works fine
 
     this.infobar = new Infobar(
             new TemporalPos(pos.w - 250, 0, 250, pos.h * 0.8)
@@ -121,6 +121,9 @@
 
         if (currentRangeDisplayed && this.selectedObj)
             currentRangeDisplayed.pCenter.set(this.selectedObj.tPos.getCenter());
+
+        if (this.selectedObj)
+            this.selectedObj.hover = true;
     };
 
     this.resizeEvent = null;
@@ -167,8 +170,8 @@
     function throwMouseEventAt(mX, mY, eventName, eng) {
         var allUnderMouse = [];
 
-        for (var type in ENG.base.allChildren) {
-            mergeToArray(findAllWithin(ENG, type, { x: mX, y: mY }, 0), allUnderMouse);
+        for (var type in eng.base.allChildren) {
+            mergeToArray(findAllWithin(eng, type, { x: mX, y: mY }, 0), allUnderMouse);
         }
 
         if (allUnderMouse.length == 0)
@@ -299,6 +302,9 @@
 
             this.base.addObject(currentRangeDisplayed);
 
+            if (this.selectedObj)
+                this.selectedObj.hover = false;
+
             this.selectedObj = obj;
             this.infobar.updateAttr(obj);
 
@@ -325,6 +331,9 @@
                 }
             }
             this.selectedBucket = [];
+
+            if (this.selectedObj)
+                this.selectedObj.hover = false;
 
             this.selectedObj = null;
             this.infobar.clearDisplay();

@@ -1,6 +1,11 @@
-function Button(pos, txt, context, functionName, callData) {
-	this.tPos = pos;
-	this.base = new BaseObj(this, 15);
+function Button(pos, txt, context, functionName, callData, zorder) {
+    this.tPos = pos;
+
+    if (!zorder)
+        zorder = 15;
+
+    this.base = new BaseObj(this, zorder);
+    this.base.type = "Button" + zorder;
 	var textsize = 14;
 
 	this.hover = false;

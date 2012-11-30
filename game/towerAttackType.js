@@ -11,7 +11,7 @@ function applyAttack(attackTemplate) {
     var attacker = attackTemplate.attacker;
     var damage = attackTemplate.damage;
     var baseAttacker = attackTemplate.baseAttacker;
-
+    
     if(!assertDefined(target, attacker, damage, baseAttacker))
         return;
 
@@ -53,7 +53,10 @@ function startAttack(attackTemplate) {
     if(!assertDefined(attackTemplate.attacker))
         return;
 
-    var ENG = attackTemplate.attacker.base.rootNode;
+    if(attackTemplate.damage < 0)
+        return;
+
+    var eng = attackTemplate.attacker.base.rootNode;
     var attackType = attackTemplate.attackType;
 
     var realAttacker = attackTemplate.baseAttacker;
@@ -68,7 +71,7 @@ function startAttack(attackTemplate) {
     {
         var attackNode = new attackType.AttackNode(attackTemplate);
 
-        ENG.base.addObject(attackNode);
+        eng.base.addObject(attackNode);
     }
 }
 
@@ -266,9 +269,9 @@ var allAttackTypes = {
                     this.attackTemplate.target = targets[randomPos];
 
 
-                    var ENG = this.attackTemplate.attacker.base.rootNode;
+                    var eng = this.attackTemplate.attacker.base.rootNode;
                     //Resurrect ourself
-                    ENG.base.addObject(new attackTemplate.attackType.AttackNode(this.attackTemplate));
+                    eng.base.addObject(new attackTemplate.attackType.AttackNode(this.attackTemplate));
                 }
             };
         };

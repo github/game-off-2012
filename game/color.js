@@ -37,3 +37,7 @@ function Color() {
         return str;
     }
 }
+
+function getColorFromAttrs(attr) {
+    
+}
