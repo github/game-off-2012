@@ -1,0 +1,91 @@
+body {
+  background-color: #333; color: #646464; line-height: normal;
+  font-family: Lucida Grande, Lucida Sans, Arial, Helvetica Neue, Verdana, Geneva, sans-serif;
+  font-size: 11px; font-weight: normal; text-decoration: none;
+	  line-height: 1.5em;
+}
+a img { 
+	border: 0px solid transparent;
+}
+a, a:link, a:visited, a:active, a:hover { 
+	color: #cdcdcd; text-decoration: underline;
+}
+
+h1,h2,h3,h4, .button, .button:link, .button:active, .button:visited{
+	font-family: 'Wire One', sans-serif;
+	text-shadow: 0px 1px 0px #ffffff;
+	color: #323232;
+    filter: dropshadow(color=#ffffff, offx=0, offy=1);
+}
+
+.button{
+	color: #323232;
+}
+
+.button:hover{
+	text-decoration: none;
+	color: #633d3d;
+}
+
+
+#game-wrapper{
+	position: relative;
+}
+
+	#loading{
+		width: 100%;
+		height: 100%;
+		background: #f1f1f1;
+	}
+		#loading h2{
+			font-size: 80px;
+			line-height: 80px;
+			text-align: center;
+			margin-top: 290px;
+		}
+	#main-menu{
+		text-align: center;
+		background: #f1f1f1;
+		background: rgba(100,100,100,0.2);
+	}
+		#main-menu h1{
+			font-size: 120px;
+			line-height: 120px;
+			margin-bottom: 348px;
+			margin-top: 55px;
+		}
+	#replay-menu{
+		display: none;
+	}
+
+.button{
+	font-size: 50px;
+	line-height: 50px;
+	text-decoration: none;
+}
+
+.overlay{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+#flash{
+	background: #fff;
+	display: none;
+}
+
+canvas { 
+	display: block; 
+	outline: 0px; 
+	margin-bottom: 1.5em; 
+}
+#content { 
+	margin: 50px auto 0px auto; padding: 25px 25px 15px 25px;
+	width: 800px; min-width: 300px; overflow: auto;
+	border-left: 1px solid #444; border-top: 1px solid #444; 
+	border-right: 1px solid #333; border-bottom: 1px solid #333;
+	background-color: #3d3d3d;
+}
