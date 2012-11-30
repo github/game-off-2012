@@ -74,18 +74,9 @@ Crafty.c('FinishableBox', {
 */
 Crafty.c('RemovableBox', {
     init: function() {
-        this.requires("removable, Box, ColorBox, FancyText")
+        this.requires("removable, Box, ColorBox")
         .bind('remove', function() {
             this.removeNeighbors();
-        });
-
-        // Initiate inner text to display the number
-        // of blocks needed for removable.  Not sure if we want this?
-        this.FancyText("3");
-        this.trigger('setTextCSS', {
-            "text-align": "center",
-            "font-size": "2em",
-            top: "-2px"
         });
     },
 
@@ -133,7 +124,7 @@ Crafty.c('RemovableBox', {
 * Applies a sprite for the colored boxes
 */
 Crafty.c('ColorBox', {
-    _colorString: "white", // Default is white
+    _colorString: null, // Default is white
 
     init: function() {
         this.requires("Box, " + this.colorComponentString())
@@ -163,7 +154,7 @@ Crafty.c('ColorBox', {
     },
 
     colorComponentString: function() {
-        return this._colorString + "Box" + (this.has("PushableBox") ? "" : "Unmovable" );
+        return (this._colorString || "white") + "Box" + (this.has("ColorableBox") ? "" : "NotColorable" ) + (this.has("PushableBox") ? "" : "Unmovable" );
     },
     
     canMoveToColorTile: function(direction) {
@@ -195,6 +186,7 @@ Crafty.c('ColorableBox', {
     init: function() {
         this.requires("ColorBox");
         this.trigger('setBoxColor', "white");
+        return this;
     },
 
     // Constructor takes a color

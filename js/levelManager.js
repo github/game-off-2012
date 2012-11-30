@@ -1,11 +1,11 @@
 var levelManager = {
     tileMap: {
         B: function (x, y) { levelManager.createRemovableBox("blue", x, y); },
-        W: function (x, y) { levelManager.createRemovableBox("white", x, y); },
+        W: function (x, y) { levelManager.createRemovableBox(null, x, y); },
         R: function (x, y) { levelManager.createRemovableBox("red", x, y); },
         P: function (x, y) { levelManager.createRemovableBox("purple", x, y); },
         b: function (x, y) { levelManager.createPushableRemovableBox("blue", x, y); },
-        w: function (x, y) { levelManager.createPushableRemovableBox("white", x, y); },
+        w: function (x, y) { levelManager.createPushableRemovableBox(null, x, y); },
         r: function (x, y) { levelManager.createPushableRemovableBox("red", x, y); },
         p: function (x, y) { levelManager.createPushableRemovableBox("purple", x, y); },
         X: function (x, y) { levelManager.createWall(x, y); },
@@ -15,7 +15,15 @@ var levelManager = {
         "1": function (x, y) { levelManager.createColorFloor("blue", x, y); },
         "2": function (x, y) { levelManager.createColorFloor("white", x, y); },
         "3": function (x, y) { levelManager.createColorFloor("red", x, y); },
-        "4": function (x, y) { levelManager.createColorFloor("purple", x, y); }
+        "4": function (x, y) { levelManager.createColorFloor("purple", x, y); },
+        "5": function (x, y) { levelManager.createPushableNonColorableBox("blue", x, y); },
+        "6": function (x, y) { levelManager.createPushableNonColorableBox("white", x, y); },
+        "7": function (x, y) { levelManager.createPushableNonColorableBox("red", x, y); },
+        "8": function (x, y) { levelManager.createPushableNonColorableBox("purple", x, y); },
+        u: function (x, y) { levelManager.createPushableNonColorableRemovableBox("blue", x, y); },
+        i: function (x, y) { levelManager.createPushableNonColorableRemovableBox("white", x, y); },
+        o: function (x, y) { levelManager.createPushableNonColorableRemovableBox("red", x, y); },
+        l: function (x, y) { levelManager.createPushableNonColorableRemovableBox("purple", x, y); }
     },
 
     createRemovableBox: function (color, x, y) {
@@ -33,8 +41,18 @@ var levelManager = {
         .ColorableBox(color)
         .attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
     },
+    createPushableNonColorableBox: function (color, x, y) {
+        Crafty.e("2D, DOM, PushableBox")
+        .ColorableBox(color)
+        .attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+    },
+    createPushableNonColorableRemovableBox: function (color, x, y) {
+        Crafty.e("2D, DOM, PushableBox, RemovableBox")
+        .ColorableBox(color)
+        .attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+    },
     createFinishTile: function (x, y) {
-        Crafty.e("2D, DOM, FinishableBox, portal").attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
+        Crafty.e("2D, Canvas, FinishableBox, portal").attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
     },
     createWall: function (x, y) {
         Crafty.e("2D, DOM, solid, wall").attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize});
