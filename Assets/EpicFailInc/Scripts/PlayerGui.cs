@@ -43,13 +43,12 @@ public class PlayerGui : MonoBehaviour
     {
         //Need to do it here because this here's a monobehavior (not supposed to "new" those), as well as being able to get things like the amunition variable
         var playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        var temp = (Transform)Instantiate(Ammunition, new Vector3(playerTransform.position.x, playerTransform.position.y + (playerTransform.localScale.y + 0.5f), playerTransform.position.z), Quaternion.identity);
+        var temp = (Transform)Instantiate(Ammunition, new Vector3(playerTransform.position.x, playerTransform.position.y, playerTransform.position.z), Quaternion.identity);
         var explosionScript = (Explode)temp.gameObject.GetComponent(typeof(Explode));
         explosionScript.NumberOfBombs = HowManyToMerge;
         temp.GetChild(0).gameObject.active = false;
         var downScale = .53f;
         temp.localScale = new Vector3(temp.localScale.x * HowManyToMerge * downScale, temp.localScale.y * HowManyToMerge * downScale, temp.localScale.z * HowManyToMerge * downScale);
-        temp.rigidbody.AddForce(transform.forward * 100);
     }
 }
 

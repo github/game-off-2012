@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float moveInput = Input.GetAxis("Horizontal");
+        float moveInput = Input.GetAxisRaw("Horizontal");
         if (moveInput > 0) moveInput = 1;
         else if (moveInput < 0) moveInput = -1;
         else moveInput = 0;

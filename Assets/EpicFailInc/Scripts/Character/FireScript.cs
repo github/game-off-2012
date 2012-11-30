@@ -4,7 +4,7 @@ using System.Collections;
 public class FireScript : MonoBehaviour
 {
     public Transform ammunition;
-    public int speed = 1000;
+    public int speed = 0;
     public float fireRateInSeconds = 1.0f;
 
     //Private
@@ -24,7 +24,7 @@ public class FireScript : MonoBehaviour
         if (fireInput > 0 && time >= fireRateInSeconds)
         {
             time = 0.0f;
-            var temp = (Transform)Instantiate(ammunition,new Vector3(transform.position.x, transform.position.y+(transform.localScale.y+0.5f), transform.position.z),Quaternion.identity);
+            var temp = (Transform)Instantiate(ammunition,new Vector3(transform.position.x, transform.position.y, transform.position.z),Quaternion.identity);
             temp.GetChild(0).gameObject.active = false;
             temp.rigidbody.AddForce(-transform.forward * speed);
         }
