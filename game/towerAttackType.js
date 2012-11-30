@@ -280,7 +280,7 @@ var allAttackTypes = {
 
             //AlphaDecay destroys us
             var circle = new Circle(attacker.tPos.getCenter(), effect_range, this.color, this.color, 10);
-            this.base.addObject(new AttributeTween(0.2, 1, charge_time, "charged", "alpha"));
+            this.base.addObject(new AttributeTween(0.2, 0.6, charge_time, "charged", "alpha"));
 
             this.base.addObject(circle);
 
@@ -298,7 +298,7 @@ var allAttackTypes = {
             this.charged = function()
             {
                 this.base.addObject(new SimpleCallback(0.1, "fire"));
-                circle.color = "rgba(255,255,255,200)";
+                circle.color = "rgba(255,255,255,0.6)";
             };
 
             this.fire = function()

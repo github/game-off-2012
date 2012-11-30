@@ -4,7 +4,7 @@ function Bug(startPath, difficulty) {
     this.value = Math.floor(5 * (1 + (difficulty / 16)));
     //this.speed = 20; //Math.floor(20 * difficulty);
     this.color = "yellow";
-    var r = 4;
+    var r = 8;
 
     this.attr = {
         range:          100,
