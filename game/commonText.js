@@ -34,9 +34,10 @@ function formatToDisplay(text) {
     if (typeof text != "string")
         fail("Only pass us text!");
     // Transforms "fooBar" to "Foo Bar"
+    // Also transforms foo_bar to Foo Bar, since that was
+    // the original behavior, and we don't have time to
+    // fix everything.
     // http://stackoverflow.com/questions/5796383/insert-spaces-between-words-on-a-camel-cased-token
-
-    //Don't replace my code which does stuff
     text = text.replace(/_/g, " ");
     text = text.replace(/([A-Z])/g, " $1");
     text = text.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
