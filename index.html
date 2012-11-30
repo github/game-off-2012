@@ -35,19 +35,31 @@
 			
 			<div class="step" id="game" style="width:850px;" data-x="3000" data-y="0" data-scale="1">
 				<div id="cloneMenu" style="float:left; height:480px; width:200px;">
-						<div style="float:left">Clone-Points: </div><div id="total">0</div>
-						<div id="archer">
-							Archer
-							<button class=".btn" entity="archer">
-							+
-							</button>
-						</div>
-						<div id="soldier">
-							Warrior
-							<button class=".btn" entity="warrior">
-								+
-							</button>
-						</div>
+						<table>
+							<tr>
+							<div style="float:left">Clone-Points: </div><div id="total">0</div>
+							</tr>
+							<tr>
+								<td>
+									Archer
+								</td>
+								<td>
+									<button class=".btn" entity="archer">
+									+
+									</button>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Warrior
+								</td>
+								<td>
+									<button class=".btn" entity="warrior">
+									+
+									</button>
+								</td>
+							</tr>
+						</table>
 					</div>
 				<canvas id="board" style="background-color: #92dcff;width: 640px;height: 480px; float:right;">
 				</canvas>
