@@ -1,0 +1,17 @@
+{
+  "name": "Pappu Pakia",
+  "description": "Fun and Addictive HTML5 Game that you'll love to play!",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "app": {
+    "urls": [
+      "http://khele.in/"
+    ],
+    "launch": {
+      "web_url": "http://khele.in/pappu-pakia/"
+    }
+  }
+}
