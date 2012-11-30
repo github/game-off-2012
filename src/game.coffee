@@ -38,6 +38,7 @@ class Game
   
   init:=>
     console.log("INIT Game")
+    @running = false
     
     #box2dweb-world for physics
     @world = new b2World(new b2Vec2(0, 10), true)
@@ -60,20 +61,18 @@ class Game
     #The Camera
     @camera = new Camera('undefined',30 ,5,@inputHandler)
     
-    @level = new TestLevel("board", STORAGE.getRessource("test"), @camera)
+    @level = new TestLevel("board", STORAGE.getRessource("test"), @camera, @)
     @camera.setWorld(@level.getWorld())
     @camera.setActive(true)
-    
-    @run()
- 
+  
   loadLevel:(index)->
     @level = @levels[index]
     impress().goto("game")
     
   run: =>
-    @tick()
-    @render()
-    window.requestAnimFrame(@run)
+    @tick() if @running
+    @render() if @running
+    window.requestAnimFrame(@run) if @running
     
   tick: ->
     @level.tick() if @level?

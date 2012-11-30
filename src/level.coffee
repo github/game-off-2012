@@ -54,7 +54,7 @@ class Level
       
       if typeof @entities.get(i) != 'undefined'
         if @entities.get(i).getUserData().hasDied()
-          if @entities.get(i).getUserData() instanceof BadWarrior
+          if @entities.get(i).getUserData() instanceof BadWarrior or @entities.get(i).getUserData() instanceof BadArcher 
             @clonepoints++
           @entities.del(i)
         
@@ -86,14 +86,14 @@ class Level
     
 
 class TestLevel extends Level
-  constructor:(@id, json, @camera)->
+  constructor:(@id, json, @camera, @game)->
     super @id
     @level = new LevelGenerator(json, STORAGE.getRessource("spritesheet"), @world)
     
     @clonepoints = 10
     
     #HowMuchCanBeSpawned
-    @badWarriors = 3
+    @badWarriors = 20
     @badArchers = 10
     
     @tickcount = 0
@@ -119,10 +119,18 @@ class TestLevel extends Level
     
     if @tickcount %30 == 0
       @badWarriors--
+      @badArchers--
+      
       if @badWarriors >= 0
         e = new EntityModel(@world, 800-@camera.getXoffset(), 180, 24, -1.5, 0x04, 0x01|0x02|0x08)
         e.setUserData(new BadWarrior())
         @entities.add(e)
+      
+      if @badArchers >= 0
+        e = new EntityModel(@world, 800-@camera.getXoffset(), 180, 24, -2, 0x04, 0x01|0x02|0x08)
+        e.setUserData(new BadArcher())
+        @entities.add(e)  
+        
     
     if !@tower.hasDied()
       @tower.setX(@towerbody.GetPosition().x*30)
@@ -135,6 +143,11 @@ class TestLevel extends Level
     @tower.render(@ctx) if !@tower.hasDied()
   
   click:(e)=>
+    
+    if !@game.running
+      @game.running = true
+      @game.run()
+    
     ent = e.srcElement.attributes.entity.value
     
     if @clonepoints != 0
