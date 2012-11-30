@@ -204,12 +204,15 @@
     this.handleMouseEvents = function () {
         if (mdX > 0 && mdY > 0) {
             for (var key in this.globalMouseDown) {
-                this.globalMouseMove[key].base.callRaise("mousedown", { x: mdX, y: mdY });
+                if (this.globalMouseMove[key].base.rootNode != this)
+                    delete this.globalMouseMove[key];
+                else
+                    this.globalMouseMove[key].base.callRaise("mousedown", { x: mdX, y: mdY });
             }
 
             var curMouseDown = throwMouseEventAt(mdX, mdY, "mousedown", this);
             this.prevMouseDown = curMouseDown;
-            
+
             mdX = -1;
             mdY = -1;
         }
@@ -234,7 +237,10 @@
 
         if (mY > 0 && mX > 0) {
             for (var key in this.globalMouseMove) {
-                this.globalMouseMove[key].base.callRaise("mousemove", { x: mX, y: mY });
+                if (this.globalMouseMove[key].base.rootNode != this)
+                    delete this.globalMouseMove[key];
+                else
+                    this.globalMouseMove[key].base.callRaise("mousemove", { x: mX, y: mY });
             }
 
             var curMouseOver = throwMouseEventAt(mX, mY, "mouseover", this);
@@ -252,7 +258,7 @@
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
                     this.prevMouseDown[i].base.callRaise("dragged", { x: mX, y: mY });
                 }
-            }            
+            }
 
             mY = -1;
             mX = -1;

@@ -6,15 +6,6 @@ function damageToTime(damage) {
     return (Math.log(Math.log(damage)) / Math.E + 1) / 2;
 }
 
-//Should really make attacks have delay between
-//attack trigger and damage time (impact).
-
-//Normal
-//Aoe
-//Slow
-//Arcing (delay arcs also)
-//DOT
-
 function applyAttack(attackTemplate) {
     var target = attackTemplate.target;
     var attacker = attackTemplate.attacker;
@@ -222,7 +213,7 @@ var allAttackTypes = {
             this.die = function()
             {
                 if(Math.random() < this.chain_chance)
-                {                    
+                {
                     //This is basically just a custom targeting strategy
                     this.attackTemplate.attacker = this.attackTemplate.target;
                     var attacker = this.attackTemplate.target;
@@ -379,10 +370,11 @@ var allAttackTypes = {
             this.poisonAlpha = 0;
             this.update = function()
             {
-                line.color = setAlpha(line.color, this.alpha);                
+                line.color = setAlpha(line.color, this.alpha);
                 poisonIndicator.color = setAlpha(poisonIndicator.color, this.poisonAlpha);
                 poisonIndicator.fillColor = setAlpha(poisonIndicator.fillColor, this.alpha);
-                poisonIndicator.tPos = target.tPos.getCenter();
+                poisonIndicator.tPos.x = target.tPos.getCenter().x;
+                poisonIndicator.tPos.y = target.tPos.getCenter().y;
             };
 
             this.nothing = function(){}
@@ -404,78 +396,49 @@ var allAttackTypes = {
             };
         };
     },
-    /*
-    Aoe: function area_of_effect() {
-        this.radius = 15;
-        this.percent_damage = 1;
-        this.run = function (tower, target) {
-            var targets = findAllWithin(tower.base.rootNode, "Bug", target.tPos.getCenter(), this.radius);
-
-            var hit = [];
-
-            var damage = tower.attr.damage;
-
-            for (var key in targets) {
-                applyDamage(targets[key], tower, damage);
-                hit.push(targets[key]);
-            }
-
-            var aoeCircle = new Circle(
-                    target.tPos.getCenter(),
-                    this.radius,
-                    "rgba(255,255,255,0)",
-                    "rgba(0,255,0,255)",
-                    12);
-
-            var line = new Line(tower.tPos.getCenter(), target.tPos.getCenter(), "rgba(0,255,0,255)", 13);
-
-            aoeCircle.base.addObject(new AlphaDecayPointer(1, 0.2, 0, new Pointer(aoeCircle, "color")));
-            aoeCircle.base.addObject(new AlphaDecayPointer(1, 0.5, 0, new Pointer(aoeCircle, "fillColor")));
-
-            line.base.addObject(new AlphaDecay(1, 1, 0));
-
-            tower.base.addObject(aoeCircle);
-            tower.base.addObject(line);
-
-            return hit; //Can probably just return targets...
-        },
-        this.draw = function (pen, tPos) {
-            //Draw text
-            pen.fillStyle = "#000000";
-            pen.font = tPos.h + "px arial";
-            pen.textAlign = 'left';
-
-            ink.text(tPos.x, tPos.y, "A", pen);
-        },
-        this.applyAttrMods = function(attr) {
-            attr.damage *= this.percent_damage / 100
-        }
-    },
-    Slow: function slow() {        
-        this.percent_slow = 50;
-        this.duration = 2;
-        this.run = function (tower, target) {
-            var slowEffect = new SlowEffect(this.percent_slow / 100);
-            slowEffect.base.addObject(new Lifetime(this.duration));
-
-            target.base.addObject(slowEffect);
-
-            var line = new Line(tower.tPos.getCenter(), target.tPos.getCenter(), "rgba(10,50,250,255)", 13);
-            line.base.addObject(new AlphaDecay(1, 1, 0));
-            tower.base.addObject(line);
-
-            return target;
-        },
-        this.draw = function (pen, tPos) {
+    Slow: function slow() {
+        this.slow_percent = 0.5;
+        this.slow_time = 2.5;
+        this.drawGlyph = function (pen, tPos) {
             //Draw text
             pen.fillStyle = "#000000";
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
 
             ink.text(tPos.x, tPos.y, "S", pen);
-        }
+        };
+        this.AttackNode = function(attackTemplate)
+        {
+            this.base = new baseObj(this, 15);         
+            this.attackTemplate = attackTemplate;
+
+            var attacker = attackTemplate.attacker;
+            var realAttacker = attackTemplate.baseAttacker;
+            var target = attackTemplate.target;
+            var damage = attackTemplate.damage;
+
+            var slow = attackTemplate.attackType.slow_percent;
+            var slow_time = attackTemplate.attackType.slow_time;
+
+            this.color = "rgba(30, 144, 255, 1)";
+
+            var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
+            line.base.addObject(new AlphaDecay(slow_time, 1, 0));
+            this.base.addObject(line);            
+            
+            var slow = new SlowEffect(slow);
+            slow.base.addObject(new Lifetime(slow_time));
+
+            target.base.addObject(slow);
+
+            applyAttack(this.attackTemplate);
+
+            this.update = function()
+            {
+                line.end = target.tPos.getCenter();
+            };
+        };
     },
-    */
 };
 
 //Not needed anymore... but if you have a radio option for something this
