@@ -203,6 +203,7 @@ function Dock(item, dockX, dockY) {
     var left = obj.x - parent.x;
     var top = obj.y - parent.y;
     return function () {
+    
         if (dockX == "left") {
             obj.x = parent.x;
         } else if (dockX == "right") {
@@ -222,6 +223,7 @@ function Dock(item, dockX, dockY) {
         } else {
             obj.y = parent.y + top;
         }
+        
     };
 }
 

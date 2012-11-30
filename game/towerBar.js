@@ -66,7 +66,7 @@ function Towerbar(pos) {
 	    attackCombinations.push(attackTypes);
 	}
 
-	//var superCombo = { 1: allAttackTypes.Pulse, 2: allAttackTypes.Slow };
+	//var superCombo = { 1: allAttackTypes.Pulse, 2: allAttackTypes.Pulse, 3: allAttackTypes.Pulse };
 	//attackCombinations.push(superCombo);
 
 	var buttonW = 100;

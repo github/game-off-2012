@@ -40,7 +40,7 @@ function Infobar(pos) {
 	this.base.addObject(this.attributeChoosers.bug_attack_type);
     */
 
-	this.allelePoints = new AllelePointSystem(new temporalPos(pos.x, pos.y, pos.w * 0.88, 190));
+	this.allelePoints = new AllelePointSystem(new temporalPos(pos.x, pos.y, pos.w * 0.92, 190));
 	this.base.addObject(this.allelePoints);
 
     //Add our buttons, should really be done just in the constructor with our given pos information
@@ -185,7 +185,7 @@ function Infobar(pos) {
 	                    }
 
 	                    pen.color = "Green";
-	                    pen.fillStyle = "Green";
+	                    pen.fillStyle = "White";
 	                    pen.textAlign = 'left';
 	                    ink.text(xPos, yPos, nametxt, pen);
 	                    pen.textAlign = 'right';

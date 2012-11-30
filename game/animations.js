@@ -30,6 +30,9 @@ function Line(start, end, color, zorder) {
         pen.strokeStyle = this.color;
         pen.lineWidth = 2;
 
+        if (!this.color)
+            fail("should not happen.");
+
         var s = this.start;
         var e = this.end;
 

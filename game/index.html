@@ -31,6 +31,9 @@ canvas {
     //Try to only do this in debug.js
     var DFlag = {};
     DFlag.disableSounds = true;
+
+    DFlag.width = 820;
+    DFlag.height = 760;
 </script>
 
 <script src="debug.js"></script>
@@ -60,6 +63,7 @@ canvas {
 
 <script src="baseEntities.js"></script>
 
+<script src="gameInfoBar.js"></script>
 <script src="infobar.js"></script>
 <script src="towerBar.js"></script>
 <script src="level.js"></script>
@@ -94,8 +98,8 @@ var eng;
         // Someday...
         minWidth = wTiles * tileSize + 150;
         minHeight = hTiles * tileSize;
-        width = Math.max(window.innerWidth, minWidth);
-        height = Math.max(window.innerHeight - 5, minHeight);
+        width = DFlag.width || Math.max(window.innerWidth, minWidth);
+        height = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
         bW = width - 150;
         bH = height;
         canvas.width = width;
@@ -121,8 +125,8 @@ var eng;
             };
         })();
         
-        width = Math.max(window.innerWidth, minWidth);
-        height = Math.max(window.innerHeight - 5, minHeight);
+        width = DFlag.width || Math.max(window.innerWidth, minWidth);
+        height = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
         
         eng = new Engine(pen, bufferCanvas, new temporalPos(0, 0, width, height, 0, 0));
         //this.base.rootNode.holder will also get eng... but... yeah...

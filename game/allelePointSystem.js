@@ -13,14 +13,14 @@ function AllelePointSystem(pos) {
     this.buyButton = new Button(cloneObject(pos), "Buy Point ($" + this.pointCost + ")",
                                 this, "buyPoint", { count: pointCount, cost: this.pointCost });
     this.buyButton.tPos.h = 26;
-    this.buyButton.tPos.w *= 0.8;
+    this.buyButton.tPos.w *= 0.93;
     this.base.addObject(this.buyButton);
 
     this.pointCost = 700; pointCount = 10;
     this.buyButton2 = new Button(cloneObject(pos), "Buy " + pointCount + " Points ($" + this.pointCost + ")",
                                 this, "buyPoint", { count: pointCount, cost: this.pointCost });
     this.buyButton2.tPos.h = 26;
-    this.buyButton2.tPos.w *= 0.8;
+    this.buyButton2.tPos.w *= 0.93;
     this.base.addObject(this.buyButton2);
 
 
@@ -28,24 +28,24 @@ function AllelePointSystem(pos) {
     this.buyButton3 = new Button(cloneObject(pos), "Buy " + pointCount + " Points ($" + this.pointCost + ")",
                                 this, "buyPoint", { count: pointCount, cost: this.pointCost });
     this.buyButton3.tPos.h = 26;
-    this.buyButton3.tPos.w *= 0.8;
+    this.buyButton3.tPos.w *= 0.93;
     this.base.addObject(this.buyButton3);
 
 
     this.spendButton = new Button(cloneObject(pos), "Spend Point", this, "spendPoint");
     this.spendButton.tPos.h = 26;
-    this.spendButton.tPos.w *= 0.8;    
+    this.spendButton.tPos.w *= 0.93;    
     
     this.base.addObject(this.spendButton);
 
     this.trashButton = new Button(cloneObject(pos), "Trash Point", this, "trashPoint");
     this.trashButton.tPos.h = 26;
-    this.trashButton.tPos.w *= 0.8;
+    this.trashButton.tPos.w *= 0.93;
     this.base.addObject(this.trashButton);
 
     this.autoTrashButton = new RadioButton(cloneObject(pos), "Auto Trash Worse", this, "autoTrashToggle");
     this.autoTrashButton.tPos.h = 26;
-    this.autoTrashButton.tPos.w *= 0.8;
+    this.autoTrashButton.tPos.w *= 0.93;
     this.base.addObject(this.autoTrashButton);
 
     this.pointCost = 50;

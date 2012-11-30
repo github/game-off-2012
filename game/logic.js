@@ -40,13 +40,18 @@
     this.base.addObject(this.infobar);
 
     this.towerbar = new Towerbar(
-            new temporalPos(0, pos.h - 150, pos.w - 350, 150)
+            new temporalPos(0, pos.h - 150, pos.w - 250, 150)
         );
     this.base.addObject(this.towerbar);
     this.towerbreeder = new TowerBreeder(
-            new temporalPos(pos.w - 350, pos.h - 150, 200, 150)
+            new temporalPos(pos.w - 250, pos.h - 150, 200, 150)
         );
     this.base.addObject(this.towerbreeder);
+
+    this.gameInfoBar = new GameInfoBar(
+            new temporalPos(0, pos.h - 240, pos.w - 260, 80)
+        );
+    this.base.addObject(this.gameInfoBar);
 
     
     this.currentBugs = 10;
@@ -101,21 +106,6 @@
 
     this.update = function (dt) {
         this.curQuadTree = new QuadTree(this.base.allChildren);
-
-        /*
-        if (eng.base.lengths["Path_Start"] > 0
-        && (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] === 0)) {
-        this.bugDifficulty += 0.1;
-        while (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] < this.currentBugs) {
-        var bugStart = getAnElement(eng.base.children["Path_Start"]);
-        var newBug = new Bug(bugStart, this.bugDifficulty);
-        this.base.addObject(newBug);
-        }
-        this.currentBugs += this.bugIncrease;
-        if (this.currentBugs > this.maxBugs) {
-        this.currentBugs = this.maxBugs;
-        }
-        }*/
 
         this.handleMouseEvents();
 
@@ -273,20 +263,10 @@
 
     this.draw = function () {
         pen = this.pen;
-        
+
         pen.fillStyle = "black";
+        //Commenting out this line leads to funny results :D
         ink.rect(0, 0, width, height, pen);
-        
-        pen.font = "10px courier";
-        pen.fillStyle = "#0F0";
-        var x = bW + 10;
-        var y = bH - 75;
-        ink.text(x, y, "Health: " + this.health, pen);
-        ink.text(x, y + 15, "Money: $" + Math.round(this.money*100)/100, pen);
-        ink.text(x, y + 30, "Time passed: " + gameTimeAccumulated, pen);
-        ink.text(x, y + 45, "FPS: " + this.lastFPS, pen);
-        ink.text(x, y + 60, "Bugs: " + eng.base.allLengths.Bug, pen);
-        ink.text(x, y + 75, "Ctrl: " + this.ctrlKey, pen);
     };
 
     //All selected stuff should probably be in its own object
