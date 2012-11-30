@@ -33,7 +33,7 @@
     this.engine = this; //eng also works fine
 
     this.infobar = new Infobar(
-            new temporalPos(pos.w - 150, 0, 150, pos.h * 0.8)
+            new temporalPos(pos.w - 250, 0, 250, pos.h * 0.8)
         );
 
     this.base.addObject(this.infobar);

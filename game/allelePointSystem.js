@@ -73,10 +73,18 @@ function AllelePointSystem(pos) {
                                 extraInfo[key] = 0;
 
                             extraInfo[key] += change * factor;
+
+                            //if (!extraInfo[key])
+                            //delete extraInfo[key];
                         }
                         else {
-                            extraInfo[formatToDisplay(change.name)] = change;
-                            extraInfo[formatToDisplay(change.name)].added = factor == 1;
+                            if (extraInfo[formatToDisplay(change.name)]) {
+                                extraInfo[formatToDisplay(change.name)].added = "+-";
+                            }
+                            else {
+                                extraInfo[formatToDisplay(change.name)] = change;
+                                extraInfo[formatToDisplay(change.name)].added = factor == 1 ? "+" : "-";
+                            }
                         }
                     }
                 }

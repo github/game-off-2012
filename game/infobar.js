@@ -495,7 +495,7 @@ function Infobar(pos) {
 	                    if (defined(extraInfo[nameText]) && !extraInfoDisplayed[nameText]) {
 	                        subExtraInfo = extraInfo[nameText];
 	                        extraInfoDisplayed[nameText] = true;
-	                        nameText = "(" + (extraInfo[nameText].added ? "+" : "-") + ") " + nameText;
+	                        nameText = "(" + extraInfo[nameText].added + ") " + nameText;
 	                    }
 
 	                    pen.color = "Green";
