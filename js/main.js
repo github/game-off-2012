@@ -32,7 +32,8 @@ mit.main = function() {
   var ui = mit.ui = {
     body: $('body'),
     score_board: $('#score_board'),
-    high_score: $('#highScore'),
+    last_score: $('#last_score'),
+    high_score: $('#high_score'),
     start_screen: $('#start_screen'),
     start_game: $('#start_game'),
     tweet: $('#tweet'),
@@ -95,6 +96,8 @@ mit.main = function() {
       music.volume = 0.2;
       isMute = false;
     }
+
+    return false;
   });
 
   /*
@@ -174,7 +177,7 @@ mit.main = function() {
 
     mit.highScore = JSON.parse(localStorage.getItem("highScore"));
     if (mit.highScore)
-      ui.high_score.text("Your highscore is "+ mit.highScore);
+      ui.high_score.text("High Score: "+ mit.highScore);
 
   } catch (e) {}
 
@@ -286,8 +289,11 @@ mit.main = function() {
       mit.highScore = parseInt(mit.score);
       localStorage.setItem("highScore", JSON.stringify(parseInt(mit.score)));
 
-      ui.high_score.text("Your highscore is "+ mit.highScore);
+      ui.high_score.text("High Score: "+ mit.highScore);
     }
+
+    // Show last_score
+    ui.last_score.text("Last Score: " + parseInt(mit.score));
 
 
     ui.start_game.html('re-start');
@@ -362,7 +368,7 @@ mit.main = function() {
       mit.gameOver();
       return;
     }
-    
+
     //mit.ForkUtils.draw(ctx);
     //mit.BranchUtils.draw(ctx);
 
