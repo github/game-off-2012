@@ -89,6 +89,19 @@
         ctx.translate(this.w/2, this.h/2);
         ctx.rotate(utils.toRadian(this.rotate_angle));
       }
+      else if (mit.game_over) {
+        // draw() is called as long as
+        // pappu hasnt hit boundaries and over'ed the game :P
+
+        // Game Over Gugglu!
+        this.rotate_angle += 2;
+
+        ctx.save();
+
+        ctx.translate(this.x, this.y);
+        ctx.translate(this.w/2, this.h/2);
+        ctx.rotate(utils.toRadian(this.rotate_angle));
+      }
       else {
         if (this.rotate_angle < 30) {
           this.rotate_angle += 2;

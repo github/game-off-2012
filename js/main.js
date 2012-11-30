@@ -131,6 +131,11 @@ mit.main = function() {
     mit.ax = 0; mit.ay = 0;
     mit.vx = 0; mit.vy = 0;
 
+    // if game over due to hitting someone
+    // he'll rotate a lot. so need ta reset
+    // on restart
+    mit.Pappu.rotate_angle = 0;
+
     // reset score
     mit.score = 0;
 
@@ -357,7 +362,7 @@ mit.main = function() {
       mit.gameOver();
       return;
     }
-
+    
     //mit.ForkUtils.draw(ctx);
     //mit.BranchUtils.draw(ctx);
 
@@ -402,23 +407,30 @@ mit.main = function() {
       // mit.ay = mit.ay + mit.gravity;
       
       // Velocity
-      if (
-        (mit.vy < mit.v_cap && mit.ay+mit.gravity > 0) ||
-        (mit.vy > -mit.v_cap && mit.ay+mit.gravity < 0)
-        ) {
+      if (!mit.game_over) {
+        if (
+          (mit.vy < mit.v_cap && mit.ay+mit.gravity > 0) ||
+          (mit.vy > -mit.v_cap && mit.ay+mit.gravity < 0)
+          ) {
 
-        // console.log(mit.ay);
-        mit.vy += mit.ay;
-        mit.vy += mit.gravity;
+          // console.log(mit.ay);
+          mit.vy += mit.ay;
+          mit.vy += mit.gravity;
+        }
+
+        // console.log(vy, ay)
+
+        mit.Pappu.x += mit.vx;
+        mit.Pappu.y += mit.vy;
+
+        if (mit.vy > mit.v_cap) {
+          mit.vy = mit.v_cap;
+        }
       }
-
-      // console.log(vy, ay)
-
-      mit.Pappu.x += mit.vx;
-      mit.Pappu.y += mit.vy;
-
-      if (mit.vy > mit.v_cap) {
-        mit.vy = mit.v_cap;
+      else {
+        // on game over, he's gravity is unstoppable
+        mit.vy += mit.gravity;
+        mit.Pappu.y += mit.vy;
       }
     
       mit.Pappu.draw(ctx);
