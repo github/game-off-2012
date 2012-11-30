@@ -52,6 +52,11 @@ function Towerbar(pos) {
 
 	this.tPos = pos;
 
+	this.costIndicator = new Label(new temporalPos(pos.x, pos.y, pos.w, pos.h), "Tower cost: 50");
+	this.costIndicator.font = "20px arial";
+	this.costIndicator.color = "white";
+	this.base.addObject(this.costIndicator);
+
 	var attackCombinations = [];
 	var uniqueNum = 1;
 
@@ -61,9 +66,8 @@ function Towerbar(pos) {
 	    attackCombinations.push(attackTypes);
 	}
 
-	var superCombo = { 1: allAttackTypes.DOT, 2: allAttackTypes.Pulse };
-
-	attackCombinations.push(superCombo);
+	//var superCombo = { 1: allAttackTypes.Pulse, 2: allAttackTypes.Slow };
+	//attackCombinations.push(superCombo);
 
 	var buttonW = 100;
     //Scaled exactly to 150 by 674...
@@ -102,12 +106,19 @@ function Towerbar(pos) {
         attackCombinations,
         new temporalPos(
             pos.x + 15,
-            pos.y,
+            pos.y + 40,
             450,
             150),
         6, 2,
         0.1);
-  
+
+
+        this.update = function () {
+            this.costIndicator.tPos.x = pos.x + 10;
+            this.costIndicator.tPos.y = pos.y + 25;
+
+            this.costIndicator.text = "Current tower cost: " + this.base.rootNode.currentCost;
+        }
 
 	this.draw = function (pen) {
 	    pen.fillStyle = "#000";

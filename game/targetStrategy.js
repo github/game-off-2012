@@ -39,7 +39,7 @@ var targetStrategies = {
             if(prevTarget)
                 prevTarget.hidden = false;
 
-            if(!(targets.length > 0))
+            if(!targets || !(targets.length > 0))
                 return;
 
             var randomPos = Math.floor(Math.random() * targets.length);

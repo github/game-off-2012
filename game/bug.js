@@ -30,7 +30,7 @@ function Bug(startPath, difficulty) {
 
     this.attr.target_Strategy = new targetStrategies.Closest();
     this.attr.attack_types = [];
-    this.attr.attack_types.push(new allAttackTypes.Laser());
+    this.attr.attack_types.push(new allAttackTypes.Bullet());
 
     this.base.addObject(new AttackCycle());
 

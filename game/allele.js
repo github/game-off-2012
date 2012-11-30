@@ -152,9 +152,79 @@ var AllAlleleGroups =
 //ATTRIBUTE SPECIALIZATIONS
 
 //SCARCE MEDIUM BONUS
+    rangeMediumBonus: function () { return choose(
+        {
+            0.5: { },
+            0.7: { range: 50 },
+            0.9: { range: 70 },
+            1: { range: 150 },
+        }); },
+
+    damageMediumBonus: function () { return choose(
+        {
+            0.5: { },
+            0.7: { damage: 5 },
+            0.9: { damage: 7 },
+            1: { damage: 15 },
+        }); },
+
+    hpMediumBonus: function () { return choose(
+        {
+            0.5: { },
+            0.7: { hp: 50 },
+            0.9: { hp: 70 },
+            1: { hp: 150 },
+        }); },
+
+    hpRegenMediumBonus: function () { return choose(
+        {
+            0.5: { },
+            0.7: { hpRegen: 5 },
+            0.9: { hpRegen: 7 },
+            1: { hpRegen: 15 },
+        }); },
+
+    attSpeedMediumBonus: function () { return choose(
+        {
+            0.5: { },
+            0.7: { attSpeed: 0.2 },
+            0.9: { attSpeed: 0.3 },
+            1: { attSpeed: 0.5 },
+        }); },
 //SCARCE MEDIUM BONUS
 
 //RARE SUPER BONUS
+    rangeSuperBonus: function () { return choose(
+        {
+            0.5: { },
+            0.7: { range: 50 },
+            0.9: { range: 70 },
+            1: { range: 150 },
+        }); },
+
+    damageSuperBonus: function () { return choose(
+        {
+            0.9: { },
+            1: { damage: 30 },
+        }); },
+
+    hpSuperBonus: function () { return choose(
+        {
+            0.9: { },
+            1: { hp: 250 },
+        }); },
+
+    hpRegenSuperBonus: function () { return choose(
+        {
+            0.9: { },
+            1: { hpRegen: 25 },
+        }); },
+
+    attSpeedSuperBonus: function () { return choose(
+        {
+            0.9: { },
+            1: { attSpeed: 3.5 },
+        }); },
 //RARE SUPER BONUS
 
 };

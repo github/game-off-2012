@@ -19,8 +19,9 @@
     this.globalMouseMove = {};
     this.globalMouseDown = {};
 
-    this.id = 0;
-    this.money = 1600; //Default a much more reasonable value.
+    this.id = 0; //Shouldn't be needed (ids are in base)
+    this.currentCost = 100;
+    this.money = 1600; //Default to a much more reasonable value.
     if (DFlag.lotsamoney) {
         this.money = 10000;
     }

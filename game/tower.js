@@ -252,8 +252,13 @@ function tryPlaceTower(tower, tile)
     var towerOnTile = findClosest(eng, "Tower", e, 0);
     var pathOnTile = findClosest(eng, "Path", e, 0);
 
-    if (!towerOnTile && !pathOnTile && eng.money - tower.attr.value >= 0) {
-        eng.money -= tower.attr.value;   
+    var curCost = tile.base.rootNode.currentCost;
+
+    if (!towerOnTile && !pathOnTile && eng.money - curCost >= 0) {
+        eng.money -= curCost;   
+
+        tile.base.rootNode.currentCost *= 2;
+
         tower.tPos = tile.tPos;         
         eng.base.addObject(tower);
         eng.changeSel(tower);

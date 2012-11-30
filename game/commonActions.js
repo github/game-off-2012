@@ -37,17 +37,23 @@ function UpdateTicker(objWithDelay, tickDelayName, parentTickFunctionName, inver
     this.update = function (dt) {
         this.currentCount += dt;
 
+        var objDelay = 0;
+
         if (this.inverseRate) {
-            if (this.currentCount > (1 / this.objWithDelay[this.tickDelayName])) {
-                this.base.parent[parentTickFunctionName]();
-                this.currentCount = 0;
+            if (this.objWithDelay[this.tickDelayName] < 0) {
+                objDelay = Math.exp(this.objWithDelay[this.tickDelayName]) / Math.E;
+            }
+            else {
+                objDelay = 1 / this.objWithDelay[this.tickDelayName];
             }
         }
         else {
-            if (this.currentCount > this.objWithDelay[this.tickDelayName]) {
-                this.base.parent[parentTickFunctionName]();
-                this.currentCount = 0;
-            }
+            objDelay = this.objWithDelay[this.tickDelayName];
+        }
+
+        if (this.currentCount > objDelay) {
+            this.base.parent[parentTickFunctionName]();
+            this.currentCount = 0;
         }
     }
 }
