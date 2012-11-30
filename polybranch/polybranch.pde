@@ -7,7 +7,7 @@ PVector[] tris = {
       new PVector(0,100)
     };
     
-PFont font;
+PShape[] levelText = new PShape[11];
 
 boolean[] keys = new boolean[4];
       
@@ -24,19 +24,24 @@ Game g;
 PVector focalPoint;
 
 void setup(){
-  paused = false;
+  paused = true;
   size(800,800);
   //frameRate(30);
   originX = width/2;
   originY = height/2;
   
-  font = loadFont("WireOne-150.vlw");
-  textFont(font, 150);
+  for(int i = 0; i < levelText.length; i++){
+    levelText[i] = loadShape("level"+(i+2)+".svg");
+    levelText[i].disableStyle();
+  }
   
+
+  colorMode(HSB, 255);
   imageMode(CENTER);
   rectMode(CENTER);
   ellipseMode(CENTER);
   textAlign(CENTER);
+  shapeMode(CENTER);
   focalPoint = new PVector(width/2,height/2);
   noStroke();
   background(230);
@@ -45,11 +50,19 @@ void setup(){
   player = new Player();
   g = new Game();
   //Layer layer = new Layer(16, width, height);
+  noLoop();
 }
 
 void draw(){
   if(frameCount % 30 == 0){
+    //println(frameRate);
     println("LEVEL "+g.level+"  SCORE:"+g.score+"  SPEED "+g.speed);
+  }
+  if(keys[0] || keys[1] || keys[2] || keys[3]){
+    player.hue += g.speed*100;
+    if(player.hue > 255){
+      player.hue = 0;
+    }
   }
   if(keys[0] || keys[1]){
     if(keys[0]){
@@ -136,19 +149,19 @@ void keyPressed(){
     keys[3] = true;
   }
   
-  if(key == 'a'){
-    player.r -= 0.5;
-  }
-  if(key == 'z'){
-    player.r += 0.5;
-  }
-  
-  if(key == 's'){
-    g.numBranches ++;
-  }
-  if(key == 'x'){
-    g.numBranches --;
-  }
+//  if(key == 'a'){
+//    player.r -= 0.5;
+//  }
+//  if(key == 'z'){
+//    player.r += 0.5;
+//  }
+//  
+//  if(key == 's'){
+//    g.numBranches ++;
+//  }
+//  if(key == 'x'){
+//    g.numBranches --;
+//  }
   
   if(key == 'p'){
     if(paused){

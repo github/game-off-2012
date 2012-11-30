@@ -4,11 +4,13 @@ class Player{
   float r;
   int speed;
   float velX, velY;
+  float hue;
   
   Player(){
     pos = new PVector(width/2,height/2);
     r = 20;
     speed = 6;
+    hue = 0;
   }
   
   public void reset(){

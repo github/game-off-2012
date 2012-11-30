@@ -7,6 +7,8 @@ PVector[] tris = {
       new PVector(0,100)
     };
     
+PShape[] levelText = new PShape[11];
+
 boolean[] keys = new boolean[4];
       
 int originX;
@@ -22,29 +24,45 @@ Game g;
 PVector focalPoint;
 
 void setup(){
-  paused = false;
+  paused = true;
   size(800,800);
   //frameRate(30);
   originX = width/2;
   originY = height/2;
   
+  for(int i = 0; i < levelText.length; i++){
+    levelText[i] = loadShape("level"+(i+2)+".svg");
+    levelText[i].disableStyle();
+  }
   
+
+  colorMode(HSB, 255);
   imageMode(CENTER);
   rectMode(CENTER);
   ellipseMode(CENTER);
+  textAlign(CENTER);
+  shapeMode(CENTER);
   focalPoint = new PVector(width/2,height/2);
   noStroke();
-  background(255);
+  background(230);
   //testTree = new Tree(5, bob);
   
   player = new Player();
   g = new Game();
   //Layer layer = new Layer(16, width, height);
+  noLoop();
 }
 
 void draw(){
   if(frameCount % 30 == 0){
+    //println(frameRate);
     println("LEVEL "+g.level+"  SCORE:"+g.score+"  SPEED "+g.speed);
+  }
+  if(keys[0] || keys[1] || keys[2] || keys[3]){
+    player.hue += g.speed*100;
+    if(player.hue > 255){
+      player.hue = 0;
+    }
   }
   if(keys[0] || keys[1]){
     if(keys[0]){
@@ -107,7 +125,7 @@ void draw(){
     originY = (int)(player.pos.y + (height/2 - player.r - 8) * sin(a));
   }
   
-  background(255);
+  background(235);
   g.update();  
 }
 
@@ -131,19 +149,19 @@ void keyPressed(){
     keys[3] = true;
   }
   
-  if(key == 'a'){
-    player.r -= 0.5;
-  }
-  if(key == 'z'){
-    player.r += 0.5;
-  }
-  
-  if(key == 's'){
-    g.numBranches ++;
-  }
-  if(key == 'x'){
-    g.numBranches --;
-  }
+//  if(key == 'a'){
+//    player.r -= 0.5;
+//  }
+//  if(key == 'z'){
+//    player.r += 0.5;
+//  }
+//  
+//  if(key == 's'){
+//    g.numBranches ++;
+//  }
+//  if(key == 'x'){
+//    g.numBranches --;
+//  }
   
   if(key == 'p'){
     if(paused){
@@ -367,7 +385,7 @@ class Branch{
     }
   }
 }
-class Layer{
+class Layer {
   public int numSides;
   int startVertex;
   Tree tree;
@@ -376,205 +394,229 @@ class Layer{
   float distance;
   float easedDistance;
   boolean passed = false;
-  
-  Layer(int numSidesIn, int w, int h, boolean active){
+  String type; //active, inactive, level
+
+  Layer(int numSidesIn, int w, int h, String typeIn) {
     numSides = numSidesIn;
     layerWidth = w;
     layerHeight = h;
     distance = 1;
+    type = typeIn;
 
-    if(active){
+    if (type == "active") {
       startVertex = int(random(0, numSides));
-    
+
       float aX = (layerWidth/2) + (layerWidth/2 - ringWeight/2) * cos((TWO_PI/numSides)*startVertex);
       float aY = (layerHeight/2) + (layerHeight/2 - ringWeight/2) * sin((TWO_PI/numSides)*startVertex);
       float bX = (layerWidth/2) + (layerWidth/2 - ringWeight/2) * cos((TWO_PI/numSides)*(startVertex-1));
       float bY = (layerHeight/2) + (layerHeight/2 - ringWeight/2) * sin((TWO_PI/numSides)*(startVertex-1));
-      
+
       tree = new Tree(11, new Branch(
-                  new PVector(aX, aY),
-                  new PVector(bX, bY),
-                  new PVector(lerp(aX,layerWidth/2,0.7), lerp(aY,layerHeight/2,0.7))));
-    }else{
+      new PVector(aX, aY), 
+      new PVector(bX, bY), 
+      new PVector(lerp(aX, layerWidth/2, 0.7), lerp(aY, layerHeight/2, 0.7))));
+    }
+    else {
       tree = new Tree();
     }
 
-    
-    
+
+
     //drawPolygon(layerWidth/2, layerHeight/2, layerWidth/2 - ringWeight/2, numSides, ringWeight, color(255,0,0,0.5));
-    
   }
-  
-  public void updateDist(float increment){
+
+  public void updateDist(float increment) {
     distance += increment;
-//    if(easedDistance > 4){
-//      reset();
-//    }
-    easedDistance = easeInExpo(distance, distance, 0,1,1);
-    if(easedDistance >= 0.999 && easedDistance <= 1.02){
-      tree.checkCollisions();
-    }else if(easedDistance > 1 && !passed && (tree.branches[0].verticies[0].x != 0 && tree.branches[0].verticies[0].y != 0)){
+    //    if(easedDistance > 4){
+    //      reset();
+    //    }
+    easedDistance = easeInExpo(distance, distance, 0, 1, 1);
+    if (easedDistance >= map(g.speed, 0.0025, 0.008, 0.999, 0.9) && easedDistance <= map(g.speed, 0.0025, 0.008, 1.02, 1.04)) {
+      if(type == "active"){
+        tree.checkCollisions();
+      }else if(type == "level"){
+        if(g.speed != g.speeds[g.level-1]){
+          g.speed = g.speeds[g.level-1];
+        }
+      }
+      
+    }else if (easedDistance > 1 && !passed && type == "active") {
       passed = true;
       g.score += 100;
     }
-    
   }
-  
-  public int getNumSides(){ return numSides;}
-  
-  public void reset(){
+
+  public int getNumSides() { 
+    return numSides;
+  }
+
+  public void reset(String typeIn) {
+    type = typeIn;
     distance = 0;
     easedDistance = 0;
     passed = false;
     tree.reset();
   }
-  
-  public void render(){
+
+  public void render() {
     //fill(255,100);
     //rect(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
-    
+
     //image(pg, lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), width*2*easedDistance, height*2*easedDistance);
-    tree.render(lerp(width/2, originX, easedDistance),lerp(height/2, originY,easedDistance), layerWidth*easedDistance, layerHeight*easedDistance, easedDistance);
-    
+    if (type == "active") {
+      tree.render(lerp(width/2, originX, easedDistance), lerp(height/2, originY, easedDistance), layerWidth*easedDistance, layerHeight*easedDistance, easedDistance);
+    }
+    else if (type == "level") {
+      if (easedDistance < 0.8) {
+        fill(map(easedDistance, 0.0, 0.8, 255, 100));
+      }
+      else {
+        int alph = (easedDistance > 2) ? (int)map(easedDistance, 2, 8, 255, 0) : 255;
+        fill(100,alph);
+      }
+      //text("Level "+g.level, lerp(width/2, originX, easedDistance), lerp(height/2, originY, easedDistance));
+      noStroke();
+      shape(levelText[(g.level-2)], lerp(width/2, originX, easedDistance), lerp(height/2, originY, easedDistance), levelText[(g.level-2)].width*easedDistance, levelText[(g.level-2)].height*easedDistance);
+    }
+
     //color c = (easedDistance > 1) ? color(0,0,255) : color(100);
     color c = color(100);
-    drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY,easedDistance), (layerWidth*easedDistance)/2 - (ringWeight*easedDistance)/2, numSides, ringWeight*easedDistance, c);
+    drawPolygon(lerp(width/2, originX, easedDistance), lerp(height/2, originY, easedDistance), (layerWidth*easedDistance)/2 - (ringWeight*easedDistance)/2, numSides, ringWeight*easedDistance, c);
   }
-  
-  
+
+
   //
-  class Tree{
+  class Tree {
     Branch branches[];
     int numBranches;
     int index = 0;
     float trunkLen;
-    Tree(int numBranchesIn, Branch trunk){
+    Tree(int numBranchesIn, Branch trunk) {
       numBranches = numBranchesIn;
       branches = new Branch[16];
       println(numSides);
-      for(int i = 0; i < branches.length; i++){
+      for (int i = 0; i < branches.length; i++) {
         branches[i] = new Branch();
       }
-      
+
       branches[index] = trunk;
       index ++;
       trunkLen = dist(lerp(trunk.verticies[0].x, trunk.verticies[1].x, 0.5), lerp(trunk.verticies[0].y, trunk.verticies[1].y, 0.5), trunk.verticies[2].x, trunk.verticies[2].y);
       this.populateRandomBranches(branches[0], (random(1)));
       //println("trunks is "+trunkLen);
     }
-    
-    Tree(){
+
+    Tree() {
       numBranches = 0;
       branches = new Branch[16];
-      for(int i = 0; i < branches.length; i++){
+      for (int i = 0; i < branches.length; i++) {
         branches[i] = new Branch();
       }
     }
-    
-    void populateRandomBranches(Branch trunkIn, float sides){
-        int side;
-        if(sides > 0.2){
-         side = 2; 
-        }else{
-          side = int(random(2));
-        }
-        
-        if((side == 1 || side == 2) && index < numBranches){
-          float angle = myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0])+random(HALF_PI);
-          float len = dist(trunkIn.verticies[2].x, trunkIn.verticies[2].y, trunkIn.verticies[0].x, trunkIn.verticies[0].y) * 0.7;
-          
-          if(len > (trunkLen*0.4)){
-            
-            //check if the random angle will fit inside the circle
-            if(dist((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle)),width/2,height/2) < width/2){
-              //println(index);
-              branches[index] = new Branch(
-                        new PVector(trunkIn.verticies[2].x, trunkIn.verticies[2].y),
-                        new PVector(lerp(trunkIn.verticies[2].x, trunkIn.verticies[1].x, 0.3), lerp(trunkIn.verticies[2].y, trunkIn.verticies[1].y, 0.3)),
-                        new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))));
-                        index ++;
-                        populateRandomBranches(branches[index-1], (random(1)));
-                  //check if the min or max angle fit inside the area
-            }else if(dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0])+HALF_PI)), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0])+HALF_PI)),width/2,height/2) < width/2 || 
-                        dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0]))), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0]))),width/2,height/2) < width/2){
-              populateRandomBranches(trunkIn, 1);
-            }//otherwise don't do it.
-          
+
+    void populateRandomBranches(Branch trunkIn, float sides) {
+      int side;
+      if (sides > 0.2) {
+        side = 2;
+      }
+      else {
+        side = int(random(2));
+      }
+
+      if ((side == 1 || side == 2) && index < numBranches) {
+        float angle = myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0])+random(HALF_PI);
+        float len = dist(trunkIn.verticies[2].x, trunkIn.verticies[2].y, trunkIn.verticies[0].x, trunkIn.verticies[0].y) * 0.7;
+
+        if (len > (trunkLen*0.4)) {
+
+          //check if the random angle will fit inside the circle
+          if (dist((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle)), width/2, height/2) < width/2) {
+            //println(index);
+            branches[index] = new Branch(
+            new PVector(trunkIn.verticies[2].x, trunkIn.verticies[2].y), 
+            new PVector(lerp(trunkIn.verticies[2].x, trunkIn.verticies[1].x, 0.3), lerp(trunkIn.verticies[2].y, trunkIn.verticies[1].y, 0.3)), 
+            new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))));
+            index ++;
+            populateRandomBranches(branches[index-1], (random(1)));
+            //check if the min or max angle fit inside the area
           }
-                    
+          else if (dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0])+HALF_PI)), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0])+HALF_PI)), width/2, height/2) < width/2 || 
+            dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0]))), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[0]))), width/2, height/2) < width/2) {
+            populateRandomBranches(trunkIn, 1);
+          }//otherwise don't do it.
         }
-        
-        
-        if((side == 0 || side == 2) && index < numBranches){
-          
-          float angle = myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-random(HALF_PI);
-          float len = dist(trunkIn.verticies[2].x, trunkIn.verticies[2].y, trunkIn.verticies[1].x, trunkIn.verticies[1].y) * 0.7;
-          if(len > (trunkLen*0.4)){
-            
-            //check if the random angle will fit inside the circle
-            if(dist((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle)),width/2,height/2) < width/2){
-              //println(index);
-              branches[index] = new Branch(
-                        new PVector(lerp(trunkIn.verticies[2].x, trunkIn.verticies[0].x, 0.3), lerp(trunkIn.verticies[2].y, trunkIn.verticies[0].y, 0.3)),
-                        new PVector(trunkIn.verticies[2].x, trunkIn.verticies[2].y),
-                        new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))));
-                        index ++;
-                        populateRandomBranches(branches[index-1], (random(1)));
-            }else if(dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-HALF_PI)), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-HALF_PI)), width/2, height/2) < width / 2 ||
-                      dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1]))), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1]))), width/2, height/2) < width / 2){
-              populateRandomBranches(trunkIn, 0);
-            }
-          
+      }
+
+
+      if ((side == 0 || side == 2) && index < numBranches) {
+
+        float angle = myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-random(HALF_PI);
+        float len = dist(trunkIn.verticies[2].x, trunkIn.verticies[2].y, trunkIn.verticies[1].x, trunkIn.verticies[1].y) * 0.7;
+        if (len > (trunkLen*0.4)) {
+
+          //check if the random angle will fit inside the circle
+          if (dist((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle)), width/2, height/2) < width/2) {
+            //println(index);
+            branches[index] = new Branch(
+            new PVector(lerp(trunkIn.verticies[2].x, trunkIn.verticies[0].x, 0.3), lerp(trunkIn.verticies[2].y, trunkIn.verticies[0].y, 0.3)), 
+            new PVector(trunkIn.verticies[2].x, trunkIn.verticies[2].y), 
+            new PVector((trunkIn.verticies[2].x + len * cos(angle)), (trunkIn.verticies[2].y + len * sin(angle))));
+            index ++;
+            populateRandomBranches(branches[index-1], (random(1)));
+          }
+          else if (dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-HALF_PI)), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1])-HALF_PI)), width/2, height/2) < width / 2 ||
+            dist((trunkIn.verticies[2].x + len * cos(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1]))), (trunkIn.verticies[2].y + len * sin(myAngleBetween(trunkIn.verticies[2], trunkIn.verticies[1]))), width/2, height/2) < width / 2) {
+            populateRandomBranches(trunkIn, 0);
           }
         }
-        //if(index < numBranches){
-  //        if(side == 2){
-  //          populateRandomBranches(branches[index-1], int(random(3)));
-  //          populateRandomBranches(branches[index-2], int(random(3)));
-  //        }else{
-  //          populateRandomBranches(branches[index-1], int(random(3)));
-  //        }
-        //}
-  
+      }
+      //if(index < numBranches){
+      //        if(side == 2){
+      //          populateRandomBranches(branches[index-1], int(random(3)));
+      //          populateRandomBranches(branches[index-2], int(random(3)));
+      //        }else{
+      //          populateRandomBranches(branches[index-1], int(random(3)));
+      //        }
+      //}
     }
-    
-    void reset(){
+
+    void reset() {
       index = 1;
       numBranches = g.numBranches;
-      for(int i = 1; i < numBranches; i++){
-          branches[i].br = (int)random(50,200);
-          branches[i].verticies[0].x = 0;
-          branches[i].verticies[0].y = 0;
+      for (int i = 1; i < numBranches; i++) {
+        branches[i].br = (int)random(50, 200);
+        branches[i].verticies[0].x = 0;
+        branches[i].verticies[0].y = 0;
       }
-      
+
       startVertex = int(random(0, numSides));
-    
-    
+
+
       float aX = (layerWidth/2) + (layerWidth/2 - ringWeight/2) * cos((TWO_PI/numSides)*startVertex);
       float aY = (layerHeight/2) + (layerHeight/2 - ringWeight/2) * sin((TWO_PI/numSides)*startVertex);
       float bX = (layerWidth/2) + (layerWidth/2 - ringWeight/2) * cos((TWO_PI/numSides)*(startVertex-1));
       float bY = (layerHeight/2) + (layerHeight/2 - ringWeight/2) * sin((TWO_PI/numSides)*(startVertex-1));
-      
+
       branches[0] = new Branch(
-                  new PVector(aX, aY),
-                  new PVector(bX, bY),
-                  new PVector(lerp(aX,width/2,0.7), lerp(aY,width/2,0.7)));
+      new PVector(aX, aY), 
+      new PVector(bX, bY), 
+      new PVector(lerp(aX, width/2, 0.7), lerp(aY, width/2, 0.7)));
       trunkLen = dist(lerp(branches[0].verticies[0].x, branches[0].verticies[1].x, 0.5), lerp(branches[0].verticies[0].y, branches[0].verticies[1].y, 0.5), branches[0].verticies[2].x, branches[0].verticies[2].y);
       populateRandomBranches(branches[0], 2);
     }
-    
-    void checkCollisions(){
-      for(int i = 0; i < numBranches; i++){
-        if(branches[i].verticies[0].x != 0 && branches[i].verticies[0].y != 0){
+
+    void checkCollisions() {
+      for (int i = 0; i < numBranches; i++) {
+        if (branches[i].verticies[0].x != 0 && branches[i].verticies[0].y != 0) {
           //branches[i].render(context);
           branches[i].playerOverlap();
         }
       }
     }
-    
-    void render(float oX, float oY, float w, float h, float easedDist){
-      for(int i = 0; i < numBranches; i++){
-        if(branches[i].verticies[0].x != 0 && branches[i].verticies[0].y != 0){
+
+    void render(float oX, float oY, float w, float h, float easedDist) {
+      for (int i = 0; i < numBranches; i++) {
+        if (branches[i].verticies[0].x != 0 && branches[i].verticies[0].y != 0) {
           //branches[i].render(context);
           branches[i].setPos(oX, oY, w, h, easedDist);
           branches[i].render(oX, oY, w, h, easedDist);
@@ -582,19 +624,21 @@ class Layer{
       }
     }
   }
-
 }
+
 class Player{
   
   PVector pos;
   float r;
   int speed;
   float velX, velY;
+  float hue;
   
   Player(){
     pos = new PVector(width/2,height/2);
     r = 20;
     speed = 6;
+    hue = 0;
   }
   
   public void reset(){
@@ -612,8 +656,11 @@ class Game{
   boolean drawnPlayer;
   int score;
   int level;
+  int levelUp = 3;
   
   int numBranches;
+  
+  float[] speeds = { 0.0025, 0.003, 0.0035, 0.004, 0.0045, 0.005, 0.0055, 0.006, 0.0065, 0.007, 0.0075, 0.008 };
   
   
   float speed;
@@ -631,11 +678,11 @@ class Game{
     
     //make 6 layers
     for(int i = 0; i < 13; i++){
-      if(i < 4){
-        layers.add(new Layer(16, width, height, true));
-      }else{
-        layers.add(new Layer(16, width, height, false));
-      }
+//      if(i < 4){
+//        layers.add(new Layer(16, width, height, "active"));
+//      }else{
+        layers.add(new Layer(16, width, height, "inactive"));
+     // }
     }
     //set the distance var for these 6 layers
     for(int i = layers.size(); i > 0; i--){
@@ -659,7 +706,15 @@ class Game{
         layers.add(0, layer);
         layers.remove(layers.size()-1);
         checkLevel();
-        layer.reset();
+        if(levelUp == 0 || levelUp == 2){
+          layer.reset("inactive");
+          levelUp ++;
+        }else if(levelUp == 1){
+          layer.reset("level");
+          levelUp ++;
+        }else{
+          layer.reset("active");
+        }
         
       }else{
         layer.updateDist(speed);
@@ -673,54 +728,83 @@ class Game{
   
   void drawPlayer(){
     noStroke();
-    fill(50,200);
+    fill(0, 100, 100,200);
     ellipse(width/2,height/2,player.r*2,player.r*2);
     drawPolygon(lerp(width/2, originX, 1), lerp(height/2, originY,1), width/2, 16, 6, color(0,0,0));
     drawnPlayer = true;
   }
   
   void checkLevel(){
-    if(score > 18000){
+    
+    if(score > 48000 && level < 12){
+      level = 12;
+      numBranches = 16;
+      levelUp = 0;
+      //speed = 0.004;
+    }else if(score > 39000 && level < 11){
+      level = 11;
+      numBranches = 16;
+      levelUp = 0;
+      //speed = 0.004;
+    }else if(score > 31000 && level < 10){
+      level = 10;
+      numBranches = 15;
+      levelUp = 0;
+      //speed = 0.004;
+    }else if(score > 24000 && level < 9){
+      level = 9;
+      numBranches = 14;
+      levelUp = 0;
+      //speed = 0.004;
+    }else if(score > 18000 && level < 8){
       level = 8;
       numBranches = 13;
+      levelUp = 0;
       //speed = 0.004;
-    }else if(score > 12000){
+    }else if(score > 13000 && level < 7){
       level = 7;
       numBranches = 12;
+      levelUp = 0;
       //speed = 0.004;
-    }else if(score > 8000){
+    }else if(score > 9500 && level < 6){
       level = 6;
       numBranches = 11;
+      levelUp = 0;
       //speed = 0.004;
-    }else if(score > 5000){
+    }else if(score > 6500 && level < 5){
       level = 5;
       numBranches = 10;
+      levelUp = 0;
       //speed = 0.004;
-    }else if(score > 3000){
+    }else if(score > 4000 && level < 4){
       level = 4;
       numBranches = 9;
+      levelUp = 0;
       //speed = 0.004;
-    }else if(score > 1500){
+    }else if(score > 2000 && level < 3){
       level = 3;
       numBranches = 8;
+      levelUp = 0;
       //speed = 0.0035;
-    }else if(score > 500){
+    }else if(score > 500 && level < 2){
       level = 2;
       numBranches = 7;
+      levelUp = 0;
       //speed = 0.003;
     }else{
-      level = 1;
-      numBranches = 6;
+      //level = 1;
+      //numBranches = 6;
       //speed = 0.0025;
     }
     
-    if(score < 30000){
-      speed = map(score, 0,30000, 0.0025,0.009);
-    }
+//    if(score < 30000){
+//      speed = map(score, 0,30000, 0.0025,0.009);
+//    }
   }
   
   public void gameOver(){
     drawPlayer();
+    println(g.level+" "+g.score);
     noLoop();
   }
   

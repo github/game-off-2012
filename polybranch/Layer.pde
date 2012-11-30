@@ -80,7 +80,6 @@ class Layer {
       tree.render(lerp(width/2, originX, easedDistance), lerp(height/2, originY, easedDistance), layerWidth*easedDistance, layerHeight*easedDistance, easedDistance);
     }
     else if (type == "level") {
-      textSize(150*easedDistance);
       if (easedDistance < 0.8) {
         fill(map(easedDistance, 0.0, 0.8, 255, 100));
       }
@@ -88,7 +87,9 @@ class Layer {
         int alph = (easedDistance > 2) ? (int)map(easedDistance, 2, 8, 255, 0) : 255;
         fill(100,alph);
       }
-      text("Level "+g.level, lerp(width/2, originX, easedDistance), lerp(height/2, originY, easedDistance));
+      //text("Level "+g.level, lerp(width/2, originX, easedDistance), lerp(height/2, originY, easedDistance));
+      noStroke();
+      shape(levelText[(g.level-2)], lerp(width/2, originX, easedDistance), lerp(height/2, originY, easedDistance), levelText[(g.level-2)].width*easedDistance, levelText[(g.level-2)].height*easedDistance);
     }
 
     //color c = (easedDistance > 1) ? color(0,0,255) : color(100);

@@ -26,11 +26,11 @@ class Game{
     
     //make 6 layers
     for(int i = 0; i < 13; i++){
-      if(i < 4){
-        layers.add(new Layer(16, width, height, "active"));
-      }else{
+//      if(i < 4){
+//        layers.add(new Layer(16, width, height, "active"));
+//      }else{
         layers.add(new Layer(16, width, height, "inactive"));
-      }
+     // }
     }
     //set the distance var for these 6 layers
     for(int i = layers.size(); i > 0; i--){
@@ -76,34 +76,55 @@ class Game{
   
   void drawPlayer(){
     noStroke();
-    fill(50,200);
+    fill(0, 100, 100,200);
     ellipse(width/2,height/2,player.r*2,player.r*2);
     drawPolygon(lerp(width/2, originX, 1), lerp(height/2, originY,1), width/2, 16, 6, color(0,0,0));
     drawnPlayer = true;
   }
   
   void checkLevel(){
-    if(score > 18000 && level < 8){
+    
+    if(score > 48000 && level < 12){
+      level = 12;
+      numBranches = 16;
+      levelUp = 0;
+      //speed = 0.004;
+    }else if(score > 39000 && level < 11){
+      level = 11;
+      numBranches = 16;
+      levelUp = 0;
+      //speed = 0.004;
+    }else if(score > 31000 && level < 10){
+      level = 10;
+      numBranches = 15;
+      levelUp = 0;
+      //speed = 0.004;
+    }else if(score > 24000 && level < 9){
+      level = 9;
+      numBranches = 14;
+      levelUp = 0;
+      //speed = 0.004;
+    }else if(score > 18000 && level < 8){
       level = 8;
       numBranches = 13;
       levelUp = 0;
       //speed = 0.004;
-    }else if(score > 12000 && level < 7){
+    }else if(score > 13000 && level < 7){
       level = 7;
       numBranches = 12;
       levelUp = 0;
       //speed = 0.004;
-    }else if(score > 8000 && level < 6){
+    }else if(score > 9500 && level < 6){
       level = 6;
       numBranches = 11;
       levelUp = 0;
       //speed = 0.004;
-    }else if(score > 5000 && level < 5){
+    }else if(score > 6500 && level < 5){
       level = 5;
       numBranches = 10;
       levelUp = 0;
       //speed = 0.004;
-    }else if(score > 3500 && level < 4){
+    }else if(score > 4000 && level < 4){
       level = 4;
       numBranches = 9;
       levelUp = 0;
@@ -131,6 +152,7 @@ class Game{
   
   public void gameOver(){
     drawPlayer();
+    println(g.level+" "+g.score);
     noLoop();
   }
   
