@@ -12,12 +12,20 @@ function Genes() {
         if (!assertDefined(holder))
             return;
 
-        if (this.alleles[group])
-            this.alleles[group].apply(holder, true);
 
-        this.alleles[group] = allele;
+        if (!allele.delta.attack) {
+            if (this.alleles[group])
+                this.alleles[group].apply(holder, true);
 
-        this.alleles[group].apply(holder, false);
+            this.alleles[group] = allele;
+
+            this.alleles[group].apply(holder, false);
+        }
+        else {
+            //Should fix attack types not properly being removed
+            this.alleles[group] = allele;
+            this.replaceAlleles(this.alleles[group]);
+        }
     };
 
     //Should only be called if you are fuly replacing the targetting strategy and attack types

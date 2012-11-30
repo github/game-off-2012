@@ -100,11 +100,15 @@ function Tower(baseTile) {
         }
     }
 
+    this.update = function()
+    {
+        this.color = this.rColor.str();
+    }
 
     this.draw = function (pen) {
         var p = this.tPos;
         pen.save();
-        pen.fillStyle = color.str();
+        pen.fillStyle = this.rColor.str();
         pen.strokeStyle = "lightblue";
         ink.rect(p.x, p.y, p.w, p.h, pen);        
         pen.restore();
@@ -169,10 +173,10 @@ function Tower(baseTile) {
         this.recolor();
     };
     
-    var color = new Color();
+    this.rColor = new Color();
     this.recolor = function() {
         var a = this.attr;
-        color.r(255 - a.hp).g(a.range).b(a.damage).a(0.5);
+        this.rColor = this.rColor.r(255 - a.hp).g(a.range).b(a.damage).a(0.5);
     }
 
     this.mouseover = function(e) {        
