@@ -1,18 +1,3 @@
-/*
-TowerStats = {
-        range:          100,
-        damage:         1,
-        hp:             10,
-        attSpeed:       1,        
-        mutate:         0,
-        mutatestrength: 0,
-        upload:         0,
-        download:       0,
-        hitcount:       0,
-        value:          50,
-    };
-    */
-
 var AllAlleleGroups =
 {
 //Should likely have better names
@@ -29,20 +14,25 @@ var AllAlleleGroups =
 function Allele(delta)
 {
     this.delta = delta;
-    this.apply = function (target, unapply) {
-        for (var key in this.delta) {
-            var curChange = this.delta[key];
+    this.apply = function (target) {
+        applyOrUnapply(target, this.delta, false);
+    }
+    this.unapply = function (target) {
+        applyOrUnapply(target, this.delta, true)
+    }
+    function applyOrUnapply (target, delta, unapply) {
+        for (var key in delta) {
+            var curChange = delta[key];
             if (defined(target.attr[key])) {                
                 target.attr[key] += curChange * (unapply ? -1 : 1);
-            }
-            //Then its a attack_type or target strategy
-            else if (key == "attack") {
+            } else if (key == "attack") {
                 //attack type
                 target.attr.attack_types.push(new curChange());
-            }
-            else if(key == "target"){
+                // Shouldn't we be removing the attack_type here if unapply == true?
+            } else if (key == "target") {
                 //target strategy
                 target.attr.target_Strategy = new curChange();
+                // What should we do if we're removing the gene for the target_Strategy?
             }
         }
     }    
@@ -60,8 +50,7 @@ function TowerBreeder(pos) {
 
     var placingTower = null;
 
-    this.added = function()
-    {
+    this.added = function () {
         this.base.rootNode.globalMouseMove[this.base.id] = this;
         this.base.rootNode.globalMouseDown[this.base.id] = this;
     }
@@ -70,8 +59,7 @@ function TowerBreeder(pos) {
         var maxLength = 0;
         
         var resultantAlleles = {};
-        for(var alleleGroup in AllAlleleGroups)
-        {
+        for (var alleleGroup in AllAlleleGroups) {
             var alleleParent = this.towers[Math.floor(Math.random() * this.towers.length)];
             if(alleleParent.genes.alleles[alleleGroup])
                 resultantAlleles[alleleGroup] = alleleParent.genes.alleles[alleleGroup];
@@ -87,8 +75,7 @@ function TowerBreeder(pos) {
     }
 
     this.mousemove = function (e) {
-        if(placingTower)
-        {
+        if(placingTower) {
             placingTower.tPos.x = e.x;
             placingTower.tPos.y = e.y;
         }

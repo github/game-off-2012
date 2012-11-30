@@ -12,16 +12,14 @@ function Genes() {
         if (!assertDefined(holder))
             return;
 
-
         if (!allele.delta.attack) {
             if (this.alleles[group])
-                this.alleles[group].apply(holder, true);
+                this.alleles[group].unapply(holder);
 
             this.alleles[group] = allele;
 
-            this.alleles[group].apply(holder, false);
-        }
-        else {
+            this.alleles[group].apply(holder);
+        } else {
             //Should fix attack types not properly being removed
             this.alleles[group] = allele;
             this.replaceAlleles(this.alleles[group]);
@@ -36,7 +34,8 @@ function Genes() {
 
         for (var alleleGroup in this.alleles)
             if (this.alleles[alleleGroup]) {
-                this.alleles[alleleGroup].apply(holder, true);
+                this.alleles[alleleGroup].unapply(holder);
+                // Is this really what you want to do?
                 delete this.alleles[alleleGroup];
             }
 

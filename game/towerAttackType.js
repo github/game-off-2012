@@ -170,7 +170,7 @@ var allAttackTypes = {
     },
     Chain: function chain_lightning() {
         this.chain_chance = 0.8;
-        this.repeat_delay = 0.3;
+        this.repeatDelay = 0.3;
         this.drawGlyph = function (pen, tPos) {
             //Draw text
             pen.fillStyle = "#000000";
@@ -190,13 +190,13 @@ var allAttackTypes = {
             var damage = attackTemplate.damage;
 
             this.chain_chance = attackTemplate.attackType.chain_chance;
-            this.repeat_delay = attackTemplate.attackType.repeat_delay;
+            this.repeatDelay = attackTemplate.attackType.repeatDelay;
 
             this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
             
             //AlphaDecay destroys us
             var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
-            this.base.addObject(new AlphaDecay(this.repeat_delay, 1, 0));
+            this.base.addObject(new AlphaDecay(this.repeatDelay, 1, 0));
 
             this.base.addObject(line);
 
@@ -332,7 +332,7 @@ var allAttackTypes = {
     },
     DOT: function poison() {
         this.repeat_chance = 0.8;
-        this.repeat_delay = 0.3;
+        this.repeatDelay = 0.3;
         this.percent_damage = 0.3;
         this.drawGlyph = function (pen, tPos) {
             //Draw text
@@ -353,13 +353,13 @@ var allAttackTypes = {
             var damage = attackTemplate.damage * attackTemplate.attackType.percent_damage;
 
             this.repeat_chance = attackTemplate.attackType.repeat_chance;
-            this.repeat_delay = attackTemplate.attackType.repeat_delay;
+            this.repeatDelay = attackTemplate.attackType.repeatDelay;
 
             this.color = "rgba(0, 255, 0, 0)";
             
             //AlphaDecay destroys us
             var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);
-            this.base.addObject(new AttributeTween(1, 0, this.repeat_delay, "tick", "alpha"));
+            this.base.addObject(new AttributeTween(1, 0, this.repeatDelay, "tick", "alpha"));
 
             this.base.addObject(line);
             
@@ -384,8 +384,8 @@ var allAttackTypes = {
                 if(target.base.rootNode == this.base.rootNode &&
                     Math.random() < this.repeat_chance)
                 {                    
-                    this.base.addObject(new AttributeTween(1, 0, this.repeat_delay * 0.5, "nothing", "poisonAlpha"));
-                    this.base.addObject(new SimpleCallback(this.repeat_delay, "tick"));
+                    this.base.addObject(new AttributeTween(1, 0, this.repeatDelay * 0.5, "nothing", "poisonAlpha"));
+                    this.base.addObject(new SimpleCallback(this.repeatDelay, "tick"));
 
                     applyAttack(this.attackTemplate);
                 }

@@ -30,17 +30,12 @@ function roundToDecimal(value, decimalPlaces) {
     return Math.round(value * decimalValue) / decimalValue;
 }
 
-function underscoresToSpaces(text) {
+function formatToDisplay(text) {
     if (typeof text != "string")
         fail("Only pass us text!");
-    return text.replace(/_/g, " ");
-}
-
-//http://stackoverflow.com/questions/4878756/javascript-how-to-capitalize-first-letter-of-each-word-like-a-2-word-city
-function capitalizeWords(text) {
-    return text.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
-}
-
-function formatToDisplay(text) {
-    return capitalizeWords(underscoresToSpaces(text));
+    // Transforms "fooBar" to "Foo Bar"
+    // http://stackoverflow.com/questions/5796383/insert-spaces-between-words-on-a-camel-cased-token
+    text = text.replace(/([A-Z])/g, " $1");
+    text = text.charAt(0).toUpperCase() + text.substr(1);
+    return text;
 }
