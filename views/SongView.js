@@ -172,10 +172,14 @@ SongView = Backbone.View.extend({
     }
   },
 
+  displayStatus: function (text) {
+    this.$el.find("#status").html(text).show().delay(250).fadeOut('fast');
+  },
+
   check: function (queue) {
     if(this.active[queue].length > 0 && 
       this.active[queue][0].top < 334){
-      console.log('early');
+      this.displayStatus('Early');
       this.score -= 500;
       this.checkGameOver();
       this.combo = 0;
@@ -184,7 +188,7 @@ SongView = Backbone.View.extend({
       this.active[queue][0].top > 366){
       this.inactive[queue].push(this.active[queue].shift());
       this.displayActionText(queue);
-      console.log('ok');
+      this.displayStatus('Ok');
       this.score += 500;
       this.combo += 1;
     }else if(this.active[queue].length > 0 &&
@@ -192,7 +196,7 @@ SongView = Backbone.View.extend({
       this.active[queue][0].top < 440){
       this.inactive[queue].push(this.active[queue].shift());
       this.displayActionText(queue);
-      console.log('Perfect!');
+      this.displayStatus('Perfect!');
       this.score += 1000;
       this.combo += 1;
     }

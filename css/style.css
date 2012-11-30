@@ -43,7 +43,7 @@
 	background-image: url('../img/background.png');
 }
 
-.song .paused, .menu ul, .game-text, .action {
+.song .paused, .menu ul, .game-text, .action, #status {
 	font-family: 'Galindo', cursive;
 }
 
@@ -99,11 +99,11 @@
 	right: 0;
 }
 
-.action {
+.action, #status {
 	display: none;
 	position: absolute;
 	z-index: 1000;
-	top: 300px;
+	top: 400px;
 }
 
 #forked {
@@ -120,6 +120,12 @@
 
 #cloned {
 	left: 344px;
+}
+
+#status {
+	top: 250px;
+	left: 250px;
+	font-size: 40px;
 }
 
 .flyin {
