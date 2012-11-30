@@ -9,6 +9,7 @@ class Entity
   collide:(entity)->
   hasDied:->@died
   die:->@died = true
+  hasStopped:->@stop
 
 class Tower extends Entity
   constructor:(@hp, @img)->super
@@ -63,6 +64,7 @@ class Warrior extends Entity
         entity.hurt(@ap)
         @attackE = entity
         @stop = true
+        console.log(@stop)
         
   render:(screen)->
     screen.render @x, @y, @tile
@@ -114,6 +116,8 @@ class Model
   getBody:->@body
   setUserData:(data)->@body.UserData = data  
   getUserData:->@body.UserData  
+  setStopped:(@stopped)->
+  hasStopped:->@stopped
 
 class EntityModel extends Model
   constructor:(@world, @x, @y, @seewidth) ->
@@ -125,9 +129,9 @@ class EntityModel extends Model
     @stopped = false
     
     fixDef = new b2FixtureDef
-    fixDef.density = 0.1
-    fixDef.friction = 0.3
-    fixDef.restitution = 0.4
+    fixDef.density = 1
+    fixDef.friction = 1
+    fixDef.restitution = 0
     
     #Collision-Filtering == AWESOME
     fixDef.filter.categoryBits = 0x02
@@ -152,6 +156,15 @@ class EntityModel extends Model
     
     fixDef = @body.CreateFixture(fixDef)
     @body.CreateFixture(sensorDef)
+    
+  getScreenX:->(@body.GetPosition().x-@width)*@scale
+  getScreenY:->(@body.GetPosition().y-@height)*@scale
+  tick:->
+    #@body.SetTransform(new b2Vec2(0, @body.GetPosition().y))
+    if @stopped == false
+      @body.SetPosition(new b2Vec2(@body.GetPosition().x+(2/30), @body.GetPosition().y))
+      
+  wakeUp:->@body.SetAwake(true)
 
 #test-model-class
 class PlayerModel extends Model
@@ -196,9 +209,11 @@ class PlayerModel extends Model
   hasStopped:->@stopped
   getScreenX:->(@body.GetPosition().x-@width)*@scale
   getScreenY:->(@body.GetPosition().y-@height)*@scale
+  
   tick:->
+    @body.SetLinearVelocity(new b2Vec2(0, @body.GetLinearVelocity().y))
+    
     if @stopped == false
       @body.SetLinearVelocity(new b2Vec2(5, @body.GetLinearVelocity().y))
-    else
-      @body.SetLinearVelocity(new b2Vec2(0, @body.GetLinearVelocity().y))
+      
   wakeUp:->@body.SetAwake(true)  
