@@ -10,7 +10,7 @@ You can play the game at [release-cycles.com](http://www.release-cycles.com)
 
 
 ## Browser Compatibility
-The game works and is tested on Chrome, Safari & Firefox. Although it works best on WebKit browsers (Chrome & Safari)
+The game works and is tested on __Chrome__, __Safari__ & __Firefox__. Although it works best on WebKit browsers ( **Chrome** & __Safari__ )
 
 ## Controls
 You can control your program by using the **left-right** keyboard keys.
@@ -27,10 +27,8 @@ We used the following libraries to make the game
 * Typicons • [homepage](http://typicons.com/) 
 
 ## Music
-
-All music is created by [Goto80](http://www.goto80.com/) taken from [CC-gratisvibes](http://gratisvibes.com/post/goto80-and-digi-dig/).
-
+All music was created by [Goto80](http://www.goto80.com/) taken from [CC-gratisvibes](http://gratisvibes.com/post/goto80-and-digi-dig/).
 
 
-
+## Created By
 The game was created by [@shayhdavidson](https://twitter.com/shayhdavidson) and [@yonbergman](https://twitter.com/yonbergman)
