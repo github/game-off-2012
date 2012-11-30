@@ -67,7 +67,8 @@ function GameInfoBar(pos) {
 	    this.nextLevelTimeIndi.text = "Seconds To Next Level: " + roundToDecimal(eng.lvMan.nwicounter, 0);
 	    if (this.base.rootNode.health < 50) {
 		 this.healthIndi.color = "yellow";
-	    } else if (this.base.rootNode.health < 25) {
+	    } 
+	    if (this.base.rootNode.health < 25) {
 		 this.healthIndi.color = "red";
 	    }
 
