@@ -26,8 +26,8 @@ function Tower_Connection(t1, t2) {
     var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11, {1: 1.0});
     this.base.addObject(line);
 
-    t1.prevHitCount = t1.attr.hitcount;
-    t2.prevHitCount = t2.attr.hitcount;
+    t1.prevhitCount = t1.attr.hitCount;
+    t2.prevhitCount = t2.attr.hitCount;
     
     var that = this;
     function dataTransfer(t1, t2) {
@@ -42,17 +42,17 @@ function Tower_Connection(t1, t2) {
             that.base.addObject(new Tower_Packet(t1, t2, group, al));
         }
 
-        if (t1.prevHitCount === undefined) {
-            t1.prevHitCount = t1.attr.hitcount;
+        if (t1.prevhitCount === undefined) {
+            t1.prevhitCount = t1.attr.hitCount;
             return;
         }
-        var killDelta = t1.attr.hitcount - t1.prevHitCount;
-        while (Math.floor(killDelta / 10) > 0) {
+        var killDelta = t1.attr.hitCount - t1.prevhitCount;
+        while (Math.floor(killDelta / 1) > 0) {
             sendRandomPacket(t1, t2);
-            t1.prevHitCount += 10;
-            killDelta = t1.attr.hitcount - t1.prevHitCount;
+            t1.prevhitCount += 10;
+            killDelta = t1.attr.hitCount - t1.prevhitCount;
         }
-        t1.prevHitCount = t1.attr.hitcount - killDelta;
+        t1.prevhitCount = t1.attr.hitCount - killDelta;
     }
     
     this.update = function(dt) {
@@ -79,10 +79,11 @@ TowerStats = {
         hp:             100,
         currentHp:      100,
         hpRegen:        1,
-        attSpeed:       0.6,        
+        attSpeed:       0.6,
         upload:         1,
         download:       1,
-        hitcount:       0,
+        hitCount:       0,
+        kills:          0,
         value:          50,
     };
 
@@ -100,7 +101,7 @@ function Tower(baseTile) {
         attSpeed:       TowerStats.attSpeed,
         upload:         TowerStats.upload,
         download:       TowerStats.download,
-        hitcount:       TowerStats.hitcount,
+        hitCount:       TowerStats.hitCount,
         value:          TowerStats.value,
     };    
 
@@ -212,7 +213,7 @@ function Tower(baseTile) {
                     fail("Invalid attribute in attr of object (you likely have a typo).");
                 }
             }
-            if (at == "hitcount") continue;
+            if (at == "hitCount") continue;
             if (at == "mutate" || at == "mutatestrength") {
                 // Avoid exponetial increase in all tower stats if mutate mutation was calculated just like all the other values.
                 a[at] += (Math.random() - 0.5) * a.mutatestrength / 500;

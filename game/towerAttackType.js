@@ -21,7 +21,7 @@ function applyAttack(attackTemplate) {
     }
 
     target.attr.currentHp -= damage;    
-    baseAttacker.attr.hitcount++;
+    baseAttacker.attr.hitCount++;
 
     var newAttackType = baseAttacker.attr.attack_types[attackTemplate.currentAttPos + 1];
 
@@ -38,6 +38,8 @@ function applyAttack(attackTemplate) {
     {
         var sound = new Sound("snd/die.wav");
         target.base.destroySelf();
+
+        baseAttacker.attr.kills++;
 
         if(getRealType(target) != "Tower")
             attacker.base.rootNode.money += target.attr.value;
@@ -90,7 +92,7 @@ var allAttackTypes = {
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
 
-            ink.text(tPos.x, tPos.y, "N", pen);
+            ink.text(tPos.x, tPos.y, "L", pen);
         };
         this.AttackNode = function(attackTemplate)
         {
@@ -467,10 +469,19 @@ var allAttackTypes = {
     },
 };
 
+var towerAttackTypes = {
+    Laser: allAttackTypes.Laser,
+    Bullet: allAttackTypes.Bullet,
+    Chain: allAttackTypes.Chain,
+    Pulse: allAttackTypes.Pulse,
+    DOT: allAttackTypes.DOT,
+    Slow: allAttackTypes.Slow
+}
+
 //Not needed anymore... but if you have a radio option for something this
 //is how you would set up the underlying attack types for it
 var bugAttackTypes = {
-    Laser: allAttackTypes.Laser
+    BugBullet: allAttackTypes.Bullet
 };
 
 

@@ -50,7 +50,7 @@ function GameInfoBar(pos) {
 	    this.FPSIndi.text = "FPS: " + roundToDecimal(eng.lastFPS, 2);
 	    this.bugIndi.text = "Bugs: " + roundToDecimal(eng.base.allLengths.Bug, 2);
 
-	    this.curLevelIndi.text = "Current Level: " + roundToDecimal(eng.lvMan.currWv.lv, 2);
+	    this.curLevelIndi.text = "Current Level: " + roundToDecimal(eng.lvMan.curLevel, 2);
 	    this.nextLevelTimeIndi.text = "Seconds To Next Level: " + roundToDecimal(eng.lvMan.nwicounter, 0);
 	}
 

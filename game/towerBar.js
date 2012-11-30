@@ -60,9 +60,9 @@ function Towerbar(pos) {
 	var attackCombinations = [];
 	var uniqueNum = 1;
 
-	for (var key in allAttackTypes) {
+	for (var key in towerAttackTypes) {
 	    var attackTypes = {}; //Obj needed for now, it goes away when added (because we turn it into an array)
-	    attackTypes[1] = (allAttackTypes[key]);
+	    attackTypes[1] = (towerAttackTypes[key]);
 	    attackCombinations.push(attackTypes);
 	}
 

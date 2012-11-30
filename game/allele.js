@@ -80,7 +80,7 @@ var AllAlleleGroups =
             0.9: { attSpeed: 0.3 },
             1: { attSpeed: 0.5 },
         }); },
-    
+
     attack1: function () { return choose(
         {
             0.166: { attack: allAttackTypes.Laser },
@@ -235,7 +235,10 @@ function Allele(delta)
     this.apply = function (target) {
         for (var key in delta) {
             var curChange = delta[key];
-            if (defined(target.attr[key])) {                
+            if(!assertDefined(curChange))
+                continue;
+
+            if (defined(target.attr[key])) {
                 target.attr[key] += curChange;
             } else if (key == "attack") {
                 //attack type

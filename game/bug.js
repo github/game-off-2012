@@ -1,20 +1,17 @@
-function Bug(startPath, difficulty) {
-    this.maxHP = Math.floor(20 * 3 * difficulty);
-    this.hp = this.maxHP;
-    this.value = Math.floor(5 * (1 + (difficulty / 16)));
-    //this.speed = 20; //Math.floor(20 * difficulty);
+function Bug(startPath) {
     this.color = "yellow";
     var r = 8;
 
     this.attr = {
         range:          100,
-        damage:         (1 + difficulty/4) * 0.25,
-        hp:             Math.floor(20 * 3 * difficulty),
-        currentHp:     Math.floor(20 * 3 * difficulty),
-        hpRegen:       0.1,
+        damage:         0.25,
+        hp:             Math.floor(20 * 3),
+        currentHp:      Math.floor(20 * 3),
+        hpRegen:        0.1,
         attSpeed:       1,
         speed:          20,
-        hitcount:       0,
+        hitCount:       0,
+        kills:          0,
         value:          5,
     };
 
@@ -30,7 +27,7 @@ function Bug(startPath, difficulty) {
 
     this.attr.target_Strategy = new targetStrategies.Closest();
     this.attr.attack_types = [];
-    this.attr.attack_types.push(new allAttackTypes.Bullet());
+    //this.attr.attack_types.push(new allAttackTypes.Bullet());
 
     this.base.addObject(new AttackCycle());
 

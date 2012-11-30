@@ -118,10 +118,12 @@ function SlowEffect(magnitude) {
 
     this.added = function () {
         this.base.parent.attr.speed *= this.magnitude;
+        this.base.parent.attr.attSpeed *= this.magnitude;
     }
 
     this.die = function () {
         this.base.parent.attr.speed /= this.magnitude;
+        this.base.parent.attr.attSpeed /= this.magnitude;
     }
 
     this.draw = function (pen) {
