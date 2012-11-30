@@ -87,13 +87,9 @@ function Tower(baseTile) {
     this.constantOne = 1;
     this.base.addObject(new UpdateTicker(this, "constantOne", "regenTick"));
 
-    //Hackish way to check if we are from breeder
-    if (baseTile) {
-        var fillChance = 1;
-        for (var alGroup in AllAlleleGroups) {
-            if (Math.random() < fillChance) {
-                this.genes.addAllele(alGroup, new Allele(AllAlleleGroups[alGroup]()));
-            }
+    for (var alGroup in AllAlleleGroups) {
+        if (!this.genes.alleles[alGroup]) {
+            this.genes.addAllele(alGroup, new Allele(AllAlleleGroups[alGroup]()));
         }
     }
 

@@ -63,6 +63,35 @@ var AllAlleleGroups =
             0.9: { hpRegen: 7 },
             1: { hpRegen: 15 },
         }); },
+    
+    attack1: function () { return choose(
+        {
+            0.166: { attack: allAttackTypes.Laser },
+            0.333: { attack: allAttackTypes.Bullet },
+            0.500: { attack: allAttackTypes.Chain },
+            0.666: { attack: allAttackTypes.Pulse },
+            0.833: { attack: allAttackTypes.DOT },
+            1.0: { attack: allAttackTypes.Slow },
+        }); },
+
+        
+    attack2: function () { return choose(
+        {
+            0.166: { attack: allAttackTypes.Laser },
+            0.333: { attack: allAttackTypes.Bullet },
+            0.500: { attack: allAttackTypes.Chain },
+            0.666: { attack: allAttackTypes.Pulse },
+            0.833: { attack: allAttackTypes.DOT },
+            1.0: { attack: allAttackTypes.Slow },
+        }); },
+        
+
+    targetBase: function () { return choose(
+        {
+            0.333: { target: targetStrategies.Closest },
+            0.666: { target: targetStrategies.Random },
+            1.000: { target: targetStrategies.Farthest },
+        }); },
 
     //Some minor bonuses
 
@@ -78,16 +107,10 @@ function Allele(delta)
 {
     this.delta = delta;
     this.apply = function (target) {
-        applyOrUnapply(target, this.delta, false);
-    }
-    this.unapply = function (target) {
-        applyOrUnapply(target, this.delta, true)
-    }
-    function applyOrUnapply (target, delta, unapply) {
         for (var key in delta) {
             var curChange = delta[key];
             if (defined(target.attr[key])) {                
-                target.attr[key] += curChange * (unapply ? -1 : 1);
+                target.attr[key] += curChange;
             } else if (key == "attack") {
                 //attack type
                 target.attr.attack_types.push(new curChange());
@@ -98,7 +121,16 @@ function Allele(delta)
                 // What should we do if we're removing the gene for the target_Strategy?
             }
         }
-    }    
+    }
+    this.unapply = function (target) {
+        for (var key in delta) {
+            var curChange = delta[key];
+            if (defined(target.attr[key])) {                
+                target.attr[key] -= curChange;
+            }
+            //Can't unapply attacks and targets
+        }
+    }
 }
 
 function TowerBreeder(pos) {

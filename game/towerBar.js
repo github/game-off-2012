@@ -7,7 +7,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
     this.towerGeneratorFnc = towerGeneratorFnc;
 
-    this.displayedTower = towerGeneratorFnc();
+    this.displayedTower = towerGeneratorFnc(true);
 
     this.dragPos = null;
 
@@ -57,11 +57,11 @@ function Towerbar(pos) {
 
 	for (var key in allAttackTypes) {
 	    var attackTypes = {}; //Obj needed for now, it goes away when added (because we turn it into an array)
-	    attackTypes[uniqueNum++] = (allAttackTypes[key]);
+	    attackTypes[1] = (allAttackTypes[key]);
 	    attackCombinations.push(attackTypes);
 	}
 
-	var superCombo = { 0: allAttackTypes.DOT, 1: allAttackTypes.Pulse };
+	var superCombo = { 1: allAttackTypes.DOT, 2: allAttackTypes.Pulse };
 
 	attackCombinations.push(superCombo);
 
@@ -71,14 +71,23 @@ function Towerbar(pos) {
         function (obj, refObj, pos) {
             var towerDragger = new TowerDragger(
                 new temporalPos(pos.x, pos.y, pos.w, pos.h),
-                function () {
+                function (forDisplay) {
                     var fakeTile = {};
                     fakeTile.tPos = new temporalPos(0, 0, 0, 0);
                     var tower = new Tower(fakeTile);
 
-                    tower.attr.attack_types = [];
-                    for (var attackType in obj)                    
-                        tower.attr.attack_types.push(new obj[attackType]());
+                    if (forDisplay) {
+                        tower.attr.attack_types = [];
+                        for (var alleleGroup in tower.genes.alleles) {
+                            if (tower.genes.alleles[alleleGroup].delta.attack)
+                                delete tower.genes.alleles[alleleGroup];
+                        }
+                    }
+
+                    for (var key in obj) {
+                        var attackType = obj[key];
+                        tower.genes.addAllele("attack" + key, new Allele({ attack: attackType }));
+                    }
 
                     tower.recolor();
 

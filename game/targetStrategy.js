@@ -55,7 +55,7 @@ var targetStrategies = {
             ink.text(tPos.x, tPos.y, "R", pen);
         };
     },
-    FarthestOnPath: function farthestOnPath () {
+    Farthest: function farthestOnPath () {
         this.run = function (attacker, prevTarget) {
             //Just trust me
             var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
