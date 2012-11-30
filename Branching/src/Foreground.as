@@ -39,9 +39,17 @@ package
 		
 		private var budList:Vector.<plantBud>;
 		private var playerBud:plantBud;
+		private var vineList0:Vector.<plantVine>;
+		private var vineList1:Vector.<plantVine>;
+		private var vineList2:Vector.<plantVine>;
+		private var vineList3:Vector.<plantVine>;
 		private var playerVine:plantVine;
 		private var branchingGuideL:angleGuide;
 		private var branchingGuideR:angleGuide;
+		
+		private var plantFood:food;
+		private var glass:window;
+		private var blockade:obstacle;
 		
 		private var buildingRotation:Number;		
 		public var moveWorld:Number = 0;
@@ -52,8 +60,12 @@ package
 		public var intro:Boolean = true;
 		private var maxHeight:Number = 550;
 		
-		private var i:int = 0;
+		private var i:int;
 		private var RandomNumber:int;
+		private var dx:Number;
+		private var dy:Number;
+		private var angle:Number;
+		private var distance:Number;
 		
 		public function Foreground() 
 		{
@@ -106,17 +118,22 @@ package
 			
 			point2D = new Point(0,0);
 			
-			//Arranging
-			plane0 = new Vector.<interactiveObject>;
-			plane1 = new Vector.<interactiveObject>;
-			plane2 = new Vector.<interactiveObject>;
-			plane3 = new Vector.<interactiveObject>;
+			//Arranging Level
+			plane0 = new Vector.<interactiveObject>();
+			plane1 = new Vector.<interactiveObject>();
+			plane2 = new Vector.<interactiveObject>();
+			plane3 = new Vector.<interactiveObject>();
+			vineList0 = new Vector.<plantVine>();
+			vineList1 = new Vector.<plantVine>();
+			vineList2 = new Vector.<plantVine>();
+			vineList3 = new Vector.<plantVine>();
 			
 			//Adding Player
-			budList = new Vector.<plantBud>;
+			budList = new Vector.<plantBud>();
 			playerBud = new plantBud(250, 0, 0, 3);
-			playerVine = new plantVine(250, 0);
-			plane0.push(playerVine);
+			playerVine = new plantVine(250, 0, playerBud);
+			playerBud.myVine = playerVine;
+			vineList0.push(playerVine);
 			addChild(playerVine);
 			budList.push(playerBud);
 			addChild(playerBud);
@@ -141,13 +158,9 @@ package
 							selectedBud = clicked.parent as plantBud;
 							selectedBud.startBranching();
 							//Creating Guides
-							branchingGuideL = new angleGuide(true);
-							branchingGuideL.x = selectedBud.x;
-							branchingGuideL.y = selectedBud.y;
+							branchingGuideL = new angleGuide(true,selectedBud.x,selectedBud.y);
 							addChild(branchingGuideL);
-							branchingGuideR = new angleGuide(false);
-							branchingGuideR.x = selectedBud.x;
-							branchingGuideR.y = selectedBud.y;
+							branchingGuideR = new angleGuide(false,selectedBud.x,selectedBud.y);
 							addChild(branchingGuideR);
 						}
 					}
@@ -164,14 +177,10 @@ package
 							if (selectedBud.budGrowth > 1)
 							{
 								//Branch Bud
-								RandomNumber = Math.floor(Math.random()*(selectedBud.budGrowth-1))+1;
-								playerBud = new plantBud(selectedBud.RealX, selectedBud.RealY, selectedBud.worldPlane, RandomNumber, -branchingGuideL.rotation);
-								budList.push(playerBud);
-								addChild(playerBud);
+								RandomNumber = Math.floor(Math.random() * (selectedBud.budGrowth - 1)) + 1;
+								createBud(true);
 								RandomNumber = selectedBud.budGrowth - RandomNumber;
-								playerBud = new plantBud(selectedBud.RealX, selectedBud.RealY, selectedBud.worldPlane, RandomNumber, -branchingGuideR.rotation);
-								budList.push(playerBud);
-								addChild(playerBud);
+								createBud(false);								
 								selectedBud.makeJoint();
 							}
 							else
@@ -188,6 +197,33 @@ package
 					}
 				}
 			}
+		}
+		
+		private function createBud(isLeft:Boolean):void
+		{
+			playerBud = new plantBud(selectedBud.RealX, selectedBud.RealY, selectedBud.worldPlane, RandomNumber, (isLeft)? -branchingGuideL.rotation:-branchingGuideR.rotation);
+			playerVine = new plantVine(selectedBud.RealX, selectedBud.RealY, playerBud);
+			playerBud.myVine = playerVine;
+			switch(playerBud.worldPlane)
+			{
+				case 0:
+					vineList0.push(playerVine);
+					break;
+				case 1:
+					vineList1.push(playerVine);
+					break;
+				case 2:
+					vineList2.push(playerVine);
+					break;
+				case 3:
+					vineList3.push(playerVine);
+					break;
+				default:
+					break;
+			}
+			addChild(playerVine);
+			budList.push(playerBud);
+			addChild(playerBud);
 		}
 		
 		public function Update(rotationY:Number):void
@@ -216,17 +252,61 @@ package
 				//Changing plane
 				if (playerBud.RealX < 0)
 				{
+					playerBud.myVine.KillInPlane(playerBud.RealX, playerBud.RealY);
 					playerBud.RealX = 500 + playerBud.RealX;
 					playerBud.worldPlane--;
 					if (playerBud.worldPlane < 0)
 						playerBud.worldPlane = 3;
+					//Creating new vine for new plane
+					playerVine = new plantVine(playerBud.RealX, playerBud.RealY, playerBud);
+					playerBud.myVine = playerVine;
+					switch(playerBud.worldPlane)
+					{
+						case 0:
+							vineList0.push(playerVine);
+							break;
+						case 1:
+							vineList1.push(playerVine);
+							break;
+						case 2:
+							vineList2.push(playerVine);
+							break;
+						case 3:
+							vineList3.push(playerVine);
+							break;
+						default:
+							break;
+					}
+					addChild(playerVine);
 				}
 				else if (playerBud.RealX > 500)
 				{
+					playerBud.myVine.KillInPlane(playerBud.RealX, playerBud.RealY);
 					playerBud.RealX = playerBud.RealX - 500;
 					playerBud.worldPlane++;
 					if (playerBud.worldPlane > 3)
 						playerBud.worldPlane = 0;
+					//Creating new vine for new plane
+					playerVine = new plantVine(playerBud.RealX, playerBud.RealY, playerBud);
+					playerBud.myVine = playerVine;
+					switch(playerBud.worldPlane)
+					{
+						case 0:
+							vineList0.push(playerVine);
+							break;
+						case 1:
+							vineList1.push(playerVine);
+							break;
+						case 2:
+							vineList2.push(playerVine);
+							break;
+						case 3:
+							vineList3.push(playerVine);
+							break;
+						default:
+							break;
+					}
+					addChild(playerVine);
 				}
 				//Showing or Hiding
 				switch(playerBud.worldPlane)
@@ -247,9 +327,6 @@ package
 						break;
 				}
 			}
-			
-			//Vines
-			//playerVine.height = 750 - playerBud.y - 750 + playerVine.y;
 			
 			//Branching
 			if (branching)
@@ -286,19 +363,6 @@ package
 						playerBud.y = v3d.y;
 					}
 				}
-				/*
-				for (i = 0; i < budList.length; i++)
-				{
-					playerBud = budList[i];
-					playerBud.RealY -= moveWorld;
-					//Adjusting in 2D
-					if (playerBud.visible)
-					{
-						v3d = Main.Away3dView.project(Main.GetVerticeWorldPosition(Main.Away3dView.scene.getChildAt(0) as Mesh,0,0,playerBud.RealX, playerBud.RealY,playerBud.worldPlane));
-						playerBud.x = v3d.x;
-						playerBud.y = v3d.y;
-					}
-				}*/
 			}
 			else
 			{
@@ -315,6 +379,12 @@ package
 					}
 				}
 			}
+			
+			//Vines
+			updateVines(vineList0, 0);
+			updateVines(vineList1, 1);
+			updateVines(vineList2, 2);
+			updateVines(vineList3, 3);
 		}
 		
 		public function DrawLine():void
@@ -324,14 +394,14 @@ package
 			point2D.y = v3d.y;
 			
 			// Set distance points
-			var dx:Number = point2D.x - _lineStartPoint.x;
-			var dy:Number = point2D.y - _lineStartPoint.y;
+			dx = point2D.x - _lineStartPoint.x;
+			dy = point2D.y - _lineStartPoint.y;
 			
 			// Calculate angle between 2 points
-			var angle:Number = Math.atan2(dy, dx);
+			angle = Math.atan2(dy, dx);
 			
 			// Calculate distance between 2 points
-			var distance:Number = Math.sqrt(dx * dx + dy * dy);
+			distance = Math.sqrt(dx * dx + dy * dy);
 			
 			for (i = 0; i < plane0.length; i++)
 			{
@@ -347,6 +417,67 @@ package
 			
 			_text.text = "Distance climbed: " +  Math.round(distance * 100) / 100 + "\n";
 			_text.text += "angle: " + Math.round(_line.rotation * 100) / 100;
+		}
+		
+		private function updateVines(list:Vector.<plantVine>,wall:int):void
+		{
+			for (i = 0; i < list.length; i++)
+			{
+				playerVine = list[i] as plantVine;
+				if (!intro)
+				{
+					playerVine.RealY -= moveWorld;
+					if(playerVine.isDead)
+						playerVine.deadPoint.y -= moveWorld;
+				}
+				switch(wall)
+				{
+					case 0:
+						playerVine.visible = (hidden0)?false:true;
+						break;
+					case 1:
+						playerVine.visible = (hidden1)?false:true;
+						break;
+					case 2:
+						playerVine.visible = (hidden2)?false:true;
+						break;
+					case 3:
+						playerVine.visible = (hidden3)?false:true;
+						break;
+					default:
+						break;
+				}
+				if (playerVine.visible)
+				{
+					v3d = Main.Away3dView.project(Main.GetVerticeWorldPosition(Main.Away3dView.scene.getChildAt(0) as Mesh,0,0,playerVine.RealX, playerVine.RealY,wall));
+					playerVine.x = v3d.x;
+					playerVine.y = v3d.y;
+					
+					if (playerVine.isDead)
+					{
+						v3d = Main.Away3dView.project(Main.GetVerticeWorldPosition(Main.Away3dView.scene.getChildAt(0) as Mesh, 0, 0, playerVine.deadPoint.x, playerVine.deadPoint.y, wall));
+						// Set distance points
+						dx = v3d.x - playerVine.x;
+						dy = v3d.y - playerVine.y;
+					}
+					else
+					{
+						// Set distance points
+						dx = playerVine.master.x - playerVine.x;
+						dy = playerVine.master.y - playerVine.y;
+					}
+					
+					// Calculate angle between 2 points
+					angle = Math.atan2(dy, dx);
+					
+					// Calculate distance between 2 points
+					distance = Math.sqrt(dx * dx + dy * dy);
+					
+					playerVine.rotation = 0; //Reset rotation to zero before change width
+					playerVine.width = Math.round(distance);
+					playerVine.rotation = angle;
+				}
+			}
 		}
 		
 		private function ShowAndHideWalls():void

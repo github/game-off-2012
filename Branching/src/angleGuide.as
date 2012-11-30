@@ -9,10 +9,13 @@ package
 		
 		public var goingBackwards:Boolean;
 		
-		public function angleGuide(isLeft:Boolean) 
+		public function angleGuide(isLeft:Boolean,selectedX:Number,selectedY:Number) 
 		{
 			touchable = false;
 			goingBackwards = false;
+			this.x = selectedX;
+			this.y = selectedY;
+			
 			guideImage = new Quad(100, 10, 0xFACE3E);
 			guideImage.y = -(guideImage.height / 2);
 			addChild(guideImage);

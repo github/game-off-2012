@@ -53,8 +53,7 @@ package
 				layer1.y += distance * 0.3;
 				if (layer1.y > 800)
 				{
-					removeChild(layer1);
-					layer1 = null;
+					removeChild(layer1,true);
 					lyr1Visible = false;
 				}
 			}
@@ -64,8 +63,7 @@ package
 				layer0.y += distance * 0.5;
 				if (layer0.y > 800)
 				{
-					removeChild(layer0);
-					layer0 = null;
+					removeChild(layer0,true);
 					lyr0Visible = false;
 				}
 			}
@@ -75,8 +73,7 @@ package
 				layerGround.y += distance * 0.8;
 				if (layerGround.y > 800)
 				{
-					removeChild(layerGround);
-					layerGround = null;
+					removeChild(layerGround,true);
 					groundVisible = false;
 				}
 			}

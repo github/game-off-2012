@@ -6,6 +6,7 @@ package
 	{
 		private var budImage:Quad;
 		
+		public var myVine:plantVine;
 		public var worldPlane:int;
 		
 		public var budGrowth:int;
@@ -62,6 +63,9 @@ package
 		
 		public function makeJoint():void
 		{
+			XSpeed = 0;
+			YSpeed = 0;
+			budMaxSpeed = 0;
 			budImage.color = 0x98F59E;
 			touchable = false;
 		}
