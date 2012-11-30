@@ -40,7 +40,7 @@
     this.base.addObject(this.infobar);
 
     this.towerbar = new Towerbar(
-            new TemporalPos(0, pos.h - 150, pos.w - 250, 150)
+            new TemporalPos(0, pos.h - 150, pos.w - 260, 150)
         );
     this.base.addObject(this.towerbar);
 

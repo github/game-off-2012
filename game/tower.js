@@ -30,20 +30,16 @@ function Tower_Connection(t1, t2) {
     var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11, {1: 0.1, 2: 0.3, 3: 0.5, 4: 0.7, 5: 0.9});
     this.base.addObject(line);
 
-    var pos = t2.tPos.getCenter();
+    var pos = new Vector(t2.tPos.x, t2.tPos.y);
+    
+    pos.w = 15;
+    pos.h = 15;
 
-    var delta = t2.tPos.getCenter();
-    delta.sub(t1.tPos.getCenter());
-    delta.setMag(t2.tPos.w * 0.5);
-
-    pos.w = 20;
-    pos.h = 20;
-
-    //pos.sub(delta);
     pos.sub({x: pos.w * 0.5, y: pos.h * 0.5});
     
     this.deleteButton = new Button(pos, "-", 
         this, "deleteSelf", 50);
+    this.deleteButton.textsize = 8;
     
     this.base.addObject(this.deleteButton);
 
