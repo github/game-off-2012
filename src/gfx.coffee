@@ -201,12 +201,11 @@ class Camera
 
     #Some performance-thing
     if xNow != 0
+      @xOffset += xNow
       body = @world.GetBodyList()
       @setBodyPosition(body, xNow, 0)
       while (body = body.GetNext()) != null
         @setBodyPosition(body, xNow, 0)
-      
-      @xOffset += xNow
   
   #Set Body-Position easily
   setBodyPosition:(body,xOffset, yOffset)->
