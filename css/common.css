@@ -45,14 +45,13 @@ body {
 
 #levelTitle {
   float: left;
-  width: 353px;
-  color: black;
+  width: 348px;
+  color: white;
   font-family: 'Scada', sans-serif;
   font-size: 120%;
   letter-spacing: 3px;
   background-color: #5468FF;
-  min-height: 31px;
-  padding: 5px;
+  padding: 9px;
   border: 1px solid black;
 }
 
@@ -92,12 +91,14 @@ body {
   font-family: 'Scada', sans-serif;
   letter-spacing: 3px;
   font-size: 20px;
+  top: -3px;
+  position: relative;
 }
 
 .smallText {
   font-family: 'Scada', sans-serif;
   letter-spacing: 3px;
-  top: -5px;
+  top: -7px;
   font-size: 13px;
   position: relative;
 }

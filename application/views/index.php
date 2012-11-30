@@ -32,7 +32,7 @@
         <div id="levelText">To pass this level, you will need to use the SPACEBAR to grab and move blocks.</div>
         <div id="controlText">
             <span class="headerText">How To Play</span><br />
-            <span><b>Movement</b>: <b>W</b> (up) <b>A</b> (left) <b>S</b> (down) <b>U</b> (up)</span><br />
+            <span><b>Movement</b>: <b>W</b> (up) <b>A</b> (left) <b>S</b> (down) <b>D</b> (up)</span><br />
             <span><b>Move Blocks</b>: Hold <b>SPACEBAR</b> to grab a block.  Use the movement keys to move the block</span><br />
             <span><b>Remove Blocks</b>: <b>F</b> (There must be 3 touching blocks of the same color)</span><br />
             <span><b>Take / Give Color</b>: <b>E</b> (Blocks with a white outline are <b>NOT</b> colorable)</span><br /><br />
