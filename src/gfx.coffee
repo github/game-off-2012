@@ -9,7 +9,7 @@ class Screen
   #Would be the method for entities
   render:(x, y, tile) ->
     @spritesheet.drawTile(@ctx,x/3, y/3,tile)
-  
+    
   draw:->
     @context.drawImage(@canvas, 0, 0, 640, 480)
   
@@ -138,6 +138,37 @@ class LevelGenerator
       body.UserData = obj.properties.userdata if obj.properties.userdata? 
       body.CreateFixture(fixDef)
       
+class TowerGenerator
+  constructor:(@json)->
+    @sprites = new SpriteSheet(STORAGE.getRessource("spritesheet"), 8)
+    @bodies = new List()
+    @load()
+    
+  load:->
+    console.log(@json)
+    img = document.createElement("canvas")
+    img.width = @json.width * @json.tilewidth 
+    img.height = @json.height * @json.tileheight
+    
+    ctx = img.getContext("2d")
+    
+    data = @json.layers[0]
+    tiles = data.data
+    
+    for y in [0...data.height]
+      for x in [0...data.width]
+        @sprites.drawTile(ctx, x*8, y*8, tiles[x+y*data.width]-1)
+        
+    @img = document.createElement("canvas")
+    @img.width = @json.width * @json.tilewidth * 4 
+    @img.height = @json.height * @json.tileheight *4
+    
+    ctx = @img.getContext('2d')
+    ctx.webkitImageSmoothingEnabled = false
+    ctx.drawImage(img, 0, 0,@json.width * @json.tilewidth * 4 ,@json.height * @json.tileheight *4)
+    
+   getTowerModel:->@img
+
 class Camera
   constructor:(@world,@scale,@screenscale,@inputHandler)->
     @active = false
@@ -154,6 +185,8 @@ class Camera
   
   setXboundary:(xbound)->
     @xBound = xbound
+    
+  setWorld:(@world)->
     
   tick:=>
     xNow = 0
@@ -181,12 +214,11 @@ class Camera
     newy = body.GetPosition().y - (yOffset/@modelScale)
     body.SetPosition(new b2Vec2(newx, newy), 0)
     
-  isActive:->
-    @active  
+  isActive:->@active  
+  setActive:(@active)->
   
-  setActive:(active)->
-    @active = active
-
+  setWorld:(@world)->
+    
 #SpriteSheet-Class for accessing sprites by a atlas-index
 class SpriteSheet
   constructor:(@image, @tilesize)->
