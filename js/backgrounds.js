@@ -324,7 +324,7 @@
       ctx.drawImage(this.log_img, this.log_x, this.log_y);
 
       if (mit.game_started) {
-        this.log_x -= this.grass_bg_move_speed * this.common_bg_speed;
+        this.log_x -= this.ground_bg_move_speed * this.common_bg_speed;
       }
     },
 
