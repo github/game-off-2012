@@ -172,13 +172,13 @@ void keyPressed(){
 //    g.numBranches --;
 //  }
   
-  if(key == 'p'){
-    pause();
-  }
+  // if(key == 'p'){
+  //   pause();
+  // }
   
-  if(key == 'r'){
-    newGame();
-  }
+  // if(key == 'r'){
+  //   newGame();
+  // }
 
 }
 

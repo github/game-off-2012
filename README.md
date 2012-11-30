@@ -1,11 +1,13 @@
 ## PolyBranch
 
-PolyBranch is a minimalistic 3D game. Dodging branches may seem easy at first, but how long can you hold up as you approach breakneck speed?
+PolyBranch is a minimalistic 3D game. Dodging branches may seem easy at first, but how long can you hold up as you approach terminal velocity?
 
 ### Open Source!
 
 Game core built with [Processing.js](http://processingjs.org/)
+
 GUI built with HTML5 and [jQuery](http://jquery.com)
+
 Font is [Wire One](http://www.google.com/webfonts/specimen/Wire+One) from [Google Web Fonts](http://www.google.com/webfonts)
 
 ## Prizes
