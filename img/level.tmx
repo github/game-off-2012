@@ -5,7 +5,7 @@
  </tileset>
  <layer name="scene" width="32" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjYBh4wArFtJInxm5cZlAqz4mGCelnxSFHrh9w2Y+sltywIwZgs59Yf9HKfnqCUftH7cdnP+MAY6ZRPKIxAMghAxk=
+   eJxjYBh4wArFtJInxm5cZlAqT6r9rDjkSDGDFHsZGMgPO3IBJeE1CkbBcAKMA4yZRvGIxgD03wHV
   </data>
  </layer>
  <objectgroup name="static" width="32" height="16">
