@@ -96,11 +96,11 @@ class TestLevel extends Level
     super @id
     @level = new LevelGenerator(json, STORAGE.getRessource("spritesheet"), @world)
     
-    @clonepoints = 5
+    @clonepoints = 10
     
     #HowMuchCanBeSpawned
-    @badWarriors = 40
-    @badArchers = 20
+    @badWarriors = 20
+    @badArchers = 5
     
     @tickcount = 0
     
@@ -116,7 +116,7 @@ class TestLevel extends Level
     while((body = body.GetNext()) != null)
       if body.UserData is "Tower" then @towerbody = body
     
-    @tower=new Tower(500, new TowerGenerator(STORAGE.getRessource("towermodel")).getTowerModel()) 
+    @tower=new Tower(10, new TowerGenerator(STORAGE.getRessource("towermodel")).getTowerModel()) 
     @towerbody.UserData = @tower
   
   tick:->
