@@ -78,7 +78,7 @@ h1,h2,h3,h4, .button, .button:link, .button:active, .button:visited{
 			height: 550px;
 			margin: 0px auto;
 			background: #f1f1f1;
-			background: rgba(200,200,200,0.7);
+			background: rgba(240,240,240,0.7);
 		}
 		#gameover-menu #score{
 			font-size: 120px;
@@ -147,6 +147,24 @@ canvas {
 	outline: 0px; 
 	margin-bottom: 1.5em; 
 }
+
+#page{
+	color: #f1f1f1;
+}
+
+	#page h1{
+		color: #f1f1f1;
+		text-shadow: none;
+	    filter: none;
+		font-size: 60px;
+		line-height: 60px;
+	}
+
+	#page p{
+		font-size: 16px;
+		line-height: 22px;
+	}
+
 #content { 
 	margin: 50px auto 0px auto; padding: 25px 25px 15px 25px;
 	width: 800px; min-width: 300px; overflow: auto;
