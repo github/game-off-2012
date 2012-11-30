@@ -13,7 +13,7 @@
     <audio class="whip" src="audio/effects/whip.wav">
 
     <script type="text/template" id="menu-template">
-      <img src="img/logo.png"/>
+      <img class="flyin" src="img/logo.png"/>
       <ul class="menu">
         <li id="start" class="selected">Start</li>
         <li id="howto">How to Play</li>
@@ -28,8 +28,8 @@
       <div id="pause" class="game-text">
         Paused
         <ul>
-          <li>Main menu</li>
-          <li>Select Song</li>
+          <li class="menu">Main menu</li>
+          <li class="choose">Select Song</li>
         <ul>
       </div>
       <div id="game-over" class="game-text">
@@ -52,11 +52,14 @@
       <h2>Choctopus Games</h2>
       <p>Programming: Graham Conzett</p>
       <p>Design and animation: Stephanie Owens</p>
+      <h2>Music Credits</h2>
+      <ul id="song-credits"></ul>
       <small>Press esc to return to main menu</small>
     </script>
 
     <script type="text/template" id="highscore-template">
       <h2>High Scores</h2>
+      <ul id="scores"></ul>
       <small>Press esc to return to main menu</small>
     </script>
 
@@ -74,13 +77,20 @@
       <h3><%= name %><h3>
       <dl>
         <dt>Artist:</dt>
-        <dd><a href="<%= website %>"><%= artist %></a><dd>
+        <dd><%= artist %><dd>
         <dt>Difficulty:</dt>
         <dd><%= difficulty %></a><dd>
-        <dt>License:</dt>
-        <dd><%= license %></a><dd>
       </dl>
     </script>
+
+    <script type="text/template" id="song-credit-template">
+      <li>
+      <a href="<%= website %>"><%= artist %></a> - <%= name %></br>
+      <%= license %>
+      </li>
+    </script>
+
+    <script type="text/template" id="choctopus-template"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
     <script src="src/requestAnimationFrame.js"></script>
@@ -91,6 +101,7 @@
     <script src="collections/Songs.js"></script>
     <script src="views/MenuView.js"></script>
     <script src="views/ScreenView.js"></script>
+    <script src="views/ChoctopusView.js"></script>
     <script src="views/SongView.js"></script>
     <script src="views/SongListItemView.js"></script>
     <script src="views/SongsView.js"></script>

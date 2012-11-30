@@ -89,3 +89,31 @@
 #clear {
 	color : blue;
 }
+
+.choctopus {
+	background-image: url('../img/choctopus_splash.png');
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.flyin {
+  -webkit-animation: flyin 0.25s ease forwards;
+     -moz-animation: flyin 0.25s ease forwards;
+       -o-animation: flyin 0.25s ease forwards;
+          animation: flyin 0.25s ease forwards;
+
+  opacity: 0;
+  -webkit-transform: scale(2);
+  -webkit-filter: blur(4px);
+}
+
+@-webkit-keyframes flyin {
+   to { 
+     -webkit-filter: blur(0);
+     -webkit-transform: scale(1);
+     opacity: 1;
+   }
+}

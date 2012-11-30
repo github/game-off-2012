@@ -4,6 +4,11 @@ SongView = Backbone.View.extend({
 
   className: 'song',
 
+  events: {
+    'click #pause .menu' : 'backToMenu',
+    'click #pause .choose' : 'backToChoose'
+  },
+
   initialize: function(){
     this.render();
     this.canvas = this.$el.find('canvas')[0];
@@ -21,6 +26,9 @@ SongView = Backbone.View.extend({
     this.active   = [[],[],[],[]];
     this.inactive = [[],[],[],[]];
     this.missed   = [[],[],[],[]];
+    if(localStorage[this.model.get('filename')] === undefined){
+      localStorage[this.model.get('filename')] = 0;
+    }
     this.context = this.canvas.getContext('2d');
     _.bindAll(this, 'handleKeyDown', 'handleKeyUp', 'animate', 'getNext', 'moveMarkers');
     $(document).bind('keydown', this.handleKeyDown);
@@ -37,6 +45,14 @@ SongView = Backbone.View.extend({
     window.setTimeout(_.bind(function(){
       this.$el.find('#go').hide();
     }, this), 2000);
+  },
+
+  backToChoose: function () {
+    game.events.trigger('start');
+  },
+
+  backToMenu: function () {
+    game.events.trigger('menu');
   },
 
   render: function () { 
@@ -82,6 +98,12 @@ SongView = Backbone.View.extend({
       this.finished = true;
       this.audio.pause();
       this.clearAllIntervals();
+
+      if(this.score > localStorage[this.model.get('filename')]){
+        localStorage[this.model.get('filename')] = this.score;
+        this.$el.find('#clear').append('<div id="new-highscore">New high score!</div>');
+      }
+
       this.$el.find('#clear').show();
     }
   },
@@ -210,6 +232,8 @@ SongView = Backbone.View.extend({
         break;
       case 80: this.pause();
         break;
+      case 27: this.pause();
+        break;
     }
   },
 
@@ -224,6 +248,11 @@ SongView = Backbone.View.extend({
       case 74: sprites.octo_clone.set('current_frame', 0);
         break;
     }
+  },
+
+  destroy: function() {
+    $(document).unbind('keydown');
+    $(document).unbind('keyup');
   }
 
 });
