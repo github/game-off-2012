@@ -126,7 +126,7 @@ mit.main = function() {
     mit.game_started = 0;
 
     mit.Backgrounds.common_bg_speed = 1;
-    mit.Backgrounds.ground_bg_move_speed = 7;
+    mit.Backgrounds.resetAllSpeed();
 
     // Reset all accelerations and make
     // pappu stationary
@@ -306,7 +306,6 @@ mit.main = function() {
     mit.Backgrounds.common_bg_speed = 0;
     mit.Backgrounds.ground_bg_move_speed = 0;
     mit.Backgrounds.fps = 0;
-    mit.Backgrounds.resetAllSpeed();
 
     mit.game_over = 1;
     mit.start_btn_clicked = 0;
