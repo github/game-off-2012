@@ -1,16 +1,69 @@
+//Choices is an object with key as CDF (so the last should be 1)
+function choose(choices)
+{
+    var randomValue = Math.random();
+
+    var curValue = 0;
+    for(var chance in choices)
+        if(randomValue < chance)
+            return choices[chance];
+}
 var AllAlleleGroups =
 {
-//Should likely have better names
-//EACH ONE OF THESE SHOULD HAVE MORE THAN ONE PHENOTYPE!
-//(Ex, one could be +10 range, of +5 range (moderate bonus)
-//two could be +1000 range of +50 damage (major bonus)
-//three could be... etc
-    one: function () { return { range: 10}; },
-    two: function () { return { range: Math.random() * 20}; },
-    three: function () { return { range: 100, damage: -1}; },
-//Make some for all of the attack types and target strategies.
+    //Should likely have better names
+    //EACH ONE OF THESE SHOULD HAVE MORE THAN ONE PHENOTYPE!
+    //(Ex, one could be +10 range, of +5 range (moderate bonus)
+    //two could be +1000 range of +50 damage (major bonus)
+    //three could be... etc
+    one: function () { return { range: 10 }; },
+    two: function () { return { range: Math.random() * 20 }; },
+    three: function () { return { range: 100, damage: -1 }; },
+    //Make some for all of the attack types and target strategies.
+    //Some major bonuses
+    rangeBase: function () { return choose(
+        {
+            0.5: { range: 30 }, //Roughly even distribution of base stats
+            0.7: { range: 50 },
+            0.9: { range: 70 },
+            1: { range: 150 },  //With a minor chance of huge benefit (this is really good, as
+                                //no matter what the target tower stats the best phenotype
+                                //for this allele will improve it or make it the same).
+        }); },
 
-//One per attribute
+    damageBase: function () { return choose(
+        {
+            0.5: { damage: 3 }, //Roughly even distribution of base stats
+            0.7: { damage: 5 },
+            0.9: { damage: 7 },
+            1: { damage: 15 },  //With a minor chance of huge benefit (this is really good, as
+                                //no matter what the target tower stats the best phenotype
+                                //for this allele will improve it or make it the same).
+        }); },
+
+    hpBase: function () { return choose(
+        {
+            0.5: { hp: 30 },
+            0.7: { hp: 50 },
+            0.9: { hp: 70 },
+            1: { hp: 150 },
+        }); },
+
+    hpRegenBase: function () { return choose(
+        {
+            0.5: { hpRegen: 3 },
+            0.7: { hpRegen: 5 },
+            0.9: { hpRegen: 7 },
+            1: { hpRegen: 15 },
+        }); },
+
+    //Some minor bonuses
+
+    //Some super bonuses with tradeoffs
+    //Some that always add target strategy
+    //Some that always add attack type
+    //Some that sometimes add attack type
+
+    //One per attribute
 };
 
 function Allele(delta)

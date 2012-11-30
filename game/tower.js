@@ -44,18 +44,15 @@ TowerStats = {
         range:          100,
         damage:         10,
         hp:             100,
-        current_hp:     100,
-        hp_regen:       1,
+        currentHp:     100,
+        hpRegen:       1,
         attSpeed:       1,        
-        mutate:         0,
-        mutatestrength: 0,
         upload:         1,
         download:       1,
         hitcount:       0,
         value:          50,
     };
 
-//All mutate stuff is copy-pasta from our mother project (for now)
 function Tower(baseTile) {
     var p = baseTile ? baseTile.tPos : {x: 0, y: 0, w : tileSize, h: tileSize};
     this.baseTile = baseTile;
@@ -65,11 +62,9 @@ function Tower(baseTile) {
         range:          TowerStats.range,
         damage:         TowerStats.damage,
         hp:             TowerStats.hp,
-        current_hp:     TowerStats.current_hp,
-        hp_regen:       TowerStats.hp_regen,
+        currentHp:      TowerStats.currentHp,
+        hpRegen:        TowerStats.hpRegen,
         attSpeed:       TowerStats.attSpeed,
-        mutate:         TowerStats.mutate,
-        mutatestrength: TowerStats.mutatestrength,
         upload:         TowerStats.upload,
         download:       TowerStats.download,
         hitcount:       TowerStats.hitcount,
@@ -94,7 +89,7 @@ function Tower(baseTile) {
 
     //Hackish way to check if we are from breeder
     if (baseTile) {
-        var fillChance = 0.5;
+        var fillChance = 1;
         for (var alGroup in AllAlleleGroups) {
             if (Math.random() < fillChance) {
                 this.genes.addAllele(alGroup, new Allele(AllAlleleGroups[alGroup]()));
@@ -108,9 +103,9 @@ function Tower(baseTile) {
         
     this.regenTick = function()
     {
-        this.attr.current_hp += this.attr.hp_regen;
-        if(this.attr.current_hp > this.attr.hp)
-            this.attr.current_hp = this.attr.hp;
+        this.attr.currentHp += this.attr.hpRegen;
+        if(this.attr.currentHp > this.attr.hp)
+            this.attr.currentHp = this.attr.hp;
     }
 
     this.update = function()
@@ -189,7 +184,7 @@ function Tower(baseTile) {
     this.rColor = new Color();
     this.recolor = function() {
         var a = this.attr;
-        this.rColor = this.rColor.r(255 - a.current_hp).g(a.range).b(a.damage).a(0.5);
+        this.rColor = this.rColor.r(255 - a.currentHp).g(a.range).b(a.damage).a(0.5);
     }
 
     this.mouseover = function(e) {        

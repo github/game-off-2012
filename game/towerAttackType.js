@@ -15,7 +15,7 @@ function applyAttack(attackTemplate) {
     if(!assertDefined(target, attacker, damage, baseAttacker))
         return;
 
-    target.attr.current_hp -= damage;    
+    target.attr.currentHp -= damage;    
     baseAttacker.attr.hitcount++;
 
     var newAttackType = baseAttacker.attr.attack_types[attackTemplate.currentAttPos + 1];
@@ -29,7 +29,7 @@ function applyAttack(attackTemplate) {
         startAttack(newAttTemplate);
     }
 
-    if(target.attr.current_hp < 0)
+    if(target.attr.currentHp < 0)
     {
         var sound = new Sound("snd/die.wav");
         target.base.destroySelf();
