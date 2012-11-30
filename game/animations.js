@@ -22,6 +22,8 @@ function Line(start, end, color, zorder) {
     this.tPos = new temporalPos(start.x, start.y, end.x - start.x, end.y - start.y, 0, 0);
     this.base = new baseObj(this, zorder);
 
+    this.base.type = "Line" + zorder; //hack to fix z order problem
+
     this.color = color;
 
     this.draw = function (pen) {
@@ -42,7 +44,8 @@ function PCircle(center, radius, color, fillColor, zorder) {
     this.pFillColor = forcePointer(fillColor);
 
     this.tPos = {x:0, y:0, h:0, w:0};  //We lie about this because it doesn't matter
-    this.base = new baseObj(this, zorder);    
+    this.base = new baseObj(this, zorder);
+    this.base.type = "PCircle" + zorder; //hack to fix z order problem
 
     this.draw = function (pen) {
         var p = this.pCenter.get();
@@ -67,6 +70,7 @@ function Circle(center, radius, color, fillColor, zorder) {
 
     this.tPos = { x: center.x, y: center.y, h: 0, w: 0 };  //We lie about this because it doesn't matter
     this.base = new baseObj(this, zorder);
+    this.base.type = "Circle" + zorder; //hack to fix z order problem
 
     this.draw = function (pen) {
         var p = this.tPos;
@@ -83,7 +87,6 @@ function Circle(center, radius, color, fillColor, zorder) {
         ink.circ(p.x, p.y, radius, pen);
     };
 }
-
 function AlphaDecay(lifetime, startAlpha, endAlpha) {
     this.base = new baseObj(this);
 

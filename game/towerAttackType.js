@@ -282,7 +282,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {         
-            this.base = new baseObj(this, 15);
+            this.base = new baseObj(this, 8);
             
             this.attackTemplate = attackTemplate ;
 
