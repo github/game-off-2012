@@ -145,26 +145,6 @@ var sprites = {
     destY : 0
   }),
 
-  boxes : new Sprite({
-    filename: 'boxes.png',
-    destX : 0,
-    destY : 381
-  }),
-
-  octo_grinder_front : new Sprite({
-    filename: 'spritesheet_grinder_front.png',
-    frames:[
-      [0, 0, 439, 27],
-	  [0, 28, 439, 27],
-      [0, 56, 439, 27],
-      [0, 84, 439, 27]
-    ],
-    destX : 6,
-    destY : 453,
-    continuous: true,
-    duration : 500
-  }),
-
   machine_front : new Sprite({
     filename: 'machine_front.png',
     destX : 0,
@@ -193,4 +173,27 @@ var markers = [
   new Sprite({filename: 'marker_push.png'}),
   new Sprite({filename: 'marker_pull.png'}),
   new Sprite({filename: 'marker_clone.png'})
-]
+];
+
+var foreground = {
+
+  octo_grinder_front : new Sprite({
+    filename: 'spritesheet_grinder_front.png',
+    frames:[
+      [0, 0, 439, 27],
+    [0, 28, 439, 27],
+      [0, 56, 439, 27],
+      [0, 84, 439, 27]
+    ],
+    destX : 6,
+    destY : 453,
+    continuous: true,
+    duration : 500
+  }),
+
+  boxes : new Sprite({
+    filename: 'boxes.png',
+    destX : 0,
+    destY : 381
+  })
+}

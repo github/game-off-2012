@@ -128,6 +128,7 @@ SongView = Backbone.View.extend({
         _.each(queue, function(marker, i){
           if(marker.top > 440){
             this.missed.push(queue.splice(i, 1));
+            this.displayStatus('Missed');
             this.score -= 500;
             this.checkGameOver();
             this.combo = 0;
@@ -184,15 +185,15 @@ SongView = Backbone.View.extend({
       this.checkGameOver();
       this.combo = 0;
     }else if(this.active[queue].length > 0 && 
-      this.active[queue][0].top < 334 &&
-      this.active[queue][0].top > 366){
+      this.active[queue][0].top > 366 &&
+      this.active[queue][0].top < 381){
       this.inactive[queue].push(this.active[queue].shift());
       this.displayActionText(queue);
       this.displayStatus('Ok');
       this.score += 500;
       this.combo += 1;
     }else if(this.active[queue].length > 0 &&
-      this.active[queue][0].top > 366 &&
+      this.active[queue][0].top > 381 &&
       this.active[queue][0].top < 440){
       this.inactive[queue].push(this.active[queue].shift());
       this.displayActionText(queue);
@@ -241,9 +242,13 @@ SongView = Backbone.View.extend({
 
       if(!this.audio.paused){    
         this.renderMarker(this.active, 'green');
-        this.renderMarker(this.inactive, 'darkgray');
+        //this.renderMarker(this.inactive, 'darkgray');
         this.renderMarker(this.missed, 'red');
       }
+
+      _.each(foreground, function(sprite){
+        sprite.render(this.context);
+      }, this)
     }
   },
 
