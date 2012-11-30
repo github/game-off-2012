@@ -102,7 +102,7 @@
     count: 2,
 
     types: ['coin', 'clone', 'invincible'],
-    //types: ['clone'],
+    //types: ['invincible'],
 
     sub_types: {
       coin: [50, 100, 500]
@@ -260,7 +260,22 @@
 
           case 'invincible':
             mit.Pappu.invincible = 1;
-            setTimeout(mit.Pappu.undoInvincible, 5000);
+
+            if (!mit.Pappu.invincibility_start) {
+              mit.Pappu.invincibility_time = 5000;
+            }
+            else {
+              var cur_time = new Date().getTime();
+              var prev_remaining_time = cur_time - mit.Pappu.invincibility_start;
+
+              mit.Pappu.invincibility_time = 5000 + prev_remaining_time;
+            }
+
+            mit.Pappu.invincibility_start = new Date().getTime();
+
+            // Show timer
+            mit.ui.invincible_timer.show();
+
             break;
         }
 

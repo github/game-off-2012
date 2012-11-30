@@ -9,6 +9,8 @@
     h: 50,
 
     invincible: 0,
+    invincibility_start: 0,
+    invincibility_time: 0,
     clones: [],
 
     rotate_angle: 0,
@@ -49,7 +51,11 @@
     },
 
     undoInvincible: function() {
-      mit.Pappu.invincible = 0;
+      this.invincible = 0;
+      this.invincibility_start = 0;
+      this.invincible_timer = 0;
+
+      mit.ui.invincible_timer.hide();
     },
 
     draw: function(ctx) {
@@ -97,6 +103,19 @@
 
       if (this.invincible) {
         ctx.globalAlpha = 0.4;
+
+        // Current time
+        var cur_time = new Date().getTime();
+        var time_diff = cur_time - this.invincibility_start;
+
+        var timer_progress = (time_diff/this.invincibility_time) * 100;
+
+        if (timer_progress > 100)
+          this.undoInvincible();
+        else
+          mit.ui.invincible_loader.css('width', timer_progress + '%');
+
+        // console.log(timer_progress)
       }
 
       ctx.drawImage(
