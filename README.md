@@ -13,12 +13,15 @@ Boom is a side-scrolling puzzle game that involves strategically placing bombs i
 your objective.  
   
 
-Controls: * Left/Right arrow keys or 'A'/'D' key: move left and right  
+Controls:
+* Left/Right arrow keys or 'A'/'D' key: move left and right  
 * 'Q': Drop bomb  
   
 ##### Credits
-Game developers/designers/concepts: * [Shane King](https://github.com/ShaneK)  
+Game developers/designers/concepts:
+* [Shane King](https://github.com/ShaneK)  
 * [Daniel Houk](https://github.com/DRHouk)  
 * [Jarred Bechtel](https://github.com/bechtelj)  
   
-Misc:* [Draghia Cornel - Font](http://dccanim.deviantart.com/)
+Misc:
+* [Draghia Cornel - Font](http://dccanim.deviantart.com/)
