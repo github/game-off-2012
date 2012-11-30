@@ -5,22 +5,19 @@
     // Speeds and Velocities of Backgrounds
     common_bg_speed: 1,
 
-    cloud_bg_move_speed: 2,
+    cloud_bg_move_speed: 0,
     cloud_bg_vx: 0,
 
-    backtree_bg_move_speed: 3,
+    backtree_bg_move_speed: 0,
     backtree_bg_vx: 0,
 
-    fronttree_bg_move_speed: 5,
+    fronttree_bg_move_speed: 0,
     fronttree_bg_vx: 0,
 
-    ground_bg_move_speed: 7,
+    ground_bg_move_speed: 0,
     ground_bg_vx: 0,
 
-    grass_bg_move_speed: 7,
-    grass_bg_vx: 0,
-
-    combined_bg_move_speed: 3,
+    combined_bg_move_speed: 0,
     combined_bg_vx: 0,
 
     log_x: 40,
@@ -94,6 +91,17 @@
       // this.combined_bg_img = new Image();
       // this.combined_bg_img.src = 'img/bg_combined.png';
       this.combined_bg_img = mit.image.bg_combined;
+
+      // Reset all speed
+      this.resetAllSpeed();
+    },
+
+    resetAllSpeed: function() {
+        this.cloud_bg_move_speed = 2;
+        this.backtree_bg_move_speed = 3;
+        this.fronttree_bg_move_speed = 5;
+        this.ground_bg_move_speed = 7;
+        this.combined_bg_move_speed = 3;
     },
 
     drawClouds: function(ctx) {
