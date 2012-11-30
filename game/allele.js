@@ -1,7 +1,14 @@
+var changeNextGlobalChance = null;
 //Choices is an object with key as CDF (so the last should be 1)
 function choose(choices)
 {
     var randomValue = Math.random();
+
+    if(changeNextGlobalChance)
+    {
+        randomValue = changeNextGlobalChance;
+        changeNextGlobalChance = null;
+    }
 
     var realChoices = [];
     for(var chance in choices)
@@ -28,6 +35,8 @@ var AllAlleleGroups =
     //three could be... etc
     //Make some for all of the attack types and target strategies.
     //Some major bonuses
+
+//BASELINE BONUS
     rangeBase: function () { return choose(
         {
             0.5: { range: 30 }, //Roughly even distribution of base stats
@@ -67,22 +76,12 @@ var AllAlleleGroups =
     attSpeedBase: function () { return choose(
         {
             0.5: { attSpeed: 0 },
-            0.7: { attSpeed: 0.3 },
-            0.9: { attSpeed: 0.5 },
-            1: { attSpeed: 2 },
+            0.7: { attSpeed: 0.2 },
+            0.9: { attSpeed: 0.3 },
+            1: { attSpeed: 0.5 },
         }); },
     
     attack1: function () { return choose(
-        {
-            0.166: { attack: allAttackTypes.Laser },
-            0.333: { attack: allAttackTypes.Bullet },
-            0.500: { attack: allAttackTypes.Chain },
-            0.666: { attack: allAttackTypes.Pulse },
-            0.833: { attack: allAttackTypes.DOT },
-            1.0: { attack: allAttackTypes.Slow },
-        }); },
-
-    attack2: function () { return choose(
         {
             0.166: { attack: allAttackTypes.Laser },
             0.333: { attack: allAttackTypes.Bullet },
@@ -98,15 +97,66 @@ var AllAlleleGroups =
             0.666: { target: targetStrategies.Random },
             1.000: { target: targetStrategies.Farthest },
         }); },
+//BONUS BASELINE
 
-    //Some minor bonuses
+//BONUS ATTACKS
+//Bonus attack or damage bonus
+    attack2: function () { return choose(
+        {
+            0.760: { damage: 10 },
+            0.800: { attack: allAttackTypes.Laser },
+            0.840: { attack: allAttackTypes.Bullet },
+            0.880: { attack: allAttackTypes.Chain },
+            0.920: { attack: allAttackTypes.Pulse },
+            0.960: { attack: allAttackTypes.DOT },
+            1.000: { attack: allAttackTypes.Slow },
+        }); },
+//Bonus attack or attack speed bonus
+    attack3: function () { return choose(
+        {
+            0.800: { attSpeed: 2 },
+            0.840: { attack: allAttackTypes.Bullet },
+            0.880: { attack: allAttackTypes.Chain },
+            0.920: { attack: allAttackTypes.Pulse },
+            0.960: { attack: allAttackTypes.DOT },
+            1.000: { attack: allAttackTypes.Slow },
+        }); },
+//BONUS ATTACKS
 
-    //Some super bonuses with tradeoffs
-    //Some that always add target strategy
-    //Some that always add attack type
-    //Some that sometimes add attack type
+//ATTRIBUTE SPECIALIZATIONS (these give the tower unique
+//tradeoffs which should make it a distinct tower type (like high damage low attack speed)
+    specization1: function () { return choose(
+        {
+            //Hard to kill
+            0.25: { hpRegen: 50, hp: 200, damage: -13, attSpeed: -1 },
+            //Gene spreader
+            0.50: { upload: 5, download: 5, range: -80 },
+            //Pew pew pew
+            0.75: { attSpeed: 2, damage: -13},
+            //Boom
+            1.00: { attSpeed: -1, damage: 13},
+        }); },
+    specization2: function () { return choose(
+        {
+            //Nothing
+            0.80: { range: 1 },
+            //Germ
+            0.85: { hpRegen: 50, hp: -100},
+            //Why!?
+            0.90: { attSpeed: -1, damage: -13, range: 200 },
+            //Fatty
+            0.95: { hpRegen: -50, hp: 1000},
+            //Super-charge (not sure if this will work?)
+            1.00: { currentHp: 1000},
+        }); },
+//ATTRIBUTE SPECIALIZATIONS
 
-    //One per attribute
+//SCARCE MEDIUM BONUS
+//SCARCE MEDIUM BONUS
+
+//RARE SUPER BONUS
+//RARE SUPER BONUS
+
 };
 
 function Allele(delta)

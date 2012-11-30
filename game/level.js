@@ -76,7 +76,7 @@ function LevelManager(bugStart, lmpos) {
             currWv = nextWv;
 
             //Make new wave
-            nextWv = new LevelData(currWv.bugs*2, currWv.delay/10, currWv.lv + 1, currWv.nextWaveIn);
+            nextWv = new LevelData(currWv.bugs*1.1, currWv.delay/10, currWv.lv + 1, currWv.nextWaveIn);
             this.doneWave = false;
             this.nwicounter = currWv.nextWaveIn;
             this.bugsleft = currWv.bugs;

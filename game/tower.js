@@ -44,9 +44,9 @@ TowerStats = {
         range:          100,
         damage:         10,
         hp:             100,
-        currentHp:     100,
-        hpRegen:       1,
-        attSpeed:       1,        
+        currentHp:      100,
+        hpRegen:        1,
+        attSpeed:       0.6,        
         upload:         1,
         download:       1,
         hitcount:       0,
@@ -116,7 +116,8 @@ function Tower(baseTile) {
 
     this.regenTick = function()
     {
-        this.attr.currentHp += this.attr.hpRegen;
+        if(this.attr.hpRegen > 0)
+            this.attr.currentHp += this.attr.hpRegen;
         if(this.attr.currentHp > this.attr.hp)
             this.attr.currentHp = this.attr.hp;
     }
