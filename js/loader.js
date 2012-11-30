@@ -71,7 +71,7 @@
     for(var i = 0; i < mit.audio.length; i++) {
       var file = mit.audio[i];
 
-      if (!isNaN(file.duration)) { 
+      if (isNaN(file.duration)) { 
         file.addEventListener("loadeddata", function() {
           counter++;
           percent = Math.floor((counter/size*100));
