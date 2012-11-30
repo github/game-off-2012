@@ -11,13 +11,16 @@ class Entity
   die:->@died = true
 
 class Tower extends Entity
-  constructor:(@hp)->super
+  constructor:(@hp, @img)->super
   
   hurt:(damage)->
     @hp -= damage
     if @hp <= 0
       @die()
-
+  
+  render:(ctx)->
+    ctx.drawImage(@img, @x, @y)
+  
 class TestEntity extends Entity
   constructor:->
     super()  
