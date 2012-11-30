@@ -20,7 +20,63 @@ class Tower extends Entity
   
   render:(ctx)->
     ctx.drawImage(@img, @x, @y)
-  
+
+class Archer extends Entity
+  constructor:->
+    super()  
+    @tile = 16
+    @stop = false
+    @ap = 2
+    @tickcount = 0
+    
+  collide:(entity)->
+    if entity instanceof Tower
+        @tickcount = 0
+        entity.hurt(@ap)
+        @attackE = entity
+        @stop = true
+        
+  render:(screen)->
+    screen.render @x, @y, @tile
+    
+  tick:->
+    @tickcount++
+    if @attackE?
+      if @attackE.hasDied()
+        @stop = false
+        @attackE = null
+        
+      if @tickcount % 60 == 0 and @attackE? 
+        @attackE.hurt(@ap)
+        
+class Warrior extends Entity
+  constructor:->
+    super()  
+    @tile = 17
+    @stop = false
+    @ap = 4
+    @tickcount = 0
+    
+  collide:(entity)->
+    if entity instanceof Tower
+        @tickcount = 0
+        entity.hurt(@ap)
+        @attackE = entity
+        @stop = true
+        
+  render:(screen)->
+    screen.render @x, @y, @tile
+    
+  tick:->
+    @tickcount++
+    if @attackE?
+      if @attackE.hasDied()
+        @stop = false
+        @attackE = null
+        
+      if @tickcount % 60 == 0 and @attackE? 
+        @attackE.hurt(@ap)
+    
 class TestEntity extends Entity
   constructor:->
     super()  
@@ -58,6 +114,44 @@ class Model
   getBody:->@body
   setUserData:(data)->@body.UserData = data  
   getUserData:->@body.UserData  
+
+class EntityModel extends Model
+  constructor:(@world, @x, @y, @seewidth) ->
+    @scale = SCALE
+    
+    @height = 12/@scale
+    @width = 12/@scale
+    
+    @stopped = false
+    
+    fixDef = new b2FixtureDef
+    fixDef.density = 0.1
+    fixDef.friction = 0.3
+    fixDef.restitution = 0.4
+    
+    #Collision-Filtering == AWESOME
+    fixDef.filter.categoryBits = 0x02
+    fixDef.filter.maskBits = 0x01
+    
+    bodyDef = new b2BodyDef
+    bodyDef.type = b2Body.b2_dynamicBody
+    bodyDef.position.x = @x/@scale-6/@scale
+    bodyDef.position.y = @y/@scale
+
+    fixDef.shape = new b2PolygonShape
+    fixDef.shape.SetAsBox(@width, @height)
+    
+    sensorDef = new b2FixtureDef
+    sensorDef.shape = new b2PolygonShape
+    sensorDef.shape.SetAsBox(@seewidth/@scale, @seewidth/@scale)
+    sensorDef.isSensor = true
+    
+    @body = @world.CreateBody(bodyDef)
+    @body.SetFixedRotation(true)
+    
+    
+    fixDef = @body.CreateFixture(fixDef)
+    @body.CreateFixture(sensorDef)
 
 #test-model-class
 class PlayerModel extends Model
