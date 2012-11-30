@@ -18,14 +18,16 @@ var gameBoard = {
     white: "#AFAFAF",
     blue: "#4D45E6",
     red: "#DD0000",
-    purple: "#DFDFDF"
+    purple: "#DFDFDF",
+    green: "#87E01B"
   },
   
   colorMap: {
     white: "#DFDFDF",
     blue: "#000051",
     red: "#730001",
-    purple: "#5a005a"
+    purple: "#5a005a",
+    green: "#2BFF00"
   },
 
   getHeight: function () {
