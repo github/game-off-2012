@@ -14,14 +14,14 @@ your objective.
   
 
 Controls:  
--Left/Right arrow keys or 'A'/'D' key: move left and right  
--'Q': Drop bomb  
+* Left/Right arrow keys or 'A'/'D' key: move left and right  
+* 'Q': Drop bomb  
   
 ##### Credits
-Game developers/designers/concepts:
--[Shane King](https://github.com/ShaneK)  
--[Daniel Houk](https://github.com/DRHouk)  
--[Jarred Bechtel](https://github.com/bechtelj)  
+Game developers/designers/concepts:  
+* [Shane King](https://github.com/ShaneK)  
+* [Daniel Houk](https://github.com/DRHouk)  
+* [Jarred Bechtel](https://github.com/bechtelj)  
   
 Misc:
-*[Draghia Cornel - Font](http://dccanim.deviantart.com/)
+* [Draghia Cornel - Font](http://dccanim.deviantart.com/)
