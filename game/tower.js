@@ -1,42 +1,107 @@
+function Tower_Packet(t1, t2, group, allele) {
+    this.base = new BaseObj(this, 12);
+    // We don't really need it
+    this.tpos = new TemporalPos(0, 0, 1, 1, 0, 0);
+    var p1 = getRectCenter(t1.tPos);
+    var p2 = getRectCenter(t2.tPos);
+    var dis = p1.clone().sub(p2).mag();
+    var packet = new Circle(p1, 3, allele.getInnerColor(), allele.getOuterColor(), 15);
+    packet.lineWidth = 1;
+    var motionDelay = new MotionDelay(p1, p2, dis / 10, apply);
+    this.base.addObject(packet);
+    packet.base.addObject(motionDelay);
+    
+    var that = this;
+    function apply() {
+        t2.genes.addAllele(group, allele);
+        that.base.destroySelf();
+    }
+}
 
 //Should probably use a Line to draw itself instead of doing it by itself
 function Tower_Connection(t1, t2) {
-    var p1 = getRectCenter(t1.tPos);
-    var p2 = getRectCenter(t2.tPos);
-    this.tPos = new temporalPos(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y, 0, 0);
-    this.base = new baseObj(this, 11);
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this, 11);
     this.hover = false;
-    var color = "rgba(0, 255, 0, 0.2)";
+
+    this.t1 = t1;
+    this.t2 = t2;
+
+    var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11, {1: 0.1, 2: 0.3, 3: 0.5, 4: 0.7, 5: 0.9});
+    this.base.addObject(line);
+
+    var pos = t2.tPos.getCenter();
+
+    var delta = t2.tPos.getCenter();
+    delta.sub(t1.tPos.getCenter());
+    delta.setMag(t2.tPos.w * 0.5);
+
+    pos.w = 20;
+    pos.h = 20;
+
+    //pos.sub(delta);
+    pos.sub({x: pos.w * 0.5, y: pos.h * 0.5});
     
-    this.update = function(dt) {
-        var a1 = t1.attr;
-        var a2 = t2.attr;
-        // Should have same properties; a1 vs a2 for loop should not matter.
-        for (at in a1) {
-            if (a1[at] > a2[at]) {
-                a2[at] += Math.min(a1[at] - a2[at], a1.download/10, a2.upload/10, a2[at]) * dt;
-            } else if (a1[at] < a2[at]) {
-                a1[at] += Math.min(a2[at] - a1[at], a1.upload/10, a2.download/10, a1[at]) * dt;
-            }
+    this.deleteButton = new Button(pos, "-", 
+        this, "deleteSelf", 50);
+    
+    this.base.addObject(this.deleteButton);
+
+    t1.prevhitCount = t1.attr.kills;
+    t2.prevhitCount = t2.attr.kills;
+    
+    var that = this;
+    function dataTransfer(t1, t2) {
+        function sendRandomPacket(t1, t2) {
+            var groups = [];
+            for (var group in AllAlleleGroups)
+                groups.push(group);
+
+            var group = pickRandom(groups);
+            var al = t1.genes.alleles[group];
+
+            that.base.addObject(new Tower_Packet(t1, t2, group, al));
         }
-        if (this.hover) {
-            color = "rgba(0, 255, 0, 0.9)";
-        } else {
-            color = "rgba(0, 255, 0, 0.2)";
+
+        if (t1.prevhitCount === undefined) {
+            t1.prevhitCount = t1.attr.kills;
+            return;
         }
-        var cost = 1 * dt;
-        if (eng.money < cost) {
-            this.base.destroySelf();
-        } else {
-            eng.money -= cost;
+        var killDelta = t1.attr.kills - t1.prevhitCount;
+        while (Math.floor(killDelta / 1) > 0) {
+            sendRandomPacket(t1, t2);
+            t1.prevhitCount += 10;
+            killDelta = t1.attr.kills - t1.prevhitCount;
         }
+        t1.prevhitCount = t1.attr.kills - killDelta;
     }
     
-    this.draw = function(pen) {
-        var p = this.tPos;
-        pen.strokeStyle = color;
-        pen.lineWidth = 2;
-        ink.line(p1.x, p1.y, p2.x, p2.y, pen);
+    this.deleteSelf = function()
+    {
+        var conns = this.base.parent.connections;
+
+        for(var key in conns) {
+            if(conns[key] == this) {
+                conns.splice(key, 1);
+                break;
+            }
+        }
+
+        this.base.destroySelf();
+    }
+
+    this.update = function(dt) {
+        dataTransfer(t1, t2);
+        //dataTransfer(t2, t1);
+        
+        this.deleteButton.hidden = !this.base.parent.hover;
+
+        if (this.base.parent.hover) {
+            line.color = setColorPart(line.color, 3, 0.9);            
+
+        } else {
+            line.color = setColorPart(line.color, 3, 0.2);
+        }
     }
 }
 
@@ -44,33 +109,37 @@ TowerStats = {
         range:          100,
         damage:         10,
         hp:             100,
-        attSpeed:       1,        
-        mutate:         0,
-        mutatestrength: 0,
+        currentHp:      100,
+        hpRegen:        1,
+        attSpeed:       0.6,
         upload:         1,
         download:       1,
-        hitcount:       0,
+        hitCount:       0,
+        kills:          0,
         value:          50,
     };
 
-//All mutate stuff is copy-pasta from our mother project (for now)
 function Tower(baseTile) {
-    var p = baseTile ? baseTile.tPos : {x: 0, y: 0, w : tileSize, h: tileSize};
+    var p = baseTile ? baseTile.tPos : {x: 0, y: 0, w : TILE_SIZE, h: TILE_SIZE};
     this.baseTile = baseTile;
-    this.tPos = new temporalPos(p.x, p.y, p.w, p.h, 0, 0);
-    this.base = new baseObj(this, 10);
+    this.tPos = new TemporalPos(p.x, p.y, p.w, p.h, 0, 0);
+    this.base = new BaseObj(this, 10);
     this.attr = {
         range:          TowerStats.range,
         damage:         TowerStats.damage,
         hp:             TowerStats.hp,
+        currentHp:      TowerStats.currentHp,
+        hpRegen:        TowerStats.hpRegen,
         attSpeed:       TowerStats.attSpeed,
-        mutate:         TowerStats.mutate,
-        mutatestrength: TowerStats.mutatestrength,
         upload:         TowerStats.upload,
         download:       TowerStats.download,
-        hitcount:       TowerStats.hitcount,
+        hitCount:       TowerStats.hitCount,
+        kills:          0,
         value:          TowerStats.value,
-    };
+    };    
+
+    //Each is an {group: alGroup, all: allele}
+    this.allelesGenerated = [];
 
     this.genes = new Genes();
     this.base.addObject(this.genes);
@@ -85,31 +154,43 @@ function Tower(baseTile) {
     //this.base.addObject(new UpdateTicker(this.attr, "mutate", "mutate", true));
     this.base.addObject(new Selectable());
     
-    this.added = function() {        
-        // Yes, this is supposed to be here.
-        this.recolor();        
-    };
+    this.constantOne = 1;
+    this.base.addObject(new UpdateTicker(this, "constantOne", "regenTick"));
 
-
-    //Hackish way to check if we are from breeder
-    if(baseTile)
-    {
-        var fillChance = 0.5;
-        for(var alGroup in AllAlleleGroups)
-        {
-            if(Math.random() < fillChance)
-            {
-                this.genes.addAllele(alGroup, new Allele(AllAlleleGroups[alGroup]()));
-            }
+    for (var alGroup in AllAlleleGroups) {
+        if (!this.genes.alleles[alGroup]) {
+            this.genes.addAllele(alGroup, new Allele(AllAlleleGroups[alGroup]()));
         }
     }
 
+    this.generateAllele = function()
+    {   
+        var allAlls = [];
+        for (var alGroup in AllAlleleGroups)
+            allAlls.push(alGroup);
+
+        var genAllGroup = pickRandom(allAlls);
+
+        var allObj = {};
+        allObj.group = genAllGroup;
+        allObj.all = new Allele(AllAlleleGroups[genAllGroup]());
+        this.allelesGenerated.push(allObj);
+    }
+
+    this.regenTick = function()
+    {
+        if(this.attr.hpRegen > 0)
+            this.attr.currentHp += this.attr.hpRegen;
+        if(this.attr.currentHp > this.attr.hp)
+            this.attr.currentHp = this.attr.hp;
+    }
 
     this.draw = function (pen) {
         var p = this.tPos;
         pen.save();
-        pen.fillStyle = this.color;
-        pen.strokeStyle = "lightblue";
+        this.color = getInnerColorFromAttrs(this.attr);
+        pen.fillStyle = getInnerColorFromAttrs(this.attr);
+        pen.strokeStyle = getOuterColorFromAttrs(this.attr);
         ink.rect(p.x, p.y, p.w, p.h, pen);        
         pen.restore();
 
@@ -150,14 +231,14 @@ function Tower(baseTile) {
                 continue;
             //Seriously... WTF. This code used to mean if you did:
             //attr.daf += 1 it causes the object to be deleted.
-            if (invalid(a[at]))
-            {
-                if(a[at] < 0)
+            if (invalid(a[at])) {
+                if(a[at] < 0) {
                     this.die();
-                else
+                } else {
                     fail("Invalid attribute in attr of object (you likely have a typo).");
+                }
             }
-            if (at == "hitcount") continue;
+            if (at == "hitCount") continue;
             if (at == "mutate" || at == "mutatestrength") {
                 // Avoid exponetial increase in all tower stats if mutate mutation was calculated just like all the other values.
                 a[at] += (Math.random() - 0.5) * a.mutatestrength / 500;
@@ -173,21 +254,7 @@ function Tower(baseTile) {
         this.recolor();
     };
     
-    this.recolor = function() {
-        function rgba(r, g, b, a) {
-            function color(n) {
-                return Math.round(n);
-            }
-            return "rgba(" + color(r) + "," + color(g) + "," + color(b) + "," + Math.round(a * 100) / 100 + ")";
-        }
-        var a = this.attr;
-        this.color = rgba(255 - a.hp, a.range, a.damage, 0.5);
-
-        if(a.damage < 1)
-            this.color = "blue";
-    }
-
-    this.mouseover = function(e) {        
+    this.mouseover = function(e) {
         // Only required because of issue #29
         for (var i = 0; i < this.connections.length; i++) {
             this.connections[i].hover = true;
@@ -204,7 +271,7 @@ function Tower(baseTile) {
     this.tempIndicator = null;
     this.mousedown = function(e) {
         this.startDrag = e;
-        tempIndicator = new Line(this.startDrag, e, "green", 15);
+        tempIndicator = new Line(this.startDrag, e, "green", 15, {0: 1.0});
         this.base.addObject(tempIndicator);
         this.base.rootNode.globalMouseMove[this.base.id] = this;
     };
@@ -215,18 +282,27 @@ function Tower(baseTile) {
     }
 
     this.dragEnd = function(e){
+        var eng = this.base.rootNode;
+
         this.base.removeObject(tempIndicator);
         this.startDrag = null;
 
         var towerSelected = findClosest(this.base.rootNode, "Tower", e, 0);
         if(towerSelected && towerSelected != this)
         {
+            for (var i = 0; i < this.connections.length; i++)
+                if(this.connections[i].t2 == towerSelected)
+                    return;
+
             if (eng.money < 50) return;
             eng.money -= 50;
             var conn = new Tower_Connection(this, towerSelected);
             this.base.addObject(conn);
             this.connections.push(conn);
             towerSelected.connections.push(conn);
+
+            eng.changeSel(this);
+            getAnElement(this.base.children.Selectable).ignoreNext = true;
         }
     };
 }
@@ -238,8 +314,13 @@ function tryPlaceTower(tower, tile)
     var towerOnTile = findClosest(eng, "Tower", e, 0);
     var pathOnTile = findClosest(eng, "Path", e, 0);
 
-    if (!towerOnTile && !pathOnTile && eng.money - tower.attr.value >= 0) {
-        eng.money -= tower.attr.value;   
+    var curCost = tile.base.rootNode.currentCost;
+
+    if (!towerOnTile && !pathOnTile && eng.money - curCost >= 0) {
+        eng.money -= curCost;   
+
+        tile.base.rootNode.currentCost *= 2;
+
         tower.tPos = tile.tPos;         
         eng.base.addObject(tower);
         eng.changeSel(tower);

@@ -6,26 +6,22 @@ function damageToTime(damage) {
     return (Math.log(Math.log(damage)) / Math.E + 1) / 2;
 }
 
-//Should really make attacks have delay between
-//attack trigger and damage time (impact).
-
-//Normal
-//Aoe
-//Slow
-//Arcing (delay arcs also)
-//DOT
-
 function applyAttack(attackTemplate) {
     var target = attackTemplate.target;
     var attacker = attackTemplate.attacker;
     var damage = attackTemplate.damage;
     var baseAttacker = attackTemplate.baseAttacker;
-
+    
     if(!assertDefined(target, attacker, damage, baseAttacker))
         return;
 
-    target.attr.hp -= damage;    
-    baseAttacker.attr.hitcount++;
+    if(isNaN(target.attr.currentHp))
+    {
+        fail("darn it! got to figure out how this happens.");
+    }
+
+    target.attr.currentHp -= damage;    
+    baseAttacker.attr.hitCount++;
 
     var newAttackType = baseAttacker.attr.attack_types[attackTemplate.currentAttPos + 1];
 
@@ -38,10 +34,12 @@ function applyAttack(attackTemplate) {
         startAttack(newAttTemplate);
     }
 
-    if(target.attr.hp < 0)
+    if(target.attr.currentHp < 0)
     {
         var sound = new Sound("snd/die.wav");
         target.base.destroySelf();
+
+        baseAttacker.attr.kills++;
 
         if(getRealType(target) != "Tower")
             attacker.base.rootNode.money += target.attr.value;
@@ -55,13 +53,19 @@ function startAttack(attackTemplate) {
     if(!assertDefined(attackTemplate.attacker))
         return;
 
+    if(attackTemplate.damage < 0)
+        return;
+
     var eng = attackTemplate.attacker.base.rootNode;
     var attackType = attackTemplate.attackType;
 
     var realAttacker = attackTemplate.baseAttacker;
     var attacker = attackTemplate.attacker;
     var prevTarget = attackTemplate.target;
-    attackTemplate.target = realAttacker.attr.target_Strategy.run(attacker, prevTarget);
+    if(realAttacker.attr.target_Strategy)
+        attackTemplate.target = realAttacker.attr.target_Strategy.run(attacker, prevTarget);
+    else
+        attackTemplate.target = new targetStrategies.Random().run(attacker, prevTarget);
 
     if(attackTemplate.target)
     {
@@ -87,23 +91,27 @@ function AttackTemplate(attackType, attacker, target, damage, baseAttacker, curr
 //If the attack does partial damage then it should create a copy and pass that on.
 var allAttackTypes = {
     Laser: function laser() {
+        this.damage_percent = 200;
         this.drawGlyph = function (pen, tPos) {
             //Draw text
             pen.fillStyle = "#000000";
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
 
-            ink.text(tPos.x, tPos.y, "N", pen);
+            ink.text(tPos.x, tPos.y, "L", pen);
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new baseObj(this, 15);         
+            this.base = new BaseObj(this, 15);         
             this.attackTemplate = attackTemplate;
+
+            var ourStats = attackTemplate.attackType;
+            attackTemplate.damage *= ourStats.damage_percent / 100;
 
             var attacker = attackTemplate.attacker;
             var realAttacker = attackTemplate.baseAttacker;
             var target = attackTemplate.target;
-            var damage = attackTemplate.damage;
+            var damage = attackTemplate.damage;            
 
             this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
             
@@ -126,6 +134,7 @@ var allAttackTypes = {
     },
     Bullet: function bullet() {
         this.bullet_speed = 50;
+        this.damage_percent = 300;
         this.drawGlyph = function (pen, tPos) {
             //Draw text
             pen.fillStyle = "#000000";
@@ -136,8 +145,11 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new baseObj(this, 15);         
+            this.base = new BaseObj(this, 15);         
             this.attackTemplate = attackTemplate;
+
+            var ourStats = attackTemplate.attackType;
+            attackTemplate.damage *= ourStats.damage_percent / 100;
 
             var realAttacker = attackTemplate.baseAttacker;
             var attacker = attackTemplate.attacker;
@@ -161,7 +173,11 @@ var allAttackTypes = {
                 us.base.destroySelf();
             }
 
-            var bullet = new Circle(attacker.tPos.getCenter(), 5, "White", "Orange", 15);
+            var r = 5;
+            if(realAttacker.base.type == "Bug")
+                r = 2;
+
+            var bullet = new Circle(attacker.tPos.getCenter(), r, "White", "Orange", 15);
             var motionDelay = new MotionDelay(attacker.tPos.getCenter(), target.tPos.getCenter(),
                                     dis / bulletSpeed, onImpact);
             bullet.base.addObject(motionDelay);
@@ -177,9 +193,11 @@ var allAttackTypes = {
             }
         };
     },
+    //Average best case (so enough enemies to fully chain) is:
+    // - chance / (chance - 1)
     Chain: function chain_lightning() {
-        this.chain_chance = 0.8;
-        this.repeat_delay = 0.3;
+        this.chain_chance = 80;
+        this.repeatDelay = 0.3;
         this.drawGlyph = function (pen, tPos) {
             //Draw text
             pen.fillStyle = "#000000";
@@ -190,7 +208,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new baseObj(this, 15);         
+            this.base = new BaseObj(this, 15);         
             this.attackTemplate = attackTemplate;
 
             var attacker = attackTemplate.attacker;
@@ -199,13 +217,13 @@ var allAttackTypes = {
             var damage = attackTemplate.damage;
 
             this.chain_chance = attackTemplate.attackType.chain_chance;
-            this.repeat_delay = attackTemplate.attackType.repeat_delay;
+            this.repeatDelay = attackTemplate.attackType.repeatDelay;
 
             this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
             
             //AlphaDecay destroys us
             var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
-            this.base.addObject(new AlphaDecay(this.repeat_delay, 1, 0));
+            this.base.addObject(new AlphaDecay(this.repeatDelay, 1, 0));
 
             this.base.addObject(line);
 
@@ -221,8 +239,8 @@ var allAttackTypes = {
 
             this.die = function()
             {
-                if(Math.random() < this.chain_chance)
-                {                    
+                if(Math.random() < this.chain_chance / 100)
+                {
                     //This is basically just a custom targeting strategy
                     this.attackTemplate.attacker = this.attackTemplate.target;
                     var attacker = this.attackTemplate.target;
@@ -259,7 +277,7 @@ var allAttackTypes = {
         };
     },
     Pulse: function pulse() {
-        this.percent_damage = 0.3;
+        this.damage_percent = 30;
         this.effect_range = 50;
         this.charge_time = 1;
         this.drawGlyph = function (pen, tPos) {
@@ -271,32 +289,27 @@ var allAttackTypes = {
             ink.text(tPos.x, tPos.y, "P", pen);
         };
         this.AttackNode = function(attackTemplate)
-        {
-            this.base = new baseObj(this, 15);         
-            this.attackTemplate = attackTemplate;
+        {         
+            this.base = new BaseObj(this, 8);
+            
+            this.attackTemplate = attackTemplate ;
+
+            var ourStats = attackTemplate.attackType;
+            attackTemplate.damage *= ourStats.damage_percent / 100;
 
             var attacker = attackTemplate.attacker;
             var realAttacker = attackTemplate.baseAttacker;
             var target = attackTemplate.target;
-            attackTemplate.damage *= attackTemplate.attackType.percent_damage;
             var prevTarget = this.attackTemplate.target;
 
             var effect_range = attackTemplate.attackType.effect_range;
             var charge_time = attackTemplate.attackType.charge_time;
-            //We do our own targeting (we hit everything around the attacker)
-                            
-            //This is basically just a custom targeting strategy
-            var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
-            var targets = findAllWithin(attacker.base.rootNode, targetType, 
-                    attacker.tPos.getCenter(), effect_range);
-
-            this.targets = targets;
 
             this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
-            
+
             //AlphaDecay destroys us
-            var circle = new Circle(attacker.tPos.getCenter(), effect_range, this.color, this.color, 10);        
-            this.base.addObject(new AttributeTween(0.2, 1, charge_time, "charged", "alpha"));
+            var circle = new Circle(attacker.tPos.getCenter(), effect_range, this.color, this.color, 8);
+            this.base.addObject(new AttributeTween(0.2, 0.6, charge_time, "charged", "alpha"));
 
             this.base.addObject(circle);
 
@@ -314,11 +327,29 @@ var allAttackTypes = {
             this.charged = function()
             {
                 this.base.addObject(new SimpleCallback(0.1, "fire"));
-                circle.color = "rgba(255,255,255,200)";
+                circle.color = "rgba(255,255,255,0.6)";
             };
 
             this.fire = function()
             {
+                attackTemplate = this.attackTemplate;
+
+                var attacker = attackTemplate.attacker;
+                var realAttacker = attackTemplate.baseAttacker;
+                var target = attackTemplate.target;
+                attackTemplate.damage *= attackTemplate.attackType.damage_percent / 100;
+                var prevTarget = this.attackTemplate.target;
+                
+                var charge_time = attackTemplate.attackType.charge_time;
+                //We do our own targeting (we hit everything around the attacker)
+                            
+                //This is basically just a custom targeting strategy
+                var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
+                var targets = findAllWithin(attacker.base.rootNode, targetType, 
+                        attacker.tPos.getCenter(), effect_range);
+
+                this.targets = targets;
+
                 for(var key in this.targets)
                 {
                     this.attackTemplate.target = this.targets[key];
@@ -328,84 +359,135 @@ var allAttackTypes = {
             };
         };
     },
-    /*
-    Aoe: function area_of_effect() {
-        this.radius = 15;
-        this.percent_damage = 1;
-        this.run = function (tower, target) {
-            var targets = findAllWithin(tower.base.rootNode, "Bug", target.tPos.getCenter(), this.radius);
-
-            var hit = [];
-
-            var damage = tower.attr.damage;
-
-            for (var key in targets) {
-                applyDamage(targets[key], tower, damage);
-                hit.push(targets[key]);
-            }
-
-            var aoeCircle = new Circle(
-                    target.tPos.getCenter(),
-                    this.radius,
-                    "rgba(255,255,255,0)",
-                    "rgba(0,255,0,255)",
-                    12);
-
-            var line = new Line(tower.tPos.getCenter(), target.tPos.getCenter(), "rgba(0,255,0,255)", 13);
-
-            aoeCircle.base.addObject(new AlphaDecayPointer(1, 0.2, 0, new Pointer(aoeCircle, "color")));
-            aoeCircle.base.addObject(new AlphaDecayPointer(1, 0.5, 0, new Pointer(aoeCircle, "fillColor")));
-
-            line.base.addObject(new AlphaDecay(1, 1, 0));
-
-            tower.base.addObject(aoeCircle);
-            tower.base.addObject(line);
-
-            return hit; //Can probably just return targets...
-        },
-        this.draw = function (pen, tPos) {
+    //Average is (basically its a best case chain):
+    // - chance / (chance - 1)
+    DOT: function poison() {
+        this.repeat_chance = 80;
+        this.repeatDelay = 0.3;
+        this.damage_percent = 30;
+        this.drawGlyph = function (pen, tPos) {
             //Draw text
             pen.fillStyle = "#000000";
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
 
-            ink.text(tPos.x, tPos.y, "A", pen);
-        },
-        this.applyAttrMods = function(attr) {
-            attr.damage *= this.percent_damage / 100
-        }
+            ink.text(tPos.x, tPos.y, "PO", pen);
+        };
+        this.AttackNode = function(attackTemplate)
+        {
+            this.base = new BaseObj(this, 15);         
+            this.attackTemplate = attackTemplate;
+
+            var ourStats = attackTemplate.attackType;
+            attackTemplate.damage *= ourStats.damage_percent / 100;
+
+            var attacker = attackTemplate.attacker;
+            var realAttacker = attackTemplate.baseAttacker;
+            var target = attackTemplate.target;
+            var damage = attackTemplate.damage;
+
+            this.repeat_chance = attackTemplate.attackType.repeat_chance;
+            this.repeatDelay = attackTemplate.attackType.repeatDelay;
+
+            this.color = "rgba(0, 255, 0, 0)";
+            
+            //AlphaDecay destroys us
+            var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);
+            this.base.addObject(new AttributeTween(1, 0, this.repeatDelay, "tick", "alpha"));
+
+            this.base.addObject(line);
+            
+            var poisonIndicator = new Circle(target.tPos.getCenter(), 8, this.color, this.color, 14);
+            this.base.addObject(poisonIndicator);            
+      
+            this.alpha = 0;
+            this.poisonAlpha = 0;
+            this.update = function()
+            {
+                line.color = setAlpha(line.color, this.alpha);
+                poisonIndicator.color = setAlpha(poisonIndicator.color, this.poisonAlpha);
+                poisonIndicator.fillColor = setAlpha(poisonIndicator.fillColor, this.alpha);
+                poisonIndicator.tPos.x = target.tPos.getCenter().x;
+                poisonIndicator.tPos.y = target.tPos.getCenter().y;
+            };
+
+            this.nothing = function(){}
+
+            this.tick = function()
+            {
+                if(target.base.rootNode == this.base.rootNode &&
+                    Math.random() < this.repeat_chance / 100)
+                {                    
+                    this.base.addObject(new AttributeTween(1, 0, this.repeatDelay * 0.5, "nothing", "poisonAlpha"));
+                    this.base.addObject(new SimpleCallback(this.repeatDelay, "tick"));
+
+                    applyAttack(this.attackTemplate);
+                }
+                else
+                {
+                    this.base.destroySelf();
+                }
+            };
+        };
     },
-    Slow: function slow() {        
-        this.percent_slow = 50;
-        this.duration = 2;
-        this.run = function (tower, target) {
-            var slowEffect = new SlowEffect(this.percent_slow / 100);
-            slowEffect.base.addObject(new Lifetime(this.duration));
-
-            target.base.addObject(slowEffect);
-
-            var line = new Line(tower.tPos.getCenter(), target.tPos.getCenter(), "rgba(10,50,250,255)", 13);
-            line.base.addObject(new AlphaDecay(1, 1, 0));
-            tower.base.addObject(line);
-
-            return target;
-        },
-        this.draw = function (pen, tPos) {
+    Slow: function slow() {
+        this.slow_percent = 50;
+        this.slow_time = 2.5;
+        this.drawGlyph = function (pen, tPos) {
             //Draw text
             pen.fillStyle = "#000000";
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
 
             ink.text(tPos.x, tPos.y, "S", pen);
-        }
+        };
+        this.AttackNode = function(attackTemplate)
+        {
+            this.base = new BaseObj(this, 15);         
+            this.attackTemplate = attackTemplate;
+
+            var attacker = attackTemplate.attacker;
+            var realAttacker = attackTemplate.baseAttacker;
+            var target = attackTemplate.target;
+            var damage = attackTemplate.damage;
+
+            var slow = attackTemplate.attackType.slow_percent / 100;
+            var slow_time = attackTemplate.attackType.slow_time;
+
+            this.color = "rgba(30, 144, 255, 1)";
+
+            var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
+            line.base.addObject(new AlphaDecay(slow_time, 1, 0));
+            this.base.addObject(line);            
+            
+            var slow = new SlowEffect(slow);
+            slow.base.addObject(new Lifetime(slow_time));
+
+            target.base.addObject(slow);
+
+            applyAttack(this.attackTemplate);
+
+            this.update = function()
+            {
+                line.end = target.tPos.getCenter();
+            };
+        };
     },
-    */
 };
+
+var towerAttackTypes = {
+    Laser: allAttackTypes.Laser,
+    Bullet: allAttackTypes.Bullet,
+    Chain: allAttackTypes.Chain,
+    Pulse: allAttackTypes.Pulse,
+    DOT: allAttackTypes.DOT,
+    Slow: allAttackTypes.Slow
+}
 
 //Not needed anymore... but if you have a radio option for something this
 //is how you would set up the underlying attack types for it
 var bugAttackTypes = {
-    Laser: allAttackTypes.Laser
+    BugBullet: allAttackTypes.Bullet
 };
 
 
@@ -420,7 +502,7 @@ function drawAttributes(user, pen) {
             return true;
         },
         user.attr,
-        new temporalPos(
+        new TemporalPos(
             user.tPos.x + user.tPos.w * 0.15,
             user.tPos.y + user.tPos.h * 0.4,
             user.tPos.w * 0.85,

@@ -1,5 +1,5 @@
 function Sound(src) {
-    if (DFlag.disableSounds) {
+    if (!DFlag.enableSounds) {
         this.play = function() {};
         return;
     }

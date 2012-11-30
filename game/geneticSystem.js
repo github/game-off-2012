@@ -1,8 +1,9 @@
 function Genes() {
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
     this.alleles = {};
 
+    var replaceAllele = false;
     this.addAllele = function (group, allele) {
         if (!assertDefined(group, allele))
             return;
@@ -12,30 +13,42 @@ function Genes() {
         if (!assertDefined(holder))
             return;
 
-        if (this.alleles[group])
-            this.alleles[group].apply(holder, true);
+        if (!assertDefined(allele.delta))
+            return;
 
-        this.alleles[group] = allele;
+        if (replaceAllele || !allele.delta.attack) {
+            if (this.alleles[group])
+                this.alleles[group].unapply(holder);
 
-        this.alleles[group].apply(holder, false);
+            this.alleles[group] = allele;
+
+            this.alleles[group].apply(holder);
+        } else {
+            //Should fix attack types not properly being removed
+            this.alleles[group] = allele;
+            this.replaceAlleles(cloneObject(this.alleles));
+        }
     };
 
     //Should only be called if you are fuly replacing the targetting strategy and attack types
     this.replaceAlleles = function (newAlleles) {
-        this.attr.target_Strategy = null;
-        this.attr.attack_types = [];
-        var holder = this.base.parent.holder;
+        var holder = this.base.parent;
+        holder.attr.target_Strategy = null;
+        holder.attr.attack_types = [];
+
+        replaceAllele = true;
 
         for (var alleleGroup in this.alleles)
             if (this.alleles[alleleGroup]) {
-                this.alleles[alleleGroup].apply(holder, true);
+                this.alleles[alleleGroup].unapply(holder);
+                // Is this really what you want to do?
                 delete this.alleles[alleleGroup];
             }
 
-        for (var group in newAlleles)
+        for (var group in newAlleles) {
             this.addAllele(group, newAlleles[group]);
+        }
 
-        if (!holder.attr.target_Strategy || holder.attr.attack_types.length == 0)
-            fail("Don't call replace alleles unless you are going to fill in targetting and attacking types.");
+        replaceAllele = false;
     };
 }

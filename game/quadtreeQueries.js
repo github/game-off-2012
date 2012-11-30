@@ -1,4 +1,4 @@
-//object means: object.(baseObj)base
+//object means: object.(BaseObj)base
 
 
 //findClosest

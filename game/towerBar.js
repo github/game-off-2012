@@ -3,11 +3,11 @@
 
 function TowerDragger(pos, towerGeneratorFnc) {
     this.tPos = pos;
-    this.base = new baseObj(this, 20);
+    this.base = new BaseObj(this, 20);
 
     this.towerGeneratorFnc = towerGeneratorFnc;
 
-    this.displayedTower = towerGeneratorFnc();
+    this.displayedTower = towerGeneratorFnc(true);
 
     this.dragPos = null;
 
@@ -17,7 +17,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
         this.displayedTower.draw(pen);
 
         if (this.dragPos) {
-            this.displayedTower.tPos = new temporalPos(this.dragPos.x, this.dragPos.y, tileSize, tileSize);
+            this.displayedTower.tPos = new TemporalPos(this.dragPos.x, this.dragPos.y, TILE_SIZE, TILE_SIZE);
             this.displayedTower.base.raiseEvent("resize");
             this.displayedTower.draw(pen);
         }
@@ -35,8 +35,9 @@ function TowerDragger(pos, towerGeneratorFnc) {
                 delete this.base.rootNode.globalMouseDown[this.base.id];
             }
             var tileDrop = findClosest(this.base.rootNode, "Tile", e, 0);
-            if (tileDrop)
+            if (tileDrop) {
                 tryPlaceTower(this.towerGeneratorFnc(), tileDrop);
+            }
         }
         else {
             this.dragPos = e;
@@ -47,39 +48,50 @@ function TowerDragger(pos, towerGeneratorFnc) {
 }
 
 function Towerbar(pos) {
-	this.base = new baseObj(this, 14);
+	this.base = new BaseObj(this, 14);
 
 	this.tPos = pos;
+
+	this.costIndicator = new Label(new TemporalPos(pos.x, pos.y, pos.w, pos.h), "Tower cost: 50");
+	this.costIndicator.font = "20px arial";
+	this.costIndicator.color = "white";
+	this.base.addObject(this.costIndicator);
 
 	var attackCombinations = [];
 	var uniqueNum = 1;
 
-	for (var key in allAttackTypes) {
+	for (var key in towerAttackTypes) {
 	    var attackTypes = {}; //Obj needed for now, it goes away when added (because we turn it into an array)
-	    attackTypes[uniqueNum++] = (allAttackTypes[key]);
+	    attackTypes[1] = (towerAttackTypes[key]);
 	    attackCombinations.push(attackTypes);
 	}
 
-	var superCombo = { 0: allAttackTypes.Bullet, 1: allAttackTypes.Laser };
-
-	attackCombinations.push(superCombo);
+	//var superCombo = { 1: allAttackTypes.Pulse, 2: allAttackTypes.Pulse, 3: allAttackTypes.Pulse };
+	//attackCombinations.push(superCombo);
 
 	var buttonW = 100;
     //Scaled exactly to 150 by 674...
 	makeTiled(this,
         function (obj, refObj, pos) {
             var towerDragger = new TowerDragger(
-                new temporalPos(pos.x, pos.y, pos.w, pos.h),
-                function () {
+                new TemporalPos(pos.x, pos.y, pos.w, pos.h),
+                function (forDisplay) {
                     var fakeTile = {};
-                    fakeTile.tPos = new temporalPos(0, 0, 0, 0);
+                    fakeTile.tPos = new TemporalPos(0, 0, 0, 0);
                     var tower = new Tower(fakeTile);
 
-                    tower.attr.attack_types = [];
-                    for (var attackType in obj)                    
-                        tower.attr.attack_types.push(new obj[attackType]());
+                    if (forDisplay) {
+                        tower.attr.attack_types = [];
+                        for (var alleleGroup in tower.genes.alleles) {
+                            if (tower.genes.alleles[alleleGroup].delta.attack)
+                                delete tower.genes.alleles[alleleGroup];
+                        }
+                    }
 
-                    tower.recolor();
+                    for (var key in obj) {
+                        var attackType = obj[key];
+                        tower.genes.addAllele("attack" + key, new Allele({ attack: attackType }));
+                    }
 
                     return tower;
                 }
@@ -90,14 +102,21 @@ function Towerbar(pos) {
             return true;
         },
         attackCombinations,
-        new temporalPos(
-            pos.x + 65,
-            pos.y,
-            600,
+        new TemporalPos(
+            pos.x + 15,
+            pos.y + 40,
+            450,
             150),
-        8, 2,
+        6, 2,
         0.1);
-  
+
+
+        this.update = function () {
+            this.costIndicator.tPos.x = pos.x + 10;
+            this.costIndicator.tPos.y = pos.y + 25;
+
+            this.costIndicator.text = "Current tower cost: " + this.base.rootNode.currentCost;
+        }
 
 	this.draw = function (pen) {
 	    pen.fillStyle = "#000";

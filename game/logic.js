@@ -1,4 +1,4 @@
-﻿function Engine(pen, bufferCanvas, pos) {
+﻿function engine(pen, bufferCanvas, pos) {
     var mX = -1;
     var mY = -1;    
     var mdX = -1; //Mouse down
@@ -19,8 +19,9 @@
     this.globalMouseMove = {};
     this.globalMouseDown = {};
 
-    this.id = 0;
-    this.money = 1600; //Default a much more reasonable value.
+    this.id = 0; //Shouldn't be needed (ids are in base)
+    this.currentCost = 100;
+    this.money = 1600; //Default to a much more reasonable value.
     if (DFlag.lotsamoney) {
         this.money = 10000;
     }
@@ -28,24 +29,30 @@
 
     this.lastTowerHover = null;
 
-    this.base = new baseObj(this);
+    this.base = new BaseObj(this);
 
     this.engine = this; //eng also works fine
 
     this.infobar = new Infobar(
-            new temporalPos(pos.w - 150, 0, 150, pos.h * 0.8)
+            new TemporalPos(pos.w - 250, 0, 250, pos.h)
         );
 
     this.base.addObject(this.infobar);
 
     this.towerbar = new Towerbar(
-            new temporalPos(0, pos.h - 150, pos.w - 350, 150)
+            new TemporalPos(0, pos.h - 150, pos.w - 250, 150)
         );
     this.base.addObject(this.towerbar);
-    this.towerbreeder = new TowerBreeder(
-            new temporalPos(pos.w - 350, pos.h - 150, 200, 150)
+
+//    this.towerbreeder = new TowerBreeder(
+//            new TemporalPos(pos.w - 250, pos.h - 150, 200, 150)
+//        );
+//    this.base.addObject(this.towerbreeder);
+
+    this.gameInfoBar = new GameInfoBar(
+            new TemporalPos(0, pos.h - 240, pos.w - 260, 80)
         );
-    this.base.addObject(this.towerbreeder);
+    this.base.addObject(this.gameInfoBar);
 
     
     this.currentBugs = 10;
@@ -59,7 +66,7 @@
     var bugStart = getAnElement(this.engine.base.children["Path_Start"]);
 
     //Level/Wave generator
-    var lmpos = new temporalPos(pos.w-400, 0, 100, pos.h*0.05);
+    var lmpos = new TemporalPos(pos.w-400, 0, 100, pos.h*0.05);
     this.lvMan = new LevelManager(bugStart, lmpos);
     this.base.addObject(this.lvMan);
     
@@ -101,21 +108,6 @@
     this.update = function (dt) {
         this.curQuadTree = new QuadTree(this.base.allChildren);
 
-        /*
-        if (eng.base.lengths["Path_Start"] > 0
-        && (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] === 0)) {
-        this.bugDifficulty += 0.1;
-        while (!eng.base.lengths["Bug"] || eng.base.lengths["Bug"] < this.currentBugs) {
-        var bugStart = getAnElement(eng.base.children["Path_Start"]);
-        var newBug = new Bug(bugStart, this.bugDifficulty);
-        this.base.addObject(newBug);
-        }
-        this.currentBugs += this.bugIncrease;
-        if (this.currentBugs > this.maxBugs) {
-        this.currentBugs = this.maxBugs;
-        }
-        }*/
-
         this.handleMouseEvents();
 
         if (this.resizeEvent) {
@@ -127,6 +119,12 @@
         if (curFrameCounter % 100 == 0) {
             this.base.addObject(new FancyBackground(this.pen));
         }
+
+        if (currentRangeDisplayed && this.selectedObj)
+            currentRangeDisplayed.pCenter.set(this.selectedObj.tPos.getCenter());
+
+        if (this.selectedObj)
+            this.selectedObj.hover = true;
     };
 
     this.resizeEvent = null;
@@ -205,12 +203,15 @@
     this.handleMouseEvents = function () {
         if (mdX > 0 && mdY > 0) {
             for (var key in this.globalMouseDown) {
-                this.globalMouseMove[key].base.callRaise("mousedown", { x: mdX, y: mdY });
+                if (this.globalMouseMove[key].base.rootNode != this)
+                    delete this.globalMouseMove[key];
+                else
+                    this.globalMouseMove[key].base.callRaise("mousedown", { x: mdX, y: mdY });
             }
 
             var curMouseDown = throwMouseEventAt(mdX, mdY, "mousedown", this);
             this.prevMouseDown = curMouseDown;
-            
+
             mdX = -1;
             mdY = -1;
         }
@@ -235,7 +236,10 @@
 
         if (mY > 0 && mX > 0) {
             for (var key in this.globalMouseMove) {
-                this.globalMouseMove[key].base.callRaise("mousemove", { x: mX, y: mY });
+                if (this.globalMouseMove[key].base.rootNode != this)
+                    delete this.globalMouseMove[key];
+                else
+                    this.globalMouseMove[key].base.callRaise("mousemove", { x: mX, y: mY });
             }
 
             var curMouseOver = throwMouseEventAt(mX, mY, "mouseover", this);
@@ -253,7 +257,7 @@
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
                     this.prevMouseDown[i].base.callRaise("dragged", { x: mX, y: mY });
                 }
-            }            
+            }
 
             mY = -1;
             mX = -1;
@@ -267,20 +271,11 @@
 
     this.draw = function () {
         pen = this.pen;
-        
+
         pen.fillStyle = "black";
+
+        //Commenting out this line leads to funny results :D
         ink.rect(0, 0, width, height, pen);
-        
-        pen.font = "10px courier";
-        pen.fillStyle = "#0F0";
-        var x = bW + 10;
-        var y = bH - 75;
-        ink.text(x, y, "Health: " + this.health, pen);
-        ink.text(x, y + 15, "Money: $" + Math.round(this.money*100)/100, pen);
-        ink.text(x, y + 30, "Time passed: " + gameTimeAccumulated, pen);
-        ink.text(x, y + 45, "FPS: " + this.lastFPS, pen);
-        ink.text(x, y + 60, "Bugs: " + eng.base.allLengths.Bug, pen);
-        ink.text(x, y + 75, "Ctrl: " + this.ctrlKey, pen);
     };
 
     //All selected stuff should probably be in its own object
@@ -309,6 +304,9 @@
 
             this.base.addObject(currentRangeDisplayed);
 
+            if (this.selectedObj)
+                this.selectedObj.hover = false;
+
             this.selectedObj = obj;
             this.infobar.updateAttr(obj);
 
@@ -324,7 +322,7 @@
             }
             this.selectedBucket.push(obj);
             obj.base.addObject(new HoverIndicator());
-            this.towerbreeder.towers = this.selectedBucket;
+            //this.towerbreeder.towers = this.selectedBucket;
         }
         else {
             for (var key in this.selectedBucket) {
@@ -335,6 +333,9 @@
                 }
             }
             this.selectedBucket = [];
+
+            if (this.selectedObj)
+                this.selectedObj.hover = false;
 
             this.selectedObj = null;
             this.infobar.clearDisplay();

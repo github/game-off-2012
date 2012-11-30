@@ -9,23 +9,23 @@ function generatePath(eng) {
     //Just temp
     var curUniqueBoardNum = 2;
     var board = [];
-    for (var x = 0; x < wTiles; x++) {
+    for (var x = 0; x < NUM_TILES_X; x++) {
         board[x] = [];
-        for (var y = 0; y < hTiles; y++) {
+        for (var y = 0; y < NUM_TILES_Y; y++) {
             board[x][y] = false;
-            eng.base.addObject(new Tile(x * tileSize, y * tileSize, tileSize, tileSize));
+            eng.base.addObject(new Tile(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE));
         }
     }
 
     var uniqueBoard = [];
-    for (var x = 0; x < wTiles; x++) {
+    for (var x = 0; x < NUM_TILES_X; x++) {
         uniqueBoard[x] = [];
-        for (var y = 0; y < hTiles; y++)
+        for (var y = 0; y < NUM_TILES_Y; y++)
             uniqueBoard[x][y] = false;
     }
 
     function isValid(pos) {
-        return (pos.x < wTiles && pos.y < hTiles && pos.x >= 0 && pos.y >= 0);
+        return (pos.x < NUM_TILES_X && pos.y < NUM_TILES_Y && pos.x >= 0 && pos.y >= 0);
     }
 
     function isDeadEnd(startPos) {
@@ -36,7 +36,7 @@ function generatePath(eng) {
             return true;
         uniqueBoard[startPos.x][startPos.y] = curUniqueBoardNum;
 
-        if (startPos.x == (wTiles - 1) || startPos.y == (hTiles - 1)) {
+        if (startPos.x == (NUM_TILES_X - 1) || startPos.y == (NUM_TILES_Y - 1)) {
             return false;
         }
 
@@ -50,9 +50,10 @@ function generatePath(eng) {
     }
     var prevPos = { x: 0, y: 0 };
     var prevPath = null;
+    var pathPos = 1;
     while (true) {
-        if (curPos.x == (wTiles - 1) || curPos.y == (hTiles - 1)) {
-            curPath = new Path_End(curPos.x * tileSize, curPos.y * tileSize, tileSize, tileSize);
+        if (curPos.x == (NUM_TILES_X - 1) || curPos.y == (NUM_TILES_Y - 1)) {
+            curPath = new Path_End(curPos.x * TILE_SIZE, curPos.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             prevPath.nextPath = curPath;
 
             eng.base.addObject(curPath);
@@ -64,14 +65,15 @@ function generatePath(eng) {
             var curPath;
 
             if (!prevPath) {
-                curPath = new Path_Start(curPos.x * tileSize, curPos.y * tileSize, tileSize, tileSize);
+                curPath = new Path_Start(curPos.x * TILE_SIZE, curPos.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             }
             else {
-                curPath = new Path(curPos.x * tileSize, curPos.y * tileSize, tileSize, tileSize);
+                curPath = new Path(curPos.x * TILE_SIZE, curPos.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 prevPath.nextPath = curPath;
             }
 
             prevPath = curPath;
+            curPath.pathPos = pathPos++;
 
             eng.base.addObject(curPath);
 

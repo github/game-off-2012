@@ -1,4 +1,4 @@
-function temporalPos(x, y, w, h, dx, dy) {
+function TemporalPos(x, y, w, h, dx, dy) {
     this.x = x;
     this.y = y;
 
@@ -80,6 +80,9 @@ var Vector = (function () {
     }
     p.setMag = function (magnitude) {
         this.norm().mult(magnitude);
+    }
+    p.clone = function() {
+        return new Vector(this.x, this.y);
     }
     return Vector;
 } ());

@@ -12,8 +12,8 @@
 /********************************* CODE START *********************************/
 
 var uniqueBaseObjNumber = 1;
-function baseObj(holder, zindex) {
-    if (!assertDefined("baseObj", holder))
+function BaseObj(holder, zindex) {
+    if (!assertDefined("BaseObj", holder))
         return;
 
     //Strange... but needed
@@ -66,18 +66,18 @@ function baseObj(holder, zindex) {
 
     //This just makes easier to maintain our arrays. It doesn't really create them,
     //so array and arrayLengths must still be members initialized in our constructor
-    function addToArray(baseObj, obj, array, arrayLengths) {
-        if (!assertDefined("addToArray", baseObj, baseObj[array], baseObj[arrayLengths], obj, obj.base))
+    function addToArray(BaseObj, obj, array, arrayLengths) {
+        if (!assertDefined("addToArray", BaseObj, BaseObj[array], BaseObj[arrayLengths], obj, obj.base))
             return;
 
-        if (!baseObj[array][obj.base.type]) {
-            baseObj[array][obj.base.type] = {};
-            baseObj[arrayLengths][obj.base.type] = 0;
+        if (!BaseObj[array][obj.base.type]) {
+            BaseObj[array][obj.base.type] = {};
+            BaseObj[arrayLengths][obj.base.type] = 0;
         }
 
-        if (!baseObj[array][obj.base.type][obj.base.id]) {
-            baseObj[array][obj.base.type][obj.base.id] = obj;
-            baseObj[arrayLengths][obj.base.type]++;
+        if (!BaseObj[array][obj.base.type][obj.base.id]) {
+            BaseObj[array][obj.base.type][obj.base.id] = obj;
+            BaseObj[arrayLengths][obj.base.type]++;
         }
     };
 
@@ -100,17 +100,17 @@ function baseObj(holder, zindex) {
         });
     };    
 
-    function removeFromArray(baseObj, obj, array, arrayLengths) {
-        if (!assertDefined(baseObj) || 
-            !assertDefined("removeFromArray", baseObj, baseObj[array], baseObj[arrayLengths], obj, obj.base))
+    function removeFromArray(BaseObj, obj, array, arrayLengths) {
+        if (!assertDefined(BaseObj) || 
+            !assertDefined("removeFromArray", BaseObj, BaseObj[array], BaseObj[arrayLengths], obj, obj.base))
             return;
 
-        if (!baseObj[array][obj.base.type])
+        if (!BaseObj[array][obj.base.type])
             return;
 
-        if (baseObj[array][obj.base.type][obj.base.id]) {
-            delete baseObj[array][obj.base.type][obj.base.id];
-            baseObj[arrayLengths][obj.base.type]--;
+        if (BaseObj[array][obj.base.type][obj.base.id]) {
+            delete BaseObj[array][obj.base.type][obj.base.id];
+            BaseObj[arrayLengths][obj.base.type]--;
         }
     }
 

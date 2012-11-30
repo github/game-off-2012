@@ -19,6 +19,9 @@ function prefixNumber(number, decimalPlaces) {
 
 var decimalTable = { 0: 1, 1: 10, 2: 100, 3: 1000, 4: 10000, 5: 100000, 6: 1000000 };
 function roundToDecimal(value, decimalPlaces) {
+    if (isNaN(value))
+        return 0;
+
     var decimalValue;
     if (decimalPlaces <= 6) {
         decimalValue = decimalTable[decimalPlaces]
@@ -30,17 +33,45 @@ function roundToDecimal(value, decimalPlaces) {
     return Math.round(value * decimalValue) / decimalValue;
 }
 
-function underscoresToSpaces(text) {
+function formatToDisplay(text) {
+    if (!text)
+        return "";
+
     if (typeof text != "string")
         fail("Only pass us text!");
-    return text.replace(/_/g, " ");
+
+    // Transforms "fooBar" to "Foo Bar"
+    // Also transforms foo_bar to Foo Bar, since that was
+    // the original behavior, and we don't have time to
+    // fix everything.
+    // http://stackoverflow.com/questions/5796383/insert-spaces-between-words-on-a-camel-cased-token
+    text = text.replace(/_/g, " ");
+    text = text.replace(/([A-Z])/g, " $1");
+    text = text.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+    return text;
 }
 
-//http://stackoverflow.com/questions/4878756/javascript-how-to-capitalize-first-letter-of-each-word-like-a-2-word-city
-function capitalizeWords(text) {
-    return text.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
-}
+//Well this is all I need to do colors
+function setColorPart(color, partNumber, partValue) {
+    var functionParts = color.split("(");
+    var functionName = functionParts[0];
+    var args = functionParts[1].split(")")[0].split(",");
 
-function formatToDisplay(text) {
-    return capitalizeWords(underscoresToSpaces(text));
+    args[partNumber] = partValue;
+
+    var returnValue = functionName + "( ";
+
+    var first = true;
+    for (var key in args) {
+        if (first) {
+            first = false;
+            returnValue += args[key];
+        }
+        else {
+            returnValue += ", " + args[key];
+        }
+    }
+    returnValue += ")";
+
+    return returnValue;
 }
