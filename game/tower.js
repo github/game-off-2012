@@ -71,6 +71,9 @@ function Tower(baseTile) {
         value:          TowerStats.value,
     };    
 
+    //Each is an {group: alGroup, all: allele}
+    this.allelesGenerated = [];
+
     this.genes = new Genes();
     this.base.addObject(this.genes);
 
@@ -97,6 +100,20 @@ function Tower(baseTile) {
         this.recolor();        
     };
         
+    this.generateAllele = function()
+    {   
+        var allAlls = [];
+        for (var alGroup in AllAlleleGroups)
+            allAlls.push(alGroup);
+
+        var genAllGroup = allAlls[Math.floor(Math.random() * allAlls.length)];
+
+        var allObj = {};
+        allObj.group = genAllGroup;
+        allObj.all = new Allele(AllAlleleGroups[genAllGroup]());
+        this.allelesGenerated.push(allObj);
+    }
+
     this.regenTick = function()
     {
         this.attr.currentHp += this.attr.hpRegen;

@@ -63,6 +63,14 @@ var AllAlleleGroups =
             0.9: { hpRegen: 7 },
             1: { hpRegen: 15 },
         }); },
+
+    attSpeedBase: function () { return choose(
+        {
+            0.5: { attSpeed: 0 },
+            0.7: { attSpeed: 0.3 },
+            0.9: { attSpeed: 0.5 },
+            1: { attSpeed: 2 },
+        }); },
     
     attack1: function () { return choose(
         {
@@ -74,7 +82,6 @@ var AllAlleleGroups =
             1.0: { attack: allAttackTypes.Slow },
         }); },
 
-        
     attack2: function () { return choose(
         {
             0.166: { attack: allAttackTypes.Laser },
@@ -84,7 +91,6 @@ var AllAlleleGroups =
             0.833: { attack: allAttackTypes.DOT },
             1.0: { attack: allAttackTypes.Slow },
         }); },
-        
 
     targetBase: function () { return choose(
         {

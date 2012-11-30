@@ -168,6 +168,8 @@ var allAttackTypes = {
             }
         };
     },
+    //Average best case (so enough enemies to fully chain) is:
+    // - chance / (chance - 1)
     Chain: function chain_lightning() {
         this.chain_chance = 0.8;
         this.repeatDelay = 0.3;

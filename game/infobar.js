@@ -63,6 +63,40 @@ function Button(pos, txt, context, functionName, callData) {
 	};
 }
 
+function Label(pos, text) {
+    this.tPos = pos;
+    this.base = new baseObj(this, 15);
+    this.color = "red";
+    var textsize = 14;
+
+    this.text = formatToDisplay(text);
+
+    this.draw = function (pen) {
+        //Draw text
+        pen.fillStyle = this.color;
+        pen.font = textsize + "px arial";
+
+        ink.text(this.tPos.x, this.tPos.y, this.text, pen);
+        return;
+    }
+
+    this.mouseover = function () {
+        this.hover = true;
+    };
+
+    this.mouseout = function () {
+        this.hover = false;
+    };
+
+    this.mousedown = function () {
+        this.down = true;
+    };
+
+    this.mouseup = function () {
+        this.down = false;
+    };
+}
+
 function RadioButton(pos, txt, context, functionName, callData, prevRadioButton){
     this.tPos = pos;
 	this.base = new baseObj(this, 15);
@@ -168,8 +202,6 @@ function Dock(item, dockX, dockY) {
     var left = obj.x - parent.x;
     var top = obj.y - parent.y;
     return function () {
-        console.log(parent, obj);
-        
         if (dockX == "left") {
             obj.x = parent.x;
         } else if (dockX == "right") {
@@ -189,7 +221,6 @@ function Dock(item, dockX, dockY) {
         } else {
             obj.y = parent.y + top;
         }
-        console.log(parent, obj);
     };
 }
 
@@ -275,7 +306,8 @@ function Infobar(pos) {
 
 	var buttonW = 100;
 
-// 	this.base.addObject(new Docked().dockX(-1));
+	//For each displayed item gives extra info to be displayed in brackets)
+	this.extraInfo = {};
 
 	this.attributeChoosers = {};	
 
@@ -303,17 +335,13 @@ function Infobar(pos) {
             "bug_attack_type");
 	//We will soon no longer let them choose their attack strategy!
 	this.base.addObject(this.attributeChoosers.bug_attack_type);
-    
 
+	this.allelePoints = new AllelePointSystem(new temporalPos(pos.x, pos.y, pos.w * 0.88, 150));
+	this.base.addObject(this.allelePoints);
 
     //Add our buttons, should really be done just in the constructor with our given pos information
 	this.added = function () {
 	    //Std centered button position
-	    this.upgradeb = new Button(
-            new temporalPos(((width - bW) / 2) - (buttonW / 2) + bW, 200, buttonW, 30, 0),
-            "Upgrade!", this.base.rootNode, "upgradeSel");
-// 	    this.upgradeb.base.addObject(new Docked(0, 1, 1, 0));
-	    this.base.addObject(this.upgradeb);
 
         this.clearDisplay();
         this.resize = Dock(this, "right", "top");
@@ -366,120 +394,159 @@ function Infobar(pos) {
 	    var obj = this.obj;
 
 	    pen.font = "10px courier";
-	    for (var attrName in this.obj.attr) {
-	        var value = this.obj.attr[attrName];
 
-	        var arrayAttr = value;
-	        if (getRealType(arrayAttr) != "Array") {
-	            arrayAttr = [];
-	            arrayAttr.push(value);
-	        }
+	    var extraInfo = this.extraInfo;
+	    var extraInfoDisplayed = {};
 
-	        pen.color = "Green";
-	        pen.fillStyle = "Transparent";	        
-	        //ink.rect(xs, y, (xe - xs), 15, pen);
+	    var attChoosers = this.attributeChoosers;
 
-	        for (var key in arrayAttr) {
-	            var val = arrayAttr[key];
-	            function tryPrintAsNumber(val, name) {
-	                if (typeof val != "number")
-	                    return false;
+	    function displayAttributes(attrs) {
+	        for (var attrName in attrs) {
+	            var value = attrs[attrName];
 
-	                var valtxt = prefixNumber(val, 1);
+	            var arrayAttr = value;
+	            if (getRealType(arrayAttr) != "Array") {
+	                arrayAttr = [];
+	                arrayAttr.push(value);
+	            }
 
-	                var nametxt = formatToDisplay(name);
+	            pen.color = "Green";
+	            pen.fillStyle = "Transparent";
+	            //ink.rect(xs, y, (xe - xs), 15, pen);
 
-	                var baseStat = baseStats[name];
+	            for (var key in arrayAttr) {
+	                var val = arrayAttr[key];
+	                function tryPrintAsNumber(val, name, extraInfo) {
+	                    if (typeof val != "number")
+	                        return false;
 
-	                if (defined(baseStat)) {
-	                    pen.color = "White";
-	                    pen.fillStyle = "Purple";
-	                    var startX = xPos - 3;
-	                    var startY = yPos - 10;
-	                    var totalWidth = ourWidth + 6;
-	                    var totalHeight = 15;
-	                    var totalStat = Math.max(baseStat, 0);
-	                    var factor = 1 * totalWidth * 0.5 / 10;	                    
-	                    startX += totalWidth * 0.5;
-
-	                    function addBarPart(val) {
-	                        var direction = val < 0 ? -1 : +1;
-	                        var curWidth = (Math.log(Math.abs(val) / baseStat + 2)) *
-                                factor * direction;
-	                        if (val > 0) {
-	                            pen.fillStyle = "Green";
-	                            ink.rect(startX, startY, curWidth, totalHeight * 0.5, pen);
-	                        }
-	                        else {
-	                            pen.fillStyle = "Red";
-	                            ink.rect(startX, startY + totalHeight * 0.5, curWidth,
-                                    totalHeight * 0.5, pen);
-	                        }
-	                        return curWidth;
+	                    var valtxt = prefixNumber(val, 1);
+	                    if (defined(extraInfo[name])) {
+	                        valtxt = "(" + extraInfo[name] + ") " + valtxt;
+	                        extraInfoDisplayed[name] = true;
 	                    }
 
-	                    //addBarPart(val - baseStat);
-	                    for (var key in obj.genes.alleles) {
-	                        var allele = obj.genes.alleles[key];
-	                        for (var key in allele.delta) {
-	                            if (key == name) {
-	                                var impact = allele.delta[key];
-	                                startX += addBarPart(impact) * (impact < 0 ? -1 : 1);
+	                    var nametxt = formatToDisplay(name);
+
+	                    var baseStat = baseStats[name];
+
+	                    if (defined(baseStat)) {
+	                        pen.color = "White";
+	                        pen.fillStyle = "Purple";
+	                        var startX = xPos - 3;
+	                        var startY = yPos - 10;
+	                        var totalWidth = ourWidth + 6;
+	                        var totalHeight = 15;
+	                        var totalStat = Math.max(baseStat, 0);
+	                        var factor = 1 * totalWidth * 0.5 / 10;
+	                        startX += totalWidth * 0.5;
+
+	                        function addBarPart(val) {
+	                            var direction = val < 0 ? -1 : +1;
+	                            var curWidth = (Math.log(Math.abs(val) / baseStat + 2)) *
+                                factor * direction;
+	                            if (val > 0) {
+	                                pen.fillStyle = "Green";
+	                                ink.rect(startX, startY, curWidth, totalHeight * 0.5, pen);
+	                            }
+	                            else {
+	                                pen.fillStyle = "Red";
+	                                ink.rect(startX, startY + totalHeight * 0.5, curWidth,
+                                    totalHeight * 0.5, pen);
+	                            }
+	                            return curWidth;
+	                        }
+
+	                        //addBarPart(val - baseStat);
+	                        for (var key in obj.genes.alleles) {
+	                            var allele = obj.genes.alleles[key];
+	                            for (var key in allele.delta) {
+	                                if (key == name) {
+	                                    var impact = allele.delta[key];
+	                                    startX += addBarPart(impact) * (impact < 0 ? -1 : 1);
+	                                }
 	                            }
 	                        }
-	                    }	                    
-	                }
+	                    }
 
-	                pen.color = "Green";
-	                pen.fillStyle = "Green";
-	                pen.textAlign = 'left';
-	                ink.text(xPos, yPos, nametxt, pen);
-	                pen.textAlign = 'right';
-	                ink.text(xe, yPos, valtxt, pen);
-	                yPos += 15;
-	                return true;
-	            }
-
-	            if (!tryPrintAsNumber(val, attrName)) {
-	                yPos += 5;
-
-	                pen.textAlign = 'center';
-	                pen.font = "14px courier";
-	                ink.text((xs + xe) / 2, yPos, formatToDisplay(attrName), pen);
-	                pen.font = "10px courier";
-	                yPos += 20;
-	                xPos += 5;
-
-	                if (!defined(this.attributeChoosers[attrName])) {
+	                    pen.color = "Green";
+	                    pen.fillStyle = "Green";
 	                    pen.textAlign = 'left';
-	                    ink.text(xPos, yPos, formatToDisplay(getRealType(val)), pen);
+	                    ink.text(xPos, yPos, nametxt, pen);
+	                    pen.textAlign = 'right';
+	                    ink.text(xe, yPos, valtxt, pen);
 	                    yPos += 15;
+	                    return true;
 	                }
 
-	                for (var subAttr in val) {
-	                    tryPrintAsNumber(val[subAttr], subAttr);
+	                if (!tryPrintAsNumber(val, attrName, extraInfo)) {
+	                    yPos += 5;
+
+	                    var nameText;
+
+	                    if (!defined(attChoosers[attrName])) {
+	                        nameText = formatToDisplay(getRealType(val));
+	                    }
+	                    else {
+	                        nameText = formatToDisplay(attrName);
+	                    }
+
+	                    var subExtraInfo = {};
+	                    if (defined(extraInfo[nameText]) && !extraInfoDisplayed[nameText]) {
+	                        subExtraInfo = extraInfo[nameText];
+	                        extraInfoDisplayed[nameText] = true;
+	                        nameText = "(" + (extraInfo[nameText].added ? "+" : "-") + ") " + nameText;
+	                    }
+
+	                    pen.color = "Green";
+	                    pen.fillStyle = "Green";
+	                    pen.textAlign = 'center';
+	                    pen.font = "14px courier";
+	                    ink.text((xs + xe) / 2, yPos, nameText, pen);
+	                    pen.font = "10px courier";
+	                    yPos += 20;
+	                    xPos += 5;
+
+	                    for (var subAttr in val) {
+	                        tryPrintAsNumber(val[subAttr], subAttr, subExtraInfo);
+	                    }
+
+	                    //See if its an attribute which we have a attribute chooser for
+	                    if (defined(attChoosers[attrName])) {
+	                        attChoosers[attrName].tPos.y = yPos;
+	                        attChoosers[attrName].resize();
+	                        yPos += attChoosers[attrName].tPos.h;
+	                        yPos += 20; //idk really why this is needed
+	                    }
+
+	                    xPos -= 5;
+
+	                    //Even so we still need to position the attribute choosers
 	                }
+	            } //End of looping through arrays within attributes
 
-	                //See if its an attribute which we have a attribute chooser for
-	                if (defined(this.attributeChoosers[attrName])) {
-	                    this.attributeChoosers[attrName].tPos.y = yPos;
-	                    this.attributeChoosers[attrName].resize();
-	                    yPos += this.attributeChoosers[attrName].tPos.h;
-	                    yPos += 20; //idk really why this is needed
-	                }
+	        } //End of attribute loop
+	    } //End of display attribute function
 
-	                xPos -= 5;
+	    displayAttributes(this.obj.attr);
 
-	                //Even so we still need to position the attribute choosers
-	            }
-	        } //End of looping through arrays within attributes
+	    //var extraInfo = this.extraInfo;
+	    //var extraInfoDisplayed = {};
 
-	    } //End of attribute loop
+	    var undisplayedExtra = {};
 
-	    this.upgradeb.tPos.y = yPos;
-	    yPos += 20;
+	    for (var key in extraInfo) {
+	        if (!extraInfoDisplayed[key])
+	            undisplayedExtra[key] = new extraInfo[key]();
+	    }
+
+	    displayAttributes(undisplayedExtra);
+
+	    //this.upgradeb.tPos.y = yPos;
+	    //yPos += 30;
 
 
-
-	}                                              //End of draw
+	    this.allelePoints.tPos.x = xPos;
+	    this.allelePoints.tPos.y = this.tPos.y + this.tPos.h - this.allelePoints.tPos.h - 10;
+	}                                                                    //End of draw
 }
