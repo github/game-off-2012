@@ -261,7 +261,8 @@
           case 'invincible':
             mit.Pappu.invincible = 1;
 
-            if (!mit.Pappu.invincibility_start) {
+            // Kush says we shouldnt add up
+            /*if (!mit.Pappu.invincibility_start) {
               mit.Pappu.invincibility_time = 5000;
             }
             else {
@@ -269,9 +270,10 @@
               var prev_remaining_time = cur_time - mit.Pappu.invincibility_start;
 
               mit.Pappu.invincibility_time = 5000 + prev_remaining_time;
-            }
+            }*/
 
             mit.Pappu.invincibility_start = new Date().getTime();
+            mit.Pappu.invincibility_time = 5000;
 
             // Show timer
             mit.ui.invincible_timer.show();
