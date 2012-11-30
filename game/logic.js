@@ -136,8 +136,9 @@
 
     function getMousePos(e) {
         // Canvas is fullscreen now, so pageX is our x position.
-        var mX = defined(e.offsetX) ? e.offsetX : e.pageX;
-        var mY = defined(e.offsetY) ? e.offsetY : e.pageY;
+	var canpos = document.getElementById("myCanvas")
+        var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canpos.offsetLeft;
+        var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canpos.offsetTop;
         
         return { x: mX + 0.5, y: mY + 0.5 };
     }
