@@ -102,7 +102,7 @@ function LevelManager(bugStart) {
             this.nwicounter = this.curLevelData.waveTime;
 
             this.levelIteration = Math.floor(this.curLevel / levels.length);
-            var attributeModifier = Math.atan((this.levelIteration + 1) / 5) / Math.PI * 2;
+            var attributeModifier = Math.exp(this.levelIteration * 0.2) - 0.8;
 
             this.bugsToSpawn = [];
             for (var part in this.curLevelData) {
@@ -114,9 +114,14 @@ function LevelManager(bugStart) {
                             bug.genes.addAllele(group, new Allele(bugAlleles[group]()));
                         for (var attrName in bug.attr) {
                             if (typeof bug.attr[attrName] == "number") {
-                                bug.attr[attrName] *= attributeModifier;
+                                if (attrName == "speed")
+                                    bug.attr[attrName] *= Math.min(attributeModifier, 2);
+                                else
+                                    bug.attr[attrName] *= attributeModifier;
                             }
                         }
+                        if (bug.attr.currentHp < bug.attr.hp)
+                            bug.attr.currentHp = bug.attr.hp;
                         this.bugsToSpawn.push(bug);
                     }
                 }
@@ -134,5 +139,5 @@ function LevelManager(bugStart) {
             this.bugsToSpawn.splice(0, 1);
         }
 
-    }  //End of update
+    }     //End of update
 } //End of levelManager

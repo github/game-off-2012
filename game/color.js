@@ -117,12 +117,12 @@ function getInnerColorFromAttrs(attr) {
     //att speed - lightness
     //damage - saturation
 
-    hue = Math.round(Math.log(attr.range) / Math.log(8)) * attr.damage * 100;
+    hue = 240 + attr.damage * 60;
 
     //hue = 0.5;
 
     //I don't even know
-    saturation = Math.log((attr.currentHp / attr.hp) * Math.log(attr.hp)) * 10;
+    saturation = (attr.currentHp / attr.hp);
 
     lightness = Math.atan(attr.attSpeed) * 100;
 
@@ -139,5 +139,31 @@ function getInnerColorFromAttrs(attr) {
 }
 
 function getOuterColorFromAttrs(attr) {
-    return getInnerColorFromAttrs(attr);
+    var hue = 0;
+    var saturation = 0;
+    var lightness = 0;
+    var alpha = 0;
+
+    //att speed - lightness
+    //damage - saturation
+
+    hue = 240 + attr.range;
+
+    //hue = 0.5;
+
+    //I don't even know
+    saturation = attr.damage;
+
+    lightness = (attr.currentHp / attr.hp) * 100;
+
+    alpha = 1;
+
+    saturation = clamp(saturation, 0, 100);
+    lightness = clamp(lightness, 0, 100);
+
+    saturation = saturation * 0.5 + 10;
+    lightness = lightness * 0.5 + 50;
+
+    //return "hsl(" + hue + "," + saturation + "," + lightness + "," + alpha + ")";
+    return (new HSLColor()).h(hue).s(saturation).l(lightness).a(alpha).str(); // "hsl(160, 50%, 50%)";
 }
