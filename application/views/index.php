@@ -28,7 +28,7 @@
             <span><b>Description</b>: You are playing as Phil!  He is a rare species of box that has the ability to push, pull, remove and take colors from inanimate boxes.  He's also hungry so help him find the cake in each level!</span><br /><br />
             <span><b>How To Play</b>: You'll find the gameplay instructions in the main window below the game.</span><br /><br />
             <span><b>Hints</b>: Each level may have a hint.  These hints will be in the green box below the game.</span><br /><br />
-            <span><b>Create By</b>: Thomas Jacobs, Sean Cusick, Dan Bergren and Tom Patterson</span><br /><br />
+            <span><b>Created By</b>: Thomas Jacobs, Sean Cusick, Dan Bergren and Tom Patterson</span><br /><br />
             <div id="helpScreenClose" onclick="closeHelp();">Close</div>
         </div>
     </div>
