@@ -147,7 +147,6 @@ function Update () {
 	processFall();
 	processSpeed();
 	processSlowDownBonus();
-	//processSparks(); this idea was not conclusive
 }
 
 function processSparks() {
@@ -157,7 +156,6 @@ function processSparks() {
 			var obj:GameObject = level.getPrefab('spark', sprite.position + Vector2(-0.2, -0.4));
 			//generateParticles('spark', sprite.position, 1, 0, Vector2(0, 0), Vector2(0, 0));
 			lastSpark = Time.time;
-			
 		}
 	}
 }
