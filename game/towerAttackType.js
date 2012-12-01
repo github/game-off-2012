@@ -653,5 +653,5 @@ function drawAttributes(user, pen) {
             user.tPos.w,
             user.tPos.h ),
         2, 2,
-        0);
+        0.01);
 }
