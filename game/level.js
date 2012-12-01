@@ -102,7 +102,7 @@ function LevelManager(bugStart) {
             this.nwicounter = this.curLevelData.waveTime;
 
             this.levelIteration = Math.floor(this.curLevel / levels.length);
-            var attributeModifier = Math.exp(this.levelIteration * 0.2) - 0.8;
+            var attributeModifier = Math.atan(this.levelIteration) + this.levelIteration * 0.3 + 0.1;
 
             this.bugsToSpawn = [];
             for (var part in this.curLevelData) {
@@ -115,7 +115,7 @@ function LevelManager(bugStart) {
                         for (var attrName in bug.attr) {
                             if (typeof bug.attr[attrName] == "number") {
                                 if (attrName == "speed")
-                                    bug.attr[attrName] *= Math.min(attributeModifier, 1);
+                                    bug.attr[attrName] *= Math.max(Math.min(attributeModifier, 1), 0.6);
                                 else
                                     bug.attr[attrName] *= attributeModifier;
 
