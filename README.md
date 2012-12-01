@@ -8,11 +8,13 @@ Defend your base from incoming bugs with towers that can dynamically improve.
 Towers are your only defence against creeps trying to get to your base and subsequently damage your health. If your health goes to 0 you die, so you will want to built a lot of towers.
 
 You can build towers by dragging them from the tower bar onto the map:
+
 <img src="http://i.imgur.com/UiAD4.gif" style="border:0;">
 
 Towers will attack creeps according to their targeting type, which is dependent on their genetics, although no matter their targeting type they cannot attack creeps beyond their range. To see their range click on the tower.
 
 Clicking on a tower will also show its stats in the sidebar:
+
 <img src="http://i.imgur.com/vgcKZ.gif" style="border:0;">
 
 Towers have the following stats:
