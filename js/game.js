@@ -66,6 +66,6 @@ $(document).ready(function () {
   
   // Disable space bar page scrolling
   window.onkeydown = function(e) { 
-    return !(e.keyCode == 32);
+    return !($.inArray(e.keyCode, [32,33,34,35,36,37,38,39,40]));
   };
 });
