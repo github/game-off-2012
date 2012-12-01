@@ -50,28 +50,3 @@ function formatToDisplay(text) {
     text = text.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     return text;
 }
-
-//Well this is all I need to do colors
-function setColorPart(color, partNumber, partValue) {
-    var functionParts = color.split("(");
-    var functionName = functionParts[0];
-    var args = functionParts[1].split(")")[0].split(",");
-
-    args[partNumber] = partValue;
-
-    var returnValue = functionName + "( ";
-
-    var first = true;
-    for (var key in args) {
-        if (first) {
-            first = false;
-            returnValue += args[key];
-        }
-        else {
-            returnValue += ", " + args[key];
-        }
-    }
-    returnValue += ")";
-
-    return returnValue;
-}

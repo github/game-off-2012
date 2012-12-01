@@ -37,6 +37,9 @@ function TemporalPos(x, y, w, h, dx, dy) {
             this.dy *= Math.sqrt((speed * speed) / initialSpeedSq);
         }
     };
+    this.clone = function() {
+        return new TemporalPos(this.x, this.y, this.w, this.h, this.dx, this.dy);
+    }
 }
 
 var Vector = (function () {

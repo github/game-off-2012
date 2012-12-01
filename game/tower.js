@@ -1,13 +1,16 @@
-function Tower_Packet(t1, t2, group, allele) {
+function Tower_Packet(t1, t2, speed, group, allele) {
     this.base = new BaseObj(this, 12);
     // We don't really need it
     this.tpos = new TemporalPos(0, 0, 1, 1, 0, 0);
     var p1 = getRectCenter(t1.tPos);
     var p2 = getRectCenter(t2.tPos);
-    var dis = p1.clone().sub(p2).mag();
+    
+    var dis = p1.clone().sub(p2).mag()
+    
     var packet = new Circle(p1, 3, allele.getInnerColor(), allele.getOuterColor(), 15);
     packet.lineWidth = 1;
-    var motionDelay = new MotionDelay(p1, p2, dis / 10, apply);
+    
+    var motionDelay = new MotionDelay(p1, p2, dis / speed, apply);
     this.base.addObject(packet);
     packet.base.addObject(motionDelay);
     
@@ -22,33 +25,37 @@ function Tower_Packet(t1, t2, group, allele) {
 function Tower_Connection(t1, t2) {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this, 11);
-    this.hover = false;
 
-    this.t1 = t1;
-    this.t2 = t2;
-
+    // Those fucking random numbers passed as the last argument? Those are positions along the line where arrows are drawn. Probably. I can't be sure.
+    // What does 11 mean? Fuck if I know.
     var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11, {1: 0.1, 2: 0.3, 3: 0.5, 4: 0.7, 5: 0.9});
     this.base.addObject(line);
-
-    var pos = new Vector(t2.tPos.x, t2.tPos.y);
     
-    pos.w = 15;
-    pos.h = 15;
-
-    pos.sub({x: pos.w * 0.5, y: pos.h * 0.5});
-    
-    this.deleteButton = new Button(pos, "-", 
-        this, "deleteSelf", 50);
-    this.deleteButton.textsize = 8;
-    
-    this.base.addObject(this.deleteButton);
-
-    t1.prevhitCount = t1.attr.kills;
-    t2.prevhitCount = t2.attr.kills;
+    var prevhitCount;
+    var deleteButton;
     
     var that = this;
+    
+    function addDeleteButton() {
+        var delta = t2.tPos.getCenter();
+        delta.sub(t1.tPos.getCenter());
+        delta.mult(1/2);
+        
+        var pos = t2.tPos.getCenter();
+        pos.sub(delta);
+        pos.w = 20;
+        pos.h = 20;
+        pos.sub({x: pos.w * 0.5, y: pos.h * 0.5});
+        
+        deleteButton = new Button(pos, "-", 
+            that, "deleteSelf", 50);
+        
+        that.base.addObject(deleteButton);
+    }
+    addDeleteButton();
+    
     function dataTransfer(t1, t2) {
-        function sendRandomPacket(t1, t2) {
+        function sendRandomPacket(t1, t2, speed) {
             var groups = [];
             for (var group in AllAlleleGroups)
                 groups.push(group);
@@ -56,24 +63,27 @@ function Tower_Connection(t1, t2) {
             var group = pickRandom(groups);
             var al = t1.genes.alleles[group];
 
-            that.base.addObject(new Tower_Packet(t1, t2, group, al));
+            that.base.addObject(new Tower_Packet(t1, t2, speed, group, al));
         }
 
-        if (t1.prevhitCount === undefined) {
-            t1.prevhitCount = t1.attr.kills;
+        if (prevhitCount === undefined) {
+            prevhitCount = t1.attr.kills;
             return;
         }
-        var killDelta = t1.attr.kills - t1.prevhitCount;
-        while (Math.floor(killDelta / 1) > 0) {
-            sendRandomPacket(t1, t2);
-            t1.prevhitCount += 10;
-            killDelta = t1.attr.kills - t1.prevhitCount;
+        
+        var speed = Math.max(Math.min(t1.attr.upload, t2.attr.download), 0.00000001 /* should really be zero */);
+        var killsRequired = 10 / speed;
+        var killDelta = t1.attr.kills - prevhitCount;
+        
+        while (Math.floor(killDelta / killsRequired) > 0) {
+            sendRandomPacket(t1, t2, speed);
+            prevhitCount += killsRequired;
+            killDelta = t1.attr.kills - prevhitCount;
         }
-        t1.prevhitCount = t1.attr.kills - killDelta;
+        prevhitCount = t1.attr.kills - killDelta;
     }
     
-    this.deleteSelf = function()
-    {
+    this.deleteSelf = function() {
         var conns = this.base.parent.connections;
 
         for(var key in conns) {
@@ -88,13 +98,12 @@ function Tower_Connection(t1, t2) {
 
     this.update = function(dt) {
         dataTransfer(t1, t2);
-        //dataTransfer(t2, t1);
-        
-        this.deleteButton.hidden = !this.base.parent.hover;
 
+        deleteButton.hidden = !this.base.parent.hover;
+
+        // Wtf... setColorPart() should not be a thing.
         if (this.base.parent.hover) {
             line.color = setColorPart(line.color, 3, 0.9);            
-
         } else {
             line.color = setColorPart(line.color, 3, 0.2);
         }
