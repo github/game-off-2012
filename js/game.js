@@ -8,7 +8,7 @@ var gameBoard = {
   height: 16,       // Height in tiles
   width: 16,        // Width in tiles
   tileSize: 32,     // Tile size in px squared
-  actionKey: 32,    // Spacebar is the action key
+  actionKey: 72,    // H is the action key
   removeKey: 70,    // F is the remove key
   colorKey: 69,     // E is the take / give color key
   standardAnimationLength: 50,   // Number of frames to play animations
@@ -66,6 +66,6 @@ $(document).ready(function () {
   
   // Disable space bar page scrolling
   window.onkeydown = function(e) { 
-    return !($.inArray(e.keyCode, [32,33,34,35,36,37,38,39,40]));
+    return !($.inArray(e.keyCode, [33,34,35,36,37,38,39,40,72]));
   };
 });
