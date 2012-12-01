@@ -146,7 +146,7 @@ var DFlag = {};
 <s src="game/logic.js"></s>
 </div>
 <script>
-(function() {
+document.body.onload = function() {
     var scripts = document.getElementById("scripts");
     var c = scripts.children;
     for (var i = 0; i < c.length; i++) {
@@ -154,7 +154,7 @@ var DFlag = {};
         var script = new Image();
         script.src = src;
     }
-}());
+};
 </script>
 </body>
 </html>
