@@ -98,7 +98,11 @@ var allAttackTypes = {
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
 
-            ink.text(tPos.x, tPos.y, "L", pen);
+            pen.strokeStyle = "blue";
+	    pen.lineWidth = 3;
+	    ink.line(tPos.x, tPos.y, tPos.x + (tPos.w*0.7), tPos.y - tPos.h, pen);
+
+            //ink.text(tPos.x, tPos.y, "L", pen);
         };
         this.AttackNode = function(attackTemplate)
         {
@@ -137,11 +141,17 @@ var allAttackTypes = {
         this.damage_percent = 300;
         this.drawGlyph = function (pen, tPos) {
             //Draw text
-            pen.fillStyle = "#000000";
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
+	    pen.lineWidth = 0;
+	    pen.fillStyle = "#ffffff";
+	    ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.5, pen);
 
-            ink.text(tPos.x, tPos.y, "B", pen);
+	    pen.strokeStyle = "transparent";
+            pen.fillStyle = "orange";
+	    ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.3, pen);
+
+            //ink.text(tPos.x, tPos.y, "B", pen);
         };
         this.AttackNode = function(attackTemplate)
         {
@@ -200,11 +210,15 @@ var allAttackTypes = {
         this.repeatDelay = 0.3;
         this.drawGlyph = function (pen, tPos) {
             //Draw text
-            pen.fillStyle = "#000000";
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
 
-            ink.text(tPos.x, tPos.y, "CL", pen);
+            pen.strokeStyle = "blue";
+	    pen.lineWidth = 2;
+	    ink.line(tPos.x, tPos.y, tPos.x + (tPos.w*0.2), tPos.y - (tPos.w*0.7), pen);
+	    ink.line(tPos.x + (tPos.w*0.2), tPos.y - (tPos.w*0.7), tPos.x + (tPos.w*0.5), tPos.y - (tPos.w*0.3), pen);
+
+            //ink.text(tPos.x, tPos.y, "CL", pen);
         };
         this.AttackNode = function(attackTemplate)
         {
@@ -286,6 +300,8 @@ var allAttackTypes = {
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
 
+	    pen.fillStyle = "blue";
+	    ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.5, pen);
             ink.text(tPos.x, tPos.y, "P", pen);
         };
         this.AttackNode = function(attackTemplate)
@@ -370,6 +386,7 @@ var allAttackTypes = {
             pen.fillStyle = "#000000";
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
+	    
 
             ink.text(tPos.x, tPos.y, "PO", pen);
         };
@@ -435,10 +452,14 @@ var allAttackTypes = {
         this.slow_time = 2.5;
         this.drawGlyph = function (pen, tPos) {
             //Draw text
-            pen.fillStyle = "#000000";
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
 
+            pen.fillStyle = "lightblue";
+	    pen.strokeStyle = "white";
+	    ink.tri(tPos.x, tPos.y - tPos.h, tPos.w/2, tPos.h, pen);
+
+            pen.fillStyle = "white";
             ink.text(tPos.x, tPos.y, "S", pen);
         };
         this.AttackNode = function(attackTemplate)
