@@ -44,5 +44,8 @@ pink for 100, red for 500, blue for 1000). Stars for invincibility
 for a short period. Berries spawning clones that'll destroy
 anything that comes in their way!
 
-Collisions are not super strict
-to make the gameplay a little less harder.
+Collisions are not super strict to make the gameplay a little less harder.
+
+No Libraries/Frameworks used. All Custom Code and Custom Physics.
+
+Hit Enter or Spacebar keys to (re)start the game.
