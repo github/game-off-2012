@@ -167,11 +167,12 @@ function Infobar(pos) {
                                 for (var key in allele.delta) {
                                     if (key == name) {
                                         var impact = allele.delta[key];
-                                        if(impact > 0)
+                                        if (impact > 0)
                                             startX += addBarPart(impact) * (impact < 0 ? -1 : 1);
                                     }
                                 }
                             }
+                            startX -= 2;
                             for (var key in obj.genes.alleles) {
                                 var allele = obj.genes.alleles[key];
                                 for (var key in allele.delta) {
@@ -263,5 +264,5 @@ function Infobar(pos) {
 
         this.allelePoints.tPos.x = xPos;
         this.allelePoints.tPos.y = this.tPos.y + this.tPos.h - this.allelePoints.tPos.h - 10;
-    }                                                                    //End of draw
+    }                                                                      //End of draw
 }

@@ -109,31 +109,55 @@ function setColorPart(color, partNumber, partValue) {
 }
 
 function getInnerColorFromAttrs(attr) {
-
-    //Range - logarithmic
-
-    //Damage - gradient
-
-    //Hp - gradient
-
-    //Att speed - logarithmic
-
     var hue = 0;
     var saturation = 0;
     var lightness = 0;
     var alpha = 0;
 
     //att speed - lightness
-    //hue =  
+    //damage - saturation
 
+    hue = Math.round(Math.log(attr.range) / Math.log(8)) * attr.damage * 100;
 
-    hue = clamp(hue % 360, 0, 360);
-    saturation = clamp(saturation, 0, 1);
-    lightness = clamp(lightness, 0, 1);
-    alpha = clamp(alpha, 0, 1);
-    return "hsl(" + hue + "," + saturation + "," + lightness + "," + alpha + ")";
+    //hue = 0.5;
+
+    //I don't even know
+    saturation = Math.log((attr.currentHp / attr.hp) * Math.log(attr.hp)) * 10;
+
+    lightness = Math.atan(attr.attSpeed) * 100;
+
+    alpha = 1;
+
+    saturation = clamp(saturation, 0, 100);
+    lightness = clamp(lightness, 0, 100);
+
+    saturation = saturation * 0.5 + 25;
+    lightness = lightness * 0.5 + 25;
+
+    //return "hsl(" + hue + "," + saturation + "," + lightness + "," + alpha + ")";
+    return (new HSLColor()).h(hue).s(saturation).l(lightness).a(alpha).str();// "hsl(160, 50%, 50%)";
 }
 
 function getOuterColorFromAttrs(attr) {
-    return "yellow";
+    var hue = 0;
+    var saturation = 0;
+    var lightness = 0;
+    var alpha = 0;
+
+    //att speed - lightness
+    //damage - saturation
+
+    hue = Math.round(Math.log(attr.range) / Math.log(8)) * attr.damage;
+
+    hue = 180;
+
+    //I don't even know
+    saturation = Math.log((attr.currentHp / attr.hp) * Math.log(attr.hp)) / 10;
+    saturation = 0.5;
+
+    lightness = 0.5; // Math.atan(attr.attSpeed);
+
+    alpha = 1;
+
+    return "hsl(" + hue + "," + saturation + "," + lightness + "," + alpha + ")";
 }

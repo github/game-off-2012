@@ -110,7 +110,10 @@ function mergeObject(objectOne, objectTwo) {
 }
 
 function clamp(val, min, max) {
-//Like my code?
+    //Like my code?
+    if (isNaN(val))
+        return min / 2 + max / 2;
+
     return val <
            min ?
            min :
