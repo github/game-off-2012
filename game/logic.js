@@ -50,7 +50,7 @@
 //    this.base.addObject(this.towerbreeder);
 
     this.gameInfoBar = new GameInfoBar(
-            new TemporalPos(0, pos.h - 240, pos.w - 260, 80)
+            new TemporalPos(0, pos.h - 240, pos.w - 260, 90)
         );
     this.base.addObject(this.gameInfoBar);
 
