@@ -181,7 +181,9 @@ function AttributeTween(start, end, time, callbackName, attributeName) {
     this.update = function (dt) {
         this.time -= dt;
         if (this.time < 0) {
-            this.base.parent[this.callbackName]();
+            if (this.callbackName && this.callbackName.length > 0)
+                this.base.parent[this.callbackName]();            
+
             this.base.destroySelf();
             return;
         }

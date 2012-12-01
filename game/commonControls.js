@@ -68,12 +68,15 @@ function Button(pos, txt, context, functionName, callData, zorder) {
     };
 }
 
-function Label(pos, text) {
+function Label(pos, text, zorder) {
+    if (!zorder)
+        zorder = 15;
+
     this.tPos = pos;
-    this.base = new BaseObj(this, 15);
+    this.base = new BaseObj(this, zorder);
+    this.type = "Label" + zorder;
     this.color = "red";
     this.font = "12px courier";
-    var textsize = 14;
 
     this.text = formatToDisplay(text);
 

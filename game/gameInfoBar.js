@@ -48,7 +48,7 @@ function GameInfoBar(pos) {
 
 
     this.gotoNextLevel = new Button(
-        new TemporalPos(pos.x + 300, pos.y + 53, 190, 25), "Send Next Wave Now",
+        new TemporalPos(pos.x + 315, pos.y + 63, 190, 25), "Send Next Wave Now",
             this, "skipNextLevel");
     //this.gotoNextLevel.font = "20px arial";
     //this.gotoNextLevel.color = "white";

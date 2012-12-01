@@ -104,8 +104,8 @@ function Bug(startPath) {
     this.destroyAtBase = function() {        
         eng.health -= 5;
 
-        if (eng.health <= 0 && !this.base.rootNode.base.allLengths.gameOver) {
-            this.base.rootNode.base.addObject(new gameOver());
+        if (eng.health <= 0 && !this.base.rootNode.base.allLengths.GameOver) {
+            this.base.rootNode.base.addObject(new GameOver());
             //window.location.reload();
         }
 
