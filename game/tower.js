@@ -7,7 +7,7 @@ function Tower_Packet(t1, t2, speed, group, allele) {
     
     var dis = p1.clone().sub(p2).mag()
     
-    var packet = new Circle(p1, 3, allele.getInnerColor(), allele.getOuterColor(), 15);
+    var packet = new Circle(p1, 3, allele.getOuterColor(), allele.getInnerColor(), 15);
     packet.lineWidth = 1;
     
     var motionDelay = new MotionDelay(p1, p2, dis / speed, apply);
@@ -49,6 +49,7 @@ function Tower_Connection(t1, t2) {
         
         deleteButton = new Button(pos, "-", 
             that, "deleteSelf", 50);
+        deleteButton.color = "rgba(0, 255, 0, 0.6)";
         
         that.base.addObject(deleteButton);
     }
@@ -117,8 +118,8 @@ TowerStats = {
         currentHp:      100,
         hpRegen:        1,
         attSpeed:       0.6,
-        upload:         1,
-        download:       1,
+        upload:         5,
+        download:       5,
         hitCount:       0,
         kills:          0,
         value:          50,
