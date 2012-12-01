@@ -16,11 +16,11 @@
 ----------------
 ----------------
 XXXXXXXXXXXXXXXX
-X--------------X
-X--------------X
-X--------------X
-X-------------pX
-X----------XXXXX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
 X----------XXXXX
 X----------XXXXX
 X----------XXXPX
@@ -29,7 +29,7 @@ XBB------------X
 XrPW-----------X
 XBB-----------BX
 X-----------XWXX
-X------RS---XRFX
+Xp-----RS---XRFX
 XXXXXXXXXXXXXXXX
 METADATA
 title: Level 4: Advanced Color Swapping
