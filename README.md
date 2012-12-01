@@ -24,7 +24,8 @@ Towers will attack and damage bugs near them, they can have multiple attacks in 
 
 These are also shown in the top right, lower left and lower right quadtrants of each tower.
 
-The top left corner shows how the tower will attack. In the picture above, the towers (from left to right) will attack closest, random, furthest, random, furthest and furthest. 
+The top left corner shows how the tower will attack. Towers can attack the closest or furthest bug, or a random bug. 
+In the picture above, the towers (from left to right) will attack furthest, random, closest, random, closest and closest. 
 
 
 Clicking on a tower will also show its stats in the sidebar:
