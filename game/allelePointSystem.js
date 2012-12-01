@@ -48,6 +48,8 @@ function AllelePointSystem(pos) {
     this.autoTrashButton.tPos.w *= 0.93;
     this.base.addObject(this.autoTrashButton);
 
+    this.autoTrashButton.toggle();
+
     this.pointCost = 50;
 
     this.buyPoint = function (costData) {

@@ -289,9 +289,7 @@ function Tower(baseTile) {
             for (var i = 0; i < this.connections.length; i++)
                 if(this.connections[i].t2 == towerSelected)
                     return;
-
-            if (eng.money < 50) return;
-            eng.money -= 50;
+            
             var conn = new Tower_Connection(this, towerSelected);
             this.base.addObject(conn);
             this.connections.push(conn);
