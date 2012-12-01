@@ -71,7 +71,7 @@ When mousing over any of the purchase allele buttons indicator will apear next t
 
 Networks between towers can be created by dragged one tower to another tower. This will cause alleles from the starting tower to be occasionally pushed to the end tower. Alleles will be pushed according the the kills the tower gets, and the kills needed to push an allele is proportional to the minimum of the sending tower's upload and the receiving tower's download speed.
 
-Network connections can be removed by clicking on the sending tower and then clicking on the - box next to the receiving tower.
+Network connections can be removed by clicking on the sending tower and then clicking on the "-" box next to the receiving tower.
 
 ## Resources Used
 
