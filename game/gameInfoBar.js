@@ -76,10 +76,10 @@ function GameInfoBar(pos) {
 	} 
 	if (oldmoney < this.base.rootNode.money) {
 		oldmoney = this.base.rootNode.money;
-		this.base.addObject( new dollarAni(this.healthIndi.tPos, false));
+		this.base.addObject( new dollarAni(this.moneyIndi.tPos, false));
 	} else if (oldmoney > this.base.rootNode.money) {
 		oldmoney = this.base.rootNode.money;
-		this.base.addObject( new dollarAni(this.healthIndi.tPos, true));
+		this.base.addObject( new dollarAni(this.moneyIndi.tPos, true));
 	}
 
 	
@@ -89,6 +89,12 @@ function GameInfoBar(pos) {
 function dollarAni(pos, negative) {
 	this.base = new BaseObj(this, 19);
 	this.tPos = pos.clone();
+	if (!negative) {
+		this.tPos.y -= 15;
+	} else {
+		this.tPos.y += 15;
+	}
+
 
 	var alpha = 1;
 
@@ -109,7 +115,11 @@ function dollarAni(pos, negative) {
 		if (alpha <= 0) {
 			this.base.destroySelf();
 		}
-		this.tPos.y -= dt*5;
+		if (!negative) {
+			this.tPos.y -= dt*5;
+		} else {
+			this.tPos.y += dt*5;
+		}
 	}
 }
 
