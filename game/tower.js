@@ -321,8 +321,9 @@ function tryPlaceTower(tower, tile)
 
     if (!towerOnTile && !pathOnTile && eng.money - curCost >= 0) {
         eng.money -= curCost;   
+        tower.value = curCost;
 
-        tile.base.rootNode.currentCost *= 2;
+        tile.base.rootNode.currentCost *= 2;        
 
         tower.tPos = tile.tPos;         
         eng.base.addObject(tower);

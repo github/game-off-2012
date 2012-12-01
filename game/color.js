@@ -69,7 +69,29 @@ function setColorPart(color, partNumber, partValue) {
 }
 
 function getInnerColorFromAttrs(attr) {
-    return "pink";
+
+    //Range - logarithmic
+
+    //Damage - gradient
+
+    //Hp - gradient
+
+    //Att speed - logarithmic
+
+    var hue = 0;
+    var saturation = 0;
+    var lightness = 0;
+    var alpha = 0;
+
+    //att speed - lightness
+    //hue =  
+
+
+    hue = clamp(hue % 360, 0, 360);
+    saturation = clamp(saturation, 0, 1);
+    lightness = clamp(lightness, 0, 1);
+    alpha = clamp(alpha, 0, 1);
+    return "hsl(" + hue + "," + saturation + "," + lightness + "," + alpha + ")";
 }
 
 function getOuterColorFromAttrs(attr) {

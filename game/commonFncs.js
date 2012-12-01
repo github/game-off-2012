@@ -109,6 +109,17 @@ function mergeObject(objectOne, objectTwo) {
     return jQuery.extend(true, objectOne, objectTwo);
 }
 
+function clamp(val, min, max) {
+//Like my code?
+    return val <
+           min ?
+           min :
+           val >
+           max ?
+           max : 
+           val;
+}
+
 
 //makeTileFnc takes array[x], pen, new TemporalPos(xPos, yPos, width, height)
 function makeTiled(pen, makeTileFnc, array, tPosBox, xNum, yNum, percentBuffer) {
