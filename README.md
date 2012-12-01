@@ -1,5 +1,6 @@
 ## Epic Fail Inc's Github Game-Off Submission
 
+<img src="http://i.imgur.com/zDjHa.jpg" style="border:0;">
 
 ##### Intro
 Greetings!  
