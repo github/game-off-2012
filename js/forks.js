@@ -125,7 +125,7 @@
           pos.x += utils.randomNumber(500,800);
       }
       else {
-        pos.x = mit.W/1000 * 800;
+        pos.x = mit.W/1000 * 1050;
       }
 
       var branches = mit.BranchUtils.branches;

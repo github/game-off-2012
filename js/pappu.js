@@ -228,6 +228,8 @@
       for (var i = 0; i < count; i++) {
         pappu_clone = Object.create(mit.Pappu);
 
+        pappu_clone.invincible = 0;
+
         this.clones.push(pappu_clone);
       }
 
