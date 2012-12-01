@@ -1,5 +1,15 @@
-Fork It, We'll Do It Live Game 2012!
+## Fork It!
 
-You control Phil, this little dude who is trying to navigate through these silly block mazes. He has inherited a magic fork (like seriously, an actual fork) that he can use once he grabs enough blocks of the same color and moves them together. Once he sticks this fork into the blocks, they turn into food that his buddies quickly devour; this a) feeds his buddies who are starving, and b) clears a path for him through the block maze.
+**Playable URL:** [http://forkit.herokuapp.com](http://forkit.herokuapp.com/)
 
-There are other silly mechanics such as letting Phil change the color of the blocks, or only move certain colored blocks along special tracks, or combining colors. The possibilities are endless. What this game boils down to, however, is getting from Point A to Point B in order to progress/save the princess/feed his people/whatever. I'm still working on the story. :)
+**Description:** You are playing as Phil! He is a rare species of box that has the ability to push, pull, remove and take colors from inanimate boxes. He's also hungry so help him find the cake in each level!
+
+**How To Play:** You'll find the gameplay instructions in the main window below the game.
+
+**Hints:** Each level may have a hint. These hints will be in the green box below the game.
+
+**Create By:** Thomas Jacobs, Sean Cusick, Dan Bergren and Tom Patterson
+
+**Technologies Used:** [Crafty.js](http://craftyjs.com/), [CodeIgniter](http://ellislab.com/codeigniter)
+
+![](http://forkit.herokuapp.com/images/forkit.png)
