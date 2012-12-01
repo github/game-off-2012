@@ -233,7 +233,7 @@ var allAttackTypes = {
             this.chain_chance = attackTemplate.attackType.chain_chance;
             this.repeatDelay = attackTemplate.attackType.repeatDelay;
 
-            this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
+            this.color = "white";
             
             //AlphaDecay destroys us
             var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        

@@ -262,11 +262,34 @@ function Allele(delta)
     }
     this.getInnerColor = function()
     {
-        return "pink";
+        if(this.delta.attack)        
+            return "pink";
+        else if(this.delta.target)
+            return "yellow";
+
+        return "white";
     }
     this.getOuterColor = function()
     {
-        return "yellow";
+        if(this.delta.attack)
+        {
+            var name = this.delta.attack.name;
+            if(name == "bullet")
+                return "yellow";
+            else if(name == "laser")
+                return "blue";
+            else if(name == "chain_lightning")
+                return "white";
+            else if(name == "pulse")
+                return "magenta";
+            else if(name == "poison")
+                return "green";
+            else if(name == "slow")
+                return "dodgerblue";
+                
+            return "yellow";
+        }
+        return getInnerColorFromAttrs(this.delta);
     }
 }
 

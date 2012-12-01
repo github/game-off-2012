@@ -15,6 +15,8 @@ function Button(pos, txt, context, functionName, callData, zorder) {
     this.functionName = functionName;
     this.callData = callData;
 
+    this.color = "green";
+
     txt = formatToDisplay(txt);
 
     this.draw = function(pen) {
