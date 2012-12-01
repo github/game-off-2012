@@ -76,17 +76,17 @@ function GameInfoBar(pos) {
 	} 
 	if (oldmoney < this.base.rootNode.money) {
 		oldmoney = this.base.rootNode.money;
-		this.base.addObject( new dollarAni(this.moneyIndi.tPos, false));
+		this.base.addObject( new TextFadeAni(this.moneyIndi.tPos, false, "$$$$$"));
 	} else if (oldmoney > this.base.rootNode.money) {
 		oldmoney = this.base.rootNode.money;
-		this.base.addObject( new dollarAni(this.moneyIndi.tPos, true));
+		this.base.addObject( new TextFadeAni(this.moneyIndi.tPos, true, "$$$$$"));
 	}
 
 	
     }
 }
 
-function dollarAni(pos, negative) {
+function TextFadeAni(pos, negative, txt) {
 	this.base = new BaseObj(this, 19);
 	this.tPos = pos.clone();
 	if (!negative) {
@@ -106,7 +106,7 @@ function dollarAni(pos, negative) {
 		}
 			
 		pen.font = "24px courier";
-		ink.text(this.tPos.x, this.tPos.y, "$$$$$", pen);
+		ink.text(this.tPos.x, this.tPos.y, txt, pen);
 		return;
 	}
 
