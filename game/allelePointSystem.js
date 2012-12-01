@@ -186,31 +186,31 @@ function AllelePointSystem(pos) {
 
         this.pointIndicator.tPos.x = xPos + 10;
         this.pointIndicator.tPos.y = yPos + 20;
-        yPos += 26;
+        yPos += 28;
 
         this.buyButton.tPos.x = xPos + 10;
         this.buyButton.tPos.y = yPos;
-        yPos += 26;
+        yPos += 28;
 
         this.buyButton2.tPos.x = xPos + 10;
         this.buyButton2.tPos.y = yPos;
-        yPos += 26;
+        yPos += 28;
 
         this.buyButton3.tPos.x = xPos + 10;
         this.buyButton3.tPos.y = yPos;
-        yPos += 26;
+        yPos += 28;
 
         this.spendButton.tPos.x = xPos + 10;
         this.spendButton.tPos.y = yPos;
-        yPos += 26;
+        yPos += 28;
 
         this.trashButton.tPos.x = xPos + 10;
         this.trashButton.tPos.y = yPos;
-        yPos += 26;
+        yPos += 28;
 
         this.autoTrashButton.tPos.x = xPos + 10;
         this.autoTrashButton.tPos.y = yPos;
-        yPos += 26;
+        yPos += 28;
 
         if (selected)
             this.autoTrashButton.toggled = selected.autoTrash;
@@ -230,17 +230,5 @@ function AllelePointSystem(pos) {
         else {
             this.base.setAttributeRecursive("hidden", true);
         }
-    }
-
-    this.draw = function (pen) {
-        //pen.fillStyle = "#000";
-        //ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-
-        pen.fillStyle = "transparent";
-
-        pen.strokeStyle = "orange";
-        pen.lineWidth = 1;
-
-        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
     }
 }
