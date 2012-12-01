@@ -15,8 +15,7 @@ function applyAttack(attackTemplate) {
     if(!assertDefined(target, attacker, damage, baseAttacker))
         return;
 
-    if(isNaN(target.attr.currentHp))
-    {
+    if(isNaN(target.attr.currentHp)) {
         fail("darn it! got to figure out how this happens.");
     }
 
@@ -25,8 +24,7 @@ function applyAttack(attackTemplate) {
 
     var newAttackType = baseAttacker.attr.attack_types[attackTemplate.currentAttPos + 1];
 
-    if(newAttackType)
-    {
+    if(newAttackType) {
         var newAttTemplate = cloneObject(attackTemplate); //Clone it just incase it has its own attributes
         newAttTemplate.attackType = newAttackType;
         newAttTemplate.attacker = attackTemplate.target;
@@ -34,8 +32,7 @@ function applyAttack(attackTemplate) {
         startAttack(newAttTemplate);
     }
 
-    if(target.attr.currentHp < 0)
-    {
+    if(target.attr.currentHp < 0) {
         var sound = new Sound("snd/die.wav");
         target.base.destroySelf();
 
