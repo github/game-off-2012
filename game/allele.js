@@ -275,17 +275,17 @@ function Allele(delta)
         {
             var name = this.delta.attack.name;
             if(name == "bullet")
-                return "yellow";
+                return globalColorPalette.bullet;
             else if(name == "laser")
-                return "blue";
+                return globalColorPalette.laser;
             else if(name == "chain_lightning")
-                return "white";
+                return globalColorPalette.chain_lightning;
             else if(name == "pulse")
-                return "magenta";
+                return globalColorPalette.pulse;
             else if(name == "poison")
-                return "green";
+                return globalColorPalette.poison;
             else if(name == "slow")
-                return "dodgerblue";
+                return globalColorPalette.slow;
                 
             return "yellow";
         }

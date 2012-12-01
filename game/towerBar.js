@@ -66,6 +66,9 @@ function Towerbar(pos) {
         attackCombinations.push(attackTypes);
     }
 
+    var superAttack = { 0: allAttackTypes.Pulse, 1: allAttackTypes.Pulse, 2: allAttackTypes.Pulse };
+    attackCombinations.push(superAttack);
+
     var buttonW = TILE_SIZE;
     //Scaled exactly to 150 by 674...
     

@@ -98,9 +98,32 @@ var allAttackTypes = {
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
 
-            pen.strokeStyle = "blue";
-	    pen.lineWidth = 3;
-	    ink.line(tPos.x, tPos.y, tPos.x + (tPos.w*0.7), tPos.y - tPos.h, pen);
+            var start = new Vector(tPos.x, tPos.y);
+            var end = new Vector(tPos.x + (tPos.w*0.7), tPos.y - tPos.h);
+
+            pen.strokeStyle = globalColorPalette.laser;
+	        pen.lineWidth = 3;
+	        ink.line(start.x, start.y, end.x, end.y, pen);
+
+            pen.lineWidth = 1;
+
+            var dist = cloneObject(start);
+            dist.sub(end);
+            dist = dist.mag() * 0.2;
+
+            end = start;
+
+            for(var i = 0; i <= Math.PI * 2; i += Math.PI / 3)
+            {
+                start = cloneObject(end);
+
+                var delta = new Vector(Math.cos(i) * dist, Math.sin(i) * dist);
+                start.add(delta);
+
+                pen.strokeStyle = globalColorPalette.laser;
+	            pen.lineWidth = 3;
+	            ink.line(start.x, start.y, end.x, end.y, pen);
+            }
 
             //ink.text(tPos.x, tPos.y, "L", pen);
         };
@@ -117,7 +140,7 @@ var allAttackTypes = {
             var target = attackTemplate.target;
             var damage = attackTemplate.damage;            
 
-            this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
+            this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : globalColorPalette.laser;
             
             //AlphaDecay destroys us
             var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
@@ -140,18 +163,15 @@ var allAttackTypes = {
         this.bullet_speed = 50;
         this.damage_percent = 300;
         this.drawGlyph = function (pen, tPos) {
-            //Draw text
-            pen.font = tPos.h + "px arial";
-            pen.textAlign = 'left';
-	    pen.lineWidth = 0;
-	    pen.fillStyle = "#ffffff";
-	    ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.5, pen);
+            
+	        pen.lineWidth = 0;
+	        pen.fillStyle = "#ffffff";        
+            pen.strokeStyle = "transparent";
+	        ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.5, pen);
 
-	    pen.strokeStyle = "transparent";
+    	    pen.strokeStyle = "transparent";
             pen.fillStyle = "orange";
-	    ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.3, pen);
-
-            //ink.text(tPos.x, tPos.y, "B", pen);
+	        ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.4, pen);
         };
         this.AttackNode = function(attackTemplate)
         {
@@ -209,16 +229,37 @@ var allAttackTypes = {
         this.chain_chance = 80;
         this.repeatDelay = 0.3;
         this.drawGlyph = function (pen, tPos) {
-            //Draw text
-            pen.font = tPos.h + "px arial";
-            pen.textAlign = 'left';
+            var w = tPos.w;
+            var h = tPos.h;
 
-            pen.strokeStyle = "blue";
-	    pen.lineWidth = 2;
-	    ink.line(tPos.x, tPos.y, tPos.x + (tPos.w*0.2), tPos.y - (tPos.w*0.7), pen);
-	    ink.line(tPos.x + (tPos.w*0.2), tPos.y - (tPos.w*0.7), tPos.x + (tPos.w*0.5), tPos.y - (tPos.w*0.3), pen);
+            var offsetList = 
+                [3, 2, -3, 0, 5, 3, -4, 0, 5, 3,
+                2, 0,
+                -5, -3, 3, 0, -4, -3, 2, 0, -4, -2];
 
-            //ink.text(tPos.x, tPos.y, "CL", pen);
+            var start = new Vector(tPos.x, tPos.y);
+            var end = new Vector(tPos.x, tPos.y);
+
+            var scale = 8;
+
+            pen.fillStyle = globalColorPalette.chain_lightning;
+            pen.strokeStyle = globalColorPalette.chain_lightning;
+
+            pen.moveTo(start.x, start.y);
+
+            for(var i = 0; i < offsetList.length; i += 2)
+            {
+                start = cloneObject(end);
+                end = new Vector(start.x + w * (offsetList[i] / scale), start.y - h * (offsetList[i + 1] / scale));
+                pen.strokeStyle = globalColorPalette.chain_lightning;
+	            pen.lineWidth = 0.5;	            
+                pen.lineTo(end.x, end.y);   
+                pen.stroke();             
+            }             
+
+            pen.closePath();
+            pen.fill();
+
         };
         this.AttackNode = function(attackTemplate)
         {
@@ -233,7 +274,7 @@ var allAttackTypes = {
             this.chain_chance = attackTemplate.attackType.chain_chance;
             this.repeatDelay = attackTemplate.attackType.repeatDelay;
 
-            this.color = "white";
+            this.color = globalColorPalette.chain_lightning;
             
             //AlphaDecay destroys us
             var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
@@ -300,10 +341,21 @@ var allAttackTypes = {
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
 
-	    pen.fillStyle = "blue";
-	    pen.strokeStyle = "white";
-	    ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.5, pen);
-            ink.text(tPos.x, tPos.y, "P", pen);
+	        pen.fillStyle = setAlpha(globalColorPalette.pulse, 0.5);
+	        pen.strokeStyle = "transparent";
+	        ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.5, pen);
+
+            pen.fillStyle = setAlpha(globalColorPalette.pulse, 0.5);
+	        pen.strokeStyle = "transparent";
+	        ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.4, pen);
+
+            pen.fillStyle = setAlpha(globalColorPalette.pulse, 0.5);
+	        pen.strokeStyle = "transparent";
+	        ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.2, pen);
+
+            pen.fillStyle = setAlpha(globalColorPalette.pulse, 0.5);
+	        pen.strokeStyle = "transparent";
+	        ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.1, pen);
         };
         this.AttackNode = function(attackTemplate)
         {         
@@ -389,9 +441,24 @@ var allAttackTypes = {
             pen.textAlign = 'left';
 	    
 
-            pen.strokeStyle = "#00ff00";
-	    pen.lineWidth = 3;
-	    ink.line(tPos.x, tPos.y, tPos.x + (tPos.w*0.7), tPos.y - tPos.h, pen);
+            var circlePos = [0.2, 0.25, 0.1, 
+                            0.5, 0.1, 0.1, 
+                            0.8, 0.25, 0.1,
+                            0.2, 0.65, 0.1,
+                            0.5, 0.5, 0.1,
+                            0.8, 0.65, 0.1,
+                            0.5, 0.85, 0.1];
+
+            for(var i = 0; i < circlePos.length; i += 3)
+            {
+                pen.strokeStyle = globalColorPalette.poison;
+                pen.fillStyle = globalColorPalette.poison;
+	            pen.lineWidth = 1;
+                ink.circ(tPos.x+(tPos.w*circlePos[i]), tPos.y-(tPos.w*circlePos[i + 1]), 
+                    tPos.w * circlePos[i + 2], pen);
+            }
+            
+            
             //ink.text(tPos.x, tPos.y, "PO", pen);
         };
         this.AttackNode = function(attackTemplate)
@@ -410,7 +477,7 @@ var allAttackTypes = {
             this.repeat_chance = attackTemplate.attackType.repeat_chance;
             this.repeatDelay = attackTemplate.attackType.repeatDelay;
 
-            this.color = "rgba(0, 255, 0, 0)";
+            this.color = globalColorPalette.poison;
             
             //AlphaDecay destroys us
             var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);
@@ -455,16 +522,42 @@ var allAttackTypes = {
         this.slow_percent = 50;
         this.slow_time = 2.5;
         this.drawGlyph = function (pen, tPos) {
-            //Draw text
-            pen.font = tPos.h + "px arial";
-            pen.textAlign = 'left';
+            var w = tPos.w;
+            var h = tPos.h;
 
-            pen.fillStyle = "lightblue";
-	    pen.strokeStyle = "white";
-	    ink.tri(tPos.x, tPos.y - tPos.h, tPos.w/2, tPos.h, pen);
+            var offsetList = 
+                [5, -20, 5, 20,   
+                10, -50, 10, 30,
+                5, -50, 7, 50,
+                5, -100, 7, 100,
+                5, -50, 7, 50,
+                7, -50, 7, 30,
+                10, -50, 10, 30,
+                10, 60, -100, 0
+                ];
 
-            pen.fillStyle = "white";
-            ink.text(tPos.x, tPos.y, "S", pen);
+            var start = new Vector(tPos.x - w * 0.1, tPos.y - w);
+            var end = new Vector(tPos.x - w * 0.1, tPos.y - w);
+
+            var scale = 100;
+
+            pen.fillStyle = globalColorPalette.slow;
+            pen.strokeStyle = "rgba(255, 255, 255, 1)";
+
+            pen.moveTo(start.x, start.y);
+
+            for(var i = 0; i < offsetList.length; i += 2)
+            {
+                start = cloneObject(end);
+                end = new Vector(start.x + w * (offsetList[i] / scale), start.y - h * (offsetList[i + 1] / scale));
+                pen.strokeStyle = globalColorPalette.chain_lightning;
+	            pen.lineWidth = 0.5;	            
+                pen.lineTo(end.x, end.y);   
+                pen.stroke();             
+            }             
+
+            pen.closePath();
+            pen.fill();
         };
         this.AttackNode = function(attackTemplate)
         {
@@ -479,7 +572,7 @@ var allAttackTypes = {
             var slow = attackTemplate.attackType.slow_percent / 100;
             var slow_time = attackTemplate.attackType.slow_time;
 
-            this.color = "rgba(30, 144, 255, 1)";
+            this.color = globalColorPalette.slow;
 
             var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
             line.base.addObject(new AlphaDecay(slow_time, 1, 0));
@@ -531,7 +624,7 @@ function drawAttributes(user, pen) {
             user.tPos.x + user.tPos.w * 0.15,
             user.tPos.y + user.tPos.h * 0.4,
             user.tPos.w * 0.85,
-            user.tPos.h * 0.6),
+            user.tPos.h * 0.85),
         2, 2,
         0.1);
 }
