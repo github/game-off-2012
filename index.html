@@ -147,14 +147,16 @@ var DFlag = {};
 </div>
 <script>
 window.onload = function() {
-    var scripts = document.getElementById("scripts");
-    var c = scripts.children;
-    for (var i = 0; i < c.length; i++) {
-        var src = c[i].getAttribute('src');
-        var script = new Image();
-        script.src = src;
-        console.log("Preloading ", src);
-    }
+    setTimeout(function() {
+        var scripts = document.getElementById("scripts");
+        var c = scripts.children;
+        for (var i = 0; i < c.length; i++) {
+            var src = c[i].getAttribute('src');
+            var script = new Image();
+            script.src = src;
+            console.log("Preloading ", src);
+        }
+    }, 100);
 };
 </script>
 </body>
