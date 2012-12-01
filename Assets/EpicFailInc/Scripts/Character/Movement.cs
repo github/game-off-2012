@@ -48,6 +48,9 @@ public class Movement : MonoBehaviour
             {
                 MainCamera.gameObject.active = SecondaryCamera.gameObject.active;
                 SecondaryCamera.gameObject.active = !SecondaryCamera.gameObject.active;
+            }else
+            {
+                Debug.Log("Error, camera missing. First camera missing? "+(MainCamera == null).ToString() + "; Secondary camera missing? "+(SecondaryCamera == null).ToString());
             }
         }
     }

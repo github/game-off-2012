@@ -41,7 +41,7 @@ public class HealthAndLifeRelated : MonoBehaviour
 	    if(_lastTick != currentTick && currentTick % 3 == 0)
 	    {
 	        _lastTick = currentTick;
-	        RegenerateHealth(5);
+	        RegenerateHealth(1);
             if (_gameManager != null)
                 _gameManager.Score += 1;
 	    }
@@ -62,7 +62,7 @@ public class HealthAndLifeRelated : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (!TakesFallDamage || !Alive) return;
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "DestructableWall")
         {
             if (collision.relativeVelocity.y >= 5)
             {
