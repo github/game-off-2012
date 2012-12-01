@@ -15,7 +15,6 @@
     <script type="text/javascript" src="js/components/player.js"></script>
     <script type="text/javascript" src="js/scenes/loading.js"></script>
     <script type="text/javascript" src="js/levelManager.js"></script>
-    <script type="text/javascript" src="js/scenes/gameBoard.js"></script>
     <script type="text/javascript" src="js/game.js"></script>
     <link href="css/common.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
@@ -23,9 +22,19 @@
 </head>
 <body>
     <img id="gameTitle" src="images/title.png" />
-
+    <div style="position: absolute; left: 50%;">
+        <div id="helpScreen" style="display:none;">
+            <span>Thank you for playing Fork It!<br /><br />
+            <span><b>Description</b>: You are playing as Phil!  He is a rare species of box that has the ability to push, pull, remove and take colors from inanimate boxes.  He's also hungry so help him find the cake in each level!</span><br /><br />
+            <span><b>How To Play</b>: You'll find the gameplay instructions in the main window below the game.</span><br /><br />
+            <span><b>Hints</b>: Each level may have a hint.  These hints will be in the green box below the game.</span><br /><br />
+            <span><b>Create By</b>: Thomas Jacobs, Sean Cusick, Dan Bergren and Tom Patterson</span><br /><br />
+            <div id="helpScreenClose" onclick="closeHelp();">Close</div>
+        </div>
+    </div>
     <div id="container">
         <div id="cr-stage"></div>
+        <div id="questionMark" onclick="showHelp();">?</div>
         <div id="levelTitle">Level 1: Moving blocks</div>
         <div id="levelReset" onclick="levelManager.resetLevel();"><div class="largeText">RESET</div><div class="smallText">level</div></div>
         <div class="clear"></div>
@@ -42,5 +51,7 @@
             <span><b>Single Color Box</b>: Boxes with a white outline cannot have color taken or given to them.  They are locked to a single color.</span><br />
         </div>
     </div>
+    
+    <div class="screenMask" style="display:none;"></div>
 </body>
 </html>

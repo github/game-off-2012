@@ -48,6 +48,18 @@ var gameBoard = {
   }
 }
 
+function showHelp()
+{
+    $(".screenMask").show();
+    $("#helpScreen").show();
+}
+
+function closeHelp()
+{
+    $(".screenMask").hide();
+    $("#helpScreen").hide();
+}
+
 $(document).ready(function () {
   Crafty.init(gameBoard.getWidth(), gameBoard.getHeight());
   Crafty.scene("loading");
