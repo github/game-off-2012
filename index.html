@@ -92,59 +92,66 @@ Highlighted shows the change that will be applied if an allele which changes att
 <p>Quadtree article on wikipedia.</p><!-- README content goes here -->
 </div>
 <a id="play" href="game/index.html">Let's Try It!</a>
-<div id="scripts">
-<script async src="lib/jquery.min.js"></script>
-<!-- MUST BE FIRST OR ELSE THINGS WILL CRASH! -->
 <script>
-//Set DFlag.flagName to set debug flags.
-//Try to only do this in debug.js
 var DFlag = {};
 </script>
+<div id="scripts">
+<s src="game/lib/jquery.min.js"></s>
+<s src="game/debug.js"></s>
+<s src="game/fail.js"></s>
+<s src="game/type.js"></s>
+<s src="game/sound.js"></s>
+<s src="game/color.js"></s>
 
-<script async src="debug.js"></script>
-<script async src="fail.js"></script>
-<script async src="type.js"></script>
-<script async src="sound.js"></script>
-<script async src="color.js"></script>
+<s src="game/baseGeometry.js"></s>
 
-<script async src="baseGeometry.js"></script>
+<s src="game/commonFncs.js"></s>
+<s src="game/commonText.js"></s>
+<s src="game/commonGeometry.js"></s>
+<s src="game/commonActions.js"></s>
+<s src="game/commonControls.js"></s>
 
-<script async src="commonFncs.js"></script>
-<script async src="commonText.js"></script>
-<script async src="commonGeometry.js"></script>
-<script async src="commonActions.js"></script>
-<script async src="commonControls.js"></script>
+<s src="game/pointer.js"></s>
 
-<script async src="pointer.js"></script>
+<s src="game/allele.js"></s>
+<s src="game/allelePointSystem.js"></s>
+<s src="game/geneticSystem.js"></s>
 
-<script async src="allele.js"></script>
-<script async src="allelePointSystem.js"></script>
-<script async src="geneticSystem.js"></script>
+<s src="game/targetStrategy.js"></s>
+<s src="game/towerAttackType.js"></s>
 
-<script async src="targetStrategy.js"></script>
-<script async src="towerAttackType.js"></script>
+<s src="game/animations.js"></s>
 
-<script async src="animations.js"></script>
+<s src="game/baseEntities.js"></s>
 
-<script async src="baseEntities.js"></script>
+<s src="game/infobar.js"></s>
+<s src="game/towerBar.js"></s>
+<s src="game/level.js"></s>
 
-<script async src="infobar.js"></script>
-<script async src="towerBar.js"></script>
-<script async src="level.js"></script>
+<s src="game/tower.js"></s>
+<s src="game/path.js"></s>
+<s src="game/bug.js"></s>
+<s src="game/entities.js"></s>
 
-<script async src="tower.js"></script>
-<script async src="path.js"></script>
-<script async src="bug.js"></script>
-<script async src="entities.js"></script>
+<s src="game/quadtree.js"></s>
+<s src="game/quadtreeQueries.js"></s>
 
-<script async src="quadtree.js"></script>
-<script async src="quadtreeQueries.js"></script>
+<s src="game/graphics.js"></s>
 
-<script async src="graphics.js"></script>
+<s src="game/pathGeneration.js"></s>
 
-<script async src="pathGeneration.js"></script>
-
-<script async src="logic.js"></script>
+<s src="game/logic.js"></s>
 </div>
+<script>
+(function() {
+    var scripts = document.getElementById("scripts");
+    var c = scripts.children;
+    for (var i = 0; i < c.length; i++) {
+        var src = c[i].getAttribute('src');
+        var script = new Image();
+        script.src = src;
+    }
+}());
+</script>
 </body>
 </html>
