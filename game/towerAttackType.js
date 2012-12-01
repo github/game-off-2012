@@ -389,7 +389,10 @@ var allAttackTypes = {
             pen.textAlign = 'left';
 	    
 
-            ink.text(tPos.x, tPos.y, "PO", pen);
+            pen.strokeStyle = "#00ff00";
+	    pen.lineWidth = 3;
+	    ink.line(tPos.x, tPos.y, tPos.x + (tPos.w*0.7), tPos.y - tPos.h, pen);
+            //ink.text(tPos.x, tPos.y, "PO", pen);
         };
         this.AttackNode = function(attackTemplate)
         {

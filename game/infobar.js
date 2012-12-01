@@ -65,16 +65,6 @@ function Infobar(pos) {
     }
 
     this.draw = function (pen) {
-        pen.fillStyle = "#000";
-        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-
-        pen.fillStyle = "transparent";
-
-        pen.strokeStyle = "orange";
-        pen.lineWidth = 1;
-
-        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-
         pen.fillStyle = "#0f0";
         pen.font = "15px courier";
 

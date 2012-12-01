@@ -70,7 +70,7 @@ function Label(pos, text) {
     this.tPos = pos;
     this.base = new BaseObj(this, 15);
     this.color = "red";
-    this.font = "12px arial";
+    this.font = "12px courier";
     var textsize = 14;
 
     this.text = formatToDisplay(text);
