@@ -104,7 +104,6 @@ function LevelManager(bugStart) {
             this.levelIteration = Math.floor(this.curLevel / levels.length);
             var attributeModifier = Math.atan(this.levelIteration) + this.levelIteration * 0.3 + 0.1;
 
-            this.bugsToSpawn = [];
             for (var part in this.curLevelData) {
                 if (!isNaN(part)) {
                     var bugAlleles = this.curLevelData[part];
