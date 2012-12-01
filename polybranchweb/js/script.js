@@ -1,12 +1,52 @@
 var firstPlaythrough = true;
+var playing = false;
+
+var bells = new Array();
+var bellsIndex = randomXToY(0,4);
+var endSound = ((new Audio()).canPlayType("audio/ogg; codecs=vorbis") != "") ? new Audio("sound/end.ogg") : new Audio("sound/end.mp3");
+
+for(var i = 0; i < 10; i++){
+	var index = (i < 5) ? i : i - 5;
+    if((new Audio()).canPlayType("audio/ogg; codecs=vorbis") != ""){
+        bells[i] = new Audio("sound/_bell"+index+".ogg");
+    }else{
+        bells[i] = new Audio("sound/_bell"+index+".mp3");
+    }
+}
+
+function jsTriggerBell(){
+	var newIndex = randomXToY(0,4);
+	if(newIndex == bellsIndex){
+		jsTriggerBell();
+	}else{
+		bellsIndex = newIndex;
+		if(bells[bellsIndex].paused){
+			bells[bellsIndex].currentTime=0;
+		    bells[bellsIndex].play();
+		}else{
+			bells[bellsIndex+5].currentTime=0;
+		    bells[bellsIndex+5].play();
+		}
+	}
+}
+
+
+
+
 
 $(document).ready(function(){
 	$("#main-menu #start").click(function(){
-		jsStartGame(false);
+		if(!playing){
+			jsStartGame(false);
+			playing = true;
+		}
 	});
 
 	$("#gameover-menu #retry").click(function(){
-		jsNewGame();
+		if(!playing){
+			playing = true;
+			jsNewGame();
+		}
 	});
 
 	$(document).bind("keydown",function(){
@@ -18,11 +58,11 @@ $(document).ready(function(){
 
 
 
-function start(){
-	if(pjs!=null) {
-    	pjs.pause();
-    }
-}
+// function start(){
+// 	if(pjs!=null) {
+//     	pjs.pause();
+//     }
+// }
 function processingIsReady(){
 	$("#loading").fadeOut(300);
 }
@@ -47,9 +87,11 @@ function jsNewGame(){
 	pjs.newGame();
 	$("#hud #score").html("0");
 	$("#hud #level span").html("1");
-	$("#gameover-menu .content").fadeOut(300,function(){
+	$("#gameover-menu .content").animate({"opacity":"0"},300,function(){
+		$("#gameover-menu .content").hide();
 		$("#hud").fadeIn(300);
-		$("#gameover-menu").fadeOut(300,function(){
+		$("#gameover-menu").animate({"opacity":"0"},300,function(){
+			$(this).hide();
 			pjs.pause();
 		});
 	});
@@ -64,7 +106,10 @@ function jsIncrementLevel(){
 }
 
 function jsGameOver(score){
+	playing = false;
 	$("#flash").show();
+	endSound.currentTime=0;
+	endSound.play();
 	$("#hud").hide();
 	$("#flash").delay(1000).animate({"opacity":0}, 1000,function(){
 		$(this).hide();
@@ -78,10 +123,19 @@ function jsGameOver(score){
 			$("#gameover-menu #highscore").html("PERSONAL BEST: "+addCommas(parseInt(localStorage["highScore"]))+"<span id='L'>L"+localStorage["highLevel"]+"</span>");
 		}
 		$("#gameover-menu #nextlevel span").html(addCommas((pjs.getNextScore(parseInt($("#hud #level span").html())))+1000));
-		$("#gameover-menu").fadeIn(300,function(){
-			$("#gameover-menu .content").fadeIn(300);
+		$("#gameover-menu").show();
+		$("#gameover-menu").animate({"opacity":"1"},300,function(){
+			$("#gameover-menu .content").show();
+			$("#gameover-menu .content").animate({"opacity":"1"},300);
 		});
 	});
+}
+
+//function to get random number upto m
+function randomXToY(minVal,maxVal,floatVal)
+{
+  var randVal = minVal+(Math.random()*(maxVal-minVal));
+  return typeof floatVal=='undefined'?Math.round(randVal):randVal.toFixed(floatVal);
 }
 
 function addCommas(nStr){

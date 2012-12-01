@@ -213,6 +213,7 @@ public void pause(){
 }
 
 public void newGame(){
+  player.reset();
   g.newGame();
 }
 
@@ -475,6 +476,7 @@ class Layer {
       passed = true;
       g.score += 100;
       jsUpdateScore(g.score);
+      jsTriggerBell();
     }
   }
 
