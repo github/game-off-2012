@@ -14,25 +14,6 @@ for(var i = 0; i < 10; i++){
     }
 }
 
-function jsTriggerBell(){
-	var newIndex = randomXToY(0,4);
-	if(newIndex == bellsIndex){
-		jsTriggerBell();
-	}else{
-		bellsIndex = newIndex;
-		if(bells[bellsIndex].paused){
-			bells[bellsIndex].currentTime=0;
-		    bells[bellsIndex].play();
-		}else{
-			bells[bellsIndex+5].currentTime=0;
-		    bells[bellsIndex+5].play();
-		}
-	}
-}
-
-
-
-
 
 $(document).ready(function(){
 	$("#main-menu #start").click(function(){
@@ -44,8 +25,8 @@ $(document).ready(function(){
 
 	$("#gameover-menu #retry").click(function(){
 		if(!playing){
-			playing = true;
 			jsNewGame();
+			playing = true;
 		}
 	});
 
@@ -89,12 +70,28 @@ function jsNewGame(){
 	$("#hud #level span").html("1");
 	$("#gameover-menu .content").animate({"opacity":"0"},300,function(){
 		$("#gameover-menu .content").hide();
-		$("#hud").fadeIn(300);
 		$("#gameover-menu").animate({"opacity":"0"},300,function(){
-			$(this).hide();
+			$("#gameover-menu").hide();
+			$("#hud").fadeIn(300);
 			pjs.pause();
 		});
 	});
+}
+
+function jsTriggerBell(){
+	var newIndex = randomXToY(0,4);
+	if(newIndex == bellsIndex){
+		jsTriggerBell();
+	}else{
+		bellsIndex = newIndex;
+		if(bells[bellsIndex].paused){
+			bells[bellsIndex].currentTime=0;
+		    bells[bellsIndex].play();
+		}else{
+			bells[bellsIndex+5].currentTime=0;
+		    bells[bellsIndex+5].play();
+		}
+	}
 }
 
 function jsUpdateScore(score){

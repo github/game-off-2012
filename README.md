@@ -16,7 +16,7 @@ We have 5 shiny new iPads with Retina displays (64GB wifi models) to give to our
 
 All of the winners and runners up will be showcased on our blog.
 
-<img src="http://i.imgur.com/lxZrD.png" style="border:0;">
+<img src="http://f.cl.ly/items/3M2G3q1G0c3I3x1j3F34/Screen%20shot%202012-11-30%20at%2011.48.30%20PM.png" style="border:0; width: 100%;">
 
 
 

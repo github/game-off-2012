@@ -57,7 +57,7 @@ void setup(){
   g = new Game();
   //Layer layer = new Layer(16, width, height);
   noLoop();
-  console.log("sucess!");
+
   processingIsReady();
   
 }
@@ -76,10 +76,16 @@ void draw(){
   if(keys[0] || keys[1]){
     if(keys[0]){
       //originY += player.speed;
+      if(player.velY < 0 && dist(player.pos.x, player.pos.y, originX, originY + player.velY) > (height/2 - player.r - 8)){
+        player.velY = 0;
+      }
       player.velY += 0.3;
     }
     if(keys[1]){
       //originY -= player.speed;
+      if(player.velY > 0 && dist(player.pos.x, player.pos.y, originX, originY + player.velY) > (height/2 - player.r - 8)){
+        player.velY = 0;
+      }
       player.velY -= 0.3;
     }
   }else if(player.velY != 0.0){
@@ -101,10 +107,16 @@ void draw(){
   if(keys[2] || keys[3]){
     if(keys[2]){
       //originX += player.speed;
+      if(player.velX < 0 && dist(player.pos.x, player.pos.y, originX + player.velX, originY) > (height/2 - player.r - 8)){
+        player.velX = 0;
+      }
       player.velX += 0.3;
     }
     if(keys[3]){
       //originX -= player.speed;
+      if(player.velX > 0 && dist(player.pos.x, player.pos.y, originX + player.velX, originY) > (height/2 - player.r - 8)){
+        player.velX = 0;
+      }
       player.velX -= 0.3;
     }
   }else if(player.velX != 0.0){
@@ -870,17 +882,19 @@ class Game{
   }
   
   public void gameOver(){
-    jsGameOver(score);
-    isGameOver = true;
-    background(0,0,255);
-    for(int i = 0; i < layers.size(); i++){
-      Layer layer = (Layer) layers.get(i);
-      layer.render();
+    if(!isGameOver){
+      jsGameOver(score);
+      isGameOver = true;
+      background(0,0,255);
+      for(int i = 0; i < layers.size(); i++){
+        Layer layer = (Layer) layers.get(i);
+        layer.render();
+      }
+      //drawPlayer();
+      //println(g.level+" "+g.score);
+      noLoop();
+      paused = true;
     }
-    //drawPlayer();
-    //println(g.level+" "+g.score);
-    noLoop();
-    paused = true;
   }
 
 
