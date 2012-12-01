@@ -5,6 +5,9 @@ package
 
 	public class Resources 
 	{
+		[Embed(source="../lib/MainSong.mp3")]
+		public static const bgmusic:Class;
+		
 		[Embed(source="../lib/eating.mp3")]
 		public static const eatSfx:Class;
 		[Embed(source="../lib/dividing.mp3")]

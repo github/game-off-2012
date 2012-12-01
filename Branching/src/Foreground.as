@@ -1041,7 +1041,10 @@ package
 				}
 			}
 			
-			this.sortChildren(sortVIP);
+			if (!GameOff)
+			{
+				this.sortChildren(sortVIP);
+			}
 			
 			if (budsDead)
 			{
@@ -1057,6 +1060,7 @@ package
 		
 		private function gameOver():void
 		{
+			audioManager.stopAll();
 			GameOff = true;
 			_image.visible = false;
 			_text.visible = false;
@@ -1064,6 +1068,9 @@ package
 			this.addChild(_gameOverDialog);
 			this.addChild(_gameOverText);
 			this.addChild(restartBttn);
+			this.swapChildrenAt(getChildIndex(_gameOverDialog), this.numChildren -3);
+			this.swapChildrenAt(getChildIndex(_gameOverText), this.numChildren -2);
+			this.swapChildrenAt(getChildIndex(restartBttn), this.numChildren -1);
 		}
 		
 		private function OnRestart(event:Event):void
@@ -1410,8 +1417,8 @@ package
 		
 		private function sortVIP(do1:DisplayObject,do2:DisplayObject):int
 		{
-			if (do1.y > do2.y) return 1;
-			if (do1.y < do2.y) return -1;
+			if (do1 is plantBud && !(do2 is plantBud)) return 1;
+			if (do2 is plantBud) return -1;
 			return 0;
 		}
 		

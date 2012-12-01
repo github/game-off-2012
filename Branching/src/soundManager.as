@@ -22,16 +22,23 @@ package
 			divideSfx = new Resources.divideSfx as Sound;
 			hitSfx = new Resources.hitSfx as Sound;
 			diedSfx = new Resources.deadSfx as Sound;
-			/*LvlBgMusic = new Resources.bgmusic as Sound;
+			LvlBgMusic = new Resources.bgmusic as Sound;
 			BgMusicChannel = LvlBgMusic.play();
 			BgMusicChannel.addEventListener(Event.SOUND_COMPLETE, OnBgMusicFinished, false, 0, true);
-			*/
 		}
 		
 		private function OnBgMusicFinished(event:Event):void 
 		{
 			BgMusicChannel = LvlBgMusic.play();
 			BgMusicChannel.addEventListener(Event.SOUND_COMPLETE, OnBgMusicFinished, false, 0, true);
+		}
+		
+		public function stopAll():void
+		{
+
+			BgMusicChannel.removeEventListener(Event.SOUND_COMPLETE, OnBgMusicFinished);
+			BgMusicChannel.stop();
+			SfxChannel.stop();
 		}
 		
 		public function playEat():void
