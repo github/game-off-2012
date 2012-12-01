@@ -33,5 +33,5 @@ XXXXXXXXXXXXXXXX
 ----------------
 METADATA
 title: Level 6: Can you solve it?
-nextMap: 6
+nextMap: 8
 text:
