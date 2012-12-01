@@ -1,8 +1,8 @@
 ## PolyBranch
 
-<img src="http://f.cl.ly/items/3M2G3q1G0c3I3x1j3F34/Screen%20shot%202012-11-30%20at%2011.48.30%20PM.png" style="border:0; display: block; margin: 0px auto;">
+<img src="http://gregbatha.com/branches/screenshot1.png" style="border: 1px solid #646464; display: block; margin: 0px auto;">
 
-<img src="http://f.cl.ly/items/1a3z1H040Y1k3w1a1G3j/Screen%20shot%202012-11-30%20at%203.33.27%20AM.png" style="border:0; display: block; margin: 0px auto;">
+<img src="http://gregbatha.com/branches/screenshot2.png" style="border: 1px solid #646464; display: block; margin: 0px auto;">
 
 <a href="http://gregbatha.com/branches/">PolyBranch</a> is a minimalist 3D game. Avoid the branches protruding from the walls as you fly through the tunnel. Dodging branches may seem easy at first, but how long can you hold up as you approach terminal velocity? Dive in, stay focused, and enjoy the ride!
 
