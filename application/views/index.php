@@ -38,7 +38,7 @@
         <div id="levelTitle">Level 1: Moving blocks</div>
         <div id="levelReset" onclick="levelManager.resetLevel();"><div class="largeText">RESET</div><div class="smallText">level</div></div>
         <div class="clear"></div>
-        <div id="levelText">To pass this level, you will need to use the SPACEBAR to grab and move blocks.</div>
+        <div id="levelText">To pass this level, you will need to use the H to grab and move blocks.</div>
         <div id="controlText">
             <span class="headerText">How To Play</span><br />
             <span><b>Movement</b>: <b>W</b> (up) <b>A</b> (left) <b>S</b> (down) <b>D</b> (up)</span><br />
