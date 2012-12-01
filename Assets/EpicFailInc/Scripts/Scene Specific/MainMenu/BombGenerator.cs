@@ -17,6 +17,9 @@ public class BombGenerator : MonoBehaviour
             _time = 0f;
             var temp = (Transform)Instantiate(WhatToGenerate, new Vector3(-1.76f, 8.67f, Random.Range(11f, -11f)), Quaternion.identity);
             temp.GetChild(0).gameObject.active = false;
+            var explosionScript = (Explode)temp.gameObject.GetComponent(typeof(Explode));
+            var howManyToMerge = Random.Range(1, 5);
+            explosionScript.NumberOfBombs = howManyToMerge; //Changes the power of the explosion, don't wanna change the size of the bomb though.
         }
     }
 }

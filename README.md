@@ -11,11 +11,13 @@ and motivation required to actually start and finish a game. Unfortunately, howe
 ##### Description
 Boom is a side-scrolling puzzle game that involves strategically placing bombs in order to destroy or move obstacles that block you from reaching
 your objective.  
+ 
+Game:  
+You can find the game here: [http://epicfailinc.org/game](http://epicfailinc.org/game)   
   
-
 Controls:
 * Left/Right arrow keys or 'A'/'D' key: move left and right  
-* 'Q': Drop bomb  
+* Space: Drop bomb  
   
 ##### Credits
 Game developers/designers/concepts:

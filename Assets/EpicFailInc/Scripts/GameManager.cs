@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
     public float LifeSpan = 0;
 
     //Currently unused (but need to implement sometime in the future)
-    public int CurrentLevel = 0;
+    public int CurrentLevel = 1;
     public bool Paused = false;
     public int LivesLeft = 3;
     public bool ShowHints = true;
@@ -20,5 +20,19 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         DontDestroyOnLoad(this);
+    }
+
+    public void LevelUp()
+    {
+        CurrentLevel += 1;
+        var testName = "Level_" + CurrentLevel;
+        if (Application.CanStreamedLevelBeLoaded(testName))
+        {
+            Application.LoadLevel(testName);
+        }
+        else
+        {
+            Application.LoadLevel("Winner");
+        }
     }
 }

@@ -9,12 +9,17 @@ public class Movement : MonoBehaviour
     public Camera SecondaryCamera;
 
     private Vector3 _targetVelocity;
+    private GameManager _gameManager;
 
     // Use this for initialization
     private void Start()
     {
         _targetVelocity = new Vector3(0, 0, MaxVelocity);
-
+        var manager = GameObject.FindGameObjectWithTag("Manager");
+        if (manager != null)
+        {
+            _gameManager = (GameManager)manager.GetComponent("GameManager");
+        }
     }
 
     private void FixedUpdate()
@@ -47,4 +52,19 @@ public class Movement : MonoBehaviour
         }
     }
 
+    void levelUp()
+    {
+        if(_gameManager != null)
+        {
+            _gameManager.LevelUp();
+        }
+    }
+
+    void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Finish")
+        {
+            levelUp();
+        }
+    }
 }

@@ -59,8 +59,6 @@ public class Explode : MonoBehaviour {
         var explosionPower = 300 * NumberOfBombs;
         var explosionRadius = 2 * NumberOfBombs;
 
-        Debug.Log(NumberOfBombs);
-
         var colliders = Physics.OverlapSphere( transform.position, explosionRadius );
         foreach (var hit in colliders)
         {
