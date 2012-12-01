@@ -7,6 +7,9 @@ function GameInfoBar(pos) {
 
     this.tPos = pos;
 
+    var oldmoney = 0;
+
+	    
     this.healthIndi = new Label(
         new TemporalPos(pos.x + 9, pos.y + 25, pos.w, pos.h), "");
     this.healthIndi.font = "20px arial";
@@ -71,6 +74,53 @@ function GameInfoBar(pos) {
 	if (this.base.rootNode.health < 25) {
 	    this.healthIndi.color = "red";
 	} 
+	if (oldmoney < this.base.rootNode.money) {
+		oldmoney = this.base.rootNode.money;
+		this.base.addObject( new TextFadeAni(this.moneyIndi.tPos, false, "$$$$$"));
+	} else if (oldmoney > this.base.rootNode.money) {
+		oldmoney = this.base.rootNode.money;
+		this.base.addObject( new TextFadeAni(this.moneyIndi.tPos, true, "$$$$$"));
+	}
+
 	
     }
 }
+
+function TextFadeAni(pos, negative, txt) {
+	this.base = new BaseObj(this, 19);
+	this.tPos = pos.clone();
+	if (!negative) {
+		this.tPos.y -= 15;
+	} else {
+		this.tPos.y += 15;
+	}
+
+
+	var alpha = 1;
+
+	this.draw = function (pen) {
+		if (negative) {
+			pen.fillStyle = "rgba(255,0,0," + alpha + ")";
+		} else { 
+			pen.fillStyle = "rgba(0,255,0," + alpha + ")";
+		}
+			
+		pen.font = "24px courier";
+		ink.text(this.tPos.x, this.tPos.y, txt, pen);
+		return;
+	}
+
+	this.update = function (dt) {
+		alpha -= dt/2;
+		if (alpha <= 0) {
+			this.base.destroySelf();
+		}
+		if (!negative) {
+			this.tPos.y -= dt*5;
+		} else {
+			this.tPos.y += dt*5;
+		}
+	}
+}
+
+
