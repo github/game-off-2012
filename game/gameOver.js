@@ -10,7 +10,7 @@ function GameOver() {
 
         this.base.addObject(new SimpleCallback(2, "addButton"));
         
-        this.base.rootNode.base.addObject(new AttributeTween(1, 0, 10, null, "speed"));
+        this.base.rootNode.base.addObject(new AttributeTween(1, 0, 5, null, "speed"));
 
         this.base.addObject(new AttributeTween(0, 0.8, 3, null, "alpha"));
     }
