@@ -301,6 +301,7 @@ var allAttackTypes = {
             pen.textAlign = 'left';
 
 	    pen.fillStyle = "blue";
+	    pen.strokeStyle = "white";
 	    ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.5, pen);
             ink.text(tPos.x, tPos.y, "P", pen);
         };
