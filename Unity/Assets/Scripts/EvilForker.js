@@ -10,7 +10,8 @@ private var leftEyePoints: Vector2[];
 private var rightEyePoints: Vector2[];
 private var leftEyeCenter: Vector2;
 private var rightEyeCenter: Vector2;
-private var player: GameObject;
+private var playerObject: GameObject;
+private var player: Player;
 private var shootingRange: float = 25;
 private var waitBeforeShoot: float = 1;
 private var waitedForShoot: float = 0;
@@ -38,7 +39,8 @@ function Start () {
 	leftEye.renderer.enabled = true;
 	rightEye.renderer.enabled = true;
 	
-	player = GameObject.Find('player');
+	playerObject = GameObject.Find('player');
+	player = playerObject.GetComponent('Player') as Player;
 	
 	leftEyePoints = new Vector2[eyePoints.length];
 	rightEyePoints = new Vector2[eyePoints.length];
@@ -68,7 +70,7 @@ function processEyesPositions() {
 	var intersection;
 	var vectIntersection: Vector2;
 	
-	var playerPosition: Vector2 = Vector2(player.transform.position.x, player.transform.position.y);
+	var playerPosition: Vector2 = Vector2(playerObject.transform.position.x, playerObject.transform.position.y);
 	for (i = 0; i < leftEyePoints.length; i++) {
 		j = (i == leftEyePoints.Length - 1) ? 0 : i + 1;
 		// Debug.DrawLine(Vector3(leftEyePoints[i].x, leftEyePoints[i].y, -3), Vector3(leftEyePoints[j].x, leftEyePoints[j].y, -3), Color.red);
@@ -97,7 +99,18 @@ function processEyesPositions() {
 }
 
 function processForks() {
-	var playerPosition: Vector2 = Vector2(player.transform.position.x, player.transform.position.y);
+	if (player.isOnDragAndDropMode()) {
+		if (isBlinking) {
+			sprite.PlayOnce('Watching');
+			leftEye.renderer.enabled = true;
+			rightEye.renderer.enabled = true;
+			sprite.position = originalPosition;
+			isBlinking = false;
+		}
+		return;
+	}
+
+	var playerPosition: Vector2 = Vector2(playerObject.transform.position.x, playerObject.transform.position.y);
 	var distance: float = Vector2.Distance(playerPosition, sprite.position);
 	
 	if (distance < shootingRange) {

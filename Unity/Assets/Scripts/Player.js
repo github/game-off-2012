@@ -147,15 +147,17 @@ function Update () {
 	processFall();
 	processSpeed();
 	processSlowDownBonus();
-	//processSparks();
+	//processSparks(); this idea was not conclusive
 }
 
 function processSparks() {
 	if (currentAnimation == 'Sliding' && onGround) {
 		if (Time.time> lastSpark + (0.5 / speed) ) {
 			//Debug.Log('here');
-			generateParticles('spark', sprite.position, 1, 0, Vector2(0, 0), Vector2(0, 0));
+			var obj:GameObject = level.getPrefab('spark', sprite.position + Vector2(-0.2, -0.4));
+			//generateParticles('spark', sprite.position, 1, 0, Vector2(0, 0), Vector2(0, 0));
 			lastSpark = Time.time;
+			
 		}
 	}
 }
@@ -294,7 +296,8 @@ function OnTriggerEnter(other: Collider) {
 	// @todo : process the decal when jumping on an rotated ground
 	// it is due to the fact that the center of the pl
 	
-	var isOnGround: boolean = (positionOnGround.x > groundStart.x + 0.5 && positionOnGround.x < groundStart.x + width - 0.5)  || sprite.position.y - 0.1 > positionOnGround.y;
+	// when the ground was going up, there was some bug (player continued sliding on the flat ground. (height > 0 ? 0 : 0.5) tries to fix that...
+	var isOnGround: boolean = (positionOnGround.x > groundStart.x + (height > 0 ? 0 : 0.5) && positionOnGround.x < groundStart.x + width - 0.5)  || sprite.position.y - 0.1 > positionOnGround.y;
 	
 	//Debug.Log('ENTER');
 	if (other.gameObject.CompareTag("Ground") && !isJumping && fallSpeed > 0 && isOnGround && !collidingGrounds.ContainsKey(other.gameObject.GetInstanceID())) {
@@ -490,3 +493,7 @@ function triggerSlowDown() {
 		Time.timeScale = 0.5;
 	}
 }
+
+function isOnDragAndDropMode() {
+	return dragAndDropMode;
+}	

@@ -178,26 +178,22 @@ function playerDied() {
 function generate(from: int, to: int) {
 	while (generatedUntil < to) {
 		var zoneSize: int = zoneSizes[Mathf.Floor(Random.Range(0, zoneSizes.length))];
-		if (lastZoneGenerated == 'none' || lastZoneGenerated == 'islands') {
+		/*if (lastZoneGenerated == 'none' || lastZoneGenerated == 'islands') {
 			generateGroundZone(generatedUntil, generatedUntil + zoneSize);
 			break;
 		}
 		if (lastZoneGenerated == 'ground') {
-			if (Random.value < 0.2) {
+			if (Random.value < 0.2) {*/
 				generateSlopeZone(generatedUntil, generatedUntil + zoneSize);
-			} else {
+			/*} else {
 				generateIslandsZone(generatedUntil, generatedUntil + zoneSize);
 			}
 			break;
 		}
 		if (lastZoneGenerated == 'slope') {
-			//if (Random.value < 0.5) {
 				generateGroundZone(generatedUntil, generatedUntil + zoneSize);
-			/*} else {
-				generateIslandsZone(generatedUntil, generatedUntil + zoneSize);
-			}*/
 			break;
-		}
+		}*/
 	}
 }
 
