@@ -12,3 +12,6 @@ _ReSharper.*
 *.resharper
 Ankh.NoLoad
 WindowsLockFile
+*Library/previews*
+*Library/metadata*
+*Library/cache*
