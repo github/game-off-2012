@@ -71,7 +71,7 @@ function Tower_Connection(t1, t2) {
             return;
         }
         
-        var speed = Math.min(t1.attr.upload, t2.attr.download);
+        var speed = Math.max(Math.min(t1.attr.upload, t2.attr.download), 0.00000001 /* should really be zero */);
         var killsRequired = 10 / speed;
         var killDelta = t1.attr.kills - prevhitCount;
         
