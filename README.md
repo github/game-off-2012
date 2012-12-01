@@ -1,64 +1,24 @@
-Here at GitHub, we're no strangers to hosting or sponsoring hackathons. With the growing number of games and game development resources on GitHub, we thought it was about time to throw our very own game jam!
+# How far can you climb?
 
-## The Challenge
+<img src="http://rojo.com.mx/branchingup/titlePeek.png" style="border:0;">
 
-You have the entire month of November to create a **web-based** game *loosely* built around one or more of the following themes:
+As a little bud, Venus always wished for conquering the enormous tower that always stood above her. One day, she decided to climb it and grow beyond any other plant can imagen. Help her in her quest!
 
-* forking (or forks)
-* branching (or branches)
-* cloning (or clones)
-* pushing
-* pulling
+<img src="http://rojo.com.mx/branchingup/Screencap.png" style="border:0;">
 
-What do we mean by **loosely** based on these concepts? We literally mean, *loosely* based. Some examples might be a FPS where you throw forks at water balloons, an educational game about DNA cloning, or perhaps a platformer where you push and pull objects.
+##  How To Play?
 
-Your game. Your rules. You can participate as an individual or as a team. You're encouraged to use open source libraries, frameworks, graphics, and sounds.
+*Click on a Venus head in order to project a possible branch. Release the button over the same head so she can branch into two more heads. Release the button anywhere else to cancel the action.
 
-## Prizes
+*Click and drag anywhere else in order to rotate the camera around the tower, so you can see all of Venus heads.
 
-We have 5 shiny new iPads with Retina displays (64GB wifi models) to give to our winners (or Apple Store Credit equivalent). Runners up will receive GitHub swag of their choice ($100 credit for the [GitHub Shop](http://shop.github.com/)). If you have a team submission, we'll give you Apple Store credit equal to the value of the iPad. You can split it with your teammates as appropriate.
+*Plan carefully how she will branch: There are a lot of wood beams and windows that can stop her.
 
-All of the winners and runners up will be showcased on our blog.
+*Eat butterflies so Venus can grow. She can grow only 5 times. The more she grows, the stronger her branchs will be; plus she will be able to withstand more hits against wood beams!
 
-<img src="http://i.imgur.com/lxZrD.png" style="border:0;">
+## Open Source Projects Used:
 
-### Everyone's a winner!
-
-All participants will receive a limited edition [Coderwall](http://www.coderwall.com) badge as shown above. Winners and runners up will also get their own special version of it.
-
-## Judging
-
-We have a number of awesome judges who graciously volunteered to take a look at all the entries!
-
-* [David Czarnecki](http://twitter.com/CzarneckiD), Lead Engineer at Agora Games
-* [Eric Preisz](https://twitter.com/epreisz), CEO of GarageGames
-* [Matt Hackett](https://twitter.com/#!/richtaur), Co-founder of Lost Decade Games
-* [Lee Reilly](http://twitter.com/leereilly), Gamer Dad and Software Developer at GitHub
-* [Romana Ramzan](https://twitter.com/Manak/), Denki's Player Champion. PhD Researcher. Organiser of Scottish Game Jam.
-
-## Rules
-
-* To qualify for entry as an **individual** you must fork the [github/game-off-2012](https://github.com/github/game-off-2012) repository to your individual account
-* To qualify for entry as a **team** you must fork the [github/game-off-2012](https://github.com/github/game-off-2012) to a [free organization account](https://github.com/settings/organizations)
-* All entries must be web-based i.e. playable in a browser. HTML5, WebGL, Unity, Torque 3D, Node JS, Flash is all possible - just be sure the source is made available on your fork.
-* You must be over the age of 13
-
-## Instructions
-
-* If you don't already have a GitHub account, [sign up now](https://github.com/signup/free) - it's free!
-* Fork the [github/game-off-2012](https://github.com/github/game-off-2012) repository to your individual account (or to a free organization account)
-* Be sure to follow @github on Twitter for updates
-* Make sure your code is pushed to the master branch of before Dec 1st!
-* Make sure you have a README file with a brief description, what open source projects (if any) you used, and a screenshot.
-* Your repo should have a brief description and a URL where the game is playable entered into the fields shown below (this will make our judging process easier):
-
-![](https://img.skitch.com/20121010-x2ecpu95fi91us6hbfehg2dgit.png)
-
-Winners will be announced before Christmas :santa:
-
-# Comments / Questions / Help
-
-* New to Git, GitHub, and/or version control? Check out our [help documentation](https://help.github.com/) to get started!
-* Questions about Git/GitHub? Please email support@github.com and be sure to include 'GitHub Game Off' in the subject.
-* Questions specific to the GitHub Game Off? Please [create an issue](https://github.com/github/game-off-2012/issues/new). That will be the offical FAQ.
-* The official Twitter hashtag is [#ggo12](https://twitter.com/search/realtime?q=%23ggo12).
+* [Starling Framework](http://gamua.com/starling/), an Open Source Game Engine for Flash.
+* [Away3d](http://www.away3d.com/), an open source 3D graphics engine, written for the Adobe Flash platform in ActionScript 3.
+	
+Also, coding this was much easier thanks to the [Code for Translating Away3D 3D point to a 2D point in Starling framework](http://www.mycreativity.nl/blog/translating-away3d-3d-point-to-a-2d-point-in-starling-framework) by Jasper Steenweg.
