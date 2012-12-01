@@ -6,7 +6,7 @@ function Button(pos, txt, context, functionName, callData, zorder) {
 
     this.base = new BaseObj(this, zorder);
     this.base.type = "Button" + zorder;
-	var textsize = 14;
+	this.textsize = 14;
 
 	this.hover = false;
 	this.down = false;
@@ -32,12 +32,12 @@ function Button(pos, txt, context, functionName, callData, zorder) {
 		
 		//Draw text
 		pen.fillStyle = "#000000";
-		pen.font = textsize + "px arial";
+		pen.font = this.textsize + "px arial";
 
 		//How wide is text?
 		var tW = pen.measureText(txt).width;
 
-		ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+textsize+4, txt, pen);
+		ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+this.textsize+4, txt, pen);
 		return;
 	}
 	

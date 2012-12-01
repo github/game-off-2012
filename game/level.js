@@ -16,7 +16,7 @@ function LevelManager(bugStart) {
                     function () { return { attack: bugAttackTypes.BugBullet }; },
                     AllAlleleGroups.targetBase,
                     AllAlleleGroups.rangeBase,
-                    function () { return { speed: 30 }; },
+                    function () { return { speed: 30, damage: 5 }; },
                ],
             waveTime: 7,
             spawnDelay: 0.1
@@ -27,7 +27,7 @@ function LevelManager(bugStart) {
                     AllAlleleGroups.targetBase,
                     AllAlleleGroups.damageBase,
                     AllAlleleGroups.hpBase,
-                    function () { return { speed: 20 }; },
+                    function () { return { speed: 20, attSpeed: 1, damage: 10 }; },
                ],
             waveTime: 7,
             spawnDelay: 0.1
@@ -40,7 +40,7 @@ function LevelManager(bugStart) {
                     AllAlleleGroups.hpBase,
                     AllAlleleGroups.hpRegenBase,
                     AllAlleleGroups.attSpeedBase,
-                    function () { return { speed: 20 }; },
+                    function () { return { speed: 20, hpRegen: 100, hp: -99 }; },
                ],
             waveTime: 7,
             spawnDelay: 0.1
@@ -54,13 +54,14 @@ function LevelManager(bugStart) {
                     AllAlleleGroups.hpRegenBase,
                     AllAlleleGroups.attSpeedBase,
                     AllAlleleGroups.attack2,
-                    function () { return { speed: 30 }; },
+                    AllAlleleGroups.attack3,
+                    function () { return { speed: 30, hp: 300 }; },
                ],
             waveTime: 7,
             spawnDelay: 0.1
         },
         {
-            10: [
+            20: [
                     function () { return { attack: bugAttackTypes.BugBullet }; },
                     AllAlleleGroups.targetBase,
                     AllAlleleGroups.damageBase,
@@ -101,7 +102,7 @@ function LevelManager(bugStart) {
             this.nwicounter = this.curLevelData.waveTime;
 
             this.levelIteration = Math.floor(this.curLevel / levels.length);
-            var attributeModifier = Math.atan(this.levelIteration + 1) / Math.PI * 2;
+            var attributeModifier = Math.atan((this.levelIteration + 1) / 5) / Math.PI * 2;
 
             this.bugsToSpawn = [];
             for (var part in this.curLevelData) {

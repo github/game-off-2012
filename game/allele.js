@@ -130,7 +130,7 @@ var AllAlleleGroups =
             //Hard to kill
             0.25: { hpRegen: 50, hp: 200, damage: -13, attSpeed: -1 },
             //Gene spreader
-            0.50: { upload: 5, download: 5, range: -80 },
+            0.50: { upload: 50, download: -5, range: -80 },
             //Pew pew pew
             0.75: { attSpeed: 2, damage: -13},
             //Boom

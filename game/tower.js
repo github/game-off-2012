@@ -102,7 +102,7 @@ function Tower_Connection(t1, t2) {
         deleteButton.hidden = !this.base.parent.hover;
 
         // Wtf... setColorPart() should not be a thing.
-        if (this.hover) {
+        if (this.base.parent.hover) {
             line.color = setColorPart(line.color, 3, 0.9);            
         } else {
             line.color = setColorPart(line.color, 3, 0.2);
@@ -295,6 +295,10 @@ function Tower(baseTile) {
         var towerSelected = findClosest(this.base.rootNode, "Tower", e, 0);
         if(towerSelected && towerSelected != this)
         {
+            for (var i = 0; i < this.connections.length; i++)
+                if(this.connections[i].t2 == towerSelected)
+                    return;
+
             if (eng.money < 50) return;
             eng.money -= 50;
             var conn = new Tower_Connection(this, towerSelected);

@@ -34,19 +34,20 @@
     this.engine = this; //eng also works fine
 
     this.infobar = new Infobar(
-            new TemporalPos(pos.w - 250, 0, 250, pos.h * 0.8)
+            new TemporalPos(pos.w - 250, 0, 250, pos.h)
         );
 
     this.base.addObject(this.infobar);
 
     this.towerbar = new Towerbar(
-            new TemporalPos(0, pos.h - 150, pos.w - 250, 150)
+            new TemporalPos(0, pos.h - 150, pos.w - 260, 150)
         );
     this.base.addObject(this.towerbar);
-    this.towerbreeder = new TowerBreeder(
-            new TemporalPos(pos.w - 250, pos.h - 150, 200, 150)
-        );
-    this.base.addObject(this.towerbreeder);
+
+//    this.towerbreeder = new TowerBreeder(
+//            new TemporalPos(pos.w - 250, pos.h - 150, 200, 150)
+//        );
+//    this.base.addObject(this.towerbreeder);
 
     this.gameInfoBar = new GameInfoBar(
             new TemporalPos(0, pos.h - 240, pos.w - 260, 80)
@@ -133,8 +134,9 @@
 
     function getMousePos(e) {
         // Canvas is fullscreen now, so pageX is our x position.
-        var mX = defined(e.offsetX) ? e.offsetX : e.pageX;
-        var mY = defined(e.offsetY) ? e.offsetY : e.pageY;
+	var canpos = document.getElementById("myCanvas")
+        var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canpos.offsetLeft;
+        var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canpos.offsetTop;
         
         return { x: mX + 0.5, y: mY + 0.5 };
     }
@@ -320,7 +322,7 @@
             }
             this.selectedBucket.push(obj);
             obj.base.addObject(new HoverIndicator());
-            this.towerbreeder.towers = this.selectedBucket;
+            //this.towerbreeder.towers = this.selectedBucket;
         }
         else {
             for (var key in this.selectedBucket) {

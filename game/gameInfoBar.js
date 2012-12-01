@@ -43,6 +43,19 @@ function GameInfoBar(pos) {
 	this.nextLevelTimeIndi.color = "white";
 	this.base.addObject(this.nextLevelTimeIndi);
 
+
+	this.gotoNextLevel = new Button(
+        new TemporalPos(pos.x + 300, pos.y + 53, 190, 25), "Send Next Wave Now",
+            this, "skipNextLevel");
+	//this.gotoNextLevel.font = "20px arial";
+	//this.gotoNextLevel.color = "white";
+	this.base.addObject(this.gotoNextLevel);
+
+	this.skipNextLevel = function()
+	{
+	    this.base.rootNode.lvMan.nwicounter = -1;
+	}
+
 	this.update = function () {
 	    var eng = this.base.rootNode;
 	    this.healthIndi.text = "User Health: " + roundToDecimal(eng.health, 1);

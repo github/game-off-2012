@@ -257,7 +257,7 @@ var allAttackTypes = {
 
                     var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
                     var targets = findAllWithin(attacker.base.rootNode, targetType, 
-                            attacker.tPos.getCenter(), attacker.attr.range);
+                            attacker.tPos.getCenter(), rootAttacker.attr.range);
 
                     for(var key in this.attackTemplate.prevList)
                         this.attackTemplate.prevList[key].hidden = false;
