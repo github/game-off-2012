@@ -6,10 +6,14 @@ package
 	{
 		private var obstacleImage:Quad;
 		
-		public function obstacle() 
+		public function obstacle(X2D:Number, Y2D:Number) 
 		{
-			obstacleImage = new Quad(200, 50, 0x786B54);
-			obstacleImage.x = -obstacleImage.width / 2;
+			RealX = X2D;
+			RealY = Y2D;
+			RealWidth = 102;
+			RealHeight = 20;
+			
+			obstacleImage = new Quad(RealWidth, 20, 0xA36D3E);
 			obstacleImage.y = -obstacleImage.height / 2;
 			addChild(obstacleImage);
 		}

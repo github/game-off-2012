@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="foodSheet.png">
+    <SubTexture name="food_00" x="0" y="0" width="50" height="50"/>
+	<SubTexture name="food_01" x="100" y="0" width="50" height="50"/>
+	<SubTexture name="food_02" x="150" y="0" width="50" height="50"/>
+</TextureAtlas>

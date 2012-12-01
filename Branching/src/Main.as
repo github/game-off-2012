@@ -5,7 +5,6 @@ package
 	import away3d.core.managers.Stage3DManager;
 	import away3d.core.managers.Stage3DProxy;
 	import away3d.containers.View3D;
-	import away3d.debug.AwayStats;
 	import away3d.entities.Mesh;
 	import away3d.events.Stage3DEvent;
 	import away3d.lights.DirectionalLight;
@@ -19,6 +18,7 @@ package
 	import away3d.utils.*;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -58,6 +58,8 @@ package
 		
 		/* Functional vars */
 		private var _data:Object;
+		
+		private var LetsRestart:Boolean = false;
 
 		public function Main():void 
 		{
@@ -84,7 +86,7 @@ package
 			_stage3DProxy = _stage3DManager.getFreeStage3DProxy(); 
 			_stage3DProxy.addEventListener(Stage3DEvent.CONTEXT3D_CREATED, OnContextCreated); 
 			_stage3DProxy.antiAlias = 8; 
-			_stage3DProxy.color = 0x99ECFF;
+			_stage3DProxy.color = 0x45ABFF;
 		}
 		
 		private function OnContextCreated(event:Stage3DEvent):void
@@ -139,13 +141,7 @@ package
 			_cube.name = "cube";
 			Away3dView.scene.addChild(_cube);
 			
-			_cube.subMeshes[0].offsetV = 1;
-			
-			/* DEBUG */
-			// Add stats
-			var awayStats:AwayStats = new AwayStats(Away3dView);
-			awayStats.x = awayStats.y = 5;
-			addChild(awayStats);			
+			_cube.subMeshes[0].offsetV = 1;		
 		}
 		
 		private function InitListeners():void
@@ -206,8 +202,14 @@ package
 				_light.y = _camera.y;
 				_light.z = _camera.z;
 				
-				fg.DrawLine();
-				fg.Update(_cube.rotationY);
+				if (fg.GameOn)
+				{
+					fg.UpdateHUD();
+					fg.Update(_cube.rotationY);
+				}
+				else
+					fg.waitStart(_cube.rotationY);
+					
 				if (fg.moveWorld > 0)
 				{
 					if (!fg.intro)
@@ -220,8 +222,11 @@ package
 					}
 				}
 				var bg:Background = Background.GetInstance();
+				bg.rotatingWorld(_cube.rotationY);
 				bg.MovingUp(fg.moveWorld);
 				fg.moveWorld = 0;
+				if (fg.RestartMe)
+					LetsRestart = true;
 			}
 			
 			Away3dView.render();
@@ -229,6 +234,8 @@ package
 			_starlingFg.nextFrame();
 			
 			_stage3DProxy.present();
+			if (LetsRestart)
+				RestartGame();
 		}
 			
 		public static function GetVerticeWorldPosition(mesh:Mesh, vtxIndex:uint, subgIndex:uint = 0, PosX:Number = 0, PosY:Number = 0, WorldPlane:int = 0):Vector3D
@@ -262,6 +269,24 @@ package
 			}
 			vtx = mesh.sceneTransform.transformVector(vtx);
 			return vtx;
+		}
+		
+		private function RestartGame():void
+		{
+			_starlingBg.stop();
+			_starlingBg.dispose();
+			_starlingBg = null;
+			_starlingBg = new Starling(Background, stage, _stage3DProxy.viewPort, _stage3DProxy.stage3D);
+			_starlingBg.start();
+			_starlingFg.stop();
+			_starlingFg.dispose();
+			_starlingFg = null;
+			_starlingFg = new Starling(Foreground, stage, _stage3DProxy.viewPort, _stage3DProxy.stage3D);
+			_starlingFg.start();
+			_cube.y = 350;
+			_cube.rotationY = 0;
+			_cube.subMeshes[0].offsetV = 1;
+			LetsRestart = false;
 		}
 	}
 

@@ -1,17 +1,30 @@
 package  
 {
-	import starling.display.Quad;
+	import starling.core.Starling;
+	import starling.display.MovieClip;
+	import starling.textures.Texture;
+	import starling.textures.TextureAtlas;
 	
 	public class food extends interactiveObject 
 	{
-		private var foodImage:Quad;
+		//Texture Atlas
+		private var foodTextures:Texture = Texture.fromBitmap(new Resources.foodAtlasTexture());
+		private var foodXml:XML = XML(new Resources.foodAtlasXml());
+		private var foodAtlas:TextureAtlas= new TextureAtlas(foodTextures, foodXml);
 		
-		public function food() 
+		private var foodMovie:MovieClip;
+		
+		public function food(X2D:Number, Y2D:Number) 
 		{
-			foodImage = new Quad(30, 30, 0xff2233)
-			foodImage.x = -foodImage.width / 2;
-			foodImage.y = -foodImage.height / 2;
-			addChild(foodImage);
+			RealX = X2D;
+			RealY = Y2D;
+			
+			foodMovie = new MovieClip(foodAtlas.getTextures("food_"), 10);
+			foodMovie.x = -foodMovie.width / 2;
+			foodMovie.y = -foodMovie.height / 2;
+			addChild(foodMovie);
+			
+			Starling.juggler.add(foodMovie);
 		}
 		
 	}
