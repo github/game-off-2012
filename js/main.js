@@ -364,6 +364,9 @@ mit.main = function() {
 
     // Game over on reaching any boundary
     if (mit.Pappu.hasReachedBoundary(W, H)) {
+      if (mit.game_over)
+        return;
+
       // Performing some game over tasks
       mit.gameOver();
       return;
