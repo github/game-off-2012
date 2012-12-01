@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{CD8C9303-404B-FB8D-6B9B-21988D5CAC0A}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_3_5_6;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_WEBPLAYER;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="UnityEngine">
+	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Orthello\Examples\0 - Simple Examples\(Unity Pro) NavMesh Pathfinding\Agent.cs" />
+     <Compile Include="Assets\Orthello\Examples\0 - Simple Examples\3D integration\App.cs" />
+     <Compile Include="Assets\Orthello\Examples\0 - Simple Examples\3D integration\Arrow.cs" />
+     <Compile Include="Assets\Orthello\Examples\0 - Simple Examples\DragTest\DragTest.cs" />
+     <Compile Include="Assets\Orthello\Examples\0 - Simple Examples\DragTest\DragTestMain.cs" />
+     <Compile Include="Assets\Orthello\Examples\0 - Simple Examples\Persistance\PersistentSprite.cs" />
+     <Compile Include="Assets\Orthello\Examples\0 - Simple Examples\RotateTowards\TestRotateTowards.cs" />
+     <Compile Include="Assets\Orthello\Examples\0 - Simple Examples\TextSprites\OTTextChalc.cs" />
+     <Compile Include="Assets\Orthello\Examples\0 - Simple Examples\TextSprites\OTTextImages.cs" />
+     <Compile Include="Assets\Orthello\Examples\0 - Simple Examples\TextSprites\OTTextPortago.cs" />
+     <Compile Include="Assets\Orthello\Examples\1 - Paralax scrolling FilledSprite\CExample1.cs" />
+     <Compile Include="Assets\Orthello\Examples\2 - Moving collidable sprites\CBlock2.cs" />
+     <Compile Include="Assets\Orthello\Examples\2 - Moving collidable sprites\CExample2.cs" />
+     <Compile Include="Assets\Orthello\Examples\2 - Moving collidable sprites\CStar2.cs" />
+     <Compile Include="Assets\Orthello\Examples\3 - Shooting Asteroids\CAsteroid3.cs" />
+     <Compile Include="Assets\Orthello\Examples\3 - Shooting Asteroids\CBullet3.cs" />
+     <Compile Include="Assets\Orthello\Examples\3 - Shooting Asteroids\CExample3.cs" />
+     <Compile Include="Assets\Orthello\Examples\4 - Follow Target View\CExample4.cs" />
+     <Compile Include="Assets\Orthello\Examples\4 - Follow Target View\CMover4.cs" />
+     <Compile Include="Assets\Orthello\Examples\5 - Creating At Runtime\CExample5.cs" />
+     <Compile Include="Assets\Orthello\Examples\6 - Physics\CExample6.cs" />
+     <Compile Include="Assets\Orthello\Examples\7 - Tweening\CExample7.cs" />
+     <Compile Include="Assets\Orthello\Examples\7 - Tweening\CStar7_1.cs" />
+     <Compile Include="Assets\Orthello\Examples\7 - Tweening\CStar7_2.cs" />
+     <Compile Include="Assets\Orthello\Examples\8 - Prefab-Support\test8.cs" />
+     <None Include="Assets\SpriteAtlases\stargazer.xml" />
+     <None Include="Assets\SpriteAtlases\player.xml" />
+     <None Include="Assets\SpriteAtlases\backgrounds.xml" />
+     <None Include="Assets\Orthello\Examples\0 - Simple Examples\TextSprites\lorem.txt" />
+     <None Include="Assets\Orthello\Examples\0 - Simple Examples\TextSprites\Atlases\russian.txt" />
+     <None Include="Assets\SpriteAtlases\level.xml" />
+     <None Include="Assets\Orthello\Examples\4 - Follow Target View\-orthello-config.xml" />
+     <None Include="Assets\SpriteAtlases\jumpingwatcher.xml" />
+     <None Include="Assets\Orthello\-Read-Me.txt" />
+     <None Include="Assets\SpriteAtlases\coincommit.xml" />
+     <None Include="Assets\Orthello\-Update-Upgrade info.txt" />
+     <None Include="Assets\Orthello\Examples\0 - Simple Examples\TextSprites\Atlases\img.xml" />
+     <None Include="Assets\Orthello\Examples\0 - Simple Examples\TextSprites\Atlases\glyph.xml" />
+     <None Include="Assets\SpriteAtlases\evilforker.xml" />
+     <None Include="Assets\Orthello\Examples\0 - Simple Examples\TextSprites\Atlases\chalk.xml" />
+     <None Include="Assets\Standard Assets\OT\_Base\TintedAlpha.shader" />
+     <None Include="Assets\Orthello\Examples\0 - Simple Examples\RotateTowards\-read-me.txt" />
+     <None Include="Assets\Orthello\Examples\0 - Simple Examples\Persistance\-read-me.txt" />
+     <None Include="Assets\Orthello\Examples\0 - Simple Examples\TextSprites\lorem-rus-utf8.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
+      <Project>{2662B409-6332-1E56-D797-C9025C53BDD6}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

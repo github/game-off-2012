@@ -1,0 +1,18 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Level.js">
+    <Files>
+      <File FileName="Assets\Scripts\PlayerData.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Spark.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player.js" Line="170" Column="17" />
+      <File FileName="Assets\Scripts\Level.js" Line="186" Column="29" />
+      <File FileName="Assets\Scripts\EvilForker.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ParallaxBackground.js" Line="24" Column="25" />
+      <File FileName="Assets\Scripts\OutlineText.js" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

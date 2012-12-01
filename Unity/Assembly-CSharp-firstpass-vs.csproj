@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{2662B409-6332-1E56-D797-C9025C53BDD6}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_3_5_6;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_WEBPLAYER;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="UnityEngine">
+	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Standard Assets\OT\Animation\OTMovementController.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\OTView.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\Atlas\OTAtlasData.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\Atlas\OTSpriteAtlas.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\Atlas\OTSpriteAtlasBMFontXml.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\Atlas\OTSpriteAtlasCocos2D.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\Atlas\OTSpriteAtlasCocos2DFnt.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\Atlas\OTSpriteAtlasImport.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\Atlas\OTSpriteAtlasImportText.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\Atlas\OTSpriteAtlasImportXML.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\Atlas\OTSpriteAtlasOGRE.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\Atlas\OTSpriteAtlasSparrow.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\OTAnimatingSprite.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\OTAnimation.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\OTAnimationFrameset.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\OTContainer.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\OTFilledSprite.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\OTGradientSprite.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\OTScale9Sprite.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\OTSprite.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\OTSpriteSheet.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Graphics\Sprites\OTTextSprite.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEase.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseBackIn.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseBackInOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseBackOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseBounceIn.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseBounceInOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseBounceOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseCircIn.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseCircInOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseCircOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseCubicIn.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseCubicInOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseCubicOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseElasticIn.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseElasticInOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseElasticOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseExpoIn.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseExpoInOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseExpoOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseLinear.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseQuadIn.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseQuadInOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseQuadOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseQuartIn.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseQuartInOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseQuartOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseQuintIn.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseQuintInOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseQuintOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseSineIn.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseSineInOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseSineOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseStrongIn.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseStrongInOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEaseStrongOut.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTEasing.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTTween.cs" />
+     <Compile Include="Assets\Standard Assets\OT\Tweening\OTTweenController.cs" />
+     <Compile Include="Assets\Standard Assets\OT\_Base\OT.cs" />
+     <Compile Include="Assets\Standard Assets\OT\_Base\OTController.cs" />
+     <Compile Include="Assets\Standard Assets\OT\_Base\OTDevTrace.cs" />
+     <Compile Include="Assets\Standard Assets\OT\_Base\OTMatRef.cs" />
+     <Compile Include="Assets\Standard Assets\OT\_Base\OTObject.cs" />
+     <Compile Include="Assets\Standard Assets\OT\_Base\OTObjectType.cs" />
+     <Compile Include="Assets\Standard Assets\OT\_Base\OTPB.cs" />
+     <Compile Include="Assets\Standard Assets\OT\_Base\OTSounds.cs" />
+     <Compile Include="Assets\Standard Assets\OT\_Base\OTTimeCycle.cs" />
+     <None Include="Assets\SpriteAtlases\stargazer.xml" />
+     <None Include="Assets\SpriteAtlases\player.xml" />
+     <None Include="Assets\SpriteAtlases\backgrounds.xml" />
+     <None Include="Assets\SpriteAtlases\level.xml" />
+     <None Include="Assets\SpriteAtlases\jumpingwatcher.xml" />
+     <None Include="Assets\Orthello\-Read-Me.txt" />
+     <None Include="Assets\SpriteAtlases\coincommit.xml" />
+     <None Include="Assets\Orthello\-Update-Upgrade info.txt" />
+     <None Include="Assets\SpriteAtlases\evilforker.xml" />
+     <None Include="Assets\SpriteAtlases\player256.xml" />
+     <None Include="Assets\Standard Assets\OT\_Base\TintedAlpha.shader" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>
