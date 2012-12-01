@@ -8,8 +8,8 @@ function LevelManager(bugStart) {
                     AllAlleleGroups.rangeBase,
                     function () { return { speed: 20 }; },
                ],
-            waveTime: 10,
-            spawnDelay: 0.1
+            waveTime: 20,
+            spawnDelay: 1
         },    
         { 
             7: [
@@ -18,8 +18,8 @@ function LevelManager(bugStart) {
                     AllAlleleGroups.rangeBase,
                     function () { return { speed: 30, damage: 5 }; },
                ],
-            waveTime: 7,
-            spawnDelay: 0.1
+            waveTime: 14,
+            spawnDelay: 0.5
         },
         {
             14: [
@@ -29,8 +29,8 @@ function LevelManager(bugStart) {
                     AllAlleleGroups.hpBase,
                     function () { return { speed: 20, attSpeed: 1, damage: 10 }; },
                ],
-            waveTime: 7,
-            spawnDelay: 0.1
+            waveTime: 14,
+            spawnDelay: 0.5
         },
         {
             14: [
@@ -42,8 +42,8 @@ function LevelManager(bugStart) {
                     AllAlleleGroups.attSpeedBase,
                     function () { return { speed: 20, hpRegen: 100, hp: -99 }; },
                ],
-            waveTime: 7,
-            spawnDelay: 0.1
+            waveTime: 14,
+            spawnDelay: 0.5
         },
         {
             15: [
@@ -57,8 +57,8 @@ function LevelManager(bugStart) {
                     AllAlleleGroups.attack3,
                     function () { return { speed: 30, hp: 300 }; },
                ],
-            waveTime: 7,
-            spawnDelay: 0.1
+            waveTime: 20,
+            spawnDelay: 0.5
         },
         {
             20: [
@@ -73,8 +73,8 @@ function LevelManager(bugStart) {
                     AllAlleleGroups.specization2,
                     function () { return { speed: 15 }; },
                ],
-            waveTime: 7,
-            spawnDelay: 0.1
+            waveTime: 20,
+            spawnDelay: 0.2
         }
 
     ];
@@ -120,7 +120,7 @@ function LevelManager(bugStart) {
                                     bug.attr[attrName] *= attributeModifier;
 
                                 if (attrName == "range")
-                                    bug.attr[attrName] *= Math.min(attributeModifier, 0.5);
+                                    bug.attr[attrName] *= Math.min(attributeModifier, 0.3);
                                 else
                                     bug.attr[attrName] *= attributeModifier;
                             }
