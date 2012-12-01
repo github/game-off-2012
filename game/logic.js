@@ -50,7 +50,7 @@
 //    this.base.addObject(this.towerbreeder);
 
     this.gameInfoBar = new GameInfoBar(
-            new TemporalPos(0, pos.h - 240, pos.w - 260, 80)
+            new TemporalPos(0, pos.h - 240, pos.w - 260, 90)
         );
     this.base.addObject(this.gameInfoBar);
 
@@ -116,9 +116,9 @@
         }
 
         //Make fancy background
-        if (curFrameCounter % 100 == 0) {
-            this.base.addObject(new FancyBackground(this.pen));
-        }
+        //if (curFrameCounter % 100 == 0) {
+          //  this.base.addObject(new FancyBackground(this.pen));
+        //}
 
         if (currentRangeDisplayed && this.selectedObj)
             currentRangeDisplayed.pCenter.set(this.selectedObj.tPos.getCenter());
