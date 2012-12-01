@@ -27,6 +27,8 @@
     }
     this.health = 100;
 
+    this.speed = 1;
+
     this.lastTowerHover = null;
 
     this.base = new BaseObj(this);
@@ -92,13 +94,15 @@
             lastFPSUpdate = timestamp;
         }
 
+        updateAmount *= this.speed;
+
         gameTimeAccumulated += updateAmount;
 
         var newObjects = this.base.update(updateAmount / 1000);
 
         for (var key in newObjects)
             this.base.addObject(newObjects[key]);
-        
+
         this.bPen.clearRect(0, 0, bufferCanvas.width, bufferCanvas.height);
         this.base.draw(this.bPen);
         pen.drawImage(bufferCanvas, 0, 0);

@@ -49,7 +49,7 @@ function Tower_Connection(t1, t2) {
         
         deleteButton = new Button(pos, "-", 
             that, "deleteSelf", 50);
-        deleteButton.color = "rgba(0, 255, 0, 0.6)";
+        deleteButton.color = "rgba(0, 255, 0, 0.6)";        
         
         that.base.addObject(deleteButton);
     }
