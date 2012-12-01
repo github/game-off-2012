@@ -45,7 +45,7 @@ function GameInfoBar(pos) {
 
 
     this.gotoNextLevel = new Button(
-        new TemporalPos(pos.x + 320, pos.y + 63, 190, 25), "Send Next Wave Now",
+        new TemporalPos(pos.x + 300, pos.y + 53, 190, 25), "Send Next Wave Now",
             this, "skipNextLevel");
     //this.gotoNextLevel.font = "20px arial";
     //this.gotoNextLevel.color = "white";
@@ -65,11 +65,5 @@ function GameInfoBar(pos) {
 
         this.curLevelIndi.text = "Current Level: " + roundToDecimal(eng.lvMan.curLevel, 2);
         this.nextLevelTimeIndi.text = "Seconds To Next Level: " + roundToDecimal(eng.lvMan.nwicounter, 0);
-    }
-
-    this.draw = function (pen) {
-        pen.fillStyle = "transparent";
-
-        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
     }
 }
