@@ -14,13 +14,13 @@
     },
     tri: function(x, y, width, height, pen) {
         pen.beginPath();
-	pen.moveTo(x, y);
-	pen.lineTo(x + width, y);
-	pen.lineTo(x + (width/2), y+ height);
-	pen.lineTo(x,y);
-	pen.closePath();
-	pen.fill();
-	pen.stroke();
+	    pen.moveTo(x, y);
+	    pen.lineTo(x + width, y);
+	    pen.lineTo(x + (width/2), y+ height);
+	    pen.lineTo(x,y);
+	    pen.closePath();
+	    pen.fill();
+	    pen.stroke();
     },
     rect: function (x, y, width, height, pen) {
         pen.beginPath();

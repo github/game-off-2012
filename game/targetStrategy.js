@@ -17,12 +17,33 @@ var targetStrategies = {
             return target;
         },
         this.drawGlyph = function(pen, tPos) {
-            //Draw text
-            pen.fillStyle = "#000000";
-            pen.font = tPos.h + "px arial";
-            pen.textAlign = 'left';
+	        var color = "grey";
 
-            ink.text(tPos.x, tPos.y, "C", pen);
+            var circlePos = [-0.1, 0.5, 0.2];
+
+            pen.beginPath();
+
+            for(var i = 0; i < circlePos.length; i += 3)
+            {
+                pen.strokeStyle = "black";
+                pen.fillStyle = color;
+	            pen.lineWidth = 1;
+                ink.circ(tPos.x+(tPos.w*circlePos[i]), tPos.y-(tPos.w*circlePos[i + 1]), 
+                    tPos.w * circlePos[i + 2], pen);
+            }
+
+
+            var rectPos = [0.2, 0.75, 0.5];
+
+            for(var i = 0; i < rectPos.length; i += 3)
+            {
+                pen.strokeStyle = "white";
+                pen.fillStyle = color;
+	            pen.lineWidth = 1;
+                ink.rect(tPos.x+(tPos.w*rectPos[i]), tPos.y-(tPos.w*rectPos[i + 1]), 
+                    tPos.w * rectPos[i + 2], tPos.w * rectPos[i + 2], pen);
+            }
+
         };
     },
     Random: function Random () {
@@ -47,12 +68,34 @@ var targetStrategies = {
             return targets[randomPos];        
         },
         this.drawGlyph = function(pen, tPos) {
-            //Draw text
-            pen.fillStyle = "#000000";
-            pen.font = tPos.h + "px arial";
-            pen.textAlign = 'left';
+            var color = "grey";
 
-            ink.text(tPos.x, tPos.y, "R", pen);
+            pen.beginPath();
+
+            var circlePos = [0.0, 0.4, 0.1,
+                             0.6, 0.7, 0.1,
+                             0.0, 0.8, 0.1,];
+
+            for(var i = 0; i < circlePos.length; i += 3)
+            {
+                pen.strokeStyle = "black";
+                pen.fillStyle = color;
+	            pen.lineWidth = 1;
+                ink.circ(tPos.x+(tPos.w*circlePos[i]), tPos.y-(tPos.w*circlePos[i + 1]), 
+                    tPos.w * circlePos[i + 2], pen);
+            }
+
+
+            var rectPos = [0.2, 0.80, 0.3];
+
+            for(var i = 0; i < rectPos.length; i += 3)
+            {
+                pen.strokeStyle = "white";
+                pen.fillStyle = color;
+	            pen.lineWidth = 1;
+                ink.rect(tPos.x+(tPos.w*rectPos[i]), tPos.y-(tPos.w*rectPos[i + 1]), 
+                    tPos.w * rectPos[i + 2], tPos.w * rectPos[i + 2], pen);
+            }
         };
     },
     Farthest: function farthestOnPath () {
@@ -97,12 +140,32 @@ var targetStrategies = {
             }
         },
         this.drawGlyph = function(pen, tPos) {
-            //Draw text
-            pen.fillStyle = "#000000";
-            pen.font = tPos.h + "px arial";
-            pen.textAlign = 'left';
+            var color = "grey";
 
-            ink.text(tPos.x, tPos.y, "R", pen);
+            var circlePos = [0.7, 0.9, 0.1];
+
+            pen.beginPath();
+
+            for(var i = 0; i < circlePos.length; i += 3)
+            {
+                pen.strokeStyle = "black";
+                pen.fillStyle = color;
+	            pen.lineWidth = 1;
+                ink.circ(tPos.x+(tPos.w*circlePos[i]), tPos.y-(tPos.w*circlePos[i + 1]), 
+                    tPos.w * circlePos[i + 2], pen);
+            }
+
+
+            var rectPos = [-0.3, 0.3, 0.3];
+
+            for(var i = 0; i < rectPos.length; i += 3)
+            {
+                pen.strokeStyle = "white";
+                pen.fillStyle = color;
+	            pen.lineWidth = 1;
+                ink.rect(tPos.x+(tPos.w*rectPos[i]), tPos.y-(tPos.w*rectPos[i + 1]), 
+                    tPos.w * rectPos[i + 2], tPos.w * rectPos[i + 2], pen);
+            }
         };
     },
 };

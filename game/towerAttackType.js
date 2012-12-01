@@ -98,22 +98,22 @@ var allAttackTypes = {
             pen.font = tPos.h + "px arial";
             pen.textAlign = 'left';
 
-            var start = new Vector(tPos.x, tPos.y);
+            var start = new Vector(tPos.x + tPos.w * 0.1, tPos.y - tPos.h * 0.2);
             var end = new Vector(tPos.x + (tPos.w*0.7), tPos.y - tPos.h);
 
             pen.strokeStyle = globalColorPalette.laser;
-	        pen.lineWidth = 3;
+	        pen.lineWidth = 2;
 	        ink.line(start.x, start.y, end.x, end.y, pen);
 
-            pen.lineWidth = 1;
+            pen.lineWidth = 0.8;
 
             var dist = cloneObject(start);
             dist.sub(end);
-            dist = dist.mag() * 0.2;
+            dist = dist.mag() * 0.3;
 
             end = start;
 
-            for(var i = 0; i <= Math.PI * 2; i += Math.PI / 3)
+            for(var i = 0; i <= Math.PI * 2; i += Math.PI / 3 * 0.5)
             {
                 start = cloneObject(end);
 
@@ -121,7 +121,7 @@ var allAttackTypes = {
                 start.add(delta);
 
                 pen.strokeStyle = globalColorPalette.laser;
-	            pen.lineWidth = 3;
+	            pen.lineWidth = 2;
 	            ink.line(start.x, start.y, end.x, end.y, pen);
             }
 
@@ -167,11 +167,11 @@ var allAttackTypes = {
 	        pen.lineWidth = 0;
 	        pen.fillStyle = "#ffffff";        
             pen.strokeStyle = "transparent";
-	        ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.5, pen);
+	        ink.circ(tPos.x+(tPos.w*0.35), tPos.y-(tPos.w*0.5), tPos.w*0.4, pen);
 
     	    pen.strokeStyle = "transparent";
             pen.fillStyle = "orange";
-	        ink.circ(tPos.x+(tPos.w*0.3), tPos.y-(tPos.w*0.5), tPos.w*0.4, pen);
+	        ink.circ(tPos.x+(tPos.w*0.35), tPos.y-(tPos.w*0.5), tPos.w*0.3, pen);
         };
         this.AttackNode = function(attackTemplate)
         {
@@ -241,6 +241,8 @@ var allAttackTypes = {
             var end = new Vector(tPos.x, tPos.y);
 
             var scale = 8;
+
+            pen.beginPath();
 
             pen.fillStyle = globalColorPalette.chain_lightning;
             pen.strokeStyle = globalColorPalette.chain_lightning;
@@ -435,11 +437,6 @@ var allAttackTypes = {
         this.repeatDelay = 0.3;
         this.damage_percent = 30;
         this.drawGlyph = function (pen, tPos) {
-            //Draw text
-            pen.fillStyle = "#000000";
-            pen.font = tPos.h + "px arial";
-            pen.textAlign = 'left';
-	    
 
             var circlePos = [0.2, 0.25, 0.1, 
                             0.5, 0.1, 0.1, 
@@ -529,17 +526,19 @@ var allAttackTypes = {
                 [5, -20, 5, 20,   
                 10, -50, 10, 30,
                 5, -50, 7, 50,
-                5, -100, 7, 100,
+                5, -90, 7, 100,
                 5, -50, 7, 50,
                 7, -50, 7, 30,
                 10, -50, 10, 30,
-                10, 60, -100, 0
+                10, 60, -110, 0
                 ];
 
             var start = new Vector(tPos.x - w * 0.1, tPos.y - w);
             var end = new Vector(tPos.x - w * 0.1, tPos.y - w);
 
             var scale = 100;
+
+            pen.beginPath();
 
             pen.fillStyle = globalColorPalette.slow;
             pen.strokeStyle = "rgba(255, 255, 255, 1)";
@@ -615,7 +614,8 @@ function drawAttributes(user, pen) {
             if (typeof obj == "number")
                 return false;
             if(!obj.drawGlyph)
-                fail("not good");
+                fail("not good");            
+
             obj.drawGlyph(pen, pos);
             return true;
         },
@@ -627,4 +627,31 @@ function drawAttributes(user, pen) {
             user.tPos.h * 0.85),
         2, 2,
         0.1);
+
+    makeTiled(pen,
+        function (obj, pen, pos) {
+            if (typeof obj == "number")
+                return false;
+
+            
+            pen.beginPath();
+
+            pen.strokeStyle = "rgba(255, 255, 255, 0.5)";
+            pen.fillStyle = "transparent";
+
+            pen.lineWidth = 1;
+            ink.rect(pos.x, pos.y, pos.w, pos.h, pen);
+
+            pen.closePath();
+
+            return true;
+        },
+        user.attr,
+        new TemporalPos(
+            user.tPos.x,
+            user.tPos.y,
+            user.tPos.w,
+            user.tPos.h ),
+        2, 2,
+        0);
 }
