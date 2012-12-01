@@ -18,6 +18,7 @@ Clicking on a tower will also show its stats in the sidebar:
 <img src="http://i.imgur.com/vgcKZ.gif" style="border:0;">
 
 Towers have the following stats:
+
 * Range: Allows them to attack creeps which are farther away.
 * Damage: Makes them take away more health from creeps with every attack.
 * Hp: Their lifesource, they health will never go above this (except if their receive a rare allele).
@@ -41,7 +42,7 @@ Reductions in damage will apply to the next attack when attacks are chained. So 
 
 ## Genetics
 
-Towers and creeps (or bugs) have a genetic system based on alleles. These alleles do not act quite like real alleles, as they are all dominant and you only need one for a trait to be changed, however they add a natural progression of towers. 
+Towers and creeps (or bugs) have a genetic system based on alleles. Towers are branched from the their specific base tower (which determines their attack type) and then given random alleles. These alleles do not act quite like real alleles, as they are all dominant and you only need one for a trait to be changed, however they add a natural progression of towers. 
 
 Every tower starts off with random alleles, and an allele to give it a specific attack type. New alleles can be purchased or gained by connecting towers to other towers. However, beware, as with genetics you cannot gain a trait (or allele) without losing one of your existing ones. When you buy alleles you are able to see how the allele will impact your tower and discard it if you choose so. Connecting towers gives you less control, but making connections between towers is free so it is a good way to spread the traits of amazing towers.
 
@@ -61,7 +62,7 @@ When mousing over any of the purchase allele buttons indicator will apear next t
 
 ## Making Networks
 
-Networks between towers can be created by dragged one tower to another tower. This will cause alleles from the starting tower to send alleles occasionally to the end tower. Alleles will be sent according the the kills the tower gets, and the kills needed to send an allele is proportional to the minimum of the sending tower's upload and the receiving tower's download speed.
+Networks between towers can be created by dragged one tower to another tower. This will cause alleles from the starting tower to be occasionally pushed to the end tower. Alleles will be pushed according the the kills the tower gets, and the kills needed to push an allele is proportional to the minimum of the sending tower's upload and the receiving tower's download speed.
 
 Network connections can be removed by clicking on the sending tower and then clicking on the - box next to the receiving tower.
 
