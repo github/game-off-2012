@@ -146,13 +146,14 @@ var DFlag = {};
 <s src="game/logic.js"></s>
 </div>
 <script>
-document.body.onload = function() {
+window.onload = function() {
     var scripts = document.getElementById("scripts");
     var c = scripts.children;
     for (var i = 0; i < c.length; i++) {
         var src = c[i].getAttribute('src');
         var script = new Image();
         script.src = src;
+        console.log("Preloading ", src);
     }
 };
 </script>
