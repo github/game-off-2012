@@ -115,7 +115,12 @@ function LevelManager(bugStart) {
                         for (var attrName in bug.attr) {
                             if (typeof bug.attr[attrName] == "number") {
                                 if (attrName == "speed")
-                                    bug.attr[attrName] *= Math.min(attributeModifier, 2);
+                                    bug.attr[attrName] *= Math.min(attributeModifier, 1.5);
+                                else
+                                    bug.attr[attrName] *= attributeModifier;
+
+                                if (attrName == "range")
+                                    bug.attr[attrName] *= Math.min(attributeModifier, 0.5);
                                 else
                                     bug.attr[attrName] *= attributeModifier;
                             }

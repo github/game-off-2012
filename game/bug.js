@@ -106,7 +106,7 @@ function Bug(startPath) {
 
         eng.health -= 5;
 
-        if (eng.health < 0) {
+        if (eng.health <= 0) {
             window.location.reload();
         }
     };
