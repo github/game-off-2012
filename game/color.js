@@ -39,7 +39,7 @@ function RGBColor() {
 }
 
 function HSLColor() {
-    var h = 255;
+    var h = 360;
     var s = 100;
     var l = 100;
     var a = 1.0;
@@ -50,7 +50,7 @@ function HSLColor() {
     }
     this.h = function(newh) {
         if (newh === undefined) return h;
-        h = Math.max(Math.min(Math.floor(newh), 255), 0);
+        h = (Math.floor(newh) + 360) % 360;
         dirty = true;
         return this;
     }
