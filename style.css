@@ -90,3 +90,9 @@ h4 {
 	margin: auto;
 	margin-top: 20px;
 }
+
+.tested_on {
+	text-align: center;
+	font-size: 10px;
+	margin-top: 5px;
+}
