@@ -6,66 +6,64 @@ function Button(pos, txt, context, functionName, callData, zorder) {
 
     this.base = new BaseObj(this, zorder);
     this.base.type = "Button" + zorder;
-	this.textsize = 14;
+    this.textsize = 14;
 
-	this.hover = false;
-	this.down = false;
-	
-	this.context = context;
+    this.hover = false;
+    this.down = false;
+    
+    this.context = context;
     this.functionName = functionName;
     this.callData = callData;
 
     txt = formatToDisplay(txt);
 
-	this.draw = function(pen) {
-		//Draw box
-		if (this.down) {
-			pen.fillStyle = "white";
-		} 
-		else if(this.hover){
-			pen.fillStyle = "gray";
-		} 
-		else {
-			pen.fillStyle = "dimgray";
-		}
-		ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-		
-		//Draw text
-		pen.fillStyle = "#000000";
-		pen.font = this.textsize + "px arial";
+    this.draw = function(pen) {
+        //Draw box
+        if (this.down) {
+            pen.fillStyle = "#333";
+        } else if (this.hover) {
+            pen.fillStyle = "#111";
+        } else {
+            pen.fillStyle = "black";
+        }
+        pen.strokeStyle = "green";
+        
+        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
+        
+        //Draw text
+        pen.fillStyle = "green";
+        pen.font = this.textsize + "px monospace";
 
-		//How wide is text?
-		var tW = pen.measureText(txt).width;
-
-		ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+this.textsize+4, txt, pen);
-		return;
-	}
-	
-	this.added = function() {
+        var p = this.tPos;
+        ink.cenText(p.x + (p.w/2), p.y + this.textsize + 4, txt, pen);
+        return;
+    }
+    
+    this.added = function() {
         //this.resize = Dock(this, "none", "center");
-	}
-	
+    }
+    
 
-	this.click = function() {
+    this.click = function() {
         if(this.context[this.functionName])
             this.context[this.functionName](this.callData);
-	};
-	
-	this.mouseover = function() {
-		this.hover = true;
-	};
-	
-	this.mouseout = function() {
-		this.hover = false;
-	};
-	
-	this.mousedown = function() {
-		this.down = true;
-	};
-	
-	this.mouseup = function() {
-		this.down = false;
-	};
+    };
+    
+    this.mouseover = function() {
+        this.hover = true;
+    };
+    
+    this.mouseout = function() {
+        this.hover = false;
+    };
+    
+    this.mousedown = function() {
+        this.down = true;
+    };
+    
+    this.mouseup = function() {
+        this.down = false;
+    };
 }
 
 function Label(pos, text) {
@@ -105,13 +103,13 @@ function Label(pos, text) {
 
 function RadioButton(pos, txt, context, functionName, callData, prevRadioButton){
     this.tPos = pos;
-	this.base = new BaseObj(this, 15);
-	var textsize = 14;
+    this.base = new BaseObj(this, 15);
+    var textsize = 14;
 
-	this.hover = false;
-	this.down = false;
+    this.hover = false;
+    this.down = false;
 
-	txt = formatToDisplay(txt);
+    txt = formatToDisplay(txt);
 
     this.radioGroup = [];
     if(prevRadioButton) {
@@ -122,7 +120,7 @@ function RadioButton(pos, txt, context, functionName, callData, prevRadioButton)
     }
     this.radioGroup.push(this);
     
-	this.context = context;
+    this.context = context;
     this.functionName = functionName;
     this.callData = callData;
     
@@ -159,46 +157,46 @@ function RadioButton(pos, txt, context, functionName, callData, prevRadioButton)
         this.radioGroup.push(button);
     };
     
-	this.draw = function(pen) {
-		//Draw box
-		if (this.down || this.toggled) {
-			pen.fillStyle = "white";
-		} 
-		else if(this.hover){
-			pen.fillStyle = "gray";
-		} 
-		else {
-			pen.fillStyle = "dimgray";
-		}
-		ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-		
-		//Draw text
-		pen.fillStyle = "#000000";
-		pen.font = textsize + "px arial";
+    this.draw = function(pen) {
+        //Draw box
+        if (this.down || this.toggled) {
+            pen.fillStyle = "white";
+        } 
+        else if(this.hover){
+            pen.fillStyle = "gray";
+        } 
+        else {
+            pen.fillStyle = "dimgray";
+        }
+        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
+        
+        //Draw text
+        pen.fillStyle = "#000000";
+        pen.font = textsize + "px arial";
 
-		//How wide is text?
-		var tW = pen.measureText(txt).width;
+        //How wide is text?
+        var tW = pen.measureText(txt).width;
 
-		ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+textsize+4, txt, pen);
-		return;
-	}
-	
-	this.mouseover = function() {
-		this.hover = true;
-	};
-	
-	this.mouseout = function() {
-		this.hover = false;
-	};
-	
-	this.mousedown = function() {
-		this.down = true;
-	};
-	
-	this.mouseup = function() {
-		this.down = false;
+        ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+textsize+4, txt, pen);
+        return;
+    }
+    
+    this.mouseover = function() {
+        this.hover = true;
+    };
+    
+    this.mouseout = function() {
+        this.hover = false;
+    };
+    
+    this.mousedown = function() {
+        this.down = true;
+    };
+    
+    this.mouseup = function() {
+        this.down = false;
         this.toggle();
-	};
+    };
 }
 
 function Dock(item, dockX, dockY) {

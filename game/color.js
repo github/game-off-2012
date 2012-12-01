@@ -1,4 +1,4 @@
-function Color() {
+function RGBColor() {
     var r = 255;
     var g = 255;
     var b = 255;
@@ -36,6 +36,36 @@ function Color() {
         dirty = false;
         return str;
     }
+}
+
+function HSLColor() {
+    // Someone should do this.
+}
+
+// This function should really be done with HSLColor or RGBColor, but this works for now since everything is using strings for colors.
+//Well this is all I need to do colors
+function setColorPart(color, partNumber, partValue) {
+    var functionParts = color.split("(");
+    var functionName = functionParts[0];
+    var args = functionParts[1].split(")")[0].split(",");
+
+    args[partNumber] = partValue;
+
+    var returnValue = functionName + "( ";
+
+    var first = true;
+    for (var key in args) {
+        if (first) {
+            first = false;
+            returnValue += args[key];
+        }
+        else {
+            returnValue += ", " + args[key];
+        }
+    }
+    returnValue += ")";
+
+    return returnValue;
 }
 
 function getInnerColorFromAttrs(attr) {
