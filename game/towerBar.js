@@ -108,6 +108,6 @@ function Towerbar(pos) {
         costIndicator.tPos.x = pos.x + 10;
         costIndicator.tPos.y = pos.y + 25;
 
-        costIndicator.text = "Current tower cost: " + this.base.rootNode.currentCost;
+        costIndicator.text = "Current tower cost: " + roundToDecimal(this.base.rootNode.currentCost, 2);
     }
 }

@@ -6,9 +6,9 @@ function AllelePointSystem(pos) {
     this.pointIndicator.color = "blue";
     this.base.addObject(this.pointIndicator);
 
-    this.pointCost = 100;
+    this.pointCost = 50;
 
-    this.pointCost = 100;
+    this.pointCost = 50;
     var pointCount = 1;
     this.buyButton = new Button(cloneObject(pos), "Buy Point ($" + this.pointCost + ")",
                                 this, "buyPoint", { count: pointCount, cost: this.pointCost });
@@ -16,7 +16,7 @@ function AllelePointSystem(pos) {
     this.buyButton.tPos.w *= 0.93;
     this.base.addObject(this.buyButton);
 
-    this.pointCost = 700; pointCount = 10;
+    this.pointCost = 350; pointCount = 10;
     this.buyButton2 = new Button(cloneObject(pos), "Buy " + pointCount + " Points ($" + this.pointCost + ")",
                                 this, "buyPoint", { count: pointCount, cost: this.pointCost });
     this.buyButton2.tPos.h = 26;
@@ -24,7 +24,7 @@ function AllelePointSystem(pos) {
     this.base.addObject(this.buyButton2);
 
 
-    this.pointCost = 5000; pointCount = 100;
+    this.pointCost = 2500; pointCount = 100;
     this.buyButton3 = new Button(cloneObject(pos), "Buy " + pointCount + " Points ($" + this.pointCost + ")",
                                 this, "buyPoint", { count: pointCount, cost: this.pointCost });
     this.buyButton3.tPos.h = 26;

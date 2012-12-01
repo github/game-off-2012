@@ -72,7 +72,11 @@ function Tower_Connection(t1, t2) {
             return;
         }
         
-        var speed = Math.max(Math.min(t1.attr.upload, t2.attr.download), 0.00000001 /* should really be zero */);
+        var dis = cloneObject(t1.tPos.getCenter());
+        dis.sub(t2.tPos.getCenter());
+        dis = dis.mag() / 1000;
+
+        var speed = Math.max(Math.min(t1.attr.upload, t2.attr.download) / dis, 0.00000001 /* should really be zero */);
         var killsRequired = 10 / speed;
         var killDelta = t1.attr.kills - prevhitCount;
         
@@ -324,7 +328,7 @@ function tryPlaceTower(tower, tile)
         eng.money -= curCost;   
         tower.value = curCost;
 
-        tile.base.rootNode.currentCost *= 2;        
+        tile.base.rootNode.currentCost *= 1.3;
 
         tower.tPos = tile.tPos;         
         eng.base.addObject(tower);
