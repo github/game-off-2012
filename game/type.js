@@ -7,7 +7,7 @@ function assertDefined(functionName) {
 
     for(var i = 0; i < arguments.length; i++)
     {
-        if (nullOrUndefined(arguments[i])) {
+        if (nullOrUndefined(arguments[i]) || realIsNan(arguments[i])) {
             fail("Variable is required but is undefined in " + functionName);
             allDefined = false;
         }
@@ -38,4 +38,8 @@ function getRealType(object) {
 
 function nullOrUndefined(object) {
     return typeof object === "undefined" || object === null;
+}
+
+function realIsNan(object) {
+    return typeof object == "number" && isNaN(object);
 }

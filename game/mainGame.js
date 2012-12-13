@@ -26,9 +26,7 @@ function GitDefence(pen, bufferCanvas, pos) {
     if (DFlag.lotsamoney) {
         this.money = 10000;
     }
-    this.health = 100;
-
-    this.speed = 1;
+    this.health = 100;    
 
     this.lastTowerHover = null;
 
@@ -69,15 +67,17 @@ function GitDefence(pen, bufferCanvas, pos) {
     var lmpos = new TemporalPos(pos.w-400, 0, 100, pos.h*0.05);
     this.lvMan = new LevelManager(bugStart, lmpos);
     engine.base.addObject(this.lvMan);
-    
+
 
     this.run = function (timestamp) {
-        this.engine.run(timestamp);
+        var eng = this.engine;
+
+        eng.run(timestamp);
 
         this.handleMouseEvents();
 
         if (this.resizeEvent) {
-            this.base.raiseEvent("resize", this.resizeEvent);
+            eng.base.raiseEvent("resize", this.resizeEvent);
             this.resizeEvent = null;
         }
 
@@ -86,6 +86,8 @@ function GitDefence(pen, bufferCanvas, pos) {
 
         if (this.selectedObj)
             this.selectedObj.hover = true;
+
+        window.reqAnim(this.run.bind(this));
     };
 
     this.resizeEvent = null;

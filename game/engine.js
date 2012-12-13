@@ -22,6 +22,8 @@ function Engine(pen, bufferCanvas, pos, game) {
     //Usage of this will likely become deprecated
     this.engine = this; //eng also works fine
 
+    this.speed = 1;
+
     this.lastFPS = 60;
 
     //https://developer.mozilla.org/en-US/docs/DOM/window.requestAnimationFrame
@@ -53,8 +55,7 @@ function Engine(pen, bufferCanvas, pos, game) {
 
         this.bPen.clearRect(0, 0, bufferCanvas.width, bufferCanvas.height);
         this.base.draw(this.bPen);
-        pen.drawImage(bufferCanvas, 0, 0);
-        window.reqAnim(this.run.bind(this));
+        pen.drawImage(bufferCanvas, 0, 0);        
     };
 
     this.update = function (dt) {

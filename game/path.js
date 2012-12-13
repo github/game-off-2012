@@ -81,11 +81,4 @@ function Path(x, y, w, h) {
         
         return newObjs;
     };
-
-    this.draw = function (pen) {
-        var p = this.tPos;
-        pen.fillStyle = "transparent";
-        pen.strokeStyle = "#123456";
-        pen.lineWidth = 1;
-    };
 }
