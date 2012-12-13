@@ -28,21 +28,24 @@ function TowerDragger(pos, towerGeneratorFnc) {
     }
 
     this.mousedown = function (e) {
+        var eng = this.base.rootNode;
+        var game = eng.game;
+
         if (this.dragPos) {
-            if (!this.base.rootNode.ctrlKey) {
+            if (!game.ctrlKey) {
                 this.dragPos = null;
-                delete this.base.rootNode.globalMouseMove[this.base.id];
-                delete this.base.rootNode.globalMouseDown[this.base.id];
+                delete game.globalMouseMove[this.base.id];
+                delete game.globalMouseDown[this.base.id];
             }
-            var tileDrop = findClosest(this.base.rootNode, "Tile", e, 0);
+            var tileDrop = findClosest(eng, "Tile", e, 0);
             if (tileDrop) {
                 tryPlaceTower(this.towerGeneratorFnc(), tileDrop);
             }
         }
         else {
             this.dragPos = e;
-            this.base.rootNode.globalMouseMove[this.base.id] = this;
-            this.base.rootNode.globalMouseDown[this.base.id] = this;
+            game.globalMouseMove[this.base.id] = this;
+            game.globalMouseDown[this.base.id] = this;
         }
     }
 }
@@ -105,9 +108,11 @@ function Towerbar(pos) {
 
 
     this.update = function () {
+        var game = getGame(this);
+
         costIndicator.tPos.x = pos.x + 10;
         costIndicator.tPos.y = pos.y + 25;
 
-        costIndicator.text = "Current tower cost: " + roundToDecimal(this.base.rootNode.currentCost, 2);
+        costIndicator.text = "Current tower cost: " + roundToDecimal(game.currentCost, 2);
     }
 }

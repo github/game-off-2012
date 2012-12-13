@@ -497,7 +497,9 @@ var allAttackTypes = {
 
             this.tick = function()
             {
-                if(target.base.rootNode == this.base.rootNode &&
+                var eng = this.base.rootNode;
+
+                if(target.base.rootNode == eng &&
                     Math.random() < this.repeat_chance / 100)
                 {                    
                     this.base.addObject(new AttributeTween(1, 0, this.repeatDelay * 0.5, "nothing", "poisonAlpha"));

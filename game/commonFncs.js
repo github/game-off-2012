@@ -99,6 +99,18 @@ function setAlpha(color, newAlpha) {
     return color.replace(/[^,]+(?=\))/, newAlpha);
 }
 
+function getSel(obj) {
+    return obj.base.rootNode.game.selectedObj;
+}
+
+function getGame(obj) {
+    return obj.base.rootNode.game;
+}
+
+function getEng(obj) {
+    return obj.base.rootNode;
+}
+
 //Great debate here over this topic:
 //http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-a-javascript-object
 function cloneObject(object) {

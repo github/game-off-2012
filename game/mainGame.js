@@ -62,13 +62,13 @@ function GitDefence(pen, bufferCanvas, pos) {
 
     this.selectedObj = null;
 
-    generatePath(this);
+    generatePath(this.engine);
     var bugStart = getAnElement(this.engine.base.children["Path_Start"]);
 
     //Level/Wave generator
     var lmpos = new TemporalPos(pos.w-400, 0, 100, pos.h*0.05);
     this.lvMan = new LevelManager(bugStart, lmpos);
-    this.base.addObject(this.lvMan);
+    engine.base.addObject(this.lvMan);
     
 
     this.run = function (timestamp) {

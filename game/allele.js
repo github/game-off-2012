@@ -293,7 +293,7 @@ function Allele(delta)
     }
 }
 
-function TowerBreeder(pos) {
+function TowerBreeder(pos) {    
     this.base = new BaseObj(this, 15);
 
     this.towers = [];
@@ -306,8 +306,10 @@ function TowerBreeder(pos) {
     var placingTower = null;
 
     this.added = function () {
-        this.base.rootNode.globalMouseMove[this.base.id] = this;
-        this.base.rootNode.globalMouseDown[this.base.id] = this;
+        var eng = this.base.rootNode;
+
+        eng.globalMouseMove[this.base.id] = this;
+        eng.globalMouseDown[this.base.id] = this;
     }
 
     this.breed = function () {
@@ -337,14 +339,16 @@ function TowerBreeder(pos) {
     }
 
     this.mousedown = function (e) {
+        var eng = this.base.rootNode;
+
         if (placingTower) {
-            var towerSelected = findClosest(this.base.rootNode, "Tower", e, 0);
-            var tileSelected = findClosest(this.base.rootNode, "Tile", e, 0);
-            var pathSelected = findClosest(this.base.rootNode, "Path", e, 0);
+            var towerSelected = findClosest(eng, "Tower", e, 0);
+            var tileSelected = findClosest(eng, "Tile", e, 0);
+            var pathSelected = findClosest(eng, "Path", e, 0);
 
             if (!towerSelected && !pathSelected && tileSelected) {
                 placingTower.tPos = tileSelected.tPos;
-                this.base.rootNode.base.addObject(placingTower);
+                eng.base.addObject(placingTower);
                 placingTower = null;
             }
         }

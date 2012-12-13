@@ -56,36 +56,39 @@ function GameInfoBar(pos) {
 
     this.skipNextLevel = function()
     {
-        this.base.rootNode.lvMan.nwicounter = -1;
+        getGame(this).lvMan.nwicounter = -1;
     }
 
     this.update = function () {
+        var game = this.base.rootNode.game;
         var eng = this.base.rootNode;
-        this.healthIndi.text = "User Health: " + roundToDecimal(eng.health, 1);
-        this.moneyIndi.text = "Money: $" + roundToDecimal(eng.money, 2);
+
+        this.healthIndi.text = "User Health: " + roundToDecimal(game.health, 1);
+        this.moneyIndi.text = "Money: $" + roundToDecimal(game.money, 2);
         this.FPSIndi.text = "FPS: " + roundToDecimal(eng.lastFPS, 2);
         this.bugIndi.text = "Bugs: " + roundToDecimal(eng.base.allLengths.Bug, 2);
 
-        this.curLevelIndi.text = "Current Level: " + roundToDecimal(eng.lvMan.curLevel, 2);
-        this.nextLevelTimeIndi.text = "Seconds To Next Level: " + roundToDecimal(eng.lvMan.nwicounter, 0);
-	if (this.base.rootNode.health < 50) {
-	    this.healthIndi.color = "yellow";
-	} 
-	if (this.base.rootNode.health < 25) {
-	    this.healthIndi.color = "red";
-	} 
-	if (oldmoney < this.base.rootNode.money) {
-		oldmoney = this.base.rootNode.money;
-		this.base.addObject( new TextFadeAni(this.moneyIndi.tPos, false, "$$$$$"));
-	} else if (oldmoney > this.base.rootNode.money) {
-		oldmoney = this.base.rootNode.money;
-		this.base.addObject( new TextFadeAni(this.moneyIndi.tPos, true, "$$$$$"));
-	}
-
+        this.curLevelIndi.text = "Current Level: " + roundToDecimal(game.lvMan.curLevel, 2);
+        this.nextLevelTimeIndi.text = "Seconds To Next Level: " + roundToDecimal(game.lvMan.nwicounter, 0);
+        if (game.health < 50) {
+	        this.healthIndi.color = "yellow";
+	    }
+	    if (game.health < 25) {
+	        this.healthIndi.color = "red";
+	    }
+	    if (oldmoney < game.money) {
+	        oldmoney = game.money;
+		    this.base.addObject( new TextFadeAni(this.moneyIndi.tPos, false, "$$$$$"));
+		} else if (oldmoney > game.money) {
+		    oldmoney = game.money;
+		    this.base.addObject( new TextFadeAni(this.moneyIndi.tPos, true, "$$$$$"));
+	    }
 	
     }
 }
 
+//Should use AlphaDecay instead of implementing its alpha decay itself
+//Also should likely use AttributeTween for its motion.
 function TextFadeAni(pos, negative, txt) {
 	this.base = new BaseObj(this, 19);
 	this.tPos = pos.clone();

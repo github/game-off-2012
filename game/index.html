@@ -37,6 +37,7 @@ canvas {
 </script>
 
 <script src="debug.js"></script>
+
 <script src="fail.js"></script>
 <script src="type.js"></script>
 <script src="sound.js"></script>
@@ -82,7 +83,8 @@ canvas {
 
 <script src="pathGeneration.js"></script>
 
-<script src="logic.js"></script>
+<script src="engine.js"></script>
+<script src="mainGame.js"></script>
 <script>
 // We should try and get rid of these someday.
 var NUM_TILES_X = 16;
@@ -98,6 +100,7 @@ $(document).ready(function () {
     var canvas = document.getElementById("myCanvas");
     var bufferCanvas = canvas.cloneNode(true); //Who knew no argument for cloneNode would crash us in firefox?
     var pen = canvas.getContext("2d");
+
 
     window.reqAnim = (function () {
         return window.requestAnimationFrame ||
@@ -118,8 +121,9 @@ $(document).ready(function () {
     CANVAS_WIDTH = DFlag.width || Math.max(window.innerWidth, minWidth);
     CANVAS_HEIGHT = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
 
-    var eng = new engine(pen, bufferCanvas, new TemporalPos(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0));
-    window.reqAnim(eng.run.bind(eng));
+    var game = new GitDefence(pen, bufferCanvas, new TemporalPos(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0));
+
+    window.reqAnim(game.run.bind(game));
     
     //Okay this might break something Justin? The main thing is that the creation of our 
     //main engine has to be entirely abstracted as there is no reason the only engine we will
@@ -135,18 +139,18 @@ $(document).ready(function () {
         canvas.height = CANVAS_HEIGHT;
         bufferCanvas.width = CANVAS_WIDTH;
         bufferCanvas.height = CANVAS_HEIGHT;
-        if (eng && eng.triggerResize) {
-            eng.triggerResize({ width: CANVAS_WIDTH, height: CANVAS_HEIGHT });
+        if (game && game.triggerResize) {
+            game.triggerResize({ width: CANVAS_WIDTH, height: CANVAS_HEIGHT });
         }
     }
     initCanvas();
     $(window).resize(initCanvas);
 
 
-    $("#myCanvas").mousemove(eng.triggerMousemove.bind(eng));
-    $("#myCanvas").mouseout(eng.triggerMouseout.bind(eng));
-    $("#myCanvas").mousedown(eng.triggerMousedown.bind(eng));
-    $("#myCanvas").mouseup(eng.triggerMouseup.bind(eng));
+    $("#myCanvas").mousemove(game.triggerMousemove.bind(game));
+    $("#myCanvas").mouseout(game.triggerMouseout.bind(game));
+    $("#myCanvas").mousedown(game.triggerMousedown.bind(game));
+    $("#myCanvas").mouseup(game.triggerMouseup.bind(game));
 });    
 
 </script>

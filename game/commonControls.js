@@ -282,14 +282,14 @@ function AttributeChooser(tPos, attributes, attributeName) {
     }
 
     this.setAttribute = function (newValue) {
-        var selected = this.base.rootNode.selectedObj;
+        var selected = getSel(this);
         if (!selected)
             return;
         selected.attr[attributeName] = new this.attributes[newValue]();
     };
 
     this.loadAttribute = function () {
-        var selected = this.base.rootNode.selectedObj;
+        var selected = getSel(this);
         var attributeName = this.attributeName;
         if (!selected)
             return;

@@ -207,12 +207,13 @@ function Tower(baseTile) {
         drawAttributes(this, pen);
     };
 
-    // WTF - yeah man, this code is the bomb
     this.tryUpgrade = function () {
-        if (eng.money >= 100) {
+        var game = getGame(this);
+
+        if (game.money >= 100) {
             this.attr.damage *= 2;
             this.attr.attSpeed *= 2;
-            eng.money -= 100;
+            game.money -= 100;
         }
     };
     
@@ -283,7 +284,7 @@ function Tower(baseTile) {
         this.startDrag = e;
         tempIndicator = new Line(this.startDrag, e, "green", 15, {0: 1.0});
         this.base.addObject(tempIndicator);
-        this.base.rootNode.globalMouseMove[this.base.id] = this;
+        getGame(this).globalMouseMove[this.base.id] = this;
     };
 
     this.mousemove = function(e)
@@ -293,11 +294,12 @@ function Tower(baseTile) {
 
     this.dragEnd = function(e){
         var eng = this.base.rootNode;
+        var game = eng.game;
 
         this.base.removeObject(tempIndicator);
         this.startDrag = null;
 
-        var towerSelected = findClosest(this.base.rootNode, "Tower", e, 0);
+        var towerSelected = findClosest(eng, "Tower", e, 0);
         if(towerSelected && towerSelected != this)
         {
             for (var i = 0; i < this.connections.length; i++)
@@ -309,7 +311,7 @@ function Tower(baseTile) {
             this.connections.push(conn);
             towerSelected.connections.push(conn);
 
-            eng.changeSel(this);
+            game.changeSel(this);
             getAnElement(this.base.children.Selectable).ignoreNext = true;
         }
     };
@@ -318,21 +320,23 @@ function Tower(baseTile) {
 function tryPlaceTower(tower, tile)
 {
     var eng = tile.base.rootNode;
+    var game = eng.game;
+
     var e = tile.tPos.getCenter();
     var towerOnTile = findClosest(eng, "Tower", e, 0);
     var pathOnTile = findClosest(eng, "Path", e, 0);
 
     var curCost = tile.base.rootNode.currentCost;
 
-    if (!towerOnTile && !pathOnTile && eng.money - curCost >= 0) {
-        eng.money -= curCost;   
+    if (!towerOnTile && !pathOnTile && game.money - curCost >= 0) {
+        game.money -= curCost;
         tower.value = curCost;
 
-        tile.base.rootNode.currentCost *= 1.3;
+        game.currentCost *= 1.3;
 
-        tower.tPos = tile.tPos;         
+        tower.tPos = tile.tPos;
         eng.base.addObject(tower);
-        eng.changeSel(tower);
+        game.changeSel(tower);
         getAnElement(tile.base.children.Selectable).ignoreNext = true;
     }
 };

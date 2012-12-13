@@ -53,7 +53,9 @@ function AllelePointSystem(pos) {
     this.pointCost = 50;
 
     this.buyPoint = function (costData) {
-        var selected = this.base.rootNode.selectedObj;
+        var eng = this.base.rootNode;
+        var game = eng.game;
+        var selected = getSel(this);
 
         var cost = costData.cost;
         var count = costData.count;
@@ -65,8 +67,8 @@ function AllelePointSystem(pos) {
             count = 1;
 
         if (selected && selected.base.type == "Tower") {
-            if (this.base.rootNode.money > cost) {
-                this.base.rootNode.money -= cost;
+            if (game.money > cost) {
+                game.money -= cost;
                 for (var i = 0; i < count; i++)
                     selected.generateAllele();
             }
@@ -74,7 +76,7 @@ function AllelePointSystem(pos) {
     }
 
     this.spendPoint = function () {
-        var selected = this.base.rootNode.selectedObj;
+        var selected = getSel(this);
 
         if (selected && selected.base.type == "Tower") {
             if (selected.allelesGenerated.length > 0) {
@@ -86,7 +88,7 @@ function AllelePointSystem(pos) {
     }
 
     this.trashPoint = function () {
-        var selected = this.base.rootNode.selectedObj;
+        var selected = getSel(this);
 
         if (selected && selected.base.type == "Tower") {
             if (selected.allelesGenerated.length > 0)
@@ -95,7 +97,7 @@ function AllelePointSystem(pos) {
     }
 
     this.autoTrashToggle = function () {
-        var selected = this.base.rootNode.selectedObj;
+        var selected = getSel(this);
 
         if (selected && selected.base.type == "Tower") {
             selected.autoTrash = !selected.autoTrash;
@@ -103,7 +105,7 @@ function AllelePointSystem(pos) {
     }
 
     this.doAutoTrash = function () {
-        var selected = this.base.rootNode.selectedObj;
+        var selected = getSel(this);
 
         if (selected && selected.base.type == "Tower") {
             var anyPositive = false;
@@ -132,10 +134,10 @@ function AllelePointSystem(pos) {
     this.mouseout = function () { this.removeDeltaDisplay(); };
 
     this.addDeltaDisplay = function () {
+        var selected = getSel(this);
+
         this.base.parent.extraInfo = {};
         var extraInfo = this.base.parent.extraInfo;
-
-        var selected = this.base.rootNode.selectedObj;
 
         if (selected && selected.base.type == "Tower") {
             if (selected.allelesGenerated.length > 0) {
@@ -179,7 +181,11 @@ function AllelePointSystem(pos) {
     }
 
     this.update = function () {
-        var selected = this.base.rootNode.selectedObj;
+        var eng = this.base.rootNode;
+        var game = eng.game;
+
+        var selected = getSel(this);
+
 
         var xPos = this.tPos.x;
         var yPos = this.tPos.y;
@@ -220,8 +226,6 @@ function AllelePointSystem(pos) {
         if (this.autoTrashButton.toggled) {
             this.doAutoTrash();
         }
-
-        var selected = this.base.rootNode.selectedObj;
 
         if (selected && selected.base.type == "Tower") {
             this.base.setAttributeRecursive("hidden", false);

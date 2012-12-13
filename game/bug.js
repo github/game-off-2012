@@ -102,10 +102,11 @@ function Bug(startPath) {
     };
 
     this.destroyAtBase = function() {
+        var game = this.base.rootNode.game;
         var eng = this.base.rootNode;
-        eng.health -= 5;
+        game.health -= 5;
 
-        if (eng.health <= 0 && !eng.base.allLengths.GameOver) {
+        if (game.health <= 0 && !eng.base.allLengths.GameOver) {
             eng.base.addObject(new GameOver());
         }
 

@@ -85,17 +85,23 @@ function Selectable() {
     }
 
     this.parent_click = function () {
+        var eng = this.base.rootNode;
+        var game = eng.game;
+
         if (this.ignoreNext) {
             this.ignoreNext = false;
             return;
         }
         if (this.topMost)
-            this.base.rootNode.changeSel(this.base.parent);
+            game.changeSel(this.base.parent);
     }
 
     this.parent_die = function () {
-        if(this.base.rootNode.selectedObj == this.base.parent)
-            this.base.rootNode.changeSel(null);
+        var eng = this.base.rootNode;
+        var game = eng.game;
+
+        if(game.selectedObj == this.base.parent)
+            game.changeSel(null);
     }
 }
 
