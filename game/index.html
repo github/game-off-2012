@@ -32,7 +32,7 @@ canvas {
     var DFlag = {};
     DFlag.disableSounds = true;
 
-    DFlag.width = 820;
+    DFlag.width = 760;
     DFlag.height = 635;
 </script>
 
@@ -84,17 +84,11 @@ canvas {
 <script src="pathGeneration.js"></script>
 
 <script src="engine.js"></script>
+<script src="screenSystem.js"></script>
 <script src="mainGame.js"></script>
 <script>
-// We should try and get rid of these someday.
-var NUM_TILES_X = 16;
-var NUM_TILES_Y = 12;
-var TILE_SIZE = 32;
-var CANVAS_WIDTH;
-var CANVAS_HEIGHT;
-var BOARD_WIDTH;
-var BOARD_HEIGHT;
-//var eng;
+
+
 $(document).ready(function () {
 
     var canvas = document.getElementById("myCanvas");
@@ -115,36 +109,14 @@ $(document).ready(function () {
         };
     })();
 
-    width = DFlag.width || Math.max(window.innerWidth, minWidth);
-    height = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
 
-    CANVAS_WIDTH = DFlag.width || Math.max(window.innerWidth, minWidth);
-    CANVAS_HEIGHT = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
-
-    var game = new GitDefence(pen, bufferCanvas, new TemporalPos(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0));
+    var game = new GitDefence(pen, bufferCanvas, new TemporalPos(0, 0, DFlag.width, DFlag.height, 0, 0));
 
     window.reqAnim(game.run.bind(game));
-    
-    //Okay this might break something Justin? The main thing is that the creation of our 
-    //main engine has to be entirely abstracted as there is no reason the only engine we will
-    //have it our game engine.
-    function initCanvas() {
-        minWidth = NUM_TILES_X * TILE_SIZE + 150;
-        minHeight = NUM_TILES_Y * TILE_SIZE;
-        CANVAS_WIDTH = DFlag.width || Math.max(window.innerWidth, minWidth);
-        CANVAS_HEIGHT = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
-        BOARD_WIDTH = CANVAS_WIDTH - 150;
-        BOARD_HEIGHT = CANVAS_HEIGHT;
-        canvas.width = CANVAS_WIDTH;
-        canvas.height = CANVAS_HEIGHT;
-        bufferCanvas.width = CANVAS_WIDTH;
-        bufferCanvas.height = CANVAS_HEIGHT;
-        if (game && game.triggerResize) {
-            game.triggerResize({ width: CANVAS_WIDTH, height: CANVAS_HEIGHT });
-        }
-    }
-    initCanvas();
-    $(window).resize(initCanvas);
+
+
+    game.triggerResize();
+    $(window).resize(function () { game.triggerResize(); });
 
 
     $("#myCanvas").mousemove(game.triggerMousemove.bind(game));

@@ -129,9 +129,9 @@ TowerStats = {
         value:          50,
     };
 
-function Tower(baseTile) {
-    var p = baseTile ? baseTile.tPos : {x: 0, y: 0, w : TILE_SIZE, h: TILE_SIZE};
+function Tower(baseTile, tPos) {    
     this.baseTile = baseTile;
+    var p = tPos;
     this.tPos = new TemporalPos(p.x, p.y, p.w, p.h, 0, 0);
     this.base = new BaseObj(this, 10);
     this.attr = {
@@ -173,8 +173,11 @@ function Tower(baseTile) {
         }
     }
 
-    this.generateAllele = function()
-    {   
+    this.added = function() {
+
+    };
+
+    this.generateAllele = function() {   
         var allAlls = [];
         for (var alGroup in AllAlleleGroups)
             allAlls.push(alGroup);

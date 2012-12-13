@@ -33,13 +33,15 @@ function applyAttack(attackTemplate) {
     }
 
     if(target.attr.currentHp < 0) {
+        var game = getGame(target) || getGame(attacker) || getGame(baseAttacker);
+
         var sound = new Sound("snd/die.wav");
         target.base.destroySelf();
 
         baseAttacker.attr.kills++;
 
-        if(getRealType(target) != "Tower")
-            attacker.base.rootNode.money += target.attr.value;
+        if(getRealType(target) != "Tower" && game)
+            game.money += target.attr.value;
     }
 }
 

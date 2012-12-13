@@ -313,6 +313,8 @@ function TowerBreeder(pos) {
     }
 
     this.breed = function () {
+        var game = getGame(this);
+
         var maxLength = 0;
         
         var resultantAlleles = {};
@@ -323,8 +325,8 @@ function TowerBreeder(pos) {
         }
 
         var notTile = [];
-        notTile.tPos = { x: 0, y: 0, w: TILE_SIZE, h: TILE_SIZE };
-        var newTower = new Tower(notTile);
+        notTile.tPos = { x: 0, y: 0, w: game.tileSize, h: game.tileSize };
+        var newTower = new Tower(notTile, notTile.tPos);
         for (var key in resultantAlleles)
             newTower.genes.addAllele(key, resultantAlleles[key]);
         placingTower = newTower;

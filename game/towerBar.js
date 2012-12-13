@@ -12,12 +12,14 @@ function TowerDragger(pos, towerGeneratorFnc) {
     this.dragPos = null;
 
     this.draw = function (pen) {
+        var tileSize = getGame(this).tileSize;
+
         this.displayedTower.tPos = this.tPos;
         this.displayedTower.base.raiseEvent("resize");
         this.displayedTower.draw(pen);
 
         if (this.dragPos) {
-            this.displayedTower.tPos = new TemporalPos(this.dragPos.x, this.dragPos.y, TILE_SIZE, TILE_SIZE);
+            this.displayedTower.tPos = new TemporalPos(this.dragPos.x, this.dragPos.y, tileSize, tileSize);
             this.displayedTower.base.raiseEvent("resize");
             this.displayedTower.draw(pen);
         }
@@ -72,40 +74,42 @@ function Towerbar(pos) {
     //var superAttack = { 0: allAttackTypes.Pulse, 1: allAttackTypes.Pulse, 2: allAttackTypes.Pulse };
     //attackCombinations.push(superAttack);
 
-    var buttonW = TILE_SIZE;
-    //Scaled exactly to 150 by 674...
-    
-    function tileFnc(obj, refObj, pos) {
-        function towerDraggerFunction(forDisplay) {
-            var fakeTile = {};
-            fakeTile.tPos = new TemporalPos(0, 0, 0, 0);
-            var tower = new Tower(fakeTile);
+    this.added = function () {
+        var game = getGame(this);
+        var tileSize = game.tileSize;
+        //Scaled exactly to 150 by 674...
 
-            if (forDisplay) {
-                tower.attr.attack_types = [];
-                for (var alleleGroup in tower.genes.alleles) {
-                    if (tower.genes.alleles[alleleGroup].delta.attack)
-                        delete tower.genes.alleles[alleleGroup];
+        function tileFnc(obj, refObj, pos) {
+            function towerDraggerFunction(forDisplay) {
+                var fakeTile = {};
+                fakeTile.tPos = new TemporalPos(0, 0, tileSize, tileSize);
+                var tower = new Tower(fakeTile, fakeTile.tPos);
+
+                if (forDisplay) {
+                    tower.attr.attack_types = [];
+                    for (var alleleGroup in tower.genes.alleles) {
+                        if (tower.genes.alleles[alleleGroup].delta.attack)
+                            delete tower.genes.alleles[alleleGroup];
+                    }
                 }
-            }
 
-            for (var key in obj) {
-                var attackType = obj[key];
-                tower.genes.addAllele("attack" + key, new Allele({ attack: attackType }));
-            }
+                for (var key in obj) {
+                    var attackType = obj[key];
+                    tower.genes.addAllele("attack" + key, new Allele({ attack: attackType }));
+                }
 
-            return tower;
+                return tower;
+            }
+            var towerDragger = new TowerDragger(pos.clone(), towerDraggerFunction);
+
+            refObj.base.addObject(towerDragger);
+
+            return true;
         }
-        var towerDragger = new TowerDragger(pos.clone(), towerDraggerFunction);
 
-        refObj.base.addObject(towerDragger);
-
-        return true;
-    }
-    
-    var tPosBox = new TemporalPos(pos.x + 15, pos.y + 40, 450, 150);
-    makeTiled(this, tileFnc, attackCombinations, tPosBox, 6, 2, 0.1);
-
+        var tPosBox = new TemporalPos(pos.x + 15, pos.y + 40, 450, 150);
+        makeTiled(this, tileFnc, attackCombinations, tPosBox, 6, 2, 0.1);
+    };
 
     this.update = function () {
         var game = getGame(this);

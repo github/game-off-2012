@@ -1,0 +1,1 @@
+﻿//System to switch between different things being active (like game, menu, etc)

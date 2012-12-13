@@ -54,8 +54,9 @@ function FancyBackground(pen) {
 	subcancon.fillStyle = "rgba(0,255,0,0.3)";
 	ink.text(0, textH, txt, subcancon);
 
-	
-	this.tPos = new TemporalPos(BOARD_WIDTH, Math.floor(Math.random()*BOARD_HEIGHT), pen.measureText(txt), textH);
+	alert("don't use fancy background.");
+	//No more BOARD_WIDTH, calc it yourself
+	//this.tPos = new TemporalPos(BOARD_WIDTH, Math.floor(Math.random()*BOARD_HEIGHT), pen.measureText(txt), textH);
 	
 
 	this.update = function(dt) {

@@ -39,12 +39,16 @@ function Bug(startPath) {
 
     this.curPath = startPath;
 
-    this.bugRelPathPos = Math.floor(Math.random()* TILE_SIZE) +1;
-    this.delay = this.bugRelPathPos + 1;
+    this.added = function() {
+        var game = getGame(this);
 
-    this.constantOne = 1;
-    this.base.addObject(new UpdateTicker(this, "constantOne", "regenTick"));
+        this.bugRelPathPos = Math.floor(Math.random() * game.tileSize) +1;
+        this.delay = this.bugRelPathPos + 1;
 
+        this.constantOne = 1;
+        this.base.addObject(new UpdateTicker(this, "constantOne", "regenTick"));
+    };
+    
     this.regenTick = function()
     {
         if(this.attr.hpRegen > 0)

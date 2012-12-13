@@ -5,6 +5,10 @@ function GitDefence(pen, bufferCanvas, pos) {
     var engine = new Engine(pen, bufferCanvas, pos, this);
     this.engine = engine;
 
+    this.numTilesX = 16;
+    this.numTilesY = 12;
+    this.tileSize = 32;
+
     var mX = -1;
     var mY = -1;    
     var mdX = -1; //Mouse down
@@ -60,7 +64,7 @@ function GitDefence(pen, bufferCanvas, pos) {
 
     this.selectedObj = null;
 
-    generatePath(this.engine);
+    generatePath(this.engine, this);
     var bugStart = getAnElement(this.engine.base.children["Path_Start"]);
 
     //Level/Wave generator
@@ -91,13 +95,30 @@ function GitDefence(pen, bufferCanvas, pos) {
     };
 
     this.resizeEvent = null;
-    this.triggerResize = function(e) {
+    this.triggerResize = function (e) {
+        var minWidth = this.numTilesX * this.tileSize + 150;
+        var minHeight = this.numTilesY * this.tileSize;
+        var canvasWidth = DFlag.width || Math.max(window.innerWidth, minWidth);
+        var canvasHeight = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
+
+        var eng = this.engine;
+
+        eng.tPos.w = canvasWidth;
+        eng.tPos.h = canvasHeight;
+
+        var canvas = eng.pen.canvas;
+
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+        eng.bufferCanvas.width = canvasWidth;
+        eng.bufferCanvas.height = canvasHeight;
+
         this.resizeEvent = e;
     }
 
     function getMousePos(e) {
         // Canvas is fullscreen now, so pageX is our x position.
-	var canpos = document.getElementById("myCanvas")
+	    var canpos = document.getElementById("myCanvas")
         var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canpos.offsetLeft;
         var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canpos.offsetTop;
         

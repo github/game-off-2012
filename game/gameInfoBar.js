@@ -69,7 +69,7 @@ function GameInfoBar(pos) {
         this.bugIndi.text = "Bugs: " + roundToDecimal(eng.base.allLengths.Bug, 2);
 
         this.curLevelIndi.text = "Current Level: " + roundToDecimal(game.lvMan.curLevel, 2);
-        this.nextLevelTimeIndi.text = "Seconds To Next Level: " + roundToDecimal(game.lvMan.nwicounter, 0);
+        this.nextLevelTimeIndi.text = "Sec To Next Level: " + roundToDecimal(game.lvMan.nwicounter, 0);
         if (game.health < 50) {
 	        this.healthIndi.color = "yellow";
 	    }
