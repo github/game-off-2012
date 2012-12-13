@@ -2,6 +2,7 @@
 
 DFlag.debug = true;
 
+/*
 DFlag.logn = {};
 
 DFlag.logn.findClosest = {};
@@ -21,10 +22,14 @@ DFlag.quadtree = {};
 DFlag.quadtree.leafCount = 0;
 DFlag.quadtree.leafDepthWeighted = 0;
 DFlag.quadtree.leafObjectCount = 0;
+*/
 
 
-DFlag.zindexCheck = true;
+//DFlag.zindexCheck = true;
 
-DFlag.disableSounds = true;
+//DFlag.disableSounds = true;
 
-DFlag.lotsamoney = true;
+//DFlag.lotsamoney = true;
+
+//DFlag.width = 820;
+//DFlag.height = 760;
