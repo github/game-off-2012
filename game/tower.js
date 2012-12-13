@@ -326,7 +326,7 @@ function tryPlaceTower(tower, tile)
     var towerOnTile = findClosest(eng, "Tower", e, 0);
     var pathOnTile = findClosest(eng, "Path", e, 0);
 
-    var curCost = tile.base.rootNode.currentCost;
+    var curCost = game.currentCost;
 
     if (!towerOnTile && !pathOnTile && game.money - curCost >= 0) {
         game.money -= curCost;
