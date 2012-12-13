@@ -1,5 +1,10 @@
-﻿/*
-function engine(pen, bufferCanvas, pos) {
+﻿//All the input should likely be combined and put in a few components,
+//as it will likely be the same for most games.
+
+function GitDefence(pen, bufferCanvas, pos) {
+    var engine = new Engine(pen, bufferCanvas, pos, this);
+    this.engine = engine;
+
     var mX = -1;
     var mY = -1;    
     var mdX = -1; //Mouse down
@@ -10,11 +15,6 @@ function engine(pen, bufferCanvas, pos) {
     //Only valid when handling mouse events (just check when it is set)
     this.ctrlKey = false;
 
-    this.tPos = pos;
-
-    this.pen = pen;
-    this.bPen = bufferCanvas.getContext("2d");
-    this.bufferCanvas = bufferCanvas;
 
     //Put yourself in here (index global id) to get global mouse moves
     this.globalMouseMove = {};
@@ -32,30 +32,27 @@ function engine(pen, bufferCanvas, pos) {
 
     this.lastTowerHover = null;
 
-    this.base = new BaseObj(this);
-
-    this.engine = this; //eng also works fine
 
     this.infobar = new Infobar(
             new TemporalPos(pos.w - 250, 0, 250, pos.h)
         );
 
-    this.base.addObject(this.infobar);
+    engine.base.addObject(this.infobar);
 
     this.towerbar = new Towerbar(
             new TemporalPos(0, pos.h - 150, pos.w - 260, 150)
         );
-    this.base.addObject(this.towerbar);
+    engine.base.addObject(this.towerbar);
 
 //    this.towerbreeder = new TowerBreeder(
 //            new TemporalPos(pos.w - 250, pos.h - 150, 200, 150)
 //        );
-//    this.base.addObject(this.towerbreeder);
+    //    engine.base.addObject(this.towerbreeder);
 
     this.gameInfoBar = new GameInfoBar(
             new TemporalPos(0, pos.h - 240, pos.w - 260, 90)
         );
-    this.base.addObject(this.gameInfoBar);
+    engine.base.addObject(this.gameInfoBar);
 
     
     this.currentBugs = 10;
@@ -74,44 +71,8 @@ function engine(pen, bufferCanvas, pos) {
     this.base.addObject(this.lvMan);
     
 
-    this.lastFPS = 60;
-
-
-    //https://developer.mozilla.org/en-US/docs/DOM/window.requestAnimationFrame
-    var firstStart = Date.now();
-    var curFrameCounter = 0;
-    var lastFPSUpdate = firstStart;
-    var gameTimeAccumulated = 0;
     this.run = function (timestamp) {
-        var updateAmount = timestamp - firstStart;
-        firstStart = timestamp;
-
-        updateAmount = Math.min(updateAmount, 100);
-
-        curFrameCounter++;
-        if (lastFPSUpdate + 1000 < timestamp) {
-            this.lastFPS = curFrameCounter;
-            curFrameCounter = 0;
-            lastFPSUpdate = timestamp;
-        }
-
-        updateAmount *= this.speed;
-
-        gameTimeAccumulated += updateAmount;
-
-        var newObjects = this.base.update(updateAmount / 1000);
-
-        for (var key in newObjects)
-            this.base.addObject(newObjects[key]);
-
-        this.bPen.clearRect(0, 0, bufferCanvas.width, bufferCanvas.height);
-        this.base.draw(this.bPen);
-        pen.drawImage(bufferCanvas, 0, 0);
-        window.reqAnim(this.run.bind(this));
-    };
-
-    this.update = function (dt) {
-        this.curQuadTree = new QuadTree(this.base.allChildren);
+        this.engine.run(timestamp);
 
         this.handleMouseEvents();
 
@@ -119,11 +80,6 @@ function engine(pen, bufferCanvas, pos) {
             this.base.raiseEvent("resize", this.resizeEvent);
             this.resizeEvent = null;
         }
-
-        //Make fancy background
-        //if (curFrameCounter % 100 == 0) {
-          //  this.base.addObject(new FancyBackground(this.pen));
-        //}
 
         if (currentRangeDisplayed && this.selectedObj)
             currentRangeDisplayed.pCenter.set(this.selectedObj.tPos.getCenter());
@@ -205,16 +161,16 @@ function engine(pen, bufferCanvas, pos) {
     }
 
     //Called in update and uses async flags set when we get events
-    this.handleMouseEvents = function () {
+    this.handleMouseEvents = function () {        
         if (mdX > 0 && mdY > 0) {
             for (var key in this.globalMouseDown) {
-                if (this.globalMouseMove[key].base.rootNode != this)
+                if (this.globalMouseMove[key].base.rootNode != this.engine)
                     delete this.globalMouseMove[key];
                 else
                     this.globalMouseMove[key].base.callRaise("mousedown", { x: mdX, y: mdY });
             }
 
-            var curMouseDown = throwMouseEventAt(mdX, mdY, "mousedown", this);
+            var curMouseDown = throwMouseEventAt(mdX, mdY, "mousedown", this.engine);
             this.prevMouseDown = curMouseDown;
 
             mdX = -1;
@@ -222,7 +178,7 @@ function engine(pen, bufferCanvas, pos) {
         }
 
         if (muX > 0 && muY > 0) {
-            var curMouseUp = throwMouseEventAt(muX, muY, "mouseup", this);
+            var curMouseUp = throwMouseEventAt(muX, muY, "mouseup", this.engine);
 
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
@@ -241,13 +197,13 @@ function engine(pen, bufferCanvas, pos) {
 
         if (mY > 0 && mX > 0) {
             for (var key in this.globalMouseMove) {
-                if (this.globalMouseMove[key].base.rootNode != this)
+                if (this.globalMouseMove[key].base.rootNode != this.engine)
                     delete this.globalMouseMove[key];
                 else
                     this.globalMouseMove[key].base.callRaise("mousemove", { x: mX, y: mY });
             }
 
-            var curMouseOver = throwMouseEventAt(mX, mY, "mouseover", this);
+            var curMouseOver = throwMouseEventAt(mX, mY, "mouseover", this.engine);
             //Can actually find mouseout more efficiently... as we have previous and current mouseover...            
             if (this.prevMouseOver && this.prevMouseOver.length > 0) {
                 for (var i = 0; i < this.prevMouseOver.length; i++) {
@@ -307,7 +263,7 @@ function engine(pen, bufferCanvas, pos) {
                 new Pointer(obj, "color"),
                 "transparent", 11);
 
-            this.base.addObject(currentRangeDisplayed);
+            this.engine.base.addObject(currentRangeDisplayed);
 
             if (this.selectedObj)
                 this.selectedObj.hover = false;
@@ -362,4 +318,3 @@ function engine(pen, bufferCanvas, pos) {
         return this.selectedObj.base.type;
     }
 }
-*/

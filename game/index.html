@@ -92,11 +92,38 @@ var CANVAS_WIDTH;
 var CANVAS_HEIGHT;
 var BOARD_WIDTH;
 var BOARD_HEIGHT;
-var eng;
-(function() {
+//var eng;
+$(document).ready(function () {
+
     var canvas = document.getElementById("myCanvas");
-    var bufferCanvas = canvas.cloneNode(true); //Who knew no argument in this would crash us in firefox?
+    var bufferCanvas = canvas.cloneNode(true); //Who knew no argument for cloneNode would crash us in firefox?
     var pen = canvas.getContext("2d");
+
+    window.reqAnim = (function () {
+        return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function (callback) {
+            window.setTimeout(function () {
+                callback(Date.now());
+            }, 1000 / 60);
+        };
+    })();
+
+    width = DFlag.width || Math.max(window.innerWidth, minWidth);
+    height = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
+
+    CANVAS_WIDTH = DFlag.width || Math.max(window.innerWidth, minWidth);
+    CANVAS_HEIGHT = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
+
+    var eng = new engine(pen, bufferCanvas, new TemporalPos(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0));
+    window.reqAnim(eng.run.bind(eng));
+    
+    //Okay this might break something Justin? The main thing is that the creation of our 
+    //main engine has to be entirely abstracted as there is no reason the only engine we will
+    //have it our game engine.
     function initCanvas() {
         minWidth = NUM_TILES_X * TILE_SIZE + 150;
         minHeight = NUM_TILES_Y * TILE_SIZE;
@@ -109,43 +136,19 @@ var eng;
         bufferCanvas.width = CANVAS_WIDTH;
         bufferCanvas.height = CANVAS_HEIGHT;
         if (eng && eng.triggerResize) {
-            eng.triggerResize({width: CANVAS_WIDTH, height: CANVAS_HEIGHT});
+            eng.triggerResize({ width: CANVAS_WIDTH, height: CANVAS_HEIGHT });
         }
     }
-    $(document).ready(function () {
-        initCanvas();
-        window.reqAnim = (function () {
-            return window.requestAnimationFrame ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            window.oRequestAnimationFrame ||
-            window.msRequestAnimationFrame ||
-            function (callback) {
-                window.setTimeout(function() {
-                    callback(Date.now());
-                }, 1000 / 60);
-            };
-        })();
-        
-        width = DFlag.width || Math.max(window.innerWidth, minWidth);
-        height = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
+    initCanvas();
+    $(window).resize(initCanvas);
 
-        CANVAS_WIDTH = DFlag.width || Math.max(window.innerWidth, minWidth);
-        CANVAS_HEIGHT = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
-        
-        eng = new engine(pen, bufferCanvas, new TemporalPos(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0));
-        //this.base.rootNode.holder will also get eng... but... yeah...
-        window.reqAnim(eng.run.bind(eng));
-        
-        $(window).resize(initCanvas);
-        initCanvas();
-        
-        $("#myCanvas").mousemove(eng.triggerMousemove.bind(eng));
-        $("#myCanvas").mouseout(eng.triggerMouseout.bind(eng));
-        $("#myCanvas").mousedown(eng.triggerMousedown.bind(eng));
-        $("#myCanvas").mouseup(eng.triggerMouseup.bind(eng));
-    });    
-}());
+
+    $("#myCanvas").mousemove(eng.triggerMousemove.bind(eng));
+    $("#myCanvas").mouseout(eng.triggerMouseout.bind(eng));
+    $("#myCanvas").mousedown(eng.triggerMousedown.bind(eng));
+    $("#myCanvas").mouseup(eng.triggerMouseup.bind(eng));
+});    
+
 </script>
 </div>
 </body>

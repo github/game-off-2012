@@ -101,12 +101,12 @@ function Bug(startPath) {
         //this.color = "#" + hexPair(Math.floor(255 -((this.attr.currentHp / this.attr.hp) * 255))) +  "0000";
     };
 
-    this.destroyAtBase = function() {        
+    this.destroyAtBase = function() {
+        var eng = this.base.rootNode;
         eng.health -= 5;
 
-        if (eng.health <= 0 && !this.base.rootNode.base.allLengths.GameOver) {
-            this.base.rootNode.base.addObject(new GameOver());
-            //window.location.reload();
+        if (eng.health <= 0 && !eng.base.allLengths.GameOver) {
+            eng.base.addObject(new GameOver());
         }
 
         this.base.destroySelf();
