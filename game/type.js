@@ -1,10 +1,6 @@
 function assertDefined(functionName) {
     var allDefined = true;
 
-    //if (typeof functionName !== "string") {
-      //  fail("First argument to assertDefined must be the name of the function");
-    //}
-
     for(var i = 0; i < arguments.length; i++)
     {
         if (nullOrUndefined(arguments[i]) || realIsNan(arguments[i])) {
@@ -18,7 +14,8 @@ function assertDefined(functionName) {
 
 function defined() {
     for (var i = 0; i < arguments.length; i++) {
-        if (typeof arguments[i] === "undefined") {
+        //if (typeof arguments[i] === "undefined") {
+        if (nullOrUndefined(arguments[i]) || realIsNan(arguments[i])) {
             return false;
         }
     }

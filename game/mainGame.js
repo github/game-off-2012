@@ -1,8 +1,8 @@
 ﻿//All the input should likely be combined and put in a few components,
 //as it will likely be the same for most games.
 
-function GitDefence(pen, bufferCanvas, pos) {
-    var engine = new Engine(pen, bufferCanvas, pos, this);
+function GitDefence(pos) {
+    var engine = new Engine(pos, this);
     this.engine = engine;
 
     this.numTilesX = 16;
@@ -73,6 +73,8 @@ function GitDefence(pen, bufferCanvas, pos) {
     engine.base.addObject(this.lvMan);
 
 
+    this.events = {};
+
     this.run = function (timestamp) {
         var eng = this.engine;
 
@@ -90,12 +92,24 @@ function GitDefence(pen, bufferCanvas, pos) {
 
         if (this.selectedObj)
             this.selectedObj.hover = true;
-
-        window.reqAnim(this.run.bind(this));
     };
 
+    this.draw = function (pen) {
+        pen.fillStyle = "black";
+
+        var width = pen.canvas.width;
+        var height = pen.canvas.height;
+
+        //Commenting out this line leads to funny results :D
+        ink.rect(0, 0, width, height, pen);
+
+        engine.base.draw(pen);
+    }
+
+
+
     this.resizeEvent = null;
-    this.triggerResize = function (e) {
+    this.events.resize = function (e) {
         var minWidth = this.numTilesX * this.tileSize + 150;
         var minHeight = this.numTilesY * this.tileSize;
         var canvasWidth = DFlag.width || Math.max(window.innerWidth, minWidth);
@@ -125,28 +139,28 @@ function GitDefence(pen, bufferCanvas, pos) {
         return { x: mX + 0.5, y: mY + 0.5 };
     }
 
-    this.triggerMousemove = function (e) {
+    this.events.mousemove = function (e) {
         var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
 
         mX = pos.x;
         mY = pos.y;
     }
 
-    this.triggerMouseout = function (e) {
+    this.events.mouseout = function (e) {
         var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
 
         mX = -1;
         mY = -1;
     }
 
-    this.triggerMousedown = function (e) {
+    this.events.mousedown = function (e) {
         var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
 
         mdX = pos.x;
         mdY = pos.y;
     }
 
-    this.triggerMouseup = function (e) {
+    this.events.mouseup = function (e) {
         var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
 
         muX = pos.x;
@@ -252,15 +266,6 @@ function GitDefence(pen, bufferCanvas, pos) {
         this.tPos.w = e.width;
         this.tPos.h = e.height;
     }
-
-    this.draw = function () {
-        pen = this.pen;
-
-        pen.fillStyle = "black";
-
-        //Commenting out this line leads to funny results :D
-        ink.rect(0, 0, width, height, pen);
-    };
 
     //All selected stuff should probably be in its own object
     var currentRangeDisplayed = null;

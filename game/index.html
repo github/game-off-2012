@@ -21,7 +21,7 @@ canvas {
 </style>
 </head>
 <body>
-<canvas id="myCanvas"></canvas>
+<canvas id="myCanvas" width = 1000 height = 1000></canvas>
 <div id="scripts">
 <script src="lib/jquery.min.js"></script><!-- //ajax.googleapis.com/ajax/libs/jquery/1.8.2/ -->
 
@@ -89,41 +89,17 @@ canvas {
 <script>
 
 
-$(document).ready(function () {
+    $(document).ready(function () {
 
-    var canvas = document.getElementById("myCanvas");
-    var bufferCanvas = canvas.cloneNode(true); //Who knew no argument for cloneNode would crash us in firefox?
-    var pen = canvas.getContext("2d");
+        var screenSystem = new ScreenSystem("#myCanvas");
 
+        screenSystem.addScreen("MainGame",
+            new GitDefence(new TemporalPos(0, 0, DFlag.width, DFlag.height, 0, 0)));
 
-    window.reqAnim = (function () {
-        return window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function (callback) {
-            window.setTimeout(function () {
-                callback(Date.now());
-            }, 1000 / 60);
-        };
-    })();
+        screenSystem.setActiveScreen("MainGame");
 
-
-    var game = new GitDefence(pen, bufferCanvas, new TemporalPos(0, 0, DFlag.width, DFlag.height, 0, 0));
-
-    window.reqAnim(game.run.bind(game));
-
-
-    game.triggerResize();
-    $(window).resize(function () { game.triggerResize(); });
-
-
-    $("#myCanvas").mousemove(game.triggerMousemove.bind(game));
-    $("#myCanvas").mouseout(game.triggerMouseout.bind(game));
-    $("#myCanvas").mousedown(game.triggerMousedown.bind(game));
-    $("#myCanvas").mouseup(game.triggerMouseup.bind(game));
-});    
+        //screenSystem.screens.MainGame.events.resize();
+    });    
 
 </script>
 </div>
