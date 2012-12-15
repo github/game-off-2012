@@ -83,9 +83,14 @@ canvas {
 
 <script src="pathGeneration.js"></script>
 
+<script src="inputEvents.js"></script>
+
 <script src="engine.js"></script>
 <script src="screenSystem.js"></script>
 <script src="mainGame.js"></script>
+
+<script src="tutorial.js"></script>
+
 <script>
 
 
@@ -97,7 +102,7 @@ canvas {
 
         screenSystem.setActiveScreen("MainGame");
 
-        screenSystem.screens.MainGame.events.resize();
+        screenSystem.screens.MainGame.input.events.resize();
     });    
 
 </script>

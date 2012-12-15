@@ -9,21 +9,6 @@ function GitDefence(pos) {
     this.numTilesY = 12;
     this.tileSize = 32;
 
-    var mX = -1;
-    var mY = -1;    
-    var mdX = -1; //Mouse down
-    var mdY = -1;
-    var muX = -1; //Mouse up
-    var muY = -1;
-
-    //Only valid when handling mouse events (just check when it is set)
-    this.ctrlKey = false;
-
-
-    //Put yourself in here (index global id) to get global mouse moves
-    this.globalMouseMove = {};
-    this.globalMouseDown = {};
-
     this.id = 0; //Shouldn't be needed (ids are in base)
     this.currentCost = 100;
     this.money = 1600; //Default to a much more reasonable value.
@@ -72,20 +57,16 @@ function GitDefence(pos) {
     this.lvMan = new LevelManager(bugStart, lmpos);
     engine.base.addObject(this.lvMan);
 
+    this.input = new inputHandler();
+    var input = this.input;
 
-    this.events = {};
-
+    
     this.run = function (timestamp) {
         var eng = this.engine;
 
         eng.run(timestamp);
 
-        this.handleMouseEvents();
-
-        if (this.resizeEvent) {
-            eng.base.raiseEvent("resize", this.resizeEvent);
-            this.resizeEvent = null;
-        }
+        this.input.handleEvents(eng);
 
         if (currentRangeDisplayed && this.selectedObj)
             currentRangeDisplayed.pCenter.set(this.selectedObj.tPos.getCenter());
@@ -107,169 +88,8 @@ function GitDefence(pos) {
     }
 
 
+    //Input events now in inputEvents.js
 
-    this.resizeEvent = null;
-    this.events.resize = function (e) {
-        //We no longer resize the canvas, it is just hardcoded in screenSystem
-
-        /*
-        var minWidth = this.numTilesX * this.tileSize + 150;
-        var minHeight = this.numTilesY * this.tileSize;
-        var canvasWidth = DFlag.width || Math.max(window.innerWidth, minWidth);
-        var canvasHeight = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
-
-        var eng = this.engine;
-
-        eng.tPos.w = canvasWidth;
-        eng.tPos.h = canvasHeight;
-
-        var canvas = eng.pen.canvas;
-
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
-        eng.bufferCanvas.width = canvasWidth;
-        eng.bufferCanvas.height = canvasHeight;
-        */
-
-        this.resizeEvent = e;
-    }
-
-    function getMousePos(e) {
-        // Canvas is fullscreen now, so pageX is our x position.
-	    var canpos = document.getElementById("myCanvas")
-        var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canpos.offsetLeft;
-        var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canpos.offsetTop;
-        
-        return { x: mX + 0.5, y: mY + 0.5 };
-    }
-
-    this.events.mousemove = function (e) {
-        var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
-
-        mX = pos.x;
-        mY = pos.y;
-    }
-
-    this.events.mouseout = function (e) {
-        var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
-
-        mX = -1;
-        mY = -1;
-    }
-
-    this.events.mousedown = function (e) {
-        var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
-
-        mdX = pos.x;
-        mdY = pos.y;
-    }
-
-    this.events.mouseup = function (e) {
-        var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
-
-        muX = pos.x;
-        muY = pos.y;
-    }
-
-    function throwMouseEventAt(mX, mY, eventName, eng) {
-        var allUnderMouse = [];
-
-        for (var type in eng.base.allChildren) {
-            mergeToArray(findAllWithin(eng, type, { x: mX, y: mY }, 0), allUnderMouse);
-        }
-
-        if (allUnderMouse.length == 0)
-            return;
-
-        var topMost = allUnderMouse[0];
-
-        //*sigh* so inefficient... but for now its fine
-        for (var key in allUnderMouse)
-            if (allUnderMouse[key].base.zindex > topMost.base.zindex ||
-                       (allUnderMouse[key].base.zindex == topMost.base.zindex &&
-                       allUnderMouse[key].base.zoffset > topMost.base.zoffset)) {
-                if (allUnderMouse[key].base.canHandleEvent(eventName))
-                    topMost = allUnderMouse[key];
-            }
-
-        for (var key in allUnderMouse)
-            if (allUnderMouse[key] !== topMost)
-                allUnderMouse[key].base.callRaise(eventName, { x: mX, y: mY, topMost: false });
-
-        topMost.base.callRaise(eventName, { x: mX, y: mY, topMost: true });
-
-        return allUnderMouse;
-    }
-
-    //Called in update and uses async flags set when we get events
-    this.handleMouseEvents = function () {        
-        if (mdX > 0 && mdY > 0) {
-            for (var key in this.globalMouseDown) {
-                if (this.globalMouseMove[key].base.rootNode != this.engine)
-                    delete this.globalMouseMove[key];
-                else
-                    this.globalMouseMove[key].base.callRaise("mousedown", { x: mdX, y: mdY });
-            }
-
-            var curMouseDown = throwMouseEventAt(mdX, mdY, "mousedown", this.engine);
-            this.prevMouseDown = curMouseDown;
-
-            mdX = -1;
-            mdY = -1;
-        }
-
-        if (muX > 0 && muY > 0) {
-            var curMouseUp = throwMouseEventAt(muX, muY, "mouseup", this.engine);
-
-            if (this.prevMouseDown && this.prevMouseDown.length > 0) {
-                for (var i = 0; i < this.prevMouseDown.length; i++) {
-                    if (vecToRect({ x: muX, y: muY }, this.prevMouseDown[i].tPos).magSq() == 0) {
-                        this.prevMouseDown[i].base.callRaise("click", { x: muX, y: muY });
-                    }
-                    this.prevMouseDown[i].base.callRaise("dragEnd", { x: muX, y: muY });
-                }
-            }
-
-            this.prevMouseDown = null;
-
-            muX = -1;
-            muY = -1;
-        }
-
-        if (mY > 0 && mX > 0) {
-            for (var key in this.globalMouseMove) {
-                if (this.globalMouseMove[key].base.rootNode != this.engine)
-                    delete this.globalMouseMove[key];
-                else
-                    this.globalMouseMove[key].base.callRaise("mousemove", { x: mX, y: mY });
-            }
-
-            var curMouseOver = throwMouseEventAt(mX, mY, "mouseover", this.engine);
-            //Can actually find mouseout more efficiently... as we have previous and current mouseover...            
-            if (this.prevMouseOver && this.prevMouseOver.length > 0) {
-                for (var i = 0; i < this.prevMouseOver.length; i++) {
-                    if (vecToRect({ x: mX, y: mY }, this.prevMouseOver[i].tPos).magSq() != 0) {
-                        this.prevMouseOver[i].base.callRaise("mouseout", { x: mX, y: mY });
-                    }
-                }
-            }
-            this.prevMouseOver = curMouseOver;
-
-            if (this.prevMouseDown && this.prevMouseDown.length > 0) {
-                for (var i = 0; i < this.prevMouseDown.length; i++) {
-                    this.prevMouseDown[i].base.callRaise("dragged", { x: mX, y: mY });
-                }
-            }
-
-            mY = -1;
-            mX = -1;
-        }
-    }
-    
-    this.resize = function(e) {
-        this.tPos.w = e.width;
-        this.tPos.h = e.height;
-    }
 
     //All selected stuff should probably be in its own object
     var currentRangeDisplayed = null;
@@ -303,7 +123,7 @@ function GitDefence(pos) {
             this.selectedObj = obj;
             this.infobar.updateAttr(obj);
 
-            if (!this.ctrlKey) {
+            if (!this.input.ctrlKey) {
                 for (var key in this.selectedBucket) {
                     var selected = this.selectedBucket[key];
                     for (var key in selected.base.children.HoverIndicator) {

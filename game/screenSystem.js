@@ -40,9 +40,9 @@ function ScreenSystem(canvasName) {
             //Set up proper mouse events
             $(this.canvasName).off();
 
-            var events = screens[screenName].events;
+            var events = screens[screenName].input.events;
             for (var eventName in events) {
-                events[eventName] = events[eventName].bind(activeScreen);
+                events[eventName] = events[eventName].bind(activeScreen.input);
             }
 
             for (var eventName in events) {

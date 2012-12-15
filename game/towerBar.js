@@ -34,10 +34,10 @@ function TowerDragger(pos, towerGeneratorFnc) {
         var game = eng.game;
 
         if (this.dragPos) {
-            if (!game.ctrlKey) {
+            if (!game.input.ctrlKey) {
                 this.dragPos = null;
-                delete game.globalMouseMove[this.base.id];
-                delete game.globalMouseDown[this.base.id];
+                delete game.input.globalMouseMove[this.base.id];
+                delete game.input.globalMouseDown[this.base.id];
             }
             var tileDrop = findClosest(eng, "Tile", e, 0);
             if (tileDrop) {
@@ -46,8 +46,8 @@ function TowerDragger(pos, towerGeneratorFnc) {
         }
         else {
             this.dragPos = e;
-            game.globalMouseMove[this.base.id] = this;
-            game.globalMouseDown[this.base.id] = this;
+            game.input.globalMouseMove[this.base.id] = this;
+            game.input.globalMouseDown[this.base.id] = this;
         }
     }
 }

@@ -306,10 +306,10 @@ function TowerBreeder(pos) {
     var placingTower = null;
 
     this.added = function () {
-        var eng = this.base.rootNode;
-
-        eng.globalMouseMove[this.base.id] = this;
-        eng.globalMouseDown[this.base.id] = this;
+        var game = getGame(this);
+        
+        game.input.globalMouseMove[this.base.id] = this;
+        game.input.globalMouseDown[this.base.id] = this;
     }
 
     this.breed = function () {

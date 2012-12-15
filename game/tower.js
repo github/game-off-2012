@@ -287,7 +287,7 @@ function Tower(baseTile, tPos) {
         this.startDrag = e;
         tempIndicator = new Line(this.startDrag, e, "green", 15, {0: 1.0});
         this.base.addObject(tempIndicator);
-        getGame(this).globalMouseMove[this.base.id] = this;
+        getGame(this).input.globalMouseMove[this.base.id] = this;
     };
 
     this.mousemove = function(e)
