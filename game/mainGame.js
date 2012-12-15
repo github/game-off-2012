@@ -59,7 +59,7 @@ function GitDefence(pos) {
 
     this.input = new inputHandler();
     var input = this.input;
-
+    this.input.resizeEvent = pos; //We need to resize right away (shouldn't really have to... but we do)
     
     this.run = function (timestamp) {
         var eng = this.engine;

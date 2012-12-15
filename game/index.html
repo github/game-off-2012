@@ -100,9 +100,10 @@ canvas {
         screenSystem.addScreen("MainGame",
             new GitDefence(new TemporalPos(0, 0, DFlag.width, DFlag.height, 0, 0)));
 
-        screenSystem.setActiveScreen("MainGame");
+        screenSystem.addScreen("Tutorial",
+            new Tutorial(new TemporalPos(0, 0, DFlag.width, DFlag.height, 0, 0)));
 
-        screenSystem.screens.MainGame.input.events.resize();
+        screenSystem.setActiveScreen("Tutorial");
     });    
 
 </script>
