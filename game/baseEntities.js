@@ -12,7 +12,7 @@
 /********************************* CODE START *********************************/
 
 var uniqueBaseObjNumber = 1;
-function BaseObj(holder, zindex) {
+function BaseObj(holder, zindex, dynamicZIndex) {
     if (!assertDefined("BaseObj", holder))
         return;
 
@@ -21,6 +21,8 @@ function BaseObj(holder, zindex) {
 
 //Identifier properties    
     this.type = getRealType(holder); //.constructor.name;
+    if (dynamicZIndex)
+        this.type += zindex;
 
     //If its not a string then the object degenerates to an array.
     this.id = 'q' + uniqueBaseObjNumber++;
@@ -195,9 +197,8 @@ function BaseObj(holder, zindex) {
         return returnedValues;
     };
 
-    //Calls and returns the returned array (or an empty array)    
-    this.callMerge = function (name, args)
-    {
+    //Calls and returns the returned array (or an empty array)
+    this.callMerge = function (name, args) {
         var returnedValues = [];
 
         //Well if it exists it is clearly a function :D

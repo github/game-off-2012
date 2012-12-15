@@ -4,9 +4,37 @@
 //and goes to the next state.
 
 var tutorialstates = {};
+tutorialstates.one = function one() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
 
-tutorialstates.one = [];
-tutorialstates.one.push(new Circle({ x: 50, y: 50 }, 100, "blue", "yellow", 5));
+    this.added = function () {
+        var message = new Button({ x: 200, y: 200, w: 200, h: 140 }, "Welcome to GitDefence! Click me to begin the tutorial!",
+          getGame(this), "advanceState");
+        message.textControl.fontSize = 20;
+        message.textControl.lineSpacing = 1.5;
+        this.base.addObject(message);
+    }
+};
+
+//Makes it so the user can still click on the main game.
+//This is done like this to restrict what they can click on, just passing all events on
+//is as simple as: this.screenSystem.bindInput(underlyingGame.input); when we gain focus.
+function ClickPassthrough(pos) {
+    this.base = new BaseObj(this, 0);
+    this.tPos = pos;
+
+    /*
+    this.mX = -1;
+    this.mY = -1;
+    this.mdX = -1; //Mouse down
+    this.mdY = -1;
+    this.muX = -1; //Mouse up
+    this.muY = -1;
+    */
+
+    this.mousedown = 
+}
 
 function Tutorial(pos) {
     var underlyingGame = new GitDefence(pos);
@@ -14,7 +42,7 @@ function Tutorial(pos) {
     //Runs before the underlyingGame, but draws after... this isn't neccessarily inconsistent
     var localEngine = new Engine(pos, this);
 
-    this.input = underlyingGame.input;
+    this.input = new InputHandler();
 
     
     this.states = [];
@@ -26,24 +54,23 @@ function Tutorial(pos) {
     this.curStatePos = -1;
 
     this.advanceState = function () {
-        var prevState = this.states[this.curStatePos];
+        var prevState = this.curState;
         if (prevState) {
-            for (var key in prevState) {
-                prevState[key].base.destroySelf();
-            }
+            prevState.base.destroySelf();
         }
 
         this.curStatePos++;
-        var currentState = this.states[this.curStatePos];
-        if (currentState) {
-            for (var key in currentState) {
-                localEngine.base.addObject(currentState[key]);
-            }
+        
+        if (this.states[this.curStatePos]) {
+            this.curState = new this.states[this.curStatePos]();
+            localEngine.base.addObject(this.curState);
         }
     }
     this.advanceState();
 
     this.run = function (timestamp) {
+        this.input.handleEvents(localEngine);
+
         localEngine.run(timestamp);
         underlyingGame.run(timestamp);
     };
@@ -51,5 +78,9 @@ function Tutorial(pos) {
     this.draw = function (pen) {
         underlyingGame.draw(pen);
         localEngine.base.draw(pen);
+    };
+
+    this.gainFocus = function () {
+        //this.screenSystem.bindInput(underlyingGame.input);
     }
 }

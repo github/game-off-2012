@@ -36,22 +36,33 @@ function ScreenSystem(canvasName) {
     this.setActiveScreen = function (screenName) {
         if (screens[screenName]) {
             activeScreen = screens[screenName];
+            activeScreen.screenSystem = this;
 
             //Set up proper mouse events
             $(this.canvasName).off();
 
             if (screens[screenName].input) {
-                var events = screens[screenName].input.events;
-                for (var eventName in events) {
-                    events[eventName] = events[eventName].bind(activeScreen.input);
-                }
-
-                for (var eventName in events) {
-                    $(this.canvasName).on(eventName, events[eventName]);
-                }
+                this.bindInput(screens[screenName].input);
             }
+
+            if (activeScreen.gainFocus)
+                activeScreen.gainFocus();
         }
     }
+
+    //Already called in setActiveScreen
+    this.bindInput = function (input) {
+        if (input) {
+            var events = input.events;
+            for (var eventName in events) {
+                events[eventName] = events[eventName].bind(input);
+            }
+
+            for (var eventName in events) {
+                $(this.canvasName).on(eventName, events[eventName]);
+            }
+        }
+    };
     
     function tick(timestamp) {
         if (activeScreen && activeScreen.run) {

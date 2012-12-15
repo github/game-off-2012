@@ -203,7 +203,7 @@ function QuadTree(arrObjs, splitThreshold) {
                 branch.ids = {};
                 for (var i = startIndex; i < endIndex; i++)
                 {
-                    arrObj[idKey[i]].quadNode = branch;
+                    arrObj[idKey[i]].base.quadNode = branch;
                     branch.ids[idKey[i]] = true; //Could be set to false even
                 }
             } else {

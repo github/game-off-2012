@@ -20,9 +20,7 @@ function Line(start, end, color, zorder, arrowHeadPercents) {
 
     //We do not maintain tPos!
     this.tPos = new TemporalPos(start.x, start.y, end.x - start.x, end.y - start.y, 0, 0);
-    this.base = new BaseObj(this, zorder);
-
-    this.base.type = "Line" + zorder; //hack to fix z order problem
+    this.base = new BaseObj(this, zorder, true);
 
     //Positions on line we add arrow heads.
     this.arrowHeadPercents = arrowHeadPercents;
@@ -62,8 +60,7 @@ function PCircle(center, radius, color, fillColor, zorder) {
     this.pFillColor = forcePointer(fillColor);
 
     this.tPos = {x:0, y:0, h:0, w:0};  //We lie about this because it doesn't matter
-    this.base = new BaseObj(this, zorder);
-    this.base.type = "PCircle" + zorder; //hack to fix z order problem
+    this.base = new BaseObj(this, zorder, true);
 
     this.draw = function (pen) {
         var p = this.pCenter.get();
@@ -88,8 +85,7 @@ function Circle(center, radius, color, fillColor, zorder) {
 
     this.tPos = { x: center.x, y: center.y, h: 0, w: 0 };  //We lie about this because it doesn't matter
 
-    this.base = new BaseObj(this, zorder);
-    this.base.type = "Circle" + zorder; //hack to fix z order problem
+    this.base = new BaseObj(this, zorder, true);
 
     this.lineWidth = 2;
 
@@ -148,6 +144,45 @@ function AlphaDecayPointer(lifetime, startAlpha, endAlpha, pColor) {
 
         if (this.currentTime > this.lifetime) {
             this.base.parent.base.destroySelf();
+        }
+    }
+}
+
+function TextWrapper(pos, text, zorder) {
+    this.tPos = pos;
+    this.base = new BaseObj(this, zorder, true);
+
+    this.text = text;
+    this.color = "green";
+    this.fontSize = 12;
+    this.fontType = "Arial";
+    this.textAlign = "left";
+    this.lineSpacing = 1;
+
+    this.draw = function (pen) {
+        pen.fillStyle = this.color;
+        pen.font = this.fontSize + "px " + this.fontType;
+        pen.textAlign = this.textAlign;
+
+        var pos = this.tPos;
+
+        var lines = getLines(pen, this.text, pos.w);
+        var textHeight = this.fontSize * this.lineSpacing;
+
+        var curX = pos.x;
+        var curY = pos.y;
+
+        if (this.textAlign == "center") {
+            curX += pos.w / 2;
+        }
+
+        var realHeightUsed = lines.length * textHeight;
+        var heightBuffer = (pos.h - realHeightUsed) / 2 - textHeight * 0.1;
+        curY += heightBuffer;
+
+        for (var key in lines) {
+            curY += textHeight;
+            ink.text(curX, curY, lines[key], pen);
         }
     }
 }

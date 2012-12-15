@@ -1,23 +1,34 @@
-function Button(pos, txt, context, functionName, callData, zorder) {
+function Button(pos, text, context, functionName, callData, zorder) {
     this.tPos = pos;
 
     if (!zorder)
         zorder = 15;
 
-    this.base = new BaseObj(this, zorder);
-    this.base.type = "Button" + zorder;
-    this.textsize = 14;
-
+    this.base = new BaseObj(this, zorder, true);
+    
     this.hover = false;
     this.down = false;
     
     this.context = context;
     this.functionName = functionName;
     this.callData = callData;
+    
+    text = formatToDisplay(text);
 
-    this.color = "green";
+    this.textControl = new TextWrapper(pos, text, zorder + 1);
+    this.textControl.textAlign = "center";
+    this.base.addObject(this.textControl);
 
-    txt = formatToDisplay(txt);
+    this.update = function () {
+        this.textControl.tPos = cloneObject(this.tPos);
+        this.textControl.tPos.x += 10;
+        this.textControl.tPos.w -= 20;
+
+        if (this.textsize)
+            this.textControl.fontSize = this.textsize;
+        if (this.color)
+            this.textControl.color = this.color;
+    }
 
     this.draw = function(pen) {
         //Draw box
@@ -31,14 +42,6 @@ function Button(pos, txt, context, functionName, callData, zorder) {
         pen.strokeStyle = "green";
         
         ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-        
-        //Draw text
-        pen.fillStyle = "green";
-        pen.font = this.textsize + "px monospace";
-
-        var p = this.tPos;
-        ink.cenText(p.x + (p.w/2), p.y + this.textsize + 4, txt, pen);
-        return;
     }
     
     this.added = function() {

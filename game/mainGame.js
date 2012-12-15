@@ -57,7 +57,7 @@ function GitDefence(pos) {
     this.lvMan = new LevelManager(bugStart, lmpos);
     engine.base.addObject(this.lvMan);
 
-    this.input = new inputHandler();
+    this.input = new InputHandler();
     var input = this.input;
     this.input.resizeEvent = pos; //We need to resize right away (shouldn't really have to... but we do)
     

@@ -28,6 +28,9 @@ function Tower_Connection(t1, t2) {
 
     // Those fucking random numbers passed as the last argument? Those are positions along the line where arrows are drawn. Probably. I can't be sure.
     // What does 11 mean? Fuck if I know.
+    //Spending some time looking at the constructor would be wise. The 11 is the zorder
+    //(this is something that is done all over the place), and the numbers are the percentages
+    //at which arrowheads are drawn).
     var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11, {1: 0.1, 2: 0.3, 3: 0.5, 4: 0.7, 5: 0.9});
     this.base.addObject(line);
     

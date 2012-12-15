@@ -50,3 +50,29 @@ function formatToDisplay(text) {
     text = text.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     return text;
 }
+
+//http://stackoverflow.com/questions/2936112/text-wrap-in-a-canvas-element
+//Set font before you call this.
+function getLines(ctx, phrase, maxPxLength) {
+    var wa = phrase.split(" "),
+        phraseArray = [],
+        lastPhrase = wa[0],
+        l = maxPxLength,
+        measure = 0;
+
+    for (var i = 1; i < wa.length; i++) {
+        var w = wa[i];
+        measure = ctx.measureText(lastPhrase + w).width;
+        if (measure < l) {
+            lastPhrase += (" " + w);
+        } else {
+            phraseArray.push(lastPhrase);
+            lastPhrase = w;
+        }
+        if (i === wa.length - 1) {
+            phraseArray.push(lastPhrase);
+            break;
+        }
+    }
+    return phraseArray;
+}

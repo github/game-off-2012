@@ -1,4 +1,4 @@
-﻿function inputHandler() {
+﻿function InputHandler() {
     //Only valid when handling mouse events (just check when it is set)
     this.ctrlKey = false;
 
@@ -6,6 +6,8 @@
     this.globalMouseMove = {};
     this.globalMouseDown = {};
 
+    //The only reason this would be false is if multiple people are sharing the input handler
+    this.consumeEvents = true;
     
     this.mX = -1;
     this.mY = -1;
@@ -115,25 +117,29 @@
 
         if (this.resizeEvent) {
             eng.base.raiseEvent("resize", this.resizeEvent);
-            this.resizeEvent = null;
+
+            if (this.consumeEvents)
+                this.resizeEvent = null;
         }
     };
 
     //Called in update and uses async flags set when we get events
-    this.handleMouseEvents = function(eng) {
+    this.handleMouseEvents = function (eng) {
         if (this.mdX > 0 && this.mdY > 0) {
             for (var key in this.globalMouseDown) {
-                if (this.globalMouseMove[key].base.rootNode != eng)
-                    delete this.globalMouseMove[key];
+                if (this.globalMouseDown[key].base.rootNode != eng)
+                    delete this.globalMouseDown[key];
                 else
-                    this.globalMouseMove[key].base.callRaise("mousedown", { x: this.mdX, y: this.mdY });
+                    this.globalMouseDown[key].base.callRaise("mousedown", { x: this.mdX, y: this.mdY });
             }
 
             var curMouseDown = throwMouseEventAt(this.mdX, this.mdY, "mousedown", eng);
             this.prevMouseDown = curMouseDown;
 
-            this.mdX = -1;
-            this.mdY = -1;
+            if (this.consumeEvents) {
+                this.mdX = -1;
+                this.mdY = -1;
+            }
         }
 
         if (this.muX > 0 && this.muY > 0) {
@@ -150,8 +156,10 @@
 
             this.prevMouseDown = null;
 
-            this.muX = -1;
-            this.muY = -1;
+            if (this.consumeEvents) {
+                this.muX = -1;
+                this.muY = -1;
+            }
         }
 
         if (this.mY > 0 && this.mX > 0) {
@@ -179,8 +187,10 @@
                 }
             }
 
-            this.mY = -1;
-            this.mX = -1;
+            if (this.consumeEvents) {
+                this.mY = -1;
+                this.mX = -1;
+            }
         }
     }
 
