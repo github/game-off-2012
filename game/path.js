@@ -45,20 +45,21 @@ function Path_Line(pathBase) {
     this.update = function (dt) {
         this.tPos.update(dt);
     };
-    
+
     this.draw = function (pen) {
         if (pathBase.nextPath) {
             var t = pathBase.nextPath.tPos.getCenter();
             var direction = new Vector(t.x, t.y);
             direction.sub(pathBase.tPos.getCenter());
-            
+
             var start = pathBase.tPos.getCenter();
-            
+
             var end = new Vector(start.x, start.y);
             direction.norm().mult(pathBase.tPos.w);
             end.add(direction);
-            
+
             pen.strokeStyle = "blue";
+            pen.lineWidth = 1;
             ink.arrow(start.x, start.y, end.x, end.y, pen);
         }
     };
