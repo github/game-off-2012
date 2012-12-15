@@ -4,6 +4,11 @@ function ScreenSystem(canvasName) {
 
 
     var canvas = document.getElementById(canvasName.substring(1));
+
+    //Proper resize code is in mainGame.js (but not used)
+    canvas.width = DFlag.width;
+    canvas.height = DFlag.height;
+    
     var pen = canvas.getContext("2d");
 
     this.screens = {};

@@ -110,6 +110,9 @@ function GitDefence(pos) {
 
     this.resizeEvent = null;
     this.events.resize = function (e) {
+        //We no longer resize the canvas, it is just hardcoded in screenSystem
+
+        /*
         var minWidth = this.numTilesX * this.tileSize + 150;
         var minHeight = this.numTilesY * this.tileSize;
         var canvasWidth = DFlag.width || Math.max(window.innerWidth, minWidth);
@@ -126,6 +129,7 @@ function GitDefence(pos) {
         canvas.height = canvasHeight;
         eng.bufferCanvas.width = canvasWidth;
         eng.bufferCanvas.height = canvasHeight;
+        */
 
         this.resizeEvent = e;
     }

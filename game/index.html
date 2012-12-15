@@ -21,7 +21,7 @@ canvas {
 </style>
 </head>
 <body>
-<canvas id="myCanvas" width = 1000 height = 1000></canvas>
+<canvas id="myCanvas"></canvas>
 <div id="scripts">
 <script src="lib/jquery.min.js"></script><!-- //ajax.googleapis.com/ajax/libs/jquery/1.8.2/ -->
 
@@ -90,7 +90,6 @@ canvas {
 
 
     $(document).ready(function () {
-
         var screenSystem = new ScreenSystem("#myCanvas");
 
         screenSystem.addScreen("MainGame",
@@ -98,7 +97,7 @@ canvas {
 
         screenSystem.setActiveScreen("MainGame");
 
-        //screenSystem.screens.MainGame.events.resize();
+        screenSystem.screens.MainGame.events.resize();
     });    
 
 </script>
