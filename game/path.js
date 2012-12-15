@@ -1,7 +1,7 @@
 
 function Path_End(x, y, w, h) {
     this.tPos = new TemporalPos(x, y, w, h, 0, 0);
-    this.base = new BaseObj(this, 5);
+    this.base = new BaseObj(this, 2);
     
     this.update = function (dt) {
         this.tPos.update(dt);
@@ -17,13 +17,15 @@ function Path_End(x, y, w, h) {
 
 function Path_Start(x, y, w, h) {
     this.tPos = new TemporalPos(x, y, w, h, 0, 0);
-    this.base = new BaseObj(this, 5);
-    
-    //This is set after we are made
-    //this.nextPath
+    this.base = new BaseObj(this, 2);
     
     this.update = function (dt) {
-        this.tPos.update(dt);
+        if (this.nextPath && !this.pathLine) {
+            var eng = getEng(this);
+
+            this.pathLine = new Path_Line(this);
+            eng.base.addObject(this.pathLine);
+        }
     };
     
     this.draw = function (pen) {
@@ -59,7 +61,7 @@ function Path_Line(pathBase) {
             end.add(direction);
 
             pen.strokeStyle = "blue";
-            pen.lineWidth = 1;
+            pen.lineWidth = 2;
             ink.arrow(start.x, start.y, end.x, end.y, pen);
         }
     };
@@ -69,17 +71,13 @@ function Path(x, y, w, h) {
     this.tPos = new TemporalPos(x, y, w, h, 0, 0);
     this.base = new BaseObj(this, 3);
     this.pathLine = null;
-    
+
     this.update = function (dt) {
-        this.tPos.update(dt);
-        
-        var newObjs = [];
-        
         if (this.nextPath && !this.pathLine) {
+            var eng = getEng(this);
+
             this.pathLine = new Path_Line(this);
-            newObjs.push(this.pathLine);
+            eng.base.addObject(this.pathLine);
         }
-        
-        return newObjs;
     };
 }
