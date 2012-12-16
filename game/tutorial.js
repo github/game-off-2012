@@ -111,9 +111,6 @@ tutorialstates.spawnEnemies = function spawnEnemies() {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
-    //What we want them to drag from!
-    this.targetDragger = null;
-
     this.added = function () {
         var realGame = getGame(this).underlyingGame;
 
@@ -132,35 +129,31 @@ tutorialstates.spawnEnemies = function spawnEnemies() {
                     targetBase: AllAlleleGroups.targetBase,
                     rangeBase: AllAlleleGroups.rangeBase,
                     speedBase: function () { return { speed: 5 }; },
-                    hpBase: function () { return { hp: 100000 }; },
+                    hpBase: function () { return { hp: 10 }; },
                     attSpeedBase: function () { return { attSpeed: -100 }; }, //We don't want it to attack
                 },
                 //Time until next wave
                 waveTime: 1/0,
                 //Time between spawn
-                spawnDelay: 1,
+                spawnDelay: 0.3,
                 //Number the resultant attributes are multiplied by
                 attributeModifier: 1,
             }
         ];
-        realGame.lvMan.nwicounter = 15;
+        realGame.lvMan.nwicounter = 0;
     }
 
     var bugsSent = false;
     this.update = function() {
         var realGame = getGame(this).underlyingGame;
 
-        if(realGame.lvMan.bugsToSpawn.length == 0)
+        if(realGame.lvMan.bugsToSpawn.length > 0)
             getGame(this).advanceState();
     }
 };
-
 tutorialstates.waitForEnemiesToDie = function waitForEnemiesToDie() {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this);
-
-    //What we want them to drag from!
-    this.targetDragger = null;
 
     this.added = function () {
         var realGame = getGame(this).underlyingGame;
@@ -176,7 +169,59 @@ tutorialstates.waitForEnemiesToDie = function waitForEnemiesToDie() {
     this.update = function() {
         var realGame = getGame(this).underlyingGame;
 
-        if(!realGame.engine.base.allChildren.Bug)
+        if(!realGame.engine.base.allLengths.Bug)
+            getGame(this).advanceState();
+    }
+};
+
+tutorialstates.clickOnTower = function clickOnTower() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
+
+    this.added = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        var message = new Button(
+            { x: 150, y: 200, w: 300, h: 220 }, "You can click on your tower to select it. After selecting a tower its attributes are displayed in the sidebar. Towers are selected by default when placed.",
+            getGame(this), "advanceState");
+        message.textControl.fontSize = 20;
+        message.textControl.lineSpacing = 1.5;
+        this.base.addObject(message);
+
+        this.base.addObject(new SimpleCallback(15, "continue"));
+    }
+
+    this.continue = function() {
+        getGame(this).advanceState();
+    }
+};
+
+tutorialstates.buyAlleles = function buyAlleles() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
+
+    this.added = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        var message = new Button(
+            { x: 150, y: 200, w: 300, h: 220 }, "You can buy 'allele' points which allow you to increase your tower attributes. Buy 10 points now.",
+            getGame(this), "advanceState");
+        message.textControl.fontSize = 20;
+        message.textControl.lineSpacing = 1.5;
+        this.base.addObject(message);
+
+
+        var allelePointSystem = getAnElement(realGame.engine.base.allChildren.AllelePointSystem);
+        var buyButton = allelePointSystem.buyButton2;
+
+        var allMouseThrough = new AllMouseThrough(buyButton.tPos);
+        this.base.addObject(allMouseThrough);
+    }
+
+    this.update = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        if(realGame.selectedObj && realGame.selectedObj.allelesGenerated.length > 0)
             getGame(this).advanceState();
     }
 };

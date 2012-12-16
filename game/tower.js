@@ -161,6 +161,9 @@ function Tower(baseTile, tPos) {
     this.attr.attack_types = [];
     this.attr.attack_types.push(new allAttackTypes.Laser());
 
+    //For alleles.
+    this.autoTrash = true;
+
     this.connections = [];
 
     this.base.addObject(new AttackCycle());
