@@ -100,7 +100,7 @@ function AllelePointSystem(pos) {
         var selected = getSel(this);
 
         if (selected && selected.base.type == "Tower") {
-            selected.autoTrash = !selected.autoTrash;
+            selected.autoTrash = this.autoTrashButton.toggled;
         }
     }
 

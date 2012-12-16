@@ -103,7 +103,10 @@ canvas {
         screenSystem.addScreen("Tutorial",
             new Tutorial(new TemporalPos(0, 0, DFlag.width, DFlag.height, 0, 0)));
 
-        screenSystem.setActiveScreen("Tutorial");
+        if(DFlag.disableTutorial)
+            screenSystem.setActiveScreen("MainGame");
+        else
+            screenSystem.setActiveScreen("Tutorial");
     });    
 
 </script>
