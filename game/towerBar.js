@@ -9,8 +9,8 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
     this.displayedTower = towerGeneratorFnc(true);
 
-    //If this is not null, then they are placing a tower
-    this.dragPos = null;
+    this.placingTower = false;
+    this.lastMousePos = null;
 
     this.draw = function (pen) {
         var tileSize = getGame(this).tileSize;
@@ -19,60 +19,53 @@ function TowerDragger(pos, towerGeneratorFnc) {
         this.displayedTower.base.raiseEvent("resize");
         this.displayedTower.draw(pen);
 
-        if (this.dragPos) {
-            this.displayedTower.tPos = new TemporalPos(this.dragPos.x, this.dragPos.y, tileSize, tileSize);
+        if (this.placingTower) {
+            this.displayedTower.tPos = new TemporalPos(this.lastMousePos.x, this.lastMousePos.y, tileSize, tileSize);
             this.displayedTower.base.raiseEvent("resize");
             this.displayedTower.draw(pen);
         }
     }
 
     this.mousemove = function (e) {
-        this.dragPos = e;
-
-        if(!e)
-            fail("noo!");
+        this.lastMousePos = e;
     }
 
+    var firstClick = false;
     this.mousedown = function (e) {
         var eng = this.base.rootNode;
         var game = eng.game;
 
-        if(!e)
-            fail("noo!");
+        firstClick = true;
 
-        if (!this.dragPos) {
+        if (!this.placingTower) {
             //They are clicking on the placer, so begin placing
-            this.dragPos = e;
+            this.placingTower = true;
+            this.lastMousePos = e;
             game.input.globalMouseMove[this.base.id] = this;
-            game.input.globalMouseUp[this.base.id] = this;
+            game.input.globalMouseClick[this.base.id] = this;
         }
     }
 
-    this.mouseup = function (e) {
+    this.click = function (e) {
+        if(firstClick) {
+            firstClick = false;
+            return;
+        }
+
         var eng = this.base.rootNode;
         var game = eng.game;
 
-        if(!e)
-            fail("noo!");
-
-        if(e.x < 0 || e.y < 0)
-            fail("noo!");
-
-        if (this.dragPos) {
+        if (this.placingTower) {
             //They already clicked on the placer, so they are trying to place now
             if (!game.input.ctrlKey) {
-                this.dragPos = null;
+                this.placingTower = false;
                 delete game.input.globalMouseMove[this.base.id];
-                delete game.input.globalMouseUp[this.base.id];
+                delete game.input.globalMouseClick[this.base.id];
             }
             var tileDrop = findClosest(eng, "Tile", e, 0);
             if (tileDrop) {
                 tryPlaceTower(this.towerGeneratorFnc(), tileDrop);
             }
-            else {
-                fail("noo!");
-            }
-
         }
     }
 }

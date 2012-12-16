@@ -344,5 +344,7 @@ function tryPlaceTower(tower, tile)
         eng.base.addObject(tower);
         game.changeSel(tower);
         getAnElement(tile.base.children.Selectable).ignoreNext = true;
+    } else {
+        fail("crap");
     }
 };

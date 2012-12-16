@@ -47,7 +47,7 @@ tutorialstates.startPlace = function startPlace() {
     }
 
     this.update = function () {
-        if(this.targetDragger.dragPos)
+        if(this.targetDragger.placingTower)
             getGame(this).advanceState();
     }
 };

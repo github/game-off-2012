@@ -6,6 +6,7 @@
     this.globalMouseMove = {};
     this.globalMouseDown = {};
     this.globalMouseUp = {};
+    this.globalMouseClick = {};
 
     //The only reason this would be false is if multiple people are sharing the input handler
     this.consumeEvents = true;
@@ -83,7 +84,7 @@
     }
 
 
-    function throwMouseEventAt(mX, mY, eventName, eng) {
+    function throwMouseEventAt(mX, mY, eventName, eng, ignore) {
         var allUnderMouse = [];
 
         for (var type in eng.base.allChildren) {
@@ -95,18 +96,23 @@
 
         var topMost = allUnderMouse[0];
 
+        if(!ignore)
+            ignore = {};
+
         //*sigh* so inefficient... but for now its fine
         for (var key in allUnderMouse)
-            if (allUnderMouse[key].base.zindex > topMost.base.zindex ||
-                       (allUnderMouse[key].base.zindex == topMost.base.zindex &&
-                       allUnderMouse[key].base.zoffset > topMost.base.zoffset)) {
-                if (allUnderMouse[key].base.canHandleEvent(eventName))
-                    topMost = allUnderMouse[key];
-            }
+            if(!ignore[key])
+                if (allUnderMouse[key].base.zindex > topMost.base.zindex ||
+                           (allUnderMouse[key].base.zindex == topMost.base.zindex &&
+                           allUnderMouse[key].base.zoffset > topMost.base.zoffset)) {
+                    if (allUnderMouse[key].base.canHandleEvent(eventName))
+                        topMost = allUnderMouse[key];
+                }
 
         for (var key in allUnderMouse)
-            if (allUnderMouse[key] !== topMost)
-                allUnderMouse[key].base.callRaise(eventName, { x: mX, y: mY, topMost: false });
+            if(!ignore[key])
+                if (allUnderMouse[key] !== topMost)
+                    allUnderMouse[key].base.callRaise(eventName, { x: mX, y: mY, topMost: false });
 
         topMost.base.callRaise(eventName, { x: mX, y: mY, topMost: true });
 
@@ -134,16 +140,15 @@
                     this.globalMouseDown[key].base.callRaise("mousedown", { x: this.mdX, y: this.mdY });
             }
 
-            var curMouseDown = throwMouseEventAt(this.mdX, this.mdY, "mousedown", eng);
+            var curMouseDown = throwMouseEventAt(this.mdX, this.mdY, "mousedown", eng, this.globalMouseDown);
             this.prevMouseDown = curMouseDown;
 
             if (this.consumeEvents) {
                 this.mdX = -1;
                 this.mdY = -1;
             }
-        }
-
-        if (this.muX > 0 && this.muY > 0) {
+        //We delay the mouse up for one cycle to prevent some bugs
+        } else if (this.muX > 0 && this.muY > 0) {
             for (var key in this.globalMouseUp) {
                 if (this.globalMouseUp[key].base.rootNode != eng)
                     delete this.globalMouseUp[key];
@@ -151,11 +156,19 @@
                     this.globalMouseUp[key].base.callRaise("mouseup", { x: this.muX, y: this.muY });
             }
 
-            var curMouseUp = throwMouseEventAt(this.muX, this.muY, "mouseup", eng);
+            var curMouseUp = throwMouseEventAt(this.muX, this.muY, "mouseup", eng, this.globalMouseUp);
 
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {
+                for (var key in this.globalMouseClick) {
+                    if (this.globalMouseClick[key].base.rootNode != eng)
+                        delete this.globalMouseClick[key];
+                    else
+                        this.globalMouseClick[key].base.callRaise("click", { x: this.muX, y: this.muY });
+                }
+
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
-                    if (vecToRect({ x: this.muX, y: this.muY }, this.prevMouseDown[i].tPos).magSq() == 0) {
+                    if (!this.globalMouseClick[this.prevMouseDown[i].base.id] &&
+                        vecToRect({ x: this.muX, y: this.muY }, this.prevMouseDown[i].tPos).magSq() == 0) {
                         this.prevMouseDown[i].base.callRaise("click", { x: this.muX, y: this.muY });
                     }
                     this.prevMouseDown[i].base.callRaise("dragEnd", { x: this.muX, y: this.muY });
@@ -178,7 +191,7 @@
                     this.globalMouseMove[key].base.callRaise("mousemove", { x: this.mX, y: this.mY });
             }
 
-            var curMouseOver = throwMouseEventAt(this.mX, this.mY, "mouseover", eng);
+            var curMouseOver = throwMouseEventAt(this.mX, this.mY, "mouseover", eng, this.globalMouseMove);
             //Can actually find mouseout more efficiently... as we have previous and current mouseover...            
             if (this.prevMouseOver && this.prevMouseOver.length > 0) {
                 for (var i = 0; i < this.prevMouseOver.length; i++) {

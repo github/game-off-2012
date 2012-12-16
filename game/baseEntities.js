@@ -174,8 +174,20 @@ function BaseObj(holder, zindex, dynamicZIndex) {
     };
 
     this.removeAllType = function (type) {
-        if (this.children[type])
+        if (this.children[type]) {
             this.children[type] = {};
+            this.lengths[type] = 0;
+        }
+        //This is harder, you need to also remove them from their parents
+        if (this.allChildren[type]) {
+            for(var key in this.allChildren[type]) {
+                var toRemove = this.allChildren[type][key];
+                if(toRemove.base.parent != this.holder)
+                    delete toRemove.base.parent.base.children[type][key];
+            }
+            this.allChildren[type] = {};
+            this.allLengths[type] = 0;
+        }
     };
 
     this.raiseEvent = function (name, args) {
