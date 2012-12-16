@@ -125,7 +125,9 @@ tutorialstates.spawnEnemies = function spawnEnemies() {
 
         realGame.lvMan.levels = [
             {
+                //Number is number of bugs, you can have multiple numbers
                 5: {
+                    //Allels for the bug
                     attack1: function () { return { attack: bugAttackTypes.BugBullet }; },
                     targetBase: AllAlleleGroups.targetBase,
                     rangeBase: AllAlleleGroups.rangeBase,
@@ -133,8 +135,11 @@ tutorialstates.spawnEnemies = function spawnEnemies() {
                     hpBase: function () { return { hp: 100000 }; },
                     attSpeedBase: function () { return { attSpeed: -100 }; }, //We don't want it to attack
                 },
+                //Time until next wave
                 waveTime: 1/0,
+                //Time between spawn
                 spawnDelay: 1,
+                //Number the resultant attributes are multiplied by
                 attributeModifier: 1,
             }
         ];
