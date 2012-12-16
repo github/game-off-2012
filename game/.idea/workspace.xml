@@ -48,7 +48,7 @@
       <content type="file-editors">
         <state>
           <leaf>
-            <file leaf-file-name="tutorial.js" pinned="false" current="true" current-in-tab="true">
+            <file leaf-file-name="tutorial.js" pinned="false" current="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/tutorial.js">
                 <provider selected="true" editor-type-id="text-editor">
                   <state line="133" column="0" selection-start="4516" selection-end="4516" vertical-scroll-proportion="0.64139944">
@@ -111,28 +111,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bug.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bug.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="0" selection-start="525" selection-end="525" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="towerBar.js" pinned="false" current="false" current-in-tab="true">
+      <file leaf-file-name="towerBar.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/towerBar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="0" selection-start="1374" selection-end="1374" vertical-scroll-proportion="0.66233766">
+            <state line="47" column="0" selection-start="1374" selection-end="1374" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tower.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="type.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/type.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="43" selection-start="813" selection-end="813" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tower.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tower.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="335" column="0" selection-start="10333" selection-end="10333" vertical-scroll-proportion="0.0">
+            <state line="337" column="30" selection-start="10432" selection-end="10432" vertical-scroll-proportion="0.5584416">
               <folding />
             </state>
           </provider>
@@ -179,10 +179,11 @@
         <option value="$PROJECT_DIR$/commonControls.js" />
         <option value="$PROJECT_DIR$/level.js" />
         <option value="$PROJECT_DIR$/tutorial.js" />
-        <option value="$PROJECT_DIR$/tower.js" />
         <option value="$PROJECT_DIR$/baseEntities.js" />
         <option value="$PROJECT_DIR$/towerBar.js" />
         <option value="$PROJECT_DIR$/inputEvents.js" />
+        <option value="$PROJECT_DIR$/type.js" />
+        <option value="$PROJECT_DIR$/tower.js" />
       </list>
     </option>
   </component>
@@ -417,23 +418,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tower.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="335" column="0" selection-start="10333" selection-end="10333" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/baseEntities.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="192" column="33" selection-start="6525" selection-end="6525" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/towerBar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="0" selection-start="1374" selection-end="1374" vertical-scroll-proportion="0.66233766">
           <folding />
         </state>
       </provider>
@@ -457,6 +444,27 @@
             <element signature="n#!!block;n#MouseMoveThrough#0" expanded="false" />
             <element signature="n#!!block;n#Tutorial#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/towerBar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="0" selection-start="1374" selection-end="1374" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/type.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="43" selection-start="813" selection-end="813" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tower.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="337" column="30" selection-start="10432" selection-end="10432" vertical-scroll-proportion="0.5584416">
+          <folding />
         </state>
       </provider>
     </entry>
