@@ -205,6 +205,25 @@ function AttributeTween(start, end, time, callbackName, attributeName) {
     }
 }
 
+function AlphaTween(lifetime, startAlpha, endAlpha) {
+    this.base = new BaseObj(this);
+
+    this.lifetime = lifetime;
+    this.startAlpha = startAlpha;
+    this.endAlpha = endAlpha;
+
+    this.currentTime = 0;
+
+    this.update = function (dt) {
+        this.currentTime += dt;
+
+        var currentAlpha = startAlpha + (endAlpha - startAlpha) * (this.currentTime / this.lifetime);
+
+        this.base.parent.color = setAlpha(this.base.parent.color, currentAlpha);
+        this.base.parent.fillColor = setAlpha(this.base.parent.fillColor, currentAlpha);
+    }
+}
+
 function SimpleCallback(time, callbackName) {
     this.base = new BaseObj(this);
 

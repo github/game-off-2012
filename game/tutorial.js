@@ -3,18 +3,43 @@
 //game until advanceState is called, at which point it removes the prev objects
 //and goes to the next state.
 
+
+function addTextDisplay(text, obj) {
+    var message = new TextBox(
+        { x: 176, y: 16, w: 318, h: 0 }, text, "rgba(0, 255, 0, 0)", "rgba(0, 0, 0, 0)");
+    message.textControl.fontSize = 20;
+    message.textControl.lineSpacing = 1.5;
+    message.textControl.scaleVertically = true;
+
+    obj.base.addObject(message);
+
+    message.base.addObject(new AlphaTween(1, 0, 1));
+}
+
+//Hardcoded position
+function ContinueButton() {
+    var pos = new Rect(400, 344, 90, 30);
+    this.tPos = pos;
+    this.base = new BaseObj(this);
+
+    var button = new Button(pos, "Continue", this, "continue");
+    button.textControl.fontSize = 20;
+    button.textControl.lineSpacing = 0.4;
+    this.base.addObject(button);
+
+    this.continue = function() {
+        getGame(this).advanceState();
+    }
+}
+
 var tutorialstates = {};
 tutorialstates.start = function start() {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     this.added = function () {
-        var message = new Button(
-            { x: 200, y: 200, w: 200, h: 140 }, "Welcome to GitDefence! Click me to begin the tutorial!",
-            getGame(this), "advanceState");
-        message.textControl.fontSize = 20;
-        message.textControl.lineSpacing = 1.5;
-        this.base.addObject(message);
+        addTextDisplay("Welcome to GitDefence! Click continue!", this);
+        this.base.addObject(new ContinueButton());
 
         getGame(this).underlyingGame.lvMan.nwicounter = 1 / 0; //Lol, purposely dividing by 0 to get infinity
     }
@@ -30,17 +55,12 @@ tutorialstates.startPlace = function startPlace() {
     this.added = function () {
         var realGame = getGame(this).underlyingGame;
 
-        var message = new Button(
-            { x: 200, y: 200, w: 200, h: 140 }, "Click on a tower to begin placement. Do this now.");
-        message.textControl.fontSize = 20;
-        message.textControl.lineSpacing = 1.5;
-        this.base.addObject(message);
+        addTextDisplay("Click on a tower to begin placement. Do this now.", this);
 
 
         var towerDraggers = realGame.engine.base.allChildren.TowerDragger;
         var firstTowerDragger = getAnElement(towerDraggers);
         this.targetDragger = firstTowerDragger;
-
 
         var allMouseThrough = new AllMouseThrough(this.targetDragger.tPos);
         this.base.addObject(allMouseThrough);
@@ -51,7 +71,6 @@ tutorialstates.startPlace = function startPlace() {
             getGame(this).advanceState();
     }
 };
-
 tutorialstates.endPlace = function endPlace() {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this);
@@ -62,17 +81,12 @@ tutorialstates.endPlace = function endPlace() {
     this.added = function () {
         var realGame = getGame(this).underlyingGame;
 
-        var message = new Button(
-            { x: 200, y: 200, w: 200, h: 140 }, "Click on a tile to place the tower.");
-        message.textControl.fontSize = 20;
-        message.textControl.lineSpacing = 1.5;
-        this.base.addObject(message);
+        addTextDisplay("Click on a tile to place the tower.", this);
 
 
         var towerDraggers = realGame.engine.base.allChildren.TowerDragger;
         var firstTowerDragger = getAnElement(towerDraggers);
         this.targetDragger = firstTowerDragger;
-
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
         var TILE_SIZE = pathStart.tPos.w;
@@ -114,12 +128,10 @@ tutorialstates.spawnEnemies = function spawnEnemies() {
     this.added = function () {
         var realGame = getGame(this).underlyingGame;
 
-        var message = new Button(
-            { x: 200, y: 200, w: 200, h: 140 }, "Now watch your tower kill the bugs!");
-        message.textControl.fontSize = 20;
-        message.textControl.lineSpacing = 1.5;
-        this.base.addObject(message);
+        addTextDisplay("Now watch your tower kill the bugs!", this);
 
+
+        realGame.lvMan.curLevel = 0;
         realGame.lvMan.levels = [
             {
                 //Number is number of bugs, you can have multiple numbers
@@ -158,18 +170,14 @@ tutorialstates.waitForEnemiesToDie = function waitForEnemiesToDie() {
     this.added = function () {
         var realGame = getGame(this).underlyingGame;
 
-        var message = new Button(
-            { x: 200, y: 200, w: 200, h: 140 }, "Now watch your tower kill the bugs!");
-        message.textControl.fontSize = 20;
-        message.textControl.lineSpacing = 1.5;
-        this.base.addObject(message);
+        addTextDisplay("Now watch your tower kill the bugs!", this);
     }
 
     var bugsSent = false;
     this.update = function() {
         var realGame = getGame(this).underlyingGame;
 
-        if(!realGame.engine.base.allLengths.Bug)
+        if(!realGame.engine.base.allLengths.Bug && realGame.lvMan.bugsToSpawn.length == 0)
             getGame(this).advanceState();
     }
 };
@@ -181,21 +189,11 @@ tutorialstates.clickOnTower = function clickOnTower() {
     this.added = function () {
         var realGame = getGame(this).underlyingGame;
 
-        var message = new Button(
-            { x: 150, y: 200, w: 300, h: 220 }, "You can click on your tower to select it. After selecting a tower its attributes are displayed in the sidebar. Towers are selected by default when placed.",
-            getGame(this), "advanceState");
-        message.textControl.fontSize = 20;
-        message.textControl.lineSpacing = 1.5;
-        this.base.addObject(message);
+        addTextDisplay("You can click on your tower to select it. After selecting a tower its attributes are displayed in the sidebar. Towers are selected by default when placed.", this);
 
-        this.base.addObject(new SimpleCallback(15, "continue"));
-    }
-
-    this.continue = function() {
-        getGame(this).advanceState();
+        this.base.addObject(new ContinueButton());
     }
 };
-
 tutorialstates.buyAlleles = function buyAlleles() {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this);
@@ -203,16 +201,11 @@ tutorialstates.buyAlleles = function buyAlleles() {
     this.added = function () {
         var realGame = getGame(this).underlyingGame;
 
-        var message = new Button(
-            { x: 150, y: 200, w: 300, h: 220 }, "You can buy 'allele' points which allow you to increase your tower attributes. Buy 10 points now.",
-            getGame(this), "advanceState");
-        message.textControl.fontSize = 20;
-        message.textControl.lineSpacing = 1.5;
-        this.base.addObject(message);
+        addTextDisplay("You can buy 'allele' points which allow you to increase your tower attributes. Buy points now.", this);
 
 
         var allelePointSystem = getAnElement(realGame.engine.base.allChildren.AllelePointSystem);
-        var buyButton = allelePointSystem.buyButton2;
+        var buyButton = allelePointSystem.buyButton;
 
         var allMouseThrough = new AllMouseThrough(buyButton.tPos);
         this.base.addObject(allMouseThrough);
@@ -222,6 +215,225 @@ tutorialstates.buyAlleles = function buyAlleles() {
         var realGame = getGame(this).underlyingGame;
 
         if(realGame.selectedObj && realGame.selectedObj.allelesGenerated.length > 0)
+            getGame(this).advanceState();
+    }
+};
+tutorialstates.spendAlleles = function spendAlleles() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
+
+    this.added = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        addTextDisplay("You can spend your allele points or trash them. When hovering over the spend and trash button the change the allele will cause is shown in the tower attributes. Also, you can automatically trash attributes which are equal or worse in all aspects to your current attributes. This is on by default.", this);
+
+
+        var allelePointSystem = getAnElement(realGame.engine.base.allChildren.AllelePointSystem);
+
+        var spendButton = allelePointSystem.spendButton;
+        var allMouseThrough = new AllMouseThrough(spendButton.tPos);
+        this.base.addObject(allMouseThrough);
+
+        var trashButton = allelePointSystem.trashButton;
+        var allMouseThrough = new AllMouseThrough(trashButton.tPos);
+        this.base.addObject(allMouseThrough);
+
+        var autoTrashButton = allelePointSystem.autoTrashButton;
+        var allMouseThrough = new AllMouseThrough(autoTrashButton.tPos);
+        this.base.addObject(allMouseThrough);
+    }
+
+    this.update = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        if(realGame.selectedObj && realGame.selectedObj.allelesGenerated.length == 0)
+            getGame(this).advanceState();
+    }
+};
+
+tutorialstates.placeAnotherTower = function placeAnotherTower() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
+
+    //What we want them to drag from!
+    this.targetDragger = null;
+
+    this.added = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        addTextDisplay("Now place another tower close to your existing tower.", this);
+
+
+        var towerDraggers = realGame.engine.base.allChildren.TowerDragger;
+        var firstTowerDragger = getAnElement(towerDraggers);
+        this.targetDragger = firstTowerDragger;
+
+        var allMouseThrough = new AllMouseThrough(this.targetDragger.tPos);
+        this.base.addObject(allMouseThrough);
+
+
+        var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
+        var TILE_SIZE = pathStart.tPos.w;
+        var tile = findClosest(realGame.engine, "Tile", {x: TILE_SIZE * 5, y: TILE_SIZE * 6}, 0);
+        this.tile = tile;
+
+        var allMouseThrough = new AllMouseThrough(tile.tPos);
+        this.base.addObject(allMouseThrough);
+    }
+
+    this.update = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
+        var TILE_SIZE = pathStart.tPos.w;
+        var tower = findClosest(realGame.engine, "Tower", {x: TILE_SIZE * 5, y: TILE_SIZE * 6}, 0);
+
+        if(tower) {
+            tower.genes.replaceAlleles(
+                {
+                    attack1: new Allele({attack: allAttackTypes.Laser}),
+                    targetBase: new Allele({target: targetStrategies.Closest}),
+                    starterTower: new Allele(
+                        {range: 10, damage: 10, hp: 100, attSpeed: 1}
+                    ),
+                });
+            getGame(this).advanceState();
+        }
+    }
+};
+
+tutorialstates.networkTowerStart = function networkTowerStart() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
+
+    //What we want them to drag from!
+    this.targetDragger = null;
+
+    this.added = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        addTextDisplay("Click and hold on a tower to begin making a network.", this);
+
+
+        var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
+        var TILE_SIZE = pathStart.tPos.w;
+        var tile = findClosest(realGame.engine, "Tile", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
+        this.tile = tile;
+
+        var allMouseThrough = new AllMouseThrough(tile.tPos);
+        this.base.addObject(allMouseThrough);
+    }
+
+    this.update = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
+        var TILE_SIZE = pathStart.tPos.w;
+        var tower = findClosest(realGame.engine, "Tower", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
+
+        if(tower && tower.startDrag) {
+            getGame(this).advanceState();
+        }
+    }
+};
+
+tutorialstates.networkTowerEnd = function networkTowerEnd() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
+
+    //What we want them to drag from!
+    this.targetDragger = null;
+
+    this.added = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        addTextDisplay("Drag and release to another tower to finish the connection.", this);
+
+
+        var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
+        var TILE_SIZE = pathStart.tPos.w;
+        var tile = findClosest(realGame.engine, "Tile", {x: TILE_SIZE * 5, y: TILE_SIZE * 6}, 0);
+        this.tile = tile;
+
+        var allMouseThrough = new AllMouseThrough(tile.tPos);
+        this.base.addObject(allMouseThrough);
+
+        this.base.addObject(new MouseMoveThrough(realGame.engine.tPos));
+    }
+
+    this.update = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
+        var TILE_SIZE = pathStart.tPos.w;
+        var tower = findClosest(realGame.engine, "Tower", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
+
+        if(tower && !tower.startDrag) {
+            if(tower.connections.length > 0)
+                getGame(this).advanceState();
+            else
+                getGame(this).setState(tutorialstates.networkTowerStart);
+        }
+    }
+};
+
+tutorialstates.spawnEnemies2 = function spawnEnemies2() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
+
+    this.added = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        addTextDisplay("Now watch your tower kill the bugs!", this);
+
+
+        realGame.lvMan.curLevel = 0;
+        realGame.lvMan.levels = [
+            {
+                //Number is number of bugs, you can have multiple numbers
+                15: {
+                    //Allels for the bug
+                    attack1: function () { return { attack: bugAttackTypes.BugBullet }; },
+                    targetBase: AllAlleleGroups.targetBase,
+                    rangeBase: AllAlleleGroups.rangeBase,
+                    speedBase: function () { return { speed: 5 }; },
+                    hpBase: function () { return { hp: 10 }; },
+                    attSpeedBase: function () { return { attSpeed: -100 }; }, //We don't want it to attack
+                },
+                //Time until next wave
+                waveTime: 1/0,
+                //Time between spawn
+                spawnDelay: 0.3,
+                //Number the resultant attributes are multiplied by
+                attributeModifier: 1,
+            }
+        ];
+        realGame.lvMan.nwicounter = 0;
+    }
+
+    var bugsSent = false;
+    this.update = function() {
+        var realGame = getGame(this).underlyingGame;
+
+        if(realGame.lvMan.bugsToSpawn.length > 0 && realGame.engine.base.allLengths.Bug > 0)
+            getGame(this).advanceState();
+    }
+};
+tutorialstates.waitForEnemiesToDie2 = function waitForEnemiesToDie2() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
+
+    this.added = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        addTextDisplay("Alleles will be sent along your network (the connections are 1 way). Alleles will be sent randomly from the existing alleles in a tower. They may override alleles in the destination tower, potentially making them worse, so be careful! When alleles are sent as a pink bubble, they contain an attack type, a yellow color is a targeting type and white just affects attributes.", this);
+    }
+
+    var bugsSent = false;
+    this.update = function() {
+        var realGame = getGame(this).underlyingGame;
+
+        if(!realGame.engine.base.allLengths.Bug && realGame.lvMan.bugsToSpawn.length == 0)
             getGame(this).advanceState();
     }
 };
@@ -236,23 +448,21 @@ tutorialstates.done = function done() {
     this.added = function () {
         var realGame = getGame(this).underlyingGame;
 
-        /*
-        var message = new Button(
-            { x: 200, y: 200, w: 200, h: 140 }, "You have finished the tutorial!");
-        message.textControl.fontSize = 20;
-        message.textControl.lineSpacing = 1.5;
-        this.base.addObject(message);
-        */
+        addTextDisplay("And thats it! Good luck!", this);
 
-        //var allMouseThrough = new AllMouseThrough(realGame.engine.tPos);
-        //this.base.addObject(allMouseThrough);
+        this.base.addObject(new ContinueButton());
+    }
+};
 
-        realGame.lvMan.levels = realGame.lvMan.baseLevels;
-        realGame.lvMan.nwicounter = 0;
-        realGame.lvMan.curLevel = 0;
+tutorialstates.switchToGame = function switchToGame() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
 
-        //Just set up all inputs
-        getGame(this).screenSystem.bindInput(getGame(this).underlyingGame.input);
+    //What we want them to drag from!
+    this.targetDragger = null;
+
+    this.added = function () {
+        getGame(this).screenSystem.setActiveScreen("MainGame");
     }
 };
 
@@ -414,7 +624,12 @@ function Tutorial(pos) {
             }
     }
 
+    var first = false;
     this.run = function (timestamp) {
+        if(first) {
+            this.setState(tutorialstates.done);
+            first = false;
+        }
         this.input.handleEvents(localEngine);
 
         localEngine.run(timestamp);
