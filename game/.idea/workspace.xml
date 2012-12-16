@@ -22,10 +22,19 @@
       <content type="file-editors">
         <state>
           <leaf>
-            <file leaf-file-name="level.js" pinned="false" current="false" current-in-tab="true">
+            <file leaf-file-name="level.js" pinned="false" current="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/level.js">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state line="137" column="52" selection-start="5122" selection-end="5122" vertical-scroll-proportion="0.62827986">
+                  <state line="137" column="52" selection-start="5122" selection-end="5122" vertical-scroll-proportion="0.0">
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="inputEvents.js" pinned="false" current="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/inputEvents.js">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state line="144" column="0" selection-start="4491" selection-end="4491" vertical-scroll-proportion="0.5885023">
                     <folding />
                   </state>
                 </provider>
@@ -39,12 +48,16 @@
       <content type="file-editors">
         <state>
           <leaf>
-            <file leaf-file-name="tutorial.js" pinned="false" current="true" current-in-tab="true">
+            <file leaf-file-name="tutorial.js" pinned="false" current="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/tutorial.js">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state line="89" column="27" selection-start="3084" selection-end="3084" vertical-scroll-proportion="0.25655976">
+                  <state line="95" column="19" selection-start="3321" selection-end="3321" vertical-scroll-proportion="0.52040815">
                     <folding>
                       <element signature="n#!!doc" expanded="true" />
+                      <element signature="e#3438#4825#0" expanded="false" />
+                      <element signature="e#4866#5357#0" expanded="false" />
+                      <element signature="n#!!block;n#MouseMoveThrough#0" expanded="false" />
+                      <element signature="n#!!block;n#hardcodePath#0" expanded="false" />
                     </folding>
                   </state>
                 </provider>
@@ -61,7 +74,7 @@
       <file leaf-file-name="infobar.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/infobar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="13" column="6" selection-start="279" selection-end="279" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -70,19 +83,28 @@
       <file leaf-file-name="allele.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/allele.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="9" selection-start="1143" selection-end="1143" vertical-scroll-proportion="0.0">
+            <state line="312" column="5" selection-start="9512" selection-end="9512" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mainGame.js" pinned="false" current="false" current-in-tab="true">
+      <file leaf-file-name="mainGame.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mainGame.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="0" selection-start="1189" selection-end="1189" vertical-scroll-proportion="0.6128405">
+            <state line="38" column="3" selection-start="1035" selection-end="1143" vertical-scroll-proportion="-9.88">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="commonControls.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/commonControls.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="65" column="25" selection-start="1690" selection-end="1690" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -96,19 +118,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="quadtreeQueries.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/quadtreeQueries.js">
+      <file leaf-file-name="towerBar.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/towerBar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="20" selection-start="1265" selection-end="1265" vertical-scroll-proportion="0.0">
+            <state line="42" column="5" selection-start="1267" selection-end="1267" vertical-scroll-proportion="0.4007421">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="towerBar.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/towerBar.js">
+      <file leaf-file-name="tower.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tower.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="5" selection-start="777" selection-end="777" vertical-scroll-proportion="0.0">
+            <state line="293" column="6" selection-start="9186" selection-end="9186" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="commonActions.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/commonActions.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="90" column="28" selection-start="2743" selection-end="2743" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="baseGeometry.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/baseGeometry.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="41" column="5" selection-start="997" selection-end="997" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -126,6 +166,10 @@
       <list>
         <option value="$PROJECT_DIR$/mainGame.js" />
         <option value="$PROJECT_DIR$/level.js" />
+        <option value="$PROJECT_DIR$/commonControls.js" />
+        <option value="$PROJECT_DIR$/tower.js" />
+        <option value="$PROJECT_DIR$/towerBar.js" />
+        <option value="$PROJECT_DIR$/inputEvents.js" />
         <option value="$PROJECT_DIR$/tutorial.js" />
       </list>
     </option>
@@ -188,7 +232,7 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="editor.preferences.appearance" />
+    <property name="options.lastSelected" value="preferences.fileTypes" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
   </component>
@@ -229,7 +273,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32921347" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28963795" sideWeight="0.6707865" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22097379" sideWeight="0.6707865" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32921347" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -303,20 +347,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/towerBar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="5" selection-start="777" selection-end="777" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/infobar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bug.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="0" selection-start="525" selection-end="525" vertical-scroll-proportion="0.0">
@@ -324,35 +354,88 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/allele.js">
+    <entry file="file://$PROJECT_DIR$/level.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="9" selection-start="1143" selection-end="1143" vertical-scroll-proportion="0.0">
+        <state line="137" column="52" selection-start="5122" selection-end="5122" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mainGame.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="1189" selection-end="1189" vertical-scroll-proportion="0.6128405">
+        <state line="38" column="3" selection-start="1035" selection-end="1143" vertical-scroll-proportion="-9.88">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/level.js">
+    <entry file="file://$PROJECT_DIR$/commonControls.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="52" selection-start="5122" selection-end="5122" vertical-scroll-proportion="0.62827986">
+        <state line="65" column="25" selection-start="1690" selection-end="1690" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/baseGeometry.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="5" selection-start="997" selection-end="997" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/commonActions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="90" column="28" selection-start="2743" selection-end="2743" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tower.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="293" column="6" selection-start="9186" selection-end="9186" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/allele.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="312" column="5" selection-start="9512" selection-end="9512" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/infobar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="6" selection-start="279" selection-end="279" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/inputEvents.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="144" column="0" selection-start="4491" selection-end="4491" vertical-scroll-proportion="0.5885023">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tutorial.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="27" selection-start="3084" selection-end="3084" vertical-scroll-proportion="0.25655976">
+        <state line="95" column="19" selection-start="3321" selection-end="3321" vertical-scroll-proportion="0.52040815">
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <element signature="e#3438#4825#0" expanded="false" />
+            <element signature="e#4866#5357#0" expanded="false" />
+            <element signature="n#!!block;n#MouseMoveThrough#0" expanded="false" />
+            <element signature="n#!!block;n#hardcodePath#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/towerBar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="5" selection-start="1267" selection-end="1267" vertical-scroll-proportion="0.4007421">
+          <folding />
         </state>
       </provider>
     </entry>

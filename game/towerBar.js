@@ -9,6 +9,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
     this.displayedTower = towerGeneratorFnc(true);
 
+    //If this is not null, then they are placing a tower
     this.dragPos = null;
 
     this.draw = function (pen) {
@@ -33,21 +34,29 @@ function TowerDragger(pos, towerGeneratorFnc) {
         var eng = this.base.rootNode;
         var game = eng.game;
 
+        if (!this.dragPos) {
+            //They are clicking on the placer, so begin placing
+            this.dragPos = e;
+            game.input.globalMouseMove[this.base.id] = this;
+            game.input.globalMouseUp[this.base.id] = this;
+        }
+    }
+
+    this.mouseup = function (e) {
+        var eng = this.base.rootNode;
+        var game = eng.game;
+
         if (this.dragPos) {
+            //They already clicked on the placer, so they are trying to place now
             if (!game.input.ctrlKey) {
                 this.dragPos = null;
                 delete game.input.globalMouseMove[this.base.id];
-                delete game.input.globalMouseDown[this.base.id];
+                delete game.input.globalMouseUp[this.base.id];
             }
             var tileDrop = findClosest(eng, "Tile", e, 0);
             if (tileDrop) {
                 tryPlaceTower(this.towerGeneratorFnc(), tileDrop);
             }
-        }
-        else {
-            this.dragPos = e;
-            game.input.globalMouseMove[this.base.id] = this;
-            game.input.globalMouseDown[this.base.id] = this;
         }
     }
 }

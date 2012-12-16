@@ -50,7 +50,7 @@ function Button(pos, text, context, functionName, callData, zorder) {
     
 
     this.click = function() {
-        if(this.context[this.functionName])
+        if(this.context && this.context[this.functionName])
             this.context[this.functionName](this.callData);
     };
     

@@ -84,30 +84,17 @@ tutorialstates.endPlace = function endPlace() {
         this.base.addObject(allMouseThrough);
     }
 
-    //I am just turning this into a state machine
-    var curStatePos = 0;
+    var wait = false;
+    var time = 0;
     this.update = function () {
-        switch(curStatePos)
-        {
-            case 0:
-                if(this.targetDragger.dragPos)
-                    curStatePos++;
-                break;
-            case 1:
-                if(!this.targetDragger.dragPos) //Give it a tick to respond to this
-                    curStatePos++;
-                break;
-            case 2:
-                var redirectedInput = getGame(this).underlyingGame.input;
+        var realGame = getGame(this).underlyingGame;
 
-                redirectedInput.muX = this.tile.tPos.x;
-                redirectedInput.muY = this.tile.tPos.y;
+        var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
+        var TILE_SIZE = pathStart.tPos.w;
+        var tower = findClosest(realGame.engine, "Tower", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
 
-                curStatePos++;
-                break;
-            case 3:
-                getGame(this).advanceState();
-                break;
+        if(tower) {
+            getGame(this).advanceState();
         }
     }
 };
@@ -322,6 +309,15 @@ function Tutorial(pos) {
         }
     }
     this.advanceState();
+
+    this.setState = function(newState) {
+        for(var num in this.states)
+            if(this.states[num] == newState) {
+                this.curStatePos = num - 1; //Really really hackish... but it should work
+                this.advanceState();
+                break;
+            }
+    }
 
     this.run = function (timestamp) {
         this.input.handleEvents(localEngine);

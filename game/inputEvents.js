@@ -5,6 +5,7 @@
     //Put yourself in here (index global id) to get global mouse moves
     this.globalMouseMove = {};
     this.globalMouseDown = {};
+    this.globalMouseUp = {};
 
     //The only reason this would be false is if multiple people are sharing the input handler
     this.consumeEvents = true;
@@ -143,6 +144,13 @@
         }
 
         if (this.muX > 0 && this.muY > 0) {
+            for (var key in this.globalMouseUp) {
+                if (this.globalMouseUp[key].base.rootNode != eng)
+                    delete this.globalMouseUp[key];
+                else
+                    this.globalMouseUp[key].base.callRaise("mouseup", { x: this.muX, y: this.muY });
+            }
+
             var curMouseUp = throwMouseEventAt(this.muX, this.muY, "mouseup", eng);
 
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {

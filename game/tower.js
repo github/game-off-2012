@@ -5,7 +5,7 @@ function Tower_Packet(t1, t2, speed, group, allele) {
     var p1 = getRectCenter(t1.tPos);
     var p2 = getRectCenter(t2.tPos);
     
-    var dis = p1.clone().sub(p2).mag()
+    var dis = p1.clone().sub(p2).mag();
     
     var packet = new Circle(p1, 3, allele.getOuterColor(), allele.getInnerColor(), 15);
     packet.lineWidth = 1;
