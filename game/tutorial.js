@@ -4,7 +4,7 @@
 //and goes to the next state.
 
 var tutorialstates = {};
-tutorialstates.one = function one() {
+tutorialstates.start = function one() {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
@@ -20,7 +20,7 @@ tutorialstates.one = function one() {
     }
 };
 
-tutorialstates.two = function two() {
+tutorialstates.startPlace = function two() {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
@@ -30,17 +30,16 @@ tutorialstates.two = function two() {
     this.added = function () {
         var realGame = getGame(this).underlyingGame;
 
-        var towerDraggers = realGame.engine.base.allChildren.TowerDragger;
-        var firstTowerDragger = getAnElement(towerDraggers);
-        this.targetDragger = firstTowerDragger;
-
-
         var message = new Button(
             { x: 200, y: 200, w: 200, h: 140 }, "Click on a tower to begin placement. Do this now.");
         message.textControl.fontSize = 20;
         message.textControl.lineSpacing = 1.5;
         this.base.addObject(message);
 
+
+        var towerDraggers = realGame.engine.base.allChildren.TowerDragger;
+        var firstTowerDragger = getAnElement(towerDraggers);
+        this.targetDragger = firstTowerDragger;
 
         var allMouseThrough = new AllMouseThrough(this.targetDragger.tPos);
         this.base.addObject(allMouseThrough);
@@ -58,6 +57,50 @@ tutorialstates.two = function two() {
         }
     }
 };
+/*
+tutorialstates.endPlace = function two() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
+
+    //What we want them to drag from!
+    this.targetDragger = null;
+
+    this.added = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        var message = new Button(
+            { x: 200, y: 200, w: 200, h: 140 }, "Click on a tile to place the tower.");
+        message.textControl.fontSize = 20;
+        message.textControl.lineSpacing = 3;
+        this.base.addObject(message);
+
+
+        var towerDraggers = realGame.engine.base.allChildren.TowerDragger;
+        var firstTowerDragger = getAnElement(towerDraggers);
+        this.targetDragger = firstTowerDragger;
+
+
+        var allMouseThrough = new AllMouseThrough(this.targetDragger.tPos);
+        this.base.addObject(allMouseThrough);
+    }
+
+    this.update = function () {
+        var realGame = getGame(this).underlyingGame;
+
+
+
+
+
+        //This is not exactly efficient, but it works
+        var towerDraggers = realGame.engine.base.allChildren.TowerDragger;
+        for (var key in towerDraggers) {
+            var towerDragger = towerDraggers[key];
+            if (towerDragger.dragPos)
+                getGame(this).advanceState();
+        }
+    }
+};
+*/
 
 //Makes it so the user can still click on the main game.
 //This is done like this to restrict what they can click on, just passing all events on
