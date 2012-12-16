@@ -3,8 +3,8 @@ function Bug(startPath) {
     var cen = (function() {
         var p = startPath.tPos;
         var cen = p.getCenter();
-        cen.x += Math.floor((p.w - 2*r) * Math.random()) + r;
-        cen.y += Math.floor((p.h - 2*r) * Math.random()) + r;
+        cen.x += Math.floor((p.w - 2*r) * (Math.random() - 0.5));
+        cen.y += Math.floor((p.h - 2*r) * (Math.random() - 0.5));
         return cen;
     }());
 
