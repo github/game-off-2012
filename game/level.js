@@ -1,6 +1,7 @@
 function LevelManager(bugStart) {
     this.baseLevels = [
-        { 
+        {
+            //The array should really be a object with the names the allele names
             5: [
                     function () { return { attack: bugAttackTypes.BugBullet }; },
                     AllAlleleGroups.targetBase,

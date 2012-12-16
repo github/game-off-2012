@@ -125,14 +125,14 @@ tutorialstates.spawnEnemies = function spawnEnemies() {
 
         realGame.lvMan.levels = [
             {
-                5: [
-                    function () { return { attack: bugAttackTypes.BugBullet }; },
-                    AllAlleleGroups.targetBase,
-                    AllAlleleGroups.rangeBase,
-                    function () { return { speed: 5 }; },
-                    function () { return { hp: 100 }; },
-                    function () { return { attSpeed: -100 }; }, //We don't want it to attack
-                ],
+                5: {
+                    attack1: function () { return { attack: bugAttackTypes.BugBullet }; },
+                    targetBase: AllAlleleGroups.targetBase,
+                    rangeBase: AllAlleleGroups.rangeBase,
+                    speedBase: function () { return { speed: 5 }; },
+                    hpBase: function () { return { hp: 100000 }; },
+                    attSpeedBase: function () { return { attSpeed: -100 }; }, //We don't want it to attack
+                },
                 waveTime: 1/0,
                 spawnDelay: 1,
                 attributeModifier: 1,
@@ -165,23 +165,6 @@ tutorialstates.waitForEnemiesToDie = function waitForEnemiesToDie() {
         message.textControl.fontSize = 20;
         message.textControl.lineSpacing = 1.5;
         this.base.addObject(message);
-
-        realGame.lvMan.levels = [
-            {
-                5: [
-                    function () { return { attack: bugAttackTypes.BugBullet }; },
-                    AllAlleleGroups.targetBase,
-                    AllAlleleGroups.rangeBase,
-                    function () { return { speed: 5 }; },
-                    function () { return { hp: 100000 }; },
-                    function () { return { attSpeed: -100 }; }, //We don't want it to attack
-                ],
-                waveTime: 1/0,
-                spawnDelay: 1,
-                attributeModifier: 1,
-            }
-        ];
-        realGame.lvMan.nwicounter = 15;
     }
 
     var bugsSent = false;
