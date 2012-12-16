@@ -1,6 +1,6 @@
 function LevelManager(bugStart) {
 
-    var levels = [    
+    this.levels = [
         { 
             5: [
                     function () { return { attack: bugAttackTypes.BugBullet }; },
@@ -85,28 +85,32 @@ function LevelManager(bugStart) {
     
     this.nwicounter = 0;
 
-    this.curLevel = -1;
-    this.curLevelData = levels[0];
+    this.curLevel = 0;
 
     this.bugsToSpawn = [];
     this.spawnCounter = 0;
 
     this.update = function (dt) {
+        var levels = this.levels;
+
         var eng = this.base.rootNode;
+
+        var curLevelData = levels[this.curLevel % levels.length];
 
         this.nwicounter -= dt;
 
         if (this.nwicounter < 0) {
             this.curLevel++;
-            this.curLevelData = levels[this.curLevel % levels.length];
-            this.nwicounter = this.curLevelData.waveTime;
+            this.nwicounter = curLevelData.waveTime;
 
             this.levelIteration = Math.floor(this.curLevel / levels.length);
-            var attributeModifier = Math.atan(this.levelIteration) + this.levelIteration * 0.3 + 0.1;
+            var attributeModifier = curLevelData.attributeModifier;
+            if(!attributeModifier)
+                attributeModifier = Math.atan(this.levelIteration) + this.levelIteration * 0.3 + 0.1;
 
-            for (var part in this.curLevelData) {
+            for (var part in curLevelData) {
                 if (!isNaN(part)) {
-                    var bugAlleles = this.curLevelData[part];
+                    var bugAlleles = curLevelData[part];
                     for (var i = 0; i < part; i++) {
                         var bug = new Bug(bugStart);
                         for (var group in bugAlleles)
@@ -131,13 +135,13 @@ function LevelManager(bugStart) {
                 }
             } //End of going through level data
 
-            this.nwicounter = this.curLevelData.waveTime;
+            this.nwicounter = curLevelData.waveTime;
 
         } //End of starting next level
 
         this.spawnCounter -= dt;
         if (this.spawnCounter < 0 && this.bugsToSpawn.length > 0) {
-            this.spawnCounter = this.curLevelData.spawnDelay;
+            this.spawnCounter = curLevelData.spawnDelay;
 
             eng.base.addObject(this.bugsToSpawn[0]);
             this.bugsToSpawn.splice(0, 1);

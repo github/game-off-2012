@@ -4,7 +4,7 @@
 //and goes to the next state.
 
 var tutorialstates = {};
-tutorialstates.start = function one() {
+tutorialstates.start = function start() {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
@@ -20,7 +20,7 @@ tutorialstates.start = function one() {
     }
 };
 
-tutorialstates.startPlace = function two() {
+tutorialstates.startPlace = function startPlace() {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
@@ -41,24 +41,18 @@ tutorialstates.startPlace = function two() {
         var firstTowerDragger = getAnElement(towerDraggers);
         this.targetDragger = firstTowerDragger;
 
+
         var allMouseThrough = new AllMouseThrough(this.targetDragger.tPos);
         this.base.addObject(allMouseThrough);
     }
 
     this.update = function () {
-        var realGame = getGame(this).underlyingGame;
-
-        //This is not exactly efficient, but it works
-        var towerDraggers = realGame.engine.base.allChildren.TowerDragger;
-        for (var key in towerDraggers) {
-            var towerDragger = towerDraggers[key];
-            if (towerDragger.dragPos)
-                getGame(this).advanceState();
-        }
+        if(this.targetDragger.dragPos)
+            getGame(this).advanceState();
     }
 };
-/*
-tutorialstates.endPlace = function two() {
+
+tutorialstates.endPlace = function endPlace() {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
@@ -71,7 +65,7 @@ tutorialstates.endPlace = function two() {
         var message = new Button(
             { x: 200, y: 200, w: 200, h: 140 }, "Click on a tile to place the tower.");
         message.textControl.fontSize = 20;
-        message.textControl.lineSpacing = 3;
+        message.textControl.lineSpacing = 1.5;
         this.base.addObject(message);
 
 
@@ -80,27 +74,105 @@ tutorialstates.endPlace = function two() {
         this.targetDragger = firstTowerDragger;
 
 
-        var allMouseThrough = new AllMouseThrough(this.targetDragger.tPos);
+        var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
+        var TILE_SIZE = pathStart.tPos.w;
+        var tile = findClosest(realGame.engine, "Tile", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
+        this.tile = tile;
+
+
+        var allMouseThrough = new AllMouseThrough(tile.tPos);
         this.base.addObject(allMouseThrough);
     }
 
+    //I am just turning this into a state machine
+    var curStatePos = 0;
     this.update = function () {
-        var realGame = getGame(this).underlyingGame;
+        switch(curStatePos)
+        {
+            case 0:
+                if(this.targetDragger.dragPos)
+                    curStatePos++;
+                break;
+            case 1:
+                if(!this.targetDragger.dragPos) //Give it a tick to respond to this
+                    curStatePos++;
+                break;
+            case 2:
+                var redirectedInput = getGame(this).underlyingGame.input;
 
+                redirectedInput.muX = this.tile.tPos.x;
+                redirectedInput.muY = this.tile.tPos.y;
 
-
-
-
-        //This is not exactly efficient, but it works
-        var towerDraggers = realGame.engine.base.allChildren.TowerDragger;
-        for (var key in towerDraggers) {
-            var towerDragger = towerDraggers[key];
-            if (towerDragger.dragPos)
+                curStatePos++;
+                break;
+            case 3:
                 getGame(this).advanceState();
+                break;
         }
     }
 };
-*/
+
+tutorialstates.spawnEnemies = function spawnEnemies() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
+
+    //What we want them to drag from!
+    this.targetDragger = null;
+
+    this.added = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        var message = new Button(
+            { x: 200, y: 200, w: 200, h: 140 }, "Now watch your tower kill the bugs!");
+        message.textControl.fontSize = 20;
+        message.textControl.lineSpacing = 1.5;
+        this.base.addObject(message);
+
+        realGame.lvMan.levels = [
+            {
+                5: [
+                    function () { return { attack: bugAttackTypes.BugBullet }; },
+                    AllAlleleGroups.targetBase,
+                    AllAlleleGroups.rangeBase,
+                    function () { return { speed: 20 }; },
+                    function () { return { attSpeed: 0 }; }, //We don't want it to attack
+                ],
+                waveTime: 1/0,
+                spawnDelay: 1,
+                attributeModifier: 1,
+            }
+        ];
+        realGame.lvMan.nwicounter = 0;
+    }
+
+    var bugsSent = false;
+    this.update = function() {
+        var realGame = getGame(this).underlyingGame;
+
+        if(realGame.engine.base.allLengths.Bugs > 0)
+            bugsSent = true;
+        else if(bugsSent && realGame.engine.base.allLengths.Bugs == 0)
+            getGame(this).advanceState();
+    }
+};
+
+tutorialstates.done = function done() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
+
+    //What we want them to drag from!
+    this.targetDragger = null;
+
+    this.added = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        var message = new Button(
+            { x: 200, y: 200, w: 200, h: 140 }, "You have finished the tutorial!");
+        message.textControl.fontSize = 20;
+        message.textControl.lineSpacing = 1.5;
+        this.base.addObject(message);
+    }
+};
 
 //Makes it so the user can still click on the main game.
 //This is done like this to restrict what they can click on, just passing all events on

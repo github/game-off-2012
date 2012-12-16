@@ -41,11 +41,6 @@ function GitDefence(pos) {
         );
     engine.base.addObject(this.gameInfoBar);
 
-    
-    this.currentBugs = 10;
-    this.maxBugs = 150;
-    this.bugIncrease = 10;
-    this.bugDifficulty = 1;
 
     this.selectedObj = null;
 
