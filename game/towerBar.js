@@ -28,11 +28,17 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
     this.mousemove = function (e) {
         this.dragPos = e;
+
+        if(!e)
+            fail("noo!");
     }
 
     this.mousedown = function (e) {
         var eng = this.base.rootNode;
         var game = eng.game;
+
+        if(!e)
+            fail("noo!");
 
         if (!this.dragPos) {
             //They are clicking on the placer, so begin placing
@@ -46,6 +52,12 @@ function TowerDragger(pos, towerGeneratorFnc) {
         var eng = this.base.rootNode;
         var game = eng.game;
 
+        if(!e)
+            fail("noo!");
+
+        if(e.x < 0 || e.y < 0)
+            fail("noo!");
+
         if (this.dragPos) {
             //They already clicked on the placer, so they are trying to place now
             if (!game.input.ctrlKey) {
@@ -57,6 +69,10 @@ function TowerDragger(pos, towerGeneratorFnc) {
             if (tileDrop) {
                 tryPlaceTower(this.towerGeneratorFnc(), tileDrop);
             }
+            else {
+                fail("noo!");
+            }
+
         }
     }
 }

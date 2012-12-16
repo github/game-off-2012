@@ -136,9 +136,7 @@ tutorialstates.spawnEnemies = function spawnEnemies() {
     this.update = function() {
         var realGame = getGame(this).underlyingGame;
 
-        if(realGame.engine.base.allLengths.Bugs > 0)
-            bugsSent = true;
-        else if(bugsSent && realGame.engine.base.allLengths.Bugs == 0)
+        if(realGame.lvMan.bugsToSpawn.length == 0)
             getGame(this).advanceState();
     }
 };
@@ -153,11 +151,19 @@ tutorialstates.done = function done() {
     this.added = function () {
         var realGame = getGame(this).underlyingGame;
 
+        /*
         var message = new Button(
             { x: 200, y: 200, w: 200, h: 140 }, "You have finished the tutorial!");
         message.textControl.fontSize = 20;
         message.textControl.lineSpacing = 1.5;
         this.base.addObject(message);
+        */
+
+        //var allMouseThrough = new AllMouseThrough(realGame.engine.tPos);
+        //this.base.addObject(allMouseThrough);
+
+        //Just set up all inputs
+        getGame(this).screenSystem.bindInput(getGame(this).underlyingGame.input);
     }
 };
 
