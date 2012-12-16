@@ -166,26 +166,34 @@ function RadioButton(pos, txt, context, functionName, callData, prevRadioButton)
     };
     
     this.draw = function(pen) {
-        //Draw box
-        if (this.down || this.toggled) {
-            pen.fillStyle = "white";
-        } 
-        else if(this.hover){
-            pen.fillStyle = "gray";
-        } 
-        else {
-            pen.fillStyle = "dimgray";
+        if (this.down) {
+            pen.fillStyle = "#333";
+        } else if (this.hover) {
+            pen.fillStyle = "#111";
+        } else {
+            pen.fillStyle = "black";
         }
+        pen.strokeStyle = "green";
+        
         ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
         
         //Draw text
-        pen.fillStyle = "#000000";
+        pen.fillStyle = "green";
         pen.font = textsize + "px arial";
 
         //How wide is text?
         var tW = pen.measureText(txt).width;
 
         ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+textsize+4, txt, pen);
+        
+        if (this.toggled) {
+            pen.fillStyle = "white";
+        } else {
+            pen.fillStyle = "black";
+        }
+        pen.strokeStyle = "green";
+        ink.rect(this.tPos.x + 6, this.tPos.y + 6, this.tPos.h - 12, this.tPos.h - 12, pen);
+        
         return;
     }
     
