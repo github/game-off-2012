@@ -88,4 +88,31 @@ var Vector = (function () {
         return new Vector(this.x, this.y);
     }
     return Vector;
-} ());
+}());
+
+var Rect = (function() {
+    function Rect(x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+
+        if (w < 0) {
+            this.x += w;
+            this.w = -w;
+        }
+
+        if (h < 0) {
+            this.y += h;
+            this.h = -h;
+        }
+    }
+    var p = Rect.prototype;
+    p.getCenter = function () {
+        return new Vector(this.x + this.w / 2, this.y + this.h / 2 );
+    };
+    p.clone = function() {
+        return new Rect(this.x, this.y, this.w, this.h);
+    };
+    return Rect;
+}());
