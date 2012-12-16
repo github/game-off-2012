@@ -162,6 +162,10 @@ tutorialstates.done = function done() {
         //var allMouseThrough = new AllMouseThrough(realGame.engine.tPos);
         //this.base.addObject(allMouseThrough);
 
+        realGame.lvMan.levels = realGame.lvMan.baseLevels;
+        realGame.lvMan.nwicounter = 0;
+        realGame.lvMan.curLevel = 0;
+
         //Just set up all inputs
         getGame(this).screenSystem.bindInput(getGame(this).underlyingGame.input);
     }

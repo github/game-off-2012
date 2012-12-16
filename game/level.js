@@ -1,6 +1,5 @@
 function LevelManager(bugStart) {
-
-    this.levels = [
+    this.baseLevels = [
         { 
             5: [
                     function () { return { attack: bugAttackTypes.BugBullet }; },
@@ -78,7 +77,7 @@ function LevelManager(bugStart) {
         }
 
     ];
-    
+    this.levels = this.baseLevels;
 
     this.base = new BaseObj(this, 10);
 
