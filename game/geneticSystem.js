@@ -30,7 +30,7 @@ function Genes() {
         }
     };
 
-    //Should only be called if you are fuly replacing the targetting strategy and attack types
+    //Should only be called if you are fully replacing the targeting strategy and attack types
     this.replaceAlleles = function (newAlleles) {
         var holder = this.base.parent;
         holder.attr.target_Strategy = null;
@@ -42,6 +42,7 @@ function Genes() {
             if (this.alleles[alleleGroup]) {
                 this.alleles[alleleGroup].unapply(holder);
                 // Is this really what you want to do?
+                // Yes, delete removes it from the object.
                 delete this.alleles[alleleGroup];
             }
 

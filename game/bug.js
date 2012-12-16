@@ -3,13 +3,15 @@ function Bug(startPath) {
     var r = 8;
 
     this.attr = {
-        //For balancing these need to be the same as the tower
-        range:          TowerStats.range,
-        damage:         TowerStats.damage,
-        hp:             TowerStats.hp,
-        currentHp:      TowerStats.currentHp,
-        hpRegen:        TowerStats.hpRegen,
-        attSpeed:       TowerStats.attSpeed,
+        //For balancing these are now 0, we get everything from our alleles
+        //(except speed, as we have to move, and value).
+        //In the future tower will be like this.
+        range:          0,
+        damage:         0,
+        hp:             0,
+        currentHp:      0,
+        hpRegen:        0,
+        attSpeed:       0,
         speed:          40,
         hitCount:       0,
         kills:          0,
