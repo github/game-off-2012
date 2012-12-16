@@ -85,10 +85,6 @@ function pickRandom(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-function LN10(value) {
-    return Math.log(value) / Math.log(10);
-}
-
 //I could make ones for every single color piece... but using regex to set
 //RGBA is retarded and incredibly inefficient, so I am just copy and pasting
 //an answer from stack overlow...
