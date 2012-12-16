@@ -1,11 +1,17 @@
 function Bug(startPath) {
-    this.color = "yellow";
     var r = 8;
+    var cen = (function() {
+        var p = startPath.tPos;
+        var cen = p.getCenter();
+        cen.x += Math.floor((p.w - 2*r) * Math.random()) + r;
+        cen.y += Math.floor((p.h - 2*r) * Math.random()) + r;
+        return cen;
+    }());
 
     this.attr = {
-        //For balancing these are now 0, we get everything from our alleles
-        //(except speed, as we have to move, and value).
-        //In the future tower will be like this.
+        // For balancing these are now 0, we get everything from our alleles
+        // (except speed, as we have to move, and value).
+        // In the future tower will be like this.
         range:          0,
         damage:         0,
         hp:             0,
@@ -18,12 +24,10 @@ function Bug(startPath) {
         value:          5,
     };
 
-    var cen = { x: startPath.tPos.x, y: startPath.tPos.y };
-    cen.x += Math.floor((startPath.tPos.w - 2*r) * Math.random()) + r;
-    cen.y += Math.floor((startPath.tPos.h - 2*r) * Math.random()) + r;
-
     this.tPos = new TemporalPos(cen.x - r, cen.y - r, r * 2, r * 2, this.attr.speed, 0);
     this.base = new BaseObj(this, 10);
+    
+    this.color = "yellow";
 
     this.self = new Circle(cen, r, "blue", "black", 10);
     this.base.addObject(this.self);
@@ -51,15 +55,16 @@ function Bug(startPath) {
         this.base.addObject(new UpdateTicker(this, "constantOne", "regenTick"));
     };
     
-    this.regenTick = function()
-    {
-        if(this.attr.hpRegen > 0)
+    this.regenTick = function() {
+        if (this.attr.hpRegen > 0) {
             this.attr.currentHp += this.attr.hpRegen;
-        if(this.attr.currentHp > this.attr.hp)
+        }
+        if (this.attr.currentHp > this.attr.hp) {
             this.attr.currentHp = this.attr.hp;
+        }
     }
 
-    this.update = function (dt) {
+    this.update = function(dt) {
         this.tPos.update(dt);
 
         var cur = this.curPath;
@@ -71,7 +76,7 @@ function Bug(startPath) {
 
         var overshot = vecToCurrent.magSq() > 0 && vecToNext.magSq() > 0;
 
-        if(overshot)
+        if (overshot)
             this.tPos.update(-dt);
 
         if (this.delay > this.bugRelPathPos) {
@@ -103,13 +108,12 @@ function Bug(startPath) {
 
         this.self.fillColor = getInnerColorFromAttrs(this.attr);
         this.self.color = getOuterColorFromAttrs(this.attr);
-
-        //this.color = "#" + hexPair(Math.floor(255 -((this.attr.currentHp / this.attr.hp) * 255))) +  "0000";
     };
 
     this.destroyAtBase = function() {
         var game = this.base.rootNode.game;
         var eng = this.base.rootNode;
+        
         game.health -= 5;
 
         if (game.health <= 0 && !eng.base.allLengths.GameOver) {
