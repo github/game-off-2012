@@ -94,6 +94,14 @@ tutorialstates.endPlace = function endPlace() {
         var tower = findClosest(realGame.engine, "Tower", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
 
         if(tower) {
+            tower.genes.replaceAlleles(
+                {
+                    attack1: new Allele({attack: allAttackTypes.Laser}),
+                    targetBase: new Allele({target: targetStrategies.Closest}),
+                    starterTower: new Allele(
+                        {range: 100, damage: 10, hp: 100, attSpeed: 1}
+                    ),
+                });
             getGame(this).advanceState();
         }
     }
@@ -117,19 +125,20 @@ tutorialstates.spawnEnemies = function spawnEnemies() {
 
         realGame.lvMan.levels = [
             {
-                5: [
-                    function () { return { attack: bugAttackTypes.BugBullet }; },
-                    AllAlleleGroups.targetBase,
-                    AllAlleleGroups.rangeBase,
-                    function () { return { speed: 20 }; },
-                    function () { return { attSpeed: 0 }; }, //We don't want it to attack
-                ],
+                5: {
+                    attack1: function () { return { attack: bugAttackTypes.BugBullet }; },
+                    targetBase: AllAlleleGroups.targetBase,
+                    rangeBase: AllAlleleGroups.rangeBase,
+                    speedBase: function () { return { speed: 5 }; },
+                    hpBase: function () { return { hp: 100000 }; },
+                    attSpeedBase: function () { return { attSpeed: -100 }; }, //We don't want it to attack
+                },
                 waveTime: 1/0,
                 spawnDelay: 1,
                 attributeModifier: 1,
             }
         ];
-        realGame.lvMan.nwicounter = 0;
+        realGame.lvMan.nwicounter = 15;
     }
 
     var bugsSent = false;
@@ -137,6 +146,32 @@ tutorialstates.spawnEnemies = function spawnEnemies() {
         var realGame = getGame(this).underlyingGame;
 
         if(realGame.lvMan.bugsToSpawn.length == 0)
+            getGame(this).advanceState();
+    }
+};
+
+tutorialstates.waitForEnemiesToDie = function waitForEnemiesToDie() {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.base = new BaseObj(this);
+
+    //What we want them to drag from!
+    this.targetDragger = null;
+
+    this.added = function () {
+        var realGame = getGame(this).underlyingGame;
+
+        var message = new Button(
+            { x: 200, y: 200, w: 200, h: 140 }, "Now watch your tower kill the bugs!");
+        message.textControl.fontSize = 20;
+        message.textControl.lineSpacing = 1.5;
+        this.base.addObject(message);
+    }
+
+    var bugsSent = false;
+    this.update = function() {
+        var realGame = getGame(this).underlyingGame;
+
+        if(!realGame.engine.base.allChildren.Bug)
             getGame(this).advanceState();
     }
 };
