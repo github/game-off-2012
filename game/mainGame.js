@@ -43,6 +43,7 @@ function GitDefence(pos) {
 
 
     this.selectedObj = null;
+    this.globalSelectionChanged = {};
 
     generatePath(this.engine, this);
     var bugStart = getAnElement(this.engine.base.children["Path_Start"]);
@@ -63,6 +64,16 @@ function GitDefence(pos) {
 
         this.input.handleEvents(eng);
 
+        if(this.selectionChanged) {
+            this.selectionChanged = false;
+            for (var key in this.globalSelectionChanged) {
+                if (this.globalSelectionChanged[key].base.rootNode != eng)
+                    delete this.globalSelectionChanged[key];
+                else
+                    this.globalSelectionChanged[key].base.callRaise("selectionChanged", this.selectedObj);
+            }
+        }
+
         if (currentRangeDisplayed && this.selectedObj)
             currentRangeDisplayed.pCenter.set(this.selectedObj.tPos.getCenter());
 
@@ -82,7 +93,6 @@ function GitDefence(pos) {
         engine.base.draw(pen);
     }
 
-
     //Input events now in inputEvents.js
 
 
@@ -92,9 +102,12 @@ function GitDefence(pos) {
 
     this.selectedBucket = [];
 
+    this.selectionChanged = false;
     this.changeSel = function (obj) {
         if (obj == this.selectedObj)
             return;
+
+        this.selectionChanged = true;
 
         if (currentRangeDisplayed) {
             currentRangeDisplayed.base.destroySelf();

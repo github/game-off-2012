@@ -52,6 +52,11 @@ function AllelePointSystem(pos) {
 
     this.pointCost = 50;
 
+    this.selectionChanged = function (newSelected) {
+        if(newSelected)
+            this.autoTrashButton.toggled = newSelected.autoTrash;
+    }
+
     this.buyPoint = function (costData) {
         var eng = this.base.rootNode;
         var game = eng.game;
@@ -180,7 +185,14 @@ function AllelePointSystem(pos) {
         this.base.parent.extraInfo = {};        
     }
 
+    var added = false;
     this.update = function () {
+        if(!added && getGame(this))
+        {
+            getGame(this).globalSelectionChanged[this.base.id] = this;
+            added = true;
+        }
+
         var eng = this.base.rootNode;
         var game = eng.game;
 
@@ -217,11 +229,6 @@ function AllelePointSystem(pos) {
         this.autoTrashButton.tPos.x = xPos + 10;
         this.autoTrashButton.tPos.y = yPos;
         yPos += 28;
-
-        if (selected)
-            this.autoTrashButton.toggled = selected.autoTrash;
-        else
-            this.autoTrashButton.toggled = false;
 
         if (this.autoTrashButton.toggled) {
             this.doAutoTrash();

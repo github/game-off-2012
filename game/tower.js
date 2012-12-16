@@ -179,10 +179,6 @@ function Tower(baseTile, tPos) {
         }
     }
 
-    this.added = function() {
-
-    };
-
     this.generateAllele = function() {   
         var allAlls = [];
         for (var alGroup in AllAlleleGroups)
