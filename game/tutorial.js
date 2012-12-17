@@ -130,55 +130,8 @@ tutorialstates.spawnEnemies = function spawnEnemies() {
 
         addTextDisplay("Now watch your tower kill the bugs!", this);
 
-
-        realGame.lvMan.curLevel = 0;
-        realGame.lvMan.levels = [
-            {
-                //Number is number of bugs, you can have multiple numbers
-                5: {
-                    //Allels for the bug
-                    attack1: function () { return { attack: bugAttackTypes.BugBullet }; },
-                    targetBase: AllAlleleGroups.targetBase,
-                    rangeBase: AllAlleleGroups.rangeBase,
-                    speedBase: function () { return { speed: 5 }; },
-                    hpBase: function () { return { hp: 10 }; },
-                    attSpeedBase: function () { return { attSpeed: -100 }; }, //We don't want it to attack
-                },
-                //Time until next wave
-                waveTime: 1/0,
-                //Time between spawn
-                spawnDelay: 0.3,
-                //Number the resultant attributes are multiplied by
-                attributeModifier: 1,
-            }
-        ];
-        realGame.lvMan.nwicounter = 0;
-    }
-
-    var bugsSent = false;
-    this.update = function() {
-        var realGame = getGame(this).underlyingGame;
-
-        if(realGame.lvMan.bugsToSpawn.length > 0)
-            getGame(this).advanceState();
-    }
-};
-tutorialstates.waitForEnemiesToDie = function waitForEnemiesToDie() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
-    this.base = new BaseObj(this);
-
-    this.added = function () {
-        var realGame = getGame(this).underlyingGame;
-
-        addTextDisplay("Now watch your tower kill the bugs!", this);
-    }
-
-    var bugsSent = false;
-    this.update = function() {
-        var realGame = getGame(this).underlyingGame;
-
-        if(!realGame.engine.base.allLengths.Bug && realGame.lvMan.bugsToSpawn.length == 0)
-            getGame(this).advanceState();
+        tutorialLevelOne.waves[0].deadTrigger = bind(getGame(this), "advanceState");
+        realGame.lvMan.loadLevel(tutorialLevelOne);
     }
 };
 
@@ -386,55 +339,8 @@ tutorialstates.spawnEnemies2 = function spawnEnemies2() {
 
         addTextDisplay("Now watch your tower kill the bugs!", this);
 
-
-        realGame.lvMan.curLevel = 0;
-        realGame.lvMan.levels = [
-            {
-                //Number is number of bugs, you can have multiple numbers
-                15: {
-                    //Allels for the bug
-                    attack1: function () { return { attack: bugAttackTypes.BugBullet }; },
-                    targetBase: AllAlleleGroups.targetBase,
-                    rangeBase: AllAlleleGroups.rangeBase,
-                    speedBase: function () { return { speed: 5 }; },
-                    hpBase: function () { return { hp: 10 }; },
-                    attSpeedBase: function () { return { attSpeed: -100 }; }, //We don't want it to attack
-                },
-                //Time until next wave
-                waveTime: 1/0,
-                //Time between spawn
-                spawnDelay: 0.3,
-                //Number the resultant attributes are multiplied by
-                attributeModifier: 1,
-            }
-        ];
-        realGame.lvMan.nwicounter = 0;
-    }
-
-    var bugsSent = false;
-    this.update = function() {
-        var realGame = getGame(this).underlyingGame;
-
-        if(realGame.lvMan.bugsToSpawn.length > 0 && realGame.engine.base.allLengths.Bug > 0)
-            getGame(this).advanceState();
-    }
-};
-tutorialstates.waitForEnemiesToDie2 = function waitForEnemiesToDie2() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
-    this.base = new BaseObj(this);
-
-    this.added = function () {
-        var realGame = getGame(this).underlyingGame;
-
-        addTextDisplay("Alleles will be sent along your network (the connections are 1 way). Alleles will be sent randomly from the existing alleles in a tower. They may override alleles in the destination tower, potentially making them worse, so be careful! When alleles are sent as a pink bubble, they contain an attack type, a yellow color is a targeting type and white just affects attributes.", this);
-    }
-
-    var bugsSent = false;
-    this.update = function() {
-        var realGame = getGame(this).underlyingGame;
-
-        if(!realGame.engine.base.allLengths.Bug && realGame.lvMan.bugsToSpawn.length == 0)
-            getGame(this).advanceState();
+        tutorialLevelTwo.waves[0].deadTrigger = bind(getGame(this), "advanceState");
+        realGame.lvMan.loadLevel(tutorialLevelTwo);
     }
 };
 

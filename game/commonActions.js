@@ -241,3 +241,43 @@ function SimpleCallback(time, callbackName) {
         }
     }
 }
+
+//Use this to make boundCallback
+function bind(thisCtx, name /*, variadic args to curry */) {
+    var args = Array.prototype.slice.call(arguments, 2);
+    return function () {
+        return thisCtx[name].apply(thisCtx, args.concat(Array.prototype.slice.call(arguments)));
+    }
+}
+
+
+function AliveCounter(boundZeroCallback) {
+    this.base = new BaseObj(this);
+
+    this.aliveCount = 0;
+
+    this.addAliveTracker = function(obj) {
+        obj.base.addObject(new DeathTrigger(bind(this, "death")));
+        this.aliveCount++;
+    }
+
+    this.death = function() {
+        this.aliveCount--;
+
+        if(this.aliveCount == 0) {
+            boundZeroCallback();
+            this.base.destroySelf();
+        }
+    }
+}
+
+function DeathTrigger(boundCallback) {
+    this.base = new BaseObj(this);
+
+    this.callback = boundCallback;
+
+    this.parent_die = function() {
+        this.callback();
+        this.base.destroySelf();
+    }
+}

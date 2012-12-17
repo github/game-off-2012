@@ -34,11 +34,11 @@ function GameInfoBar(pos) {
     this.bugIndi.color = "white";
     this.base.addObject(this.bugIndi);
 
-    this.curLevelIndi = new Label(
+    this.curWaveIndi = new Label(
         new TemporalPos(pos.x + 300, pos.y + 25, pos.w, pos.h), "");
-    this.curLevelIndi.font = "20px arial";
-    this.curLevelIndi.color = "white";
-    this.base.addObject(this.curLevelIndi);
+    this.curWaveIndi.font = "20px arial";
+    this.curWaveIndi.color = "white";
+    this.base.addObject(this.curWaveIndi);
 
     this.nextLevelTimeIndi = new Label(
         new TemporalPos(pos.x + 300, pos.y + 50, pos.w, pos.h), "");
@@ -68,7 +68,7 @@ function GameInfoBar(pos) {
         this.FPSIndi.text = "FPS: " + roundToDecimal(eng.lastFPS, 2);
         this.bugIndi.text = "Bugs: " + roundToDecimal(eng.base.allLengths.Bug, 2);
 
-        this.curLevelIndi.text = "Current Level: " + roundToDecimal(game.lvMan.curLevel, 2);
+        this.curWaveIndi.text = "Current Level: " + roundToDecimal(game.lvMan.curWave, 2);
         this.nextLevelTimeIndi.text = "Sec To Next Level: " + roundToDecimal(game.lvMan.nwicounter, 0);
         if (game.health < 50) {
 	        this.healthIndi.color = "yellow";
