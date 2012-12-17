@@ -55,7 +55,7 @@ function LevelManager(bugStart) {
 
         var eng = this.base.rootNode;
 
-        var curWaveData = waves[this.curWave];
+        var curWaveData = waves[this.curWave % waves.length];
 
         this.nwicounter -= dt;
 
@@ -97,9 +97,6 @@ function LevelManager(bugStart) {
             this.nwicounter = curWaveData.waveTime;
 
             this.curWave++;
-
-            if(this.curWave >= waves.length)
-                this.curWave = this.curWave % waves.length;
         } //End of starting next level
 
         this.spawnCounter -= dt;
