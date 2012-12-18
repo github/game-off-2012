@@ -1,57 +1,34 @@
 function AllelePointSystem(pos) {
     this.base = new BaseObj(this, 15);
+    console.log("Allelenpointsysom pos:", pos);
     this.tPos = pos;
 
+    var vbox;
     this.added = function() {
-        var vbox = new VBox();
+        var that = this;
+        function pointButton(pos, num, cost) {
+            var text;
+            if (num == 1) {
+                text = "Buy point ($" + cost + ")";
+            } else {
+                text = "Buy " + num + " points ($" + cost + ")";
+            }
+            var b = new Button(pos.clone(), text, bind(that, "buyPoint", {count: num, cost: cost}));
+            return b;
+        }
+        vbox = new VBox();
         this.base.addObject(vbox);
         
         this.pointIndicator = new Label(pos.clone(), "");
         this.pointIndicator.color = "blue";
-        this.base.addObject(this.pointIndicator);
-
-        this.pointCost = 50;
-
-        this.pointCost = 50;
-        var pointCount = 1;
-        this.buyButton = new Button(pos.clone(), "Buy Point ($" + this.pointCost + ")",
-            bind(this, "buyPoint", { count: pointCount, cost: this.pointCost }));
-        this.buyButton.tPos.h = 26;
-        this.buyButton.tPos.w *= 0.93;
-        this.base.addObject(this.buyButton);
-
-        this.pointCost = 350; pointCount = 10;
-        this.buyButton2 = new Button(pos.clone(), "Buy " + pointCount + " Points ($" + this.pointCost + ")",
-            bind(this, "buyPoint", { count: pointCount, cost: this.pointCost }));
-        this.buyButton2.tPos.h = 26;
-        this.buyButton2.tPos.w *= 0.93;
-        this.base.addObject(this.buyButton2);
-
-
-        this.pointCost = 2500;
-        pointCount = 100;
-        this.buyButton3 = new Button(pos.clone(), "Buy " + pointCount + " Points ($" + this.pointCost + ")",
-            bind(this, "buyPoint", { count: pointCount, cost: this.pointCost }));
-        this.buyButton3.tPos.h = 26;
-        this.buyButton3.tPos.w *= 0.93;
-        this.base.addObject(this.buyButton3);
-
-
-        this.spendButton = new Button(pos.clone(), "Spend Point", bind(this, "spendPoint"));
-        this.spendButton.tPos.h = 26;
-        this.spendButton.tPos.w *= 0.93;    
-        
-        this.base.addObject(this.spendButton);
-
-        this.trashButton = new Button(pos.clone(), "Trash Point", bind(this, "trashPoint"));
-        this.trashButton.tPos.h = 26;
-        this.trashButton.tPos.w *= 0.93;
-        this.base.addObject(this.trashButton);
-        
+        vbox.add(this.pointIndicator);
+        vbox.add(pointButton(pos, 1, 50));
+        vbox.add(pointButton(pos, 10, 350));
+        vbox.add(pointButton(pos, 100, 2500));
+        vbox.add(new Button(pos.clone(), "Spend Point", bind(this, "spendPoint")));
+        vbox.add(new Button(pos.clone(), "Trash Point", bind(this, "trashPoint")));
         this.autoTrashButton = new ToggleButton(pos.clone(), "Auto Trash Worse", bind(this, "autoTrashToggle"));
-        this.autoTrashButton.tPos.h = 26;
-        this.autoTrashButton.tPos.w *= 0.93;
-        this.base.addObject(this.autoTrashButton);
+        vbox.add(this.autoTrashButton);
     };
 
     this.pointCost = 50;
@@ -66,14 +43,8 @@ function AllelePointSystem(pos) {
         var game = eng.game;
         var selected = getSel(this);
 
-        var cost = costData.cost;
-        var count = costData.count;
-
-        if (!cost)
-            cost = this.pointCost;
-
-        if (!count)
-            count = 1;
+        var cost = costData.cost || 50;
+        var count = costData.count || 1;
 
         if (selected && selected.base.type == "Tower") {
             if (game.money > cost) {
@@ -202,37 +173,7 @@ function AllelePointSystem(pos) {
 
         var selected = getSel(this);
 
-
-        var xPos = this.tPos.x;
-        var yPos = this.tPos.y;
-
-        this.pointIndicator.tPos.x = xPos + 10;
-        this.pointIndicator.tPos.y = yPos + 20;
-        yPos += 28;
-
-        this.buyButton.tPos.x = xPos + 10;
-        this.buyButton.tPos.y = yPos;
-        yPos += 28;
-
-        this.buyButton2.tPos.x = xPos + 10;
-        this.buyButton2.tPos.y = yPos;
-        yPos += 28;
-
-        this.buyButton3.tPos.x = xPos + 10;
-        this.buyButton3.tPos.y = yPos;
-        yPos += 28;
-
-        this.spendButton.tPos.x = xPos + 10;
-        this.spendButton.tPos.y = yPos;
-        yPos += 28;
-
-        this.trashButton.tPos.x = xPos + 10;
-        this.trashButton.tPos.y = yPos;
-        yPos += 28;
-
-        this.autoTrashButton.tPos.x = xPos + 10;
-        this.autoTrashButton.tPos.y = yPos;
-        yPos += 28;
+        vbox.resize(this.tPos);
 
         if (this.autoTrashButton.toggled) {
             this.doAutoTrash();

@@ -33,6 +33,10 @@ function Button(pos, text, callback, zorder) {
         ink.cenText(cen.x, cen.y, text, pen);
     }
     
+    this.resize = function(rect) {
+        this.tPos = rect;
+    }
+    
     this.click = function() {
         if (callback) callback();
     };

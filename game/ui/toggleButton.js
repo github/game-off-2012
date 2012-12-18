@@ -30,6 +30,10 @@ function ToggleButton(pos, txt, cb) {
         this.toggle();
     };
     
+    this.resize = function(rect) {
+        this.tPos = rect;
+    }
+    
     this.draw = function(pen) {
         if (this.down) {
             pen.fillStyle = "#333";

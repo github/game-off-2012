@@ -11,6 +11,7 @@ function VBox() {
     }
     
     this.resize = function (rect) {
+        console.log("Resizing to fit rect:", rect);
         var h = 0;
         var shared = 0;
         for (var i = 0; i < children.length; i++) {
@@ -24,15 +25,15 @@ function VBox() {
             throw "Attempting to make a vbox smaller than it's fixed size children allow!";
         }
         
-        var sharedHeight = h / shared;
-        var y = r.y;
+        var sharedHeight = (rect.h - h) / shared;
+        var y = rect.y;
         for (i = 0; i < children.length; i++) {
             var c = children[i];
             var r = rect.clone();
             r.h = c.height || sharedHeight;
             r.y = y;
             y += r.h;
-            c.resize(r);
+            c.ui.resize(r);
         }
     }
     

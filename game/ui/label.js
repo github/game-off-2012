@@ -19,6 +19,10 @@ function Label(pos, text, zorder) {
         return;
     }
     
+    this.resize = function (rect) {
+        this.tPos = rect;
+    }
+    
     this.mouseover = function () {
         this.hover = true;
     };
