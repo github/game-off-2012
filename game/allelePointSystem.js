@@ -6,28 +6,27 @@ function AllelePointSystem(pos) {
     var vbox;
     this.added = function() {
         var that = this;
-        function pointButton(pos, num, cost) {
+        function pointButton(num, cost) {
             var text;
             if (num == 1) {
                 text = "Buy point ($" + cost + ")";
             } else {
                 text = "Buy " + num + " points ($" + cost + ")";
             }
-            var b = new Button(pos.clone(), text, bind(that, "buyPoint", {count: num, cost: cost}));
+            var b = new Button(text, bind(that, "buyPoint", {count: num, cost: cost}));
             return b;
         }
         vbox = new VBox();
         this.base.addObject(vbox);
         
         this.pointIndicator = new Label(pos.clone(), "");
-        this.pointIndicator.color = "blue";
         vbox.add(this.pointIndicator);
-        vbox.add(pointButton(pos, 1, 50));
-        vbox.add(pointButton(pos, 10, 350));
-        vbox.add(pointButton(pos, 100, 2500));
-        vbox.add(new Button(pos.clone(), "Spend Point", bind(this, "spendPoint")));
-        vbox.add(new Button(pos.clone(), "Trash Point", bind(this, "trashPoint")));
-        this.autoTrashButton = new ToggleButton(pos.clone(), "Auto Trash Worse", bind(this, "autoTrashToggle"));
+        vbox.add(pointButton(1, 50));
+        vbox.add(pointButton(10, 350));
+        vbox.add(pointButton(100, 2500));
+        vbox.add(new Button("Spend Point", bind(this, "spendPoint")));
+        vbox.add(new Button("Trash Point", bind(this, "trashPoint")));
+        this.autoTrashButton = new ToggleButton("Auto Trash Worse", bind(this, "autoTrashToggle"));
         vbox.add(this.autoTrashButton);
     };
 
@@ -181,7 +180,7 @@ function AllelePointSystem(pos) {
 
         if (selected && selected.base.type == "Tower") {
             this.base.setAttributeRecursive("hidden", false);
-            this.pointIndicator.text = "Allele Points: " + selected.allelesGenerated.length;
+            this.pointIndicator.text("Allele Points: " + selected.allelesGenerated.length);
         }
         else {
             this.base.setAttributeRecursive("hidden", true);

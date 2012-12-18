@@ -73,9 +73,8 @@ function Towerbar(pos) {
 
     this.tPos = pos;
 
-    var costIndicator = new Label(new TemporalPos(pos.x, pos.y, pos.w, pos.h), "Tower cost: 50");
-    costIndicator.font = "20px arial";
-    costIndicator.color = "white";
+    // Height of 0 used here as a hack to get old behavior.
+    var costIndicator = new Label("Tower cost: 50").resize(new TemporalPos(pos.x, pos.y, pos.w, 0));
     this.base.addObject(costIndicator);
 
     var attackCombinations = [];
@@ -133,6 +132,6 @@ function Towerbar(pos) {
         costIndicator.tPos.x = pos.x + 10;
         costIndicator.tPos.y = pos.y + 25;
 
-        costIndicator.text = "Current tower cost: " + roundToDecimal(game.currentCost, 2);
+        costIndicator.text("Current tower cost: " + roundToDecimal(game.currentCost, 2));
     }
 }

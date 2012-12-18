@@ -13,6 +13,7 @@
         'toggleButton',
         'textWrapper',
         'vbox',
+        'hbox',
     ];
     for (var i = 0; i < scripts.length; i++) {
         loadScript(scripts[i]);

@@ -1,6 +1,6 @@
 // Basically a checkbox/label combo
-function ToggleButton(pos, txt, cb) {
-    this.tPos = pos;
+function ToggleButton(text, cb) {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this, 15);
     
     var textsize = 14;
@@ -32,6 +32,7 @@ function ToggleButton(pos, txt, cb) {
     
     this.resize = function(rect) {
         this.tPos = rect;
+        return this;
     }
     
     this.draw = function(pen) {
@@ -51,9 +52,9 @@ function ToggleButton(pos, txt, cb) {
         pen.font = textsize + "px arial";
 
         //How wide is text?
-        var tW = pen.measureText(txt).width;
+        var tW = pen.measureText(text).width;
 
-        ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+textsize+4, txt, pen);
+        ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+textsize+4, text, pen);
         
         if (this.toggled) {
             pen.fillStyle = "white";

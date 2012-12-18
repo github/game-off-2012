@@ -51,8 +51,7 @@ function Tower_Connection(t1, t2) {
         pos.sub(new Vector(pos.w * 0.5, pos.h * 0.5));
         pos = new TemporalPos(pos.x, pos.y, pos.w, pos.h);
         
-        deleteButton = new Button(pos, "-", 
-            bind(that, "deleteSelf"), 50);       
+        deleteButton = new Button("-", bind(that, "deleteSelf"), 50).resize(pos);
         
         that.base.addObject(deleteButton);
     }

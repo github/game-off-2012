@@ -62,7 +62,7 @@ function Infobar(pos) {
     }
 
     this.draw = function (pen) {
-        pen.fillStyle = "#0f0";
+        pen.fillStyle = "green";
         pen.font = "15px courier";
 
         var xs = this.tPos.x + 10;

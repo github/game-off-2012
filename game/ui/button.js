@@ -1,8 +1,5 @@
-function Button(pos, text, callback, zorder) {
-    if (!(pos instanceof TemporalPos)) {
-        throw "Fuck you give me a REAL temporal postion!!";
-    }
-    this.tPos = pos;
+function Button(text, callback, zorder) {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
     
     if (!zorder)
         zorder = 15;
@@ -35,6 +32,7 @@ function Button(pos, text, callback, zorder) {
     
     this.resize = function(rect) {
         this.tPos = rect;
+        return this;
     }
     
     this.click = function() {

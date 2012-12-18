@@ -2,60 +2,43 @@
 //Make list with lits of alleles to create default tower types.
 
 function GameInfoBar(pos) {
+    console.log("GameInfoBar pos:", pos);
     this.tPos = pos;
     this.base = new BaseObj(this, 14);
 
-    this.tPos = pos;
-
     var oldmoney = 0;
 
-	    
-    this.healthIndi = new Label(
-        new TemporalPos(pos.x + 9, pos.y + 25, pos.w, pos.h), "");
-    this.healthIndi.font = "20px arial";
-    this.healthIndi.color = "white";
-    this.base.addObject(this.healthIndi);
+    var hbox = new HBox();
+    
+    var vbox1 = new VBox();
+    var healthIndi = new Label("");
+    vbox1.add(healthIndi);
 
-    this.moneyIndi = new Label(
-        new TemporalPos(pos.x + 9, pos.y + 50, pos.w, pos.h), "");
-    this.moneyIndi.font = "20px arial";
-    this.moneyIndi.color = "white";
-    this.base.addObject(this.moneyIndi);
+    var moneyIndi = new Label("");
+    vbox1.add(moneyIndi);
 
-    this.FPSIndi = new Label(
-        new TemporalPos(pos.x + 200, pos.y + 25, pos.w, pos.h), "");
-    this.FPSIndi.font = "20px arial";
-    this.FPSIndi.color = "white";
-    this.base.addObject(this.FPSIndi);
+    var FPSIndi = new Label("");
+    vbox1.add(FPSIndi);
 
-    this.bugIndi = new Label(
-        new TemporalPos(pos.x + 200, pos.y + 50, pos.w, pos.h), "");
-    this.bugIndi.font = "20px arial";
-    this.bugIndi.color = "white";
-    this.base.addObject(this.bugIndi);
+    var bugIndi = new Label("");
+    vbox1.add(bugIndi);
 
-    this.curWaveIndi = new Label(
-        new TemporalPos(pos.x + 300, pos.y + 25, pos.w, pos.h), "");
-    this.curWaveIndi.font = "20px arial";
-    this.curWaveIndi.color = "white";
-    this.base.addObject(this.curWaveIndi);
+    var vbox3 = new VBox();
+    var curWaveIndi = new Label("");
+    vbox3.add(curWaveIndi);
 
-    this.nextLevelTimeIndi = new Label(
-        new TemporalPos(pos.x + 300, pos.y + 50, pos.w, pos.h), "");
-    this.nextLevelTimeIndi.font = "20px arial";
-    this.nextLevelTimeIndi.color = "white";
-    this.base.addObject(this.nextLevelTimeIndi);
+    var nextLevelTimeIndi = new Label("");
+    vbox3.add(nextLevelTimeIndi);
+    
+    gotoNextLevel = new Button("Send Next Wave Now", bind(this, "skipNextLevel"));
+    vbox3.add(gotoNextLevel);
+    
+    hbox.add(vbox1);
+    hbox.add(vbox3);
+    this.base.addObject(hbox);
+    hbox.resize(pos);
 
-
-    this.gotoNextLevel = new Button(
-        new TemporalPos(pos.x + 315, pos.y + 63, 190, 25), "Send Next Wave Now",
-            bind(this, "skipNextLevel"));
-    //this.gotoNextLevel.font = "20px arial";
-    //this.gotoNextLevel.color = "white";
-    this.base.addObject(this.gotoNextLevel);
-
-    this.skipNextLevel = function()
-    {
+    this.skipNextLevel = function() {
         getGame(this).lvMan.nwicounter = -1;
     }
 
@@ -63,27 +46,28 @@ function GameInfoBar(pos) {
         var game = this.base.rootNode.game;
         var eng = this.base.rootNode;
 
-        this.healthIndi.text = "HP: " + roundToDecimal(game.health, 1);
-        this.moneyIndi.text = "$$$: " + prefixNumber(game.money, 2);
-        this.FPSIndi.text = "FPS: " + roundToDecimal(eng.lastFPS, 2);
-        this.bugIndi.text = "Bugs: " + roundToDecimal(eng.base.allLengths.Bug, 2);
+        healthIndi.text("HP: " + roundToDecimal(game.health, 1));
+        moneyIndi.text("$$$: " + prefixNumber(game.money, 2));
+        FPSIndi.text("FPS: " + roundToDecimal(eng.lastFPS, 2));
+        bugIndi.text("Bugs: " + roundToDecimal(eng.base.allLengths.Bug, 2));
 
-        this.curWaveIndi.text = "Current Level: " + roundToDecimal(game.lvMan.curWave, 2);
-        this.nextLevelTimeIndi.text = "Sec To Next Level: " + roundToDecimal(game.lvMan.nwicounter, 0);
-        if (game.health < 50) {
-	        this.healthIndi.color = "yellow";
-	    }
-	    if (game.health < 25) {
-	        this.healthIndi.color = "red";
-	    }
-	    if (oldmoney < game.money) {
-	        oldmoney = game.money;
-		    this.base.addObject( new TextFadeAni(this.moneyIndi.tPos, false, "$$$$$"));
-		} else if (oldmoney > game.money) {
-		    oldmoney = game.money;
-		    this.base.addObject( new TextFadeAni(this.moneyIndi.tPos, true, "$$$$$"));
-	    }
-	
+        curWaveIndi.text("Current Level: " + roundToDecimal(game.lvMan.curWave, 2));
+        nextLevelTimeIndi.text("Sec To Next Level: " + roundToDecimal(game.lvMan.nwicounter, 0));
+        
+//         if (game.health < 50) {
+// 	        healthIndi.color = "yellow";
+// 	    }
+// 	    if (game.health < 25) {
+// 	        healthIndi.color = "red";
+// 	    }
+// 	    if (oldmoney < game.money) {
+// 	        oldmoney = game.money;
+// 		    this.base.addObject( new TextFadeAni(this.moneyIndi.tPos, false, "$$$$$"));
+// 		} else if (oldmoney > game.money) {
+// 		    oldmoney = game.money;
+// 		    this.base.addObject( new TextFadeAni(this.moneyIndi.tPos, true, "$$$$$"));
+// 	    }
+// 	
     }
 }
 

@@ -1,26 +1,34 @@
 function Label(pos, text, zorder) {
-    if (!zorder)
-        zorder = 15;
+    if (!zorder) zorder = 15;
     
-    this.tPos = pos;
+    this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this, zorder);
     this.type = "Label" + zorder;
-    this.color = "red";
-    this.font = "12px courier";
     
-    this.text = formatToDisplay(text);
+    var color = "green";
+    var font = "20px courier";
     
-    this.draw = function (pen) {
-        //Draw text
-        pen.fillStyle = this.color;
-        pen.font = this.font;
+    this.draw = function (pen) {        
+        pen.fillStyle = color;
+        pen.font = font;
         
-        ink.text(this.tPos.x, this.tPos.y, this.text, pen);
+        var loc = this.tPos.getCenter();
+        ink.cenText(loc.x, loc.y, text, pen);
         return;
     }
     
     this.resize = function (rect) {
         this.tPos = rect;
+        return this;
+    }
+    
+    this.text = function (newtext) {
+        if (newtext === undefined) {
+            return text;
+        } else {
+            text = newtext;
+            return this;
+        }
     }
     
     this.mouseover = function () {
