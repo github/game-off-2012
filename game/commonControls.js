@@ -13,6 +13,7 @@ function Button(pos, text, context, functionName, callData, zorder) {
     this.functionName = functionName;
     this.callData = callData;
     
+    // What the fuck?
     text = formatToDisplay(text);
 
     this.textControl = new TextWrapper(pos, text, zorder + 1);
@@ -109,7 +110,9 @@ function Label(pos, text, zorder) {
     };
 }
 
-function RadioButton(pos, txt, context, functionName, callData, prevRadioButton){
+// Not sure if this works right now.
+// Here be dragons.
+function RadioButton(pos, txt, cb, prevRadioButton) {
     this.tPos = pos;
     this.base = new BaseObj(this, 15);
     var textsize = 14;
@@ -117,46 +120,35 @@ function RadioButton(pos, txt, context, functionName, callData, prevRadioButton)
     this.hover = false;
     this.down = false;
 
-    txt = formatToDisplay(txt);
-
-    this.radioGroup = [];
-    if(prevRadioButton) {
-        for(var key in prevRadioButton.radioGroup) {
-            prevRadioButton.radioGroup[key].addButtonToGroup(this);
-            this.radioGroup.push(prevRadioButton.radioGroup[key]);
-        }
+    if (prevRadioButton) {
+        this.radioGroup = prevRadioButton.radioGroup;
+    } else {
+        this.radioGroup = [];
     }
     this.radioGroup.push(this);
-    
-    this.context = context;
-    this.functionName = functionName;
-    this.callData = callData;
     
     this.toggled = false;
     
     this.toggle = function() {
-        if(!this.toggled)
-            this.pressed();
-        else
+        if (this.toggled) {
             this.unpressed();
+            return;
+        }
         
-        for(var key in this.radioGroup) {
-            if(this.radioGroup[key] != this)
+        this.pressed();
+        
+        for (var key in this.radioGroup) {
+            if (this.radioGroup[key] != this) {
                 this.radioGroup[key].unpressed();
+            }
         }
     };
     
-    this.added = function() {
-        this.resize = Dock(this, "center", "none");
-    }
-    
-    //May be called multiple times
     this.pressed = function() {
         this.toggled = true;
-        if(this.context[this.functionName])
-            this.context[this.functionName](this.callData);
+        cb();
     };
-    //Might be called multiple times
+    
     this.unpressed = function() {
         this.toggled = false;
     };
@@ -192,7 +184,7 @@ function RadioButton(pos, txt, context, functionName, callData, prevRadioButton)
             pen.fillStyle = "black";
         }
         pen.strokeStyle = "green";
-        ink.rect(this.tPos.x + 6, this.tPos.y + 6, this.tPos.h - 12, this.tPos.h - 12, pen);
+        ink.circ(this.tPos.x + 6, this.tPos.y + 6, this.tPos.h - 12, pen);
         
         return;
     }
@@ -213,6 +205,72 @@ function RadioButton(pos, txt, context, functionName, callData, prevRadioButton)
         this.down = false;
         this.toggle();
     };
+}
+
+// Will allow the creation of toggleable buttons
+// Not functional currently.
+function ToggleButton(pos, txt, cb) {
+    this.tPos = pos;
+    this.base = new BaseObj(this, 15);
+    
+    var textsize = 14;
+    var hover = false;
+    var down = false;
+    
+    this.toggled = false;
+    this.toggle = function() {
+        this.toggled = !this.toggled;
+        cb();
+    };
+    
+    this.mouseover = function() {
+        hover = true;
+    };
+    
+    this.mouseout = function() {
+        hover = false;
+    };
+    
+    this.mousedown = function() {
+        down = true;
+    };
+    
+    this.mouseup = function() {
+        down = false;
+        this.toggle();
+    };
+    
+    this.draw = function(pen) {
+        if (this.down) {
+            pen.fillStyle = "#333";
+        } else if (this.hover) {
+            pen.fillStyle = "#111";
+        } else {
+            pen.fillStyle = "black";
+        }
+        pen.strokeStyle = "green";
+        
+        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
+        
+        //Draw text
+        pen.fillStyle = "green";
+        pen.font = textsize + "px arial";
+
+        //How wide is text?
+        var tW = pen.measureText(txt).width;
+
+        ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+textsize+4, txt, pen);
+        
+        if (this.toggled) {
+            pen.fillStyle = "white";
+        } else {
+            pen.fillStyle = "black";
+        }
+        pen.strokeStyle = "green";
+        ink.rect(this.tPos.x + 6, this.tPos.y + 6, this.tPos.h - 12, this.tPos.h - 12, pen);
+        
+        return;
+    }
 }
 
 function Dock(item, dockX, dockY) {

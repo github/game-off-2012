@@ -2,53 +2,54 @@ function AllelePointSystem(pos) {
     this.base = new BaseObj(this, 15);
     this.tPos = pos;
 
-    this.pointIndicator = new Label(cloneObject(pos), "");
-    this.pointIndicator.color = "blue";
-    this.base.addObject(this.pointIndicator);
+    this.added = function() {
+        this.pointIndicator = new Label(cloneObject(pos), "");
+        this.pointIndicator.color = "blue";
+        this.base.addObject(this.pointIndicator);
 
-    this.pointCost = 50;
+        this.pointCost = 50;
 
-    this.pointCost = 50;
-    var pointCount = 1;
-    this.buyButton = new Button(cloneObject(pos), "Buy Point ($" + this.pointCost + ")",
-                                this, "buyPoint", { count: pointCount, cost: this.pointCost });
-    this.buyButton.tPos.h = 26;
-    this.buyButton.tPos.w *= 0.93;
-    this.base.addObject(this.buyButton);
+        this.pointCost = 50;
+        var pointCount = 1;
+        this.buyButton = new Button(cloneObject(pos), "Buy Point ($" + this.pointCost + ")",
+                                    this, "buyPoint", { count: pointCount, cost: this.pointCost });
+        this.buyButton.tPos.h = 26;
+        this.buyButton.tPos.w *= 0.93;
+        this.base.addObject(this.buyButton);
 
-    this.pointCost = 350; pointCount = 10;
-    this.buyButton2 = new Button(cloneObject(pos), "Buy " + pointCount + " Points ($" + this.pointCost + ")",
-                                this, "buyPoint", { count: pointCount, cost: this.pointCost });
-    this.buyButton2.tPos.h = 26;
-    this.buyButton2.tPos.w *= 0.93;
-    this.base.addObject(this.buyButton2);
-
-
-    this.pointCost = 2500; pointCount = 100;
-    this.buyButton3 = new Button(cloneObject(pos), "Buy " + pointCount + " Points ($" + this.pointCost + ")",
-                                this, "buyPoint", { count: pointCount, cost: this.pointCost });
-    this.buyButton3.tPos.h = 26;
-    this.buyButton3.tPos.w *= 0.93;
-    this.base.addObject(this.buyButton3);
+        this.pointCost = 350; pointCount = 10;
+        this.buyButton2 = new Button(cloneObject(pos), "Buy " + pointCount + " Points ($" + this.pointCost + ")",
+                                    this, "buyPoint", { count: pointCount, cost: this.pointCost });
+        this.buyButton2.tPos.h = 26;
+        this.buyButton2.tPos.w *= 0.93;
+        this.base.addObject(this.buyButton2);
 
 
-    this.spendButton = new Button(cloneObject(pos), "Spend Point", this, "spendPoint");
-    this.spendButton.tPos.h = 26;
-    this.spendButton.tPos.w *= 0.93;    
-    
-    this.base.addObject(this.spendButton);
+        this.pointCost = 2500;
+        pointCount = 100;
+        this.buyButton3 = new Button(cloneObject(pos), "Buy " + pointCount + " Points ($" + this.pointCost + ")",
+                                    this, "buyPoint", { count: pointCount, cost: this.pointCost });
+        this.buyButton3.tPos.h = 26;
+        this.buyButton3.tPos.w *= 0.93;
+        this.base.addObject(this.buyButton3);
 
-    this.trashButton = new Button(cloneObject(pos), "Trash Point", this, "trashPoint");
-    this.trashButton.tPos.h = 26;
-    this.trashButton.tPos.w *= 0.93;
-    this.base.addObject(this.trashButton);
-    
-    this.autoTrashButton = new RadioButton(cloneObject(pos), "Auto Trash Worse", this, "autoTrashToggle");
-    this.autoTrashButton.tPos.h = 26;
-    this.autoTrashButton.tPos.w *= 0.93;
-    this.base.addObject(this.autoTrashButton);
 
-    this.autoTrashButton.toggle();
+        this.spendButton = new Button(cloneObject(pos), "Spend Point", this, "spendPoint");
+        this.spendButton.tPos.h = 26;
+        this.spendButton.tPos.w *= 0.93;    
+        
+        this.base.addObject(this.spendButton);
+
+        this.trashButton = new Button(cloneObject(pos), "Trash Point", this, "trashPoint");
+        this.trashButton.tPos.h = 26;
+        this.trashButton.tPos.w *= 0.93;
+        this.base.addObject(this.trashButton);
+        
+        this.autoTrashButton = new ToggleButton(cloneObject(pos), "Auto Trash Worse", bind(this, "autoTrashToggle"));
+        this.autoTrashButton.tPos.h = 26;
+        this.autoTrashButton.tPos.w *= 0.93;
+        this.base.addObject(this.autoTrashButton);
+    };
 
     this.pointCost = 50;
 
