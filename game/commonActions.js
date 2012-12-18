@@ -205,6 +205,25 @@ function AttributeTween(start, end, time, callbackName, attributeName) {
     }
 }
 
+function AlphaTween(lifetime, startAlpha, endAlpha) {
+    this.base = new BaseObj(this);
+
+    this.lifetime = lifetime;
+    this.startAlpha = startAlpha;
+    this.endAlpha = endAlpha;
+
+    this.currentTime = 0;
+
+    this.update = function (dt) {
+        this.currentTime += dt;
+
+        var currentAlpha = startAlpha + (endAlpha - startAlpha) * (this.currentTime / this.lifetime);
+
+        this.base.parent.color = setAlpha(this.base.parent.color, currentAlpha);
+        this.base.parent.fillColor = setAlpha(this.base.parent.fillColor, currentAlpha);
+    }
+}
+
 function SimpleCallback(time, callbackName) {
     this.base = new BaseObj(this);
 
@@ -220,5 +239,45 @@ function SimpleCallback(time, callbackName) {
             this.base.destroySelf();
             return;
         }
+    }
+}
+
+//Use this to make boundCallback
+function bind(thisCtx, name /*, variadic args to curry */) {
+    var args = Array.prototype.slice.call(arguments, 2);
+    return function () {
+        return thisCtx[name].apply(thisCtx, args.concat(Array.prototype.slice.call(arguments)));
+    }
+}
+
+
+function AliveCounter(boundZeroCallback) {
+    this.base = new BaseObj(this);
+
+    this.aliveCount = 0;
+
+    this.addAliveTracker = function(obj) {
+        obj.base.addObject(new DeathTrigger(bind(this, "death")));
+        this.aliveCount++;
+    }
+
+    this.death = function() {
+        this.aliveCount--;
+
+        if(this.aliveCount == 0) {
+            boundZeroCallback();
+            this.base.destroySelf();
+        }
+    }
+}
+
+function DeathTrigger(boundCallback) {
+    this.base = new BaseObj(this);
+
+    this.callback = boundCallback;
+
+    this.parent_die = function() {
+        this.callback();
+        this.base.destroySelf();
     }
 }

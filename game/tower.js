@@ -64,7 +64,7 @@ function Tower_Connection(t1, t2) {
             for (var group in AllAlleleGroups)
                 groups.push(group);
 
-            var group = pickRandom(groups);
+            var group = pickRandom(t1.genes.alleles);
             var al = t1.genes.alleles[group];
 
             that.base.addObject(new Tower_Packet(t1, t2, speed, group, al));
@@ -179,10 +179,6 @@ function Tower(baseTile, tPos) {
         }
     }
 
-    this.added = function() {
-
-    };
-
     this.generateAllele = function() {   
         var allAlls = [];
         for (var alGroup in AllAlleleGroups)
@@ -294,6 +290,7 @@ function Tower(baseTile, tPos) {
         tempIndicator = new Line(this.startDrag, e, "green", 15, {0: 1.0});
         this.base.addObject(tempIndicator);
         getGame(this).input.globalMouseMove[this.base.id] = this;
+        getGame(this).input.globalMouseUp[this.base.id] = this;
     };
 
     this.mousemove = function(e)
@@ -301,7 +298,7 @@ function Tower(baseTile, tPos) {
         tempIndicator.end = e;
     }
 
-    this.dragEnd = function(e){
+    this.mouseup = function(e){
         var eng = this.base.rootNode;
         var game = eng.game;
 
@@ -323,6 +320,9 @@ function Tower(baseTile, tPos) {
             game.changeSel(this);
             getAnElement(this.base.children.Selectable).ignoreNext = true;
         }
+
+        delete getGame(this).input.globalMouseMove[this.base.id];
+        delete getGame(this).input.globalMouseUp[this.base.id];
     };
 }
 
