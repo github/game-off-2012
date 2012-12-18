@@ -3,6 +3,7 @@
     this.ctrlKey = false;
 
     //Put yourself in here (index global id) to get global mouse moves
+    // Why are these objects, not arrays??
     this.globalMouseMove = {};
     this.globalMouseDown = {};
     this.globalMouseUp = {};

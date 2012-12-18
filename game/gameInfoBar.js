@@ -63,8 +63,8 @@ function GameInfoBar(pos) {
         var game = this.base.rootNode.game;
         var eng = this.base.rootNode;
 
-        this.healthIndi.text = "User Health: " + roundToDecimal(game.health, 1);
-        this.moneyIndi.text = "Money: $" + roundToDecimal(game.money, 2);
+        this.healthIndi.text = "HP: " + roundToDecimal(game.health, 1);
+        this.moneyIndi.text = "$$$: " + prefixNumber(game.money, 2);
         this.FPSIndi.text = "FPS: " + roundToDecimal(eng.lastFPS, 2);
         this.bugIndi.text = "Bugs: " + roundToDecimal(eng.base.allLengths.Bug, 2);
 

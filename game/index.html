@@ -92,10 +92,11 @@ canvas {
 
 <script src="tutorial.js"></script>
 
+<script src="ui/include.js"></script>
+
 <script>
-
-
-    $(document).ready(function () {
+    document.body.onload = function () {
+        console.log("test");
         var canvas = document.getElementById("myCanvas");
         var screenSystem = new ScreenSystem(canvas);
 
@@ -109,8 +110,7 @@ canvas {
             screenSystem.setActiveScreen("MainGame");
         else
             screenSystem.setActiveScreen("Tutorial");
-    });    
-
+    };
 </script>
 </div>
 </body>
