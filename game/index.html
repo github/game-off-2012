@@ -84,7 +84,7 @@ canvas {
 
 <script src="pathGeneration.js"></script>
 
-<script src="inputEvents.js"></script>
+<script src="inputHandler.js"></script>
 
 <script src="engine.js"></script>
 <script src="screenSystem.js"></script>
@@ -96,7 +96,8 @@ canvas {
 
 
     $(document).ready(function () {
-        var screenSystem = new ScreenSystem("#myCanvas");
+        var canvas = document.getElementById("myCanvas");
+        var screenSystem = new ScreenSystem(canvas);
 
         screenSystem.addScreen("MainGame",
             new GitDefence(new TemporalPos(0, 0, DFlag.width, DFlag.height, 0, 0)));
