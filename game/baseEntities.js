@@ -191,22 +191,17 @@ function BaseObj(holder, zindex, dynamicZIndex) {
     };
 
     this.raiseEvent = function (name, args) {
-        var returnedValues = [];
-
         //Well if it exists it is clearly a function :D
         //(read http://stackoverflow.com/questions/5999998/how-can-i-check-if-a-javascript-variable-is-function-type
         //before fixing this in order to implement the most efficient solution to checking if something is a function
         //for different browsers).
-        if (holder[name] && !holder.hidden)
-            mergeToArray(holder[name](args), returnedValues);
+        if (holder[name]) holder[name](args);
 
         this.loopThroughAllTypes(function (child) {
             if (child.base) {
-                mergeToArray(child.base.raiseEvent(name, args), returnedValues);
+                child.base.raiseEvent(name, args)
             }
         });
-
-        return returnedValues;
     };
 
     //Calls and returns the returned array (or an empty array)

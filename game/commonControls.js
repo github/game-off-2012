@@ -55,19 +55,18 @@ function AttributeChooser(tPos, attributes, attributeName) {
     }
 
     this.added = function () {
-        this.resize();
+        this.resize(this.tPos);
     };
 
-    this.resize = function () {
-        var tPos = this.tPos;
+    this.resize = function (rect) {
         var numAttributes = countElements(attributes);
 
-        var eachHeight = tPos.h / (numAttributes);
-        var eachWidth = tPos.w * 0.8;
+        var eachHeight = rect.h / (numAttributes);
+        var eachWidth = rect.w * 0.8;
         var radioButtons = this.radioButtons;
 
-        var yPos = tPos.y;
-        var xPos = tPos.x + tPos.w * 0.1;
+        var yPos = rect.y;
+        var xPos = rect.x + rect.w * 0.1;
 
         for (var key in radioButtons) {
             radioButtons[key].tPos.y = yPos;

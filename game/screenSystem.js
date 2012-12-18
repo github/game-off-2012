@@ -21,6 +21,7 @@ function ScreenSystem(canvas) {
         activeScreen.screenSystem = this;
 
         $(canvas).off();
+        $(window).off();
 
         if (screens[name].input) {
             bindInput(screens[name].input);
@@ -39,6 +40,10 @@ function ScreenSystem(canvas) {
         }
 
         for (var eventName in events) {
+            if (eventName == 'resize') {
+                $(window).on(eventName, events[eventName]);
+                continue;
+            }
             $(canvas).on(eventName, events[eventName]);
         }
     };

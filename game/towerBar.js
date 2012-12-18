@@ -16,12 +16,10 @@ function TowerDragger(pos, towerGeneratorFnc) {
         var tileSize = getGame(this).tileSize;
 
         this.displayedTower.tPos = this.tPos;
-        this.displayedTower.base.raiseEvent("resize");
         this.displayedTower.draw(pen);
 
         if (this.placingTower) {
             this.displayedTower.tPos = new TemporalPos(this.lastMousePos.x, this.lastMousePos.y, tileSize, tileSize);
-            this.displayedTower.base.raiseEvent("resize");
             this.displayedTower.draw(pen);
         }
     }

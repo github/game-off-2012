@@ -45,10 +45,7 @@ function Infobar(pos) {
 
     //Add our buttons, should really be done just in the constructor with our given pos information
     this.added = function () {
-        //Std centered button position
-
         this.clearDisplay();
-        this.resize = Dock(this, "right", "top");
     };
 
     this.obj = null;
@@ -95,6 +92,7 @@ function Infobar(pos) {
         var attChoosers = this.attributeChoosers;
 
         function displayAttributes(attrs) {
+            // Good fucking luck figuring out how this works!
             for (var attrName in attrs) {
                 var value = attrs[attrName];
 
@@ -107,7 +105,8 @@ function Infobar(pos) {
                 pen.color = "Green";
                 pen.fillStyle = "Transparent";
                 //ink.rect(xs, y, (xe - xs), 15, pen);
-
+                
+                // Baby go down down down down dowwwwwn
                 for (var key in arrayAttr) {
                     var val = arrayAttr[key];
                     function tryPrintAsNumber(val, name, extraInfo) {
@@ -124,6 +123,7 @@ function Infobar(pos) {
 
                         var baseStat = baseStats[name];
 
+                        // We need to go deeper!
                         if (defined(baseStat)) {
                             pen.color = "White";
                             pen.fillStyle = "Purple";
@@ -154,9 +154,11 @@ function Infobar(pos) {
                             //addBarPart(val - baseStat);
                             for (var key in obj.genes.alleles) {
                                 var allele = obj.genes.alleles[key];
+                                // His subconcious is fighting us! They have an army!
                                 for (var key in allele.delta) {
                                     if (key == name) {
                                         var impact = allele.delta[key];
+                                        // I'm sorry, you're stuck here forever now. This is the point of no return...
                                         if (impact > 0)
                                             startX += addBarPart(impact) * (impact < 0 ? -1 : 1);
                                     }
@@ -220,7 +222,6 @@ function Infobar(pos) {
                         //See if its an attribute which we have a attribute chooser for
                         if (defined(attChoosers[attrName])) {
                             attChoosers[attrName].tPos.y = yPos;
-                            attChoosers[attrName].resize();
                             yPos += attChoosers[attrName].tPos.h;
                             yPos += 20; //idk really why this is needed
                         }

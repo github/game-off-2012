@@ -12,6 +12,7 @@
         'textbox',
         'toggleButton',
         'textWrapper',
+        'vbox',
     ];
     for (var i = 0; i < scripts.length; i++) {
         loadScript(scripts[i]);

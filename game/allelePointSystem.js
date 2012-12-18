@@ -3,6 +3,9 @@ function AllelePointSystem(pos) {
     this.tPos = pos;
 
     this.added = function() {
+        var vbox = new VBox();
+        this.base.addObject(vbox);
+        
         this.pointIndicator = new Label(pos.clone(), "");
         this.pointIndicator.color = "blue";
         this.base.addObject(this.pointIndicator);

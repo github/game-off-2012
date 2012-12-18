@@ -3,7 +3,6 @@
     this.ctrlKey = false;
 
     //Put yourself in here (index global id) to get global mouse moves
-    // Why are these objects, not arrays??
     this.globalMouseMove = {};
     this.globalMouseDown = {};
     this.globalMouseUp = {};
@@ -43,12 +42,12 @@
         eng.bufferCanvas.width = canvasWidth;
         eng.bufferCanvas.height = canvasHeight;
         */
+        console.log("inputHandler events.resize", e);
 
         this.resizeEvent = e;
     }
 
     function getMousePos(e) {
-        // Canvas is fullscreen now, so pageX is our x position.
         var canpos = document.getElementById("this.mYCanvas")
         var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canpos.offsetLeft;
         var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canpos.offsetTop;
@@ -82,6 +81,12 @@
 
         this.muX = pos.x;
         this.muY = pos.y;
+    }
+    
+    this.globalResize = function (e) {
+        console.log("input handle globalResize", e);
+        this.tPos.w = e.width;
+        this.tPos.h = e.height;
     }
 
 
@@ -124,7 +129,8 @@
         this.handleMouseEvents(eng);
 
         if (this.resizeEvent) {
-            eng.base.raiseEvent("resize", this.resizeEvent);
+            console.log("this.resizeEvent:", this.resizeEvent);
+            eng.base.raiseEvent("globalResize", this.resizeEvent);
 
             if (this.consumeEvents)
                 this.resizeEvent = null;
@@ -214,10 +220,5 @@
                 this.mX = -1;
             }
         }
-    }
-
-    this.resize = function (e) {
-        this.tPos.w = e.width;
-        this.tPos.h = e.height;
     }
 }
