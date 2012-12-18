@@ -48,11 +48,11 @@ function Tower_Connection(t1, t2) {
         pos.sub(delta);
         pos.w = 20;
         pos.h = 20;
-        pos.sub({x: pos.w * 0.5, y: pos.h * 0.5});
+        pos.sub(new Vector(pos.w * 0.5, pos.h * 0.5));
+        pos = new TemporalPos(pos.x, pos.y, pos.w, pos.h);
         
         deleteButton = new Button(pos, "-", 
-            that, "deleteSelf", 50);
-        deleteButton.color = "rgba(0, 255, 0, 0.6)";        
+            bind(that, "deleteSelf"), 50);       
         
         that.base.addObject(deleteButton);
     }

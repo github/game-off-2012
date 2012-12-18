@@ -22,9 +22,9 @@ function ContinueButton() {
     this.tPos = pos;
     this.base = new BaseObj(this);
 
-    var button = new Button(pos, "Continue", this, "continue");
-    button.textControl.fontSize = 20;
-    button.textControl.lineSpacing = 0.4;
+    var button = new Button(pos, "Continue", bind(this, "continue"));
+//     button.textControl.fontSize = 20;
+//     button.textControl.lineSpacing = 0.4;
     this.base.addObject(button);
 
     this.continue = function() {
