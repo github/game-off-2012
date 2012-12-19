@@ -6,7 +6,7 @@ function Label(pos, text, zorder) {
     this.type = "Label" + zorder;
     
     var color = "green";
-    var font = "20px courier";
+    var font = "14px courier";
     
     this.draw = function (pen) {        
         pen.fillStyle = color;
