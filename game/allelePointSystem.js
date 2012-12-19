@@ -21,11 +21,17 @@ function AllelePointSystem(pos) {
         
         this.pointIndicator = new Label(pos.clone(), "");
         vbox.add(this.pointIndicator);
-        vbox.add(pointButton(1, 50));
+        
+        // The tutorial needs these to be public, which is really bad,
+        // but I don't really feel like fixing it right now.
+        this.buyButton = pointButton(1, 50);
+        vbox.add(this.buyButton);
         vbox.add(pointButton(10, 350));
         vbox.add(pointButton(100, 2500));
-        vbox.add(new Button("Spend Point", bind(this, "spendPoint")));
-        vbox.add(new Button("Trash Point", bind(this, "trashPoint")));
+        this.spendButton = new Button("Spend Point", bind(this, "spendPoint"));
+        vbox.add(this.spendButton);
+        this.trashButton = new Button("Trash Point", bind(this, "trashPoint"))
+        vbox.add(this.trashButton);
         this.autoTrashButton = new ToggleButton("Auto Trash Worse", bind(this, "autoTrashToggle"));
         vbox.add(this.autoTrashButton);
     };

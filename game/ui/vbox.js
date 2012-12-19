@@ -13,7 +13,6 @@ function VBox() {
     }
     
     this.resize = function (rect) {
-        console.log("Resizing to fit rect:", rect);
         var h = 0;
         var shared = 0;
         for (var i = 0; i < children.length; i++) {

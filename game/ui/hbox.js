@@ -13,7 +13,6 @@ function HBox() {
     }
     
     this.resize = function (rect) {
-        console.log("Resizing to fit rect:", rect);
         var w = 0;
         var shared = 0;
         for (var i = 0; i < children.length; i++) {
