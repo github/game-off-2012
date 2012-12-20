@@ -1,4 +1,7 @@
-function Label(pos, text, zorder) {
+function Label(text, zorder) {
+    if(!assertDefined(text))
+        return;
+
     if (!zorder) zorder = 15;
     
     this.tPos = new TemporalPos(0, 0, 0, 0);
