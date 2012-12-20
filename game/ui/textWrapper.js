@@ -1,61 +1,61 @@
-function TextWrapper(pos, text, zorder, scaleVertically) {
-    this.tPos = pos;
+function TextWrapper(text, zorder) {
+    this.tPos = new TemporalPos(0, 0, 0, 0);
+    if (!zorder) zorder = 15;
     this.base = new BaseObj(this, zorder, true);
     
-    this.scaleVertically = scaleVertically;
-    
-    this.text = text;
-    this.color = "green";
-    this.fontSize = 12;
-    this.fontType = "Arial";
-    this.textAlign = "left";
-    this.lineSpacing = 1;
-    
-    this.lastHeight = null;
+    var fontSize = 14;
+    var myCanvas = document.createElement('canvas').getContext('2d');
+    myCanvas.font = fontSize + "px courier";
+    var lines = [];
+        
+    //http://stackoverflow.com/questions/2936112/text-wrap-in-a-canvas-element
+    //Set font before you call this.
+    function getLines(ctx, phrase, maxPxLength) {
+        var wa = phrase.split(" "),
+        phraseArray = [],
+        lastPhrase = wa[0],
+        l = maxPxLength,
+        measure = 0;
+        
+        for (var i = 1; i < wa.length; i++) {
+            var w = wa[i];
+            measure = ctx.measureText(lastPhrase + w).width;
+            if (measure < l) {
+                lastPhrase += (" " + w);
+            } else {
+                phraseArray.push(lastPhrase);
+                lastPhrase = w;
+            }
+            if (i === wa.length - 1) {
+                phraseArray.push(lastPhrase);
+                break;
+            }
+        }
+        return phraseArray;
+    }
     
     this.draw = function (pen) {
-        pen.fillStyle = this.color;
-        pen.font = this.fontSize + "px " + this.fontType;
-        pen.textAlign = this.textAlign;
+        pen.font = fontSize + "px courier";
+        pen.fillStyle = "green";
+        pen.textAlign = "center";
+        pen.textBaseline = "middle";
         
         var pos = this.tPos;
-        
-        var lines = getLines(pen, this.text, pos.w);
-        var textHeight = this.fontSize * this.lineSpacing;
-        
-        var curX = pos.x;
+        var lineHeight = fontSize;
+        var curX = pos.x + pos.w / 2;
         var curY = pos.y;
         
-        if (this.textAlign == "center") {
-            curX += pos.w / 2;
-        }
-        
-        var heightBuffer = this.getHeightBuffer(lines);
-        
-        curY += heightBuffer;
-        
-        for (var key in lines) {
-            curY += textHeight;
-            ink.text(curX, curY, lines[key], pen);
-        }
-        
-        curY += heightBuffer;
-        
-        var curHeight = textHeight * (lines.length + 1);
-        
-        if(this.scaleVertically && curHeight != this.lastHeight) {
-            this.lastHeight = curHeight;
-            pos.h = curHeight;
-            this.base.parent.tPos.h = curHeight;
+        for (var i = 0; i < lines.length; i++) {
+            curY += lineHeight;
+            ink.text(curX, curY, lines[i], pen);
         }
     }
     
-    this.getHeightBuffer = function(lines) {
-        var pos = this.tPos;
-        
-        var textHeight = this.fontSize * this.lineSpacing;
-        
-        var realHeightUsed = lines.length * textHeight;
-        return (pos.h - realHeightUsed) / 2 - textHeight * 0.2;
+    this.resize = function (rect) {
+        this.tPos = rect;
+        lines = getLines(myCanvas, text, rect.w);
+        var lineHeight = fontSize;
+        var h = lineHeight * (lines.length + 1);
+        this.tPos.h = h;
     }
 }

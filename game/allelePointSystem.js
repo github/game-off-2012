@@ -21,6 +21,7 @@ function AllelePointSystem(pos) {
         
         this.pointIndicator = new Label(pos.clone(), "");
         vbox.add(this.pointIndicator);
+
         vbox.add(this.buyButton = pointButton(1, 50));
         vbox.add(this.buyButton1 = pointButton(10, 350));
         vbox.add(this.buyButton2 = pointButton(100, 2500));

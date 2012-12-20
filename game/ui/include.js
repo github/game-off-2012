@@ -9,7 +9,7 @@
         'button',
         'label',
         'radioButton',
-        'textbox',
+        'textBox',
         'toggleButton',
         'textWrapper',
         'vbox',

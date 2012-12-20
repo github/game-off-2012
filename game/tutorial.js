@@ -5,15 +5,8 @@
 
 
 function addTextDisplay(text, obj) {
-    var message = new TextBox(
-        { x: 176, y: 16, w: 318, h: 0 }, text, "rgba(0, 255, 0, 0)", "rgba(0, 0, 0, 0)");
-    message.textControl.fontSize = 20;
-    message.textControl.lineSpacing = 1.5;
-    message.textControl.scaleVertically = true;
-
+    var message = new TextBox(text).resize(new Rect(176, 16, 318, 0));
     obj.base.addObject(message);
-
-    message.base.addObject(new AlphaTween(1, 0, 1));
 }
 
 //Hardcoded position
@@ -22,12 +15,7 @@ function ContinueButton() {
     this.tPos = pos;
     this.base = new BaseObj(this);
 
-    var button = new Button("Continue", bind(this, "continue"));
-    button.tPos = pos;
-    //button.textControl.fontSize = 20;
-    //button.textControl.lineSpacing = 1.5;
-//     button.textControl.fontSize = 20;
-//     button.textControl.lineSpacing = 0.4;
+    var button = new Button("Continue", bind(this, "continue")).resize(pos);
     this.base.addObject(button);
 
     this.continue = function() {
