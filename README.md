@@ -1,6 +1,6 @@
 # The GitHub Game Off is Over!
 
-See the [winners, runners up and honorotable mentions](https://github.com/blog/1337-github-game-off-winners).
+See the [winners, runners up and honorable mentions](https://github.com/blog/1337-github-game-off-winners).
 
 ---
 
