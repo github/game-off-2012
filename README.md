@@ -1,3 +1,9 @@
+# The GitHub Game Off is Over!
+
+See the [winners, runners up and honorotable mentions](https://github.com/blog/1337-github-game-off-winners).
+
+---
+
 Here at GitHub, we're no strangers to hosting or sponsoring hackathons. With the growing number of games and game development resources on GitHub, we thought it was about time to throw our very own game jam!
 
 ## The Challenge
