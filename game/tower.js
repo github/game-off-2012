@@ -286,7 +286,7 @@ function Tower(baseTile, tPos) {
     this.tempIndicator = null;
     this.mousedown = function(e) {
         this.startDrag = e;
-        tempIndicator = new Line(this.startDrag, e, "green", 15, {0: 1.0});
+        this.tempIndicator = new Line(this.startDrag, e, "green", 15, {0: 1.0});
         this.base.addObject(tempIndicator);
         getGame(this).input.globalMouseMove[this.base.id] = this;
         getGame(this).input.globalMouseUp[this.base.id] = this;
@@ -301,8 +301,8 @@ function Tower(baseTile, tPos) {
         var eng = this.base.rootNode;
         var game = eng.game;
 
-        if(tempIndicator)
-            this.base.removeObject(tempIndicator);
+        if(this.tempIndicator)
+            this.base.removeObject(this.tempIndicator);
 
         this.startDrag = null;
 
