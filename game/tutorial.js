@@ -263,7 +263,6 @@ tutorialstates.networkTowerStart = function networkTowerStart() {
 
         addTextDisplay("Click and hold on a tower to begin making a network.", this);
 
-
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
         var TILE_SIZE = pathStart.tPos.w;
         var tile = findClosest(realGame.engine, "Tile", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
@@ -308,6 +307,7 @@ tutorialstates.networkTowerEnd = function networkTowerEnd() {
         this.base.addObject(allMouseThrough);
 
         this.base.addObject(new MouseMoveThrough(realGame.engine.tPos));
+        this.base.addObject(new MouseUpThrough(realGame.engine.tPos));
     }
 
     this.update = function () {
@@ -317,11 +317,15 @@ tutorialstates.networkTowerEnd = function networkTowerEnd() {
         var TILE_SIZE = pathStart.tPos.w;
         var tower = findClosest(realGame.engine, "Tower", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
 
-        if(tower && !tower.startDrag) {
-            if(tower.connections.length > 0)
-                getGame(this).advanceState();
-            else
+        if(!tower.startDrag) {
+            if(tower) {
+                if(tower.connections.length > 0)
+                    getGame(this).advanceState();
+                else
+                    getGame(this).setState(tutorialstates.networkTowerStart);
+            } else {
                 getGame(this).setState(tutorialstates.networkTowerStart);
+            }
         }
     }
 };
@@ -424,6 +428,20 @@ function MouseMoveThrough(pos) {
 
         redirectedInput.mX = e.x;
         redirectedInput.mY = e.y;
+    }
+}
+
+//This is always on, as it makes the underlying game look more responsive,
+//and shouldn't trigger any actions.
+function MouseUpThrough(pos) {
+    this.base = new BaseObj(this, 0);
+    this.tPos = pos;
+
+    this.mouseup = function (e) {
+        var redirectedInput = getGame(this).underlyingGame.input;
+
+        redirectedInput.muX = e.x;
+        redirectedInput.muY = e.y;
     }
 }
 

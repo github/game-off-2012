@@ -301,7 +301,9 @@ function Tower(baseTile, tPos) {
         var eng = this.base.rootNode;
         var game = eng.game;
 
-        this.base.removeObject(tempIndicator);
+        if(tempIndicator)
+            this.base.removeObject(tempIndicator);
+
         this.startDrag = null;
 
         var towerSelected = findClosest(eng, "Tower", e, 0);
