@@ -3,7 +3,6 @@ function ToggleButton(text, cb) {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this, 15);
     
-    var textsize = 14;
     var hover = false;
     var down = false;
     
@@ -12,6 +11,42 @@ function ToggleButton(text, cb) {
         this.toggled = !this.toggled;
         cb();
     };
+    
+    this.resize = function(rect) {
+        this.tPos = rect;
+        return this;
+    }
+    
+    this.draw = function(pen) {
+        if (down) {
+            pen.fillStyle = "#555";
+        } else if (hover) {
+            pen.fillStyle = "#222";
+        } else {
+            pen.fillStyle = "black";
+        }
+        pen.strokeStyle = "green";
+        
+        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
+        
+        // Draw text
+        pen.fillStyle = "green";
+        pen.font = "14px courier";
+        pen.textBaseline = "middle";
+        var cen = this.tPos.getCenter();
+        ink.cenText(cen.x, cen.y, text, pen);
+        
+        // Draw checkbox
+        if (this.toggled) {
+            pen.fillStyle = "white";
+        } else {
+            pen.fillStyle = "black";
+        }
+        pen.strokeStyle = "green";
+        ink.rect(this.tPos.x + 6, this.tPos.y + 6, this.tPos.h - 12, this.tPos.h - 12, pen);
+        
+        return;
+    }
     
     this.mouseover = function() {
         hover = true;
@@ -29,41 +64,4 @@ function ToggleButton(text, cb) {
         down = false;
         this.toggle();
     };
-    
-    this.resize = function(rect) {
-        this.tPos = rect;
-        return this;
-    }
-    
-    this.draw = function(pen) {
-        if (this.down) {
-            pen.fillStyle = "#333";
-        } else if (this.hover) {
-            pen.fillStyle = "#111";
-        } else {
-            pen.fillStyle = "black";
-        }
-        pen.strokeStyle = "green";
-        
-        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-        
-        //Draw text
-        pen.fillStyle = "green";
-        pen.font = textsize + "px arial";
-
-        //How wide is text?
-        var tW = pen.measureText(text).width;
-
-        ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+textsize+4, text, pen);
-        
-        if (this.toggled) {
-            pen.fillStyle = "white";
-        } else {
-            pen.fillStyle = "black";
-        }
-        pen.strokeStyle = "green";
-        ink.rect(this.tPos.x + 6, this.tPos.y + 6, this.tPos.h - 12, this.tPos.h - 12, pen);
-        
-        return;
-    }
 }

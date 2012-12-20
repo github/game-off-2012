@@ -6,15 +6,15 @@ function Button(text, callback, zorder) {
     
     this.base = new BaseObj(this, zorder, true);
     
-    hover = false;
-    down = false;
+    var hover = false;
+    var down = false;
     
     this.draw = function(pen) {
         //Draw box
-        if (this.down) {
-            pen.fillStyle = "#333";
-        } else if (this.hover) {
-            pen.fillStyle = "#111";
+        if (down) {
+            pen.fillStyle = "#555";
+        } else if (hover) {
+            pen.fillStyle = "#222";
         } else {
             pen.fillStyle = "black";
         }
