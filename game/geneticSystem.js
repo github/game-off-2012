@@ -25,8 +25,9 @@ function Genes() {
             this.alleles[group].apply(holder);
         } else {
             //Should fix attack types not properly being removed
-            this.alleles[group] = allele;
-            this.replaceAlleles(cloneObject(this.alleles));
+            var alleleCopy = cloneObject(this.alleles);
+            alleleCopy[group] = allele;
+            this.replaceAlleles(alleleCopy);
         }
     };
 

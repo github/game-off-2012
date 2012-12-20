@@ -21,6 +21,11 @@ function ContinueButton() {
     this.continue = function() {
         getGame(this).advanceState();
     }
+    this.draw = function(pen) {
+        //pen.strokeStyle = "white";
+        //pen.fillStyle = "blue";
+        //ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
+    }
 }
 
 var tutorialstates = {};
