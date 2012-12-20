@@ -21,13 +21,12 @@ function AllelePointSystem(pos) {
         
         this.pointIndicator = new Label(pos.clone(), "");
         vbox.add(this.pointIndicator);
-        vbox.add(pointButton(1, 50));
-        vbox.add(pointButton(10, 350));
-        vbox.add(pointButton(100, 2500));
-        vbox.add(new Button("Spend Point", bind(this, "spendPoint")));
-        vbox.add(new Button("Trash Point", bind(this, "trashPoint")));
-        this.autoTrashButton = new ToggleButton("Auto Trash Worse", bind(this, "autoTrashToggle"));
-        vbox.add(this.autoTrashButton);
+        vbox.add(this.buyButton = pointButton(1, 50));
+        vbox.add(this.buyButton1 = pointButton(10, 350));
+        vbox.add(this.buyButton2 = pointButton(100, 2500));
+        vbox.add(this.spendButton = new Button("Spend Point", bind(this, "spendPoint")));
+        vbox.add(this.trashButton = new Button("Trash Point", bind(this, "trashPoint")));
+        vbox.add(this.autoTrashButton = new ToggleButton("Auto Trash Worse", bind(this, "autoTrashToggle")));
     };
 
     this.pointCost = 50;

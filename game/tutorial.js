@@ -22,13 +22,21 @@ function ContinueButton() {
     this.tPos = pos;
     this.base = new BaseObj(this);
 
-    var button = new Button(pos, "Continue", bind(this, "continue"));
+    var button = new Button("Continue", bind(this, "continue"));
+    button.tPos = pos;
+    //button.textControl.fontSize = 20;
+    //button.textControl.lineSpacing = 1.5;
 //     button.textControl.fontSize = 20;
 //     button.textControl.lineSpacing = 0.4;
     this.base.addObject(button);
 
     this.continue = function() {
         getGame(this).advanceState();
+    }
+    this.draw = function(pen) {
+        //pen.strokeStyle = "white";
+        //pen.fillStyle = "blue";
+        //ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
     }
 }
 
