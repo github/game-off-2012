@@ -3,9 +3,17 @@ function Genes() {
 
     this.alleles = {};
 
-    var replaceAllele = false;
-    this.addAllele = function (group, allele) {
-        if (!assertDefined(group, allele))
+    var addingAlleles = false;
+    this.startAlleleAdd = function() {
+        addingAlleles = true;
+    }
+    this.endAlleleAdd = function() {
+        addingAlleles = false;
+        this.recalculateAttributes();
+    }
+
+    this.addAllele = function (allele) {
+        if (!assertDefined(allele))
             return;
 
         var holder = this.base.parent;
@@ -13,23 +21,29 @@ function Genes() {
         if (!assertDefined(holder))
             return;
 
-        if (!assertDefined(allele.delta))
+        if (!assertDefined(allele.delta, allele.group))
             return;
 
-        if (replaceAllele || !allele.delta.attack) {
-            if (this.alleles[group])
-                this.alleles[group].unapply(holder);
+        var group = allele.group;
 
-            this.alleles[group] = allele;
-
-            this.alleles[group].apply(holder);
-        } else {
-            //Should fix attack types not properly being removed
-            var alleleCopy = cloneObject(this.alleles);
-            alleleCopy[group] = allele;
-            this.replaceAlleles(alleleCopy);
-        }
+        this.alleles[group] = allele;
+        if(!addingAlleles)
+            this.recalculateAttributes();
     };
+
+    this.removeAlleleGroup = function (group) {
+        if(this.alleles[group.group])
+            delete this.alleles[group.group];
+    }
+
+    this.recalculateAttributes = function() {
+        var holder = this.base.parent;
+        holder.setBaseAttrs();
+
+        for(var key in this.alleles) {
+            this.alleles[key].apply(holder);
+        }
+    }
 
     //Should only be called if you are fully replacing the targeting strategy and attack types
     this.replaceAlleles = function (newAlleles) {
@@ -37,20 +51,12 @@ function Genes() {
         holder.attr.target_Strategy = null;
         holder.attr.attack_types = [];
 
-        replaceAllele = true;
-
-        for (var alleleGroup in this.alleles)
-            if (this.alleles[alleleGroup]) {
-                this.alleles[alleleGroup].unapply(holder);
-                // Is this really what you want to do?
-                // Yes, delete removes it from the object.
-                delete this.alleles[alleleGroup];
-            }
+        this.startAlleleAdd();
 
         for (var group in newAlleles) {
-            this.addAllele(group, newAlleles[group]);
+            this.addAllele(newAlleles[group]);
         }
 
-        replaceAllele = false;
+        this.endAlleleAdd();
     };
 }

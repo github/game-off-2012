@@ -82,15 +82,17 @@ function sortArrayByProperty(a, prop) {
 
 //If given an object it turns a random key from it
 function pickRandom(array) {
-    if(array.length) {
-        return array[Math.floor(Math.random() * array.length)];
-    }
-    else {
-        var keys = [];
-        for(var key in array)
-            keys.push(key)
-        return keys[Math.floor(Math.random() * keys.length)];
-    }
+    if(!assertDefined(array.length))
+        return;
+
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+function pickRandomKey(object) {
+    var keys = [];
+    for(var key in array)
+        keys.push(key)
+    return keys[Math.floor(Math.random() * keys.length)];
 }
 
 //I could make ones for every single color piece... but using regex to set

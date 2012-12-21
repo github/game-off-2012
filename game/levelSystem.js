@@ -6,7 +6,7 @@ function generateBugArray (bugStart, bugTemplate, count, attributeModifier) {
     for (var i = 0; i < count; i++) {
         var bug = new Bug(bugStart);
         for (var group in bugTemplate)
-            bug.genes.addAllele(group, new Allele(bugTemplate[group]()));
+            bug.genes.addAllele(new Allele(group, bugTemplate[group]()));
         for (var attrName in bug.attr) {
             if (typeof bug.attr[attrName] == "number") {
                 if (attrName == "speed")

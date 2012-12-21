@@ -105,13 +105,13 @@ tutorialstates.endPlace = function endPlace() {
 
         if(tower) {
             tower.genes.replaceAlleles(
-                {
-                    attack1: new Allele({attack: allAttackTypes.Laser}),
-                    targetBase: new Allele({target: targetStrategies.Closest}),
-                    starterTower: new Allele(
+                [
+                    new Allele("attack1", {attack: allAttackTypes.Laser}),
+                    new Allele("targetBase", {target: targetStrategies.Closest}),
+                    new Allele("starterTower",
                         {range: 100, damage: 10, hp: 100, attSpeed: 1}
                     ),
-                });
+                ]);
             getGame(this).advanceState();
         }
     }
@@ -239,13 +239,13 @@ tutorialstates.placeAnotherTower = function placeAnotherTower() {
 
         if(tower) {
             tower.genes.replaceAlleles(
-                {
-                    attack1: new Allele({attack: allAttackTypes.Laser}),
-                    targetBase: new Allele({target: targetStrategies.Closest}),
-                    starterTower: new Allele(
+                [
+                    new Allele("attack1", {attack: allAttackTypes.Laser}),
+                    new Allele("targetBase", {target: targetStrategies.Closest}),
+                    new Allele("starterTower",
                         {range: 10, damage: 10, hp: 100, attSpeed: 1}
                     ),
-                });
+                ]);
             getGame(this).advanceState();
         }
     }

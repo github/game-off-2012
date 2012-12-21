@@ -110,7 +110,7 @@ function Towerbar(pos) {
 
                 for (var key in obj) {
                     var attackType = obj[key];
-                    tower.genes.addAllele("attack" + key, new Allele({ attack: attackType }));
+                    tower.genes.addAllele(new Allele("attack" + key, { attack: attackType }));
                 }
 
                 return tower;

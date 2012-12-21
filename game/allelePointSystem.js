@@ -59,9 +59,9 @@ function AllelePointSystem(pos) {
 
         if (selected && selected.base.type == "Tower") {
             if (selected.allelesGenerated.length > 0) {
-                var allObj = selected.allelesGenerated[0];
+                var allele = selected.allelesGenerated[0];
                 selected.allelesGenerated.splice(0, 1);
-                selected.genes.addAllele(allObj.group, allObj.all);
+                selected.genes.addAllele(allele);
             }
         }
     }
@@ -120,7 +120,7 @@ function AllelePointSystem(pos) {
 
         if (selected && selected.base.type == "Tower") {
             if (selected.allelesGenerated.length > 0) {
-                var allObj = selected.allelesGenerated[0];
+                var allele = selected.allelesGenerated[0];
 
                 function addToExtraInfo(allele, factor) {
                     for (var key in allele.delta) {
@@ -147,10 +147,10 @@ function AllelePointSystem(pos) {
                     }
                 }
 
-                if (selected.genes.alleles[allObj.group])
-                    addToExtraInfo(selected.genes.alleles[allObj.group], -1);
+                if (selected.genes.alleles[allele.group])
+                    addToExtraInfo(selected.genes.alleles[allele.group], -1);
 
-                addToExtraInfo(allObj.all, 1);
+                addToExtraInfo(allele, 1);
             }
         }
     }

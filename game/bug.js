@@ -8,21 +8,30 @@ function Bug(startPath) {
         return cen;
     }());
 
-    this.attr = {
-        // For balancing these are now 0, we get everything from our alleles
-        // (except speed, as we have to move, and value).
-        // In the future tower will be like this.
-        range:          0,
-        damage:         0,
-        hp:             0,
-        currentHp:      0,
-        hpRegen:        0,
-        attSpeed:       0,
-        speed:          40,
-        hitCount:       0,
-        kills:          0,
-        value:          5,
-    };
+    this.attr = {};
+    this.setBaseAttrs = function () {
+        //Lol, prevCur...
+        var prevCurHp = this.attr.hp || this.attr.currentHp;
+        if(!prevCurHp)
+            prevCurHp = 0;
+        this.attr = {
+            // For balancing these are now 0, we get everything from our alleles
+            // (except speed, as we have to move, and value).
+            // In the future tower will be like this.
+            range:          0,
+            damage:         0,
+            hp:             0,
+            currentHp:      0,
+            hpRegen:        0,
+            attSpeed:       0,
+            speed:          40,
+            hitCount:       0,
+            kills:          0,
+            value:          5,
+        };
+        this.attr.attack_types = [];
+    }
+    this.setBaseAttrs();
 
     this.tPos = new TemporalPos(cen.x - r, cen.y - r, r * 2, r * 2, this.attr.speed, 0);
     this.base = new BaseObj(this, 10);
@@ -35,9 +44,7 @@ function Bug(startPath) {
     this.genes = new Genes();
     this.base.addObject(this.genes);
 
-    //this.attr.target_Strategy = new targetStrategies.Closest();
-    this.attr.attack_types = [];
-    //this.attr.attack_types.push(new allAttackTypes.Bullet());
+
 
     this.base.addObject(new AttackCycle());
 

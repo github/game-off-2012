@@ -1,4 +1,4 @@
-function Tower_Packet(t1, t2, speed, group, allele) {
+function Tower_Packet(t1, t2, speed, allele) {
     this.base = new BaseObj(this, 12);
     // We don't really need it
     this.tpos = new TemporalPos(0, 0, 1, 1, 0, 0);
@@ -16,7 +16,7 @@ function Tower_Packet(t1, t2, speed, group, allele) {
     
     var that = this;
     function apply() {
-        t2.genes.addAllele(group, allele);
+        t2.genes.addAllele(allele);
         that.base.destroySelf();
     }
 }
@@ -59,14 +59,10 @@ function Tower_Connection(t1, t2) {
     
     function dataTransfer(t1, t2) {
         function sendRandomPacket(t1, t2, speed) {
-            var groups = [];
-            for (var group in AllAlleleGroups)
-                groups.push(group);
-
-            var group = pickRandom(t1.genes.alleles);
+            var group = pickRandomKey(t1.genes.alleles);
             var al = t1.genes.alleles[group];
 
-            that.base.addObject(new Tower_Packet(t1, t2, speed, group, al));
+            that.base.addObject(new Tower_Packet(t1, t2, speed, al));
         }
 
         if (prevhitCount === undefined) {
@@ -136,29 +132,36 @@ function Tower(baseTile, tPos) {
     var p = tPos;
     this.tPos = new TemporalPos(p.x, p.y, p.w, p.h, 0, 0);
     this.base = new BaseObj(this, 10);
-    this.attr = {
-        range:          TowerStats.range,
-        damage:         TowerStats.damage,
-        hp:             TowerStats.hp,
-        currentHp:      TowerStats.currentHp,
-        hpRegen:        TowerStats.hpRegen,
-        attSpeed:       TowerStats.attSpeed,
-        upload:         TowerStats.upload,
-        download:       TowerStats.download,
-        hitCount:       TowerStats.hitCount,
-        kills:          0,
-        value:          TowerStats.value,
-    };    
 
-    //Each is an {group: alGroup, all: allele}
+    this.attr = {};
+    this.setBaseAttrs = function () {
+        //Lol, prevCur...
+        var prevCurHp = this.attr.hp || this.attr.currentHp;
+        if(!prevCurHp)
+            prevCurHp = 0;
+        this.attr = {
+            range:          TowerStats.range,
+            damage:         TowerStats.damage,
+            hp:             TowerStats.hp,
+            currentHp:      TowerStats.currentHp,
+            hpRegen:        TowerStats.hpRegen,
+            attSpeed:       TowerStats.attSpeed,
+            upload:         TowerStats.upload,
+            download:       TowerStats.download,
+            hitCount:       TowerStats.hitCount,
+            kills:          0,
+            value:          TowerStats.value,
+        };
+        this.attr.target_Strategy = new targetStrategies.Closest();
+        this.attr.attack_types = [];
+    };
+    this.setBaseAttrs();
+
+    //List of alleles
     this.allelesGenerated = [];
 
     this.genes = new Genes();
     this.base.addObject(this.genes);
-
-    this.attr.target_Strategy = new targetStrategies.Closest();
-    this.attr.attack_types = [];
-    this.attr.attack_types.push(new allAttackTypes.Laser());
 
     //For alleles.
     this.autoTrash = true;
@@ -174,21 +177,15 @@ function Tower(baseTile, tPos) {
 
     for (var alGroup in AllAlleleGroups) {
         if (!this.genes.alleles[alGroup]) {
-            this.genes.addAllele(alGroup, new Allele(AllAlleleGroups[alGroup]()));
+            this.genes.addAllele(new Allele(alGroup, AllAlleleGroups[alGroup]()));
         }
     }
 
-    this.generateAllele = function() {   
-        var allAlls = [];
-        for (var alGroup in AllAlleleGroups)
-            allAlls.push(alGroup);
+    this.generateAllele = function() {
+        var genAllGroup = pickRandomKey(AllAlleleGroups);
 
-        var genAllGroup = pickRandom(allAlls);
-
-        var allObj = {};
-        allObj.group = genAllGroup;
-        allObj.all = new Allele(AllAlleleGroups[genAllGroup]());
-        this.allelesGenerated.push(allObj);
+        var alleleGenerated = new Allele(genAllGroup, AllAlleleGroups[genAllGroup]());
+        this.allelesGenerated.push(alleleGenerated);
     }
 
     this.regenTick = function()
