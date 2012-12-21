@@ -55,8 +55,14 @@ TemporalPos.prototype = Rect.prototype;
 
 var Vector = (function() {
     function Vector(x, y) {
-        this.x = x;
-        this.y = y;
+        if(x.x) {
+            //Then they probably actually want:
+            this.x = x.x;
+            this.y = x.y;
+        } else {
+            this.x = x;
+            this.y = y;
+        }
     }
     // We use prototype here because assigning
     // all of these functions in the constructor

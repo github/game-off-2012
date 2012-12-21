@@ -29,115 +29,11 @@ function TowerDragger(pos, towerGeneratorFnc) {
         var eng = getEng(this);
 
         if(tower) {
-            if(canPlace(tower, e, getEng(this))) {
+            if(canPlace(tower, e, eng)) {
                 tower.tPos.x = e.x;
                 tower.tPos.y = e.y;
             } else {
-
-                /*
-                var originalPos = cloneObject(tower.tPos);
-
-                tower.tPos.x = e.x;
-                tower.tPos.y = e.y;
-                var towerCollision = findClosestToRect(eng, "Tower", tower.tPos, 2);
-
-                if(towerCollision) {
-                    var offsetFromTower = minVecForDistanceRects(tower.tPos, towerCollision.tPos, 1);
-
-                    tower.tPos.x += offsetFromTower.x;
-                    tower.tPos.y += offsetFromTower.y;
-                } else {
-                    tower.tPos = originalPos;
-                }
-                */
-
-
-                //Unfortunately while the above code works well and is likely the most efficient, this code
-                //handles cases with the path and lots of collisions...
-
-                originalPos = cloneObject(tower.tPos);
-
-
-                tower.tPos.x = e.x;
-                tower.tPos.y = e.y;
-
-                var collisions = [];
-                mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tPos, 0), collisions);
-                mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tPos, 0), collisions);
-
-                if(collisions.length > 0) {
-                    var alignTo = collisions[0];
-                    var offset = minVecForDistanceRects(tower.tPos, alignTo.tPos, 1);
-
-                    e.x += offset.x;
-                    e.y += offset.y;
-                }
-
-                tower.tPos.x = e.x;
-                tower.tPos.y = e.y;
-
-                //This code is kinda buggy... but thats okay... in the future we will project a line
-                //from the tower position to the cursor and just put the tower as far upon that line as possible.
-                //(this projection code will be created for bullets and lasers anyway).
-                tower.tPos.x = e.x;
-                var collisions = [];
-                mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tPos, 0), collisions);
-                mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tPos, 0), collisions);
-                if(collisions.length > 0) {
-                    tower.tPos.x = originalPos.x;
-                }
-
-                tower.tPos.y = e.y;
-                var collisions = [];
-                mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tPos, 0), collisions);
-                mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tPos, 0), collisions);
-                if(collisions.length > 0) {
-                    tower.tPos.y = originalPos.y;
-                }
-
-
-                /*
-                var xIntersect = false;
-                var yIntersect = false;
-
-                for(var key in collisions) {
-                    if(collisions[key] == tower)
-                        continue;
-
-                    var colObject = collisions[key];
-
-                    if(!xIntersect && !yIntersect) {
-                        if(rangeOverlap(tower.tPos.x, tower.tPos.x + tower.tPos.w,
-                                        colObject.tPos.x, colObject.tPos.x + colObject.tPos.w)) {
-                            xIntersect = true;
-                        }
-                        if(rangeOverlap(tower.tPos.y, tower.tPos.y + tower.tPos.h,
-                            colObject.tPos.y, colObject.tPos.y + colObject.tPos.h)) {
-                            yIntersect = true;
-                        }
-                    } else if(!xIntersect) {
-                        if(rangeOverlap(tower.tPos.x, tower.tPos.x + tower.tPos.w,
-                            colObject.tPos.x, colObject.tPos.x + colObject.tPos.w)) {
-                            xIntersect = true;
-                        }
-                    } else if(!yIntersect) {
-                        if(rangeOverlap(tower.tPos.y, tower.tPos.y + tower.tPos.h,
-                            colObject.tPos.y, colObject.tPos.y + colObject.tPos.h)) {
-                            yIntersect = true;
-                        }
-                    } else {
-                        break;
-                    }
-                }
-
-                if(!xIntersect) {
-                    tower.tPos.x = e.x;
-                }
-
-                if(!yIntersect) {
-                    tower.tPos.y = e.y;
-                }
-                */
+                tower.tryToMove(e, eng);
             }
         }
     }
@@ -176,10 +72,13 @@ function TowerDragger(pos, towerGeneratorFnc) {
         if (this.placingTower) {
             //They already clicked on the placer, so they are trying to place now
             if(tryPlaceTower(this.placingTower, this.placingTower.tPos, eng)) {
-                if (!game.input.ctrlKey) {
-                    this.placingTower = false;
-                    delete game.input.globalMouseMove[this.base.id];
-                    delete game.input.globalMouseClick[this.base.id];
+                this.placingTower = false;
+                delete game.input.globalMouseMove[this.base.id];
+                delete game.input.globalMouseClick[this.base.id];
+
+                if(game.input.ctrlKey) {
+                    this.mousedown(e);
+                    firstClick = false;
                 }
             }
             else {

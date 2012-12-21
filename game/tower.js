@@ -316,11 +316,12 @@ function Tower(baseTile, tPos) {
     };
 
     this.startDrag = null;
-    var tempIndicator = null;
+    this.dragOffset = null;
     this.mousedown = function(e) {
         this.startDrag = e;
-        tempIndicator = new Line(this.startDrag, e, "green", 15, {0: 1.0});
-        this.base.addObject(tempIndicator);
+        this.dragOffset = new Vector(this.tPos);
+        this.dragOffset.sub(e);
+
         getGame(this).input.globalMouseMove[this.base.id] = this;
         getGame(this).input.globalMouseUp[this.base.id] = this;
     };
@@ -329,23 +330,17 @@ function Tower(baseTile, tPos) {
     {
         var eng = getEng(this);
 
-        tempIndicator.end = e;
-        var towerSelected = findClosestToPoint(eng, "Tower", e, 0);
-        var tileSelected = findClosestToPoint(eng, "Tile", e, 0);
-        var path = findClosestToPoint(eng, "Path", e, 0);
-        if(!towerSelected && tileSelected && !path)
-        {
-            this.tPos.x = e.x;
-            this.tPos.y = e.y;
+        if(this.startDrag) {
+            var vector = new Vector(e);
+            vector.add(this.dragOffset);
+
+            this.tryToMove(vector, eng);
         }
     }
 
     this.mouseup = function(e){
         var eng = this.base.rootNode;
         var game = eng.game;
-
-        if(tempIndicator)
-            this.base.removeObject(tempIndicator);
 
         this.startDrag = null;
 
@@ -370,6 +365,54 @@ function Tower(baseTile, tPos) {
         delete getGame(this).input.globalMouseMove[this.base.id];
         delete getGame(this).input.globalMouseUp[this.base.id];
     };
+
+    //Given that the user has told us to move this tower to the destination,
+    //tries to move it as close as possible.
+    this.tryToMove = function (destination, eng) {
+        var tower = this;
+        tower.hidden = true;
+        var e = destination;
+
+        var originalPos = cloneObject(tower.tPos);
+
+        tower.tPos.x = e.x;
+        tower.tPos.y = e.y;
+
+        var collisions = [];
+        mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tPos, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tPos, 0), collisions);
+
+        if(collisions.length > 0) {
+            var alignTo = collisions[0];
+            var offset = minVecForDistanceRects(tower.tPos, alignTo.tPos, 1);
+
+            e.x += offset.x;
+            e.y += offset.y;
+        }
+
+        tower.tPos.x = e.x;
+        tower.tPos.y = e.y;
+
+        //This code is kinda buggy... but thats okay... in the future we will project a line
+        //from the tower position to the cursor and just put the tower as far upon that line as possible.
+        //(this projection code will be created for bullets and lasers anyway).
+        tower.tPos.x = e.x;
+        var collisions = [];
+        mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tPos, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tPos, 0), collisions);
+        if(collisions.length > 0) {
+            tower.tPos.x = originalPos.x;
+        }
+
+        tower.tPos.y = e.y;
+        var collisions = [];
+        mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tPos, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tPos, 0), collisions);
+        if(collisions.length > 0) {
+            tower.tPos.y = originalPos.y;
+        }
+        tower.hidden = false;
+    }
 }
 
 function canPlace(tower, pos, eng) {

@@ -241,7 +241,7 @@ var AllAlleleGroups =
 //All alleles must be balanced, they either specialize in one of many aspects or are a tradeoff
 var TowerAlleles =
 {
-    rangeBase: function () { return {range: Math.floor(random(90, 110))}; },
+    rangeBase: function () { return {range: Math.floor(random(250, 260))}; },
     damageBase: function () { return choose(
         {
             0.5: { damage: 1 },
@@ -269,9 +269,9 @@ var TowerAlleles =
     spec1: function () { return pickRandom(
         [
             { hp: 100, hpRegen: 1, range: -50 }, //Bruiser part 1
-            { hp: 200, hpRegen: 2, damage: -10 }, //Bruiser part 2
-            { damage: -8, attSpeed: 1 }, //Pew pew
-            { damage: 50, attSpeed: -1 }, //BOOM!
+            { hp: 200, hpRegen: 2, damage: -0.8 }, //Bruiser part 2
+            { damage: -0.5, attSpeed: 1 }, //Pew pew
+            { damage: 50, attSpeed: -0.85 }, //BOOM!
         ]); },
 
 };
