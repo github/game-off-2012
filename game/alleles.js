@@ -78,7 +78,7 @@ var AllAlleleGroups =
 
     attSpeedBase: function () { return choose(
         {
-            0.5: { attSpeed: 0 },
+            0.5: { attSpeed: 0.1 },
             0.7: { attSpeed: 0.2 },
             0.9: { attSpeed: 0.3 },
             1: { attSpeed: 0.5 },
@@ -154,6 +154,7 @@ var AllAlleleGroups =
         }); },
 //ATTRIBUTE SPECIALIZATIONS
 
+    /*
 //SCARCE MEDIUM BONUS
     rangeMediumBonus: function () { return choose(
         {
@@ -229,5 +230,6 @@ var AllAlleleGroups =
             1: { attSpeed: 3.5 },
         }); },
 //RARE SUPER BONUS
+*/
 
 };
