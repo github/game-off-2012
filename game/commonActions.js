@@ -1,27 +1,41 @@
-//The reason this is its own object is because the attack cycle will
-//shortly (hopefully become much more complex than just calling doAttack.
+//Not using UpdateTicker for easier debugging.
 function AttackCycle() {
     this.base = new BaseObj(this);
     this.attackCounter = 0;
 
-    this.added = function () {
-        this.base.addObject(new UpdateTicker(this.base.parent.attr, "attSpeed", "triggerAttack", true));
-    }
-    
-    this.triggerAttack = function () {
-        var attacker = this.base.parent;
-        var attackTypes = attacker.attr.attack_types || attacker.attr.bug_attack_types;
+    this.update = function (dt) {
+        if(!this.base.parent.attr.attSpeed)
+            return;
 
-        if (attackTypes && attackTypes.length > 0) {
-            startAttack(new AttackTemplate(attackTypes[0], attacker, null, attacker.attr.damage, attacker, 0));
+        var objDelay = 0;
+        objDelay = 1 / this.base.parent.attr.attSpeed;
+        if(objDelay < 0)
+            objDelay = 1 / 0;
+
+        this.attackCounter += dt;
+
+        if (this.attackCounter > objDelay) {
+            this.attackCounter = 0;
+
+            var attacker = this.base.parent;
+            var attackTypes = attacker.attr.attack_types || attacker.attr.bug_attack_types;
+
+            if (attackTypes && attackTypes.length > 0) {
+                startAttack(new AttackTemplate(attackTypes[0], attacker, null, attacker.attr.damage, attacker, 0));
+            }
         }
     };
 };
+
 
 //I foresee this function dying in a deep dark hole due to its
 //(theoretical) major impacts on speed... but w/e, its cool
 //(Actually... if these were to combine themselves and notice patterns they
 //could probably be much much more efficient than the naive implementation)
+
+//The entire engine will be optimized to make everything essentially function like this
+//(except the triggering will be many times more complicated to handle basically any type of trigger)
+
 function UpdateTicker(objWithDelay, tickDelayName, parentTickFunctionName, inverseRate) {
     this.base = new BaseObj(this);
     

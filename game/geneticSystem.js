@@ -43,6 +43,7 @@ function Genes() {
         for(var key in this.alleles) {
             this.alleles[key].apply(holder);
         }
+        holder.attr.currentHp = holder.attr.hp;
     }
 
     //Should only be called if you are fully replacing the targeting strategy and attack types

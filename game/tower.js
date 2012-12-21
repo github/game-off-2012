@@ -114,12 +114,12 @@ function Tower_Connection(t1, t2) {
 }
 
 TowerStats = {
-        range:          100,
-        damage:         10,
-        hp:             100,
-        currentHp:      100,
+        range:          0,
+        damage:         0,
+        hp:             0,
+        currentHp:      0,
         hpRegen:        1,
-        attSpeed:       0.6,
+        attSpeed:       0,
         upload:         5,
         download:       5,
         hitCount:       0,
@@ -130,7 +130,7 @@ TowerStats = {
 function Tower(baseTile, tPos) {    
     this.baseTile = baseTile;
     var p = tPos;
-    this.tPos = new TemporalPos(p.x, p.y, p.w, p.h, 0, 0);
+    this.tPos = new Rect(p.x, p.y, p.w, p.h);//new TemporalPos(p.x, p.y, p.w, p.h, 0, 0);
     this.base = new BaseObj(this, 10);
 
     this.attr = {};
@@ -175,10 +175,14 @@ function Tower(baseTile, tPos) {
     this.constantOne = 1;
     this.base.addObject(new UpdateTicker(this, "constantOne", "regenTick"));
 
-    for (var alGroup in AllAlleleGroups) {
+    for (var alGroup in TowerAlleles) {
         if (!this.genes.alleles[alGroup]) {
-            this.genes.addAllele(new Allele(alGroup, AllAlleleGroups[alGroup]()));
+            this.genes.addAllele(new Allele(alGroup, TowerAlleles[alGroup]()));
         }
+    }
+
+    this.added = function () {
+        this.recalculateAppearance();
     }
 
     this.generateAllele = function() {
@@ -196,14 +200,48 @@ function Tower(baseTile, tPos) {
             this.attr.currentHp = this.attr.hp;
     }
 
-    this.draw = function (pen) {
-        var p = this.tPos;
-        pen.save();
+    this.update = function(dt) {
+        this.recalculateAppearance(true);
+
+
+    }
+
+    //This may also change x, y, w and h.
+    this.recalculateAppearance = function (changeSize) {
         this.color = getInnerColorFromAttrs(this.attr);
-        pen.fillStyle = getInnerColorFromAttrs(this.attr);
-        pen.strokeStyle = getOuterColorFromAttrs(this.attr);
-        ink.rect(p.x, p.y, p.w, p.h, pen);        
-        pen.restore();
+        this.borderColor = getOuterColorFromAttrs(this.attr);
+
+        //Shows HP
+        var outerWidth = Math.pow(this.attr.hp / 50, 0.9);
+
+        //Show HP regen?
+        var innerWidth = Math.pow(this.attr.hpRegen * 10, 0.9);
+
+        var center = this.tPos.getCenter();
+
+        var totalWidth = outerWidth + innerWidth;
+
+        if(changeSize) {
+            this.tPos.x = center.x - totalWidth;
+            this.tPos.y = center.y - totalWidth;
+
+            this.tPos.w = totalWidth * 2;
+            this.tPos.h = totalWidth * 2;
+        }
+
+        this.lineWidth = outerWidth;
+    }
+
+    this.draw = function (pen) {
+        var pos = this.tPos;
+        var cen = pos.getCenter();
+
+        DRAW.rect(pen, pos,
+                  this.color,
+                  this.lineWidth, this.borderColor);
+
+        DRAW.circle(pen, cen, this.attr.range,
+            setAlpha(this.color, 0.1));
 
         drawAttributes(this, pen);
     };
@@ -291,7 +329,15 @@ function Tower(baseTile, tPos) {
 
     this.mousemove = function(e)
     {
+        var eng = getEng(this);
+
         tempIndicator.end = e;
+        var towerSelected = findClosest(eng, "Tower", e, 0);
+        var tileSelected = findClosest(eng, "Tile", e, 0);
+        if(!towerSelected && tileSelected)
+        {
+            this.tPos = tileSelected.tPos;
+        }
     }
 
     this.mouseup = function(e){
@@ -303,6 +349,7 @@ function Tower(baseTile, tPos) {
 
         this.startDrag = null;
 
+        /*
         var towerSelected = findClosest(eng, "Tower", e, 0);
         if(towerSelected && towerSelected != this)
         {
@@ -318,6 +365,7 @@ function Tower(baseTile, tPos) {
             game.changeSel(this);
             getAnElement(this.base.children.Selectable).ignoreNext = true;
         }
+        */
 
         delete getGame(this).input.globalMouseMove[this.base.id];
         delete getGame(this).input.globalMouseUp[this.base.id];
@@ -329,8 +377,11 @@ function tryPlaceTower(tower, tile)
     var eng = tile.base.rootNode;
     var game = eng.game;
 
+    tower.recalculateAppearance(true);
+    var towerRadius = tower.tPos.w / 2;
+
     var e = tile.tPos.getCenter();
-    var towerOnTile = findClosest(eng, "Tower", e, 0);
+    var towerOnTile = findClosest(eng, "Tower", e, towerRadius);
     var pathOnTile = findClosest(eng, "Path", e, 0);
 
     var curCost = game.currentCost;
@@ -341,7 +392,7 @@ function tryPlaceTower(tower, tile)
 
         game.currentCost *= 1.3;
 
-        tower.tPos = tile.tPos;
+        tower.tPos = cloneObject(tile.tPos);
         eng.base.addObject(tower);
         game.changeSel(tower);
         getAnElement(tile.base.children.Selectable).ignoreNext = true;

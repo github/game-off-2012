@@ -59,7 +59,7 @@ function LevelManager(bugStart) {
 
         this.nwicounter -= dt;
 
-        if (this.nwicounter < 0) {
+        if (this.nwicounter <= 0) {
 
             this.levelIteration = Math.floor(this.curWave / waves.length);
             var attributeModifier = curWaveData.attributeModifier;
@@ -93,14 +93,13 @@ function LevelManager(bugStart) {
                 this.base.addObject(grimReaper);
             }
 
-
             this.nwicounter = curWaveData.waveTime;
 
             this.curWave++;
         } //End of starting next level
 
         this.spawnCounter -= dt;
-        if (this.spawnCounter < 0 && this.bugsToSpawn.length > 0) {
+        if (this.spawnCounter <= 0 && this.bugsToSpawn.length > 0) {
             this.spawnCounter = curWaveData.spawnDelay;
 
             var currentWave = this.bugsToSpawn[0];

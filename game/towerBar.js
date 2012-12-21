@@ -16,6 +16,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
         var tileSize = getGame(this).tileSize;
 
         this.displayedTower.tPos = this.tPos;
+        this.displayedTower.recalculateAppearance();
         this.displayedTower.draw(pen);
 
         if (this.placingTower) {

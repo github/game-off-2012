@@ -1,0 +1,46 @@
+Currently:
+
+attack speed / movement speed 
+(between 2 and 8)
+
+damage (more is better, between 30 - 80 usually)
+
+range 
+1) either can't hit enemies, can hit some, or can hit most
+
+hp 
+2) (less than a certain amount and instantly die, eventually all towers instantly die)
+
+hp regen 
+3) (less than a certain amount and will die very fast if ever hit)
+
+network (towers become duplicates)
+upload
+download
+
+
+a) Once you have a great allele it effectively applies to all your towers.
+b) Once you have enough slow a certain quantity of enemies are effectively stopped.
+c) Fire rate is too fast for user to pay attention to individual attacks
+
+
+Fixes:
+
+1) 	- Range must be modified by very little, or modified in very small increments.
+	- Range is also a factor of tower type?
+2)	- Bugs need to do much less damage than towers have, a good balancing metric is that towers should not be able to last very long if they attack themselves (player does a lot of damage, but has very little HP, and bugs don't really do that much damage but have much more HP)
+3)	-
+
+Movable towers
+Deletable towers
+
+Attack speed - between 0.1 and 0.6
+
+Raw damage (kills per second):
+floor(hp/damage)*attack speed
+
+Damage buffer window:
+path in range approx = (range - 16)/32 * 4 + 1
++(path in range)*32/enemy movement speed * kills per second
+
+

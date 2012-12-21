@@ -43,6 +43,9 @@ function Infobar(pos) {
     this.allelePoints = new AllelePointSystem(new TemporalPos(pos.x, pos.y, pos.w * 0.92, 190));
     this.base.addObject(this.allelePoints);
 
+    this.sellButton = new Button("Kill Tower", bind(this, "sellTower"));
+    this.base.addObject(this.sellButton);
+
     //Add our buttons, should really be done just in the constructor with our given pos information
     this.added = function () {
         this.clearDisplay();
@@ -249,11 +252,20 @@ function Infobar(pos) {
 
         displayAttributes(undisplayedExtra);
 
-        //this.upgradeb.tPos.y = yPos;
-        //yPos += 30;
+        this.sellButton.tPos.w = this.tPos.w * 0.9;
+        this.sellButton.tPos.h = 24;
+
+        this.sellButton.tPos.x = xPos;
+        this.sellButton.tPos.y = yPos;
+        yPos += this.sellButton.tPos.h;
 
 
         this.allelePoints.tPos.x = xPos;
         this.allelePoints.tPos.y = this.tPos.y + this.tPos.h - this.allelePoints.tPos.h - 10;
-    }                                                                      //End of draw
+    }
+    //End of draw
+
+    this.sellTower = function() {
+        this.obj.base.destroySelf();
+    }
 }

@@ -32,7 +32,7 @@ function applyAttack(attackTemplate) {
         startAttack(newAttTemplate);
     }
 
-    if(target.attr.currentHp < 0) {
+    if(target.attr.currentHp <= 0) {
         var game = getGame(target) || getGame(attacker) || getGame(baseAttacker);
 
         var sound = new Sound("snd/die.wav");
@@ -610,6 +610,14 @@ var bugAttackTypes = {
 
 
 function drawAttributes(user, pen) {
+
+    if(user.lineWidth) {
+        user.tPos.x += user.lineWidth;
+        user.tPos.y += user.lineWidth;
+        user.tPos.w -= Math.ceil(user.lineWidth * 1.5);
+        user.tPos.h -= Math.ceil(user.lineWidth * 1.5);
+    }
+
     makeTiled(pen,
         function (obj, pen, pos) {
             if (typeof obj == "number")
@@ -634,7 +642,6 @@ function drawAttributes(user, pen) {
             if (typeof obj == "number")
                 return false;
 
-            
             pen.beginPath();
 
             pen.strokeStyle = "rgba(255, 255, 255, 0.5)";
@@ -655,4 +662,11 @@ function drawAttributes(user, pen) {
             user.tPos.h ),
         2, 2,
         0.01);
+
+    if(user.lineWidth) {
+        user.tPos.x -= user.lineWidth;
+        user.tPos.y -= user.lineWidth;
+        user.tPos.w += Math.ceil(user.lineWidth * 1.5);
+        user.tPos.h += Math.ceil(user.lineWidth * 1.5);
+    }
 }

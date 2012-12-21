@@ -29,6 +29,11 @@ function choose(choices)
         if(randomValue < realChoices[key].chance)
             return realChoices[key].choice;
 }
+
+function random(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
 var AllAlleleGroups =
 {
     //Should likely have better names
@@ -230,5 +235,73 @@ var AllAlleleGroups =
         }); },
 //RARE SUPER BONUS
 
+
+};
+
+//All alleles must be balanced, they either specialize in one of many aspects or are a tradeoff
+var TowerAlleles =
+{
+    rangeBase: function () { return {range: Math.floor(random(90, 110))}; },
+    damageBase: function () { return choose(
+        {
+            0.5: { damage: 1 },
+            0.7: { damage: 1.3 },
+            1: { damage: 1.5 },
+        }); },
+    hpBase: function () { return choose(
+        {
+            0.5: { hp: 100 },
+            0.7: { hp: 130 },
+            1: { hp: 150 },
+        }); },
+    hpRegenBase: function () { return choose(
+        {
+            0.5: { hpRegen: 1 },
+            0.7: { hpRegen: 1.3 },
+            1: { hpRegen: 1.5 },
+        }); },
+    attSpeedBase: function () { return {attSpeed: roundToDecimal(random(0.9, 1.1), 1)}; },
+
+    //Specializations:
+
+    //Spec group 1:
+
+    spec1: function () { return pickRandom(
+        [
+            { hp: 100, hpRegen: 1, range: -50 }, //Bruiser part 1
+            { hp: 200, hpRegen: 2, damage: -10 }, //Bruiser part 2
+            { damage: -8, attSpeed: 1 }, //Pew pew
+            { damage: 50, attSpeed: -1 }, //BOOM!
+        ]); },
+
+};
+
+var BugAlleles =
+{
+    rangeBase: function () { return choose(
+        {
+            0.5: { range: 250 },
+            0.7: { range: 270 },
+            1: { range: 290 },
+        }); },
+    damageBase: function () { return choose(
+        {
+            0.5: { damage: 2 },
+            0.7: { damage: 3 },
+            1: { damage: 5 },
+        }); },
+    hpBase: function () { return {hp: Math.floor(random(8, 15))}; },
+    attSpeedBase: function () { return choose(
+        {
+            0.5: { attSpeed: 0.5 },
+            0.7: { attSpeed: 0.75 },
+            1: { attSpeed: 1 },
+        }); },
+    movementSpeedBase: function () { return choose(
+        {
+            0.5: { speed: 15 },
+            0.7: { speed: 20 },
+            1: { speed: 25 },
+        }); },
 
 };

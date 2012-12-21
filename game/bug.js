@@ -24,7 +24,7 @@ function Bug(startPath) {
             currentHp:      0,
             hpRegen:        0,
             attSpeed:       0,
-            speed:          40,
+            speed:          0,
             hitCount:       0,
             kills:          0,
             value:          5,
@@ -34,12 +34,15 @@ function Bug(startPath) {
     this.setBaseAttrs();
 
     this.tPos = new TemporalPos(cen.x - r, cen.y - r, r * 2, r * 2, this.attr.speed, 0);
-    this.base = new BaseObj(this, 10);
-    
-    this.color = "yellow";
+    this.base = new BaseObj(this, 11);
 
-    this.self = new Circle(cen, r, "blue", "black", 10);
-    this.base.addObject(this.self);
+    //Will be replaced
+    this.color = "yellow";
+    this.borderColor =  "red";
+
+    this.lineWidth = 1;
+    this.radius = r;
+
 
     this.genes = new Genes();
     this.base.addObject(this.genes);
@@ -109,12 +112,7 @@ function Bug(startPath) {
         
 
         this.color = getInnerColorFromAttrs(this.attr);
-
-        this.self.tPos.x = this.tPos.getCenter().x;
-        this.self.tPos.y = this.tPos.getCenter().y;
-
-        this.self.fillColor = getInnerColorFromAttrs(this.attr);
-        this.self.color = getOuterColorFromAttrs(this.attr);
+        this.borderColor = getOuterColorFromAttrs(this.attr);
     };
 
     this.destroyAtBase = function() {
@@ -129,4 +127,23 @@ function Bug(startPath) {
 
         this.base.destroySelf();
     };
+
+    this.draw = function(pen) {
+        var pos = this.tPos;
+        var cen = pos.getCenter();
+
+        var hpPercent = this.attr.currentHp / this.attr.hp;
+        var hue = hpPercent * 135;
+
+        DRAW.arc(pen, cen, this.radius + this.lineWidth,
+            0, Math.PI * 2 * hpPercent,
+            new HSLColor().h(hue).s(50).l(50).a(0).str(), 3,
+            new HSLColor().h(hue).s(90).l(60).a(1).str());
+
+        DRAW.circle(pen, cen, this.radius,
+                    this.color, 1, this.borderColor);
+
+        DRAW.circle(pen, cen, this.attr.range,
+                    setAlpha(this.color, 0.13));
+    }
 }

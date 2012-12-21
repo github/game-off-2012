@@ -122,3 +122,59 @@
         this.text(x - pen.measureText(text).width / 2, y, text, pen);
     }
 };
+
+DRAW = {
+    circle: function(pen, centerPos, r, insideColor, borderWidth, borderColor) {
+        DRAW.arc(pen, centerPos, r, 0, Math.PI * 2, insideColor, borderWidth, borderColor);
+    },
+    arc: function(pen, centerPos, r, angleStart, angleEnd, insideColor, borderWidth, borderColor) {
+
+        if(borderWidth) {
+            pen.lineWidth = borderWidth;
+            pen.strokeStyle = borderColor;
+        }
+        else {
+            pen.lineWidth = 0;
+            pen.strokeStyle = "transparent";
+        }
+
+        pen.fillStyle = insideColor;
+
+        pen.beginPath();
+        pen.arc(centerPos.x, centerPos.y, r, angleStart, angleEnd, false);
+        //pen.closePath();
+        pen.fill();
+        pen.stroke();
+    },
+    piePiece: function(pen, centerPos, r, angleStart, angleEnd, insideColor, borderWidth, borderColor) {
+        pen.lineWidth = borderWidth;
+        pen.strokeStyle = borderColor;
+
+        pen.fillStyle = insideColor;
+
+        pen.beginPath();
+        pen.arc(centerPos.x, centerPos.y, r, angleStart, angleEnd, false);
+        pen.lineTo(centerPos.x, centerPos.y);
+        pen.closePath();
+        pen.fill();
+        pen.stroke();
+    },
+    rect: function(pen, rect, insideColor, borderWidth, borderColor) {
+        if(borderWidth) {
+            pen.lineWidth = borderWidth;
+            pen.strokeStyle = borderColor;
+        }
+        else {
+            pen.lineWidth = 0;
+            pen.strokeStyle = "transparent";
+        }
+
+        pen.fillStyle = insideColor;
+
+        pen.beginPath();
+        pen.rect(rect.x + borderWidth / 2, rect.y + borderWidth / 2,
+                 rect.w - borderWidth, rect.h - borderWidth);
+        pen.fill();
+        pen.stroke();
+    }
+};

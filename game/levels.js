@@ -63,83 +63,47 @@ var tutorialLevelTwo = {
     ],
 };
 
+var baseBugAlleles = [
+    function () { return { attack: bugAttackTypes.BugBullet }; },
+
+    BugAlleles.rangeBase,
+    BugAlleles.damageBase,
+    BugAlleles.hpBase,
+    BugAlleles.attSpeedBase,
+    BugAlleles.movementSpeedBase,
+
+    function () { return { speed: 20 }; },
+];
+
 var baseLevel = {
     waves: [
         {
             //The array should really be a object with the names the allele names
-            5: [
-                function () { return { attack: bugAttackTypes.BugBullet }; },
-                AllAlleleGroups.targetBase,
-                AllAlleleGroups.rangeBase,
-                function () { return { speed: 20 }; },
-            ],
+            5: baseBugAlleles,
             waveTime: 20,
-            spawnDelay: 1
+            spawnDelay: 1,
+            attributeModifier: 1
         },
         {
-            7: [
-                function () { return { attack: bugAttackTypes.BugBullet }; },
-                AllAlleleGroups.targetBase,
-                AllAlleleGroups.rangeBase,
-                function () { return { speed: 30, damage: 5 }; },
-            ],
-            waveTime: 14,
-            spawnDelay: 0.5
+            //The array should really be a object with the names the allele names
+            10: baseBugAlleles,
+            waveTime: 30,
+            spawnDelay: 0.5,
+            attributeModifier: 1
         },
         {
-            14: [
-                function () { return { attack: bugAttackTypes.BugBullet }; },
-                AllAlleleGroups.targetBase,
-                AllAlleleGroups.damageBase,
-                AllAlleleGroups.hpBase,
-                function () { return { speed: 20, attSpeed: 1, damage: 10 }; },
-            ],
-            waveTime: 14,
-            spawnDelay: 0.5
+            //The array should really be a object with the names the allele names
+            20: baseBugAlleles,
+            waveTime: 30,
+            spawnDelay: 0.5,
+            attributeModifier: 1
         },
         {
-            14: [
-                function () { return { attack: bugAttackTypes.BugBullet }; },
-                AllAlleleGroups.targetBase,
-                AllAlleleGroups.damageBase,
-                AllAlleleGroups.hpBase,
-                AllAlleleGroups.hpRegenBase,
-                AllAlleleGroups.attSpeedBase,
-                function () { return { speed: 20, hpRegen: 100, hp: -99 }; },
-            ],
-            waveTime: 14,
-            spawnDelay: 0.5
+            //The array should really be a object with the names the allele names
+            40: baseBugAlleles,
+            waveTime: 30,
+            spawnDelay: 0.25,
+            attributeModifier: 1
         },
-        {
-            15: [
-                function () { return { attack: bugAttackTypes.BugBullet }; },
-                AllAlleleGroups.targetBase,
-                AllAlleleGroups.damageBase,
-                AllAlleleGroups.hpBase,
-                AllAlleleGroups.hpRegenBase,
-                AllAlleleGroups.attSpeedBase,
-                AllAlleleGroups.attack2,
-                AllAlleleGroups.attack3,
-                function () { return { speed: 30, hp: 300 }; },
-            ],
-            waveTime: 20,
-            spawnDelay: 0.5
-        },
-        {
-            20: [
-                function () { return { attack: bugAttackTypes.BugBullet }; },
-                AllAlleleGroups.targetBase,
-                AllAlleleGroups.damageBase,
-                AllAlleleGroups.hpBase,
-                AllAlleleGroups.hpRegenBase,
-                AllAlleleGroups.attSpeedBase,
-                AllAlleleGroups.attack2,
-                AllAlleleGroups.specization1,
-                AllAlleleGroups.specization2,
-                function () { return { speed: 15 }; },
-            ],
-            waveTime: 20,
-            spawnDelay: 0.2
-        }
     ],
 };
