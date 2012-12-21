@@ -10,7 +10,6 @@ function TowerDragger(pos, towerGeneratorFnc) {
     this.displayedTower = towerGeneratorFnc(true);
 
     this.placingTower = false;
-    this.lastMousePos = null;
 
     this.draw = function (pen) {
 
@@ -20,8 +19,6 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
         if (this.placingTower) {
             this.placingTower.recalculateAppearance(true);
-            this.placingTower.tPos.x = this.lastMousePos.x;
-            this.placingTower.tPos.y = this.lastMousePos.y;
             this.placingTower.draw(pen);
         }
     }
@@ -34,20 +31,18 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
         if(tower) {
             if(canPlace(tower, e, getEng(this))) {
-                this.lastMousePos = e;
+                tower.tPos.x = e.x;
+                tower.tPos.y = e.y;
             } else {
                 tower.tPos.x = e.x;
                 tower.tPos.y = e.y;
                 var towerCollision = findClosestToRect(eng, "Tower", tower.tPos, 100);
 
                 if(towerCollision) {
-                    var offsetFromTower = minVecJustTouchingRects(tower.tPos, towerCollision.tPos);
+                    var offsetFromTower = minVecForDistanceRects(tower.tPos, towerCollision.tPos, 1);
 
                     tower.tPos.x += offsetFromTower.x;
                     tower.tPos.y += offsetFromTower.y;
-
-                    this.lastMousePos.x = tower.tPos.x;
-                    this.lastMousePos.y = tower.tPos.y;
 
                     var worked = minVecBetweenRects(tower.tPos, towerCollision.tPos);
 
@@ -71,7 +66,8 @@ function TowerDragger(pos, towerGeneratorFnc) {
         if (!this.placingTower && game.money - curCost >= 0) {
             //They are clicking on the placer, so begin placing
             this.placingTower = this.towerGeneratorFnc();
-            this.lastMousePos = e;
+            this.placingTower.tPos.x = e.x;
+            this.placingTower.tPos.y = e.y;
             game.input.globalMouseMove[this.base.id] = this;
             game.input.globalMouseClick[this.base.id] = this;
 
@@ -91,7 +87,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
         if (this.placingTower) {
             //They already clicked on the placer, so they are trying to place now
-            if(tryPlaceTower(this.placingTower, e, eng)) {
+            if(tryPlaceTower(this.placingTower, this.placingTower.tPos, eng)) {
                 if (!game.input.ctrlKey) {
                     this.placingTower = false;
                     delete game.input.globalMouseMove[this.base.id];

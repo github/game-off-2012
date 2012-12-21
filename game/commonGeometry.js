@@ -101,9 +101,23 @@ function minVecToOuterRect(point, rect, vector) {
     return vector;
 }
 
-//Gets the minimum vector from rectOne to rectTwo
-//Basically just the minimum vec between the vertices of one and two
+//Gets the minimum vector from rectOne to rectTwo to make them touch or overlap.
+//(so 0 if they are already overlapping).
 function minVecBetweenRects(rectOne, rectTwo) {
+    var normal = minVecBetweenRectsOneWay(rectOne, rectTwo);
+    var opposite = minVecBetweenRectsOneWay(rectTwo, rectOne);
+
+    if(opposite.magSq() < normal.magSq()) {
+        opposite.x *= -1;
+        opposite.y *= -1;
+        return opposite;
+    }
+    return normal;
+}
+
+//Gets the minimum vector from rectOne to rectTwo to make them touch.
+//Basically just the minimum vec between the vertices of one and two.
+function minVecBetweenRectsOneWay(rectOne, rectTwo) {
     if (!assertDefined("minVecBetweenRects", rectOne, rectTwo) ||
         !assertRectangle(rectOne) || !assertRectangle(rectTwo))
         return new Vector(0, 0);
@@ -127,19 +141,37 @@ function minVecBetweenRects(rectOne, rectTwo) {
     return minimum;
 }
 
-//Gets the minimum vector to make 2 rects just touch
-function minVecJustTouchingRects(rectOne, rectTwo) {
-    if (!assertDefined("minVecJustTouchingRects", rectOne, rectTwo) ||
+//Gives the delta for one to be distance away from two
+function minVecForDistanceRects(rectOne, rectTwo, distance) {
+    if (!assertDefined("minVecForDistanceRects", rectOne, rectTwo, distance) ||
         !assertRectangle(rectOne) || !assertRectangle(rectTwo))
         return new Vector(0, 0);
 
+    var xIntersect = false;
     var xChange1 = rectTwo.x - (rectOne.x + rectOne.w); //Top of two to bottom of one
     var xChange2 = (rectTwo.x + rectTwo.w) - rectOne.x;
     var xChange = Math.abs(xChange1) < Math.abs(xChange2) ? xChange1 : xChange2;
+    var xIntersect = Math.abs(xChange1) < Math.abs(xChange2) ? xChange1 < 0 : xChange2 > 0;
 
+    var yIntersect = false;
     var yChange1 = rectTwo.y - (rectOne.y + rectOne.h);
     var yChange2 = (rectTwo.y + rectTwo.h) - rectOne.y;
     var yChange = Math.abs(yChange1) < Math.abs(yChange2) ? yChange1 : yChange2;
+    var yIntersect = Math.abs(yChange1) < Math.abs(yChange2) ? yChange1 < 0 : yChange2 > 0;
+
+    if(xIntersect && yIntersect) {
+        if(Math.abs(xChange) > Math.abs(yChange)) {
+            xChange = 0;
+        } else {
+            yChange = 0;
+        }
+    }
+
+    if(xChange) {
+        xChange += xChange > 0 ? distance : -distance;
+    } else {
+        yChange += yChange > 0 ? distance : -distance;
+    }
 
     return new Vector(xChange, yChange);
 }
