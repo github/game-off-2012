@@ -1,3 +1,6 @@
+//ALL DISTANCE IN HERE SHOULD BE DONE USING THE FOLLOWING PARADIGM:
+//A distance or delta, or vecTo, etc should be:   vecTo(x, y) = y - x, so x + vecTo(x, y) = y...
+
 //For all functions:
     //rect in x, y, w, h format
     //point in x, y format
@@ -74,6 +77,30 @@ function vecToRect(point, rect, vector) {
     return vector;
 }
 
+//Gets the minimum distance from the point to the bounds of the rect
+//(so if the point is inside it returns the vector to the closest side)
+function minVecToOuterRect(point, rect, vector) {
+    if (!assertDefined("vecToRect", rect, point) || !assertRectangle(rect))
+        return new Vector(0, 0);
+
+    if(!vector)
+        vector = new Vector(0, 0);
+
+    var cenX = rect.x + rect.w / 2;
+    if(point.x < cenX)
+        vector.x = rect.x - point.x;
+    else
+        vector.x = (rect.x + rect.w) - point.x;
+
+    var cenY = rect.y + rect.h / 2;
+    if(point.y < cenY)
+        vector.y = rect.y - point.y;
+    else
+        vector.y = (rect.y + rect.h) - point.y;
+
+    return vector;
+}
+
 //Gets the minimum vector from rectOne to rectTwo
 //Basically just the minimum vec between the vertices of one and two
 function minVecBetweenRects(rectOne, rectTwo) {
@@ -100,12 +127,38 @@ function minVecBetweenRects(rectOne, rectTwo) {
     return minimum;
 }
 
-//Gets the minimum vector for rectOne to be fully overlapped by rectTwo
-//Its behaviour is undefined if rectOne cannot be fully overlapped by rectTwo
+//Gets the minimum vector to make 2 rects just touch
+function minVecJustTouchingRects(rectOne, rectTwo) {
+    if (!assertDefined("minVecJustTouchingRects", rectOne, rectTwo) ||
+        !assertRectangle(rectOne) || !assertRectangle(rectTwo))
+        return new Vector(0, 0);
+
+    var xChange1 = rectTwo.x - (rectOne.x + rectOne.w); //Top of two to bottom of one
+    var xChange2 = (rectTwo.x + rectTwo.w) - rectOne.x;
+    var xChange = Math.abs(xChange1) < Math.abs(xChange2) ? xChange1 : xChange2;
+
+    var yChange1 = rectTwo.y - (rectOne.y + rectOne.h);
+    var yChange2 = (rectTwo.y + rectTwo.h) - rectOne.y;
+    var yChange = Math.abs(yChange1) < Math.abs(yChange2) ? yChange1 : yChange2;
+
+    return new Vector(xChange, yChange);
+}
+
+//Gets the minimum vector for rectOne to be fully overlapped by rectTwo, or two by one
+//Its behaviour is undefined if fully overlap is impossible (rectangles with one wide and one tall)
 function minVecFullOverlapRects(rectOne, rectTwo) {
     if (!assertDefined("minVecFullOverlapRects", rectOne, rectTwo) ||
         !assertRectangle(rectOne) || !assertRectangle(rectTwo))
         return new Vector(0, 0);
+
+    if(rectTwo.w > rectOne.w) {
+        var vect = minVecBetweenRects(rectTwo, rectOne);
+        vect.x *= -1;
+        vect.y *= -1;
+
+        return vect;
+    }
+
 
     var distance1 = vecToRect(new Vector(rectOne.x, rectOne.y), rectTwo);
     var distance2 = vecToRect(new Vector(rectOne.x + rectOne.w, rectOne.y), rectTwo);

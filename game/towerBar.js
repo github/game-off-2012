@@ -13,20 +13,50 @@ function TowerDragger(pos, towerGeneratorFnc) {
     this.lastMousePos = null;
 
     this.draw = function (pen) {
-        var tileSize = getGame(this).tileSize;
 
         this.displayedTower.tPos = this.tPos;
         this.displayedTower.recalculateAppearance();
         this.displayedTower.draw(pen);
 
         if (this.placingTower) {
-            this.displayedTower.tPos = new TemporalPos(this.lastMousePos.x, this.lastMousePos.y, tileSize, tileSize);
-            this.displayedTower.draw(pen);
+            this.placingTower.recalculateAppearance(true);
+            this.placingTower.tPos.x = this.lastMousePos.x;
+            this.placingTower.tPos.y = this.lastMousePos.y;
+            this.placingTower.draw(pen);
         }
     }
 
     this.mousemove = function (e) {
-        this.lastMousePos = e;
+        //var towerCollision = findClosestToPoint(eng, "Tower", tower.tPos.getCenter(), towerRadius);
+
+        var tower = this.placingTower;
+        var eng = getEng(this);
+
+        if(tower) {
+            if(canPlace(tower, e, getEng(this))) {
+                this.lastMousePos = e;
+            } else {
+                tower.tPos.x = e.x;
+                tower.tPos.y = e.y;
+                var towerCollision = findClosestToRect(eng, "Tower", tower.tPos, 100);
+
+                if(towerCollision) {
+                    var offsetFromTower = minVecJustTouchingRects(tower.tPos, towerCollision.tPos);
+
+                    tower.tPos.x += offsetFromTower.x;
+                    tower.tPos.y += offsetFromTower.y;
+
+                    this.lastMousePos.x = tower.tPos.x;
+                    this.lastMousePos.y = tower.tPos.y;
+
+                    var worked = minVecBetweenRects(tower.tPos, towerCollision.tPos);
+
+                    if(worked.magSq() > 0) {
+                        var breakHere = 0;
+                    }
+                }
+            }
+        }
     }
 
     var firstClick = false;
@@ -36,12 +66,17 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
         firstClick = true;
 
-        if (!this.placingTower) {
+        var curCost = game.currentCost;
+
+        if (!this.placingTower && game.money - curCost >= 0) {
             //They are clicking on the placer, so begin placing
-            this.placingTower = true;
+            this.placingTower = this.towerGeneratorFnc();
             this.lastMousePos = e;
             game.input.globalMouseMove[this.base.id] = this;
             game.input.globalMouseClick[this.base.id] = this;
+
+            game.money -= curCost;
+            game.currentCost *= 1.3;
         }
     }
 
@@ -56,14 +91,16 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
         if (this.placingTower) {
             //They already clicked on the placer, so they are trying to place now
-            if (!game.input.ctrlKey) {
-                this.placingTower = false;
-                delete game.input.globalMouseMove[this.base.id];
-                delete game.input.globalMouseClick[this.base.id];
+            if(tryPlaceTower(this.placingTower, e, eng)) {
+                if (!game.input.ctrlKey) {
+                    this.placingTower = false;
+                    delete game.input.globalMouseMove[this.base.id];
+                    delete game.input.globalMouseClick[this.base.id];
+                }
             }
-            var tileDrop = findClosest(eng, "Tile", e, 0);
-            if (tileDrop) {
-                tryPlaceTower(this.towerGeneratorFnc(), tileDrop);
+            else {
+                //Nothing, we could not place tower but they paid for it so
+                //they have to place it somewhere!
             }
         }
     }

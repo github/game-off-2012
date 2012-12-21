@@ -1,7 +1,7 @@
 //object means: object.(BaseObj)base
 
 
-//findClosest
+//findClosestToPoint
     //What it do:
         //Finds the closest object (within maxDistance) to target.
         //(Returns null if nothing is found) 
@@ -12,7 +12,7 @@
         //target.x and target.y (position of the place you are finding the closest to)
         //maxDistance means the object returned must be <= maxDistance away (so 0 is fine)
 
-    //function findClosest(engine, type, target, maxDistance)
+    //function findClosestToPoint(engine, type, target, maxDistance)
 
 
 //findAllWithin
@@ -35,13 +35,13 @@
 /********************************* CODE START *********************************/
 
 
-function findClosest(engine, type, target, maxDistance) {
+function findClosestToRect(engine, type, targetRect, maxDistance) {
     if (!engine.curQuadTree) //I want to crash... but this is legitimate.
         return null;
 
-    if (!assertDefined("findClosest", engine, type, target))
+    if (!assertDefined("findClosestToPoint", engine, type, targetRect))
         return null;
-    
+
     if (!engine.curQuadTree.objTrees[type])
         return null;
 
@@ -50,19 +50,68 @@ function findClosest(engine, type, target, maxDistance) {
 
     var within = [];
 
-    if (DFlag.logn && DFlag.logn.findClosest)
-        DFlag.logn.findClosest.max += relevantArray.length;
+    if (DFlag.logn && DFlag.logn.findClosestToRect)
+        DFlag.logn.findClosestToRect.max += relevantArray.length;
 
-    var realClosest = null;
-    var realClosDisSq = maxDistance * maxDistance;
-    for (var x = 0; x < relevantArray.length; x++) {
-        returnedObj = relevantArray[x];
+    var closest = findClosestGeneric(relevantQuadTree, relevantArray,
+        function (splitX, axisPos) {
+            if (splitX) {
+                if ((targetRect.x + targetRect.w) < axisPos)
+                    return -1;
+                else if (targetRect.x > axisPos)
+                    return 1;
+                else
+                    return 0;
+            }
+            else {
+                if ((targetRect.y + targetRect.h) < axisPos)
+                    return -1;
+                else if (targetRect.y > axisPos)
+                    return 1;
+                else
+                    return 0;
+            }
+        },
+        function (rect) {
+            return minVecBetweenRects(targetRect, rect).magSq();
+        },
+        maxDistance * maxDistance, true);
 
-        var disSquared = vecToRect(target, returnedObj.tPos).magSq();
+    return closest;
+}
 
-        if (disSquared <= realClosDisSq) {
-            realClosest = returnedObj;
-            realClosDisSq = disSquared;
+//This code is mildly inconsistent and probably shouldn't be used with
+//a rect as the target, try to only use a point as the target just to be sure.
+function findClosestToPoint(engine, type, target, maxDistance) {
+    if (!engine.curQuadTree) //I want to crash... but this is legitimate.
+        return null;
+
+    if (!assertDefined("findClosestToPoint", engine, type, target))
+        return null;
+
+    if (!engine.curQuadTree.objTrees[type])
+        return null;
+
+    var relevantQuadTree = engine.curQuadTree.objTrees[type].tree;
+    var relevantArray = engine.base.allChildren[type];
+
+    var within = [];
+
+    if (DFlag.logn && DFlag.logn.findClosestToPoint)
+        DFlag.logn.findClosestToPoint.max += relevantArray.length;
+
+    if(DFlag.logn && DFlag.logn.findClosestToPoint) {
+        var realClosest = null;
+        var realClosDisSq = maxDistance * maxDistance;
+        for (var x = 0; x < relevantArray.length; x++) {
+            returnedObj = relevantArray[x];
+
+            var disSquared = vecToRect(target, returnedObj.tPos).magSq();
+
+            if (disSquared <= realClosDisSq) {
+                realClosest = returnedObj;
+                realClosDisSq = disSquared;
+            }
         }
     }
 
@@ -92,7 +141,6 @@ function findClosest(engine, type, target, maxDistance) {
 
     return closest;
 }
-
 
 function findAllWithin(engine, type, target, maxDistance) {
     if (!engine.curQuadTree) //I want to crash... but this is legitimate.

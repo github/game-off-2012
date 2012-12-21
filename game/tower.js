@@ -332,11 +332,13 @@ function Tower(baseTile, tPos) {
         var eng = getEng(this);
 
         tempIndicator.end = e;
-        var towerSelected = findClosest(eng, "Tower", e, 0);
-        var tileSelected = findClosest(eng, "Tile", e, 0);
-        if(!towerSelected && tileSelected)
+        var towerSelected = findClosestToPoint(eng, "Tower", e, 0);
+        var tileSelected = findClosestToPoint(eng, "Tile", e, 0);
+        var path = findClosestToPoint(eng, "Path", e, 0);
+        if(!towerSelected && tileSelected && !path)
         {
-            this.tPos = tileSelected.tPos;
+            this.tPos.x = e.x;
+            this.tPos.y = e.y;
         }
     }
 
@@ -350,7 +352,7 @@ function Tower(baseTile, tPos) {
         this.startDrag = null;
 
         /*
-        var towerSelected = findClosest(eng, "Tower", e, 0);
+        var towerSelected = findClosestToPoint(eng, "Tower", e, 0);
         if(towerSelected && towerSelected != this)
         {
             for (var i = 0; i < this.connections.length; i++)
@@ -372,29 +374,48 @@ function Tower(baseTile, tPos) {
     };
 }
 
-function tryPlaceTower(tower, tile)
+function canPlace(tower, pos, eng) {
+    var game = eng.game;
+
+    var originalPosX = tower.tPos.x;
+    var originalPosY = tower.tPos.y;
+
+    tower.recalculateAppearance(true);
+    tower.tPos.x = pos.x;
+    tower.tPos.y = pos.y;
+
+    var towerRadius = tower.tPos.w / 2;
+
+    var e = pos;
+    var towerCollision = findClosestToRect(eng, "Tower", tower.tPos, 0);
+    var pathOnTile = findClosestToPoint(eng, "Path", e, 0);
+    var tileExist = findClosestToPoint(eng, "Tile", e, 0);
+
+    tower.tPos.x = originalPosX;
+    tower.tPos.y = originalPosY;
+
+    if (!towerCollision && !pathOnTile && tileExist) {
+        return true;
+    }
+    return false;
+}
+
+function tryPlaceTower(tower, pos, eng)
 {
-    var eng = tile.base.rootNode;
     var game = eng.game;
 
     tower.recalculateAppearance(true);
-    var towerRadius = tower.tPos.w / 2;
+    tower.tPos.x = pos.x;
+    tower.tPos.y = pos.y;
 
-    var e = tile.tPos.getCenter();
-    var towerOnTile = findClosest(eng, "Tower", e, towerRadius);
-    var pathOnTile = findClosest(eng, "Path", e, 0);
+    var tileExist = findClosestToPoint(eng, "Tile", pos, 0);
 
-    var curCost = game.currentCost;
-
-    if (!towerOnTile && !pathOnTile && game.money - curCost >= 0) {
-        game.money -= curCost;
-        tower.value = curCost;
-
-        game.currentCost *= 1.3;
-
-        tower.tPos = cloneObject(tile.tPos);
+    if (canPlace(tower, pos, eng)) {
         eng.base.addObject(tower);
         game.changeSel(tower);
-        getAnElement(tile.base.children.Selectable).ignoreNext = true;
+        tower.value = game.currentCost;
+        getAnElement(tileExist.base.children.Selectable).ignoreNext = true;
+        return true;
     }
+    return false;
 };

@@ -8,7 +8,7 @@ var targetStrategies = {
             if(prevTarget)
                 prevTarget.hidden = true;
             
-            var target = findClosest(attacker.base.rootNode, targetType,
+            var target = findClosestToPoint(attacker.base.rootNode, targetType,
                                 attacker.tPos.getCenter(), attacker.attr.range);
             
             if(prevTarget)
