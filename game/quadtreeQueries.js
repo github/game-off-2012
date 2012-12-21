@@ -34,6 +34,50 @@
 
 /********************************* CODE START *********************************/
 
+function findAllWithinDistanceToRect(engine, type, targetRect, maxDistance) {
+    if (!engine.curQuadTree) //I want to crash... but this is legitimate.
+        return null;
+
+    if (!assertDefined("findAllWithinDistanceToRect", engine, type, targetRect))
+        return null;
+
+    if (!engine.curQuadTree.objTrees[type])
+        return null;
+
+    var relevantQuadTree = engine.curQuadTree.objTrees[type].tree;
+    var relevantArray = engine.base.allChildren[type];
+
+    var within = [];
+
+    if (DFlag.logn && DFlag.logn.findAllWithinDistanceToRect)
+        DFlag.logn.findAllWithinDistanceToRect.max += relevantArray.length;
+
+    findClosestGeneric(relevantQuadTree, relevantArray,
+        function (splitX, axisPos) {
+            if (splitX) {
+                if ((targetRect.x + targetRect.w) < axisPos)
+                    return -1;
+                else if (targetRect.x > axisPos)
+                    return 1;
+                else
+                    return 0;
+            }
+            else {
+                if ((targetRect.y + targetRect.h) < axisPos)
+                    return -1;
+                else if (targetRect.y > axisPos)
+                    return 1;
+                else
+                    return 0;
+            }
+        },
+        function (rect) {
+            return minVecBetweenRects(targetRect, rect).magSq();
+        },
+        maxDistance * maxDistance, false, within);
+
+    return within;
+}
 
 function findClosestToRect(engine, type, targetRect, maxDistance) {
     if (!engine.curQuadTree) //I want to crash... but this is legitimate.

@@ -202,8 +202,6 @@ function Tower(baseTile, tPos) {
 
     this.update = function(dt) {
         this.recalculateAppearance(true);
-
-
     }
 
     //This may also change x, y, w and h.
@@ -388,8 +386,8 @@ function canPlace(tower, pos, eng) {
 
     var e = pos;
     var towerCollision = findClosestToRect(eng, "Tower", tower.tPos, 0);
-    var pathOnTile = findClosestToPoint(eng, "Path", e, 0);
-    var tileExist = findClosestToPoint(eng, "Tile", e, 0);
+    var pathOnTile = findClosestToRect(eng, "Path", tower.tPos, 0);
+    var tileExist = findClosestToRect(eng, "Tile", tower.tPos, 0);
 
     tower.tPos.x = originalPosX;
     tower.tPos.y = originalPosY;

@@ -224,3 +224,13 @@ function vecBetweenRectAndCircle(circle, circle) {
     else
         return dist;
 }
+
+//I just can't shake the feeling there is a much more efficient way to do this.
+function rangeOverlap(startOne, endOne, startTwo, endTwo) {
+    return (
+       startOne < startTwo && endOne > startTwo ||
+       startOne < endTwo && endOne > endTwo ||
+       startTwo < startOne && endTwo > startOne ||
+       startTwo < endOne && endTwo > endOne
+        );
+}
