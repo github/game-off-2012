@@ -4,8 +4,9 @@ function TextWrapper(text, zorder) {
     this.base = new BaseObj(this, zorder, true);
     
     var fontSize = 14;
+    var font = fontSize + "px courier";
     var myCanvas = document.createElement('canvas').getContext('2d');
-    myCanvas.font = fontSize + "px courier";
+    myCanvas.font = font;
     var lines = [];
         
     //http://stackoverflow.com/questions/2936112/text-wrap-in-a-canvas-element
@@ -35,7 +36,7 @@ function TextWrapper(text, zorder) {
     }
     
     this.draw = function (pen) {
-        pen.font = fontSize + "px courier";
+        pen.font = font;
         pen.fillStyle = "green";
         pen.textAlign = "center";
         pen.textBaseline = "middle";

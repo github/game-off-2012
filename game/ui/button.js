@@ -12,9 +12,9 @@ function Button(text, callback, zorder) {
     this.draw = function(pen) {
         //Draw box
         if (down) {
-            pen.fillStyle = "#333";
+            pen.fillStyle = "#555";
         } else if (hover) {
-            pen.fillStyle = "#111";
+            pen.fillStyle = "#222";
         } else {
             pen.fillStyle = "black";
         }

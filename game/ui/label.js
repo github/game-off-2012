@@ -8,15 +8,13 @@ function Label(text, zorder) {
     this.base = new BaseObj(this, zorder);
     this.type = "Label" + zorder;
     
-    var color = "green";
-    var font = "14px courier";
-    
-    this.draw = function (pen) {        
-        pen.fillStyle = color;
-        pen.font = font;
-        
-        var loc = this.tPos.getCenter();
-        ink.cenText(loc.x, loc.y, text, pen);
+    this.draw = function (pen) {
+        // Draw text
+        pen.fillStyle = "green";
+        pen.font = "14px courier";
+        pen.textBaseline = "middle";
+        var cen = this.tPos.getCenter();
+        ink.cenText(cen.x, cen.y, text, pen);
         return;
     }
     
