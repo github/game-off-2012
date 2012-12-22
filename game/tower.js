@@ -210,7 +210,7 @@ function Tower(baseTile, tPos) {
         this.borderColor = getOuterColorFromAttrs(this.attr);
 
         //Shows HP
-        var outerWidth = Math.pow(this.attr.hp / 50, 0.9) * 5;
+        var outerWidth = Math.pow(this.attr.hp / 50, 0.5) * 8;
         this.outerWidth = outerWidth;
 
         //Show HP regen?
@@ -232,12 +232,28 @@ function Tower(baseTile, tPos) {
     }
 
     this.draw = function (pen) {
-        var pos = this.tPos;
+        var pos = this.tPos.clone();
         var cen = pos.getCenter();
+
+        pos.x += this.outerWidth;
+        pos.y += this.outerWidth;
+
+        pos.w -= this.outerWidth * 2;
+        pos.h -= this.outerWidth * 2;
 
         DRAW.rect(pen, pos,
                   this.color);
 
+        this.drawHpBars(pen, pos);
+
+
+        DRAW.circle(pen, cen, this.attr.range,
+            setAlpha(this.color, 0.1));
+
+        drawAttributes(this, pen);
+    };
+
+    this.drawHpBars = function(pen, pos) {
 
         //One hp bar per x hp
         var hpPerBar = 10;
@@ -252,11 +268,14 @@ function Tower(baseTile, tPos) {
         //Shows HP
         var outerWidth = Math.pow(this.attr.hp / 50, 0.9);
 
+        var layers = Math.ceil(numberOfBars / barsPerSide / 4);
+
         //Draw hp bars around rectangle...
         //We draw it with a finite state machine, the state is the position, color, size etc.
         //Then we just increment the state machine a lot.
-        var barHeight = 10 / Math.pow(barsPerSide, 0.1);//50 / Math.ceil(numberOfBars / barsPerSide / 4);
+        var barHeight = this.outerWidth / layers;//10 / Math.pow(barsPerSide, 0.1);//50 / Math.ceil(numberOfBars / barsPerSide / 4);
         var barWidth = pos.w / barsPerSide;
+
 
         var posX = pos.x;
         var posY = pos.y;
@@ -341,7 +360,7 @@ function Tower(baseTile, tPos) {
             DRAW.rect(pen, new Rect(posX + xBuffer, posY + yBuffer, Math.abs(width) - xBuffer * 2, Math.abs(height) - yBuffer * 2), color);
 
             if(rotationPosition <= 1)
-               nextBar();
+                nextBar();
 
             sideCount++;
             if(sideCount >= barsPerSide) {
@@ -352,13 +371,7 @@ function Tower(baseTile, tPos) {
             numberOfBars--;
             barsFilled--;
         }
-
-
-        DRAW.circle(pen, cen, this.attr.range,
-            setAlpha(this.color, 0.1));
-
-        drawAttributes(this, pen);
-    };
+    }
 
     this.tryUpgrade = function () {
         var game = getGame(this);
@@ -571,7 +584,8 @@ function tryPlaceTower(tower, pos, eng)
         eng.base.addObject(tower);
         game.changeSel(tower);
         tower.value = game.currentCost;
-        getAnElement(tileExist.base.children.Selectable).ignoreNext = true;
+        if(tileExist)
+            getAnElement(tileExist.base.children.Selectable).ignoreNext = true;
         return true;
     }
     return false;

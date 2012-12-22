@@ -610,12 +610,11 @@ var bugAttackTypes = {
 
 
 function drawAttributes(user, pen) {
-
     if(user.lineWidth) {
         user.tPos.x += user.lineWidth;
         user.tPos.y += user.lineWidth;
-        user.tPos.w -= Math.ceil(user.lineWidth * 1.5);
-        user.tPos.h -= Math.ceil(user.lineWidth * 1.5);
+        user.tPos.w -= Math.ceil(user.lineWidth * 2);
+        user.tPos.h -= Math.ceil(user.lineWidth * 2);
     }
 
     makeTiled(pen,
@@ -666,7 +665,7 @@ function drawAttributes(user, pen) {
     if(user.lineWidth) {
         user.tPos.x -= user.lineWidth;
         user.tPos.y -= user.lineWidth;
-        user.tPos.w += Math.ceil(user.lineWidth * 1.5);
-        user.tPos.h += Math.ceil(user.lineWidth * 1.5);
+        user.tPos.w += Math.ceil(user.lineWidth * 2);
+        user.tPos.h += Math.ceil(user.lineWidth * 2);
     }
 }
