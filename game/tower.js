@@ -26,12 +26,8 @@ function Tower_Connection(t1, t2) {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this, 11);
 
-    // Those fucking random numbers passed as the last argument? Those are positions along the line where arrows are drawn. Probably. I can't be sure.
-    // What does 11 mean? Fuck if I know.
-    //Spending some time looking at the constructor would be wise. The 11 is the zorder
-    //(this is something that is done all over the place), and the numbers are the percentages
-    //at which arrowheads are drawn).
-    var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11, {1: 0.1, 2: 0.3, 3: 0.5, 4: 0.7, 5: 0.9});
+    var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11,
+        {1: 0.1, 2: 0.3, 3: 0.5, 4: 0.7, 5: 0.9});
     this.base.addObject(line);
     
     var prevhitCount;
@@ -124,7 +120,7 @@ TowerStats = {
         download:       5,
         hitCount:       0,
         kills:          0,
-        value:          50,
+        value:          50
     };
 
 function Tower(baseTile, tPos) {    
@@ -150,7 +146,7 @@ function Tower(baseTile, tPos) {
             download:       TowerStats.download,
             hitCount:       TowerStats.hitCount,
             kills:          0,
-            value:          TowerStats.value,
+            value:          TowerStats.value
         };
         this.attr.target_Strategy = new targetStrategies.Closest();
         this.attr.attack_types = [];
@@ -254,14 +250,13 @@ function Tower(baseTile, tPos) {
     };
 
     this.drawHpBars = function(pen, pos) {
-
         //One hp bar per x hp
         var hpPerBar = 10;
 
         //Total of hp in bars one one side equal to hp regenerated in x seconds
         var timePerSide = 10;
 
-        var numberOfBars = Math.ceil(this.attr.hp / hpPerBar);
+        var numberOfBars = this.attr.hp / hpPerBar;
         var barsFilled = this.attr.currentHp / hpPerBar;
         var barsPerSide = Math.ceil(timePerSide * this.attr.hpRegen / hpPerBar);
 
@@ -293,8 +288,6 @@ function Tower(baseTile, tPos) {
 
         posY -= height;
 
-        //numberOfBars = clamp(numberOfBars, 0, 25);
-
         function nextBar() {
             switch(rotationPosition) {
                 case 0:
@@ -319,47 +312,73 @@ function Tower(baseTile, tPos) {
             }
             switch(rotationPosition) {
                 case 0:
-                    posY += height * currentFactor;
-                    swapWidthHeight();
-                    posX -= width * (currentFactor - 1);
+                    width = barHeight; //Rotate bar
+                    height = barWidth;
+
+                    posX += barHeight * (currentFactor - 1); //Move out to correct distance away from square
+                    posY += barHeight * currentFactor; //Move to correct start
                     break;
                 case 1:
-                    posX += width * (currentFactor - 1);
-                    swapWidthHeight();
-                    posY -= height * (currentFactor - 1);
+                    width = -barWidth; //Rotate bar
+                    height = barHeight;
+
+                    posX -= barHeight * (currentFactor - 1);
+                    posY += barHeight * (currentFactor - 1);
                     break;
                 case 2:
-                    posY += height * (currentFactor - 1);
-                    swapWidthHeight();
-                    posX -= width * currentFactor;
+                    width = -barHeight; //Rotate bar
+                    height = -barWidth;
+
+                    posX -= barHeight * (currentFactor - 1);
+                    posY -= barHeight * (currentFactor - 1);
                     break;
                 case 3:
-                    swapWidthHeight();
+                    width = barWidth; //Rotate bar
+                    height = barHeight;
+
+                    posX += barHeight * (currentFactor - 1);
+                    posY -= barHeight * (currentFactor + 1);
                     break;
             }
             rotationPosition++;
             if(rotationPosition >= 4) {
-                posX += height * (currentFactor);
-                posY -= height * (currentFactor + 1);
                 rotationPosition = 0;
                 currentFactor++;
             }
         }
 
         while(numberOfBars > 0) {
-            if(rotationPosition > 1)
-                nextBar();
+            //if(rotationPosition > 1)
+              //  nextBar();
 
-            if(barsFilled < 0) {
-                //Should really partially fill the bar...
-                color = "grey";
+            var xBuffer = (width) * 0.15;
+            var yBuffer = (height) * 0.15;
+
+            function drawBar(color, widthPercent, heightPercent) {
+                DRAW.rect(pen,
+                        new Rect(
+                                    posX + xBuffer, posY + yBuffer,
+                                    ((width) - xBuffer * 2) * widthPercent,
+                                    ((height) - yBuffer * 2) * heightPercent
+                                ),
+                         color);
             }
 
-            var xBuffer = Math.abs(width) * 0.15;
-            var yBuffer = Math.abs(height) * 0.15;
-            DRAW.rect(pen, new Rect(posX + xBuffer, posY + yBuffer, Math.abs(width) - xBuffer * 2, Math.abs(height) - yBuffer * 2), color);
+            if(barsFilled < 1) {
+                drawBar("grey", 1, 1);
 
-            if(rotationPosition <= 1)
+                if(barsFilled > 0) {
+                    var currentFill = barsFilled % 1;
+                    if(rotationPosition == 1 || rotationPosition == 3)
+                        drawBar(color, 1, currentFill);
+                    else
+                        drawBar(color, currentFill, 1);
+                }
+            } else {
+                drawBar(color, 1, 1);
+            }
+
+            //if(rotationPosition <= 1)
                 nextBar();
 
             sideCount++;

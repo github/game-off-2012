@@ -29,11 +29,15 @@ function TowerDragger(pos, towerGeneratorFnc) {
         var eng = getEng(this);
 
         if(tower) {
-            if(canPlace(tower, e, eng)) {
-                tower.tPos.x = e.x;
-                tower.tPos.y = e.y;
+            var pos = new Vector(e);
+            pos.x -= tower.tPos.w / 2;
+            pos.y -= tower.tPos.h / 2;
+
+            if(canPlace(tower, pos, eng)) {
+                tower.tPos.x = pos.x;
+                tower.tPos.y = pos.y;
             } else {
-                tower.tryToMove(e, eng);
+                tower.tryToMove(pos, eng);
             }
         }
     }
@@ -50,8 +54,14 @@ function TowerDragger(pos, towerGeneratorFnc) {
         if (!this.placingTower && game.money - curCost >= 0) {
             //They are clicking on the placer, so begin placing
             this.placingTower = this.towerGeneratorFnc();
-            this.placingTower.tPos.x = e.x;
-            this.placingTower.tPos.y = e.y;
+
+            var tower = this.placingTower;
+            var pos = new Vector(e);
+            pos.x -= tower.tPos.w / 2;
+            pos.y -= tower.tPos.h / 2;
+
+            tower.tPos.x = pos.x;
+            tower.tPos.y = pos.y;
             game.input.globalMouseMove[this.base.id] = this;
             game.input.globalMouseClick[this.base.id] = this;
 
