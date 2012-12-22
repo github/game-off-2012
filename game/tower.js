@@ -210,10 +210,11 @@ function Tower(baseTile, tPos) {
         this.borderColor = getOuterColorFromAttrs(this.attr);
 
         //Shows HP
-        var outerWidth = Math.pow(this.attr.hp / 50, 0.9);
+        var outerWidth = Math.pow(this.attr.hp / 50, 0.9) * 5;
+        this.outerWidth = outerWidth;
 
         //Show HP regen?
-        var innerWidth = Math.pow(this.attr.hpRegen * 10, 0.9);
+        var innerWidth = 30; //Math.pow(this.attr.hpRegen * 10, 0.9);
 
         var center = this.tPos.getCenter();
 
@@ -235,8 +236,123 @@ function Tower(baseTile, tPos) {
         var cen = pos.getCenter();
 
         DRAW.rect(pen, pos,
-                  this.color,
-                  this.lineWidth, this.borderColor);
+                  this.color);
+
+
+        //One hp bar per x hp
+        var hpPerBar = 10;
+
+        //Total of hp in bars one one side equal to hp regenerated in x seconds
+        var timePerSide = 10;
+
+        var numberOfBars = Math.ceil(this.attr.hp / hpPerBar);
+        var barsFilled = this.attr.currentHp / hpPerBar;
+        var barsPerSide = Math.ceil(timePerSide * this.attr.hpRegen / hpPerBar);
+
+        //Shows HP
+        var outerWidth = Math.pow(this.attr.hp / 50, 0.9);
+
+        //Draw hp bars around rectangle...
+        //We draw it with a finite state machine, the state is the position, color, size etc.
+        //Then we just increment the state machine a lot.
+        var barHeight = 10 / Math.pow(barsPerSide, 0.1);//50 / Math.ceil(numberOfBars / barsPerSide / 4);
+        var barWidth = pos.w / barsPerSide;
+
+        var posX = pos.x;
+        var posY = pos.y;
+        var width = barWidth;
+        var height = barHeight;
+
+        var color = this.borderColor;
+
+        var rotationPosition = 0; //0 = top, 1 = left, etc (clockwise)
+        var sideCount = 0;
+
+        var onX = true;
+
+        var currentFactor = 1;
+
+        posY -= height;
+
+        //numberOfBars = clamp(numberOfBars, 0, 25);
+
+        function nextBar() {
+            switch(rotationPosition) {
+                case 0:
+                    posX += width;
+                    break;
+                case 1:
+                    posY += height;
+                    break;
+                case 2:
+                    posX += width;
+                    break;
+                case 3:
+                    posY += height;
+                    break;
+            }
+        }
+        function rotateBar() {
+            function swapWidthHeight() {
+                var temp = width;
+                width = -height;
+                height = temp;
+            }
+            switch(rotationPosition) {
+                case 0:
+                    posY += height * currentFactor;
+                    swapWidthHeight();
+                    posX -= width * (currentFactor - 1);
+                    break;
+                case 1:
+                    posX += width * (currentFactor - 1);
+                    swapWidthHeight();
+                    posY -= height * (currentFactor - 1);
+                    break;
+                case 2:
+                    posY += height * (currentFactor - 1);
+                    swapWidthHeight();
+                    posX -= width * currentFactor;
+                    break;
+                case 3:
+                    swapWidthHeight();
+                    break;
+            }
+            rotationPosition++;
+            if(rotationPosition >= 4) {
+                posX += height * (currentFactor);
+                posY -= height * (currentFactor + 1);
+                rotationPosition = 0;
+                currentFactor++;
+            }
+        }
+
+        while(numberOfBars > 0) {
+            if(rotationPosition > 1)
+                nextBar();
+
+            if(barsFilled < 0) {
+                //Should really partially fill the bar...
+                color = "grey";
+            }
+
+            var xBuffer = Math.abs(width) * 0.15;
+            var yBuffer = Math.abs(height) * 0.15;
+            DRAW.rect(pen, new Rect(posX + xBuffer, posY + yBuffer, Math.abs(width) - xBuffer * 2, Math.abs(height) - yBuffer * 2), color);
+
+            if(rotationPosition <= 1)
+               nextBar();
+
+            sideCount++;
+            if(sideCount >= barsPerSide) {
+                sideCount = 0;
+                rotateBar();
+            }
+
+            numberOfBars--;
+            barsFilled--;
+        }
+
 
         DRAW.circle(pen, cen, this.attr.range,
             setAlpha(this.color, 0.1));

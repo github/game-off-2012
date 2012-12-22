@@ -256,7 +256,7 @@ var TowerAlleles =
         }); },
     hpRegenBase: function () { return choose(
         {
-            0.5: { hpRegen: 1 },
+            0.5: { hpRegen: 1.0 },
             0.7: { hpRegen: 1.3 },
             1: { hpRegen: 1.5 },
         }); },
@@ -266,6 +266,7 @@ var TowerAlleles =
 
     //Spec group 1:
 
+    /*
     spec1: function () { return pickRandom(
         [
             { hp: 100, hpRegen: 1, range: -50 }, //Bruiser part 1
@@ -273,6 +274,7 @@ var TowerAlleles =
             { damage: -0.5, attSpeed: 1 }, //Pew pew
             { damage: 50, attSpeed: -0.85 }, //BOOM!
         ]); },
+    */
 
 };
 
