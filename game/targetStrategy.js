@@ -19,6 +19,12 @@ var targetStrategies = {
         this.drawGlyph = function(pen, tPos) {
 	        var color = "grey";
 
+            tPos.x += tPos.w * 0.4;
+            tPos.y += tPos.h * 0.7;
+
+            tPos.w *= 0.6;
+            tPos.h *= 0.8;
+
             var circlePos = [-0.1, 0.5, 0.2];
 
             pen.beginPath();
