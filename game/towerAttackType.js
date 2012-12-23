@@ -93,58 +93,51 @@ function AttackTemplate(attackType, attacker, target, damage, baseAttacker, curr
 //Attacks shouldn't modify the attacker's attribute (unless that is really the goal)
 //If the attack does partial damage then it should create a copy and pass that on.
 var allAttackTypes = {
+    //Each charge bar is constant damage, number of rows relates to charge speed (1 row per constant time)
     Laser: function laser() {
         this.damage_percent = 200;
         this.drawGlyph = function (pen, tPos, user) {
-            //Original glyph code
-            /*
-            var start = new Vector(tPos.x + tPos.w * 0.1, tPos.y - tPos.h * 0.2);
-            var end = new Vector(tPos.x + (tPos.w*0.7), tPos.y - tPos.h);
-
-            pen.strokeStyle = baseColor;
-	        pen.lineWidth = 2;
-	        ink.line(start.x, start.y, end.x, end.y, pen);
-
-            pen.lineWidth = 0.8;
-
-            var dist = cloneObject(start);
-            dist.sub(end);
-            dist = dist.mag() * 0.3;
-
-            end = start;
-
-            for(var i = 0; i <= Math.PI * 2; i += Math.PI / 3 * 0.5)
-            {
-                start = cloneObject(end);
-
-                var delta = new Vector(Math.cos(i) * dist, Math.sin(i) * dist);
-                start.add(delta);
-
-                pen.strokeStyle = globalColorPalette.laser;
-	            pen.lineWidth = 2;
-	            ink.line(start.x, start.y, end.x, end.y, pen);
-            }
-            */
-
             var baseColor = globalColorPalette.laser;
 
-            var percentCharge = user.attackCycle.chargePercent;
+            var bufferPercent = 0.15;
 
+            tPos.x += tPos.w * bufferPercent;
+            tPos.y += tPos.h * bufferPercent;
+
+            tPos.w *= (1 - bufferPercent * 2);
+            tPos.h *= (1 - bufferPercent * 2);
+
+            var percentCharge = user.attackCycle.chargePercent;
             var damage = user.attr.damage;
 
-            var damagePerModule = 0.5;
+            var damagePerModule = 0.1;
 
             var damageModules = Math.ceil(damage / damagePerModule);
             var modulesFilled = damage * percentCharge / damagePerModule;
 
+            var timePerRow = 0.5;
+
+            var rows = user.attackCycle.maxCounter / timePerRow;
+
+
+
             var posX = 0;
             var posY = 0;
-            var width = 0.1;
-            var height = 0.1;
-            while(damageModules > 0) {
+            var width = rows / damageModules;
+            var height = 1 / rows;
 
+
+
+            var widthBuffer = 0.2;
+            var heightBuffer = 0.1;
+
+            while(damageModules > 0) {
                 function drawPart(color) {
-                    DRAW.arcRect(pen, new Rect(posX, posY, width, height).scale(tPos), color);
+                    DRAW.rect(pen, new Rect(
+                        posX + width * widthBuffer,
+                        posY + height * heightBuffer,
+                        width * (1 - widthBuffer * 2),
+                        height * (1 - heightBuffer * 2)).scale(tPos), color);
                 }
 
                 if(modulesFilled >= 1) {
@@ -153,18 +146,46 @@ var allAttackTypes = {
                     drawPart("grey");
                 }
 
-                posX += 0.1;
+                posX += width;
 
-                if(posX >= 0.85) {
-                    posX = 0.1;
-                    posY += 0.1;
+                if(posX >= 1) {
+                    posX = 0;
+                    posY += height;
                 }
 
                 modulesFilled--;
                 damageModules--;
             }
 
+            //Original glyph code
+            /*
+             var start = new Vector(tPos.x + tPos.w * 0.1, tPos.y - tPos.h * 0.2);
+             var end = new Vector(tPos.x + (tPos.w*0.7), tPos.y - tPos.h);
 
+             pen.strokeStyle = baseColor;
+             pen.lineWidth = 2;
+             ink.line(start.x, start.y, end.x, end.y, pen);
+
+             pen.lineWidth = 0.8;
+
+             var dist = cloneObject(start);
+             dist.sub(end);
+             dist = dist.mag() * 0.3;
+
+             end = start;
+
+             for(var i = 0; i <= Math.PI * 2; i += Math.PI / 3 * 0.5)
+             {
+             start = cloneObject(end);
+
+             var delta = new Vector(Math.cos(i) * dist, Math.sin(i) * dist);
+             start.add(delta);
+
+             pen.strokeStyle = globalColorPalette.laser;
+             pen.lineWidth = 2;
+             ink.line(start.x, start.y, end.x, end.y, pen);
+             }
+             */
         };
         this.AttackNode = function(attackTemplate)
         {
