@@ -86,21 +86,22 @@ function AttackTemplate(attackType, attacker, target, damage, baseAttacker, curr
     this.currentAttPos = currentAttPos;    
 }
 
+//Each glyph should illustrate
+//1) charge (user.attackCycle.chargePercent)
+//2) damage (user.attr.damage
+
 //Attacks shouldn't modify the attacker's attribute (unless that is really the goal)
 //If the attack does partial damage then it should create a copy and pass that on.
 var allAttackTypes = {
     Laser: function laser() {
         this.damage_percent = 200;
-        this.drawGlyph = function (pen, tPos) {
-            //Draw text
-            pen.fillStyle = "#000000";
-            pen.font = tPos.h + "px arial";
-            pen.textAlign = 'left';
-
+        this.drawGlyph = function (pen, tPos, user) {
+            //Original glyph code
+            /*
             var start = new Vector(tPos.x + tPos.w * 0.1, tPos.y - tPos.h * 0.2);
             var end = new Vector(tPos.x + (tPos.w*0.7), tPos.y - tPos.h);
 
-            pen.strokeStyle = globalColorPalette.laser;
+            pen.strokeStyle = baseColor;
 	        pen.lineWidth = 2;
 	        ink.line(start.x, start.y, end.x, end.y, pen);
 
@@ -123,8 +124,47 @@ var allAttackTypes = {
 	            pen.lineWidth = 2;
 	            ink.line(start.x, start.y, end.x, end.y, pen);
             }
+            */
 
-            //ink.text(tPos.x, tPos.y, "L", pen);
+            var baseColor = globalColorPalette.laser;
+
+            var percentCharge = user.attackCycle.chargePercent;
+
+            var damage = user.attr.damage;
+
+            var damagePerModule = 0.5;
+
+            var damageModules = Math.ceil(damage / damagePerModule);
+            var modulesFilled = damage * percentCharge / damagePerModule;
+
+            var posX = 0;
+            var posY = 0;
+            var width = 0.1;
+            var height = 0.1;
+            while(damageModules > 0) {
+
+                function drawPart(color) {
+                    DRAW.arcRect(pen, new Rect(posX, posY, width, height).scale(tPos), color);
+                }
+
+                if(modulesFilled >= 1) {
+                    drawPart("blue");
+                } else {
+                    drawPart("grey");
+                }
+
+                posX += 0.1;
+
+                if(posX >= 0.85) {
+                    posX = 0.1;
+                    posY += 0.1;
+                }
+
+                modulesFilled--;
+                damageModules--;
+            }
+
+
         };
         this.AttackNode = function(attackTemplate)
         {
@@ -161,8 +201,89 @@ var allAttackTypes = {
     Bullet: function bullet() {
         this.bullet_speed = 50;
         this.damage_percent = 300;
-        this.drawGlyph = function (pen, tPos) {
-            
+        this.drawGlyph = function (pen, tPos, user) {
+            var baseColor = globalColorPalette.laser;
+
+            var percentCharge = user.attackCycle.chargePercent;
+
+            var damage = user.attr.damage;
+
+            var damagePerModule = 0.1;
+
+            var damageModules = Math.ceil(damage / damagePerModule);
+            var modulesFilled = damage * percentCharge / damagePerModule;
+
+            //Hexagon fill is:
+            //Layer size = layer * 6, layer 0 is 1... but we exclude layer 0 for now
+            //So layer number = (width - 1) / 2
+            //number = ((layer number) * 6 + 6) / 2 * (layer number)
+            //number = ((layer number) + 1) * 3 * (layer number)
+            //number/3 = lr^2 + lr
+            //x = (-b +- sqrt(b^2 - 4ac))/(2a)
+            //x = (sqrt(1 + 4n/3) - 1) / 2... rounded up
+            //1, 6, 12, 18
+            //So total width is:
+
+            var circleWidths = Math.ceil(Math.sqrt(1 + 4 * damageModules / 3)) + 1;
+
+            //damageModules = 18;
+
+            tPos.x += tPos.w * 0.07;
+            tPos.y += tPos.h * 0.01;
+
+            tPos.w *= 0.85;
+            tPos.h *= 0.85;
+
+            var width = 1 / circleWidths / 2;
+            var height = 1 / circleWidths / 2;
+            var posX = 0.5 - width * 1.5;
+            var posY = 0.5 - height * 1.5;
+
+            var moveDelta = width * 2;
+
+            var angle = 0;
+            var curDist = 0;
+            var curMove = 1;
+
+            var angleIncrement = Math.PI / 3;
+            var angleChanges = 5.5;
+
+            while(damageModules > 0) {
+
+                function drawPart(color) {
+                    DRAW.arcRect(pen, new Rect(posX, posY, width, height).scale(tPos), color);
+                }
+
+                drawPart("grey");
+
+                if(modulesFilled >= 1) {
+                    drawPart("yellow");
+                }
+
+                posX += Math.cos(angle) * moveDelta;
+                posY += Math.sin(angle) * moveDelta;
+
+                curDist++;
+
+                if(curDist >= curMove) {
+                    curDist = 0;
+                    angle += angleIncrement;
+
+                    if(angle > angleIncrement * angleChanges) {
+                        angle = 0;
+                        curDist = 0;
+                        curMove++;
+
+                        posX += Math.cos(angleIncrement * 4) * moveDelta;
+                        posY += Math.sin(angleIncrement * 4) * moveDelta;
+                    }
+                }
+
+                modulesFilled--;
+                damageModules--;
+            }
+
+            /*
 	        pen.lineWidth = 0;
 	        pen.fillStyle = "#ffffff";        
             pen.strokeStyle = "transparent";
@@ -171,6 +292,7 @@ var allAttackTypes = {
     	    pen.strokeStyle = "transparent";
             pen.fillStyle = "orange";
 	        ink.circ(tPos.x+(tPos.w*0.35), tPos.y-(tPos.w*0.5), tPos.w*0.3, pen);
+            */
         };
         this.AttackNode = function(attackTemplate)
         {
@@ -624,17 +746,17 @@ function drawAttributes(user, pen) {
             if(!obj.drawGlyph)
                 fail("not good");            
 
-            obj.drawGlyph(pen, pos);
+            obj.drawGlyph(pen, pos, user);
             return true;
         },
         user.attr,
         new TemporalPos(
-            user.tPos.x + user.tPos.w * 0.15,
-            user.tPos.y + user.tPos.h * 0.4,
-            user.tPos.w * 0.85,
-            user.tPos.h * 0.85),
+            user.tPos.x,
+            user.tPos.y,
+            user.tPos.w,
+            user.tPos.h),
         2, 2,
-        0.1);
+        0.01);
 
     makeTiled(pen,
         function (obj, pen, pos) {

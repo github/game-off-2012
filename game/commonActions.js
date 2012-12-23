@@ -2,6 +2,8 @@
 function AttackCycle() {
     this.base = new BaseObj(this);
     this.attackCounter = 0;
+    this.maxCounter = 0;
+    this.chargePercent = 0;
 
     this.update = function (dt) {
         if(!this.base.parent.attr.attSpeed)
@@ -12,9 +14,13 @@ function AttackCycle() {
         if(objDelay < 0)
             objDelay = 1 / 0;
 
+        this.maxCounter = objDelay;
+
         this.attackCounter += dt;
 
-        if (this.attackCounter > objDelay) {
+        this.chargePercent = this.attackCounter / this.maxCounter;
+
+        if (this.attackCounter > this.maxCounter) {
             this.attackCounter = 0;
 
             var attacker = this.base.parent;

@@ -8,10 +8,10 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
     this.displayedTower = towerGeneratorFnc(true);
 
+    var placeOffset = new Vector(0, 0);
     this.placingTower = false;
 
     this.draw = function (pen) {
-
         this.displayedTower.tPos = this.tPos;
         this.displayedTower.recalculateAppearance();
         this.displayedTower.draw(pen);
@@ -22,6 +22,12 @@ function TowerDragger(pos, towerGeneratorFnc) {
         }
     }
 
+    this.update = function(dt) {
+        if(this.placingTower) {
+            this.placingTower.base.update(dt);
+        }
+    }
+
     this.mousemove = function (e) {
         //var towerCollision = findClosestToPoint(eng, "Tower", tower.tPos.getCenter(), towerRadius);
 
@@ -29,9 +35,10 @@ function TowerDragger(pos, towerGeneratorFnc) {
         var eng = getEng(this);
 
         if(tower) {
-            var pos = new Vector(e);
-            pos.x -= tower.tPos.w / 2;
-            pos.y -= tower.tPos.h / 2;
+            var pos = new Vector(0, 0);
+
+            pos.x = e.x - placeOffset.x * tower.tPos.w;
+            pos.y = e.y - placeOffset.y * tower.tPos.h;
 
             if(canPlace(tower, pos, eng)) {
                 tower.tPos.x = pos.x;
@@ -43,7 +50,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
     }
 
     var firstClick = false;
-    this.mousedown = function (e) {
+    this.mousedown = function (e, repeatPlace) {
         var eng = this.base.rootNode;
         var game = eng.game;
 
@@ -56,12 +63,21 @@ function TowerDragger(pos, towerGeneratorFnc) {
             this.placingTower = this.towerGeneratorFnc();
 
             var tower = this.placingTower;
-            var pos = new Vector(e);
-            pos.x -= tower.tPos.w / 2;
-            pos.y -= tower.tPos.h / 2;
 
-            tower.tPos.x = pos.x;
-            tower.tPos.y = pos.y;
+            if(!repeatPlace) {
+                placeOffset.set(e);
+                placeOffset.sub(this.tPos);
+
+                placeOffset.x /= this.tPos.w;
+                placeOffset.y /= this.tPos.h;
+            }
+
+            tower.tPos.x = e.x - placeOffset.x * this.tPos.w;
+            tower.tPos.y = e.y - placeOffset.y * this.tPos.h;
+
+            this.placingTower.recalculateAppearance(true);
+            this.mousemove(e);
+
             game.input.globalMouseMove[this.base.id] = this;
             game.input.globalMouseClick[this.base.id] = this;
 
@@ -87,7 +103,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
                 delete game.input.globalMouseClick[this.base.id];
 
                 if(game.input.ctrlKey) {
-                    this.mousedown(e);
+                    this.mousedown(e, true);
                     firstClick = false;
                 }
             }

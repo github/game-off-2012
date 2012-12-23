@@ -44,3 +44,27 @@ path in range approx = (range - 16)/32 * 4 + 1
 +(path in range)*32/enemy movement speed * kills per second
 
 
+HP/hp regen:
+Hp bars around tower, each bar constant hp, each side heals in constant time. Bars form more layers as needed.
+
+
+Attack damage/speed:
+Attack mechanism is visible and always running to show speed.
+Components of it scale and change to show speed and damage.
+
+Entire component scales to show damage (so if damage is a constant ratio to hp... then it appears normal, when they become out of balance it starts to look different. High hp but low damage has a tiny little weapon (in comparison to body), while low hp but high damage has a massive weapon (which may even overshadow body).
+
+Tower body scales based on max hp (but not linearily!), and so does weapon size to weapon damage. Tower size is the max of the 2.
+
+
+Laser:
+
+Bullet:
+
+Lightning:
+
+Pulse:
+
+Poison:
+
+Slow:

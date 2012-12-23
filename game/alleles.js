@@ -234,8 +234,6 @@ var AllAlleleGroups =
             1: { attSpeed: 3.5 },
         }); },
 //RARE SUPER BONUS
-
-
 };
 
 //All alleles must be balanced, they either specialize in one of many aspects or are a tradeoff
@@ -272,7 +270,7 @@ var TowerAlleles =
             { hp: 100, hpRegen: 1, range: -50 }, //Bruiser part 1
             { hp: 200, hpRegen: 2, damage: -0.8 }, //Bruiser part 2
             { damage: -0.5, attSpeed: 1 }, //Pew pew
-            { damage: 50, attSpeed: -0.85 }, //BOOM!
+            { damage: 10, attSpeed: -0.85 }, //BOOM!
         ]); },
 
 
@@ -288,9 +286,9 @@ var BugAlleles =
         }); },
     damageBase: function () { return choose(
         {
-            0.5: { damage: 2 },
-            0.7: { damage: 3 },
-            1: { damage: 5 },
+            0.5: { damage: 0.4 },
+            0.7: { damage: 0.6 },
+            1: { damage: 1.0 },
         }); },
     hpBase: function () { return {hp: Math.floor(random(8, 15))}; },
     attSpeedBase: function () { return choose(

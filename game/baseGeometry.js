@@ -25,7 +25,18 @@ var Rect = (function() {
     p.clone = function() {
         return new Rect(this.x, this.y, this.w, this.h);
     };
-    
+
+    //Takes a unit rectangle (so all values of it between 0 and 1) and scales it based on the given rect.
+    p.scale = function(rect) {
+        this.x = rect.x + this.x * rect.w;
+        this.y = rect.y + this.y * rect.h;
+
+        this.w = this.w * rect.w;
+        this.h = this.h * rect.h;
+
+        return this;
+    }
+
     return Rect;
 }());
 
@@ -104,7 +115,13 @@ var Vector = (function() {
         this.y += otherVec.y;
         return this;
     };
-    
+
+    p.set = function(otherVec) {
+        this.x = otherVec.x;
+        this.y = otherVec.y;
+        return this;
+    };
+
     p.setMag = function(magnitude) {
         this.norm().mult(magnitude);
         return this;

@@ -164,7 +164,7 @@ function Tower(baseTile, tPos) {
 
     this.connections = [];
 
-    this.base.addObject(new AttackCycle());
+    this.base.addObject(this.attackCycle = new AttackCycle());
     //this.base.addObject(new UpdateTicker(this.attr, "mutate", "mutate", true));
     this.base.addObject(new Selectable());
     
@@ -210,7 +210,7 @@ function Tower(baseTile, tPos) {
         this.outerWidth = outerWidth;
 
         //Show HP regen?
-        var innerWidth = 30; //Math.pow(this.attr.hpRegen * 10, 0.9);
+        var innerWidth = Math.log(this.attr.hp / this.attr.damage / this.attr.attSpeed + 10) * 6; //Math.pow(this.attr.hpRegen * 10, 0.9);
 
         var center = this.tPos.getCenter();
 
