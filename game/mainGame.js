@@ -144,8 +144,7 @@ function GitDefence(pos) {
             this.selectedBucket.push(obj);
             obj.base.addObject(new HoverIndicator());
             //this.towerbreeder.towers = this.selectedBucket;
-        }
-        else {
+        } else {
             for (var key in this.selectedBucket) {
                 var selected = this.selectedBucket[key];
                 for (var key in selected.base.children.HoverIndicator) {

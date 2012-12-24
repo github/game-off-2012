@@ -83,7 +83,7 @@ function Infobar(pos) {
 
                         var valtxt = prefixNumber(val, 1);
                         if (defined(extraInfo[name])) {
-                            valtxt = "(" + roundToDecimal(extraInfo[name], 3) + ") " + valtxt;
+                            valtxt = "(" + round(extraInfo[name], 3) + ") " + valtxt;
                             extraInfoDisplayed[name] = true;
                         }
 

@@ -256,7 +256,7 @@ var TowerAlleles =
             0.7: { hpRegen: 1.3 },
             1: { hpRegen: 1.5 },
         }); },
-    attSpeedBase: function () { return {attSpeed: roundToDecimal(random(0.9, 1.1), 1)}; },
+    attSpeedBase: function () { return {attSpeed: round(random(0.9, 1.1), 1)}; },
 
     //Specializations:
 

@@ -179,6 +179,6 @@ function Towerbar(pos) {
         costIndicator.tPos.x = pos.x + 10;
         costIndicator.tPos.y = pos.y + 25;
 
-        costIndicator.text("Current tower cost: " + roundToDecimal(game.currentCost, 2));
+        costIndicator.text("Current tower cost: " + prefixNumber(game.currentCost));
     }
 }
