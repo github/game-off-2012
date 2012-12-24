@@ -8,7 +8,7 @@ var targetStrategies = {
             if(prevTarget)
                 prevTarget.hidden = true;
             
-            var target = findClosest(attacker.base.rootNode, targetType,
+            var target = findClosestToPoint(attacker.base.rootNode, targetType,
                                 attacker.tPos.getCenter(), attacker.attr.range);
             
             if(prevTarget)
@@ -18,6 +18,12 @@ var targetStrategies = {
         },
         this.drawGlyph = function(pen, tPos) {
 	        var color = "grey";
+
+            tPos.x += tPos.w * 0.4;
+            tPos.y += tPos.h * 0.7;
+
+            tPos.w *= 0.6;
+            tPos.h *= 0.8;
 
             var circlePos = [-0.1, 0.5, 0.2];
 

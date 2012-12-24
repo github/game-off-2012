@@ -1,209 +1,6 @@
-function Button(pos, txt, context, functionName, callData, zorder) {
-    this.tPos = pos;
 
-    if (!zorder)
-        zorder = 15;
-
-    this.base = new BaseObj(this, zorder);
-    this.base.type = "Button" + zorder;
-    this.textsize = 14;
-
-    this.hover = false;
-    this.down = false;
-    
-    this.context = context;
-    this.functionName = functionName;
-    this.callData = callData;
-
-    this.color = "green";
-
-    txt = formatToDisplay(txt);
-
-    this.draw = function(pen) {
-        //Draw box
-        if (this.down) {
-            pen.fillStyle = "#333";
-        } else if (this.hover) {
-            pen.fillStyle = "#111";
-        } else {
-            pen.fillStyle = "black";
-        }
-        pen.strokeStyle = "green";
-        
-        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-        
-        //Draw text
-        pen.fillStyle = "green";
-        pen.font = this.textsize + "px monospace";
-
-        var p = this.tPos;
-        ink.cenText(p.x + (p.w/2), p.y + this.textsize + 4, txt, pen);
-        return;
-    }
-    
-    this.added = function() {
-        //this.resize = Dock(this, "none", "center");
-    }
-    
-
-    this.click = function() {
-        if(this.context[this.functionName])
-            this.context[this.functionName](this.callData);
-    };
-    
-    this.mouseover = function() {
-        this.hover = true;
-    };
-    
-    this.mouseout = function() {
-        this.hover = false;
-    };
-    
-    this.mousedown = function() {
-        this.down = true;
-    };
-    
-    this.mouseup = function() {
-        this.down = false;
-    };
-}
-
-function Label(pos, text, zorder) {
-    if (!zorder)
-        zorder = 15;
-
-    this.tPos = pos;
-    this.base = new BaseObj(this, zorder);
-    this.type = "Label" + zorder;
-    this.color = "red";
-    this.font = "12px courier";
-
-    this.text = formatToDisplay(text);
-
-    this.draw = function (pen) {
-        //Draw text
-        pen.fillStyle = this.color;
-        pen.font = this.font;
-
-        ink.text(this.tPos.x, this.tPos.y, this.text, pen);
-        return;
-    }
-
-    this.mouseover = function () {
-        this.hover = true;
-    };
-
-    this.mouseout = function () {
-        this.hover = false;
-    };
-
-    this.mousedown = function () {
-        this.down = true;
-    };
-
-    this.mouseup = function () {
-        this.down = false;
-    };
-}
-
-function RadioButton(pos, txt, context, functionName, callData, prevRadioButton){
-    this.tPos = pos;
-    this.base = new BaseObj(this, 15);
-    var textsize = 14;
-
-    this.hover = false;
-    this.down = false;
-
-    txt = formatToDisplay(txt);
-
-    this.radioGroup = [];
-    if(prevRadioButton) {
-        for(var key in prevRadioButton.radioGroup) {
-            prevRadioButton.radioGroup[key].addButtonToGroup(this);
-            this.radioGroup.push(prevRadioButton.radioGroup[key]);
-        }
-    }
-    this.radioGroup.push(this);
-    
-    this.context = context;
-    this.functionName = functionName;
-    this.callData = callData;
-    
-    this.toggled = false;
-    
-    this.toggle = function() {
-        if(!this.toggled)
-            this.pressed();
-        else
-            this.unpressed();
-        
-        for(var key in this.radioGroup) {
-            if(this.radioGroup[key] != this)
-                this.radioGroup[key].unpressed();
-        }
-    };
-    
-    this.added = function() {
-        this.resize = Dock(this, "center", "none");
-    }
-    
-    //May be called multiple times
-    this.pressed = function() {
-        this.toggled = true;
-        if(this.context[this.functionName])
-            this.context[this.functionName](this.callData);
-    };
-    //Might be called multiple times
-    this.unpressed = function() {
-        this.toggled = false;
-    };
-
-    this.addButtonToGroup = function(button) {
-        this.radioGroup.push(button);
-    };
-    
-    this.draw = function(pen) {
-        //Draw box
-        if (this.down || this.toggled) {
-            pen.fillStyle = "white";
-        } 
-        else if(this.hover){
-            pen.fillStyle = "gray";
-        } 
-        else {
-            pen.fillStyle = "dimgray";
-        }
-        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-        
-        //Draw text
-        pen.fillStyle = "#000000";
-        pen.font = textsize + "px arial";
-
-        //How wide is text?
-        var tW = pen.measureText(txt).width;
-
-        ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+textsize+4, txt, pen);
-        return;
-    }
-    
-    this.mouseover = function() {
-        this.hover = true;
-    };
-    
-    this.mouseout = function() {
-        this.hover = false;
-    };
-    
-    this.mousedown = function() {
-        this.down = true;
-    };
-    
-    this.mouseup = function() {
-        this.down = false;
-        this.toggle();
-    };
-}
-
+// Nobody knows what this is or does or if it works at all.
+// Probably just best you move along.
 function Dock(item, dockX, dockY) {
     var parent = item.base.parent.tPos;
     var obj = item.tPos;
@@ -258,19 +55,18 @@ function AttributeChooser(tPos, attributes, attributeName) {
     }
 
     this.added = function () {
-        this.resize();
+        this.resize(this.tPos);
     };
 
-    this.resize = function () {
-        var tPos = this.tPos;
+    this.resize = function (rect) {
         var numAttributes = countElements(attributes);
 
-        var eachHeight = tPos.h / (numAttributes);
-        var eachWidth = tPos.w * 0.8;
+        var eachHeight = rect.h / (numAttributes);
+        var eachWidth = rect.w * 0.8;
         var radioButtons = this.radioButtons;
 
-        var yPos = tPos.y;
-        var xPos = tPos.x + tPos.w * 0.1;
+        var yPos = rect.y;
+        var xPos = rect.x + rect.w * 0.1;
 
         for (var key in radioButtons) {
             radioButtons[key].tPos.y = yPos;
@@ -282,14 +78,14 @@ function AttributeChooser(tPos, attributes, attributeName) {
     }
 
     this.setAttribute = function (newValue) {
-        var selected = this.base.rootNode.selectedObj;
+        var selected = getSel(this);
         if (!selected)
             return;
         selected.attr[attributeName] = new this.attributes[newValue]();
     };
 
     this.loadAttribute = function () {
-        var selected = this.base.rootNode.selectedObj;
+        var selected = getSel(this);
         var attributeName = this.attributeName;
         if (!selected)
             return;

@@ -19,17 +19,16 @@ function mergeToArray(value, array) {
     if ((value.length === undefined || value.length !== 0)) {
         if (typeof value === "number") {
             array.push(value);
-        }
-        else if(value) {
+        } else if (value) {
             //This is probably the fastest way to check if it is probably an array, if it isn't and it has length... well then:
             //http://stackoverflow.com/questions/332422/how-do-i-get-the-name-of-an-objects-type-in-javascript
             if (value.length !== undefined) {
                 if (value.length > 0)
                     for (var key in value) //concat would mean when you call this you have to do arr = merg(val, arr)
                         array.push(value[key]);
-            }
-            else if (value)
+            } else if (value) {
                 array.push(value);
+            }
         }
     }
     return array;
@@ -81,12 +80,19 @@ function sortArrayByProperty(a, prop) {
     }
 }
 
+//If given an object it turns a random key from it
 function pickRandom(array) {
+    if(!assertDefined(array.length))
+        return;
+
     return array[Math.floor(Math.random() * array.length)];
 }
 
-function LN10(value) {
-    return Math.log(value) / Math.log(10);
+function pickRandomKey(object) {
+    var keys = [];
+    for(var key in object)
+        keys.push(key)
+    return keys[Math.floor(Math.random() * keys.length)];
 }
 
 //I could make ones for every single color piece... but using regex to set
@@ -97,6 +103,18 @@ function setAlpha(color, newAlpha) {
     if (!assertDefined(color, newAlpha))
         return;
     return color.replace(/[^,]+(?=\))/, newAlpha);
+}
+
+function getSel(obj) {
+    return obj.base.rootNode.game.selectedObj;
+}
+
+function getGame(obj) {
+    return obj.base.rootNode.game;
+}
+
+function getEng(obj) {
+    return obj.base.rootNode;
 }
 
 //Great debate here over this topic:
@@ -230,4 +248,12 @@ function sortArrayByPropertyCustom
         if (endIndex - greaterStart > 0)
             sortArrayByPropertyPrivate(arrObj, greaterStart, endIndex, property);
     }
+}
+
+// From http://fitzgeraldnick.com/weblog/26/ with slight modifications
+function bind(thisCtx, name /*, variadic args to curry */) {
+    var args = Array.prototype.slice.call(arguments, 2);
+    return function () {
+        return thisCtx[name].apply(thisCtx, args.concat(Array.prototype.slice.call(arguments)));
+    };
 }

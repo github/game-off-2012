@@ -1,6 +1,11 @@
 
-function generatePath(eng) {
+function generatePath(eng, game) {
     var curPos = { x: 0, y: 0 };
+
+    var NUM_TILES_X = game.numTilesX;
+    var NUM_TILES_Y = game.numTilesY;
+
+    var TILE_SIZE = game.tileSize;
 
     var meanderFactor = 40;
     var curMeander = 0;

@@ -148,6 +148,7 @@ function getInnerColorFromAttrs(attr) {
 }
 
 function getOuterColorFromAttrs(attr) {
+    /*
     var hue = 0;
     var saturation = 0;
     var lightness = 0;
@@ -175,4 +176,11 @@ function getOuterColorFromAttrs(attr) {
 
     //return "hsl(" + hue + "," + saturation + "," + lightness + "," + alpha + ")";
     return (new HSLColor()).h(hue).s(saturation).l(lightness).a(alpha).str(); // "hsl(160, 50%, 50%)";
+    */
+
+    //Simplified as it had too much information for the user to pick up
+    var hpPercent = attr.currentHp / attr.hp;
+    var hue = hpPercent * 135;
+
+    return new HSLColor().h(hue).s(50).l(50).a(1).str();
 }
