@@ -158,7 +158,7 @@ function Infobar(pos) {
                     if (!tryPrintAsNumber(val, attrName, extraInfo)) {
                         yPos += 5;
 
-                        var nameText = formatToDisplay(attrName);
+                        var nameText = formatToDisplay(getRealType(val));
 
                         var subExtraInfo = {};
                         if (defined(extraInfo[nameText]) && !extraInfoDisplayed[nameText]) {

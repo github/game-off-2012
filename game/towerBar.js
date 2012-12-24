@@ -22,8 +22,8 @@ function TowerDragger(pos, towerGeneratorFnc) {
         }
     }
 
-    this.update = function(dt) {
-        if(this.placingTower) {
+    this.update = function (dt) {
+        if (this.placingTower) {
             this.placingTower.base.update(dt);
         }
     }
@@ -34,13 +34,13 @@ function TowerDragger(pos, towerGeneratorFnc) {
         var tower = this.placingTower;
         var eng = getEng(this);
 
-        if(tower) {
+        if (tower) {
             var pos = new Vector(0, 0);
 
             pos.x = e.x - placeOffset.x * tower.tPos.w;
             pos.y = e.y - placeOffset.y * tower.tPos.h;
 
-            if(canPlace(tower, pos, eng)) {
+            if (canPlace(tower, pos, eng)) {
                 tower.tPos.x = pos.x;
                 tower.tPos.y = pos.y;
             } else {
@@ -150,8 +150,9 @@ function Towerbar(pos) {
                 if (forDisplay) {
                     tower.attr.attack_types = [];
                     for (var alleleGroup in tower.genes.alleles) {
-                        if (tower.genes.alleles[alleleGroup].delta.attack)
+                        if (tower.genes.alleles[alleleGroup].delta.attack) {
                             delete tower.genes.alleles[alleleGroup];
+                        }
                     }
                 }
 
