@@ -1,3 +1,5 @@
+//Most references to eng in this should likely just reference base.parent.
+
 function GameOver() {
     this.base = new BaseObj(this, 100);
 
@@ -5,37 +7,23 @@ function GameOver() {
 
     this.alpha = 0;
 
-    this.added = function () {
+    this.added = function() {
         this.eng = this.base.rootNode;
 
         this.base.addObject(new SimpleCallback(2, "addButton"));
-        
+
         this.base.rootNode.base.addObject(new AttributeTween(1, 0, 5, null, "speed"));
 
         this.base.addObject(new AttributeTween(0, 0.8, 3, null, "alpha"));
     }
 
-    this.nothing = function () { }
+    this.nothing = function() {}
 
-    this.addButton = function () {
-        //var pos = this.eng.tPos.getCenter();
-
-
-        this.base.addObject(new Button(
-                            new TemporalPos(360, 300, 100, 30),
-                            "Restart", window.location, "reload", null, 102));
-
-        //this.gameOverLabel = new Label(new TemporalPos(220, 230, 100, 30), "Game Over!", 103);
-        //this.gameOverLabel.font = "70px bold courier";
-
-        //this.base.addObject(this.gameOverLabel);
+    this.addButton = function() {
+        this.base.addObject(new Button("Restart", bind(window.location, "reload"), 102).resize(new TemporalPos(360, 300, 100, 30)));
     }
 
-    this.stopGame = function () {
-        
-    }
-
-    this.draw = function (pen) {
+    this.draw = function(pen) {
         var eng = this.base.rootNode;
 
         pen.fillStyle = "rgba(0, 0, 0, " + this.alpha + ")"; //"hsl(180, 50%, 50%, " + this.alpha + ")";

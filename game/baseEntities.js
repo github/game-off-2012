@@ -12,7 +12,7 @@
 /********************************* CODE START *********************************/
 
 var uniqueBaseObjNumber = 1;
-function BaseObj(holder, zindex) {
+function BaseObj(holder, zindex, dynamicZIndex) {
     if (!assertDefined("BaseObj", holder))
         return;
 
@@ -21,6 +21,8 @@ function BaseObj(holder, zindex) {
 
 //Identifier properties    
     this.type = getRealType(holder); //.constructor.name;
+    if (dynamicZIndex)
+        this.type += zindex;
 
     //If its not a string then the object degenerates to an array.
     this.id = 'q' + uniqueBaseObjNumber++;
@@ -172,32 +174,38 @@ function BaseObj(holder, zindex) {
     };
 
     this.removeAllType = function (type) {
-        if (this.children[type])
+        if (this.children[type]) {
             this.children[type] = {};
+            this.lengths[type] = 0;
+        }
+        //This is harder, you need to also remove them from their parents
+        if (this.allChildren[type]) {
+            for(var key in this.allChildren[type]) {
+                var toRemove = this.allChildren[type][key];
+                if(toRemove.base.parent != this.holder)
+                    delete toRemove.base.parent.base.children[type][key];
+            }
+            this.allChildren[type] = {};
+            this.allLengths[type] = 0;
+        }
     };
 
     this.raiseEvent = function (name, args) {
-        var returnedValues = [];
-
         //Well if it exists it is clearly a function :D
         //(read http://stackoverflow.com/questions/5999998/how-can-i-check-if-a-javascript-variable-is-function-type
         //before fixing this in order to implement the most efficient solution to checking if something is a function
         //for different browsers).
-        if (holder[name] && !holder.hidden)
-            mergeToArray(holder[name](args), returnedValues);
+        if (holder[name]) holder[name](args);
 
         this.loopThroughAllTypes(function (child) {
             if (child.base) {
-                mergeToArray(child.base.raiseEvent(name, args), returnedValues);
+                child.base.raiseEvent(name, args)
             }
         });
-
-        return returnedValues;
     };
 
-    //Calls and returns the returned array (or an empty array)    
-    this.callMerge = function (name, args)
-    {
+    //Calls and returns the returned array (or an empty array)
+    this.callMerge = function (name, args) {
         var returnedValues = [];
 
         //Well if it exists it is clearly a function :D

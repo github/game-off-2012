@@ -1,27 +1,47 @@
-//The reason this is its own object is because the attack cycle will
-//shortly (hopefully become much more complex than just calling doAttack.
+//Not using UpdateTicker for easier debugging.
 function AttackCycle() {
     this.base = new BaseObj(this);
     this.attackCounter = 0;
+    this.maxCounter = 0;
+    this.chargePercent = 0;
 
-    this.added = function () {
-        this.base.addObject(new UpdateTicker(this.base.parent.attr, "attSpeed", "triggerAttack", true));
-    }
-    
-    this.triggerAttack = function () {
-        var attacker = this.base.parent;
-        var attackTypes = attacker.attr.attack_types || attacker.attr.bug_attack_types;
+    this.update = function (dt) {
+        if(!this.base.parent.attr.attSpeed)
+            return;
 
-        if (attackTypes && attackTypes.length > 0) {
-            startAttack(new AttackTemplate(attackTypes[0], attacker, null, attacker.attr.damage, attacker, 0));
+        var objDelay = 0;
+        objDelay = 1 / this.base.parent.attr.attSpeed;
+        if(objDelay < 0)
+            objDelay = 1 / 0;
+
+        this.maxCounter = objDelay;
+
+        this.attackCounter += dt;
+
+        this.chargePercent = this.attackCounter / this.maxCounter;
+
+        if (this.attackCounter > this.maxCounter) {
+            this.attackCounter = 0;
+
+            var attacker = this.base.parent;
+            var attackTypes = attacker.attr.attack_types || attacker.attr.bug_attack_types;
+
+            if (attackTypes && attackTypes.length > 0) {
+                startAttack(new AttackTemplate(attackTypes[0], attacker, null, attacker.attr.damage, attacker, 0));
+            }
         }
     };
 };
+
 
 //I foresee this function dying in a deep dark hole due to its
 //(theoretical) major impacts on speed... but w/e, its cool
 //(Actually... if these were to combine themselves and notice patterns they
 //could probably be much much more efficient than the naive implementation)
+
+//The entire engine will be optimized to make everything essentially function like this
+//(except the triggering will be many times more complicated to handle basically any type of trigger)
+
 function UpdateTicker(objWithDelay, tickDelayName, parentTickFunctionName, inverseRate) {
     this.base = new BaseObj(this);
     
@@ -85,17 +105,23 @@ function Selectable() {
     }
 
     this.parent_click = function () {
+        var eng = this.base.rootNode;
+        var game = eng.game;
+
         if (this.ignoreNext) {
             this.ignoreNext = false;
             return;
         }
         if (this.topMost)
-            this.base.rootNode.changeSel(this.base.parent);
+            game.changeSel(this.base.parent);
     }
 
     this.parent_die = function () {
-        if(this.base.rootNode.selectedObj == this.base.parent)
-            this.base.rootNode.changeSel(null);
+        var eng = this.base.rootNode;
+        var game = eng.game;
+
+        if(game.selectedObj == this.base.parent)
+            game.changeSel(null);
     }
 }
 
@@ -199,6 +225,25 @@ function AttributeTween(start, end, time, callbackName, attributeName) {
     }
 }
 
+function AlphaTween(lifetime, startAlpha, endAlpha) {
+    this.base = new BaseObj(this);
+
+    this.lifetime = lifetime;
+    this.startAlpha = startAlpha;
+    this.endAlpha = endAlpha;
+
+    this.currentTime = 0;
+
+    this.update = function (dt) {
+        this.currentTime += dt;
+
+        var currentAlpha = startAlpha + (endAlpha - startAlpha) * (this.currentTime / this.lifetime);
+
+        this.base.parent.color = setAlpha(this.base.parent.color, currentAlpha);
+        this.base.parent.fillColor = setAlpha(this.base.parent.fillColor, currentAlpha);
+    }
+}
+
 function SimpleCallback(time, callbackName) {
     this.base = new BaseObj(this);
 
@@ -214,5 +259,45 @@ function SimpleCallback(time, callbackName) {
             this.base.destroySelf();
             return;
         }
+    }
+}
+
+//Use this to make boundCallback
+function bind(thisCtx, name /*, variadic args to curry */) {
+    var args = Array.prototype.slice.call(arguments, 2);
+    return function () {
+        return thisCtx[name].apply(thisCtx, args.concat(Array.prototype.slice.call(arguments)));
+    }
+}
+
+
+function AliveCounter(boundZeroCallback) {
+    this.base = new BaseObj(this);
+
+    this.aliveCount = 0;
+
+    this.addAliveTracker = function(obj) {
+        obj.base.addObject(new DeathTrigger(bind(this, "death")));
+        this.aliveCount++;
+    }
+
+    this.death = function() {
+        this.aliveCount--;
+
+        if(this.aliveCount == 0) {
+            boundZeroCallback();
+            this.base.destroySelf();
+        }
+    }
+}
+
+function DeathTrigger(boundCallback) {
+    this.base = new BaseObj(this);
+
+    this.callback = boundCallback;
+
+    this.parent_die = function() {
+        this.callback();
+        this.base.destroySelf();
     }
 }

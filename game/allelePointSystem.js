@@ -1,72 +1,53 @@
 function AllelePointSystem(pos) {
     this.base = new BaseObj(this, 15);
+    console.log("Allelenpointsysom pos:", pos);
     this.tPos = pos;
 
-    this.pointIndicator = new Label(cloneObject(pos), "");
-    this.pointIndicator.color = "blue";
-    this.base.addObject(this.pointIndicator);
+    var vbox;
+    this.added = function() {
+        var that = this;
+        function pointButton(num, cost) {
+            var text;
+            if (num == 1) {
+                text = "Buy point ($" + cost + ")";
+            } else {
+                text = "Buy " + num + " points ($" + cost + ")";
+            }
+            var b = new Button(text, bind(that, "buyPoint", {count: num, cost: cost}));
+            return b;
+        }
+        vbox = new VBox();
+        this.base.addObject(vbox);
+        
+        this.pointIndicator = new Label(pos.clone(), "");
+        vbox.add(this.pointIndicator);
+
+        vbox.add(this.buyButton = pointButton(1, 50));
+        vbox.add(this.buyButton1 = pointButton(10, 350));
+        vbox.add(this.buyButton2 = pointButton(100, 2500));
+        vbox.add(this.spendButton = new Button("Spend Point", bind(this, "spendPoint")));
+        vbox.add(this.trashButton = new Button("Trash Point", bind(this, "trashPoint")));
+        vbox.add(this.autoTrashButton = new ToggleButton("Auto Trash Worse", bind(this, "autoTrashToggle")));
+    };
 
     this.pointCost = 50;
 
-    this.pointCost = 50;
-    var pointCount = 1;
-    this.buyButton = new Button(cloneObject(pos), "Buy Point ($" + this.pointCost + ")",
-                                this, "buyPoint", { count: pointCount, cost: this.pointCost });
-    this.buyButton.tPos.h = 26;
-    this.buyButton.tPos.w *= 0.93;
-    this.base.addObject(this.buyButton);
-
-    this.pointCost = 350; pointCount = 10;
-    this.buyButton2 = new Button(cloneObject(pos), "Buy " + pointCount + " Points ($" + this.pointCost + ")",
-                                this, "buyPoint", { count: pointCount, cost: this.pointCost });
-    this.buyButton2.tPos.h = 26;
-    this.buyButton2.tPos.w *= 0.93;
-    this.base.addObject(this.buyButton2);
-
-
-    this.pointCost = 2500; pointCount = 100;
-    this.buyButton3 = new Button(cloneObject(pos), "Buy " + pointCount + " Points ($" + this.pointCost + ")",
-                                this, "buyPoint", { count: pointCount, cost: this.pointCost });
-    this.buyButton3.tPos.h = 26;
-    this.buyButton3.tPos.w *= 0.93;
-    this.base.addObject(this.buyButton3);
-
-
-    this.spendButton = new Button(cloneObject(pos), "Spend Point", this, "spendPoint");
-    this.spendButton.tPos.h = 26;
-    this.spendButton.tPos.w *= 0.93;    
-    
-    this.base.addObject(this.spendButton);
-
-    this.trashButton = new Button(cloneObject(pos), "Trash Point", this, "trashPoint");
-    this.trashButton.tPos.h = 26;
-    this.trashButton.tPos.w *= 0.93;
-    this.base.addObject(this.trashButton);
-    
-    this.autoTrashButton = new RadioButton(cloneObject(pos), "Auto Trash Worse", this, "autoTrashToggle");
-    this.autoTrashButton.tPos.h = 26;
-    this.autoTrashButton.tPos.w *= 0.93;
-    this.base.addObject(this.autoTrashButton);
-
-    this.autoTrashButton.toggle();
-
-    this.pointCost = 50;
+    this.selectionChanged = function (newSelected) {
+        if(newSelected)
+            this.autoTrashButton.toggled = newSelected.autoTrash;
+    }
 
     this.buyPoint = function (costData) {
-        var selected = this.base.rootNode.selectedObj;
+        var eng = this.base.rootNode;
+        var game = eng.game;
+        var selected = getSel(this);
 
-        var cost = costData.cost;
-        var count = costData.count;
-
-        if (!cost)
-            cost = this.pointCost;
-
-        if (!count)
-            count = 1;
+        var cost = costData.cost || 50;
+        var count = costData.count || 1;
 
         if (selected && selected.base.type == "Tower") {
-            if (this.base.rootNode.money > cost) {
-                this.base.rootNode.money -= cost;
+            if (game.money > cost) {
+                game.money -= cost;
                 for (var i = 0; i < count; i++)
                     selected.generateAllele();
             }
@@ -74,19 +55,19 @@ function AllelePointSystem(pos) {
     }
 
     this.spendPoint = function () {
-        var selected = this.base.rootNode.selectedObj;
+        var selected = getSel(this);
 
         if (selected && selected.base.type == "Tower") {
             if (selected.allelesGenerated.length > 0) {
-                var allObj = selected.allelesGenerated[0];
+                var allele = selected.allelesGenerated[0];
                 selected.allelesGenerated.splice(0, 1);
-                selected.genes.addAllele(allObj.group, allObj.all);
+                selected.genes.addAllele(allele);
             }
         }
     }
 
     this.trashPoint = function () {
-        var selected = this.base.rootNode.selectedObj;
+        var selected = getSel(this);
 
         if (selected && selected.base.type == "Tower") {
             if (selected.allelesGenerated.length > 0)
@@ -95,15 +76,15 @@ function AllelePointSystem(pos) {
     }
 
     this.autoTrashToggle = function () {
-        var selected = this.base.rootNode.selectedObj;
+        var selected = getSel(this);
 
         if (selected && selected.base.type == "Tower") {
-            selected.autoTrash = !selected.autoTrash;
+            selected.autoTrash = this.autoTrashButton.toggled;
         }
     }
 
     this.doAutoTrash = function () {
-        var selected = this.base.rootNode.selectedObj;
+        var selected = getSel(this);
 
         if (selected && selected.base.type == "Tower") {
             var anyPositive = false;
@@ -132,14 +113,14 @@ function AllelePointSystem(pos) {
     this.mouseout = function () { this.removeDeltaDisplay(); };
 
     this.addDeltaDisplay = function () {
+        var selected = getSel(this);
+
         this.base.parent.extraInfo = {};
         var extraInfo = this.base.parent.extraInfo;
 
-        var selected = this.base.rootNode.selectedObj;
-
         if (selected && selected.base.type == "Tower") {
             if (selected.allelesGenerated.length > 0) {
-                var allObj = selected.allelesGenerated[0];
+                var allele = selected.allelesGenerated[0];
 
                 function addToExtraInfo(allele, factor) {
                     for (var key in allele.delta) {
@@ -166,10 +147,10 @@ function AllelePointSystem(pos) {
                     }
                 }
 
-                if (selected.genes.alleles[allObj.group])
-                    addToExtraInfo(selected.genes.alleles[allObj.group], -1);
+                if (selected.genes.alleles[allele.group])
+                    addToExtraInfo(selected.genes.alleles[allele.group], -1);
 
-                addToExtraInfo(allObj.all, 1);
+                addToExtraInfo(allele, 1);
             }
         }
     }
@@ -178,54 +159,28 @@ function AllelePointSystem(pos) {
         this.base.parent.extraInfo = {};        
     }
 
+    var added = false;
     this.update = function () {
-        var selected = this.base.rootNode.selectedObj;
+        if(!added && getGame(this))
+        {
+            getGame(this).globalSelectionChanged[this.base.id] = this;
+            added = true;
+        }
 
-        var xPos = this.tPos.x;
-        var yPos = this.tPos.y;
+        var eng = this.base.rootNode;
+        var game = eng.game;
 
-        this.pointIndicator.tPos.x = xPos + 10;
-        this.pointIndicator.tPos.y = yPos + 20;
-        yPos += 28;
+        var selected = getSel(this);
 
-        this.buyButton.tPos.x = xPos + 10;
-        this.buyButton.tPos.y = yPos;
-        yPos += 28;
-
-        this.buyButton2.tPos.x = xPos + 10;
-        this.buyButton2.tPos.y = yPos;
-        yPos += 28;
-
-        this.buyButton3.tPos.x = xPos + 10;
-        this.buyButton3.tPos.y = yPos;
-        yPos += 28;
-
-        this.spendButton.tPos.x = xPos + 10;
-        this.spendButton.tPos.y = yPos;
-        yPos += 28;
-
-        this.trashButton.tPos.x = xPos + 10;
-        this.trashButton.tPos.y = yPos;
-        yPos += 28;
-
-        this.autoTrashButton.tPos.x = xPos + 10;
-        this.autoTrashButton.tPos.y = yPos;
-        yPos += 28;
-
-        if (selected)
-            this.autoTrashButton.toggled = selected.autoTrash;
-        else
-            this.autoTrashButton.toggled = false;
+        vbox.resize(this.tPos);
 
         if (this.autoTrashButton.toggled) {
             this.doAutoTrash();
         }
 
-        var selected = this.base.rootNode.selectedObj;
-
         if (selected && selected.base.type == "Tower") {
             this.base.setAttributeRecursive("hidden", false);
-            this.pointIndicator.text = "Allele Points: " + selected.allelesGenerated.length;
+            this.pointIndicator.text("Allele Points: " + selected.allelesGenerated.length);
         }
         else {
             this.base.setAttributeRecursive("hidden", true);

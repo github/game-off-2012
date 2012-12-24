@@ -1,11 +1,11 @@
-function Tower_Packet(t1, t2, speed, group, allele) {
+function Tower_Packet(t1, t2, speed, allele) {
     this.base = new BaseObj(this, 12);
     // We don't really need it
     this.tpos = new TemporalPos(0, 0, 1, 1, 0, 0);
     var p1 = getRectCenter(t1.tPos);
     var p2 = getRectCenter(t2.tPos);
     
-    var dis = p1.clone().sub(p2).mag()
+    var dis = p1.clone().sub(p2).mag();
     
     var packet = new Circle(p1, 3, allele.getOuterColor(), allele.getInnerColor(), 15);
     packet.lineWidth = 1;
@@ -16,7 +16,7 @@ function Tower_Packet(t1, t2, speed, group, allele) {
     
     var that = this;
     function apply() {
-        t2.genes.addAllele(group, allele);
+        t2.genes.addAllele(allele);
         that.base.destroySelf();
     }
 }
@@ -26,9 +26,8 @@ function Tower_Connection(t1, t2) {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this, 11);
 
-    // Those fucking random numbers passed as the last argument? Those are positions along the line where arrows are drawn. Probably. I can't be sure.
-    // What does 11 mean? Fuck if I know.
-    var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11, {1: 0.1, 2: 0.3, 3: 0.5, 4: 0.7, 5: 0.9});
+    var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11,
+        {1: 0.1, 2: 0.3, 3: 0.5, 4: 0.7, 5: 0.9});
     this.base.addObject(line);
     
     var prevhitCount;
@@ -45,11 +44,10 @@ function Tower_Connection(t1, t2) {
         pos.sub(delta);
         pos.w = 20;
         pos.h = 20;
-        pos.sub({x: pos.w * 0.5, y: pos.h * 0.5});
+        pos.sub(new Vector(pos.w * 0.5, pos.h * 0.5));
+        pos = new TemporalPos(pos.x, pos.y, pos.w, pos.h);
         
-        deleteButton = new Button(pos, "-", 
-            that, "deleteSelf", 50);
-        deleteButton.color = "rgba(0, 255, 0, 0.6)";        
+        deleteButton = new Button("-", bind(that, "deleteSelf"), 50).resize(pos);
         
         that.base.addObject(deleteButton);
     }
@@ -57,14 +55,10 @@ function Tower_Connection(t1, t2) {
     
     function dataTransfer(t1, t2) {
         function sendRandomPacket(t1, t2, speed) {
-            var groups = [];
-            for (var group in AllAlleleGroups)
-                groups.push(group);
-
-            var group = pickRandom(groups);
+            var group = pickRandomKey(t1.genes.alleles);
             var al = t1.genes.alleles[group];
 
-            that.base.addObject(new Tower_Packet(t1, t2, speed, group, al));
+            that.base.addObject(new Tower_Packet(t1, t2, speed, al));
         }
 
         if (prevhitCount === undefined) {
@@ -116,75 +110,82 @@ function Tower_Connection(t1, t2) {
 }
 
 TowerStats = {
-        range:          100,
-        damage:         10,
-        hp:             100,
-        currentHp:      100,
+        range:          0,
+        damage:         0,
+        hp:             0,
+        currentHp:      0,
         hpRegen:        1,
-        attSpeed:       0.6,
+        attSpeed:       0,
         upload:         5,
         download:       5,
         hitCount:       0,
         kills:          0,
-        value:          50,
+        value:          50
     };
 
-function Tower(baseTile) {
-    var p = baseTile ? baseTile.tPos : {x: 0, y: 0, w : TILE_SIZE, h: TILE_SIZE};
+function Tower(baseTile, tPos) {    
     this.baseTile = baseTile;
-    this.tPos = new TemporalPos(p.x, p.y, p.w, p.h, 0, 0);
+    var p = tPos;
+    this.tPos = new Rect(p.x, p.y, p.w, p.h);//new TemporalPos(p.x, p.y, p.w, p.h, 0, 0);
     this.base = new BaseObj(this, 10);
-    this.attr = {
-        range:          TowerStats.range,
-        damage:         TowerStats.damage,
-        hp:             TowerStats.hp,
-        currentHp:      TowerStats.currentHp,
-        hpRegen:        TowerStats.hpRegen,
-        attSpeed:       TowerStats.attSpeed,
-        upload:         TowerStats.upload,
-        download:       TowerStats.download,
-        hitCount:       TowerStats.hitCount,
-        kills:          0,
-        value:          TowerStats.value,
-    };    
 
-    //Each is an {group: alGroup, all: allele}
+    this.attr = {};
+    this.setBaseAttrs = function () {
+        //Lol, prevCur...
+        var prevCurHp = this.attr.hp || this.attr.currentHp;
+        if(!prevCurHp)
+            prevCurHp = 0;
+        this.attr = {
+            range:          TowerStats.range,
+            damage:         TowerStats.damage,
+            hp:             TowerStats.hp,
+            currentHp:      TowerStats.currentHp,
+            hpRegen:        TowerStats.hpRegen,
+            attSpeed:       TowerStats.attSpeed,
+            upload:         TowerStats.upload,
+            download:       TowerStats.download,
+            hitCount:       TowerStats.hitCount,
+            kills:          0,
+            value:          TowerStats.value
+        };
+        this.attr.target_Strategy = new targetStrategies.Closest();
+        this.attr.attack_types = [];
+    };
+    this.setBaseAttrs();
+
+    //List of alleles
     this.allelesGenerated = [];
 
     this.genes = new Genes();
     this.base.addObject(this.genes);
 
-    this.attr.target_Strategy = new targetStrategies.Closest();
-    this.attr.attack_types = [];
-    this.attr.attack_types.push(new allAttackTypes.Laser());
+    //For alleles.
+    this.autoTrash = true;
 
     this.connections = [];
 
-    this.base.addObject(new AttackCycle());
+    this.base.addObject(this.attackCycle = new AttackCycle());
     //this.base.addObject(new UpdateTicker(this.attr, "mutate", "mutate", true));
     this.base.addObject(new Selectable());
     
     this.constantOne = 1;
     this.base.addObject(new UpdateTicker(this, "constantOne", "regenTick"));
 
-    for (var alGroup in AllAlleleGroups) {
+    for (var alGroup in TowerAlleles) {
         if (!this.genes.alleles[alGroup]) {
-            this.genes.addAllele(alGroup, new Allele(AllAlleleGroups[alGroup]()));
+            this.genes.addAllele(new Allele(alGroup, TowerAlleles[alGroup]()));
         }
     }
 
-    this.generateAllele = function()
-    {   
-        var allAlls = [];
-        for (var alGroup in AllAlleleGroups)
-            allAlls.push(alGroup);
+    this.added = function () {
+        this.recalculateAppearance();
+    }
 
-        var genAllGroup = pickRandom(allAlls);
+    this.generateAllele = function() {
+        var genAllGroup = pickRandomKey(AllAlleleGroups);
 
-        var allObj = {};
-        allObj.group = genAllGroup;
-        allObj.all = new Allele(AllAlleleGroups[genAllGroup]());
-        this.allelesGenerated.push(allObj);
+        var alleleGenerated = new Allele(genAllGroup, AllAlleleGroups[genAllGroup]());
+        this.allelesGenerated.push(alleleGenerated);
     }
 
     this.regenTick = function()
@@ -195,24 +196,209 @@ function Tower(baseTile) {
             this.attr.currentHp = this.attr.hp;
     }
 
-    this.draw = function (pen) {
-        var p = this.tPos;
-        pen.save();
+    this.update = function(dt) {
+        this.recalculateAppearance(true);
+    }
+
+    //This may also change x, y, w and h.
+    this.recalculateAppearance = function (changeSize) {
         this.color = getInnerColorFromAttrs(this.attr);
-        pen.fillStyle = getInnerColorFromAttrs(this.attr);
-        pen.strokeStyle = getOuterColorFromAttrs(this.attr);
-        ink.rect(p.x, p.y, p.w, p.h, pen);        
-        pen.restore();
+        this.borderColor = getOuterColorFromAttrs(this.attr);
+
+        //Shows HP
+        var outerWidth = Math.pow(this.attr.hp / 50, 0.5) * 8;
+        this.outerWidth = outerWidth;
+
+        //Show HP regen?
+        var innerWidth = Math.log(this.attr.hp / this.attr.damage / this.attr.attSpeed + 10) * 6; //Math.pow(this.attr.hpRegen * 10, 0.9);
+
+        var center = this.tPos.getCenter();
+
+        var totalWidth = outerWidth + innerWidth;
+
+        if(changeSize) {
+            this.tPos.x = center.x - totalWidth;
+            this.tPos.y = center.y - totalWidth;
+
+            this.tPos.w = totalWidth * 2;
+            this.tPos.h = totalWidth * 2;
+        }
+
+        this.lineWidth = outerWidth;
+    }
+
+    this.draw = function (pen) {
+        var pos = this.tPos.clone();
+        var cen = pos.getCenter();
+
+        pos.x += this.outerWidth;
+        pos.y += this.outerWidth;
+
+        pos.w -= this.outerWidth * 2;
+        pos.h -= this.outerWidth * 2;
+
+        DRAW.rect(pen, pos,
+                  this.color);
+
+        this.drawHpBars(pen, pos);
+
+
+        DRAW.circle(pen, cen, this.attr.range,
+            setAlpha(this.color, 0.1));
 
         drawAttributes(this, pen);
     };
 
-    // WTF - yeah man, this code is the bomb
+    this.drawHpBars = function(pen, pos) {
+        //One hp bar per x hp
+        var hpPerBar = 10;
+
+        //Total of hp in bars one one side equal to hp regenerated in x seconds
+        var timePerSide = 10;
+
+        var numberOfBars = this.attr.hp / hpPerBar;
+        var barsFilled = this.attr.currentHp / hpPerBar;
+        var barsPerSide = Math.ceil(timePerSide * this.attr.hpRegen / hpPerBar);
+
+        //Shows HP
+        var outerWidth = Math.pow(this.attr.hp / 50, 0.9);
+
+        var layers = Math.ceil(numberOfBars / barsPerSide / 4);
+
+        //Draw hp bars around rectangle...
+        //We draw it with a finite state machine, the state is the position, color, size etc.
+        //Then we just increment the state machine a lot.
+        var barHeight = this.outerWidth / layers;//10 / Math.pow(barsPerSide, 0.1);//50 / Math.ceil(numberOfBars / barsPerSide / 4);
+        var barWidth = pos.w / barsPerSide;
+
+
+        var posX = pos.x;
+        var posY = pos.y;
+        var width = barWidth;
+        var height = barHeight;
+
+        var color = this.borderColor;
+
+        var rotationPosition = 0; //0 = top, 1 = left, etc (clockwise)
+        var sideCount = 0;
+
+        var onX = true;
+
+        var currentFactor = 1;
+
+        posY -= height;
+
+        function nextBar() {
+            switch(rotationPosition) {
+                case 0:
+                    posX += width;
+                    break;
+                case 1:
+                    posY += height;
+                    break;
+                case 2:
+                    posX += width;
+                    break;
+                case 3:
+                    posY += height;
+                    break;
+            }
+        }
+        function rotateBar() {
+            function swapWidthHeight() {
+                var temp = width;
+                width = -height;
+                height = temp;
+            }
+            switch(rotationPosition) {
+                case 0:
+                    width = barHeight; //Rotate bar
+                    height = barWidth;
+
+                    posX += barHeight * (currentFactor - 1); //Move out to correct distance away from square
+                    posY += barHeight * currentFactor; //Move to correct start
+                    break;
+                case 1:
+                    width = -barWidth; //Rotate bar
+                    height = barHeight;
+
+                    posX -= barHeight * (currentFactor - 1);
+                    posY += barHeight * (currentFactor - 1);
+                    break;
+                case 2:
+                    width = -barHeight; //Rotate bar
+                    height = -barWidth;
+
+                    posX -= barHeight * (currentFactor - 1);
+                    posY -= barHeight * (currentFactor - 1);
+                    break;
+                case 3:
+                    width = barWidth; //Rotate bar
+                    height = barHeight;
+
+                    posX += barHeight * (currentFactor - 1);
+                    posY -= barHeight * (currentFactor + 1);
+                    break;
+            }
+            rotationPosition++;
+            if(rotationPosition >= 4) {
+                rotationPosition = 0;
+                currentFactor++;
+            }
+        }
+
+        while(numberOfBars > 0) {
+            //if(rotationPosition > 1)
+              //  nextBar();
+
+            var xBuffer = (width) * 0.15;
+            var yBuffer = (height) * 0.15;
+
+            function drawBar(color, widthPercent, heightPercent) {
+                DRAW.rect(pen,
+                        new Rect(
+                                    posX + xBuffer, posY + yBuffer,
+                                    ((width) - xBuffer * 2) * widthPercent,
+                                    ((height) - yBuffer * 2) * heightPercent
+                                ),
+                         color);
+            }
+
+            if(barsFilled < 1) {
+                drawBar("grey", 1, 1);
+
+                if(barsFilled > 0) {
+                    var currentFill = barsFilled % 1;
+                    if(rotationPosition == 1 || rotationPosition == 3)
+                        drawBar(color, 1, currentFill);
+                    else
+                        drawBar(color, currentFill, 1);
+                }
+            } else {
+                drawBar(color, 1, 1);
+            }
+
+            //if(rotationPosition <= 1)
+                nextBar();
+
+            sideCount++;
+            if(sideCount >= barsPerSide) {
+                sideCount = 0;
+                rotateBar();
+            }
+
+            numberOfBars--;
+            barsFilled--;
+        }
+    }
+
     this.tryUpgrade = function () {
-        if (eng.money >= 100) {
+        var game = getGame(this);
+
+        if (game.money >= 100) {
             this.attr.damage *= 2;
             this.attr.attSpeed *= 2;
-            eng.money -= 100;
+            game.money -= 100;
         }
     };
     
@@ -278,26 +464,36 @@ function Tower(baseTile) {
     };
 
     this.startDrag = null;
-    this.tempIndicator = null;
+    this.dragOffset = null;
     this.mousedown = function(e) {
         this.startDrag = e;
-        tempIndicator = new Line(this.startDrag, e, "green", 15, {0: 1.0});
-        this.base.addObject(tempIndicator);
-        this.base.rootNode.globalMouseMove[this.base.id] = this;
+        this.dragOffset = new Vector(this.tPos);
+        this.dragOffset.sub(e);
+
+        getGame(this).input.globalMouseMove[this.base.id] = this;
+        getGame(this).input.globalMouseUp[this.base.id] = this;
     };
 
     this.mousemove = function(e)
     {
-        tempIndicator.end = e;
+        var eng = getEng(this);
+
+        if(this.startDrag) {
+            var vector = new Vector(e);
+            vector.add(this.dragOffset);
+
+            this.tryToMove(vector, eng);
+        }
     }
 
-    this.dragEnd = function(e){
+    this.mouseup = function(e){
         var eng = this.base.rootNode;
+        var game = eng.game;
 
-        this.base.removeObject(tempIndicator);
         this.startDrag = null;
 
-        var towerSelected = findClosest(this.base.rootNode, "Tower", e, 0);
+        /*
+        var towerSelected = findClosestToPoint(eng, "Tower", e, 0);
         if(towerSelected && towerSelected != this)
         {
             for (var i = 0; i < this.connections.length; i++)
@@ -309,30 +505,107 @@ function Tower(baseTile) {
             this.connections.push(conn);
             towerSelected.connections.push(conn);
 
-            eng.changeSel(this);
+            game.changeSel(this);
             getAnElement(this.base.children.Selectable).ignoreNext = true;
         }
+        */
+
+        delete getGame(this).input.globalMouseMove[this.base.id];
+        delete getGame(this).input.globalMouseUp[this.base.id];
     };
+
+    //Given that the user has told us to move this tower to the destination,
+    //tries to move it as close as possible.
+    this.tryToMove = function (destination, eng) {
+        var tower = this;
+        tower.hidden = true;
+        var e = destination;
+
+        var originalPos = cloneObject(tower.tPos);
+
+        tower.tPos.x = e.x;
+        tower.tPos.y = e.y;
+
+        var collisions = [];
+        mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tPos, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tPos, 0), collisions);
+
+        if(collisions.length > 0) {
+            var alignTo = collisions[0];
+            var offset = minVecForDistanceRects(tower.tPos, alignTo.tPos, 1);
+
+            e.x += offset.x;
+            e.y += offset.y;
+        }
+
+        tower.tPos.x = e.x;
+        tower.tPos.y = e.y;
+
+        //This code is kinda buggy... but thats okay... in the future we will project a line
+        //from the tower position to the cursor and just put the tower as far upon that line as possible.
+        //(this projection code will be created for bullets and lasers anyway).
+        tower.tPos.x = e.x;
+        var collisions = [];
+        mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tPos, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tPos, 0), collisions);
+        if(collisions.length > 0) {
+            tower.tPos.x = originalPos.x;
+        }
+
+        tower.tPos.y = e.y;
+        var collisions = [];
+        mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tPos, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tPos, 0), collisions);
+        if(collisions.length > 0) {
+            tower.tPos.y = originalPos.y;
+        }
+        tower.hidden = false;
+    }
 }
 
-function tryPlaceTower(tower, tile)
-{
-    var eng = tile.base.rootNode;
-    var e = tile.tPos.getCenter();
-    var towerOnTile = findClosest(eng, "Tower", e, 0);
-    var pathOnTile = findClosest(eng, "Path", e, 0);
+function canPlace(tower, pos, eng) {
+    var game = eng.game;
 
-    var curCost = tile.base.rootNode.currentCost;
+    var originalPosX = tower.tPos.x;
+    var originalPosY = tower.tPos.y;
 
-    if (!towerOnTile && !pathOnTile && eng.money - curCost >= 0) {
-        eng.money -= curCost;   
-        tower.value = curCost;
+    tower.recalculateAppearance(true);
+    tower.tPos.x = pos.x;
+    tower.tPos.y = pos.y;
 
-        tile.base.rootNode.currentCost *= 1.3;
+    var towerRadius = tower.tPos.w / 2;
 
-        tower.tPos = tile.tPos;         
-        eng.base.addObject(tower);
-        eng.changeSel(tower);
-        getAnElement(tile.base.children.Selectable).ignoreNext = true;
+    var e = pos;
+    var towerCollision = findClosestToRect(eng, "Tower", tower.tPos, 0);
+    var pathOnTile = findClosestToRect(eng, "Path", tower.tPos, 0);
+    var tileExist = findClosestToRect(eng, "Tile", tower.tPos, 0);
+
+    tower.tPos.x = originalPosX;
+    tower.tPos.y = originalPosY;
+
+    if (!towerCollision && !pathOnTile && tileExist) {
+        return true;
     }
+    return false;
+}
+
+function tryPlaceTower(tower, pos, eng)
+{
+    var game = eng.game;
+
+    tower.recalculateAppearance(true);
+    tower.tPos.x = pos.x;
+    tower.tPos.y = pos.y;
+
+    var tileExist = findClosestToPoint(eng, "Tile", pos, 0);
+
+    if (canPlace(tower, pos, eng)) {
+        eng.base.addObject(tower);
+        game.changeSel(tower);
+        tower.value = game.currentCost;
+        if(tileExist)
+            getAnElement(tileExist.base.children.Selectable).ignoreNext = true;
+        return true;
+    }
+    return false;
 };

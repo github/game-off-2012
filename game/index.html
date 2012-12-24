@@ -32,11 +32,12 @@ canvas {
     var DFlag = {};
     DFlag.disableSounds = true;
 
-    DFlag.width = 820;
+    DFlag.width = 800; // Max allowed by kongregate.
     DFlag.height = 635;
 </script>
 
 <script src="debug.js"></script>
+
 <script src="fail.js"></script>
 <script src="type.js"></script>
 <script src="sound.js"></script>
@@ -54,7 +55,8 @@ canvas {
 
 <script src="pointer.js"></script>
 
-<script src="allele.js"></script>
+<script src="alleles.js"></script>
+<script src="alleleConstruction.js"></script>
 <script src="allelePointSystem.js"></script>
 <script src="geneticSystem.js"></script>
 
@@ -68,12 +70,13 @@ canvas {
 <script src="gameInfoBar.js"></script>
 <script src="infobar.js"></script>
 <script src="towerBar.js"></script>
-<script src="level.js"></script>
+<script src="levelSystem.js"></script>
+<script src="levels.js"></script>
 
 <script src="tower.js"></script>
 <script src="path.js"></script>
 <script src="bug.js"></script>
-<script src="entities.js"></script>
+<script src="tile.js"></script>
 
 <script src="quadtree.js"></script>
 <script src="quadtreeQueries.js"></script>
@@ -82,70 +85,32 @@ canvas {
 
 <script src="pathGeneration.js"></script>
 
-<script src="logic.js"></script>
-<script>
-// We should try and get rid of these someday.
-var NUM_TILES_X = 16;
-var NUM_TILES_Y = 12;
-var TILE_SIZE = 32;
-var CANVAS_WIDTH;
-var CANVAS_HEIGHT;
-var BOARD_WIDTH;
-var BOARD_HEIGHT;
-var eng;
-(function() {
-    var canvas = document.getElementById("myCanvas");
-    var bufferCanvas = canvas.cloneNode(true); //Who knew no argument in this would crash us in firefox?
-    var pen = canvas.getContext("2d");
-    function initCanvas() {
-        minWidth = NUM_TILES_X * TILE_SIZE + 150;
-        minHeight = NUM_TILES_Y * TILE_SIZE;
-        CANVAS_WIDTH = DFlag.width || Math.max(window.innerWidth, minWidth);
-        CANVAS_HEIGHT = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
-        BOARD_WIDTH = CANVAS_WIDTH - 150;
-        BOARD_HEIGHT = CANVAS_HEIGHT;
-        canvas.width = CANVAS_WIDTH;
-        canvas.height = CANVAS_HEIGHT;
-        bufferCanvas.width = CANVAS_WIDTH;
-        bufferCanvas.height = CANVAS_HEIGHT;
-        if (eng && eng.triggerResize) {
-            eng.triggerResize({width: CANVAS_WIDTH, height: CANVAS_HEIGHT});
-        }
-    }
-    $(document).ready(function () {
-        initCanvas();
-        window.reqAnim = (function () {
-            return window.requestAnimationFrame ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            window.oRequestAnimationFrame ||
-            window.msRequestAnimationFrame ||
-            function (callback) {
-                window.setTimeout(function() {
-                    callback(Date.now());
-                }, 1000 / 60);
-            };
-        })();
-        
-        width = DFlag.width || Math.max(window.innerWidth, minWidth);
-        height = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
+<script src="inputHandler.js"></script>
 
-        CANVAS_WIDTH = DFlag.width || Math.max(window.innerWidth, minWidth);
-        CANVAS_HEIGHT = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
-        
-        eng = new engine(pen, bufferCanvas, new TemporalPos(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0));
-        //this.base.rootNode.holder will also get eng... but... yeah...
-        window.reqAnim(eng.run.bind(eng));
-        
-        $(window).resize(initCanvas);
-        initCanvas();
-        
-        $("#myCanvas").mousemove(eng.triggerMousemove.bind(eng));
-        $("#myCanvas").mouseout(eng.triggerMouseout.bind(eng));
-        $("#myCanvas").mousedown(eng.triggerMousedown.bind(eng));
-        $("#myCanvas").mouseup(eng.triggerMouseup.bind(eng));
-    });    
-}());
+<script src="engine.js"></script>
+<script src="screenSystem.js"></script>
+<script src="mainGame.js"></script>
+
+<script src="tutorial.js"></script>
+
+<script src="ui/include.js"></script>
+
+<script>
+    document.body.onload = function () {
+        var canvas = document.getElementById("myCanvas");
+        var screenSystem = new ScreenSystem(canvas);
+
+        screenSystem.addScreen("MainGame",
+            new GitDefence(new TemporalPos(0, 0, DFlag.width, DFlag.height, 0, 0)));
+
+        screenSystem.addScreen("Tutorial",
+            new Tutorial(new TemporalPos(0, 0, DFlag.width, DFlag.height, 0, 0)));
+
+        if(DFlag.disableTutorial)
+            screenSystem.setActiveScreen("MainGame");
+        else
+            screenSystem.setActiveScreen("Tutorial");
+    };
 </script>
 </div>
 </body>
