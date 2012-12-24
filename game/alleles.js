@@ -3,19 +3,16 @@
 
 var changeNextGlobalChance = null;
 //Choices is an object with key as CDF (so the last should be 1)
-function choose(choices)
-{
+function choose(choices) {
     var randomValue = Math.random();
 
-    if(changeNextGlobalChance)
-    {
+    if (changeNextGlobalChance) {
         randomValue = changeNextGlobalChance;
         changeNextGlobalChance = null;
     }
 
     var realChoices = [];
-    for(var chance in choices)
-    {
+    for (var chance in choices) {
         var obj = {};
         obj.chance = chance;
         obj.choice = choices[chance];
@@ -25,17 +22,18 @@ function choose(choices)
     realChoices.sort(function (a, b) { return a.chance - b.chance; });
 
     var curValue = 0;
-    for(var key in realChoices)
-        if(randomValue < realChoices[key].chance)
+    for (var key in realChoices) {
+        if (randomValue < realChoices[key].chance) {
             return realChoices[key].choice;
+        }
+    }
 }
 
 function random(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-var AllAlleleGroups =
-{
+var AllAlleleGroups = {
     //Should likely have better names
     //EACH ONE OF THESE SHOULD HAVE MORE THAN ONE PHENOTYPE!
     //(Ex, one could be +10 range, of +5 range (moderate bonus)

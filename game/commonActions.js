@@ -262,15 +262,6 @@ function SimpleCallback(time, callbackName) {
     }
 }
 
-//Use this to make boundCallback
-function bind(thisCtx, name /*, variadic args to curry */) {
-    var args = Array.prototype.slice.call(arguments, 2);
-    return function () {
-        return thisCtx[name].apply(thisCtx, args.concat(Array.prototype.slice.call(arguments)));
-    }
-}
-
-
 function AliveCounter(boundZeroCallback) {
     this.base = new BaseObj(this);
 

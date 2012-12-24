@@ -92,7 +92,6 @@ function HSLColor() {
 }
 
 // This function should really be done with HSLColor or RGBColor, but this works for now since everything is using strings for colors.
-//Well this is all I need to do colors
 function setColorPart(color, partNumber, partValue) {
     var functionParts = color.split("(");
     var functionName = functionParts[0];
