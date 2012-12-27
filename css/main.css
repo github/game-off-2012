@@ -293,7 +293,7 @@ canvas#game_bg {
 
 /* Share Buttons */
 #share_btns {
-	max-width: 440px;
+	max-width: 420px;
 	overflow: hidden;
 	margin: 0 auto;
 }
