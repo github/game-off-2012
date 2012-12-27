@@ -9,37 +9,6 @@ function Infobar(pos) {
     //For each displayed item gives extra info to be displayed in brackets)
     this.extraInfo = {};
 
-    this.attributeChoosers = {};    
-
-    /*
-    this.attributeChoosers.target_Strategy = new AttributeChooser(
-            new TemporalPos(pos.x, pos.y + 250, pos.w, 
-                countElements(targetStrategies) * 28),
-            targetStrategies,
-            "target_Strategy");
-    this.base.addObject(this.attributeChoosers.target_Strategy);
-    */
-    
-    /*
-    this.attributeChoosers.attack_type = new AttributeChooser(
-            new TemporalPos(pos.x, pos.y + 250, pos.w,
-                countElements(attackTypes) * 28),
-            attackTypes,
-            "attack_type");            
-    //We will soon no longer let them choose their attack strategy!
-    this.base.addObject(this.attributeChoosers.attack_type);
-    */
-
-    /*
-    this.attributeChoosers.bug_attack_type = new AttributeChooser(
-            new TemporalPos(pos.x, pos.y + 250, pos.w,
-                countElements(bugAttackTypes) * 28),
-            bugAttackTypes,
-            "bug_attack_type");
-    //We will soon no longer let them choose their attack strategy!
-    this.base.addObject(this.attributeChoosers.bug_attack_type);
-    */
-
     this.allelePoints = new AllelePointSystem(new TemporalPos(pos.x, pos.y, pos.w * 0.92, 190));
     this.base.addObject(this.allelePoints);
 
@@ -55,8 +24,6 @@ function Infobar(pos) {
     this.updateAttr = function (obj) {
         this.base.setAttributeRecursive("hidden", false);
         this.obj = obj;
-        for (var key in this.attributeChoosers)
-            this.attributeChoosers[key].loadAttribute();
         return;
     }
 
@@ -92,8 +59,6 @@ function Infobar(pos) {
         var extraInfo = this.extraInfo;
         var extraInfoDisplayed = {};
 
-        var attChoosers = this.attributeChoosers;
-
         function displayAttributes(attrs) {
             // Good fucking luck figuring out how this works!
             for (var attrName in attrs) {
@@ -118,7 +83,7 @@ function Infobar(pos) {
 
                         var valtxt = prefixNumber(val, 1);
                         if (defined(extraInfo[name])) {
-                            valtxt = "(" + roundToDecimal(extraInfo[name], 3) + ") " + valtxt;
+                            valtxt = "(" + round(extraInfo[name], 3) + ") " + valtxt;
                             extraInfoDisplayed[name] = true;
                         }
 
@@ -193,14 +158,7 @@ function Infobar(pos) {
                     if (!tryPrintAsNumber(val, attrName, extraInfo)) {
                         yPos += 5;
 
-                        var nameText;
-
-                        if (!defined(attChoosers[attrName])) {
-                            nameText = formatToDisplay(getRealType(val));
-                        }
-                        else {
-                            nameText = formatToDisplay(attrName);
-                        }
+                        var nameText = formatToDisplay(getRealType(val));
 
                         var subExtraInfo = {};
                         if (defined(extraInfo[nameText]) && !extraInfoDisplayed[nameText]) {
@@ -222,16 +180,7 @@ function Infobar(pos) {
                             tryPrintAsNumber(val[subAttr], subAttr, subExtraInfo);
                         }
 
-                        //See if its an attribute which we have a attribute chooser for
-                        if (defined(attChoosers[attrName])) {
-                            attChoosers[attrName].tPos.y = yPos;
-                            yPos += attChoosers[attrName].tPos.h;
-                            yPos += 20; //idk really why this is needed
-                        }
-
                         xPos -= 5;
-
-                        //Even so we still need to position the attribute choosers
                     }
                 } //End of looping through arrays within attributes
 

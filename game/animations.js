@@ -1,19 +1,3 @@
-function MakeLaser(shooter, target, time) {
-    var cent1 = shooter.tPos.getCenter();
-    var cent2 = target.tPos.getCenter();
-
-    var color = getRealType(shooter) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
-    var laserTime = time;
-
-    var line = new Line(cent1, cent2, color, 12);
-    line.base.addObject(new AlphaDecay(laserTime, 1, 0));
-
-    this.sound = new Sound("snd/Laser_Shoot.wav");
-    this.sound.play();
-
-    return line;
-}
-
 function Line(start, end, color, zorder, arrowHeadPercents) {
     this.start = start;
     this.end = end;
@@ -53,31 +37,6 @@ function Line(start, end, color, zorder, arrowHeadPercents) {
     };
 }
 
-function PCircle(center, radius, color, fillColor, zorder) {
-    this.pCenter = forcePointer(center);
-    this.pRadius = forcePointer(radius);
-    this.pColor = forcePointer(color);
-    this.pFillColor = forcePointer(fillColor);
-
-    this.tPos = {x:0, y:0, h:0, w:0};  //We lie about this because it doesn't matter
-    this.base = new BaseObj(this, zorder, true);
-
-    this.draw = function (pen) {
-        var p = this.pCenter.get();
-        var radius = this.pRadius.get();
-        var color = this.pColor.get();
-        var fillColor = this.pFillColor.get();
-
-        if (radius < 1) radius = 1;
-
-        pen.lineWidth = 2;
-        pen.fillStyle = fillColor;
-        pen.strokeStyle = color;
-
-        ink.circ(p.x, p.y, radius, pen);
-    };
-}
-
 function Circle(center, radius, color, fillColor, zorder) {    
     this.radius = radius;
     this.color = color;
@@ -104,6 +63,7 @@ function Circle(center, radius, color, fillColor, zorder) {
         ink.circ(p.x, p.y, radius, pen);
     };
 }
+
 function AlphaDecay(lifetime, startAlpha, endAlpha) {
     this.base = new BaseObj(this);
 
@@ -119,28 +79,6 @@ function AlphaDecay(lifetime, startAlpha, endAlpha) {
         var currentAlpha = startAlpha + (endAlpha - startAlpha) * (this.currentTime / this.lifetime);
 
         this.base.parent.color = setAlpha(this.base.parent.color, currentAlpha);
-
-        if (this.currentTime > this.lifetime) {
-            this.base.parent.base.destroySelf();
-        }
-    }
-}
-
-function AlphaDecayPointer(lifetime, startAlpha, endAlpha, pColor) {
-    this.base = new BaseObj(this);
-
-    this.lifetime = lifetime;
-    this.startAlpha = startAlpha;
-    this.endAlpha = endAlpha;
-
-    this.currentTime = 0;
-
-    this.update = function (dt) {
-        this.currentTime += dt;
-
-        var currentAlpha = startAlpha + (endAlpha - startAlpha) * (this.currentTime / this.lifetime);
-
-        pColor.set(setAlpha(pColor.get(), currentAlpha));
 
         if (this.currentTime > this.lifetime) {
             this.base.parent.base.destroySelf();

@@ -1,10 +1,9 @@
 function AllelePointSystem(pos) {
     this.base = new BaseObj(this, 15);
-    console.log("Allelenpointsysom pos:", pos);
     this.tPos = pos;
 
     var vbox;
-    this.added = function() {
+    this.added = function () {
         var that = this;
         function pointButton(num, cost) {
             var text;
@@ -134,12 +133,10 @@ function AllelePointSystem(pos) {
 
                             //if (!extraInfo[key])
                             //delete extraInfo[key];
-                        }
-                        else {
+                        } else {
                             if (extraInfo[formatToDisplay(change.name)]) {
                                 extraInfo[formatToDisplay(change.name)].added = "+-";
-                            }
-                            else {
+                            } else {
                                 extraInfo[formatToDisplay(change.name)] = change;
                                 extraInfo[formatToDisplay(change.name)].added = factor == 1 ? "+" : "-";
                             }
@@ -161,8 +158,7 @@ function AllelePointSystem(pos) {
 
     var added = false;
     this.update = function () {
-        if(!added && getGame(this))
-        {
+        if (!added && getGame(this)) {
             getGame(this).globalSelectionChanged[this.base.id] = this;
             added = true;
         }
@@ -181,8 +177,7 @@ function AllelePointSystem(pos) {
         if (selected && selected.base.type == "Tower") {
             this.base.setAttributeRecursive("hidden", false);
             this.pointIndicator.text("Allele Points: " + selected.allelesGenerated.length);
-        }
-        else {
+        } else {
             this.base.setAttributeRecursive("hidden", true);
         }
     }

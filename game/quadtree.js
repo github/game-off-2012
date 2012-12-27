@@ -65,28 +65,32 @@ function QuadTree(arrObjs, splitThreshold) {
             this.objTrees[type].tree.bounds = obj.tPos;
 
             obj.base.quadNode = this.objTrees[type].tree;
-        }
-        else {
+        } else {
             var mostBoundingNode = this.objTrees[type].tree;
 
             //Returns false if a path is no good, true if it is
             function findMostBoundingNode(tree, obj) {
-                if (!tree)
+                if (!tree) {
                     return;
+                }
 
-                if (minVecFullOverlapRects(obj.tPos, tree.bounds).magSq() > 0)
+                if (minVecFullOverlapRects(obj.tPos, tree.bounds).magSq() > 0) {
                     return false;
+                }
 
                 mostBoundingNode = tree;
 
-                if (findMostBoundingNode(tree.lessTree, obj))
+                if (findMostBoundingNode(tree.lessTree, obj)) {
                     return true;
+                }
 
-                if (findMostBoundingNode(tree.greaterTree, obj))
+                if (findMostBoundingNode(tree.greaterTree, obj)) {
                     return true;
+                }
 
-                if (findMostBoundingNode(tree.splitTree, obj))
+                if (findMostBoundingNode(tree.splitTree, obj)) {
                     return true;
+                }
 
                 //If none return true, but we bound the object, we are the most bounding!
                 return true;
@@ -130,15 +134,15 @@ function QuadTree(arrObjs, splitThreshold) {
         for (var key in arrObjs[type]) {            
             //Ughh... I don't want to find min and max
             var boundingBox = arrObjs[type][key].tPos;
-            if (boundingBox.x < minX)
-                minX = boundingBox.x;
-            if (boundingBox.y < minY)
-                minY = boundingBox.y;
+            if (boundingBox.x < minX) minX = boundingBox.x;
+            if (boundingBox.y < minY) minY = boundingBox.y;
 
-            if ((boundingBox.x + boundingBox.w) > maxX)
+            if ((boundingBox.x + boundingBox.w) > maxX) {
                 maxX = boundingBox.x + boundingBox.w;
-            if ((boundingBox.y + boundingBox.h) > maxY)
-                maxY = boundingBox.y + boundingBox.h;            
+            }
+            if ((boundingBox.y + boundingBox.h) > maxY) {
+                maxY = boundingBox.y + boundingBox.h;
+            }
         }        
         
         this.objTrees[type].tree = makeBranch
@@ -184,10 +188,11 @@ function QuadTree(arrObjs, splitThreshold) {
         branch.numberContained = length;
 
         if (DFlag.quadtreeDiagnostics) {
-            for (var i = startIndex; i < endIndex; i++)
+            for (var i = startIndex; i < endIndex; i++) {
                 if (minVecFullOverlapRects(arrObj[idKey[i]].tPos, branch.bounds).magSq() > 0) {
                     fail("Bounds not respected in quadtree!");
                 }
+            }
         }
 
         //Leaf
@@ -201,8 +206,7 @@ function QuadTree(arrObjs, splitThreshold) {
             if (length >= 0) {
                 branch.leaf = true;
                 branch.ids = {};
-                for (var i = startIndex; i < endIndex; i++)
-                {
+                for (var i = startIndex; i < endIndex; i++) {
                     arrObj[idKey[i]].base.quadNode = branch;
                     branch.ids[idKey[i]] = true; //Could be set to false even
                 }
@@ -231,8 +235,7 @@ function QuadTree(arrObjs, splitThreshold) {
 
         splitPos = arrObj[idKey[splitIndex]].tPos[curDimen];
 
-        if(DFlag.quadtreeDiagnostics)
-        {
+        if(DFlag.quadtreeDiagnostics) {
             for (var i = startIndex; i < endIndex - 1; i++) {
                 if (arrObj[idKey[i]].tPos[curDimen] > arrObj[idKey[i + 1]].tPos[curDimen]) {
                     fail("sort failed");
@@ -260,21 +263,23 @@ function QuadTree(arrObjs, splitThreshold) {
                 return;
             }
 
-            //Guaranteed to be entirely less than splitPos
             if ((boundingBox[curDimen] + boundingBox[curSize]) <= splitPos) {
-                if (curPos != lessEnd)
+                // Guaranteed to be entirely less than splitPos
+                if (curPos != lessEnd) {
                     swap(idKey, curPos, lessEnd);
-                curPos++; lessEnd++;
-            }
-            //Guaranteed to be entirely greater than splitPos
-            else if ((boundingBox[curDimen]) >= splitPos) {
-                if (curPos != greaterStart)
-                    swap(idKey, curPos, greaterStart);
-                greaterStart--;
-            }
-            //It crosses the splitting line (likely), so we can't really do anything with it!
-            else
+                }
                 curPos++;
+                lessEnd++;
+            } else if ((boundingBox[curDimen]) >= splitPos) {
+                // Guaranteed to be entirely greater than splitPos
+                if (curPos != greaterStart) {
+                    swap(idKey, curPos, greaterStart);
+                }
+                greaterStart--;
+            } else {
+                // It crosses the splitting line (likely), so we can't really do anything with it!
+                curPos++;
+            }
         }
 
         //This is important!
@@ -285,10 +290,8 @@ function QuadTree(arrObjs, splitThreshold) {
         //twice in a row (arbitrary quantity) then we stop splitting (in the future we will just do
         //different splitting techniques)            
         if ((greaterStart - lessEnd) / (endIndex - startIndex) > splitThreshold) {
-            if (splitX)
-                failedX = true;
-            else
-                failedY = true;
+            if (splitX) failedX = true;
+            else failedY = true;
         }
                     
         //How the ranges are now
@@ -297,20 +300,20 @@ function QuadTree(arrObjs, splitThreshold) {
         //greaterStart <= greater < endIndex
 
         //Less branch
-        if (startIndex != lessEnd)
+        if (startIndex != lessEnd) {
             branch.lessTree = makeBranch(
                 arrObj, idKey, startIndex, lessEnd,
                 minX, splitX ? splitPos : maxX, false,
                 minY, !splitX ? splitPos : maxY, false,
                 !splitX,
                 splitThreshold, expectedMaxDepth, curDepth + 1);
+        }
     
         //Split branch
         if (lessEnd != greaterStart) {
-            if (splitX)
-                failedX = true;
-            else
-                failedY = true;
+            if (splitX) failedX = true;
+            else failedY = true;
+            
             branch.splitTree = makeBranch(
                 arrObj, idKey, lessEnd, greaterStart,
                 minX, maxX, failedX,
@@ -320,40 +323,19 @@ function QuadTree(arrObjs, splitThreshold) {
         }
         
         //Greater branch
-        if (greaterStart != endIndex)
+        if (greaterStart != endIndex) {
             branch.greaterTree = makeBranch(
                 arrObj, idKey, greaterStart, endIndex,
                 splitX ? splitPos : minX, maxX, false,
                 !splitX ? splitPos : minY, maxY, false,
                 !splitX,
                 splitThreshold, expectedMaxDepth, curDepth + 1);
+        }
 
         return branch;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //END INDEX IS INCLUSIVE HERE!
+    // END INDEX IS INCLUSIVE HERE!
     function sortByAxis
     (
         arrObj,
@@ -364,22 +346,26 @@ function QuadTree(arrObjs, splitThreshold) {
         var pivotPoint;
 
         if (startIndex + 1 == endIndex) {
-            if (arrObj[startIndex].tPos[axis] > arrObj[endIndex].tPos[axis])
+            if (arrObj[startIndex].tPos[axis] > arrObj[endIndex].tPos[axis]) {
                 swap(arrObj, startIndex, endIndex);
+            }
             return;
         }
 
         //Make the pivot point the median of the first middle and last
         //(also we do a bit of sorting here too)
         var middleIndex = Math.floor((startIndex + endIndex) / 2);
-        if (arrObj[middleIndex].tPos[axis] < arrObj[startIndex].tPos[axis])
+        if (arrObj[middleIndex].tPos[axis] < arrObj[startIndex].tPos[axis]) {
             swap(arrObj, middleIndex, startIndex);
+        }
 
-        if (arrObj[endIndex].tPos[axis] < arrObj[startIndex].tPos[axis])
+        if (arrObj[endIndex].tPos[axis] < arrObj[startIndex].tPos[axis]) {
             swap(arrObj, endIndex, startIndex);
+        }
 
-        if (arrObj[endIndex].tPos[axis] < arrObj[middleIndex].tPos[axis])
+        if (arrObj[endIndex].tPos[axis] < arrObj[middleIndex].tPos[axis]) {
             swap(arrObj, endIndex, middleIndex);
+        }
 
         var pivotPoint = middleIndex;
         var pivotValue = arrObj[middleIndex].tPos[axis];
@@ -393,25 +379,26 @@ function QuadTree(arrObjs, splitThreshold) {
         //< here instead of <= sorts it, but leaves lessEnd and greaterStart possibly wrong
         while (curPos <= greaterStart) {
             if (arrObj[curPos].tPos[axis] < pivotValue) {
-                if (curPos != lessEnd)
+                if (curPos != lessEnd) {
                     swap(arrObj, curPos, lessEnd);
+                }
 
                 curPos++;
                 lessEnd++;
-            }
-            else if (arrObj[curPos].tPos[axis] > pivotValue) {
+            } else if (arrObj[curPos].tPos[axis] > pivotValue) {
                 swap(arrObj, curPos, greaterStart--);
-            }
-            else {
+            } else {
                 curPos++;
             }
         }
 
         greaterStart++;
 
-        if (lessEnd - startIndex > 0)
+        if (lessEnd - startIndex > 0) {
             sortByAxis(arrObj, startIndex, lessEnd - 1, axis);
-        if (endIndex - greaterStart > 0)
+        }
+        if (endIndex - greaterStart > 0) {
             sortByAxis(arrObj, greaterStart, endIndex, axis);
+        }
     }
 }

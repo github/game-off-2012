@@ -1,51 +1,40 @@
 var prefixes = ["", "k", "M", "G", "T", "P", "E", "Z", "Y"];
-//Prefixes the number with prefixes to reduce its size
-function prefixNumber(number, decimalPlaces) {
-    //Math.floor(Math.log(val) / Math.log(1000))
-    //will also get "pos"
-    var pos = 0;
-    while (number > 1000) {
-        number = number / 1000;
-        pos++;
-    }
+// Adds an SI prefix to the given number. Usefull for displaying
+// numbers over a large possible range of values.
+function prefixNumber(num, places) {
+    var pos = Math.floor(Math.log(num) / Math.log(1000));
+    if (pos < 0) pos = 0;
+    var num = num / Math.pow(1000, pos);
+    
     var pre = prefixes[pos];
-    if (pre == undefined) pre = "???";
+    if (pre === undefined) pre = "???";
 
-    if (defined(decimalPlaces))
-        number = roundToDecimal(number, decimalPlaces);
+    num = round(num, places);
 
-    return number + pre;
+    return num + pre;
 }
 
-var decimalTable = { 0: 1, 1: 10, 2: 100, 3: 1000, 4: 10000, 5: 100000, 6: 1000000 };
-//Doesn't really properly round, actually just truncates for now
-function roundToDecimal(value, decimalPlaces) {
-    if (isNaN(value))
-        return 0;
-
-    var decimalValue;
-    if (decimalPlaces <= 6) {
-        decimalValue = decimalTable[decimalPlaces]
-    } else {
-        decimalValue = 1;
-        while (decimalPlaces > 0)
-            decimalValue *= 10;
-    }
-    return Math.round(value * decimalValue) / decimalValue;
+// If places is not given, 0 is assumed
+function round(num, places) {
+    if (isNaN(num)) return 0;
+    if (places === undefined) places = 0;
+    
+    var decimalValue = Math.pow(10, places);
+    return Math.round(num * decimalValue) / decimalValue;
 }
 
+// Transforms "fooBar" to "Foo Bar"
+// Also transforms foo_bar to Foo Bar, since that was
+// the original behavior, and we don't have time to
+// fix everything.
+// http://stackoverflow.com/questions/5796383/insert-spaces-between-words-on-a-camel-cased-token
 function formatToDisplay(text) {
-    if (!text)
-        return "";
+    if (!text) return "";
 
-    if (typeof text != "string")
+    if (typeof text != "string") {
         fail("Only pass us text!");
+    }
 
-    // Transforms "fooBar" to "Foo Bar"
-    // Also transforms foo_bar to Foo Bar, since that was
-    // the original behavior, and we don't have time to
-    // fix everything.
-    // http://stackoverflow.com/questions/5796383/insert-spaces-between-words-on-a-camel-cased-token
     text = text.replace(/_/g, " ");
     text = text.replace(/([A-Z])/g, " $1");
     text = text.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });

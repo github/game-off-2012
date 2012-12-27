@@ -1,5 +1,4 @@
 ﻿ //System to switch between different things being active (like game, menu, etc)
-
 function ScreenSystem(canvas) {
     //Proper resize code is in mainGame.js (well really inputHandler.js) (but not used)
     canvas.width = DFlag.width;

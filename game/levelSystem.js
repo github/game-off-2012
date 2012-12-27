@@ -1,27 +1,31 @@
-function generateBugArray (bugStart, bugTemplate, count, attributeModifier) {
+function generateBugArray(bugStart, bugTemplate, count, attributeModifier) {
     //Needs to loop through, or else all bugs will be exactly the same
     //(their underlying generation may involve randomness
     var waveArray = [];
 
     for (var i = 0; i < count; i++) {
         var bug = new Bug(bugStart);
-        for (var group in bugTemplate)
+        for (var group in bugTemplate) {
             bug.genes.addAllele(new Allele(group, bugTemplate[group]()));
+        }
         for (var attrName in bug.attr) {
             if (typeof bug.attr[attrName] == "number") {
-                if (attrName == "speed")
+                if (attrName == "speed") {
                     bug.attr[attrName] *= Math.max(Math.min(attributeModifier, 0.8), 0.6);
-                else
+                } else {
                     bug.attr[attrName] *= attributeModifier;
+                }
 
-                if (attrName == "range")
+                if (attrName == "range") {
                     bug.attr[attrName] *= Math.min(attributeModifier, 0.3);
-                else
+                } else {
                     bug.attr[attrName] *= attributeModifier;
+                }
             }
         }
-        if (bug.attr.currentHp < bug.attr.hp)
+        if (bug.attr.currentHp < bug.attr.hp) {
             bug.attr.currentHp = bug.attr.hp;
+        }
 
         waveArray.push(bug);
     }
@@ -33,7 +37,7 @@ function LevelManager(bugStart) {
     this.base = new BaseObj(this, 10);
 
     this.curLevel = null;
-    this.loadLevel = function(level){
+    this.loadLevel = function (level) {
         this.nwicounter = 0;
         this.curWave = 0;
 
@@ -83,7 +87,7 @@ function LevelManager(bugStart) {
             this.startSpawnTriggers.push(curWaveData.startSpawnTrigger);
             this.finishSpawnTriggers.push(curWaveData.finishSpawnTrigger);
 
-            if(curWaveData.deadTrigger) {
+            if (curWaveData.deadTrigger) {
                 var grimReaper = new AliveCounter(bind(curWaveData, "deadTrigger"));
                 for(var key in waveArray)
                     grimReaper.addAliveTracker(waveArray[key]);
@@ -104,7 +108,7 @@ function LevelManager(bugStart) {
 
             var currentWave = this.bugsToSpawn[0];
 
-            if(this.bugsToSpawn.length == this.startSpawnTriggers.length) {
+            if (this.bugsToSpawn.length == this.startSpawnTriggers.length) {
                 var curStartTrigger = this.startSpawnTriggers[0];
                 if(curStartTrigger)
                     curStartTrigger();
@@ -115,7 +119,7 @@ function LevelManager(bugStart) {
             eng.base.addObject(curBug);
             currentWave.shift();
 
-            if(currentWave.length == 0) {
+            if (currentWave.length == 0) {
                 this.bugsToSpawn.shift();
                 var curFinishTrigger = this.finishSpawnTriggers[0];
                 if(curFinishTrigger)
