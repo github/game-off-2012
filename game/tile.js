@@ -23,11 +23,11 @@
         ink.rect(p.x, p.y, p.w, p.h, pen);
     };
 
-    this.mouseover = function() {
+    this.mouseover = function () {
         this.hover = true;
     };
 
-    this.mouseout = function() {
+    this.mouseout = function () {
         this.hover = false;
     };
 }

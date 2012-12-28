@@ -75,7 +75,7 @@ function GitDefence(pos) {
         }
 
         if (currentRangeDisplayed && this.selectedObj)
-            currentRangeDisplayed.pCenter.set(this.selectedObj.tPos.getCenter());
+            currentRangeDisplayed.tPos = this.selectedObj.tPos.getCenter();
 
         if (this.selectedObj)
             this.selectedObj.hover = true;
@@ -117,10 +117,10 @@ function GitDefence(pos) {
         if (obj && obj.attr) {
             //Hooks up our tower range to our actual attributes (but not our center)
             //so we don't need to maintain it.
-            currentRangeDisplayed = new PCircle(
+            currentRangeDisplayed = new Circle(
                 obj.tPos.getCenter(),
-                new Pointer(obj.attr, "range"),
-                new Pointer(obj, "color"),
+                obj.attr.range,
+                obj.color,
                 "transparent", 11);
 
             this.engine.base.addObject(currentRangeDisplayed);
@@ -144,8 +144,7 @@ function GitDefence(pos) {
             this.selectedBucket.push(obj);
             obj.base.addObject(new HoverIndicator());
             //this.towerbreeder.towers = this.selectedBucket;
-        }
-        else {
+        } else {
             for (var key in this.selectedBucket) {
                 var selected = this.selectedBucket[key];
                 for (var key in selected.base.children.HoverIndicator) {
