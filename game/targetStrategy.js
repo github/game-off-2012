@@ -172,6 +172,7 @@ var targetStrategies = {
                 ink.rect(tPos.x+(tPos.w*rectPos[i]), tPos.y-(tPos.w*rectPos[i + 1]), 
                     tPos.w * rectPos[i + 2], tPos.w * rectPos[i + 2], pen);
             }
-        };
+        },
     },
+
 };

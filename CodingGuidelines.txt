@@ -1,0 +1,19 @@
+//Gives example of correct and incorrect (but mostly correct), anything not mentioned
+//in here should be coded to be relatively readable.
+
+function args (a, b) {
+    return a + b;
+}
+
+function noArgs () {
+    return 1;
+}
+
+function () {
+    return 1;
+}
+
+function(a, b) {
+    return 1;
+}
+
