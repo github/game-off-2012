@@ -7,7 +7,7 @@ function Tower_Packet(t1, t2, speed, allele) {
     
     var dis = p1.clone().sub(p2).mag();
     
-    var packet = new Circle(p1, 3, allele.getOuterColor(), allele.getInnerColor(), 15);
+    var packet = new SCircle(p1, 3, allele.getOuterColor(), allele.getInnerColor(), 15);
     packet.lineWidth = 1;
     
     var motionDelay = new MotionDelay(p1, p2, dis / speed, apply);
@@ -26,8 +26,7 @@ function Tower_Connection(t1, t2) {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this, 11);
 
-    var line = new Line(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11,
-        {1: 0.1, 2: 0.3, 3: 0.5, 4: 0.7, 5: 0.9});
+    var line = new SLine(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11, [0.1, 0.3, 0.5, 0.7, 0.9]);
     this.base.addObject(line);
     
     var prevhitCount;

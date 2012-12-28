@@ -7,6 +7,10 @@ var globalColorPalette = {
     slow: "rgba(30, 144, 255, 1)"
 };
 
+function rgba(r, g, b, a) {
+    return new RGBColor().r(r).g(g).b(b).a(a);
+}
+
 function RGBColor() {
     var r = 255;
     var g = 255;
@@ -45,6 +49,10 @@ function RGBColor() {
         dirty = false;
         return str;
     }
+}
+
+function hsla(h, s, l, a) {
+    return new HSLColor().h(h).s(s).l(l).a(a);
 }
 
 function HSLColor() {

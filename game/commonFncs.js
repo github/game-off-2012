@@ -257,3 +257,15 @@ function bind(thisCtx, name /*, variadic args to curry */) {
         return thisCtx[name].apply(thisCtx, args.concat(Array.prototype.slice.call(arguments)));
     };
 }
+
+function loadScript(name) {
+    var s = document.createElement('script')
+    s.src = name + '.js';
+    document.getElementById('scripts').appendChild(s);
+}
+
+function loadScripts(prefix, scripts) {
+    for (var i = 0; i < scripts.length; i++) {
+        loadScript(prefix + scripts[i]);
+    }
+}

@@ -203,7 +203,7 @@ var allAttackTypes = {
             this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : globalColorPalette.laser;
             
             //AlphaDecay destroys us
-            var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
+            var line = new SLine(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
             this.base.addObject(new AlphaDecay(damageToTime(realAttacker.attr.damage), 1, 0));
 
             this.base.addObject(line);
@@ -349,7 +349,7 @@ var allAttackTypes = {
             if(realAttacker.base.type == "Bug")
                 r = 2;
 
-            var bullet = new Circle(attacker.tPos.getCenter(), r, "White", "Orange", 15);
+            var bullet = new SCircle(attacker.tPos.getCenter(), r, "White", "Orange", 15);
             var motionDelay = new MotionDelay(attacker.tPos.getCenter(), target.tPos.getCenter(),
                                     dis / bulletSpeed, onImpact);
             bullet.base.addObject(motionDelay);
@@ -421,7 +421,7 @@ var allAttackTypes = {
             this.color = globalColorPalette.chain_lightning;
             
             //AlphaDecay destroys us
-            var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
+            var line = new SLine(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
             this.base.addObject(new AlphaDecay(this.repeatDelay, 1, 0));
 
             this.base.addObject(line);
@@ -521,7 +521,7 @@ var allAttackTypes = {
             this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
 
             //AlphaDecay destroys us
-            var circle = new Circle(attacker.tPos.getCenter(), effect_range, this.color, this.color, 8);
+            var circle = new SCircle(attacker.tPos.getCenter(), effect_range, this.color, this.color, 8);
             this.base.addObject(new AttributeTween(0.2, 0.6, charge_time, "charged", "alpha"));
 
             this.base.addObject(circle);
@@ -619,12 +619,12 @@ var allAttackTypes = {
             this.color = globalColorPalette.poison;
             
             //AlphaDecay destroys us
-            var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);
+            var line = new SLine(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);
             this.base.addObject(new AttributeTween(1, 0, this.repeatDelay, "tick", "alpha"));
 
             this.base.addObject(line);
             
-            var poisonIndicator = new Circle(target.tPos.getCenter(), 8, this.color, this.color, 14);
+            var poisonIndicator = new SCircle(target.tPos.getCenter(), 8, this.color, this.color, 14);
             this.base.addObject(poisonIndicator);            
       
             this.alpha = 0;
@@ -717,7 +717,7 @@ var allAttackTypes = {
 
             this.color = globalColorPalette.slow;
 
-            var line = new Line(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
+            var line = new SLine(attacker.tPos.getCenter(), target.tPos.getCenter(), this.color, 12);        
             line.base.addObject(new AlphaDecay(slow_time, 1, 0));
             this.base.addObject(line);            
             

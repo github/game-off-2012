@@ -117,7 +117,7 @@ function GitDefence(pos) {
         if (obj && obj.attr) {
             //Hooks up our tower range to our actual attributes (but not our center)
             //so we don't need to maintain it.
-            currentRangeDisplayed = new Circle(
+            currentRangeDisplayed = new SCircle(
                 obj.tPos.getCenter(),
                 obj.attr.range,
                 obj.color,
