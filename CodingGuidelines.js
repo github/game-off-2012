@@ -8,7 +8,6 @@
 //we only need to implement the parser once and the number of keywords are finite anyway...
 function everything() {
 
-
     //CORRECT STUFF:
 
     //FUNCTION START
@@ -30,26 +29,26 @@ function everything() {
     //FUNCTION END
 
     //IF START
-    if(true) {
+    if (true) {
     }
 
-    if(true)
+    if (true)
         return false;
     else if (false)
         return true;
 
-    if(true) return whynot;
+    if (true) return whynot;
     else return lololol;
 
     //WRONG! But, the parser should still not make it worse! It should add braces or leave it be
-    if(true)
+    if (true)
         return nononono;
     else {
         return aahhhhhh;
     }
 
     //WRONG! But, the parser should still not make it worse! It should add braces or leave it be
-    if(true) {
+    if (true) {
         return nononono;
     } else
         return aahhhhhh;
@@ -58,7 +57,7 @@ function everything() {
 
 
     //WHILE START
-    while(true) {
+    while (true) {
     }
     //WHILE END
 
@@ -69,59 +68,68 @@ function everything() {
 
     //INCORRECT STUFF:
     //FUNCTION START
-    function args (a, b) {
-        return a + b;
+    function args(a, b)
+    {
+    return a + b;
     }
 
-    function noArgs () {
+    function noArgs(){
         return 1;
     }
 
-    var anon = function() {
+    var anon = function(){
         return 1;
     }
 
-    var anon = function (a, b) {
+    var anon = function(a, b){
         return 1;
     }
     //FUNCTION END
 
     //IF START
-    if(true) {
+    if(true){
     }
 
     if(true)
-        return false;
-    else if (false)
+    return false;
+    else
+    if (false)
         return true;
 
-    if(true) return whynot;
+    if(true)
+        return whynot;
     else return lololol;
 
     //WRONG! But, the parser should still not make it worse! It should add braces or leave it be
     if(true)
-        return nononono;
-    else {
+    return nononono;
+    else
+    {
         return aahhhhhh;
     }
 
     //WRONG! But, the parser should still not make it worse! It should add braces or leave it be
-    if(true) {
+    if(true)
+    {
         return nononono;
-    } else
-        return aahhhhhh;
+    }
+    else
+    return aahhhhhh;
 
     //IF END
 
 
     //WHILE START
-    while(true) {
+    while(true)
+    {
     }
     //WHILE END
 
     //DO  START
-    do {
-    } while(false);
+    do
+    {
+    }
+    while(false);
     //DO END
 
 }
