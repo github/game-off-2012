@@ -9,127 +9,159 @@
 function everything() {
 
     //CORRECT STUFF:
+    function correct() {
+        //FUNCTION START
+        function args (a, b) {
+            return a + b;
+        }
 
-    //FUNCTION START
-    function args (a, b) {
-        return a + b;
+        function noArgs () {
+            return 1;
+        }
+
+        var anon = function() {
+            return 1;
+        }
+
+        var anon = function (a, b) {
+            return 1;
+        }
+        //FUNCTION END
+
+        //IF START
+        if (true) {
+        }
+
+        if (true)
+            return false;
+        else if (false)
+            return true;
+
+        if (true) {
+            return false;
+        }
+        else if (false) {
+            return true;
+        }
+
+        if (true) return whynot;
+        else return lololol;
+
+        if (true) {
+            return true;
+        } else {
+            while(true) {
+                return true;
+            }
+        }
+
+        //WRONG! But, the parser should still not make it worse! It should add braces or leave it be
+        if (true)
+            return nononono;
+        else {
+            return aahhhhhh;
+        }
+
+        //WRONG! But, the parser should still not make it worse! It should add braces or leave it be
+        if (true) {
+            return nononono;
+        } else
+            return aahhhhhh;
+
+        //IF END
+
+
+        //WHILE START
+        while (true) {
+        }
+        //WHILE END
+
+        //DO  START
+        do {
+        } while(false);
+        //DO END
     }
-
-    function noArgs () {
-        return 1;
-    }
-
-    var anon = function() {
-        return 1;
-    }
-
-    var anon = function (a, b) {
-        return 1;
-    }
-    //FUNCTION END
-
-    //IF START
-    if (true) {
-    }
-
-    if (true)
-        return false;
-    else if (false)
-        return true;
-
-    if (true) return whynot;
-    else return lololol;
-
-    //WRONG! But, the parser should still not make it worse! It should add braces or leave it be
-    if (true)
-        return nononono;
-    else {
-        return aahhhhhh;
-    }
-
-    //WRONG! But, the parser should still not make it worse! It should add braces or leave it be
-    if (true) {
-        return nononono;
-    } else
-        return aahhhhhh;
-
-    //IF END
-
-
-    //WHILE START
-    while (true) {
-    }
-    //WHILE END
-
-    //DO  START
-    do {
-    } while(false);
-    //DO END
 
     //INCORRECT STUFF:
-    //FUNCTION START
-    function args(a, b)
-    {
-    return a + b;
-    }
+    function incorrect() {
+        //FUNCTION START
+        function args(a, b)
+        {
+        return a + b;
+        }
 
-    function noArgs(){
-        return 1;
-    }
+        function noArgs(){
+            return 1;
+        }
 
-    var anon = function(){
-        return 1;
-    }
+        var anon = function(){
+            return 1;
+        }
 
-    var anon = function(a, b){
-        return 1;
-    }
-    //FUNCTION END
+        var anon = function(a, b){
+            return 1;
+        }
+        //FUNCTION END
 
-    //IF START
-    if(true){
-    }
+        //IF START
+        if(true){
+        }
 
-    if(true)
-    return false;
-    else
-    if (false)
-        return true;
+        if(true)
+        return false;
+        else
+        if (false)
+            return true;
 
-    if(true)
-        return whynot;
-    else return lololol;
+        if(true)
+            return whynot;
+        else return lololol;
 
-    //WRONG! But, the parser should still not make it worse! It should add braces or leave it be
-    if(true)
-    return nononono;
-    else
-    {
-        return aahhhhhh;
-    }
+        //While should have braces around it... or be on next line
+        if (true) {
+            return true;
+        } else while(true) {
+            return true;
+        }
 
-    //WRONG! But, the parser should still not make it worse! It should add braces or leave it be
-    if(true)
-    {
+        //You can put if on same line as else... in fact you really should
+        if (true) {
+            return true;
+        } else
+            if(true) {
+                return true;
+            }
+
+        //WRONG! But, the parser should still not make it worse! It should add braces or leave it be
+        if(true)
         return nononono;
+        else
+        {
+            return aahhhhhh;
+        }
+
+        //WRONG! But, the parser should still not make it worse! It should add braces or leave it be
+        if(true)
+        {
+            return nononono;
+        }
+        else
+        return aahhhhhh;
+
+        //IF END
+
+
+        //WHILE START
+        while(true)
+        {
+        }
+        //WHILE END
+
+        //DO  START
+        do
+        {
+        }
+        while(false);
+        //DO END
     }
-    else
-    return aahhhhhh;
-
-    //IF END
-
-
-    //WHILE START
-    while(true)
-    {
-    }
-    //WHILE END
-
-    //DO  START
-    do
-    {
-    }
-    while(false);
-    //DO END
-
 }
