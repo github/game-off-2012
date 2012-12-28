@@ -80,6 +80,20 @@ function everything() {
         do {
         } while(false);
         //DO END
+
+        for (var x = 0; x < 0; x++) {
+            //stuff here
+        }
+
+        //Okay not the best... but... sometimes it is much better
+        for (var x = 0; x < 0; x++)
+            return false;
+
+        //Also, not ideal
+        while (true)
+            return false;
+
+        while (true) return false;
     }
 
     //INCORRECT STUFF:
@@ -163,5 +177,11 @@ function everything() {
         }
         while(false);
         //DO END
+
+
+        for (var x = 0; x < 0; x++)
+        {//Why would you do such a thing!
+            //stuff here
+        }
     }
 }
