@@ -1,5 +1,5 @@
 function Button(text, callback, zorder) {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     
     if (!zorder)
         zorder = 15;
@@ -11,7 +11,7 @@ function Button(text, callback, zorder) {
     var canvas = new Canvas();
     var dirty = true;
     
-    this.draw = function(pen) {
+    this.draw = function (pen) {
         if (!dirty) {
             canvas.drawTo(pen);
             return;
@@ -44,33 +44,33 @@ function Button(text, callback, zorder) {
         return;
     }
     
-    this.resize = function(rect) {
+    this.resize = function (rect) {
         canvas.resize(rect);
         this.tPos = rect;
         dirty = true;
         return this;
     }
     
-    this.click = function() {
+    this.click = function () {
         if (callback) callback();
     };
     
-    this.mouseover = function() {
+    this.mouseover = function () {
         hover = true;
         dirty = true;
     };
     
-    this.mouseout = function() {
+    this.mouseout = function () {
         hover = false;
         dirty = true;
     };
     
-    this.mousedown = function() {
+    this.mousedown = function () {
         down = true;
         dirty = true;
     };
     
-    this.mouseup = function() {
+    this.mouseup = function () {
         down = false;
         dirty = true;
     };
