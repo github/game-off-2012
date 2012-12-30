@@ -1,4 +1,4 @@
-function TextBox(text, zorder) {
+function QTextBox(text, zorder) {
     this.tPos = new TemporalPos(0, 0, 0, 0);
 
     if (!zorder) zorder = 15;
@@ -7,9 +7,9 @@ function TextBox(text, zorder) {
     var hover = false;
     var down = false;
 
-    var wrapper = new TextWrapper(text, zorder + 1);
-    wrapper.textAlign = "center";
-    this.base.addObject(wrapper);
+    this.wrapper = new QTextWrapper(text, zorder + 1);
+    this.wrapper.textAlign = "center";
+    this.base.addObject(this.wrapper);
 
     this.draw = function(pen) {
         pen.fillStyle = "black";
@@ -18,8 +18,8 @@ function TextBox(text, zorder) {
     };
 
     this.resize = function (rect) {
-        wrapper.resize(rect);
-        this.tPos = wrapper.tPos;
+        this.wrapper.tPos = rect;
+        this.tPos = this.rect;
         return this;
     };
 

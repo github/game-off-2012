@@ -5,7 +5,7 @@
 
 
 function addTextDisplay(text, obj) {
-    var message = new TextBox(text).resize(new Rect(176, 16, 318, 0));
+    var message = new QTextBox(text).resize(new Rect(176, 16, 318, 0));
     obj.base.addObject(message);
 }
 
@@ -158,14 +158,14 @@ tutorialstates.buyAlleles = function buyAlleles() {
 
         var allMouseThrough = new AllMouseThrough(buyButton.tPos);
         this.base.addObject(allMouseThrough);
-    }
+    };
 
     this.update = function () {
         var realGame = getGame(this).underlyingGame;
 
         if(realGame.selectedObj && realGame.selectedObj.allelesGenerated.length > 0)
             getGame(this).advanceState();
-    }
+    };
 };
 tutorialstates.spendAlleles = function spendAlleles() {
     this.tPos = new TemporalPos(0, 0, 0, 0);

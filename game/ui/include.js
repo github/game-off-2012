@@ -10,8 +10,10 @@
         'label',
         'radioButton',
         'textBox',
+        'qTextBox',
         'toggleButton',
         'textWrapper',
+        'qTextWrapper',
         'vbox',
         'hbox',
     ];

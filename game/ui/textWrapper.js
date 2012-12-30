@@ -33,7 +33,7 @@ function TextWrapper(text, zorder) {
             }
         }
         return phraseArray;
-    }
+    };
     
     this.draw = function (pen) {
         pen.font = font;
@@ -50,7 +50,7 @@ function TextWrapper(text, zorder) {
             curY += lineHeight;
             ink.text(curX, curY, lines[i], pen);
         }
-    }
+    };
     
     this.resize = function (rect) {
         this.tPos = rect;
@@ -58,5 +58,5 @@ function TextWrapper(text, zorder) {
         var lineHeight = fontSize;
         var h = lineHeight * (lines.length + 1);
         this.tPos.h = h;
-    }
+    };
 }
