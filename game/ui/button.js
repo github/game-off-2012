@@ -17,19 +17,16 @@ function Button(text, callback, zorder) {
             return;
         }
         
-        //Draw box
+        var p = new Path();
+        var r = new Rect(1.5, 1.5, ~~this.tPos.w - 3, ~~this.tPos.h - 3);
+        p.rect(r);
+        
         var fill = "black";
         if (hover) fill = "#222";
         if (down) fill = "#555";
-        
-        var p = new Path();
-        var r = this.tPos.clone();
-        r.x = r.y = 0.5;
-        r.h -= 1;
-        r.w -= 1;
-        p.rect(r);
         canvas.stroke(p, "green", 1);
         canvas.fill(p, fill);
+        
         
         // We should do this with a text object later.
         var c = canvas.ctx();

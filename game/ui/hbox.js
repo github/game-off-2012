@@ -27,7 +27,7 @@ function HBox() {
         }
         this.tPos = rect;
         
-        var sharedWidth = (rect.w - w) / shared;
+        var sharedWidth = ~~((rect.w - w) / shared);
         var x = rect.x;
         for (i = 0; i < children.length; i++) {
             var c = children[i];

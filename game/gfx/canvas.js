@@ -11,6 +11,17 @@ function Canvas() {
     }
     
     this.drawTo = function (otherCanvas) {
+    // Without this, integer values end up doing sub-pixel
+    // rendering. Who knows what the W3C was thinking?
+    // See http://diveintohtml5.info/canvas.html#paths
+    
+    // I can't seem to get this translate code to work, so
+    // I'm just manually translating for now. Good luck if
+    // you can get it to work!
+//     c.translate(0.5, 0.5);
+//     c.setTransform(1, 0, 0, 1, 0.5, 0.5);
+
+
         otherCanvas.drawImage(element, pos.x, pos.y);
     }
     

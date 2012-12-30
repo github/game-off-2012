@@ -201,13 +201,8 @@ function Infobar(pos) {
 
         displayAttributes(undisplayedExtra);
 
-        this.sellButton.tPos.w = this.tPos.w * 0.9;
-        this.sellButton.tPos.h = 24;
-
-        this.sellButton.tPos.x = xPos;
-        this.sellButton.tPos.y = yPos;
-        yPos += this.sellButton.tPos.h;
-
+        // Why -10? Dunno, it works. Why 24? Dunno, it looks nice.
+        this.sellButton.resize(new Rect(xPos, yPos, this.tPos.w - 10, 24));
 
         this.allelePoints.tPos.x = xPos;
         this.allelePoints.tPos.y = this.tPos.y + this.tPos.h - this.allelePoints.tPos.h - 10;

@@ -27,7 +27,7 @@ function VBox() {
         }
         this.tPos = rect;
         
-        var sharedHeight = (rect.h - h) / shared;
+        var sharedHeight = ~~((rect.h - h) / shared);
         var y = rect.y;
         for (i = 0; i < children.length; i++) {
             var c = children[i];

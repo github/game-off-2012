@@ -1,13 +1,11 @@
-function Text(text) {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
-    if (!zorder) zorder = 15;
-    this.base = new BaseObj(this, zorder, true);
-    
+function Text() {
     var fontSize = 14;
     var font = fontSize + "px courier";
-    var myCanvas = document.createElement('canvas').getContext('2d');
-    myCanvas.font = font;
+    var element = document.createElement('canvas')
+    var c = element.getContext('2d');
+    c.font = font;
     var lines = [];
+    var wrap = true;
     
     //http://stackoverflow.com/questions/2936112/text-wrap-in-a-canvas-element
     //Set font before you call this.
@@ -35,7 +33,7 @@ function Text(text) {
         return phraseArray;
     }
     
-    this.draw = function (pen) {
+    this.apply = function (c) {
         pen.font = font;
         pen.fillStyle = "green";
         pen.textAlign = "center";
