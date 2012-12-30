@@ -1,7 +1,7 @@
 function Canvas() {
     var element = document.createElement('canvas');
     var c = element.getContext('2d');
-    var pos;
+    var pos = new Vector(0, 0);
     
     this.resize = function (rect) {
         pos = rect.origin();
@@ -11,7 +11,7 @@ function Canvas() {
     }
     
     this.drawTo = function (otherCanvas) {
-        otherCanvas.drawImage(c, pos.x, pos.y);
+        otherCanvas.drawImage(element, pos.x, pos.y);
     }
     
     // Required for drawTo to work properly on the canvas
@@ -33,5 +33,10 @@ function Canvas() {
         path.apply(c);
         c.fillStyle = color && color.str ? color.str() : color;
         c.fill();
+    }
+    
+    // Try not to use this!
+    this.ctx = function () {
+        return c;
     }
 }

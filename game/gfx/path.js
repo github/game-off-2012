@@ -39,7 +39,8 @@ function Path() {
     // context.
     this.apply = function (c) {
         for (var i = 0; i < things.length; i++) {
-            c[things[0]](things.slice(1));
+            var cmd = things[i];
+            c[cmd[0]].apply(c, cmd.slice(1));
         }
         return this;
     }

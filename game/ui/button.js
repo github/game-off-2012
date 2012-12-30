@@ -8,30 +8,46 @@ function Button(text, callback, zorder) {
     
     var hover = false;
     var down = false;
+    var canvas = new Canvas();
+    var dirty = true;
     
     this.draw = function(pen) {
-        //Draw box
-        if (down) {
-            pen.fillStyle = "#555";
-        } else if (hover) {
-            pen.fillStyle = "#222";
-        } else {
-            pen.fillStyle = "black";
+        if (!dirty) {
+            canvas.drawTo(pen);
+            return;
         }
-        pen.strokeStyle = "green";
         
-        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
+        //Draw box
+        var fill = "black";
+        if (hover) fill = "#222";
+        if (down) fill = "#555";
         
-        // Draw text
-        pen.fillStyle = "green";
-        pen.font = "14px courier";
-        pen.textBaseline = "middle";
-        var cen = this.tPos.getCenter();
-        ink.cenText(cen.x, cen.y, text, pen);
+        var p = new Path();
+        var r = this.tPos.clone();
+        r.x = r.y = 0.5;
+        r.h -= 1;
+        r.w -= 1;
+        p.rect(r);
+        canvas.stroke(p, "green", 1);
+        canvas.fill(p, fill);
+        
+        // We should do this with a text object later.
+        var c = canvas.ctx();
+        c.fillStyle = "green";
+        c.font = "14px courier";
+        c.textBaseline = "middle";
+        var cen = r.getCenter();
+        ink.cenText(cen.x, cen.y, text, c);
+        
+        canvas.drawTo(pen);
+        dirty = false;
+        return;
     }
     
     this.resize = function(rect) {
+        canvas.resize(rect);
         this.tPos = rect;
+        dirty = true;
         return this;
     }
     
@@ -41,17 +57,21 @@ function Button(text, callback, zorder) {
     
     this.mouseover = function() {
         hover = true;
+        dirty = true;
     };
     
     this.mouseout = function() {
         hover = false;
+        dirty = true;
     };
     
     this.mousedown = function() {
         down = true;
+        dirty = true;
     };
     
     this.mouseup = function() {
         down = false;
+        dirty = true;
     };
 }

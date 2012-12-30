@@ -36,6 +36,15 @@ var Rect = (function() {
 
         return this;
     }
+    
+    p.origin = function () {
+        return new Vector(this.x, this.y);
+    }
+    
+    p.translate = function (x, y) {
+        this.x += x;
+        this.y += y;
+    }
 
     return Rect;
 }());
