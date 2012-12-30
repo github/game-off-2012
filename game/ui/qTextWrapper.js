@@ -21,7 +21,7 @@ function QTextWrapper(pos, text, zorder, scaleVertically) {
 
         var pos = this.tPos;
 
-        var lines = getLines(pen, this.text, pos.w);
+        var lines = getWrappedLines(pen, this.text, pos.w);
         var textHeight = this.fontSize * this.lineSpacing;
 
         var curX = pos.x;

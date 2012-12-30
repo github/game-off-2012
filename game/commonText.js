@@ -48,7 +48,7 @@ function formatToDisplay(text) {
 
 //http://stackoverflow.com/questions/2936112/text-wrap-in-a-canvas-element
 //Set font before you call this.
-function getLines(ctx, phrase, maxPxLength) {
+function getWrappedLines(ctx, phrase, maxPxLength) {
     var wa = phrase.split(" "),
         phraseArray = [],
         lastPhrase = wa[0],
