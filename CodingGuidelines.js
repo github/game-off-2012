@@ -11,15 +11,15 @@ function everything() {
     //CORRECT STUFF:
     function correct() {
         //FUNCTION START
-        function args (a, b) {
+        function args(a, b) {
             return a + b;
         }
 
-        function noArgs () {
+        function noArgs() {
             return 1;
         }
 
-        var anon = function() {
+        var anon = function () {
             return 1;
         }
 
@@ -39,8 +39,7 @@ function everything() {
 
         if (true) {
             return false;
-        }
-        else if (false) {
+        } else if (false) {
             return true;
         }
 
@@ -50,7 +49,7 @@ function everything() {
         if (true) {
             return true;
         } else {
-            while(true) {
+            while (true) {
                 return true;
             }
         }
