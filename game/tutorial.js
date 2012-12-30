@@ -5,7 +5,7 @@
 
 
 function addTextDisplay(text, obj) {
-    var message = new QTextBox(text).resize(new Rect(176, 16, 318, 0));
+    var message = new QTextBox(new Rect(176, 16, 318, 0), text);
     obj.base.addObject(message);
 }
 

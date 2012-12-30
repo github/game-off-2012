@@ -11,7 +11,7 @@ DFlag.height = 635;
 DFlag.debug = false;
 
 //By default now
-//DFlag.disableTutorial = true;
+DFlag.disableTutorial = true;
 
 //DFlag.checkRectangle = true;
 //DFlag.displayMoveDests = true;

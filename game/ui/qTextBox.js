@@ -1,5 +1,5 @@
-function QTextBox(text, zorder) {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+function QTextBox(pos, text, zorder) {
+    this.tPos = pos.clone();
 
     if (!zorder) zorder = 15;
     this.base = new BaseObj(this, zorder, true);
@@ -7,7 +7,7 @@ function QTextBox(text, zorder) {
     var hover = false;
     var down = false;
 
-    this.wrapper = new QTextWrapper(text, zorder + 1);
+    this.wrapper = new QTextWrapper(new Rect(pos.x + 5, pos.y, pos.w - 10, pos.h), text, zorder + 1, true);
     this.wrapper.textAlign = "center";
     this.base.addObject(this.wrapper);
 
@@ -18,8 +18,7 @@ function QTextBox(text, zorder) {
     };
 
     this.resize = function (rect) {
-        this.wrapper.tPos = rect;
-        this.tPos = this.rect;
+        //Nothing
         return this;
     };
 

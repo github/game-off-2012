@@ -8,7 +8,7 @@ function QTextWrapper(pos, text, zorder, scaleVertically) {
     this.text = text;
     this.color = "green";
     this.fontSize = 12;
-    this.fontType = "Arial";
+    this.fontType = "courier";
     this.textAlign = "left";
     this.lineSpacing = 1;
 
