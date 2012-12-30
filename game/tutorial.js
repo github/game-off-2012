@@ -468,7 +468,7 @@ function hardcodePath(underlyingGame) {
 
     function placePath() {
         var prevPath = curPath;
-        curPath = new Path(curX * TILE_SIZE, curY * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+        curPath = new Path_Piece(curX * TILE_SIZE, curY * TILE_SIZE, TILE_SIZE, TILE_SIZE);
         prevPath.nextPath = curPath;
         eng.base.addObject(curPath);
     }

@@ -20,16 +20,18 @@ function Canvas() {
         c.drawImage(img, x, y);
     }
     
-    this.strokeRect = function (rect, color, width) {
+    this.stroke = function (path, color, width) {
+        c.beginPath();
+        path.apply(c);
         c.lineWidth = width;
         c.strokeStyle = color && color.str ? color.str() : color;
-        c.strokeRect(rect.x, rect.y, rect.w, rect.h);
-        return this;
+        c.stroke();
     }
     
-    this.fillRect = function (rect, color) {
+    this.fill = function (path, color) {
+        c.beginPath();
+        path.apply(c);
         c.fillStyle = color && color.str ? color.str() : color;
-        c.fillRect(rect.x, rect.y, rect.w, rect.h);
-        return this;
+        c.fill();
     }
 }

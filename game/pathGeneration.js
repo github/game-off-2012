@@ -73,7 +73,7 @@ function generatePath(eng, game) {
                 curPath = new Path_Start(curPos.x * TILE_SIZE, curPos.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             }
             else {
-                curPath = new Path(curPos.x * TILE_SIZE, curPos.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                curPath = new Path_Piece(curPos.x * TILE_SIZE, curPos.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 prevPath.nextPath = curPath;
             }
 

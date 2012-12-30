@@ -67,7 +67,7 @@ function Path_Line(pathBase) {
     };
 }
 
-function Path(x, y, w, h) {
+function Path_Piece(x, y, w, h) {
     this.tPos = new TemporalPos(x, y, w, h, 0, 0);
     this.base = new BaseObj(this, 3);
     this.pathLine = null;
