@@ -86,7 +86,7 @@ tutorialstates.endPlace = function endPlace() {
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
         var TILE_SIZE = pathStart.tPos.w;
-        var tile = findClosestToPointToPoint(realGame.engine, "Tile", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
+        var tile = findClosestToPoint(realGame.engine, "Tile", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
         this.tile = tile;
 
 
@@ -101,7 +101,7 @@ tutorialstates.endPlace = function endPlace() {
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
         var TILE_SIZE = pathStart.tPos.w;
-        var tower = findClosestToPointToPoint(realGame.engine, "Tower", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
+        var tower = findClosestToPoint(realGame.engine, "Tower", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
 
         if(tower) {
             tower.genes.replaceAlleles(
@@ -223,7 +223,7 @@ tutorialstates.placeAnotherTower = function placeAnotherTower() {
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
         var TILE_SIZE = pathStart.tPos.w;
-        var tile = findClosestToPointToPoint(realGame.engine, "Tile", {x: TILE_SIZE * 5, y: TILE_SIZE * 6}, 0);
+        var tile = findClosestToPoint(realGame.engine, "Tile", {x: TILE_SIZE * 5, y: TILE_SIZE * 6}, 0);
         this.tile = tile;
 
         var allMouseThrough = new AllMouseThrough(tile.tPos);
