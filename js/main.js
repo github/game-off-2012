@@ -254,12 +254,18 @@ mit.main = function() {
   // ... and keyzz...
   window.addEventListener('keydown', function(e) {
 
+    // Up
     if (e.keyCode === 38) {
       mit.ascend();
 
       e.preventDefault();
     }
+    // Down
+    if (e.keyCode === 40) {
+      e.preventDefault();
+    }
 
+    // Space || Enter
     if (e.keyCode === 32 || e.keyCode === 13) {
       startGame();
       
