@@ -277,9 +277,23 @@ function BaseObj(holder, zindex, dynamicZIndex) {
         return returnedValues;
     };
 
+    var drawDirty = true;
+    this.dirty = function () {
+        drawDirty = true;
+    }
+    
     this.draw = function (pen) {
-        if (holder.draw)
+        if (holder.draw) {
+            // Provide the old API for compatability.
             holder.draw(pen);
+        } else if (holder.redraw) {
+            if (drawDirty) {
+                holder.redraw(canvas)
+                drawDirty = false;
+            } else {
+                canvas.drawTo(pen);
+            }
+        }
 
         //Sort objects by z-index (low to high) and then draw by that order
         var childWithZIndex = [];
@@ -306,15 +320,13 @@ function BaseObj(holder, zindex, dynamicZIndex) {
         for (var y = 0; y < childWithZIndex.length; y++) {
             for (var key in childWithZIndex[y].array) {
                 var child = childWithZIndex[y].array[key];
-                pen.save();
-                if (child.draw && !child.hidden)
+                if (child.draw && !child.hidden) {
+                    pen.save();
                     child.draw(pen);
-                pen.restore();
+                    pen.restore();
+                }
             }
         }
-
-        //if (holder.draw)
-          //  holder.draw(pen);
     };
     
 }

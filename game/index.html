@@ -71,7 +71,7 @@ canvas {
 
 <script src="engine.js"></script>
 <script src="screenSystem.js"></script>
-<script src="mainGame.js"></script>
+<script src="gitDefence.js"></script>
 
 <script src="tutorial.js"></script>
 
@@ -83,16 +83,15 @@ canvas {
         var canvas = document.getElementById("myCanvas");
         var screenSystem = new ScreenSystem(canvas);
 
-        screenSystem.addScreen("MainGame",
-            new GitDefence(new TemporalPos(0, 0, DFlag.width, DFlag.height, 0, 0)));
+        screenSystem.addScreen("MainGame", new GitDefence(new Rect(0, 0, DFlag.width, DFlag.height)));
 
-        screenSystem.addScreen("Tutorial",
-            new Tutorial(new TemporalPos(0, 0, DFlag.width, DFlag.height, 0, 0)));
+        screenSystem.addScreen("Tutorial", new Tutorial(new Rect(0, 0, DFlag.width, DFlag.height)));
 
-        if(DFlag.disableTutorial)
+        if (DFlag.disableTutorial) {
             screenSystem.setActiveScreen("MainGame");
-        else
+        } else {
             screenSystem.setActiveScreen("Tutorial");
+        }
     };
 </script>
 </div>

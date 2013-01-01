@@ -58,6 +58,7 @@ function ScreenSystem(canvas) {
     function tick(timestamp) {
         if (activeScreen && activeScreen.run) {
             activeScreen.run(timestamp);
+            pen.clearRect(0, 0, canvas.width, canvas.height);
             activeScreen.draw(pen);
         }
         reqAnim(tick.bind(this));
