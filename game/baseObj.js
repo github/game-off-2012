@@ -280,8 +280,10 @@ function BaseObj(holder, zindex, dynamicZIndex) {
     var drawDirty = true;
     this.dirty = function () {
         drawDirty = true;
+        canvas.resize(this.holder.tPos);
     }
     
+    var canvas = new Canvas();
     function draw(child, pen) {
         if (holder.hidden) return;
         
@@ -292,7 +294,8 @@ function BaseObj(holder, zindex, dynamicZIndex) {
             pen.restore();
         } else if (holder.redraw) {
             if (drawDirty) {
-                holder.redraw(canvas)
+                holder.redraw(canvas);
+                canvas.drawTo(pen);
                 drawDirty = false;
             } else {
                 canvas.drawTo(pen);
