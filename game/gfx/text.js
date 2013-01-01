@@ -1,10 +1,15 @@
 function Text() {
+    // Will we re-measure and re-fit all of the text on the
+    // next call to apply()?
+    var dirty = true;
+    
     var text = "[No text]";
     this.text = function (newText) {
         if (newText === undefined) {
             return text;
         }
         text = newText;
+        dirty = true;
         return this;
     }
     
@@ -18,6 +23,7 @@ function Text() {
             return wrap;
         }
         wrap = newWrap;
+        dirty = true;
         return this;
     }
     
@@ -38,6 +44,7 @@ function Text() {
             return shrink;
         }
         shrink = newShrink;
+        dirty = true;
         return this;
     }
     
@@ -52,6 +59,7 @@ function Text() {
             return lineSpacing;
         }
         lineSpacing = newLineSpacing;
+        dirty = true;
         return this;
     }
     
@@ -84,6 +92,10 @@ function Text() {
     // the canvas API does'nt let us treat text like every
     // other path...
     this.apply = function (pen, type) {
+        if (dirty) {
+            this.resize(rect);
+            dirty = false;
+        }
         pen.font = font;
         pen.fillStyle = "green";
         pen.strokeStyle = "green";
