@@ -8,10 +8,12 @@ function Button(text, callback, zorder) {
     
     var hover = false;
     var down = false;
+    var textWrapper = new Text();
+    textWrapper.text(text);
     
     this.redraw = function (canvas) {
         var p = new Path();
-        var r = new Rect(1.5, 1.5, this.tPos.w - 3, this.tPos.h - 3);
+        var r = this.tPos.clone().origin(new Vector(0, 0)).shrink(1.5);
         p.rect(r);
         
         var fill = "black";
@@ -20,15 +22,14 @@ function Button(text, callback, zorder) {
         canvas.stroke(p, "green", 1);
         canvas.fill(p, fill);
         
-        var t = new Text();
-        t.text(text);
-        t.resize(r);
-        canvas.fill(t, "green");
+        canvas.fill(textWrapper, "green");
         return;
     }
     
     this.resize = function (rect) {
         this.tPos = rect;
+        var r = rect.clone().origin(new Vector(0, 0)).shrink(1.5);
+        textWrapper.resize(r);
         this.base.dirty();
         return this;
     }

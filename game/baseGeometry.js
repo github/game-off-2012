@@ -37,8 +37,32 @@ var Rect = (function () {
         return this;
     }
     
-    p.origin = function () {
-        return new Vector(this.x, this.y);
+    p.origin = function (newOrigin) {
+        if (newOrigin === undefined) {
+            return new Vector(this.x, this.y);
+        }
+        this.x = newOrigin.x;
+        this.y = newOrigin.y;
+        return this;
+    }
+    
+    p.size = function (newSize) {
+        if (newSize === undefined) {
+            return new Vector(this.w, this.h);
+        }
+        this.w = newSize.x;
+        this.h = newSize.y;
+        return this;
+    }
+    
+    // Shrinks a rectangle by amount in all directions.
+    // used to add padding.
+    p.shrink = function (amount) {
+        this.x += amount;
+        this.y += amount;
+        this.w -= 2 * amount;
+        this.h -= 2 * amount;
+        return this;
     }
 
     return Rect;
