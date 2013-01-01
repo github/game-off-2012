@@ -27,14 +27,10 @@ function Button(text, callback, zorder) {
         canvas.stroke(p, "green", 1);
         canvas.fill(p, fill);
         
-        
-        // We should do this with a text object later.
-        var c = canvas.ctx();
-        c.fillStyle = "green";
-        c.font = "14px courier";
-        c.textBaseline = "middle";
-        var cen = r.getCenter();
-        ink.cenText(cen.x, cen.y, text, c);
+        var t = new Text();
+        t.text(text);
+        t.resize(r);
+        canvas.fill(t, "green");
         
         canvas.drawTo(pen);
         dirty = false;

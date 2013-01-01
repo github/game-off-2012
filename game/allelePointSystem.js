@@ -27,6 +27,7 @@ function AllelePointSystem(pos) {
         vbox.add(this.spendButton = new Button("Spend Point", bind(this, "spendPoint")));
         vbox.add(this.trashButton = new Button("Trash Point", bind(this, "trashPoint")));
         vbox.add(this.autoTrashButton = new ToggleButton("Auto Trash Worse", bind(this, "autoTrashToggle")));
+        vbox.resize(pos);
     };
 
     this.pointCost = 50;
@@ -167,8 +168,6 @@ function AllelePointSystem(pos) {
         var game = eng.game;
 
         var selected = getSel(this);
-
-        vbox.resize(this.tPos);
 
         if (this.autoTrashButton.toggled) {
             this.doAutoTrash();

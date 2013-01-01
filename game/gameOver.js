@@ -20,7 +20,7 @@ function GameOver() {
     this.nothing = function() {}
 
     this.addButton = function() {
-        this.base.addObject(new Button("Restart", bind(window.location, "reload"), 102).resize(new TemporalPos(360, 300, 100, 30)));
+        this.base.addObject(new Button("Restart", bind(window.location, "reload"), 102).resize(new Rect(360, 300, 100, 30)));
     }
 
     this.draw = function(pen) {

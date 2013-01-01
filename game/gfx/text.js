@@ -1,10 +1,12 @@
 function Text() {
-    var fontSize = 14;
-    var font = fontSize + "px courier";
-    var element = document.createElement('canvas')
-    var c = element.getContext('2d');
-    c.font = font;
-    var lines = [];
+    var text = "[No text]";
+    this.text = function (newText) {
+        if (newText === undefined) {
+            return text;
+        }
+        text = newText;
+        return this;
+    }
     
     // Should we word wrap long lines to fit within the width
     // of the bounding rect? If no, resize() will return the
@@ -18,6 +20,8 @@ function Text() {
         wrap = newWrap;
         return this;
     }
+    
+    var fontSize = 14;
     
     // When shrink == true, fontSize is the size we would ideally
     // line to achieve, and curFontSize is the size we are forced
@@ -54,9 +58,9 @@ function Text() {
     // How should we align the text within the box? Currently
     // supported values are "left", "right", and "center".
     // Justified support is not provided by canvas natively,
-    // at least to my knowledge, and I don't have internet
-    // right now to google it.
-    var align = "left";
+    // and is not trivial to implement. If you need it, add
+    // it.
+    var align = "center";
     this.align = function (newAlign) {
         if (newAlign === undefined) {
             return align;
@@ -76,54 +80,85 @@ function Text() {
         return this;
     }
     
-    this.apply = function (pen) {
+    // Type can be "stroke" or "fill". We need it because
+    // the canvas API does'nt let us treat text like every
+    // other path...
+    this.apply = function (pen, type) {
         pen.font = font;
         pen.fillStyle = "green";
+        pen.strokeStyle = "green";
         pen.textAlign = align;
         pen.textBaseline = "middle";
         
-        var pos = this.tPos;
-        var lineHeight = lineHeight();
-        var x = pos.x + pos.w / 2;
-        var y = pos.y;
+        var height = lineHeight();
+        var x = rect.x;
+        var y = rect.y;
         
         if (align == "center") {
-            x += pos.w / 2;
+            x += rect.w / 2;
         } else if (align == "right") {
-            x += pos.w;
+            x += rect.w;
         }
         
         for (var i = 0; i < lines.length; i++) {
-            y += lineHeight;
-            pen.text(lines[i], x, y);
-        }
-    }
-    
-    this.resize = function (rect) {
-        this.tPos = rect;
-        if (shrink) {
-            while (true) {
-                
+            y += height;
+            if (type == "stroke") {
+                pen.strokeText(lines[i], x, y);
+            } else if (type == "fill") {
+                pen.fillText(lines[i], x, y);
+            } else {
+                throw "Unknown apply type '" + type + "'";
             }
         }
     }
     
-    function fitText () {
+    var rect;
+    this.resize = function (newRect) {
+        rect = newRect;
+        curFontSize = fontSize;
+        if (shrink) {
+            while (true) {
+                var newRect2 = fitText(newRect.clone());
+                if (newRect2.w <= newRect.w && newRect2.h <= newRect.h) {
+                    return newRect;
+                }
+                curFontSize--;
+                console.log(curFontSize);
+                if (curFontSize < 0) {
+                    throw "WTF";
+                }
+                c.font = font();
+            }
+        } else {
+            return fitText(newRect.clone());
+        }
+    }
+    
+    function fitText (rect) {
         if (wrap) {
-            lines = getLines(myCanvas, text, rect.w);
+            lines = getLines(c, text, rect.w);
             rect.h = lineHeight() * (lines.length + 1);
             return rect;
         } else {
             rect.h = lineHeight();
-            rect.w = ctx.measureText(text).width;
+            rect.w = c.measureText(text).width;
             return rect;
         }
         
+    }
+    
+    function font () {
+        return curFontSize + "px courier";
     }
     
     function lineHeight () {
         return curFontSize * lineSpacing;
     }
+    
+    var element = document.createElement('canvas')
+    var c = element.getContext('2d');
+    c.font = font();
+    var lines = [];
     
     //http://stackoverflow.com/questions/2936112/text-wrap-in-a-canvas-element
     //Set font before you call this.

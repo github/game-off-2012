@@ -33,7 +33,7 @@ function Canvas() {
     
     this.stroke = function (path, color, width) {
         c.beginPath();
-        path.apply(c);
+        path.apply(c, "stroke");
         c.lineWidth = width;
         c.strokeStyle = color && color.str ? color.str() : color;
         c.stroke();
@@ -41,7 +41,7 @@ function Canvas() {
     
     this.fill = function (path, color) {
         c.beginPath();
-        path.apply(c);
+        path.apply(c, "fill");
         c.fillStyle = color && color.str ? color.str() : color;
         c.fill();
     }

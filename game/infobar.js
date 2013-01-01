@@ -9,10 +9,11 @@ function Infobar(pos) {
     //For each displayed item gives extra info to be displayed in brackets)
     this.extraInfo = {};
 
-    this.allelePoints = new AllelePointSystem(new TemporalPos(pos.x, pos.y, pos.w * 0.92, 190));
+    this.allelePoints = new AllelePointSystem(new Rect(pos.x, pos.y + pos.h - 200, pos.w, 190));
     this.base.addObject(this.allelePoints);
 
     this.sellButton = new Button("Kill Tower", bind(this, "sellTower"));
+    this.sellButton.resize(new Rect(pos.x, pos.y + pos.h - 250, pos.w, 24));
     this.base.addObject(this.sellButton);
 
     //Add our buttons, should really be done just in the constructor with our given pos information
@@ -200,12 +201,6 @@ function Infobar(pos) {
         }
 
         displayAttributes(undisplayedExtra);
-
-        // Why -10? Dunno, it works. Why 24? Dunno, it looks nice.
-        this.sellButton.resize(new Rect(xPos, yPos, this.tPos.w - 10, 24));
-
-        this.allelePoints.tPos.x = xPos;
-        this.allelePoints.tPos.y = this.tPos.y + this.tPos.h - this.allelePoints.tPos.h - 10;
     }
     //End of draw
 
