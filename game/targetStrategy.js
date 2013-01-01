@@ -16,7 +16,7 @@ var targetStrategies = {
             }
 
             return target;
-        },
+        };
         this.drawGlyph = function (pen, tPos) {
 	        var color = "grey";
 
@@ -72,7 +72,7 @@ var targetStrategies = {
             var randomPos = Math.floor(Math.random() * targets.length);
 
             return targets[randomPos];        
-        },
+        };
         this.drawGlyph = function(pen, tPos) {
             var color = "grey";
 
@@ -140,7 +140,7 @@ var targetStrategies = {
 
                 return targets[0];
             }
-        },
+        };
         this.drawGlyph = function (pen, tPos) {
             var color = "grey";
 

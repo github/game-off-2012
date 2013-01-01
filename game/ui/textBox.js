@@ -12,7 +12,7 @@ function TextBox(text, zorder) {
         pen.fillStyle = "black";
         pen.strokeStyle = "green";
         ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-    }
+    };
 
     this.resize = function (rect) {
         wrapper.resize(rect);

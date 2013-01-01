@@ -11,15 +11,15 @@ function everything() {
     //CORRECT STUFF:
     function correct() {
         //FUNCTION START
-        function args(a, b) {
+        function args (a, b) {
             return a + b;
         }
 
-        function noArgs() {
+        function noArgs () {
             return 1;
         }
 
-        var anon = function () {
+        var anon = function() {
             return 1;
         }
 
@@ -39,7 +39,8 @@ function everything() {
 
         if (true) {
             return false;
-        } else if (false) {
+        }
+        else if (false) {
             return true;
         }
 
@@ -49,7 +50,7 @@ function everything() {
         if (true) {
             return true;
         } else {
-            while (true) {
+            while(true) {
                 return true;
             }
         }
@@ -100,37 +101,37 @@ function everything() {
             zero: {one: {two: {three: 0}}}
         };
         /*
-        var AllAlleleGroups = {
-            //Should likely have better names
-            //EACH ONE OF THESE SHOULD HAVE MORE THAN ONE PHENOTYPE!
-            //(Ex, one could be +10 range, of +5 range (moderate bonus)
-            //two could be +1000 range of +50 damage (major bonus)
-            //three could be... etc
-            //Make some for all of the attack types and target strategies.
-            //Some major bonuses
+         var AllAlleleGroups = {
+         //Should likely have better names
+         //EACH ONE OF THESE SHOULD HAVE MORE THAN ONE PHENOTYPE!
+         //(Ex, one could be +10 range, of +5 range (moderate bonus)
+         //two could be +1000 range of +50 damage (major bonus)
+         //three could be... etc
+         //Make some for all of the attack types and target strategies.
+         //Some major bonuses
 
-//BASELINE BONUS
-            rangeBase: function () { return choose(
-                        {
-                            0.5: { range: 30 }, //Roughly even distribution of base stats
-                            0.7: { range: 50 },
-                            0.9: { range: 70 },
-                            1: { range: 150 },  //With a minor chance of huge benefit (this is really good, as
-                            //no matter what the target tower stats the best phenotype
-                            //for this allele will improve it or make it the same).
-                        }); },
+         //BASELINE BONUS
+         rangeBase: function () { return choose(
+         {
+         0.5: { range: 30 }, //Roughly even distribution of base stats
+         0.7: { range: 50 },
+         0.9: { range: 70 },
+         1: { range: 150 },  //With a minor chance of huge benefit (this is really good, as
+         //no matter what the target tower stats the best phenotype
+         //for this allele will improve it or make it the same).
+         }); },
 
-            damageBase: function () { return choose(
-                {
-                    0.5: { damage: 3 }, //Roughly even distribution of base stats
-                    0.7: { damage: 5 },
-                    0.9: { damage: 7 },
-                    1: { damage: 15 },  //With a minor chance of huge benefit (this is really good, as
-                    //no matter what the target tower stats the best phenotype
-                    //for this allele will improve it or make it the same).
-                }); },
-        };
-        */
+         damageBase: function () { return choose(
+         {
+         0.5: { damage: 3 }, //Roughly even distribution of base stats
+         0.7: { damage: 5 },
+         0.9: { damage: 7 },
+         1: { damage: 15 },  //With a minor chance of huge benefit (this is really good, as
+         //no matter what the target tower stats the best phenotype
+         //for this allele will improve it or make it the same).
+         }); },
+         };
+         */
     }
 
     //INCORRECT STUFF:
@@ -138,7 +139,7 @@ function everything() {
         //FUNCTION START
         function args(a, b)
         {
-        return a + b;
+            return a + b;
         }
 
         function noArgs(){
@@ -159,7 +160,7 @@ function everything() {
         }
 
         if(true)
-        return false;
+            return false;
         else
         if (false)
             return true;
@@ -179,13 +180,13 @@ function everything() {
         if (true) {
             return true;
         } else
-            if(true) {
-                return true;
-            }
+        if(true) {
+            return true;
+        }
 
         //WRONG! But, the parser should still not make it worse! It should add braces or leave it be
         if(true)
-        return nononono;
+            return nononono;
         else
         {
             return aahhhhhh;
@@ -197,7 +198,7 @@ function everything() {
             return nononono;
         }
         else
-        return aahhhhhh;
+            return aahhhhhh;
 
         //IF END
 
@@ -221,4 +222,12 @@ function everything() {
             //stuff here
         }
     }
+}
+function everything() {
+if(true)
+return 1;
+}
+function everything() {
+    if(true)
+    return 1;
 }

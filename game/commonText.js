@@ -40,3 +40,34 @@ function formatToDisplay(text) {
     text = text.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     return text;
 }
+
+//This should be public, it is very conceivable that the needs to layout text
+//(for the purposes of measurement, layout or drawing) will be needed by more than
+//one person... the assumption that is won't is the root of all text measuring and layout
+//problems with windows, and any application which draws and needs to layout text.
+
+//http://stackoverflow.com/questions/2936112/text-wrap-in-a-canvas-element
+//Set font before you call this.
+function getWrappedLines(ctx, phrase, maxPxLength) {
+    var wa = phrase.split(" "),
+        phraseArray = [],
+        lastPhrase = wa[0],
+        l = maxPxLength,
+        measure = 0;
+
+    for (var i = 1; i < wa.length; i++) {
+        var w = wa[i];
+        measure = ctx.measureText(lastPhrase + w).width;
+        if (measure < l) {
+            lastPhrase += (" " + w);
+        } else {
+            phraseArray.push(lastPhrase);
+            lastPhrase = w;
+        }
+        if (i === wa.length - 1) {
+            phraseArray.push(lastPhrase);
+            break;
+        }
+    }
+    return phraseArray;
+};

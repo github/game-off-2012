@@ -5,7 +5,7 @@
 
 
 function addTextDisplay(text, obj) {
-    var message = new TextBox(text).resize(new Rect(176, 16, 318, 0));
+    var message = new QTextBox(new Rect(176, 16, 318, 0), text);
     obj.base.addObject(message);
 }
 
@@ -86,7 +86,7 @@ tutorialstates.endPlace = function endPlace() {
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
         var TILE_SIZE = pathStart.tPos.w;
-        var tile = findClosestToPointToPoint(realGame.engine, "Tile", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
+        var tile = findClosestToPoint(realGame.engine, "Tile", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
         this.tile = tile;
 
 
@@ -101,7 +101,7 @@ tutorialstates.endPlace = function endPlace() {
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
         var TILE_SIZE = pathStart.tPos.w;
-        var tower = findClosestToPointToPoint(realGame.engine, "Tower", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
+        var tower = findClosestToPoint(realGame.engine, "Tower", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
 
         if(tower) {
             tower.genes.replaceAlleles(
@@ -158,14 +158,14 @@ tutorialstates.buyAlleles = function buyAlleles() {
 
         var allMouseThrough = new AllMouseThrough(buyButton.tPos);
         this.base.addObject(allMouseThrough);
-    }
+    };
 
     this.update = function () {
         var realGame = getGame(this).underlyingGame;
 
         if(realGame.selectedObj && realGame.selectedObj.allelesGenerated.length > 0)
             getGame(this).advanceState();
-    }
+    };
 };
 tutorialstates.spendAlleles = function spendAlleles() {
     this.tPos = new TemporalPos(0, 0, 0, 0);
@@ -223,7 +223,7 @@ tutorialstates.placeAnotherTower = function placeAnotherTower() {
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
         var TILE_SIZE = pathStart.tPos.w;
-        var tile = findClosestToPointToPoint(realGame.engine, "Tile", {x: TILE_SIZE * 5, y: TILE_SIZE * 6}, 0);
+        var tile = findClosestToPoint(realGame.engine, "Tile", {x: TILE_SIZE * 5, y: TILE_SIZE * 6}, 0);
         this.tile = tile;
 
         var allMouseThrough = new AllMouseThrough(tile.tPos);
