@@ -282,10 +282,14 @@ function BaseObj(holder, zindex, dynamicZIndex) {
         drawDirty = true;
     }
     
-    this.draw = function (pen) {
+    function draw(child, pen) {
+        if (holder.hidden) return;
+        
         if (holder.draw) {
             // Provide the old API for compatability.
+            pen.save();
             holder.draw(pen);
+            pen.restore();
         } else if (holder.redraw) {
             if (drawDirty) {
                 holder.redraw(canvas)
@@ -294,13 +298,21 @@ function BaseObj(holder, zindex, dynamicZIndex) {
                 canvas.drawTo(pen);
             }
         }
-
+    }
+    
+    this.draw = function (pen) {
+        draw(this.holder, pen);
+        
         //Sort objects by z-index (low to high) and then draw by that order
         var childWithZIndex = [];
 
-        for (var key in this.allChildren) {
-            if (getAnElement(this.allChildren[key])) {
-                childWithZIndex.push({ zindex: getAnElement(this.allChildren[key]).base.zindex, array: this.allChildren[key] });
+        for (var key in this.children) {
+            var child = this.children[key];
+            if (getAnElement(child)) {
+                childWithZIndex.push({
+                    zindex: getAnElement(child).base.zindex,
+                    array: child,
+                });
             }
         }
 
@@ -320,11 +332,7 @@ function BaseObj(holder, zindex, dynamicZIndex) {
         for (var y = 0; y < childWithZIndex.length; y++) {
             for (var key in childWithZIndex[y].array) {
                 var child = childWithZIndex[y].array[key];
-                if (child.draw && !child.hidden) {
-                    pen.save();
-                    child.draw(pen);
-                    pen.restore();
-                }
+                child.base.draw(pen);
             }
         }
     };
