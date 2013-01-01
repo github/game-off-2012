@@ -18,7 +18,7 @@ function Button(text, callback, zorder) {
         }
         
         var p = new Path();
-        var r = new Rect(1.5, 1.5, ~~this.tPos.w - 3, ~~this.tPos.h - 3);
+        var r = new Rect(1.5, 1.5, this.tPos.w - 3, this.tPos.h - 3);
         p.rect(r);
         
         var fill = "black";

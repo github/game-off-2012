@@ -37,24 +37,17 @@ function ToggleButton(text, cb) {
         canvas.stroke(outline, "green", 1);
         canvas.fill(outline, fill);
         
-        // Draw text
-        var c = canvas.ctx();
-        c.fillStyle = "green";
-        c.font = "14px courier";
-        c.textBaseline = "middle";
-        var cen = r.getCenter();
-        ink.cenText(cen.x, cen.y, text, c);
+        var t = new Text();
+        t.text(text);
+        t.resize(r);
+        canvas.fill(t, "green");
         
         var box = new Path();
         var padding = 6;
         var size = r.h - 2 * padding;
         box.rect(new Rect(r.x + padding, r.y + padding, size, size));
         
-        if (this.toggled) {
-            fill = "green";
-        } else {
-            fill = "black";
-        }
+        fill = this.toggled ? "green" : "black";
         canvas.stroke(box, "green", 1);
         canvas.fill(box, fill);
         
