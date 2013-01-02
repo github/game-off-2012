@@ -1,7 +1,7 @@
 var globalColorPalette = {
     bullet: "rgba(255, 0, 255, 1)",
     laser: "rgba(0, 0, 255, 1)",
-    chain_lightning: "rgba(255, 255, 255, 1)",
+    chainLightning: "rgba(255, 255, 255, 1)",
     pulse: "rgba(255, 0, 255, 1)",
     poison: "rgba(0, 255, 0, 1)",
     slow: "rgba(30, 144, 255, 1)"

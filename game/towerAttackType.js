@@ -22,7 +22,7 @@ function applyAttack(attackTemplate) {
     target.attr.currentHp -= damage;    
     baseAttacker.attr.hitCount++;
 
-    var newAttackType = baseAttacker.attr.attack_types[attackTemplate.currentAttPos + 1];
+    var newAttackType = baseAttacker.attr.attackTypes[attackTemplate.currentAttPos + 1];
 
     if(newAttackType) {
         var newAttTemplate = cloneObject(attackTemplate); //Clone it just incase it has its own attributes
@@ -51,7 +51,7 @@ function startAttack(attackTemplate) {
 
     if(!assertDefined(attackTemplate.attacker))
         return;
-
+    
     if(attackTemplate.damage < 0)
         return;
 
@@ -61,13 +61,13 @@ function startAttack(attackTemplate) {
     var realAttacker = attackTemplate.baseAttacker;
     var attacker = attackTemplate.attacker;
     var prevTarget = attackTemplate.target;
-    if(realAttacker.attr.target_Strategy)
-        attackTemplate.target = realAttacker.attr.target_Strategy.run(attacker, prevTarget);
-    else
+    if (realAttacker.attr.targetStrategy) {
+        attackTemplate.target = realAttacker.attr.targetStrategy.run(attacker, prevTarget);
+    } else {
         attackTemplate.target = new targetStrategies.Random().run(attacker, prevTarget);
+    }
 
-    if(attackTemplate.target)
-    {
+    if (attackTemplate.target) {
         var attackNode = new attackType.AttackNode(attackTemplate);
 
         eng.base.addObject(attackNode);
@@ -95,7 +95,7 @@ function AttackTemplate(attackType, attacker, target, damage, baseAttacker, curr
 var allAttackTypes = {
     //Each charge bar is constant damage, number of rows relates to charge speed (1 row per constant time)
     Laser: function laser() {
-        this.damage_percent = 200;
+        this.damagePercent = 200;
         this.drawGlyph = function (pen, tPos, user) {
             var baseColor = globalColorPalette.laser;
 
@@ -193,7 +193,7 @@ var allAttackTypes = {
             this.attackTemplate = attackTemplate;
 
             var ourStats = attackTemplate.attackType;
-            attackTemplate.damage *= ourStats.damage_percent / 100;
+            attackTemplate.damage *= ourStats.damagePercent / 100;
 
             var attacker = attackTemplate.attacker;
             var realAttacker = attackTemplate.baseAttacker;
@@ -220,8 +220,8 @@ var allAttackTypes = {
         };
     },
     Bullet: function bullet() {
-        this.bullet_speed = 50;
-        this.damage_percent = 300;
+        this.bulletSpeed = 50;
+        this.damagePercent = 300;
         this.drawGlyph = function (pen, tPos, user) {
             var baseColor = globalColorPalette.laser;
 
@@ -321,7 +321,7 @@ var allAttackTypes = {
             this.attackTemplate = attackTemplate;
 
             var ourStats = attackTemplate.attackType;
-            attackTemplate.damage *= ourStats.damage_percent / 100;
+            attackTemplate.damage *= ourStats.damagePercent / 100;
 
             var realAttacker = attackTemplate.baseAttacker;
             var attacker = attackTemplate.attacker;
@@ -330,7 +330,7 @@ var allAttackTypes = {
 
             this.color = "Orange";
 
-            var bulletSpeed = attackTemplate.attackType.bullet_speed;
+            var bulletSpeed = attackTemplate.attackType.bulletSpeed;
 
             var dis = attacker.tPos.center();
             dis.sub(target.tPos.center());
@@ -367,8 +367,8 @@ var allAttackTypes = {
     },
     //Average best case (so enough enemies to fully chain) is:
     // - chance / (chance - 1)
-    Chain: function chain_lightning() {
-        this.chain_chance = 80;
+    Chain: function chainLightning() {
+        this.chainChance = 80;
         this.repeatDelay = 0.3;
         this.drawGlyph = function (pen, tPos) {
             var w = tPos.w;
@@ -386,8 +386,8 @@ var allAttackTypes = {
 
             pen.beginPath();
 
-            pen.fillStyle = globalColorPalette.chain_lightning;
-            pen.strokeStyle = globalColorPalette.chain_lightning;
+            pen.fillStyle = globalColorPalette.chainLightning;
+            pen.strokeStyle = globalColorPalette.chainLightning;
 
             pen.moveTo(start.x, start.y);
 
@@ -395,7 +395,7 @@ var allAttackTypes = {
             {
                 start = cloneObject(end);
                 end = new Vector(start.x + w * (offsetList[i] / scale), start.y - h * (offsetList[i + 1] / scale));
-                pen.strokeStyle = globalColorPalette.chain_lightning;
+                pen.strokeStyle = globalColorPalette.chainLightning;
 	            pen.lineWidth = 0.5;	            
                 pen.lineTo(end.x, end.y);   
                 pen.stroke();             
@@ -415,10 +415,10 @@ var allAttackTypes = {
             var target = attackTemplate.target;
             var damage = attackTemplate.damage;
 
-            this.chain_chance = attackTemplate.attackType.chain_chance;
+            this.chainChance = attackTemplate.attackType.chainChance;
             this.repeatDelay = attackTemplate.attackType.repeatDelay;
 
-            this.color = globalColorPalette.chain_lightning;
+            this.color = globalColorPalette.chainLightning;
             
             //AlphaDecay destroys us
             var line = new SLine(attacker.tPos.center(), target.tPos.center(), this.color, 12);        
@@ -438,7 +438,7 @@ var allAttackTypes = {
 
             this.die = function()
             {
-                if(Math.random() < this.chain_chance / 100)
+                if(Math.random() < this.chainChance / 100)
                 {
                     //This is basically just a custom targeting strategy
                     this.attackTemplate.attacker = this.attackTemplate.target;
@@ -476,9 +476,9 @@ var allAttackTypes = {
         };
     },
     Pulse: function pulse() {
-        this.damage_percent = 30;
-        this.effect_range = 50;
-        this.charge_time = 1;
+        this.damagePercent = 30;
+        this.effectRange = 50;
+        this.chargeTime = 1;
         this.drawGlyph = function (pen, tPos) {
             //Draw text
             pen.fillStyle = "#000000";
@@ -508,21 +508,21 @@ var allAttackTypes = {
             this.attackTemplate = attackTemplate ;
 
             var ourStats = attackTemplate.attackType;
-            attackTemplate.damage *= ourStats.damage_percent / 100;
+            attackTemplate.damage *= ourStats.damagePercent / 100;
 
             var attacker = attackTemplate.attacker;
             var realAttacker = attackTemplate.baseAttacker;
             var target = attackTemplate.target;
             var prevTarget = this.attackTemplate.target;
 
-            var effect_range = attackTemplate.attackType.effect_range;
-            var charge_time = attackTemplate.attackType.charge_time;
+            var effectRange = attackTemplate.attackType.effectRange;
+            var chargeTime = attackTemplate.attackType.chargeTime;
 
             this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
 
             //AlphaDecay destroys us
-            var circle = new SCircle(attacker.tPos.center(), effect_range, this.color, this.color, 8);
-            this.base.addObject(new AttributeTween(0.2, 0.6, charge_time, "charged", "alpha"));
+            var circle = new SCircle(attacker.tPos.center(), effectRange, this.color, this.color, 8);
+            this.base.addObject(new AttributeTween(0.2, 0.6, chargeTime, "charged", "alpha"));
 
             this.base.addObject(circle);
 
@@ -550,16 +550,16 @@ var allAttackTypes = {
                 var attacker = attackTemplate.attacker;
                 var realAttacker = attackTemplate.baseAttacker;
                 var target = attackTemplate.target;
-                attackTemplate.damage *= attackTemplate.attackType.damage_percent / 100;
+                attackTemplate.damage *= attackTemplate.attackType.damagePercent / 100;
                 var prevTarget = this.attackTemplate.target;
                 
-                var charge_time = attackTemplate.attackType.charge_time;
+                var chargeTime = attackTemplate.attackType.chargeTime;
                 //We do our own targeting (we hit everything around the attacker)
                             
                 //This is basically just a custom targeting strategy
                 var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
                 var targets = findAllWithin(attacker.base.rootNode, targetType, 
-                        attacker.tPos.center(), effect_range);
+                        attacker.tPos.center(), effectRange);
 
                 this.targets = targets;
 
@@ -575,9 +575,9 @@ var allAttackTypes = {
     //Average is (basically its a best case chain):
     // - chance / (chance - 1)
     DOT: function poison() {
-        this.repeat_chance = 80;
+        this.repeatChance = 80;
         this.repeatDelay = 0.3;
-        this.damage_percent = 30;
+        this.damagePercent = 30;
         this.drawGlyph = function (pen, tPos) {
 
             var circlePos = [0.2, 0.25, 0.1, 
@@ -606,14 +606,14 @@ var allAttackTypes = {
             this.attackTemplate = attackTemplate;
 
             var ourStats = attackTemplate.attackType;
-            attackTemplate.damage *= ourStats.damage_percent / 100;
+            attackTemplate.damage *= ourStats.damagePercent / 100;
 
             var attacker = attackTemplate.attacker;
             var realAttacker = attackTemplate.baseAttacker;
             var target = attackTemplate.target;
             var damage = attackTemplate.damage;
 
-            this.repeat_chance = attackTemplate.attackType.repeat_chance;
+            this.repeatChance = attackTemplate.attackType.repeatChance;
             this.repeatDelay = attackTemplate.attackType.repeatDelay;
 
             this.color = globalColorPalette.poison;
@@ -645,7 +645,7 @@ var allAttackTypes = {
                 var eng = this.base.rootNode;
 
                 if(target.base.rootNode == eng &&
-                    Math.random() < this.repeat_chance / 100)
+                    Math.random() < this.repeatChance / 100)
                 {                    
                     this.base.addObject(new AttributeTween(1, 0, this.repeatDelay * 0.5, "nothing", "poisonAlpha"));
                     this.base.addObject(new SimpleCallback(this.repeatDelay, "tick"));
@@ -660,8 +660,8 @@ var allAttackTypes = {
         };
     },
     Slow: function slow() {
-        this.slow_percent = 50;
-        this.slow_time = 2.5;
+        this.slowPercent = 50;
+        this.slowTime = 2.5;
         this.drawGlyph = function (pen, tPos) {
             var w = tPos.w;
             var h = tPos.h;
@@ -693,7 +693,7 @@ var allAttackTypes = {
             {
                 start = cloneObject(end);
                 end = new Vector(start.x + w * (offsetList[i] / scale), start.y - h * (offsetList[i + 1] / scale));
-                pen.strokeStyle = globalColorPalette.chain_lightning;
+                pen.strokeStyle = globalColorPalette.chainLightning;
 	            pen.lineWidth = 0.5;	            
                 pen.lineTo(end.x, end.y);   
                 pen.stroke();             
@@ -712,17 +712,17 @@ var allAttackTypes = {
             var target = attackTemplate.target;
             var damage = attackTemplate.damage;
 
-            var slow = attackTemplate.attackType.slow_percent / 100;
-            var slow_time = attackTemplate.attackType.slow_time;
+            var slow = attackTemplate.attackType.slowPercent / 100;
+            var slowTime = attackTemplate.attackType.slowTime;
 
             this.color = globalColorPalette.slow;
 
             var line = new SLine(attacker.tPos.center(), target.tPos.center(), this.color, 12);        
-            line.base.addObject(new AlphaDecay(slow_time, 1, 0));
+            line.base.addObject(new AlphaDecay(slowTime, 1, 0));
             this.base.addObject(line);            
             
             var slow = new SlowEffect(slow);
-            slow.base.addObject(new Lifetime(slow_time));
+            slow.base.addObject(new Lifetime(slowTime));
 
             target.base.addObject(slow);
 

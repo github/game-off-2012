@@ -24,7 +24,7 @@ function AttackCycle() {
             this.attackCounter = 0;
 
             var attacker = this.base.parent;
-            var attackTypes = attacker.attr.attack_types || attacker.attr.bug_attack_types;
+            var attackTypes = attacker.attr.attackTypes || attacker.attr.bug_attackTypes;
 
             if (attackTypes && attackTypes.length > 0) {
                 startAttack(new AttackTemplate(attackTypes[0], attacker, null, attacker.attr.damage, attacker, 0));

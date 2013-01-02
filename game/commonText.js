@@ -35,7 +35,6 @@ function formatToDisplay(text) {
         fail("Only pass us text!");
     }
 
-    text = text.replace(/_/g, " ");
     text = text.replace(/([A-Z])/g, " $1");
     text = text.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     return text;

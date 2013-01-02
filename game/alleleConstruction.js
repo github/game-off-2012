@@ -11,11 +11,11 @@ function Allele(group, delta) {
                 target.attr[key] += curChange;
             } else if (key == "attack") {
                 //attack type
-                target.attr.attack_types.push(new curChange());
+                target.attr.attackTypes.push(new curChange());
             } else if (key == "target") {
                 //target strategy
-                target.attr.target_Strategy = new curChange();
-                // What should we do if we're removing the gene for the target_Strategy?
+                target.attr.targetStrategy = new curChange();
+                // What should we do if we're removing the gene for the targetStrategy?
             }
         }
     }
@@ -37,8 +37,8 @@ function Allele(group, delta) {
                 return globalColorPalette.bullet;
             else if(name == "laser")
                 return globalColorPalette.laser;
-            else if(name == "chain_lightning")
-                return globalColorPalette.chain_lightning;
+            else if(name == "chainLightning")
+                return globalColorPalette.chainLightning;
             else if(name == "pulse")
                 return globalColorPalette.pulse;
             else if(name == "poison")

@@ -29,7 +29,7 @@ function Bug(startPath) {
             kills:          0,
             value:          5,
         };
-        this.attr.attack_types = [];
+        this.attr.attackTypes = [];
     }
     this.setBaseAttrs();
 

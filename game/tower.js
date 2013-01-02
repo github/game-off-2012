@@ -146,8 +146,8 @@ function Tower(baseTile, tPos) {
             kills:          0,
             value:          TowerStats.value
         };
-        this.attr.target_Strategy = new targetStrategies.Closest();
-        this.attr.attack_types = [];
+        this.attr.targetStrategy = new targetStrategies.Closest();
+        this.attr.attackTypes = [];
     };
     this.setBaseAttrs();
 

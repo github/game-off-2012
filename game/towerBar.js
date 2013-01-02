@@ -148,7 +148,7 @@ function Towerbar(pos) {
                 var tower = new Tower(fakeTile, fakeTile.tPos);
 
                 if (forDisplay) {
-                    tower.attr.attack_types = [];
+                    tower.attr.attackTypes = [];
                     for (var alleleGroup in tower.genes.alleles) {
                         if (tower.genes.alleles[alleleGroup].delta.attack) {
                             delete tower.genes.alleles[alleleGroup];

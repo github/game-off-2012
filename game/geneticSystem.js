@@ -49,8 +49,8 @@ function Genes() {
     //Should only be called if you are fully replacing the targeting strategy and attack types
     this.replaceAlleles = function (newAlleles) {
         var holder = this.base.parent;
-        holder.attr.target_Strategy = null;
-        holder.attr.attack_types = [];
+        holder.attr.targetStrategy = null;
+        holder.attr.attackTypes = [];
 
         this.startAlleleAdd();
 
