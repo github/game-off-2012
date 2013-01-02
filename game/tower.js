@@ -26,7 +26,7 @@ function Tower_Connection(t1, t2) {
     this.tPos = new TemporalPos(0, 0, 0, 0);
     this.base = new BaseObj(this, 11);
 
-    var line = new SLine(t1.tPos.getCenter(), t2.tPos.getCenter(), "rgba(0, 255, 0, 0.2)", 11, [0.1, 0.3, 0.5, 0.7, 0.9]);
+    var line = new SLine(t1.tPos.center(), t2.tPos.center(), "rgba(0, 255, 0, 0.2)", 11, [0.1, 0.3, 0.5, 0.7, 0.9]);
     this.base.addObject(line);
     
     var prevhitCount;
@@ -35,11 +35,11 @@ function Tower_Connection(t1, t2) {
     var that = this;
     
     function addDeleteButton() {
-        var delta = t2.tPos.getCenter();
-        delta.sub(t1.tPos.getCenter());
+        var delta = t2.tPos.center();
+        delta.sub(t1.tPos.center());
         delta.mult(1/2);
         
-        var pos = t2.tPos.getCenter();
+        var pos = t2.tPos.center();
         pos.sub(delta);
         pos.w = 20;
         pos.h = 20;
@@ -65,8 +65,8 @@ function Tower_Connection(t1, t2) {
             return;
         }
         
-        var dis = cloneObject(t1.tPos.getCenter());
-        dis.sub(t2.tPos.getCenter());
+        var dis = cloneObject(t1.tPos.center());
+        dis.sub(t2.tPos.center());
         dis = dis.mag() / 1000;
 
         var speed = Math.max(Math.min(t1.attr.upload, t2.attr.download) / dis, 0.00000001 /* should really be zero */);
@@ -81,7 +81,7 @@ function Tower_Connection(t1, t2) {
         prevhitCount = t1.attr.kills - killDelta;
     }
     
-    this.deleteSelf = function() {
+    this.deleteSelf = function () {
         var conns = this.base.parent.connections;
 
         for(var key in conns) {
@@ -94,7 +94,7 @@ function Tower_Connection(t1, t2) {
         this.base.destroySelf();
     }
 
-    this.update = function(dt) {
+    this.update = function (dt) {
         dataTransfer(t1, t2);
 
         deleteButton.hidden = !this.base.parent.hover;
@@ -132,8 +132,7 @@ function Tower(baseTile, tPos) {
     this.setBaseAttrs = function () {
         //Lol, prevCur...
         var prevCurHp = this.attr.hp || this.attr.currentHp;
-        if(!prevCurHp)
-            prevCurHp = 0;
+        if (!prevCurHp) prevCurHp = 0;
         this.attr = {
             range:          TowerStats.range,
             damage:         TowerStats.damage,
@@ -180,22 +179,23 @@ function Tower(baseTile, tPos) {
         this.recalculateAppearance();
     }
 
-    this.generateAllele = function() {
+    this.generateAllele = function () {
         var genAllGroup = pickRandomKey(AllAlleleGroups);
 
         var alleleGenerated = new Allele(genAllGroup, AllAlleleGroups[genAllGroup]());
         this.allelesGenerated.push(alleleGenerated);
     }
 
-    this.regenTick = function()
-    {
-        if(this.attr.hpRegen > 0)
+    this.regenTick = function () {
+        if (this.attr.hpRegen > 0) {
             this.attr.currentHp += this.attr.hpRegen;
-        if(this.attr.currentHp > this.attr.hp)
+        }
+        if (this.attr.currentHp > this.attr.hp) {
             this.attr.currentHp = this.attr.hp;
+        }
     }
 
-    this.update = function(dt) {
+    this.update = function (dt) {
         this.recalculateAppearance(true);
     }
 
@@ -211,7 +211,7 @@ function Tower(baseTile, tPos) {
         //Show HP regen?
         var innerWidth = Math.log(this.attr.hp / this.attr.damage / this.attr.attSpeed + 10) * 6; //Math.pow(this.attr.hpRegen * 10, 0.9);
 
-        var center = this.tPos.getCenter();
+        var center = this.tPos.center();
 
         var totalWidth = outerWidth + innerWidth;
 
@@ -228,7 +228,7 @@ function Tower(baseTile, tPos) {
 
     this.draw = function (pen) {
         var pos = this.tPos.clone();
-        var cen = pos.getCenter();
+        var cen = pos.center();
 
         pos.x += this.outerWidth;
         pos.y += this.outerWidth;

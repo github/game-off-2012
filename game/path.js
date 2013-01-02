@@ -50,11 +50,11 @@ function Path_Line(pathBase) {
 
     this.draw = function (pen) {
         if (pathBase.nextPath) {
-            var t = pathBase.nextPath.tPos.getCenter();
+            var t = pathBase.nextPath.tPos.center();
             var direction = new Vector(t.x, t.y);
-            direction.sub(pathBase.tPos.getCenter());
+            direction.sub(pathBase.tPos.center());
 
-            var start = pathBase.tPos.getCenter();
+            var start = pathBase.tPos.center();
 
             var end = new Vector(start.x, start.y);
             direction.norm().mult(pathBase.tPos.w);

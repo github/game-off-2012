@@ -29,7 +29,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
     }
 
     this.mousemove = function (e) {
-        //var towerCollision = findClosestToPoint(eng, "Tower", tower.tPos.getCenter(), towerRadius);
+        //var towerCollision = findClosestToPoint(eng, "Tower", tower.tPos.center(), towerRadius);
 
         var tower = this.placingTower;
         var eng = getEng(this);

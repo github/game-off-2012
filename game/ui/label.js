@@ -14,7 +14,7 @@ function Label(text, zorder) {
         pen.fillStyle = "green";
         pen.font = "14px courier";
         pen.textBaseline = "middle";
-        var cen = this.tPos.getCenter();
+        var cen = this.tPos.center();
         ink.cenText(cen.x, cen.y, text, pen);
         return;
     }

@@ -9,7 +9,7 @@ var targetStrategies = {
                 prevTarget.hidden = true;
             }
             
-            var target = findClosestToPoint(attacker.base.rootNode, targetType, attacker.tPos.getCenter(), attacker.attr.range);
+            var target = findClosestToPoint(attacker.base.rootNode, targetType, attacker.tPos.center(), attacker.attr.range);
             
             if (prevTarget) {
                 prevTarget.hidden = false;
@@ -59,7 +59,7 @@ var targetStrategies = {
             }
 
             var targets = findAllWithin(attacker.base.rootNode, targetType, 
-                            attacker.tPos.getCenter(), attacker.attr.range);
+                            attacker.tPos.center(), attacker.attr.range);
         
             if (prevTarget) {
                 prevTarget.hidden = false;
@@ -106,7 +106,7 @@ var targetStrategies = {
             var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
             var targetLoc = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Path" ? "Tower" : "Path");
 
-            var targets = findAllWithin(attacker.base.rootNode, targetLoc, attacker.tPos.getCenter(), attacker.attr.range);
+            var targets = findAllWithin(attacker.base.rootNode, targetLoc, attacker.tPos.center(), attacker.attr.range);
                             
             //Now sort targets by pathPos
             var pathObjs = []
@@ -128,7 +128,7 @@ var targetStrategies = {
                     targetPos = curPath.nextPath.tPos;
                 }
 
-                var targets = findAllWithin(attacker.base.rootNode, targetType, curPath.tPos.getCenter(), curPath.tPos.w / 2);
+                var targets = findAllWithin(attacker.base.rootNode, targetType, curPath.tPos.center(), curPath.tPos.w / 2);
 
                 if (!targets || !(targets.length > 0)) {
                     continue;

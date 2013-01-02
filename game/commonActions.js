@@ -134,7 +134,7 @@ function HoverIndicator() {
         pen.fillStyle = "rgba(255, 255, 255, 0.25)";
         pen.strokeStyle = "yellow";
         pen.lineWidth = 1;
-        ink.circ(p.getCenter().x, p.getCenter().y, p.w / 2, pen);
+        ink.circ(p.center().x, p.center().y, p.w / 2, pen);
     }
 }
 
@@ -157,7 +157,7 @@ function SlowEffect(magnitude) {
         pen.fillStyle = "dodgerblue";
         pen.strokeStyle = "white";
         pen.lineWidth = 1;
-        ink.circ(p.getCenter().x, p.getCenter().y, p.w / 2, pen);
+        ink.circ(p.center().x, p.center().y, p.w / 2, pen);
     }
 }
 

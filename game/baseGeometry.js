@@ -18,7 +18,7 @@ var Rect = (function () {
     
     var p = Rect.prototype;
     
-    p.getCenter = function () {
+    p.center = function () {
         return new Vector(this.x + this.w / 2, this.y + this.h / 2);
     };
     
