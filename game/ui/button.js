@@ -8,17 +8,12 @@ function Button(text, callback, zorder) {
     
     var hover = false;
     var down = false;
-    var canvas = new Canvas();
-    var dirty = true;
+    var textWrapper = new Text();
+    textWrapper.text(text);
     
-    this.draw = function (pen) {
-        if (!dirty) {
-            canvas.drawTo(pen);
-            return;
-        }
-        
+    this.redraw = function (canvas) {
         var p = new Path();
-        var r = new Rect(1.5, 1.5, this.tPos.w - 3, this.tPos.h - 3);
+        var r = this.tPos.clone().origin(new Vector(0, 0)).shrink(1.5);
         p.rect(r);
         
         var fill = "black";
@@ -27,20 +22,15 @@ function Button(text, callback, zorder) {
         canvas.stroke(p, "green", 1);
         canvas.fill(p, fill);
         
-        var t = new Text();
-        t.text(text);
-        t.resize(r);
-        canvas.fill(t, "green");
-        
-        canvas.drawTo(pen);
-        dirty = false;
+        canvas.fill(textWrapper, "green");
         return;
     }
     
     this.resize = function (rect) {
-        canvas.resize(rect);
         this.tPos = rect;
-        dirty = true;
+        var r = rect.clone().origin(new Vector(0, 0)).shrink(1.5);
+        textWrapper.resize(r);
+        this.base.dirty();
         return this;
     }
     
@@ -50,21 +40,21 @@ function Button(text, callback, zorder) {
     
     this.mouseover = function () {
         hover = true;
-        dirty = true;
+        this.base.dirty();
     };
     
     this.mouseout = function () {
         hover = false;
-        dirty = true;
+        this.base.dirty();
     };
     
     this.mousedown = function () {
         down = true;
-        dirty = true;
+        this.base.dirty();
     };
     
     this.mouseup = function () {
         down = false;
-        dirty = true;
+        this.base.dirty();
     };
 }

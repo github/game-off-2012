@@ -2,7 +2,7 @@ function Bug(startPath) {
     var r = 8;
     var cen = (function() {
         var p = startPath.tPos;
-        var cen = p.getCenter();
+        var cen = p.center();
         cen.x += Math.floor((p.w - 2*r) * (Math.random() - 0.5));
         cen.y += Math.floor((p.h - 2*r) * (Math.random() - 0.5));
         return cen;
@@ -130,7 +130,7 @@ function Bug(startPath) {
 
     this.draw = function(pen) {
         var pos = this.tPos;
-        var cen = pos.getCenter();
+        var cen = pos.center();
 
         var hpPercent = this.attr.currentHp / this.attr.hp;
         var hue = hpPercent * 135;

@@ -1,5 +1,13 @@
-
 function generatePath(eng, game) {
+    // Unfortunately, Tile has to be here becuase tower placement
+    // only works on top of a tile. Eventually we should get rid of
+    // it, but having it works fine for now.
+    function Tile(x, y, w, h) {
+        this.tPos = new Rect(x, y, w, h);
+        this.base = new BaseObj(this, 1);
+        this.base.addObject(new Selectable());
+    }
+    
     var curPos = { x: 0, y: 0 };
 
     var NUM_TILES_X = game.numTilesX;

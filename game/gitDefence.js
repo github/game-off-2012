@@ -20,25 +20,13 @@ function GitDefence(pos) {
     this.lastTowerHover = null;
 
 
-    this.infobar = new Infobar(
-            new TemporalPos(pos.w - 250, 0, 250, pos.h)
-        );
-
+    this.infobar = new Infobar(new Rect(pos.w - 250, 0, 250, pos.h));
     engine.base.addObject(this.infobar);
 
-    this.towerbar = new Towerbar(
-            new TemporalPos(0, pos.h - 150, pos.w - 260, 150)
-        );
+    this.towerbar = new Towerbar(new Rect(0, pos.h - 150, pos.w - 260, 150));
     engine.base.addObject(this.towerbar);
 
-//    this.towerbreeder = new TowerBreeder(
-//            new TemporalPos(pos.w - 250, pos.h - 150, 200, 150)
-//        );
-    //    engine.base.addObject(this.towerbreeder);
-
-    this.gameInfoBar = new GameInfoBar(
-            new TemporalPos(0, pos.h - 240, pos.w - 260, 90)
-        );
+    this.gameInfoBar = new GameInfoBar(new Rect(0, pos.h - 240, pos.w - 260, 90));
     engine.base.addObject(this.gameInfoBar);
 
 
@@ -49,7 +37,7 @@ function GitDefence(pos) {
     var bugStart = getAnElement(this.engine.base.children["Path_Start"]);
 
     //Level/Wave generator
-    var lmpos = new TemporalPos(pos.w-400, 0, 100, pos.h*0.05);
+    var lmpos = new Rect(pos.w - 400, 0, 100, pos.h * 0.05);
     this.lvMan = new LevelManager(bugStart, lmpos);
     engine.base.addObject(this.lvMan);
 
@@ -59,37 +47,31 @@ function GitDefence(pos) {
     
     this.run = function (timestamp) {
         var eng = this.engine;
-
         eng.run(timestamp);
 
         this.input.handleEvents(eng);
 
-        if(this.selectionChanged) {
+        if (this.selectionChanged) {
             this.selectionChanged = false;
             for (var key in this.globalSelectionChanged) {
-                if (this.globalSelectionChanged[key].base.rootNode != eng)
+                if (this.globalSelectionChanged[key].base.rootNode != eng) {
                     delete this.globalSelectionChanged[key];
-                else
+                } else {
                     this.globalSelectionChanged[key].base.callRaise("selectionChanged", this.selectedObj);
+                }
             }
         }
 
-        if (currentRangeDisplayed && this.selectedObj)
-            currentRangeDisplayed.tPos = this.selectedObj.tPos.getCenter();
+        if (currentRangeDisplayed && this.selectedObj) {
+            currentRangeDisplayed.tPos = this.selectedObj.tPos.center();
+        }
 
-        if (this.selectedObj)
+        if (this.selectedObj) {
             this.selectedObj.hover = true;
+        }
     };
 
     this.draw = function (pen) {
-        pen.fillStyle = "black";
-
-        var width = pen.canvas.width;
-        var height = pen.canvas.height;
-
-        //Commenting out this line leads to funny results :D
-        ink.rect(0, 0, width, height, pen);
-
         engine.base.draw(pen);
     }
 
@@ -118,7 +100,7 @@ function GitDefence(pos) {
             //Hooks up our tower range to our actual attributes (but not our center)
             //so we don't need to maintain it.
             currentRangeDisplayed = new SCircle(
-                obj.tPos.getCenter(),
+                obj.tPos.center(),
                 obj.attr.range,
                 obj.color,
                 "transparent", 11);
