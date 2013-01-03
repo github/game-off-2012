@@ -120,8 +120,7 @@ function Towerbar(pos) {
 
     this.tPos = pos;
 
-    // Height of 0 used here as a hack to get old behavior.
-    var costIndicator = new Label("Tower cost: 50").resize(new TemporalPos(pos.x, pos.y, pos.w, 0));
+    var costIndicator = new Label("Tower cost: 50").resize(pos.clone());
     this.base.addObject(costIndicator);
 
     var attackCombinations = [];

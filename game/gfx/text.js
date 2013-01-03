@@ -8,7 +8,8 @@ function Text() {
         if (newText === undefined) {
             return text;
         }
-        text = newText;
+        // We rely on this text object to have string methods.
+        text = newText + "";
         dirty = true;
         return this;
     }

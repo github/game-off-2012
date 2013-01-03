@@ -1,51 +1,28 @@
 ﻿ //System to switch between different things being active (like game, menu, etc)
 function ScreenSystem(canvas) {
-    //Proper resize code is in mainGame.js (well really inputHandler.js) (but not used)
-    canvas.width = DFlag.width;
-    canvas.height = DFlag.height;
-
     var pen = canvas.getContext("2d");
 
     var screens = {};
-    var activeScreen = null;
+    var active = null;
 
-    this.addScreen = function(name, screen) {
+    this.addScreen = function (name, screen) {
         screens[name] = screen;
     }
 
-    this.setActiveScreen = function(name) {
-        if (!screens[name]) return;
+    this.setActiveScreen = function (name) {
+        if (active && active.input) {
+            active.input.unBind(canvas);
+        }
         
-        activeScreen = screens[name];
-        activeScreen.screenSystem = this;
+        active = screens[name];
+        active.screenSystem = this;
 
-        $(canvas).off();
-        $(window).off();
-
-        if (screens[name].input) {
-            bindInput(screens[name].input);
+        if (active.input) {
+            active.input.bind(canvas);
         }
 
-        if (activeScreen.gainFocus) activeScreen.gainFocus();
+        if (active.gainFocus) active.gainFocus();
     }
-
-    function bindInput(input) {
-        if (!input) return;
-        
-        var events = input.events;
-        for (var eventName in events) {
-            // Preserve this context
-            events[eventName] = events[eventName].bind(input);
-        }
-
-        for (var eventName in events) {
-            if (eventName == 'resize') {
-                $(window).on(eventName, events[eventName]);
-                continue;
-            }
-            $(canvas).on(eventName, events[eventName]);
-        }
-    };
     
     var reqAnim = (function() {
         return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(cb) {
@@ -56,10 +33,10 @@ function ScreenSystem(canvas) {
     })();
     
     function tick(timestamp) {
-        if (activeScreen && activeScreen.run) {
-            activeScreen.run(timestamp);
+        if (active && active.run) {
+            active.run(timestamp);
             pen.clearRect(0, 0, canvas.width, canvas.height);
-            activeScreen.draw(pen);
+            active.draw(pen);
         }
         reqAnim(tick.bind(this));
     }

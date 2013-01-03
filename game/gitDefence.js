@@ -1,7 +1,4 @@
-﻿//All the input should likely be combined and put in a few components,
-//as it will likely be the same for most games.
-
-function GitDefence(pos) {
+﻿function GitDefence(pos) {
     var engine = new Engine(pos, this);
     this.engine = engine;
 
@@ -28,13 +25,15 @@ function GitDefence(pos) {
 
     this.gameInfoBar = new GameInfoBar(new Rect(0, pos.h - 240, pos.w - 260, 90));
     engine.base.addObject(this.gameInfoBar);
+    
+    this.gameBoard = new GameBoard(this);
+    engine.base.addObject(this.gameBoard);
 
 
     this.selectedObj = null;
     this.globalSelectionChanged = {};
 
-    generatePath(this.engine, this);
-    var bugStart = getAnElement(this.engine.base.children["Path_Start"]);
+    var bugStart = getAnElement(this.engine.base.allChildren["Path_Start"]);
 
     //Level/Wave generator
     var lmpos = new Rect(pos.w - 400, 0, 100, pos.h * 0.05);

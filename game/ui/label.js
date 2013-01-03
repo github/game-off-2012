@@ -9,26 +9,25 @@ function Label(text, zorder) {
     this.base = new BaseObj(this, zorder);
     this.type = "Label" + zorder;
     
-    this.draw = function (pen) {
-        // Draw text
-        pen.fillStyle = "green";
-        pen.font = "14px courier";
-        pen.textBaseline = "middle";
-        var cen = this.tPos.center();
-        ink.cenText(cen.x, cen.y, text, pen);
-        return;
+    this.redraw = function (canvas) {
+        var t = new Text();
+        t.text(text);
+        t.resize(new Rect(0, 0, 0, 0).size(this.tPos.size()));
+        canvas.fill(t, "green");
     }
     
     this.resize = function (rect) {
         this.tPos = rect;
+        this.base.dirty();
         return this;
     }
     
-    this.text = function (newtext) {
-        if (newtext === undefined) {
+    this.text = function (newText) {
+        if (newText === undefined) {
             return text;
         } else {
-            text = newtext;
+            text = newText;
+            this.base.dirty();
             return this;
         }
     }
