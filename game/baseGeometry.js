@@ -114,8 +114,11 @@ var Vector = (function () {
         return this.x * this.x + this.y * this.y;
     };
     
-    p.mag = function () {
-        return Math.sqrt(this.magSq());
+    p.mag = function (newMag) {
+        if (newMag === undefined) {
+            return Math.sqrt(this.magSq());
+        }
+        return this.norm().mult(newMag);
     };
     
     p.norm = function () {

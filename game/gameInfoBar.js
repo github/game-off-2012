@@ -41,15 +41,20 @@ function GameInfoBar(pos) {
     this.skipNextLevel = function() {
         getGame(this).lvMan.nwicounter = -1;
     }
-
-    this.update = function () {
+    
+    var accumulatedTime = 0;
+    this.update = function (dt) {
         var game = this.base.rootNode.game;
         var eng = this.base.rootNode;
-
-        healthIndi.text("HP: " + round(game.health, 1));
-        moneyIndi.text("$$$: " + prefixNumber(game.money, 2));
-        FPSIndi.text("FPS: " + round(eng.lastFPS, 2));
-        bugIndi.text("Bugs: " + round(eng.base.allLengths.Bug, 2));
+        accumulatedTime += dt;
+        
+        if (accumulatedTime > 1) {
+            accumulatedTime -= 1;
+            healthIndi.text("HP: " + round(game.health, 1));
+            moneyIndi.text("$$$: " + prefixNumber(game.money, 2));
+            FPSIndi.text("FPS: " + round(eng.lastFPS, 2));
+            bugIndi.text("Bugs: " + round(eng.base.allLengths.Bug, 2));
+        }
 
         curWaveIndi.text("Current Level: " + round(game.lvMan.curWave, 2));
         nextLevelTimeIndi.text("Sec To Next Level: " + round(game.lvMan.nwicounter, 0));

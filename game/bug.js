@@ -33,8 +33,9 @@ function Bug(startPath) {
     }
     this.setBaseAttrs();
 
-    this.tPos = new TemporalPos(cen.x - r, cen.y - r, r * 2, r * 2, this.attr.speed, 0);
+    this.tPos = new Rect(cen.x - r, cen.y - r, r * 2, r * 2);
     this.base = new BaseObj(this, 11);
+    var velocity = new Vector(1, 0).mag(this.attr.speed);
 
     //Will be replaced
     this.color = "yellow";
@@ -73,9 +74,14 @@ function Bug(startPath) {
             this.attr.currentHp = this.attr.hp;
         }
     }
+    
+    function move(pos, vec, dt) {
+        pos.x += vec.x * dt;
+        pos.y += vec.y * dt;
+    }
 
     this.update = function(dt) {
-        this.tPos.update(dt);
+        move(this.tPos, velocity, dt);
 
         var cur = this.curPath;
         var next = this.curPath.nextPath;
@@ -87,11 +93,10 @@ function Bug(startPath) {
         var overshot = vecToCurrent.magSq() > 0 && vecToNext.magSq() > 0;
 
         if (overshot)
-            this.tPos.update(-dt);
+            move(this.tPos, vec, -dt);
 
         if (this.delay > this.bugRelPathPos) {
-            this.tPos.dx = vecToNext.x;
-            this.tPos.dy = vecToNext.y;            
+            velocity = vecToNext.clone();          
             this.delay = 0;
         }
 
@@ -108,7 +113,7 @@ function Bug(startPath) {
             }
         }
          
-        this.tPos.setSpeed(this.attr.speed);
+        velocity.mag(this.attr.speed);
         
 
         this.color = getInnerColorFromAttrs(this.attr);

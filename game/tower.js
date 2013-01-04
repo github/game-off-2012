@@ -1,9 +1,9 @@
 function Tower_Packet(t1, t2, speed, allele) {
     this.base = new BaseObj(this, 12);
     // We don't really need it
-    this.tpos = new TemporalPos(0, 0, 1, 1, 0, 0);
-    var p1 = getRectCenter(t1.tPos);
-    var p2 = getRectCenter(t2.tPos);
+    this.tpos = new Rect(0, 0, 1, 1);
+    var p1 = t1.tPos.center();
+    var p2 = t2.tPos.center();
     
     var dis = p1.clone().sub(p2).mag();
     
@@ -21,9 +21,8 @@ function Tower_Packet(t1, t2, speed, allele) {
     }
 }
 
-//Should probably use a Line to draw itself instead of doing it by itself
 function Tower_Connection(t1, t2) {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this, 11);
 
     var line = new SLine(t1.tPos.center(), t2.tPos.center(), "rgba(0, 255, 0, 0.2)", 11, [0.1, 0.3, 0.5, 0.7, 0.9]);
@@ -35,19 +34,19 @@ function Tower_Connection(t1, t2) {
     var that = this;
     
     function addDeleteButton() {
+        var width = 20;
+        var height = 20;
+        
         var delta = t2.tPos.center();
         delta.sub(t1.tPos.center());
         delta.mult(1/2);
         
         var pos = t2.tPos.center();
         pos.sub(delta);
-        pos.w = 20;
-        pos.h = 20;
-        pos.sub(new Vector(pos.w * 0.5, pos.h * 0.5));
-        pos = new TemporalPos(pos.x, pos.y, pos.w, pos.h);
+        pos.sub(new Vector(width * 0.5, height * 0.5));
+        pos = new Rect(0, 0, width, height).origin(pos);
         
         deleteButton = new Button("-", bind(that, "deleteSelf"), 50).resize(pos);
-        
         that.base.addObject(deleteButton);
     }
     addDeleteButton();
@@ -125,7 +124,7 @@ TowerStats = {
 function Tower(baseTile, tPos) {    
     this.baseTile = baseTile;
     var p = tPos;
-    this.tPos = new Rect(p.x, p.y, p.w, p.h);//new TemporalPos(p.x, p.y, p.w, p.h, 0, 0);
+    this.tPos = new Rect(p.x, p.y, p.w, p.h);
     this.base = new BaseObj(this, 10);
 
     this.attr = {};

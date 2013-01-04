@@ -21,7 +21,9 @@ function Canvas() {
 //     c.translate(0.5, 0.5);
 //     c.setTransform(1, 0, 0, 1, 0.5, 0.5);
 
-
+        if (pos.w == 0 || pos.h == 0) {
+            throw "Attempting to draw a canvas with area zero, this is probably a bug. Did you forget to resize it first?";
+        }
         otherCanvas.drawImage(element, pos.x, pos.y);
     }
     

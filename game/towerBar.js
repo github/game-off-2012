@@ -143,7 +143,7 @@ function Towerbar(pos) {
         function tileFnc(obj, refObj, pos) {
             function towerDraggerFunction(forDisplay) {
                 var fakeTile = {};
-                fakeTile.tPos = new TemporalPos(0, 0, tileSize, tileSize);
+                fakeTile.tPos = new Rect(0, 0, tileSize, tileSize);
                 var tower = new Tower(fakeTile, fakeTile.tPos);
 
                 if (forDisplay) {
@@ -169,7 +169,7 @@ function Towerbar(pos) {
             return true;
         }
 
-        var tPosBox = new TemporalPos(pos.x + 15, pos.y + 40, 450, 150);
+        var tPosBox = new Rect(pos.x + 15, pos.y + 40, 450, 150);
         makeTiled(this, tileFnc, attackCombinations, tPosBox, 6, 2, 0.1);
     };
 

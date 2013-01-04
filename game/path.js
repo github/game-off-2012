@@ -1,11 +1,6 @@
-
 function Path_End(x, y, w, h) {
-    this.tPos = new TemporalPos(x, y, w, h, 0, 0);
+    this.tPos = new Rect(x, y, w, h);
     this.base = new BaseObj(this, 2);
-    
-    this.update = function (dt) {
-        this.tPos.update(dt);
-    };
     
     this.draw = function (pen) {
         var p = this.tPos;
@@ -16,7 +11,7 @@ function Path_End(x, y, w, h) {
 }
 
 function Path_Start(x, y, w, h) {
-    this.tPos = new TemporalPos(x, y, w, h, 0, 0);
+    this.tPos = new Rect(x, y, w, h);
     this.base = new BaseObj(this, 2);
     
     this.update = function (dt) {
@@ -44,10 +39,6 @@ function Path_Line(pathBase) {
     this.tPos = pathBase.tPos;
     this.base = new BaseObj(this, 3);
     
-    this.update = function (dt) {
-        this.tPos.update(dt);
-    };
-
     this.draw = function (pen) {
         if (pathBase.nextPath) {
             var t = pathBase.nextPath.tPos.center();
@@ -68,7 +59,7 @@ function Path_Line(pathBase) {
 }
 
 function Path_Piece(x, y, w, h) {
-    this.tPos = new TemporalPos(x, y, w, h, 0, 0);
+    this.tPos = new Rect(x, y, w, h);
     this.base = new BaseObj(this, 3);
     this.pathLine = null;
 

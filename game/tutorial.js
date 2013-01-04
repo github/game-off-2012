@@ -9,28 +9,22 @@ function addTextDisplay(text, obj) {
     obj.base.addObject(message);
 }
 
-//Hardcoded position
 function ContinueButton() {
-    var pos = new Rect(400, 344, 90, 30);
-    this.tPos = pos;
+    // Hardcoded position
+    this.tPos = new Rect(400, 344, 90, 30);
     this.base = new BaseObj(this);
 
-    var button = new Button("Continue", bind(this, "continue")).resize(pos);
+    var button = new Button("Continue", bind(this, "continue")).resize(this.tPos);
     this.base.addObject(button);
 
     this.continue = function() {
         getGame(this).advanceState();
     }
-    this.draw = function(pen) {
-        //pen.strokeStyle = "white";
-        //pen.fillStyle = "blue";
-        //ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
-    }
 }
 
 var tutorialstates = {};
 tutorialstates.start = function start() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     this.added = function () {
@@ -42,7 +36,7 @@ tutorialstates.start = function start() {
 };
 
 tutorialstates.startPlace = function startPlace() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!
@@ -68,7 +62,7 @@ tutorialstates.startPlace = function startPlace() {
     }
 };
 tutorialstates.endPlace = function endPlace() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!
@@ -118,7 +112,7 @@ tutorialstates.endPlace = function endPlace() {
 };
 
 tutorialstates.spawnEnemies = function spawnEnemies() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     this.added = function () {
@@ -132,7 +126,7 @@ tutorialstates.spawnEnemies = function spawnEnemies() {
 };
 
 tutorialstates.clickOnTower = function clickOnTower() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     this.added = function () {
@@ -144,7 +138,7 @@ tutorialstates.clickOnTower = function clickOnTower() {
     }
 };
 tutorialstates.buyAlleles = function buyAlleles() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     this.added = function () {
@@ -168,7 +162,7 @@ tutorialstates.buyAlleles = function buyAlleles() {
     };
 };
 tutorialstates.spendAlleles = function spendAlleles() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     this.added = function () {
@@ -201,7 +195,7 @@ tutorialstates.spendAlleles = function spendAlleles() {
 };
 
 tutorialstates.placeAnotherTower = function placeAnotherTower() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!
@@ -252,7 +246,7 @@ tutorialstates.placeAnotherTower = function placeAnotherTower() {
 };
 
 tutorialstates.networkTowerStart = function networkTowerStart() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!
@@ -286,7 +280,7 @@ tutorialstates.networkTowerStart = function networkTowerStart() {
 };
 
 tutorialstates.networkTowerEnd = function networkTowerEnd() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!
@@ -331,7 +325,7 @@ tutorialstates.networkTowerEnd = function networkTowerEnd() {
 };
 
 tutorialstates.spawnEnemies2 = function spawnEnemies2() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     this.added = function () {
@@ -345,7 +339,7 @@ tutorialstates.spawnEnemies2 = function spawnEnemies2() {
 };
 
 tutorialstates.done = function done() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!
@@ -361,7 +355,7 @@ tutorialstates.done = function done() {
 };
 
 tutorialstates.switchToGame = function switchToGame() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tPos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!

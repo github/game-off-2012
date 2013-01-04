@@ -31,7 +31,7 @@ function GameOver() {
         ink.rect(0, 0, eng.tPos.w, eng.tPos.h, pen);
 
 
-        var pos = new TemporalPos(240, 230, 100, 30);
+        var pos = new Rect(240, 230, 100, 30);
         //Hack because of zorder bug
         pen.fillStyle = "Red";
         pen.font = "70px courier";

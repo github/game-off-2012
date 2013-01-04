@@ -28,7 +28,7 @@ function Text() {
         return this;
     }
     
-    var fontSize = 14;
+    var fontSize = 12;
     
     // When shrink == true, fontSize is the size we would ideally
     // line to achieve, and curFontSize is the size we are forced

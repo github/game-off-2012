@@ -771,11 +771,7 @@ function drawAttributes(user, pen) {
             return true;
         },
         user.attr,
-        new TemporalPos(
-            user.tPos.x,
-            user.tPos.y,
-            user.tPos.w,
-            user.tPos.h),
+        user.tPos.clone(),
         2, 2,
         0.01);
 
@@ -797,11 +793,7 @@ function drawAttributes(user, pen) {
             return true;
         },
         user.attr,
-        new TemporalPos(
-            user.tPos.x,
-            user.tPos.y,
-            user.tPos.w,
-            user.tPos.h ),
+        user.tPos.clone(),
         2, 2,
         0.01);
 
