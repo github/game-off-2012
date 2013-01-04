@@ -1,10 +1,10 @@
 function SLine(start, end, color, zorder, arrowHeadPercents) {
-    this.start = start;
-    this.end = end;
-    
     //We do not maintain box!
     this.box = new Rect(start.x, start.y, end.x - start.x, end.y - start.y, 0, 0);
     this.base = new BaseObj(this, zorder, true);
+    
+    this.start = start;
+    this.end = end;
     
     //Positions on line we add arrow heads.
     this.arrowHeadPercents = arrowHeadPercents;

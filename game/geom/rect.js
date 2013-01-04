@@ -1,9 +1,22 @@
 var Rect = (function () {
+    function invalid() {
+        for (var i = 0; i < arguments.length; i++) {
+            var arg = arguments[i];
+            if (arg === undefined || arg !== arg) {
+                return true;
+            }
+        }
+        return false;
+    }
     function Rect(x, y, w, h) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
+        
+        if (invalid(x, y, w, h)) {
+            throw "Invalid rectangle! " + this.str();
+        }
         
         if (w < 0) {
             this.x += w;
@@ -63,6 +76,10 @@ var Rect = (function () {
         this.w -= 2 * amount;
         this.h -= 2 * amount;
         return this;
+    }
+    
+    p.str = function () {
+        return "Rectangle at (" + this.x + ", " + this.y + ")" + "with size (" + this.w + ", " + this.h + ")";
     }
     
     return Rect;

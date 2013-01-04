@@ -1,49 +1,10 @@
-//ALL DISTANCE IN HERE SHOULD BE DONE USING THE FOLLOWING PARADIGM:
-//A distance or delta, or vecTo, etc should be:   vecTo(x, y) = y - x, so x + vecTo(x, y) = y...
+// ALL DISTANCE IN HERE SHOULD BE DONE USING THE FOLLOWING PARADIGM:
+// A distance or delta, or vecTo, etc should be:
+//     vecTo(x, y) = y - x, so x + vecTo(x, y) = y...
 
-//For all functions:
-//rect in x, y, w, h format
-//point in x, y format
-//circle is in bounding rect format
-
-//getCircleCenter
-//function getCircleCenter(circle)
-//Returns the vector of the center of a circle
-
-//vectorToRect
-//function vecToRect(rect, point, vector) 
-//Gets the Vector from the a rect to a point.    
-//Caveats
-//If point is in rect then it returns Vector(0, 0).
-//If vector is given, then it will fill in vector and return that)
-
-//minimumVectorBetweenRects
-//function minVecBetweenRects(rectOne, rectTwo) 
-//Gets the minimum vector from rectOne to rectTwo
-
-//minimumVectorUntilFullOverlapRects
-//function minVecFullOverlapRects(rectOne, rectTwo)
-//Gets the minimum vector for rectOne to be fully overlapped by rectTwo
-//Caveats
-//Its behaviour is undefined if rectOne cannot be fully overlapped by rectTwo
-
-//vectorBetweenRectAndCircle
-//function vecBetweenRectAndCircle(rect, circle)
-//Circle is defined as the bounding rect of circle
-
-
-/********************************* CODE START *********************************/
-
-//Returns the vector of the center of a circle
-function getCircleCenter(circle) {
-    return new Vector(circle.x + circle.w / 2, circle.y + circle.h / 2);
-}
-
-//Returns the vector of the center of a rect
-//Should merge this and getCircleCenter into one function. This is here for clarity only
-function getRectCenter(rect) {
-    return new Vector(rect.x + rect.w / 2, rect.y + rect.h / 2);
-}
+// For all functions:
+//  - rect in x, y, w, h format
+//  - point in x, y format
 
 function assertRectangle(rect) {
     return assertDefined("assertRectangle", rect, rect.x, rect.y, rect.w, rect.h);
@@ -209,20 +170,6 @@ function minVecFullOverlapRects(rectOne, rectTwo) {
         maximum = distance4;
     
     return maximum;
-}
-
-//Circle is defined as the bounding rect of circle
-function vecBetweenRectAndCircle(circle, circle) {
-    if (!assertDefined("vecBetweenRectAndCircle", rect, circle) ||
-        !assertRectangle(rect) || !assertRectangle(circle))
-        return new Vector(0, 0);
-    
-    var vec = vecToRect(getCircleCenter(circle), rect);
-    
-    if (vec.magSq() < circle.w * circle.w)
-        return new Vector(0, 0);
-    else
-        return dist;
 }
 
 //I just can't shake the feeling there is a much more efficient way to do this.
