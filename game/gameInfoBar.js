@@ -3,7 +3,7 @@
 
 function GameInfoBar(pos) {
     console.log("GameInfoBar pos:", pos);
-    this.tPos = pos;
+    this.box = pos;
     this.base = new BaseObj(this, 14);
 
     var oldmoney = 0;

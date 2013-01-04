@@ -2,8 +2,8 @@ function Tower_Packet(t1, t2, speed, allele) {
     this.base = new BaseObj(this, 12);
     // We don't really need it
     this.tpos = new Rect(0, 0, 1, 1);
-    var p1 = t1.tPos.center();
-    var p2 = t2.tPos.center();
+    var p1 = t1.box.center();
+    var p2 = t2.box.center();
     
     var dis = p1.clone().sub(p2).mag();
     
@@ -22,10 +22,10 @@ function Tower_Packet(t1, t2, speed, allele) {
 }
 
 function Tower_Connection(t1, t2) {
-    this.tPos = new Rect(0, 0, 0, 0);
+    this.box = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this, 11);
 
-    var line = new SLine(t1.tPos.center(), t2.tPos.center(), "rgba(0, 255, 0, 0.2)", 11, [0.1, 0.3, 0.5, 0.7, 0.9]);
+    var line = new SLine(t1.box.center(), t2.box.center(), "rgba(0, 255, 0, 0.2)", 11, [0.1, 0.3, 0.5, 0.7, 0.9]);
     this.base.addObject(line);
     
     var prevhitCount;
@@ -37,11 +37,11 @@ function Tower_Connection(t1, t2) {
         var width = 20;
         var height = 20;
         
-        var delta = t2.tPos.center();
-        delta.sub(t1.tPos.center());
+        var delta = t2.box.center();
+        delta.sub(t1.box.center());
         delta.mult(1/2);
         
-        var pos = t2.tPos.center();
+        var pos = t2.box.center();
         pos.sub(delta);
         pos.sub(new Vector(width * 0.5, height * 0.5));
         pos = new Rect(0, 0, width, height).origin(pos);
@@ -64,8 +64,8 @@ function Tower_Connection(t1, t2) {
             return;
         }
         
-        var dis = cloneObject(t1.tPos.center());
-        dis.sub(t2.tPos.center());
+        var dis = cloneObject(t1.box.center());
+        dis.sub(t2.box.center());
         dis = dis.mag() / 1000;
 
         var speed = Math.max(Math.min(t1.attr.upload, t2.attr.download) / dis, 0.00000001 /* should really be zero */);
@@ -121,10 +121,10 @@ TowerStats = {
         value:          50
     };
 
-function Tower(baseTile, tPos) {    
+function Tower(baseTile, box) {    
     this.baseTile = baseTile;
-    var p = tPos;
-    this.tPos = new Rect(p.x, p.y, p.w, p.h);
+    var p = box;
+    this.box = new Rect(p.x, p.y, p.w, p.h);
     this.base = new BaseObj(this, 10);
 
     this.attr = {};
@@ -210,23 +210,23 @@ function Tower(baseTile, tPos) {
         //Show HP regen?
         var innerWidth = Math.log(this.attr.hp / this.attr.damage / this.attr.attSpeed + 10) * 6; //Math.pow(this.attr.hpRegen * 10, 0.9);
 
-        var center = this.tPos.center();
+        var center = this.box.center();
 
         var totalWidth = outerWidth + innerWidth;
 
         if(changeSize) {
-            this.tPos.x = center.x - totalWidth;
-            this.tPos.y = center.y - totalWidth;
+            this.box.x = center.x - totalWidth;
+            this.box.y = center.y - totalWidth;
 
-            this.tPos.w = totalWidth * 2;
-            this.tPos.h = totalWidth * 2;
+            this.box.w = totalWidth * 2;
+            this.box.h = totalWidth * 2;
         }
 
         this.lineWidth = outerWidth;
     }
 
     this.draw = function (pen) {
-        var pos = this.tPos.clone();
+        var pos = this.box.clone();
         var cen = pos.center();
 
         pos.x += this.outerWidth;
@@ -465,7 +465,7 @@ function Tower(baseTile, tPos) {
     this.dragOffset = null;
     this.mousedown = function(e) {
         this.startDrag = e;
-        this.dragOffset = new Vector(this.tPos);
+        this.dragOffset = new Vector(this.box);
         this.dragOffset.sub(e);
 
         getGame(this).input.globalMouseMove[this.base.id] = this;
@@ -519,43 +519,43 @@ function Tower(baseTile, tPos) {
         tower.hidden = true;
         var e = destination;
 
-        var originalPos = cloneObject(tower.tPos);
+        var originalPos = cloneObject(tower.box);
 
-        tower.tPos.x = e.x;
-        tower.tPos.y = e.y;
+        tower.box.x = e.x;
+        tower.box.y = e.y;
 
         var collisions = [];
-        mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tPos, 0), collisions);
-        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tPos, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.box, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.box, 0), collisions);
 
         if(collisions.length > 0) {
             var alignTo = collisions[0];
-            var offset = minVecForDistanceRects(tower.tPos, alignTo.tPos, 1);
+            var offset = minVecForDistanceRects(tower.box, alignTo.box, 1);
 
             e.x += offset.x;
             e.y += offset.y;
         }
 
-        tower.tPos.x = e.x;
-        tower.tPos.y = e.y;
+        tower.box.x = e.x;
+        tower.box.y = e.y;
 
         //This code is kinda buggy... but thats okay... in the future we will project a line
         //from the tower position to the cursor and just put the tower as far upon that line as possible.
         //(this projection code will be created for bullets and lasers anyway).
-        tower.tPos.x = e.x;
+        tower.box.x = e.x;
         var collisions = [];
-        mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tPos, 0), collisions);
-        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tPos, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.box, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.box, 0), collisions);
         if(collisions.length > 0) {
-            tower.tPos.x = originalPos.x;
+            tower.box.x = originalPos.x;
         }
 
-        tower.tPos.y = e.y;
+        tower.box.y = e.y;
         var collisions = [];
-        mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tPos, 0), collisions);
-        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tPos, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.box, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.box, 0), collisions);
         if(collisions.length > 0) {
-            tower.tPos.y = originalPos.y;
+            tower.box.y = originalPos.y;
         }
         tower.hidden = false;
     }
@@ -564,22 +564,22 @@ function Tower(baseTile, tPos) {
 function canPlace(tower, pos, eng) {
     var game = eng.game;
 
-    var originalPosX = tower.tPos.x;
-    var originalPosY = tower.tPos.y;
+    var originalPosX = tower.box.x;
+    var originalPosY = tower.box.y;
 
     tower.recalculateAppearance(true);
-    tower.tPos.x = pos.x;
-    tower.tPos.y = pos.y;
+    tower.box.x = pos.x;
+    tower.box.y = pos.y;
 
-    var towerRadius = tower.tPos.w / 2;
+    var towerRadius = tower.box.w / 2;
 
     var e = pos;
-    var towerCollision = findClosestToRect(eng, "Tower", tower.tPos, 0);
-    var pathOnTile = findClosestToRect(eng, "Path", tower.tPos, 0);
-    var tileExist = findClosestToRect(eng, "Tile", tower.tPos, 0);
+    var towerCollision = findClosestToRect(eng, "Tower", tower.box, 0);
+    var pathOnTile = findClosestToRect(eng, "Path", tower.box, 0);
+    var tileExist = findClosestToRect(eng, "Tile", tower.box, 0);
 
-    tower.tPos.x = originalPosX;
-    tower.tPos.y = originalPosY;
+    tower.box.x = originalPosX;
+    tower.box.y = originalPosY;
 
     if (!towerCollision && !pathOnTile && tileExist) {
         return true;
@@ -592,8 +592,8 @@ function tryPlaceTower(tower, pos, eng)
     var game = eng.game;
 
     tower.recalculateAppearance(true);
-    tower.tPos.x = pos.x;
-    tower.tPos.y = pos.y;
+    tower.box.x = pos.x;
+    tower.box.y = pos.y;
 
     var tileExist = findClosestToPoint(eng, "Tile", pos, 0);
 

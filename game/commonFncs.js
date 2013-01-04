@@ -143,12 +143,12 @@ function clamp(val, min, max) {
 
 
 //makeTileFnc takes array[x], pen, Rect
-function makeTiled(pen, makeTileFnc, array, tPosBox, xNum, yNum, percentBuffer) {
-    var width = tPosBox.w / (xNum);
-    var height = tPosBox.h / (yNum);
+function makeTiled(pen, makeTileFnc, array, boxBox, xNum, yNum, percentBuffer) {
+    var width = boxBox.w / (xNum);
+    var height = boxBox.h / (yNum);
 
-    var xPos = tPosBox.x + width * percentBuffer;
-    var yPos = tPosBox.y + height * percentBuffer;
+    var xPos = boxBox.x + width * percentBuffer;
+    var yPos = boxBox.y + height * percentBuffer;
 
     var drawnWidth = width * (1 - 2 * percentBuffer);
     var drawnHeight = height * (1 - 2 * percentBuffer);
@@ -161,8 +161,8 @@ function makeTiled(pen, makeTileFnc, array, tPosBox, xNum, yNum, percentBuffer) 
         }
         for (var key in subArray) {
             var value = subArray[key];
-            if (xPos > tPosBox.x + tPosBox.w) {
-                xPos = tPosBox.x + width * percentBuffer;
+            if (xPos > boxBox.x + boxBox.w) {
+                xPos = boxBox.x + width * percentBuffer;
                 yPos += height;
             }
 

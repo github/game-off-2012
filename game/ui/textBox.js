@@ -1,5 +1,5 @@
 function TextBox(text, zorder) {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.box = new TemporalPos(0, 0, 0, 0);
 
     if (!zorder) zorder = 15;
     this.base = new BaseObj(this, zorder, true);
@@ -11,12 +11,12 @@ function TextBox(text, zorder) {
     this.draw = function(pen) {
         pen.fillStyle = "black";
         pen.strokeStyle = "green";
-        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
+        ink.rect(this.box.x, this.box.y, this.box.w, this.box.h, pen);
     };
 
     this.resize = function (rect) {
         wrapper.resize(rect);
-        this.tPos = wrapper.tPos;
+        this.box = wrapper.box;
         return this;
     }
 }

@@ -1,7 +1,7 @@
 //Make list with lits of alleles to create default tower types.
 
 function TowerDragger(pos, towerGeneratorFnc) {
-    this.tPos = pos;
+    this.box = pos;
     this.base = new BaseObj(this, 20);
 
     this.towerGeneratorFnc = towerGeneratorFnc;
@@ -12,7 +12,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
     this.placingTower = false;
 
     this.draw = function (pen) {
-        this.displayedTower.tPos = this.tPos;
+        this.displayedTower.box = this.box;
         this.displayedTower.recalculateAppearance();
         this.displayedTower.draw(pen);
 
@@ -29,7 +29,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
     }
 
     this.mousemove = function (e) {
-        //var towerCollision = findClosestToPoint(eng, "Tower", tower.tPos.center(), towerRadius);
+        //var towerCollision = findClosestToPoint(eng, "Tower", tower.box.center(), towerRadius);
 
         var tower = this.placingTower;
         var eng = getEng(this);
@@ -37,12 +37,12 @@ function TowerDragger(pos, towerGeneratorFnc) {
         if (tower) {
             var pos = new Vector(0, 0);
 
-            pos.x = e.x - placeOffset.x * tower.tPos.w;
-            pos.y = e.y - placeOffset.y * tower.tPos.h;
+            pos.x = e.x - placeOffset.x * tower.box.w;
+            pos.y = e.y - placeOffset.y * tower.box.h;
 
             if (canPlace(tower, pos, eng)) {
-                tower.tPos.x = pos.x;
-                tower.tPos.y = pos.y;
+                tower.box.x = pos.x;
+                tower.box.y = pos.y;
             } else {
                 tower.tryToMove(pos, eng);
             }
@@ -66,14 +66,14 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
             if(!repeatPlace) {
                 placeOffset.set(e);
-                placeOffset.sub(this.tPos);
+                placeOffset.sub(this.box);
 
-                placeOffset.x /= this.tPos.w;
-                placeOffset.y /= this.tPos.h;
+                placeOffset.x /= this.box.w;
+                placeOffset.y /= this.box.h;
             }
 
-            tower.tPos.x = e.x - placeOffset.x * this.tPos.w;
-            tower.tPos.y = e.y - placeOffset.y * this.tPos.h;
+            tower.box.x = e.x - placeOffset.x * this.box.w;
+            tower.box.y = e.y - placeOffset.y * this.box.h;
 
             this.placingTower.recalculateAppearance(true);
             this.mousemove(e);
@@ -97,7 +97,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
         if (this.placingTower) {
             //They already clicked on the placer, so they are trying to place now
-            if(tryPlaceTower(this.placingTower, this.placingTower.tPos, eng)) {
+            if(tryPlaceTower(this.placingTower, this.placingTower.box, eng)) {
                 this.placingTower = false;
                 delete game.input.globalMouseMove[this.base.id];
                 delete game.input.globalMouseClick[this.base.id];
@@ -118,7 +118,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
 function Towerbar(pos) {
     this.base = new BaseObj(this, 14);
 
-    this.tPos = pos;
+    this.box = pos;
 
     var costIndicator = new Label("Tower cost: 50").resize(pos.clone());
     this.base.addObject(costIndicator);
@@ -143,8 +143,8 @@ function Towerbar(pos) {
         function tileFnc(obj, refObj, pos) {
             function towerDraggerFunction(forDisplay) {
                 var fakeTile = {};
-                fakeTile.tPos = new Rect(0, 0, tileSize, tileSize);
-                var tower = new Tower(fakeTile, fakeTile.tPos);
+                fakeTile.box = new Rect(0, 0, tileSize, tileSize);
+                var tower = new Tower(fakeTile, fakeTile.box);
 
                 if (forDisplay) {
                     tower.attr.attackTypes = [];
@@ -169,15 +169,15 @@ function Towerbar(pos) {
             return true;
         }
 
-        var tPosBox = new Rect(pos.x + 15, pos.y + 40, 450, 150);
-        makeTiled(this, tileFnc, attackCombinations, tPosBox, 6, 2, 0.1);
+        var boxBox = new Rect(pos.x + 15, pos.y + 40, 450, 150);
+        makeTiled(this, tileFnc, attackCombinations, boxBox, 6, 2, 0.1);
     };
 
     this.update = function () {
         var game = getGame(this);
 
-        costIndicator.tPos.x = pos.x + 10;
-        costIndicator.tPos.y = pos.y + 25;
+        costIndicator.box.x = pos.x + 10;
+        costIndicator.box.y = pos.y + 25;
 
         costIndicator.text("Current tower cost: " + prefixNumber(game.currentCost));
     }

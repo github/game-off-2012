@@ -1,7 +1,7 @@
 // Pack a bunch of UI elements vertically.
 function HBox() {
     this.base = new BaseObj(this, 15);
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.box = new Rect(0, 0, 0, 0);
     
     var children = [];
     
@@ -25,7 +25,7 @@ function HBox() {
             // Eventually we can handle this properly with requestResize, but for now... fuck it.
             throw "Attempting to make a hbox smaller than it's fixed size children allow!";
         }
-        this.tPos = rect;
+        this.box = rect;
         
         var sharedWidth = ~~((rect.w - w) / shared);
         var x = rect.x;

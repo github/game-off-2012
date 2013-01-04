@@ -1,7 +1,7 @@
 function Bug(startPath) {
     var r = 8;
     var cen = (function() {
-        var p = startPath.tPos;
+        var p = startPath.box;
         var cen = p.center();
         cen.x += Math.floor((p.w - 2*r) * (Math.random() - 0.5));
         cen.y += Math.floor((p.h - 2*r) * (Math.random() - 0.5));
@@ -33,7 +33,7 @@ function Bug(startPath) {
     }
     this.setBaseAttrs();
 
-    this.tPos = new Rect(cen.x - r, cen.y - r, r * 2, r * 2);
+    this.box = new Rect(cen.x - r, cen.y - r, r * 2, r * 2);
     this.base = new BaseObj(this, 11);
     var velocity = new Vector(1, 0).mag(this.attr.speed);
 
@@ -81,19 +81,19 @@ function Bug(startPath) {
     }
 
     this.update = function(dt) {
-        move(this.tPos, velocity, dt);
+        move(this.box, velocity, dt);
 
         var cur = this.curPath;
         var next = this.curPath.nextPath;
 
         //Move towards the next rectangle.
-        var vecToCurrent = minVecBetweenRects(this.tPos, cur.tPos);        
-        var vecToNext = minVecFullOverlapRects(this.tPos, next.tPos);
+        var vecToCurrent = minVecBetweenRects(this.box, cur.box);        
+        var vecToNext = minVecFullOverlapRects(this.box, next.box);
 
         var overshot = vecToCurrent.magSq() > 0 && vecToNext.magSq() > 0;
 
         if (overshot)
-            move(this.tPos, vec, -dt);
+            move(this.box, vec, -dt);
 
         if (this.delay > this.bugRelPathPos) {
             velocity = vecToNext.clone();          
@@ -134,7 +134,7 @@ function Bug(startPath) {
     };
 
     this.draw = function(pen) {
-        var pos = this.tPos;
+        var pos = this.box;
         var cen = pos.center();
 
         var hpPercent = this.attr.currentHp / this.attr.hp;

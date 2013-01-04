@@ -2,8 +2,8 @@ function SLine(start, end, color, zorder, arrowHeadPercents) {
     this.start = start;
     this.end = end;
     
-    //We do not maintain tPos!
-    this.tPos = new TemporalPos(start.x, start.y, end.x - start.x, end.y - start.y, 0, 0);
+    //We do not maintain box!
+    this.box = new Rect(start.x, start.y, end.x - start.x, end.y - start.y, 0, 0);
     this.base = new BaseObj(this, zorder, true);
     
     //Positions on line we add arrow heads.
@@ -42,14 +42,14 @@ function SCircle(center, radius, color, fillColor, zorder) {
     this.color = color;
     this.fillColor = fillColor;
     
-    this.tPos = { x: center.x, y: center.y, h: 0, w: 0 };  //We lie about this because it doesn't matter
+    this.box = { x: center.x, y: center.y, h: 0, w: 0 };  //We lie about this because it doesn't matter
     
     this.base = new BaseObj(this, zorder, true);
     
     this.lineWidth = 2;
     
     this.draw = function (pen) {
-        var p = this.tPos;
+        var p = this.box;
         var radius = this.radius;
         var color = this.color;
         var fillColor = this.fillColor;

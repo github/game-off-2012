@@ -1,7 +1,7 @@
 // Not sure if this works right now.
 // Here be dragons.
 function RadioButton(pos, txt, cb, prevRadioButton) {
-    this.tPos = pos;
+    this.box = pos;
     this.base = new BaseObj(this, 15);
     var textsize = 14;
     
@@ -55,7 +55,7 @@ function RadioButton(pos, txt, cb, prevRadioButton) {
         }
         pen.strokeStyle = "green";
         
-        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
+        ink.rect(this.box.x, this.box.y, this.box.w, this.box.h, pen);
         
         //Draw text
         pen.fillStyle = "green";
@@ -64,7 +64,7 @@ function RadioButton(pos, txt, cb, prevRadioButton) {
         //How wide is text?
         var tW = pen.measureText(txt).width;
         
-        ink.text(this.tPos.x+(this.tPos.w/2)-(tW/2), this.tPos.y+textsize+4, txt, pen);
+        ink.text(this.box.x+(this.box.w/2)-(tW/2), this.box.y+textsize+4, txt, pen);
         
         if (this.toggled) {
             pen.fillStyle = "white";
@@ -72,7 +72,7 @@ function RadioButton(pos, txt, cb, prevRadioButton) {
             pen.fillStyle = "black";
         }
         pen.strokeStyle = "green";
-        ink.circ(this.tPos.x + 6, this.tPos.y + 6, this.tPos.h - 12, pen);
+        ink.circ(this.box.x + 6, this.box.y + 6, this.box.h - 12, pen);
         
         return;
     }

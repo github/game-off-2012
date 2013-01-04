@@ -129,7 +129,7 @@ function HoverIndicator() {
     this.base = new BaseObj(this, 20);
 
     this.draw = function (pen) {
-        var p = this.base.parent.tPos;
+        var p = this.base.parent.box;
 
         pen.fillStyle = "rgba(255, 255, 255, 0.25)";
         pen.strokeStyle = "yellow";
@@ -153,7 +153,7 @@ function SlowEffect(magnitude) {
     }
 
     this.draw = function (pen) {
-        var p = this.base.parent.tPos;
+        var p = this.base.parent.box;
         pen.fillStyle = "dodgerblue";
         pen.strokeStyle = "white";
         pen.lineWidth = 1;
@@ -187,8 +187,8 @@ function MotionDelay(start, end, time, callback) {
 
         var progress = this.time / this.baseTime;
 
-        this.base.parent.tPos.x = start.x * progress + end.x * (1 - progress);
-        this.base.parent.tPos.y = start.y * progress + end.y * (1 - progress);
+        this.base.parent.box.x = start.x * progress + end.x * (1 - progress);
+        this.base.parent.box.y = start.y * progress + end.y * (1 - progress);
     }
 }
 

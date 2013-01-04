@@ -2,7 +2,7 @@ function Infobar(pos) {
     this.base = new BaseObj(this, 14);
     this.tattr = null;
 
-    this.tPos = pos;
+    this.box = pos;
 
     var buttonW = 100;
 
@@ -36,9 +36,9 @@ function Infobar(pos) {
         pen.fillStyle = "green";
         pen.font = "15px courier";
 
-        var xs = this.tPos.x + 10;
-        var xe = this.tPos.x + this.tPos.w - 10;
-        var y = this.tPos.y + 15;
+        var xs = this.box.x + 10;
+        var xe = this.box.x + this.box.w - 10;
+        var y = this.box.y + 15;
 
         if (!this.obj || !this.obj.attr) {
             ink.text(xs, y, "[no selection]", pen);

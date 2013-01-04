@@ -10,7 +10,7 @@
 function Engine(pos, game) {
     this.game = game; //Allows object to access information on the total game-state.
 
-    this.tPos = pos;
+    this.box = pos;
     this.color = "black";
     
     this.base = new BaseObj(this);
