@@ -92,7 +92,6 @@
 
     this.selectionChanged = false;
     this.changeSel = function (obj) {
-//         if (!(obj instanceof Tile)) debugger;
         if (obj == this.selectedObj)
             return;
 
