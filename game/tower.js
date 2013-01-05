@@ -598,7 +598,7 @@ function tryPlaceTower(tower, pos, eng)
     var tileExist = findClosestToPoint(eng, "Tile", pos, 0);
 
     if (canPlace(tower, pos, eng)) {
-        eng.base.addChild(tower);
+        game.gameBoard.base.addChild(tower);
         game.changeSel(tower);
         tower.value = game.currentCost;
         if(tileExist)

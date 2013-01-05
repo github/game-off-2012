@@ -9,12 +9,18 @@ function Infobar(pos) {
     //For each displayed item gives extra info to be displayed in brackets)
     this.extraInfo = {};
 
-    this.allelePoints = new AllelePointSystem(new Rect(pos.x, pos.y + pos.h - 200, pos.w, 190));
+    this.allelePoints = new AllelePointSystem();
     this.base.addChild(this.allelePoints);
 
     this.sellButton = new Button("Kill Tower", bind(this, "sellTower"));
-    this.sellButton.resize(new Rect(pos.x, pos.y + pos.h - 250, pos.w, 24));
     this.base.addChild(this.sellButton);
+    
+    this.resize = function (rect) {
+        this.box = rect;
+        this.allelePoints.resize(new Rect(rect.x, rect.y + rect.h - 200, rect.w, 190));
+        this.sellButton.resize(new Rect(rect.x, rect.y + rect.h - 250, rect.w, 24));
+        
+    }
 
     //Add our buttons, should really be done just in the constructor with our given pos information
     this.added = function () {

@@ -1,13 +1,15 @@
 function GameBoard(game) {
     this.box = new Rect(0, 0, game.numTilesX * game.tileSize, game.numTilesY * game.tileSize);
-    this.base = new BaseObj(this, 1);
+    this.base = new BaseObj(this, -32);
     var box = this.box.clone();
     
     generatePath(this, game);
     
     function moveChildren(node, start, end) {
         node.loopThroughAllTypes(function (child) {
-            child.box.norm(start).project(end);
+            if (child.box) {
+                child.box.norm(start).project(end);
+            }
             moveChildren(child.base, start, end);
         });
     }

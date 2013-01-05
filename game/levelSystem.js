@@ -116,7 +116,8 @@ function LevelManager(bugStart) {
             }
 
             var curBug = currentWave[0];
-            eng.base.addChild(curBug);
+            curBug.box.origin(bugStart.box.origin());
+            eng.game.gameBoard.base.addChild(curBug);
             currentWave.shift();
 
             if (currentWave.length == 0) {

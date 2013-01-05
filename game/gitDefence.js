@@ -16,9 +16,19 @@
 
     this.lastTowerHover = null;
 
-
-    this.infobar = new Infobar(new Rect(pos.w - 250, 0, 250, pos.h));
-    engine.base.addChild(this.infobar);
+    var hbox = new HBox();
+    this.gameBoard = new GameBoard(this);
+    hbox.add(this.gameBoard);
+    
+    this.infobar = new Infobar();
+    hbox.add(this.infobar, 150);
+    
+    engine.base.addChild(hbox);
+    
+    engine.globalResize = function (ev) {
+        console.log("gitDefence globalResize", ev);
+        hbox.resize(new Rect(0, 0, ev.width, ev.height));
+    }
 
     this.towerbar = new Towerbar(new Rect(0, pos.h - 150, pos.w - 260, 150));
     engine.base.addChild(this.towerbar);
@@ -26,8 +36,6 @@
     this.gameInfoBar = new GameInfoBar(new Rect(0, pos.h - 240, pos.w - 260, 90));
     engine.base.addChild(this.gameInfoBar);
     
-    this.gameBoard = new GameBoard(this).resize(new Rect(10, 10, 400, 200)).resize(new Rect(44, 102, 427, 425));
-    engine.base.addChild(this.gameBoard);
 
 
     this.selectedObj = null;
@@ -35,14 +43,13 @@
 
     var bugStart = getAnElement(this.engine.base.allChildren["Path_Start"]);
 
-    //Level/Wave generator
-    var lmpos = new Rect(pos.w - 400, 0, 100, pos.h * 0.05);
-    this.lvMan = new LevelManager(bugStart, lmpos);
+    this.lvMan = new LevelManager(bugStart);
     engine.base.addChild(this.lvMan);
 
     this.input = new InputHandler();
     var input = this.input;
     this.input.resizeEvent = pos; //We need to resize right away (shouldn't really have to... but we do)
+    
     
     this.run = function (timestamp) {
         var eng = this.engine;
@@ -85,6 +92,7 @@
 
     this.selectionChanged = false;
     this.changeSel = function (obj) {
+//         if (!(obj instanceof Tile)) debugger;
         if (obj == this.selectedObj)
             return;
 

@@ -1,6 +1,7 @@
 //Not using UpdateTicker for easier debugging.
 function AttackCycle() {
     this.base = new BaseObj(this);
+    this.box = new Rect(0, 0, 0, 0);
     this.attackCounter = 0;
     this.maxCounter = 0;
     this.chargePercent = 0;

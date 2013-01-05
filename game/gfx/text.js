@@ -136,7 +136,6 @@ function Text() {
                     return newRect;
                 }
                 curFontSize--;
-                console.log(curFontSize);
                 if (curFontSize < 0) {
                     throw "WTF";
                 }

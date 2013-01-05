@@ -1,12 +1,13 @@
+// Unfortunately, Tile has to be here becuase tower placement
+// only works on top of a tile. Eventually we should get rid of
+// it, but having it works fine for now.
+function Tile(x, y, w, h) {
+    this.box = new Rect(x, y, w, h);
+    this.base = new BaseObj(this, 1);
+    this.base.addChild(new Selectable());
+}
+
 function generatePath(eng, game) {
-    // Unfortunately, Tile has to be here becuase tower placement
-    // only works on top of a tile. Eventually we should get rid of
-    // it, but having it works fine for now.
-    function Tile(x, y, w, h) {
-        this.box = new Rect(x, y, w, h);
-        this.base = new BaseObj(this, 1);
-        this.base.addChild(new Selectable());
-    }
     
     var curPos = { x: 0, y: 0 };
 
