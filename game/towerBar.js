@@ -23,7 +23,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
     }
     
     this.resize = function (rect) {
-        this.box = rect;
+        this.box = rect.largestSquare();
     }
 
     this.update = function (dt) {
@@ -122,9 +122,12 @@ function TowerDragger(pos, towerGeneratorFnc) {
 function Towerbar() {
     this.base = new BaseObj(this, 14);
     this.box = new Rect(0, 0, 0, 0);
-
+    
+    var vbox = new VBox();
+    this.base.addChild(vbox);
+    
     var costIndicator = new Label("Tower cost: 50");
-    this.base.addChild(costIndicator);
+    vbox.add(costIndicator);
 
     var attackCombinations = [];
     var uniqueNum = 1;
@@ -140,17 +143,13 @@ function Towerbar() {
     
     this.resize = function (rect) {
         costIndicator.resize(rect);
-        hbox.resize(rect);
+        vbox.resize(rect);
         this.box = rect;
     }
-    
-    var hbox = new HBox();
-    this.base.addChild(hbox);
 
     this.added = function () {
         var game = getGame(this);
         var tileSize = game.tileSize;
-        //Scaled exactly to 150 by 674...
 
         function tileFnc(obj, refObj, pos) {
             function towerDraggerFunction(forDisplay) {
@@ -176,7 +175,7 @@ function Towerbar() {
             }
             var towerDragger = new TowerDragger(pos.clone(), towerDraggerFunction);
 
-            hbox.add(towerDragger);
+            vbox.add(towerDragger);
 
             return true;
         }

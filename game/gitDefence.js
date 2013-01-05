@@ -19,14 +19,15 @@
     var hbox = new HBox();
     engine.base.addChild(hbox);
     
+    this.towerbar = new Towerbar();
+    hbox.add(this.towerbar, 64);
+    
     var vbox = new VBox();
     hbox.add(vbox);
     this.gameBoard = new GameBoard(this);
     vbox.add(this.gameBoard);
     this.gameInfoBar = new GameInfoBar();
     vbox.add(this.gameInfoBar, 90);
-    this.towerbar = new Towerbar();
-    vbox.add(this.towerbar, 150);
     
     this.infobar = new Infobar();
     hbox.add(this.infobar, 150);

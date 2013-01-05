@@ -77,6 +77,14 @@ var Rect = (function () {
         return this;
     }
     
+    // Returns a rectangle represeting the largest square that
+    // can fit inside this rectangle, centered inside the rectangle.
+    // Very useful for laying out square objects in the gui.
+    p.largestSquare = function () {
+        var size = this.w > this.h ? this.h : this.w;
+        return new Rect(0, 0, size, size).center(this.center());
+    }
+    
     p.origin = function (newOrigin) {
         if (newOrigin === undefined) {
             return new Vector(this.x, this.y);

@@ -16,16 +16,19 @@ function GameBoard(game) {
     
     this.resize = function (rect) {
         var startRect = box;
-        
-        var wide = rect.w / box.w > rect.h / box.h;
-        var size = wide ? rect.h : rect.w;
-        
-        var endRect = new Rect(0, 0, size, size).center(rect.center());
+        var endRect = rect.largestSquare();
         
         moveChildren(this.base, startRect, endRect);
         
         box = endRect;
         this.box = rect;
+        this.base.dirty();
         return this;
+    }
+    
+    this.redraw = function (canvas) {
+        var p = new Path();
+        p.rect(box.clone().origin(box.origin().sub(this.box.origin())));
+        canvas.fill(p, rgba(0, 0, 255, 0.1));
     }
 }
