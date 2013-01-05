@@ -31,8 +31,13 @@ var Rect = (function () {
     
     var p = Rect.prototype;
     
-    p.center = function () {
-        return new Vector(this.x + this.w / 2, this.y + this.h / 2);
+    p.center = function (newCenter) {
+        if (newCenter === undefined) {
+            return new Vector(this.x + this.w / 2, this.y + this.h / 2);
+        }
+        this.x = newCenter.x - this.w / 2;
+        this.y = newCenter.y - this.h / 2;
+        return this;
     };
     
     p.clone = function () {

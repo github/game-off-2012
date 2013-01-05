@@ -94,6 +94,7 @@ function Lifetime(lifetime) {
 
 function Selectable() {
     this.base = new BaseObj(this);
+    this.box = new Rect(0, 0, 0, 0);
 
     this.ignoreNext = false;
 

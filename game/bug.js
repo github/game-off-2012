@@ -92,8 +92,9 @@ function Bug(startPath) {
 
         var overshot = vecToCurrent.magSq() > 0 && vecToNext.magSq() > 0;
 
-        if (overshot)
-            move(this.box, vec, -dt);
+        if (overshot) {
+            move(this.box, velocity, -dt);
+        }
 
         if (this.delay > this.bugRelPathPos) {
             velocity = vecToNext.clone();          

@@ -3,7 +3,7 @@
     this.engine = engine;
 
     this.numTilesX = 16;
-    this.numTilesY = 12;
+    this.numTilesY = 16;
     this.tileSize = 32;
 
     this.id = 0; //Shouldn't be needed (ids are in base)
@@ -26,7 +26,7 @@
     this.gameInfoBar = new GameInfoBar(new Rect(0, pos.h - 240, pos.w - 260, 90));
     engine.base.addChild(this.gameInfoBar);
     
-    this.gameBoard = new GameBoard(this);
+    this.gameBoard = new GameBoard(this).resize(new Rect(10, 10, 400, 200)).resize(new Rect(44, 102, 427, 425));
     engine.base.addChild(this.gameBoard);
 
 
