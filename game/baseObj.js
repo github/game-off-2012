@@ -83,8 +83,8 @@ function BaseObj(holder, zindex, dynamicZIndex) {
         }
     };
 
-    this.addObject = function (obj) {
-        if (!assertDefined("addObject", obj) || !assertDefined("addObject", obj.base))
+    this.addChild = function (obj) {
+        if (!assertDefined("addChild", obj) || !assertDefined("addChild", obj.base))
             return;
 
         obj.base.parent = this.holder;

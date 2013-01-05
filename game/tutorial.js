@@ -6,7 +6,7 @@
 
 function addTextDisplay(text, obj) {
     var message = new QTextBox(new Rect(176, 16, 318, 0), text);
-    obj.base.addObject(message);
+    obj.base.addChild(message);
 }
 
 function ContinueButton() {
@@ -15,7 +15,7 @@ function ContinueButton() {
     this.base = new BaseObj(this);
 
     var button = new Button("Continue", bind(this, "continue")).resize(this.box);
-    this.base.addObject(button);
+    this.base.addChild(button);
 
     this.continue = function() {
         getGame(this).advanceState();
@@ -29,7 +29,7 @@ tutorialstates.start = function start() {
 
     this.added = function () {
         addTextDisplay("Welcome to GitDefence! Click continue!", this);
-        this.base.addObject(new ContinueButton());
+        this.base.addChild(new ContinueButton());
 
         getGame(this).underlyingGame.lvMan.nwicounter = 1 / 0; //Lol, purposely dividing by 0 to get infinity
     }
@@ -53,7 +53,7 @@ tutorialstates.startPlace = function startPlace() {
         this.targetDragger = firstTowerDragger;
 
         var allMouseThrough = new AllMouseThrough(this.targetDragger.box);
-        this.base.addObject(allMouseThrough);
+        this.base.addChild(allMouseThrough);
     }
 
     this.update = function () {
@@ -85,7 +85,7 @@ tutorialstates.endPlace = function endPlace() {
 
 
         var allMouseThrough = new AllMouseThrough(tile.box);
-        this.base.addObject(allMouseThrough);
+        this.base.addChild(allMouseThrough);
     }
 
     var wait = false;
@@ -134,7 +134,7 @@ tutorialstates.clickOnTower = function clickOnTower() {
 
         addTextDisplay("You can click on your tower to select it. After selecting a tower its attributes are displayed in the sidebar. Towers are selected by default when placed.", this);
 
-        this.base.addObject(new ContinueButton());
+        this.base.addChild(new ContinueButton());
     }
 };
 tutorialstates.buyAlleles = function buyAlleles() {
@@ -151,7 +151,7 @@ tutorialstates.buyAlleles = function buyAlleles() {
         var buyButton = allelePointSystem.buyButton;
 
         var allMouseThrough = new AllMouseThrough(buyButton.box);
-        this.base.addObject(allMouseThrough);
+        this.base.addChild(allMouseThrough);
     };
 
     this.update = function () {
@@ -175,15 +175,15 @@ tutorialstates.spendAlleles = function spendAlleles() {
 
         var spendButton = allelePointSystem.spendButton;
         var allMouseThrough = new AllMouseThrough(spendButton.box);
-        this.base.addObject(allMouseThrough);
+        this.base.addChild(allMouseThrough);
 
         var trashButton = allelePointSystem.trashButton;
         var allMouseThrough = new AllMouseThrough(trashButton.box);
-        this.base.addObject(allMouseThrough);
+        this.base.addChild(allMouseThrough);
 
         var autoTrashButton = allelePointSystem.autoTrashButton;
         var allMouseThrough = new AllMouseThrough(autoTrashButton.box);
-        this.base.addObject(allMouseThrough);
+        this.base.addChild(allMouseThrough);
     }
 
     this.update = function () {
@@ -212,7 +212,7 @@ tutorialstates.placeAnotherTower = function placeAnotherTower() {
         this.targetDragger = firstTowerDragger;
 
         var allMouseThrough = new AllMouseThrough(this.targetDragger.box);
-        this.base.addObject(allMouseThrough);
+        this.base.addChild(allMouseThrough);
 
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
@@ -221,7 +221,7 @@ tutorialstates.placeAnotherTower = function placeAnotherTower() {
         this.tile = tile;
 
         var allMouseThrough = new AllMouseThrough(tile.box);
-        this.base.addObject(allMouseThrough);
+        this.base.addChild(allMouseThrough);
     }
 
     this.update = function () {
@@ -263,7 +263,7 @@ tutorialstates.networkTowerStart = function networkTowerStart() {
         this.tile = tile;
 
         var allMouseThrough = new AllMouseThrough(tile.box);
-        this.base.addObject(allMouseThrough);
+        this.base.addChild(allMouseThrough);
     }
 
     this.update = function () {
@@ -298,10 +298,10 @@ tutorialstates.networkTowerEnd = function networkTowerEnd() {
         this.tile = tile;
 
         var allMouseThrough = new AllMouseThrough(tile.box);
-        this.base.addObject(allMouseThrough);
+        this.base.addChild(allMouseThrough);
 
-        this.base.addObject(new MouseMoveThrough(realGame.engine.box));
-        this.base.addObject(new MouseUpThrough(realGame.engine.box));
+        this.base.addChild(new MouseMoveThrough(realGame.engine.box));
+        this.base.addChild(new MouseUpThrough(realGame.engine.box));
     }
 
     this.update = function () {
@@ -350,7 +350,7 @@ tutorialstates.done = function done() {
 
         addTextDisplay("And thats it! Good luck!", this);
 
-        this.base.addObject(new ContinueButton());
+        this.base.addChild(new ContinueButton());
     }
 };
 
@@ -464,7 +464,7 @@ function hardcodePath(underlyingGame) {
         var prevPath = curPath;
         curPath = new Path_Piece(curX * TILE_SIZE, curY * TILE_SIZE, TILE_SIZE, TILE_SIZE);
         prevPath.nextPath = curPath;
-        eng.base.addObject(curPath);
+        eng.base.addChild(curPath);
     }
 
     curY++;
@@ -502,7 +502,7 @@ function Tutorial(pos) {
 
     this.input = new InputHandler();
 
-    localEngine.base.addObject(new MouseMoveThrough(underlyingGame.engine.box));
+    localEngine.base.addChild(new MouseMoveThrough(underlyingGame.engine.box));
 
     
     this.states = [];
@@ -524,7 +524,7 @@ function Tutorial(pos) {
         
         if (this.states[this.curStatePos]) {
             this.curState = new this.states[this.curStatePos]();
-            localEngine.base.addObject(this.curState);
+            localEngine.base.addChild(this.curState);
         }
     }
     this.advanceState();

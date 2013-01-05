@@ -35,7 +35,7 @@ function GameInfoBar(pos) {
     
     hbox.add(vbox1);
     hbox.add(vbox3);
-    this.base.addObject(hbox);
+    this.base.addChild(hbox);
     hbox.resize(pos);
 
     this.skipNextLevel = function() {

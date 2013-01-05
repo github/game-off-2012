@@ -11,8 +11,8 @@ function Tower_Packet(t1, t2, speed, allele) {
     packet.lineWidth = 1;
     
     var motionDelay = new MotionDelay(p1, p2, dis / speed, apply);
-    this.base.addObject(packet);
-    packet.base.addObject(motionDelay);
+    this.base.addChild(packet);
+    packet.base.addChild(motionDelay);
     
     var that = this;
     function apply() {
@@ -26,7 +26,7 @@ function Tower_Connection(t1, t2) {
     this.base = new BaseObj(this, 11);
 
     var line = new SLine(t1.box.center(), t2.box.center(), "rgba(0, 255, 0, 0.2)", 11, [0.1, 0.3, 0.5, 0.7, 0.9]);
-    this.base.addObject(line);
+    this.base.addChild(line);
     
     var prevhitCount;
     var deleteButton;
@@ -47,7 +47,7 @@ function Tower_Connection(t1, t2) {
         pos = new Rect(0, 0, width, height).origin(pos);
         
         deleteButton = new Button("-", bind(that, "deleteSelf"), 50).resize(pos);
-        that.base.addObject(deleteButton);
+        that.base.addChild(deleteButton);
     }
     addDeleteButton();
     
@@ -56,7 +56,7 @@ function Tower_Connection(t1, t2) {
             var group = pickRandomKey(t1.genes.alleles);
             var al = t1.genes.alleles[group];
 
-            that.base.addObject(new Tower_Packet(t1, t2, speed, al));
+            that.base.addChild(new Tower_Packet(t1, t2, speed, al));
         }
 
         if (prevhitCount === undefined) {
@@ -154,19 +154,19 @@ function Tower(baseTile, box) {
     this.allelesGenerated = [];
 
     this.genes = new Genes();
-    this.base.addObject(this.genes);
+    this.base.addChild(this.genes);
 
     //For alleles.
     this.autoTrash = true;
 
     this.connections = [];
 
-    this.base.addObject(this.attackCycle = new AttackCycle());
-    //this.base.addObject(new UpdateTicker(this.attr, "mutate", "mutate", true));
-    this.base.addObject(new Selectable());
+    this.base.addChild(this.attackCycle = new AttackCycle());
+    //this.base.addChild(new UpdateTicker(this.attr, "mutate", "mutate", true));
+    this.base.addChild(new Selectable());
     
     this.constantOne = 1;
-    this.base.addObject(new UpdateTicker(this, "constantOne", "regenTick"));
+    this.base.addChild(new UpdateTicker(this, "constantOne", "regenTick"));
 
     for (var alGroup in TowerAlleles) {
         if (!this.genes.alleles[alGroup]) {
@@ -499,7 +499,7 @@ function Tower(baseTile, box) {
                     return;
             
             var conn = new Tower_Connection(this, towerSelected);
-            this.base.addObject(conn);
+            this.base.addChild(conn);
             this.connections.push(conn);
             towerSelected.connections.push(conn);
 
@@ -598,7 +598,7 @@ function tryPlaceTower(tower, pos, eng)
     var tileExist = findClosestToPoint(eng, "Tile", pos, 0);
 
     if (canPlace(tower, pos, eng)) {
-        eng.base.addObject(tower);
+        eng.base.addChild(tower);
         game.changeSel(tower);
         tower.value = game.currentCost;
         if(tileExist)

@@ -6,7 +6,7 @@ function TextBox(text, zorder) {
 
     var wrapper = new TextWrapper(text, zorder + 1);
     wrapper.textAlign = "center";
-    this.base.addObject(wrapper);
+    this.base.addChild(wrapper);
 
     this.draw = function(pen) {
         pen.fillStyle = "black";

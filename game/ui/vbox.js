@@ -9,7 +9,7 @@ function VBox() {
     // all children will have same height.
     this.add = function (ui, height) {
         children.push({ui: ui, height: height});
-        this.base.addObject(ui);
+        this.base.addChild(ui);
     }
     
     this.resize = function (rect) {

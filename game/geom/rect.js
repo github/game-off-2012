@@ -39,13 +39,35 @@ var Rect = (function () {
         return new Rect(this.x, this.y, this.w, this.h);
     };
     
-    //Takes a unit rectangle (so all values of it between 0 and 1) and scales it based on the given rect.
-    p.scale = function (rect) {
+    // Assuming this rectangle fits within the unit rectangle
+    // with origin (0, 0) and size (1, 1), project it onto
+    // a rectangle with the given origin and size. For example,
+    //     rect(0, 0, 0.5, 0.5).project(rect(0, 0, 4, 4))
+    // would give you rect(0, 0, 2, 2). Similarilly,
+    //     rect(0.5, 0, 0.5, 0.5).project(rect(0, 0, 4, 4))
+    // would give you rect(2, 0, 2, 2). Finally,
+    //     rect(0, 0, 1, 1).project(rect(20, 75, 1, 1))
+    // would give you rect(20, 75, 1, 1).
+    p.project = function (rect) {
         this.x = rect.x + this.x * rect.w;
         this.y = rect.y + this.y * rect.h;
         
         this.w = this.w * rect.w;
         this.h = this.h * rect.h;
+        
+        return this;
+    }
+    
+    // Assuming this rectangle fits within the given rectangle,
+    // this function will normalize it to fit within the unit
+    // rectangle, so that it can be projected onto a different
+    // rectangle.
+    p.norm = function (rect) {
+        this.x = (this.x - rect.x) / rect.w;
+        this.y = (this.y - rect.y) / rect.h;
+        
+        this.w = this.w / rect.w;
+        this.h = this.h / rect.h;
         
         return this;
     }

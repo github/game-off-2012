@@ -50,7 +50,7 @@ function Engine(pos, game) {
         var newObjects = this.base.update(updateAmount / 1000);
 
         for (var key in newObjects)
-            this.base.addObject(newObjects[key]);        
+            this.base.addChild(newObjects[key]);        
     };
 
     this.update = function (dt) {

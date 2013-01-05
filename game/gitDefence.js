@@ -18,16 +18,16 @@
 
 
     this.infobar = new Infobar(new Rect(pos.w - 250, 0, 250, pos.h));
-    engine.base.addObject(this.infobar);
+    engine.base.addChild(this.infobar);
 
     this.towerbar = new Towerbar(new Rect(0, pos.h - 150, pos.w - 260, 150));
-    engine.base.addObject(this.towerbar);
+    engine.base.addChild(this.towerbar);
 
     this.gameInfoBar = new GameInfoBar(new Rect(0, pos.h - 240, pos.w - 260, 90));
-    engine.base.addObject(this.gameInfoBar);
+    engine.base.addChild(this.gameInfoBar);
     
     this.gameBoard = new GameBoard(this);
-    engine.base.addObject(this.gameBoard);
+    engine.base.addChild(this.gameBoard);
 
 
     this.selectedObj = null;
@@ -38,7 +38,7 @@
     //Level/Wave generator
     var lmpos = new Rect(pos.w - 400, 0, 100, pos.h * 0.05);
     this.lvMan = new LevelManager(bugStart, lmpos);
-    engine.base.addObject(this.lvMan);
+    engine.base.addChild(this.lvMan);
 
     this.input = new InputHandler();
     var input = this.input;
@@ -79,7 +79,7 @@
 
     //All selected stuff should probably be in its own object
     var currentRangeDisplayed = null;
-    //this.base.addObject(hoverIndicator);
+    //this.base.addChild(hoverIndicator);
 
     this.selectedBucket = [];
 
@@ -104,7 +104,7 @@
                 obj.color,
                 "transparent", 11);
 
-            this.engine.base.addObject(currentRangeDisplayed);
+            this.engine.base.addChild(currentRangeDisplayed);
 
             if (this.selectedObj)
                 this.selectedObj.hover = false;
@@ -123,7 +123,7 @@
                 this.selectedBucket = [];
             }
             this.selectedBucket.push(obj);
-            obj.base.addObject(new HoverIndicator());
+            obj.base.addChild(new HoverIndicator());
             //this.towerbreeder.towers = this.selectedBucket;
         } else {
             for (var key in this.selectedBucket) {

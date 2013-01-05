@@ -10,11 +10,11 @@ function Infobar(pos) {
     this.extraInfo = {};
 
     this.allelePoints = new AllelePointSystem(new Rect(pos.x, pos.y + pos.h - 200, pos.w, 190));
-    this.base.addObject(this.allelePoints);
+    this.base.addChild(this.allelePoints);
 
     this.sellButton = new Button("Kill Tower", bind(this, "sellTower"));
     this.sellButton.resize(new Rect(pos.x, pos.y + pos.h - 250, pos.w, 24));
-    this.base.addObject(this.sellButton);
+    this.base.addChild(this.sellButton);
 
     //Add our buttons, should really be done just in the constructor with our given pos information
     this.added = function () {

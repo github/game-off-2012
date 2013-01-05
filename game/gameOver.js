@@ -10,17 +10,17 @@ function GameOver() {
     this.added = function() {
         this.eng = this.base.rootNode;
 
-        this.base.addObject(new SimpleCallback(2, "addButton"));
+        this.base.addChild(new SimpleCallback(2, "addButton"));
 
-        this.base.rootNode.base.addObject(new AttributeTween(1, 0, 5, null, "speed"));
+        this.base.rootNode.base.addChild(new AttributeTween(1, 0, 5, null, "speed"));
 
-        this.base.addObject(new AttributeTween(0, 0.8, 3, null, "alpha"));
+        this.base.addChild(new AttributeTween(0, 0.8, 3, null, "alpha"));
     }
 
     this.nothing = function() {}
 
     this.addButton = function() {
-        this.base.addObject(new Button("Restart", bind(window.location, "reload"), 102).resize(new Rect(360, 300, 100, 30)));
+        this.base.addChild(new Button("Restart", bind(window.location, "reload"), 102).resize(new Rect(360, 300, 100, 30)));
     }
 
     this.draw = function(pen) {

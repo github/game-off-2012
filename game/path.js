@@ -19,7 +19,7 @@ function Path_Start(x, y, w, h) {
             var eng = getEng(this);
 
             this.pathLine = new Path_Line(this);
-            eng.base.addObject(this.pathLine);
+            eng.base.addChild(this.pathLine);
         }
     };
     
@@ -68,7 +68,7 @@ function Path_Piece(x, y, w, h) {
             var eng = getEng(this);
 
             this.pathLine = new Path_Line(this);
-            eng.base.addObject(this.pathLine);
+            eng.base.addChild(this.pathLine);
         }
     };
 }

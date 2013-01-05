@@ -46,13 +46,13 @@ function Bug(startPath) {
 
 
     this.genes = new Genes();
-    this.base.addObject(this.genes);
+    this.base.addChild(this.genes);
 
 
 
-    this.base.addObject(new AttackCycle());
+    this.base.addChild(new AttackCycle());
 
-    this.base.addObject(new Selectable());
+    this.base.addChild(new Selectable());
 
     this.curPath = startPath;
 
@@ -63,7 +63,7 @@ function Bug(startPath) {
         this.delay = this.bugRelPathPos + 1;
 
         this.constantOne = 1;
-        this.base.addObject(new UpdateTicker(this, "constantOne", "regenTick"));
+        this.base.addChild(new UpdateTicker(this, "constantOne", "regenTick"));
     };
     
     this.regenTick = function() {
@@ -127,7 +127,7 @@ function Bug(startPath) {
         game.health -= 5;
 
         if (game.health <= 0 && !eng.base.allLengths.GameOver) {
-            eng.base.addObject(new GameOver());
+            eng.base.addChild(new GameOver());
         }
 
         this.base.destroySelf();

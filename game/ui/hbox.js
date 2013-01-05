@@ -9,7 +9,7 @@ function HBox() {
     // all children will have same width.
     this.add = function (ui, width) {
         children.push({ui: ui, width: width});
-        this.base.addObject(ui);
+        this.base.addChild(ui);
     }
     
     this.resize = function (rect) {

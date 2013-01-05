@@ -16,7 +16,7 @@ function AllelePointSystem(pos) {
             return b;
         }
         vbox = new VBox();
-        this.base.addObject(vbox);
+        this.base.addChild(vbox);
         
         this.pointIndicator = new Label(pos.clone(), "");
         vbox.add(this.pointIndicator);

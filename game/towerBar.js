@@ -121,7 +121,7 @@ function Towerbar(pos) {
     this.box = pos;
 
     var costIndicator = new Label("Tower cost: 50").resize(pos.clone());
-    this.base.addObject(costIndicator);
+    this.base.addChild(costIndicator);
 
     var attackCombinations = [];
     var uniqueNum = 1;
@@ -164,7 +164,7 @@ function Towerbar(pos) {
             }
             var towerDragger = new TowerDragger(pos.clone(), towerDraggerFunction);
 
-            refObj.base.addObject(towerDragger);
+            refObj.base.addChild(towerDragger);
 
             return true;
         }

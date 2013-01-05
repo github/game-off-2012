@@ -268,7 +268,7 @@ function AliveCounter(boundZeroCallback) {
     this.aliveCount = 0;
 
     this.addAliveTracker = function(obj) {
-        obj.base.addObject(new DeathTrigger(bind(this, "death")));
+        obj.base.addChild(new DeathTrigger(bind(this, "death")));
         this.aliveCount++;
     }
 

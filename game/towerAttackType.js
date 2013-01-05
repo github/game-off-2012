@@ -70,7 +70,7 @@ function startAttack(attackTemplate) {
     if (attackTemplate.target) {
         var attackNode = new attackType.AttackNode(attackTemplate);
 
-        eng.base.addObject(attackNode);
+        eng.base.addChild(attackNode);
     }
 }
 
@@ -137,7 +137,7 @@ var allAttackTypes = {
                         posX + width * widthBuffer,
                         posY + height * heightBuffer,
                         width * (1 - widthBuffer * 2),
-                        height * (1 - heightBuffer * 2)).scale(box), color);
+                        height * (1 - heightBuffer * 2)).project(box), color);
                 }
 
                 if(modulesFilled >= 1) {
@@ -204,9 +204,9 @@ var allAttackTypes = {
             
             //AlphaDecay destroys us
             var line = new SLine(attacker.box.center(), target.box.center(), this.color, 12);        
-            this.base.addObject(new AlphaDecay(damageToTime(realAttacker.attr.damage), 1, 0));
+            this.base.addChild(new AlphaDecay(damageToTime(realAttacker.attr.damage), 1, 0));
 
-            this.base.addObject(line);
+            this.base.addChild(line);
 
             applyAttack(this.attackTemplate);
 
@@ -272,7 +272,7 @@ var allAttackTypes = {
             while(damageModules > 0) {
 
                 function drawPart(color) {
-                    DRAW.arcRect(pen, new Rect(posX, posY, width, height).scale(box), color);
+                    DRAW.arcRect(pen, new Rect(posX, posY, width, height).project(box), color);
                 }
 
                 drawPart("grey");
@@ -352,9 +352,9 @@ var allAttackTypes = {
             var bullet = new SCircle(attacker.box.center(), r, "White", "Orange", 15);
             var motionDelay = new MotionDelay(attacker.box.center(), target.box.center(),
                                     dis / bulletSpeed, onImpact);
-            bullet.base.addObject(motionDelay);
+            bullet.base.addChild(motionDelay);
 
-            this.base.addObject(bullet);
+            this.base.addChild(bullet);
 
             this.sound = new Sound("snd/Laser_Shoot.wav");
             this.sound.play();            
@@ -422,9 +422,9 @@ var allAttackTypes = {
             
             //AlphaDecay destroys us
             var line = new SLine(attacker.box.center(), target.box.center(), this.color, 12);        
-            this.base.addObject(new AlphaDecay(this.repeatDelay, 1, 0));
+            this.base.addChild(new AlphaDecay(this.repeatDelay, 1, 0));
 
-            this.base.addObject(line);
+            this.base.addChild(line);
 
             applyAttack(this.attackTemplate);
 
@@ -470,7 +470,7 @@ var allAttackTypes = {
 
                     var eng = this.attackTemplate.attacker.base.rootNode;
                     //Resurrect ourself
-                    eng.base.addObject(new attackTemplate.attackType.AttackNode(this.attackTemplate));
+                    eng.base.addChild(new attackTemplate.attackType.AttackNode(this.attackTemplate));
                 }
             };
         };
@@ -522,9 +522,9 @@ var allAttackTypes = {
 
             //AlphaDecay destroys us
             var circle = new SCircle(attacker.box.center(), effectRange, this.color, this.color, 8);
-            this.base.addObject(new AttributeTween(0.2, 0.6, chargeTime, "charged", "alpha"));
+            this.base.addChild(new AttributeTween(0.2, 0.6, chargeTime, "charged", "alpha"));
 
-            this.base.addObject(circle);
+            this.base.addChild(circle);
 
             
             this.sound = new Sound("snd/Laser_Shoot.wav");
@@ -539,7 +539,7 @@ var allAttackTypes = {
             
             this.charged = function()
             {
-                this.base.addObject(new SimpleCallback(0.1, "fire"));
+                this.base.addChild(new SimpleCallback(0.1, "fire"));
                 circle.color = "rgba(255,255,255,0.6)";
             };
 
@@ -620,12 +620,12 @@ var allAttackTypes = {
             
             //AlphaDecay destroys us
             var line = new SLine(attacker.box.center(), target.box.center(), this.color, 12);
-            this.base.addObject(new AttributeTween(1, 0, this.repeatDelay, "tick", "alpha"));
+            this.base.addChild(new AttributeTween(1, 0, this.repeatDelay, "tick", "alpha"));
 
-            this.base.addObject(line);
+            this.base.addChild(line);
             
             var poisonIndicator = new SCircle(target.box.center(), 8, this.color, this.color, 14);
-            this.base.addObject(poisonIndicator);            
+            this.base.addChild(poisonIndicator);            
       
             this.alpha = 0;
             this.poisonAlpha = 0;
@@ -647,8 +647,8 @@ var allAttackTypes = {
                 if(target.base.rootNode == eng &&
                     Math.random() < this.repeatChance / 100)
                 {                    
-                    this.base.addObject(new AttributeTween(1, 0, this.repeatDelay * 0.5, "nothing", "poisonAlpha"));
-                    this.base.addObject(new SimpleCallback(this.repeatDelay, "tick"));
+                    this.base.addChild(new AttributeTween(1, 0, this.repeatDelay * 0.5, "nothing", "poisonAlpha"));
+                    this.base.addChild(new SimpleCallback(this.repeatDelay, "tick"));
 
                     applyAttack(this.attackTemplate);
                 }
@@ -718,13 +718,13 @@ var allAttackTypes = {
             this.color = globalColorPalette.slow;
 
             var line = new SLine(attacker.box.center(), target.box.center(), this.color, 12);        
-            line.base.addObject(new AlphaDecay(slowTime, 1, 0));
-            this.base.addObject(line);            
+            line.base.addChild(new AlphaDecay(slowTime, 1, 0));
+            this.base.addChild(line);            
             
             var slow = new SlowEffect(slow);
-            slow.base.addObject(new Lifetime(slowTime));
+            slow.base.addChild(new Lifetime(slowTime));
 
-            target.base.addObject(slow);
+            target.base.addChild(slow);
 
             applyAttack(this.attackTemplate);
 

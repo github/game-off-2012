@@ -5,7 +5,7 @@ function generatePath(eng, game) {
     function Tile(x, y, w, h) {
         this.box = new Rect(x, y, w, h);
         this.base = new BaseObj(this, 1);
-        this.base.addObject(new Selectable());
+        this.base.addChild(new Selectable());
     }
     
     var curPos = { x: 0, y: 0 };
@@ -26,7 +26,7 @@ function generatePath(eng, game) {
         board[x] = [];
         for (var y = 0; y < NUM_TILES_Y; y++) {
             board[x][y] = false;
-            eng.base.addObject(new Tile(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+            eng.base.addChild(new Tile(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE));
         }
     }
 
@@ -69,7 +69,7 @@ function generatePath(eng, game) {
             curPath = new Path_End(curPos.x * TILE_SIZE, curPos.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             prevPath.nextPath = curPath;
 
-            eng.base.addObject(curPath);
+            eng.base.addChild(curPath);
             break;
         }
         else {
@@ -88,7 +88,7 @@ function generatePath(eng, game) {
             prevPath = curPath;
             curPath.pathPos = pathPos++;
 
-            eng.base.addObject(curPath);
+            eng.base.addChild(curPath);
 
             //Look around and try to find a square to turn to that is still 1 away from everything else
 
