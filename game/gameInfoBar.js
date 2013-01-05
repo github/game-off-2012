@@ -8,29 +8,29 @@ function GameInfoBar() {
     
     var vbox1 = new VBox();
     var healthIndi = new Label("");
-    vbox1.add(healthIndi);
+    hbox.add(healthIndi);
 
     var moneyIndi = new Label("");
-    vbox1.add(moneyIndi);
+    hbox.add(moneyIndi);
 
     var FPSIndi = new Label("");
-    vbox1.add(FPSIndi);
+    hbox.add(FPSIndi);
 
     var bugIndi = new Label("");
-    vbox1.add(bugIndi);
+    hbox.add(bugIndi);
 
     var vbox3 = new VBox();
     var curWaveIndi = new Label("");
-    vbox3.add(curWaveIndi);
+    hbox.add(curWaveIndi);
 
     var nextLevelTimeIndi = new Label("");
-    vbox3.add(nextLevelTimeIndi);
+    hbox.add(nextLevelTimeIndi);
     
     gotoNextLevel = new Button("Send Next Wave Now", bind(this, "skipNextLevel"));
-    vbox3.add(gotoNextLevel);
+    hbox.add(gotoNextLevel);
     
-    hbox.add(vbox1);
-    hbox.add(vbox3);
+//     hbox.add(vbox1);
+//     hbox.add(vbox3);
     this.base.addChild(hbox);
 
     this.resize = function (rect) {
