@@ -17,26 +17,25 @@
     this.lastTowerHover = null;
 
     var hbox = new HBox();
+    engine.base.addChild(hbox);
+    
+    var vbox = new VBox();
+    hbox.add(vbox);
     this.gameBoard = new GameBoard(this);
-    hbox.add(this.gameBoard);
+    vbox.add(this.gameBoard);
+    this.gameInfoBar = new GameInfoBar();
+    vbox.add(this.gameInfoBar, 90);
+    this.towerbar = new Towerbar();
+    vbox.add(this.towerbar, 150);
     
     this.infobar = new Infobar();
     hbox.add(this.infobar, 150);
     
-    engine.base.addChild(hbox);
     
     engine.globalResize = function (ev) {
         console.log("gitDefence globalResize", ev);
         hbox.resize(new Rect(0, 0, ev.width, ev.height));
     }
-
-    this.towerbar = new Towerbar(new Rect(0, pos.h - 150, pos.w - 260, 150));
-    engine.base.addChild(this.towerbar);
-
-    this.gameInfoBar = new GameInfoBar(new Rect(0, pos.h - 240, pos.w - 260, 90));
-    engine.base.addChild(this.gameInfoBar);
-    
-
 
     this.selectedObj = null;
     this.globalSelectionChanged = {};

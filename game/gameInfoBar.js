@@ -1,10 +1,6 @@
-
-//Make list with lits of alleles to create default tower types.
-
-function GameInfoBar(pos) {
-    console.log("GameInfoBar pos:", pos);
-    this.box = pos;
+function GameInfoBar() {
     this.base = new BaseObj(this, 14);
+    this.box = new Rect(0, 0, 0, 0);
 
     var oldmoney = 0;
 
@@ -36,8 +32,11 @@ function GameInfoBar(pos) {
     hbox.add(vbox1);
     hbox.add(vbox3);
     this.base.addChild(hbox);
-    hbox.resize(pos);
 
+    this.resize = function (rect) {
+        hbox.resize(rect);
+        this.box = rect;
+    }
     this.skipNextLevel = function() {
         getGame(this).lvMan.nwicounter = -1;
     }

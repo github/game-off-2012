@@ -21,6 +21,10 @@ function TowerDragger(pos, towerGeneratorFnc) {
             this.placingTower.draw(pen);
         }
     }
+    
+    this.resize = function (rect) {
+        this.box = rect;
+    }
 
     this.update = function (dt) {
         if (this.placingTower) {
@@ -115,12 +119,11 @@ function TowerDragger(pos, towerGeneratorFnc) {
     }
 }
 
-function Towerbar(pos) {
+function Towerbar() {
     this.base = new BaseObj(this, 14);
+    this.box = new Rect(0, 0, 0, 0);
 
-    this.box = pos;
-
-    var costIndicator = new Label("Tower cost: 50").resize(pos.clone());
+    var costIndicator = new Label("Tower cost: 50");
     this.base.addChild(costIndicator);
 
     var attackCombinations = [];
@@ -134,6 +137,15 @@ function Towerbar(pos) {
 
     //var superAttack = { 0: allAttackTypes.Pulse, 1: allAttackTypes.Pulse, 2: allAttackTypes.Pulse };
     //attackCombinations.push(superAttack);
+    
+    this.resize = function (rect) {
+        costIndicator.resize(rect);
+        hbox.resize(rect);
+        this.box = rect;
+    }
+    
+    var hbox = new HBox();
+    this.base.addChild(hbox);
 
     this.added = function () {
         var game = getGame(this);
@@ -164,20 +176,20 @@ function Towerbar(pos) {
             }
             var towerDragger = new TowerDragger(pos.clone(), towerDraggerFunction);
 
-            refObj.base.addChild(towerDragger);
+            hbox.add(towerDragger);
 
             return true;
         }
 
-        var boxBox = new Rect(pos.x + 15, pos.y + 40, 450, 150);
+        var boxBox = new Rect(this.box.x + 15, this.box.y + 40, 450, 150);
         makeTiled(this, tileFnc, attackCombinations, boxBox, 6, 2, 0.1);
     };
 
     this.update = function () {
         var game = getGame(this);
 
-        costIndicator.box.x = pos.x + 10;
-        costIndicator.box.y = pos.y + 25;
+//         costIndicator.box.x = pos.x + 10;
+//         costIndicator.box.y = pos.y + 25;
 
         costIndicator.text("Current tower cost: " + prefixNumber(game.currentCost));
     }
