@@ -6,7 +6,6 @@ function GameInfoBar() {
 
     var hbox = new HBox();
     
-    var vbox1 = new VBox();
     var healthIndi = new Label("");
     hbox.add(healthIndi);
 
@@ -19,7 +18,6 @@ function GameInfoBar() {
     var bugIndi = new Label("");
     hbox.add(bugIndi);
 
-    var vbox3 = new VBox();
     var curWaveIndi = new Label("");
     hbox.add(curWaveIndi);
 
@@ -29,8 +27,6 @@ function GameInfoBar() {
     gotoNextLevel = new Button("Send Next Wave Now", bind(this, "skipNextLevel"));
     hbox.add(gotoNextLevel);
     
-//     hbox.add(vbox1);
-//     hbox.add(vbox3);
     this.base.addChild(hbox);
 
     this.resize = function (rect) {
