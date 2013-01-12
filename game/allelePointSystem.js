@@ -36,8 +36,9 @@ function AllelePointSystem(pos) {
     this.pointCost = 50;
 
     this.selectionChanged = function (newSelected) {
-        if(newSelected)
+        if (newSelected) {
             this.autoTrashButton.toggled = newSelected.autoTrash;
+        }
     }
 
     this.buyPoint = function (costData) {
