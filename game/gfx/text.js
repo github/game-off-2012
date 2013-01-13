@@ -28,7 +28,7 @@ function Text() {
         return this;
     }
     
-    var fontSize = 12;
+    var fontSize = 14;
     
     // When shrink == true, fontSize is the size we would ideally
     // line to achieve, and curFontSize is the size we are forced
@@ -97,15 +97,16 @@ function Text() {
             this.resize(rect);
             dirty = false;
         }
-        pen.font = font;
+        pen.font = font();
         pen.fillStyle = "green";
         pen.strokeStyle = "green";
         pen.textAlign = align;
         pen.textBaseline = "middle";
         
         var height = lineHeight();
+        var unusedHeight = rect.h - usedHeight;
         var x = rect.x;
-        var y = rect.y;
+        var y = rect.y + height / 2 + unusedHeight / 2;
         
         if (align == "center") {
             x += rect.w / 2;
@@ -114,7 +115,6 @@ function Text() {
         }
         
         for (var i = 0; i < lines.length; i++) {
-            y += height;
             if (type == "stroke") {
                 pen.strokeText(lines[i], x, y);
             } else if (type == "fill") {
@@ -122,10 +122,12 @@ function Text() {
             } else {
                 throw "Unknown apply type '" + type + "'";
             }
+            y += height;
         }
     }
     
     var rect;
+    var usedHeight = 0;
     this.resize = function (newRect) {
         rect = newRect;
         curFontSize = fontSize;
@@ -133,13 +135,14 @@ function Text() {
             while (true) {
                 var newRect2 = fitText(newRect.clone());
                 if (newRect2.w <= newRect.w && newRect2.h <= newRect.h) {
+                    usedHeight = newRect2.h;
                     return newRect;
                 }
+                console.log(curFontSize);
                 curFontSize--;
                 if (curFontSize < 0) {
                     throw "WTF";
                 }
-                c.font = font();
             }
         } else {
             return fitText(newRect.clone());
@@ -147,9 +150,10 @@ function Text() {
     }
     
     function fitText (rect) {
+        c.font = font();
         if (wrap) {
             lines = getLines(c, text, rect.w);
-            rect.h = lineHeight() * (lines.length + 1);
+            rect.h = lineHeight() * lines.length;
             return rect;
         } else {
             rect.h = lineHeight();

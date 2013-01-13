@@ -38,7 +38,7 @@ function Bug(startPath) {
     var velocity = new Vector(1, 0).mag(this.attr.speed);
 
     //Will be replaced
-    this.color = "yellow";
+    this.color = "trasparent";
     this.borderColor =  "red";
 
     this.lineWidth = 1;
