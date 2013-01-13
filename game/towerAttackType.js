@@ -203,7 +203,7 @@ var allAttackTypes = {
             this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : globalColorPalette.laser;
             
             //AlphaDecay destroys us
-            var line = new SLine(attacker.box.center(), target.box.center(), this.color, 12);        
+            var line = new SLine(attacker.tpos.center(), target.tpos.center(), this.color, 12);        
             this.base.addChild(new AlphaDecay(damageToTime(realAttacker.attr.damage), 1, 0));
 
             this.base.addChild(line);
@@ -332,8 +332,8 @@ var allAttackTypes = {
 
             var bulletSpeed = attackTemplate.attackType.bulletSpeed;
 
-            var dis = attacker.box.center();
-            dis.sub(target.box.center());
+            var dis = attacker.tpos.center();
+            dis.sub(target.tpos.center());
             dis = Math.sqrt(dis.magSq());
 
             var us = this;
@@ -349,8 +349,8 @@ var allAttackTypes = {
             if(realAttacker.base.type == "Bug")
                 r = 2;
 
-            var bullet = new SCircle(attacker.box.center(), r, "White", "Orange", 15);
-            var motionDelay = new MotionDelay(attacker.box.center(), target.box.center(),
+            var bullet = new SCircle(attacker.tpos.center(), r, "White", "Orange", 15);
+            var motionDelay = new MotionDelay(attacker.tpos.center(), target.tpos.center(),
                                     dis / bulletSpeed, onImpact);
             bullet.base.addChild(motionDelay);
 
@@ -361,7 +361,7 @@ var allAttackTypes = {
 
             this.update = function()
             {
-                motionDelay.end = target.box.center();
+                motionDelay.end = target.tpos.center();
             }
         };
     },
@@ -421,7 +421,7 @@ var allAttackTypes = {
             this.color = globalColorPalette.chainLightning;
             
             //AlphaDecay destroys us
-            var line = new SLine(attacker.box.center(), target.box.center(), this.color, 12);        
+            var line = new SLine(attacker.tpos.center(), target.tpos.center(), this.color, 12);        
             this.base.addChild(new AlphaDecay(this.repeatDelay, 1, 0));
 
             this.base.addChild(line);
@@ -456,7 +456,7 @@ var allAttackTypes = {
 
                     var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
                     var targets = findAllWithin(attacker.base.rootNode, targetType, 
-                            attacker.box.center(), rootAttacker.attr.range);
+                            attacker.tpos.center(), rootAttacker.attr.range);
 
                     for(var key in this.attackTemplate.prevList)
                         this.attackTemplate.prevList[key].hidden = false;
@@ -521,7 +521,7 @@ var allAttackTypes = {
             this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : "rgba(0,0,255,0)";
 
             //AlphaDecay destroys us
-            var circle = new SCircle(attacker.box.center(), effectRange, this.color, this.color, 8);
+            var circle = new SCircle(attacker.tpos.center(), effectRange, this.color, this.color, 8);
             this.base.addChild(new AttributeTween(0.2, 0.6, chargeTime, "charged", "alpha"));
 
             this.base.addChild(circle);
@@ -559,7 +559,7 @@ var allAttackTypes = {
                 //This is basically just a custom targeting strategy
                 var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
                 var targets = findAllWithin(attacker.base.rootNode, targetType, 
-                        attacker.box.center(), effectRange);
+                        attacker.tpos.center(), effectRange);
 
                 this.targets = targets;
 
@@ -619,12 +619,12 @@ var allAttackTypes = {
             this.color = globalColorPalette.poison;
             
             //AlphaDecay destroys us
-            var line = new SLine(attacker.box.center(), target.box.center(), this.color, 12);
+            var line = new SLine(attacker.tpos.center(), target.tpos.center(), this.color, 12);
             this.base.addChild(new AttributeTween(1, 0, this.repeatDelay, "tick", "alpha"));
 
             this.base.addChild(line);
             
-            var poisonIndicator = new SCircle(target.box.center(), 8, this.color, this.color, 14);
+            var poisonIndicator = new SCircle(target.tpos.center(), 8, this.color, this.color, 14);
             this.base.addChild(poisonIndicator);            
       
             this.alpha = 0;
@@ -634,8 +634,8 @@ var allAttackTypes = {
                 line.color = setAlpha(line.color, this.alpha);
                 poisonIndicator.color = setAlpha(poisonIndicator.color, this.poisonAlpha);
                 poisonIndicator.fillColor = setAlpha(poisonIndicator.fillColor, this.alpha);
-                poisonIndicator.box.x = target.box.center().x;
-                poisonIndicator.box.y = target.box.center().y;
+                poisonIndicator.tpos.x = target.tpos.center().x;
+                poisonIndicator.tpos.y = target.tpos.center().y;
             };
 
             this.nothing = function(){}
@@ -717,7 +717,7 @@ var allAttackTypes = {
 
             this.color = globalColorPalette.slow;
 
-            var line = new SLine(attacker.box.center(), target.box.center(), this.color, 12);        
+            var line = new SLine(attacker.tpos.center(), target.tpos.center(), this.color, 12);        
             line.base.addChild(new AlphaDecay(slowTime, 1, 0));
             this.base.addChild(line);            
             
@@ -730,7 +730,7 @@ var allAttackTypes = {
 
             this.update = function()
             {
-                line.end = target.box.center();
+                line.end = target.tpos.center();
             };
         };
     },
@@ -754,10 +754,10 @@ var bugAttackTypes = {
 
 function drawAttributes(user, pen) {
     if(user.lineWidth) {
-        user.box.x += user.lineWidth;
-        user.box.y += user.lineWidth;
-        user.box.w -= Math.ceil(user.lineWidth * 2);
-        user.box.h -= Math.ceil(user.lineWidth * 2);
+        user.tpos.x += user.lineWidth;
+        user.tpos.y += user.lineWidth;
+        user.tpos.w -= Math.ceil(user.lineWidth * 2);
+        user.tpos.h -= Math.ceil(user.lineWidth * 2);
     }
 
     makeTiled(pen,
@@ -771,7 +771,7 @@ function drawAttributes(user, pen) {
             return true;
         },
         user.attr,
-        user.box.clone(),
+        user.tpos.clone(),
         2, 2,
         0.01);
 
@@ -793,14 +793,14 @@ function drawAttributes(user, pen) {
             return true;
         },
         user.attr,
-        user.box.clone(),
+        user.tpos.clone(),
         2, 2,
         0.01);
 
     if(user.lineWidth) {
-        user.box.x -= user.lineWidth;
-        user.box.y -= user.lineWidth;
-        user.box.w += Math.ceil(user.lineWidth * 2);
-        user.box.h += Math.ceil(user.lineWidth * 2);
+        user.tpos.x -= user.lineWidth;
+        user.tpos.y -= user.lineWidth;
+        user.tpos.w += Math.ceil(user.lineWidth * 2);
+        user.tpos.h += Math.ceil(user.lineWidth * 2);
     }
 }

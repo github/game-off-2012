@@ -9,7 +9,7 @@ var targetStrategies = {
                 prevTarget.hidden = true;
             }
             
-            var target = findClosestToPoint(attacker.base.rootNode, targetType, attacker.box.center(), attacker.attr.range);
+            var target = findClosestToPoint(attacker.base.rootNode, targetType, attacker.tpos.center(), attacker.attr.range);
             
             if (prevTarget) {
                 prevTarget.hidden = false;
@@ -59,7 +59,7 @@ var targetStrategies = {
             }
 
             var targets = findAllWithin(attacker.base.rootNode, targetType, 
-                            attacker.box.center(), attacker.attr.range);
+                            attacker.tpos.center(), attacker.attr.range);
         
             if (prevTarget) {
                 prevTarget.hidden = false;
@@ -106,7 +106,7 @@ var targetStrategies = {
             var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
             var targetLoc = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Path" ? "Tower" : "Path");
 
-            var targets = findAllWithin(attacker.base.rootNode, targetLoc, attacker.box.center(), attacker.attr.range);
+            var targets = findAllWithin(attacker.base.rootNode, targetLoc, attacker.tpos.center(), attacker.attr.range);
                             
             //Now sort targets by pathPos
             var pathObjs = []
@@ -122,20 +122,20 @@ var targetStrategies = {
             for (var key in pathObjs) {
                 var curPath = pathObjs[key].path;
                 
-                var targebox = curPath.box;
+                var targebox = curPath.tpos;
 
                 if (curPath.nextPath) {
-                    targebox = curPath.nextPath.box;
+                    targebox = curPath.nextPath.tpos;
                 }
 
-                var targets = findAllWithin(attacker.base.rootNode, targetType, curPath.box.center(), curPath.box.w / 2);
+                var targets = findAllWithin(attacker.base.rootNode, targetType, curPath.tpos.center(), curPath.tpos.w / 2);
 
                 if (!targets || !(targets.length > 0)) {
                     continue;
                 }
 
                 targets.sort(function (a,b) {
-                    return vecToRect(targebox, a.box).magSq() - vecToRect(targebox, b.box).magSq();
+                    return vecToRect(targebox, a.tpos).magSq() - vecToRect(targebox, b.tpos).magSq();
                 });
 
                 return targets[0];

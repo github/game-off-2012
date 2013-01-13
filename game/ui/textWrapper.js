@@ -1,5 +1,5 @@
 function TextWrapper(text, zorder) {
-    this.box = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new TemporalPos(0, 0, 0, 0);
     if (!zorder) zorder = 15;
     this.base = new BaseObj(this, zorder, true);
     
@@ -15,7 +15,7 @@ function TextWrapper(text, zorder) {
         pen.textAlign = "center";
         pen.textBaseline = "middle";
         
-        var pos = this.box;
+        var pos = this.tpos;
         var lineHeight = fontSize;
         var curX = pos.x + pos.w / 2;
         var curY = pos.y;
@@ -27,10 +27,10 @@ function TextWrapper(text, zorder) {
     };
     
     this.resize = function (rect) {
-        this.box = rect;
+        this.tpos = rect;
         lines = getWrappedLines(myCanvas, text, rect.w);
         var lineHeight = fontSize;
         var h = lineHeight * (lines.length + 1);
-        this.box.h = h;
+        this.tpos.h = h;
     };
 }

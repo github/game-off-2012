@@ -41,7 +41,7 @@ function QuadTree(arrObjs, splitThreshold) {
         if (!assertDefined("removeFromTree", obj, obj.base))
             return;
 
-        if (!obj.box)
+        if (!obj.tpos)
             return;
 
         delete obj.base.quadNode.ids[obj.base.id];
@@ -51,7 +51,7 @@ function QuadTree(arrObjs, splitThreshold) {
         if (!assertDefined("addToTree", obj, obj.base))
             return;
 
-        if (!obj.box)
+        if (!obj.tpos)
             return;
 
         var type = obj.base.type;
@@ -62,7 +62,7 @@ function QuadTree(arrObjs, splitThreshold) {
             this.objTrees[type].tree.leaf = true;
             this.objTrees[type].tree.ids = {};
             this.objTrees[type].tree.ids[obj.base.id] = true; //Could be set to false even
-            this.objTrees[type].tree.bounds = obj.box;
+            this.objTrees[type].tree.bounds = obj.tpos;
 
             obj.base.quadNode = this.objTrees[type].tree;
         } else {
@@ -74,7 +74,7 @@ function QuadTree(arrObjs, splitThreshold) {
                     return;
                 }
 
-                if (minVecFullOverlapRects(obj.box, tree.bounds).magSq() > 0) {
+                if (minVecFullOverlapRects(obj.tpos, tree.bounds).magSq() > 0) {
                     return false;
                 }
 
@@ -118,7 +118,7 @@ function QuadTree(arrObjs, splitThreshold) {
         }
 
         //We can't index stuff without box
-        if (idKey.length == 0 || !arrObjs[type][idKey[0]].box) {
+        if (idKey.length == 0 || !arrObjs[type][idKey[0]].tpos) {
             this.objTrees[type].tree = {};
             this.objTrees[type].tree.leaf = true;
             this.objTrees[type].tree.numberContained = 0;
@@ -127,13 +127,13 @@ function QuadTree(arrObjs, splitThreshold) {
             continue;
         }
         
-        minX = arrObjs[type][idKey[0]].box.x;
-        maxX = arrObjs[type][idKey[0]].box.x;
-        minY = arrObjs[type][idKey[0]].box.y;
-        maxY = arrObjs[type][idKey[0]].box.y;
+        minX = arrObjs[type][idKey[0]].tpos.x;
+        maxX = arrObjs[type][idKey[0]].tpos.x;
+        minY = arrObjs[type][idKey[0]].tpos.y;
+        maxY = arrObjs[type][idKey[0]].tpos.y;
         for (var key in arrObjs[type]) {            
             //Ughh... I don't want to find min and max
-            var boundingBox = arrObjs[type][key].box;
+            var boundingBox = arrObjs[type][key].tpos;
             if (boundingBox.x < minX) minX = boundingBox.x;
             if (boundingBox.y < minY) minY = boundingBox.y;
 
@@ -189,7 +189,7 @@ function QuadTree(arrObjs, splitThreshold) {
 
         if (DFlag.quadtreeDiagnostics) {
             for (var i = startIndex; i < endIndex; i++) {
-                if (minVecFullOverlapRects(arrObj[idKey[i]].box, branch.bounds).magSq() > 0) {
+                if (minVecFullOverlapRects(arrObj[idKey[i]].tpos, branch.bounds).magSq() > 0) {
                     fail("Bounds not respected in quadtree!");
                 }
             }
@@ -233,11 +233,11 @@ function QuadTree(arrObjs, splitThreshold) {
 
         var splitIndex = (Math.floor((startIndex + endIndex) / 2));            
 
-        splibox = arrObj[idKey[splitIndex]].box[curDimen];
+        splibox = arrObj[idKey[splitIndex]].tpos[curDimen];
 
         if(DFlag.quadtreeDiagnostics) {
             for (var i = startIndex; i < endIndex - 1; i++) {
-                if (arrObj[idKey[i]].box[curDimen] > arrObj[idKey[i + 1]].box[curDimen]) {
+                if (arrObj[idKey[i]].tpos[curDimen] > arrObj[idKey[i + 1]].tpos[curDimen]) {
                     fail("sort failed");
                 }
             }
@@ -253,7 +253,7 @@ function QuadTree(arrObjs, splitThreshold) {
         greaterStart--;endIndex--;
 
         while (curPos <= greaterStart) {
-            var boundingBox = arrObj[idKey[curPos]].box;
+            var boundingBox = arrObj[idKey[curPos]].tpos;
 
             if ((boundingBox.x) < minX ||
                     (boundingBox.y) < minY ||
@@ -346,7 +346,7 @@ function QuadTree(arrObjs, splitThreshold) {
         var pivotPoint;
 
         if (startIndex + 1 == endIndex) {
-            if (arrObj[startIndex].box[axis] > arrObj[endIndex].box[axis]) {
+            if (arrObj[startIndex].tpos[axis] > arrObj[endIndex].tpos[axis]) {
                 swap(arrObj, startIndex, endIndex);
             }
             return;
@@ -355,20 +355,20 @@ function QuadTree(arrObjs, splitThreshold) {
         //Make the pivot point the median of the first middle and last
         //(also we do a bit of sorting here too)
         var middleIndex = Math.floor((startIndex + endIndex) / 2);
-        if (arrObj[middleIndex].box[axis] < arrObj[startIndex].box[axis]) {
+        if (arrObj[middleIndex].tpos[axis] < arrObj[startIndex].tpos[axis]) {
             swap(arrObj, middleIndex, startIndex);
         }
 
-        if (arrObj[endIndex].box[axis] < arrObj[startIndex].box[axis]) {
+        if (arrObj[endIndex].tpos[axis] < arrObj[startIndex].tpos[axis]) {
             swap(arrObj, endIndex, startIndex);
         }
 
-        if (arrObj[endIndex].box[axis] < arrObj[middleIndex].box[axis]) {
+        if (arrObj[endIndex].tpos[axis] < arrObj[middleIndex].tpos[axis]) {
             swap(arrObj, endIndex, middleIndex);
         }
 
         var pivotPoint = middleIndex;
-        var pivotValue = arrObj[middleIndex].box[axis];
+        var pivotValue = arrObj[middleIndex].tpos[axis];
 
         //Everything <= pivot is swapper to beginning, everything else is swapped to end
 
@@ -378,14 +378,14 @@ function QuadTree(arrObjs, splitThreshold) {
 
         //< here instead of <= sorts it, but leaves lessEnd and greaterStart possibly wrong
         while (curPos <= greaterStart) {
-            if (arrObj[curPos].box[axis] < pivotValue) {
+            if (arrObj[curPos].tpos[axis] < pivotValue) {
                 if (curPos != lessEnd) {
                     swap(arrObj, curPos, lessEnd);
                 }
 
                 curPos++;
                 lessEnd++;
-            } else if (arrObj[curPos].box[axis] > pivotValue) {
+            } else if (arrObj[curPos].tpos[axis] > pivotValue) {
                 swap(arrObj, curPos, greaterStart--);
             } else {
                 curPos++;

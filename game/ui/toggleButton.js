@@ -1,6 +1,6 @@
 // Basically a checkbox/label combo
 function ToggleButton(text, cb) {
-    this.box = new Rect(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this, 15);
     
     var hover = false;
@@ -13,14 +13,14 @@ function ToggleButton(text, cb) {
     };
     
     this.resize = function(rect) {
-        this.box = rect;
+        this.tpos = rect;
         this.base.dirty();
         return this;
     }
     
     this.redraw = function(canvas) {
         var outline = new Path();
-        var r = new Rect(1.5, 1.5, this.box.w - 3, this.box.h - 3);
+        var r = new Rect(1.5, 1.5, this.tpos.w - 3, this.tpos.h - 3);
         outline.rect(r);
         
         var fill = "black";

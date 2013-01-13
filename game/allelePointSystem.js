@@ -1,6 +1,6 @@
 function AllelePointSystem(pos) {
     this.base = new BaseObj(this, 15);
-    this.box = pos;
+    this.tpos = pos;
 
     var vbox;
     this.added = function () {

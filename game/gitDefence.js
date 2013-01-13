@@ -31,7 +31,7 @@
     vbox.add(this.gameBoard);
     
     this.infobar = new Infobar();
-    hbox.add(this.infobar, 150);
+    hbox.add(this.infobar, 200);
     
     engine.globalResize = function (ev) {
         console.log("gitDefence globalResize", ev);
@@ -78,7 +78,7 @@
         if (obj) {
             pen.strokeStyle = obj.color;
             pen.fillStyle = "transparent";
-            var p = obj.box.center();
+            var p = obj.tpos.center();
             ink.circ(p.x, p.y, obj.attr.range, pen);
         }
     }

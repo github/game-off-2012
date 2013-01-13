@@ -56,7 +56,7 @@ function BaseObj(holder, zindex, dynamicZIndex) {
     this.allLengths = {};
 
 
-    if (holder.box) {
+    if (holder.tpos) {
         //Quadtree maintained properties
         //We default the quadtree to something, that way every object always has one
         var tempArrObjs = {};
@@ -290,7 +290,7 @@ function BaseObj(holder, zindex, dynamicZIndex) {
             holder.draw(pen);
         } else if (holder.redraw) {
             if (drawDirty) {
-                canvas.resize(holder.box);
+                canvas.resize(holder.tpos);
                 holder.redraw(canvas);
                 canvas.drawTo(pen);
                 drawDirty = false;

@@ -180,7 +180,7 @@
 
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
                     if (!this.globalMouseClick[this.prevMouseDown[i].base.id] &&
-                        vecToRect({ x: this.muX, y: this.muY }, this.prevMouseDown[i].box).magSq() == 0) {
+                        vecToRect({ x: this.muX, y: this.muY }, this.prevMouseDown[i].tpos).magSq() == 0) {
                         this.prevMouseDown[i].base.callRaise("click", { x: this.muX, y: this.muY });
                     }
                     this.prevMouseDown[i].base.callRaise("dragEnd", { x: this.muX, y: this.muY });
@@ -207,7 +207,7 @@
             //Can actually find mouseout more efficiently... as we have previous and current mouseover...            
             if (this.prevMouseOver && this.prevMouseOver.length > 0) {
                 for (var i = 0; i < this.prevMouseOver.length; i++) {
-                    if (vecToRect({ x: this.mX, y: this.mY }, this.prevMouseOver[i].box).magSq() != 0) {
+                    if (vecToRect({ x: this.mX, y: this.mY }, this.prevMouseOver[i].tpos).magSq() != 0) {
                         this.prevMouseOver[i].base.callRaise("mouseout", { x: this.mX, y: this.mY });
                     }
                 }

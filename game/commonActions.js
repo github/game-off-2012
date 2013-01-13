@@ -1,7 +1,7 @@
 //Not using UpdateTicker for easier debugging.
 function AttackCycle() {
     this.base = new BaseObj(this);
-    this.box = new Rect(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.attackCounter = 0;
     this.maxCounter = 0;
     this.chargePercent = 0;
@@ -95,7 +95,7 @@ function Lifetime(lifetime) {
 
 function Selectable() {
     this.base = new BaseObj(this);
-    this.box = new Rect(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     
     if (DFlag.drawSelectableBoxes) {
         this.draw = function (pen) {
@@ -129,7 +129,7 @@ function HoverIndicator() {
     this.base = new BaseObj(this, 20);
 
     this.draw = function (pen) {
-        var p = this.base.parent.box;
+        var p = this.base.parent.tpos;
 
         pen.fillStyle = "rgba(255, 255, 255, 0.25)";
         pen.strokeStyle = "yellow";
@@ -153,7 +153,7 @@ function SlowEffect(magnitude) {
     }
 
     this.draw = function (pen) {
-        var p = this.base.parent.box;
+        var p = this.base.parent.tpos;
         pen.fillStyle = "dodgerblue";
         pen.strokeStyle = "white";
         pen.lineWidth = 1;
@@ -187,8 +187,8 @@ function MotionDelay(start, end, time, callback) {
 
         var progress = this.time / this.baseTime;
 
-        this.base.parent.box.x = start.x * progress + end.x * (1 - progress);
-        this.base.parent.box.y = start.y * progress + end.y * (1 - progress);
+        this.base.parent.tpos.x = start.x * progress + end.x * (1 - progress);
+        this.base.parent.tpos.y = start.y * progress + end.y * (1 - progress);
     }
 }
 

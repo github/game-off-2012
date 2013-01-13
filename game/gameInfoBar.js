@@ -1,6 +1,6 @@
 function GameInfoBar() {
     this.base = new BaseObj(this, 14);
-    this.box = new Rect(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
 
     var oldmoney = 0;
 
@@ -31,13 +31,13 @@ function GameInfoBar() {
 
     this.resize = function (rect) {
         hbox.resize(rect);
-        this.box = rect;
+        this.tpos = rect;
     }
     this.skipNextLevel = function() {
         getGame(this).lvMan.nwicounter = -1;
     }
     
-    var accumulatedTime = 0;
+    var accumulatedTime = 1;
     this.update = function (dt) {
         var game = this.base.rootNode.game;
         var eng = this.base.rootNode;
@@ -52,6 +52,6 @@ function GameInfoBar() {
         }
 
         curWaveIndi.text("Current Level: " + round(game.lvMan.curWave, 2));
-        nextLevelTimeIndi.text("Sec To Next Level: " + round(game.lvMan.nwicounter, 0));
+        nextLevelTimeIndi.text("Next Level In: " + round(game.lvMan.nwicounter, 0));
     }
 }
