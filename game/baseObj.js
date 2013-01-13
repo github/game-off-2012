@@ -219,15 +219,14 @@ function BaseObj(holder, zindex, dynamicZIndex) {
     }
 
     //Calls the function, then raises an event called "parent_" + name
-    //to all of its children. Does not collect the return values as this
-    //concept is being phased out as it is not really OO sound.
+    //to all of its children.
     this.callRaise = function (name, args) {
         if(holder[name] && !holder.hidden)
             holder[name](args);
 
         this.loopThroughAllTypes(function (child) {
-            if (child.base) {
-                child.base.raiseEvent("parent_" + name, args);
+            if (child && child["parent_" + name]) {
+                child["parent_" + name](args);
             }
         });
     }

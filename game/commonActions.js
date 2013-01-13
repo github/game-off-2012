@@ -96,27 +96,23 @@ function Lifetime(lifetime) {
 function Selectable() {
     this.base = new BaseObj(this);
     this.box = new Rect(0, 0, 0, 0);
-
-    this.ignoreNext = false;
-
-    //Magical hacks
-    this.topMost = false;
-    //I use mouseup because click doesn't have topMost because I don't want to implement it
-    this.parent_mouseup = function (e) {
-        this.topMost = e.topMost;
+    
+    if (DFlag.drawSelectableBoxes) {
+        this.draw = function (pen) {
+            pen.beginPath();
+            pen.strokeStyle = "red";
+            pen.lineWidth = 2;
+            var b = this.base.parent.box;
+            pen.rect(b.x, b.y, b.w, b.h);
+            pen.stroke();
+        }
     }
 
     this.parent_click = function () {
         var eng = this.base.rootNode;
         var game = eng.game;
 
-        if (this.ignoreNext) {
-            this.ignoreNext = false;
-            return;
-        }
-        if (this.topMost) {
-            game.selection(this.base.parent);
-        }
+        game.selection(this.base.parent);
     }
 
     this.parent_die = function () {

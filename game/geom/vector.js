@@ -64,6 +64,12 @@ var Vector = (function () {
         return this;
     };
     
+    p.neg = function () {
+        this.x = -this.x;
+        this.y = -this.y;
+        return this;
+    }
+    
     p.clone = function () {
         return new Vector(this.x, this.y);
     };
