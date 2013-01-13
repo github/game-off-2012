@@ -78,6 +78,7 @@
         if (obj) {
             pen.strokeStyle = obj.color;
             pen.fillStyle = "transparent";
+            pen.lineWidth = 2;
             var p = obj.tpos.center();
             ink.circ(p.x, p.y, obj.attr.range, pen);
         }

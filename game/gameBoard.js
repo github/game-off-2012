@@ -16,7 +16,7 @@ function GameBoard(game) {
     
     this.resize = function (rect) {
         var startRect = contentBox;
-        var endRect = rect.largestSquare();
+        var endRect = contentBox.clone().center(rect.center());
         
         moveChildren(this.base, startRect, endRect);
         
