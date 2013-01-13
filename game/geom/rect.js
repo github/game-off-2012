@@ -94,6 +94,12 @@ var Rect = (function () {
         return this;
     }
     
+    p.moveOrigin = function (delta) {
+        this.x += delta.x;
+        this.y += delta.y;
+        return this;
+    }
+    
     p.size = function (newSize) {
         if (newSize === undefined) {
             return new Vector(this.w, this.h);

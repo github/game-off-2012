@@ -1,7 +1,7 @@
 function GameBoard(game) {
     this.box = new Rect(0, 0, game.numTilesX * game.tileSize, game.numTilesY * game.tileSize);
     this.base = new BaseObj(this, -32);
-    var box = this.box.clone();
+    var contentBox = this.box.largestSquare();
     
     generatePath(this, game);
     
@@ -15,12 +15,12 @@ function GameBoard(game) {
     }
     
     this.resize = function (rect) {
-        var startRect = box;
+        var startRect = contentBox;
         var endRect = rect.largestSquare();
         
         moveChildren(this.base, startRect, endRect);
         
-        box = endRect;
+        contentBox = endRect;
         this.box = rect;
         this.base.dirty();
         return this;
@@ -28,7 +28,8 @@ function GameBoard(game) {
     
     this.redraw = function (canvas) {
         var p = new Path();
-        p.rect(box.clone().origin(box.origin().sub(this.box.origin())));
+        p.rect(contentBox.clone().moveOrigin(this.box.origin().neg()));
         canvas.fill(p, rgba(0, 0, 255, 0.1));
+        canvas.stroke(p, rgba(0, 0, 255, 0.5), 2);
     }
 }

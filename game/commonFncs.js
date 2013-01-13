@@ -106,7 +106,7 @@ function setAlpha(color, newAlpha) {
 }
 
 function getSel(obj) {
-    return obj.base.rootNode.game.selectedObj;
+    return obj.base.rootNode.game.selection();
 }
 
 function getGame(obj) {
