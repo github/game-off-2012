@@ -2,7 +2,7 @@ function Infobar(pos) {
     this.base = new BaseObj(this, 14);
     this.tattr = null;
 
-    this.box = pos;
+    this.tpos = pos;
 
     var buttonW = 100;
 
@@ -16,7 +16,7 @@ function Infobar(pos) {
     this.base.addChild(this.sellButton);
     
     this.resize = function (rect) {
-        this.box = rect;
+        this.tpos = rect;
         this.allelePoints.resize(new Rect(rect.x, rect.y + rect.h - 200, rect.w, 190));
         this.sellButton.resize(new Rect(rect.x, rect.y + rect.h - 250, rect.w, 24));
         
@@ -42,9 +42,9 @@ function Infobar(pos) {
         pen.fillStyle = "green";
         pen.font = "15px courier";
 
-        var xs = this.box.x + 10;
-        var xe = this.box.x + this.box.w - 10;
-        var y = this.box.y + 15;
+        var xs = this.tpos.x + 10;
+        var xe = this.tpos.x + this.tpos.w - 10;
+        var y = this.tpos.y + 15;
 
         if (!this.obj || !this.obj.attr) {
             ink.text(xs, y, "[no selection]", pen);

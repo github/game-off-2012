@@ -69,7 +69,7 @@
         }
 
         if (currentRangeDisplayed && this.selectedObj) {
-            currentRangeDisplayed.box = this.selectedObj.box.center();
+            currentRangeDisplayed.tpos = this.selectedObj.tpos.center();
         }
 
         if (this.selectedObj) {
@@ -106,7 +106,7 @@
             //Hooks up our tower range to our actual attributes (but not our center)
             //so we don't need to maintain it.
             currentRangeDisplayed = new SCircle(
-                obj.box.center(),
+                obj.tpos.center(),
                 obj.attr.range,
                 obj.color,
                 "transparent", 11);

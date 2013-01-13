@@ -1,6 +1,6 @@
 function Genes() {
     this.base = new BaseObj(this);
-    this.box = new Rect(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
 
     this.alleles = {};
 

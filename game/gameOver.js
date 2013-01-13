@@ -28,7 +28,7 @@ function GameOver() {
 
         pen.fillStyle = "rgba(0, 0, 0, " + this.alpha + ")"; //"hsl(180, 50%, 50%, " + this.alpha + ")";
 
-        ink.rect(0, 0, eng.box.w, eng.box.h, pen);
+        ink.rect(0, 0, eng.tpos.w, eng.tpos.h, pen);
 
 
         var pos = new Rect(240, 230, 100, 30);

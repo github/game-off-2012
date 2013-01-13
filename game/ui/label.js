@@ -1,5 +1,5 @@
 function Label(text, zorder) {
-    this.box = new Rect(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     
     if(!assertDefined(text))
         return;
@@ -12,12 +12,12 @@ function Label(text, zorder) {
     this.redraw = function (canvas) {
         var t = new Text();
         t.text(text);
-        t.resize(new Rect(0, 0, 0, 0).size(this.box.size()));
+        t.resize(new Rect(0, 0, 0, 0).size(this.tpos.size()));
         canvas.fill(t, "green");
     }
     
     this.resize = function (rect) {
-        this.box = rect;
+        this.tpos = rect;
         this.base.dirty();
         return this;
     }

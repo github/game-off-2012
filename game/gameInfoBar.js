@@ -1,6 +1,6 @@
 function GameInfoBar() {
     this.base = new BaseObj(this, 14);
-    this.box = new Rect(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
 
     var oldmoney = 0;
 
@@ -31,7 +31,7 @@ function GameInfoBar() {
 
     this.resize = function (rect) {
         hbox.resize(rect);
-        this.box = rect;
+        this.tpos = rect;
     }
     this.skipNextLevel = function() {
         getGame(this).lvMan.nwicounter = -1;
