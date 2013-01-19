@@ -24,17 +24,15 @@ function GameOver() {
     }
 
     this.draw = function(pen) {
-        var eng = this.base.rootNode;
-
-        pen.fillStyle = "rgba(0, 0, 0, " + this.alpha + ")"; //"hsl(180, 50%, 50%, " + this.alpha + ")";
-
-        ink.rect(0, 0, eng.tpos.w, eng.tpos.h, pen);
-
+        var eng = this.base.rootNode;        
+        pen.fillStyle = rgba(0, 0, 0, this.alpha).str();
+        pen.fillRect(0, 0, eng.tpos.w, eng.tpos.h, pen);
 
         var pos = new Rect(240, 230, 100, 30);
         //Hack because of zorder bug
         pen.fillStyle = "Red";
         pen.font = "70px courier";
+        pen.textAlign = "left";
         ink.text(pos.x, pos.y, "Game Over!", pen);
     }
 }
