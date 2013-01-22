@@ -27,14 +27,14 @@ function ScreenSystem(canvas) {
     var reqAnim = (function() {
         return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(cb) {
             window.setTimeout(function() {
-                cb(Date.now());
+                cb();
             }, 1000 / 60);
         };
     })();
     
-    function tick(timestamp) {
+    function tick() {
         if (active && active.run) {
-            active.run(timestamp);
+            active.run(Date.now());
             pen.clearRect(0, 0, canvas.width, canvas.height);
             active.draw(pen);
         }
