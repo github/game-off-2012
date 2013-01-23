@@ -1,6 +1,8 @@
 # Gitdefence
 
-Defend your codebase from incoming bugs with towers that can dynamically improve. 
+Defend your codebase from incoming bugs with towers that can dynamically improve.
+
+__Note__: This readme is somewhat out of date.
 
 
 ## Towers
@@ -24,8 +26,8 @@ Towers will attack and damage bugs near them, they can have multiple attacks in 
 
 These are also shown in the top right, lower left and lower right quadtrants of each tower.
 
-The top left corner shows how the tower will attack. Towers can attack the closest or furthest bug, or a random bug. 
-In the picture above, the towers (from left to right) will attack furthest, random, closest, random, closest and closest. 
+The top left corner shows how the tower will attack. Towers can attack the closest or furthest bug, or a random bug.
+In the picture above, the towers (from left to right) will attack furthest, random, closest, random, closest and closest.
 
 
 Clicking on a tower will also show its stats in the sidebar:
@@ -49,7 +51,7 @@ Reductions in damage will apply to the next attack when attacks are chained. So 
 
 ## Genetics
 
-Towers and bugs (or bugs) have a genetic system based on alleles. Towers are branched from the their specific codebase tower (which determines their attack type) and then given random alleles. These alleles do not act quite like real alleles, as they are all dominant and you only need one for a trait to be changed, however they add a natural progression of towers. 
+Towers and bugs (or bugs) have a genetic system based on alleles. Towers are branched from the their specific codebase tower (which determines their attack type) and then given random alleles. These alleles do not act quite like real alleles, as they are all dominant and you only need one for a trait to be changed, however they add a natural progression of towers.
 
 Every tower starts off with random alleles, and an allele to give it a specific attack type. New alleles can be purchased or gained by connecting towers to other towers. However, beware, as with genetics you cannot gain a trait (or allele) without losing one of your existing ones. When you buy alleles you are able to see how the allele will impact your tower and discard it if you choose so. Connecting towers gives you less control, but making connections between towers is free so it is a good way to spread the traits of amazing towers.
 
