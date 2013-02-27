@@ -77,14 +77,14 @@ canvas {
 <script src="geom/include.js"></script>
 
 <script>
-    document.body.onload = function () {
+    window.onload = function () {
         var canvas = document.getElementById("myCanvas");
         var screenSystem = new ScreenSystem(canvas);
         var width = window.innerWidth;
         var height = window.innerHeight;
         canvas.width = width;
         canvas.height = height;
-        
+
         screenSystem.addScreen("MainGame", new GitDefence(new Rect(0, 0, width, height)));
 
         screenSystem.addScreen("Tutorial", new Tutorial(new Rect(0, 0, width, height)));
