@@ -48,7 +48,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
                 tower.tpos.x = pos.x;
                 tower.tpos.y = pos.y;
             } else {
-                tower.tryToMove(pos, eng);
+                tower.tryToMove(pos, eng, true);
             }
         }
     }
