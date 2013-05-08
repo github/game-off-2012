@@ -496,7 +496,7 @@ function Tower(baseTile, box) {
 
     //Given that the user has told us to move this tower to the destination,
     //tries to move it as close as possible.
-    this.tryToMove = function (destination, eng) {
+    this.tryToMove = function (destination, eng, initialPlacement) {
         var tower = this;
         tower.hidden = true;
         var e = destination;
@@ -506,7 +506,7 @@ function Tower(baseTile, box) {
         tower.tpos.x = e.x;
         tower.tpos.y = e.y;
         
-        if(!findClosestToPoint(eng, "Tile", tower.tpos.center(), 0)) {
+        if(!initialPlacement && !findClosestToPoint(eng, "Tile", tower.tpos.center(), 0)) {
             //You cannot move to a position where there are no tiles
             tower.tpos.x = originalPos.x;
             tower.tpos.y = originalPos.y;
