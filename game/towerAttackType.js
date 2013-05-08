@@ -86,6 +86,16 @@ function AttackTemplate(attackType, attacker, target, damage, baseAttacker, curr
     this.currentAtbox = currentAtbox;    
 }
 
+//This is needed because old glyphs draw in the wrong spot. This fixes that.
+function adjustBoxForOldGlyphs(box) {
+    box.x += box.w * 0.15;
+    box.y += box.h * 0.4;
+    box.w *= 0.85;
+    box.h *= 0.85;
+    
+    return box;
+}
+
 //Each glyph should illustrate
 //1) charge (user.attackCycle.chargePercent)
 //2) damage (user.attr.damage
@@ -100,7 +110,9 @@ var allAttackTypes = {
             var baseColor = globalColorPalette.laser;
 
             var bufferPercent = 0.15;
-
+            
+            box = adjustBoxForOldGlyphs(box);
+            
             box.x += box.w * bufferPercent;
             box.y += box.h * bufferPercent;
 
@@ -156,36 +168,6 @@ var allAttackTypes = {
                 modulesFilled--;
                 damageModules--;
             }
-
-            //Original glyph code
-            /*
-             var start = new Vector(box.x + box.w * 0.1, box.y - box.h * 0.2);
-             var end = new Vector(box.x + (box.w*0.7), box.y - box.h);
-
-             pen.strokeStyle = baseColor;
-             pen.lineWidth = 2;
-             ink.line(start.x, start.y, end.x, end.y, pen);
-
-             pen.lineWidth = 0.8;
-
-             var dist = cloneObject(start);
-             dist.sub(end);
-             dist = dist.mag() * 0.3;
-
-             end = start;
-
-             for(var i = 0; i <= Math.PI * 2; i += Math.PI / 3 * 0.5)
-             {
-             start = cloneObject(end);
-
-             var delta = new Vector(Math.cos(i) * dist, Math.sin(i) * dist);
-             start.add(delta);
-
-             pen.strokeStyle = globalColorPalette.laser;
-             pen.lineWidth = 2;
-             ink.line(start.x, start.y, end.x, end.y, pen);
-             }
-             */
         };
         this.AttackNode = function(attackTemplate)
         {
@@ -303,17 +285,6 @@ var allAttackTypes = {
                 modulesFilled--;
                 damageModules--;
             }
-
-            /*
-	        pen.lineWidth = 0;
-	        pen.fillStyle = "#ffffff";        
-            pen.strokeStyle = "transparent";
-	        ink.circ(box.x+(box.w*0.35), box.y-(box.w*0.5), box.w*0.4, pen);
-
-    	    pen.strokeStyle = "transparent";
-            pen.fillStyle = "orange";
-	        ink.circ(box.x+(box.w*0.35), box.y-(box.w*0.5), box.w*0.3, pen);
-            */
         };
         this.AttackNode = function(attackTemplate)
         {
@@ -371,6 +342,8 @@ var allAttackTypes = {
         this.chainChance = 80;
         this.repeatDelay = 0.3;
         this.drawGlyph = function (pen, box) {
+            box = adjustBoxForOldGlyphs(box);
+        	
             var w = box.w;
             var h = box.h;
 
@@ -480,6 +453,7 @@ var allAttackTypes = {
         this.effectRange = 50;
         this.chargeTime = 1;
         this.drawGlyph = function (pen, box) {
+            box = adjustBoxForOldGlyphs(box);
             //Draw text
             pen.fillStyle = "#000000";
             pen.font = box.h + "px arial";
@@ -579,7 +553,7 @@ var allAttackTypes = {
         this.repeatDelay = 0.3;
         this.damagePercent = 30;
         this.drawGlyph = function (pen, box) {
-
+            box = adjustBoxForOldGlyphs(box);
             var circlePos = [0.2, 0.25, 0.1, 
                             0.5, 0.1, 0.1, 
                             0.8, 0.25, 0.1,
@@ -663,6 +637,7 @@ var allAttackTypes = {
         this.slowPercent = 50;
         this.slowTime = 2.5;
         this.drawGlyph = function (pen, box) {
+            box = adjustBoxForOldGlyphs(box);
             var w = box.w;
             var h = box.h;
 
