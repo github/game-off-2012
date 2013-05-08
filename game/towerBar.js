@@ -1,10 +1,8 @@
 //Make list with lits of alleles to create default tower types.
 
-function TowerDragger(pos, towerGeneratorFnc) {
-    this.tpos = pos;
+function TowerDragger(towerGeneratorFnc) {
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this, 20);
-
-    this.towerGeneratorFnc = towerGeneratorFnc;
 
     this.displayedTower = towerGeneratorFnc(true);
 
@@ -34,8 +32,6 @@ function TowerDragger(pos, towerGeneratorFnc) {
     }
 
     this.mousemove = function (e) {
-        //var towerCollision = findClosestToPoint(eng, "Tower", tower.tpos.center(), towerRadius);
-
         var tower = this.placingTower;
         var eng = getEng(this);
 
@@ -65,7 +61,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
         if (!this.placingTower && game.money - curCost >= 0) {
             //They are clicking on the placer, so begin placing
-            this.placingTower = this.towerGeneratorFnc();
+            this.placingTower = towerGeneratorFnc();
 
             var tower = this.placingTower;
 
@@ -135,9 +131,9 @@ function Towerbar() {
 
     for (var key in towerAttackTypes) {
         //Obj needed for now, it goes away when added (because we turn it into an   array)
-        attackCombinations.push({
-            '1': towerAttackTypes[key],
-        });
+        attackCombinations.push([
+            towerAttackTypes[key],
+        ]);
     }
 
     this.resize = function (rect) {
@@ -147,14 +143,9 @@ function Towerbar() {
     }
 
     this.added = function () {
-        var game = getGame(this);
-        var tileSize = game.tileSize;
-
-        function tileFnc(obj, refObj, pos) {
+        function makeTower(obj) {
             function towerDraggerFunction(forDisplay) {
-                var fakeTile = {};
-                fakeTile.tpos = new Rect(0, 0, tileSize, tileSize);
-                var tower = new Tower(fakeTile, fakeTile.tpos);
+                var tower = new Tower();
 
                 if (forDisplay) {
                     tower.attr.attackTypes = [];
@@ -172,15 +163,14 @@ function Towerbar() {
 
                 return tower;
             }
-            var towerDragger = new TowerDragger(pos.clone(), towerDraggerFunction);
+            var towerDragger = new TowerDragger(towerDraggerFunction);
 
-            vbox.add(towerDragger);
-
-            return true;
+            return towerDragger;
         }
 
-        var boxBox = new Rect(this.tpos.x + 15, this.tpos.y + 40, 450, 150);
-        makeTiled(this, tileFnc, attackCombinations, boxBox, 6, 2, 0.1);
+        for (var key in attackCombinations) {
+            vbox.add(makeTower(attackCombinations[key]));
+        }
     };
 
     this.update = function () {
