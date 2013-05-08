@@ -24,6 +24,8 @@ function Tower_Packet(t1, t2, speed, allele) {
 function Tower_Connection(t1, t2) {
     this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this, 11);
+    this.t1 = t1;
+    this.t2 = t2;
 
     var line = new SLine(t1.tpos.center(), t2.tpos.center(), "rgba(0, 255, 0, 0.2)", 11, [0.1, 0.3, 0.5, 0.7, 0.9]);
     this.base.addChild(line);
@@ -95,6 +97,9 @@ function Tower_Connection(t1, t2) {
 
     this.update = function (dt) {
         dataTransfer(t1, t2);
+        
+        line.start = t1.tpos.center();
+        line.end = t2.tpos.center();
 
         deleteButton.hidden = !this.base.parent.hover;
 
@@ -463,6 +468,8 @@ function Tower(baseTile, box) {
 
     this.startDrag = null;
     this.dragOffset = null;
+    this.tempNetworkIndicator = null;
+    this.ctrlDrag = false;
     this.mousedown = function(e) {
         this.startDrag = e;
         this.dragOffset = new Vector(this.tpos);
@@ -470,17 +477,28 @@ function Tower(baseTile, box) {
 
         getGame(this).input.globalMouseMove[this.base.id] = this;
         getGame(this).input.globalMouseUp[this.base.id] = this;
+        
+        this.ctrlDrag = e.ctrlKey;
+        
+        if(!this.ctrlDrag) {
+            this.tempNetworkIndicator = new SLine(this.startDrag, e, "green", 15, {0: 1.0});
+            this.base.addChild(this.tempNetworkIndicator);
+        }
     };
 
     this.mousemove = function(e)
     {
-        var eng = getEng(this);
-
-        if(this.startDrag) {
-            var vector = new Vector(e);
-            vector.add(this.dragOffset);
-
-            this.tryToMove(vector, eng);
+        if(!this.ctrlDrag) {
+            this.tempNetworkIndicator.end = e;
+        } else {
+            var eng = getEng(this);
+    
+            if(this.startDrag) {
+                var vector = new Vector(e);
+                vector.add(this.dragOffset);
+    
+                this.tryToMove(vector, eng);
+            }
         }
     }
 
@@ -492,6 +510,27 @@ function Tower(baseTile, box) {
 
         delete getGame(this).input.globalMouseMove[this.base.id];
         delete getGame(this).input.globalMouseUp[this.base.id];
+        
+        if(!this.ctrlDrag && this.tempNetworkIndicator) {
+            this.base.removeObject(this.tempNetworkIndicator);
+            this.tempNetworkIndicator = null;
+            
+            var towerSelected = findClosestToPoint(eng, "Tower", e, 0);
+            if(towerSelected && towerSelected != this)
+            {
+                for (var i = 0; i < this.connections.length; i++)
+                    if(this.connections[i].t2 == towerSelected)
+                        return;
+                
+                var conn = new Tower_Connection(this, towerSelected);
+                this.base.addChild(conn);
+                this.connections.push(conn);
+                towerSelected.connections.push(conn);
+    
+                game.changeSel(this);
+                getAnElement(this.base.children.Selectable).ignoreNext = true;
+            }
+        }
     };
 
     //Given that the user has told us to move this tower to the destination,
