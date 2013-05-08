@@ -104,7 +104,7 @@ var targetStrategies = {
         this.run = function (attacker, prevTarget) {
             //Just trust me
             var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
-            var targetLoc = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Path" ? "Tower" : "Path");
+            var targetLoc = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Path_Piece" ? "Tower" : "Path_Piece");
 
             var targets = findAllWithin(attacker.base.rootNode, targetLoc, attacker.tpos.center(), attacker.attr.range);
                             
