@@ -12,27 +12,27 @@
     if (DFlag.lotsamoney) {
         this.money = 10000;
     }
-    this.health = 100;    
+    this.health = 100;
 
     this.lastTowerHover = null;
 
-    
+
     var hbox = new HBox();
     engine.base.addChild(hbox);
-    
+
     this.towerbar = new Towerbar();
     hbox.add(this.towerbar, 64);
-    
+
     var vbox = new VBox();
     hbox.add(vbox);
     this.gameInfoBar = new GameInfoBar();
     vbox.add(this.gameInfoBar, 32);
     this.gameBoard = new GameBoard(this);
     vbox.add(this.gameBoard);
-    
+
     this.infobar = new Infobar();
     hbox.add(this.infobar, 200);
-    
+
     engine.globalResize = function (ev) {
         console.log("gitDefence globalResize", ev);
         hbox.resize(new Rect(0, 0, ev.width, ev.height));
@@ -50,7 +50,7 @@
     var input = this.input;
     // We need to resize right away (shouldn't really have to... but we do)
     this.input.resizeEvent = pos;
-    
+
     var selection = null;
     var selectionChanged = false;
     this.run = function (timestamp) {
@@ -73,7 +73,7 @@
 
     this.draw = function (pen) {
         engine.base.draw(pen);
-        
+
         var obj = selection;
         if (obj) {
             pen.strokeStyle = obj.color;
@@ -83,22 +83,22 @@
             ink.circ(p.x, p.y, obj.attr.range, pen);
         }
     }
-    
+
     this.changeSel = function (obj) {
         return this.selection(obj);
     }
-    
+
     this.selection = function (newSelection) {
         if (newSelection === undefined) {
             return selection;
         }
-        
+
         if (selection && selection.deselected) {
             selection.deselected();
         }
-        
+
         selectionChanged = true;
-        
+
         if (newSelection && newSelection.attr) {
             selection = newSelection;
             this.infobar.updateAttr(newSelection);

@@ -8,7 +8,7 @@ function Tile(x, y, w, h) {
 }
 
 function generatePath(eng, game) {
-    
+
     var curPos = { x: 0, y: 0 };
 
     var NUM_TILES_X = game.numTilesX;
@@ -27,9 +27,9 @@ function generatePath(eng, game) {
         board[x] = [];
         for (var y = 0; y < NUM_TILES_Y; y++) {
             board[x][y] = false;
-            eng.base.addChild(new Tile(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE));
         }
     }
+    eng.base.addChild(new Tile(0, 0, TILE_SIZE*game.numTilesX, TILE_SIZE*game.numTilesY));
 
     var uniqueBoard = [];
     for (var x = 0; x < NUM_TILES_X; x++) {
