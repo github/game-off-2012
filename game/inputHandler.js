@@ -85,7 +85,7 @@
         }
     };
 
-    function throwMouseEventAt(mX, mY, eventName, eng, ignore) {
+    function throwMouseEventAt(mX, mY, eventName, eng, ignore, ctrlKey) {
         var allUnderMouse = [];
 
         for (var type in eng.base.allChildren) {
@@ -113,9 +113,9 @@
         for (var key in allUnderMouse)
             if(!ignore[key])
                 if (allUnderMouse[key] !== topMost)
-                    allUnderMouse[key].base.callRaise(eventName, { x: mX, y: mY, topMost: false, ctrlKey: this.ctrlKey });
+                    allUnderMouse[key].base.callRaise(eventName, { x: mX, y: mY, topMost: false, ctrlKey: ctrlKey });
 
-        topMost.base.callRaise(eventName, { x: mX, y: mY, topMost: true, ctrlKey: this.ctrlKey });
+        topMost.base.callRaise(eventName, { x: mX, y: mY, topMost: true, ctrlKey: ctrlKey });
 
         return allUnderMouse;
     }
@@ -152,7 +152,7 @@
                     this.globalMouseDown[key].base.callRaise("mousedown", { x: this.mdX, y: this.mdY });
             }
 
-            var curMouseDown = throwMouseEventAt(this.mdX, this.mdY, "mousedown", eng, this.globalMouseDown);
+            var curMouseDown = throwMouseEventAt(this.mdX, this.mdY, "mousedown", eng, this.globalMouseDown, this.ctrlKey);
             this.prevMouseDown = curMouseDown;
 
             if (this.consumeEvents) {
@@ -168,7 +168,7 @@
                     this.globalMouseUp[key].base.callRaise("mouseup", { x: this.muX, y: this.muY });
             }
 
-            var curMouseUp = throwMouseEventAt(this.muX, this.muY, "mouseup", eng, this.globalMouseUp);
+            var curMouseUp = throwMouseEventAt(this.muX, this.muY, "mouseup", eng, this.globalMouseUp, this.ctrlKey);
 
             if (this.prevMouseDown && this.prevMouseDown.length > 0) {
                 for (var key in this.globalMouseClick) {
