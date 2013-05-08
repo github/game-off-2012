@@ -113,9 +113,9 @@
         for (var key in allUnderMouse)
             if(!ignore[key])
                 if (allUnderMouse[key] !== topMost)
-                    allUnderMouse[key].base.callRaise(eventName, { x: mX, y: mY, topMost: false });
+                    allUnderMouse[key].base.callRaise(eventName, { x: mX, y: mY, topMost: false, ctrlKey: this.ctrlKey });
 
-        topMost.base.callRaise(eventName, { x: mX, y: mY, topMost: true });
+        topMost.base.callRaise(eventName, { x: mX, y: mY, topMost: true, ctrlKey: this.ctrlKey });
 
         return allUnderMouse;
     }
