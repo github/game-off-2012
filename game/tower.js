@@ -198,6 +198,7 @@ function Tower() {
 
     //This may also change x, y, w and h.
     this.recalculateAppearance = function (changeSize) {
+        this.base.dirty();
         this.color = getInnerColorFromAttrs(this.attr);
         this.borderColor = getOuterColorFromAttrs(this.attr);
 
@@ -223,7 +224,10 @@ function Tower() {
         this.lineWidth = outerWidth;
     }
 
-    this.draw = function (pen) {
+    this.redraw = function (canvas) {
+        canvas.resize(this.tpos);
+        var pen = canvas.ctx();
+        pen.translate(-this.tpos.x, -this.tpos.y);
         var pos = this.tpos.clone();
         var cen = pos.center();
 
