@@ -88,10 +88,10 @@ function AttackTemplate(attackType, attacker, target, damage, baseAttacker, curr
 
 //This is needed because old glyphs draw in the wrong spot. This fixes that.
 function adjustBoxForOldGlyphs(box) {
-    box.x += box.w * 0.15;
-    box.y += box.h * 0.4;
-    box.w *= 0.85;
-    box.h *= 0.85;
+    box.x += box.w * 0.20;
+    box.y += box.h * 0.85;
+    box.w *= 0.75;
+    box.h *= 0.75;
     
     return box;
 }
@@ -110,8 +110,6 @@ var allAttackTypes = {
             var baseColor = globalColorPalette.laser;
 
             var bufferPercent = 0.15;
-            
-            box = adjustBoxForOldGlyphs(box);
             
             box.x += box.w * bufferPercent;
             box.y += box.h * bufferPercent;
