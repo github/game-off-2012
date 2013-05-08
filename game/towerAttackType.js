@@ -738,34 +738,19 @@ function drawAttributes(user, pen) {
             if (typeof obj == "number")
                 return false;
             if(!obj.drawGlyph)
-                fail("not good");            
+                fail("not good");   
+                
+            DRAW.rect(
+                pen, 
+                new Rect(pos.x, pos.y, pos.w, pos.h), 
+                "transparent", 
+                1, 
+                "rgba(255, 255, 255, 0.5)");
 
             obj.drawGlyph(pen, pos, user);
             return true;
         },
-        user.attr,
-        user.tpos.clone(),
-        2, 2,
-        0.01);
-
-    makeTiled(pen,
-        function (obj, pen, pos) {
-            if (typeof obj == "number")
-                return false;
-
-            pen.beginPath();
-
-            pen.strokeStyle = "rgba(255, 255, 255, 0.5)";
-            pen.fillStyle = "transparent";
-
-            pen.lineWidth = 1;
-            ink.rect(pos.x, pos.y, pos.w, pos.h, pen);
-
-            pen.closePath();
-
-            return true;
-        },
-        user.attr,
+        user.attr.attackTypes.concat(user.attr.targetStrategy),
         user.tpos.clone(),
         2, 2,
         0.01);
