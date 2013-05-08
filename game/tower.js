@@ -482,7 +482,7 @@ function Tower(baseTile, box) {
         
         if(!this.ctrlDrag) {
             this.tempNetworkIndicator = new SLine(this.startDrag, e, "green", 15, {0: 1.0});
-            this.base.addChild(this.tempNetworkIndicator);
+            this.base.parent.base.addChild(this.tempNetworkIndicator);
         }
     };
 
