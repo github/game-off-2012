@@ -154,21 +154,14 @@ function makeTiled(pen, makeTileFnc, array, boxBox, xNum, yNum, percentBuffer) {
     var drawnHeight = height * (1 - 2 * percentBuffer);
 
     for (var key in array) {
-        var subArray = array[key];
-        if (getRealType(subArray) != "Array") {
-            subArray = []
-            subArray.push(array[key]);
+        var value = array[key];
+        if (xPos > boxBox.x + boxBox.w) {
+            xPos = boxBox.x + width * percentBuffer;
+            yPos += height;
         }
-        for (var key in subArray) {
-            var value = subArray[key];
-            if (xPos > boxBox.x + boxBox.w) {
-                xPos = boxBox.x + width * percentBuffer;
-                yPos += height;
-            }
 
-            if (makeTileFnc(value, pen, new Rect(xPos, yPos, drawnWidth, drawnHeight)))
-                xPos += width;
-        }
+        if (makeTileFnc(value, pen, new Rect(xPos, yPos, drawnWidth, drawnHeight)))
+            xPos += width;
     }
 }
 
