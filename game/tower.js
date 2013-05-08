@@ -421,7 +421,8 @@ function Tower(baseTile, box) {
         for (var i = 0; i < c.length; i++) {
             c[i].base.destroySelf();
         }
-        this.tempNetworkIndicator.base.destroySelf();
+        if(this.tempNetworkIndicator)
+            this.tempNetworkIndicator.base.destroySelf();
         new Sound("snd/Tower_Die.wav").play();
     };
 
