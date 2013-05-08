@@ -505,6 +505,15 @@ function Tower(baseTile, box) {
 
         tower.tpos.x = e.x;
         tower.tpos.y = e.y;
+        
+        if(!findClosestToPoint(eng, "Tile", tower.tpos.center(), 0)) {
+            //You cannot move to a position where there are no tiles
+            tower.tpos.x = originalPos.x;
+            tower.tpos.y = originalPos.y;
+            
+            tower.hidden = false;
+            return;
+        }
 
         var collisions = [];
         mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tpos, 0), collisions);
@@ -577,7 +586,7 @@ function tryPlaceTower(tower, pos, eng)
     tower.tpos.x = pos.x;
     tower.tpos.y = pos.y;
 
-    var tileExist = findClosestToPoint(eng, "Tile", pos, 0);
+    var tileExist = findClosestToPoint(eng, "Tile", tower.tpos.center(), 0);
 
     if (canPlace(tower, pos, eng)) {
         game.gameBoard.base.addChild(tower);
