@@ -1,5 +1,5 @@
 function Button(text, callback, zorder) {
-    this.tPos = new Rect(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     
     if (!zorder)
         zorder = 15;
@@ -13,7 +13,7 @@ function Button(text, callback, zorder) {
     
     this.redraw = function (canvas) {
         var p = new Path();
-        var r = this.tPos.clone().origin(new Vector(0, 0)).shrink(1.5);
+        var r = this.tpos.clone().origin(new Vector(0, 0)).shrink(1.5);
         p.rect(r);
         
         var fill = "black";
@@ -27,7 +27,7 @@ function Button(text, callback, zorder) {
     }
     
     this.resize = function (rect) {
-        this.tPos = rect;
+        this.tpos = rect;
         var r = rect.clone().origin(new Vector(0, 0)).shrink(1.5);
         textWrapper.resize(r);
         this.base.dirty();

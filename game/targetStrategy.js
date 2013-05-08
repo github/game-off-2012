@@ -9,7 +9,7 @@ var targetStrategies = {
                 prevTarget.hidden = true;
             }
             
-            var target = findClosestToPoint(attacker.base.rootNode, targetType, attacker.tPos.center(), attacker.attr.range);
+            var target = findClosestToPoint(attacker.base.rootNode, targetType, attacker.tpos.center(), attacker.attr.range);
             
             if (prevTarget) {
                 prevTarget.hidden = false;
@@ -17,14 +17,14 @@ var targetStrategies = {
 
             return target;
         };
-        this.drawGlyph = function (pen, tPos) {
+        this.drawGlyph = function (pen, box) {
 	        var color = "grey";
 
-            tPos.x += tPos.w * 0.4;
-            tPos.y += tPos.h * 0.7;
+            box.x += box.w * 0.4;
+            box.y += box.h * 0.7;
 
-            tPos.w *= 0.6;
-            tPos.h *= 0.8;
+            box.w *= 0.6;
+            box.h *= 0.8;
 
             var circlePos = [-0.1, 0.5, 0.2];
 
@@ -34,17 +34,17 @@ var targetStrategies = {
                 pen.strokeStyle = "black";
                 pen.fillStyle = color;
 	            pen.lineWidth = 1;
-                ink.circ(tPos.x + (tPos.w * circlePos[i]), tPos.y - (tPos.w * circlePos[i + 1]), tPos.w * circlePos[i + 2], pen);
+                ink.circ(box.x + (box.w * circlePos[i]), box.y - (box.w * circlePos[i + 1]), box.w * circlePos[i + 2], pen);
             }
 
 
-            var rectPos = [0.2, 0.75, 0.5];
+            var recbox = [0.2, 0.75, 0.5];
 
-            for (var i = 0; i < rectPos.length; i += 3) {
+            for (var i = 0; i < recbox.length; i += 3) {
                 pen.strokeStyle = "white";
                 pen.fillStyle = color;
 	            pen.lineWidth = 1;
-                ink.rect(tPos.x + (tPos.w * rectPos[i]), tPos.y - (tPos.w * rectPos[i + 1]), tPos.w * rectPos[i + 2], tPos.w * rectPos[i + 2], pen);
+                ink.rect(box.x + (box.w * recbox[i]), box.y - (box.w * recbox[i + 1]), box.w * recbox[i + 2], box.w * recbox[i + 2], pen);
             }
 
         };
@@ -59,7 +59,7 @@ var targetStrategies = {
             }
 
             var targets = findAllWithin(attacker.base.rootNode, targetType, 
-                            attacker.tPos.center(), attacker.attr.range);
+                            attacker.tpos.center(), attacker.attr.range);
         
             if (prevTarget) {
                 prevTarget.hidden = false;
@@ -73,7 +73,7 @@ var targetStrategies = {
 
             return targets[randomPos];        
         };
-        this.drawGlyph = function(pen, tPos) {
+        this.drawGlyph = function(pen, box) {
             var color = "grey";
 
             pen.beginPath();
@@ -86,17 +86,17 @@ var targetStrategies = {
                 pen.strokeStyle = "black";
                 pen.fillStyle = color;
 	            pen.lineWidth = 1;
-                ink.circ(tPos.x + (tPos.w * circlePos[i]), tPos.y - (tPos.w * circlePos[i + 1]), tPos.w * circlePos[i + 2], pen);
+                ink.circ(box.x + (box.w * circlePos[i]), box.y - (box.w * circlePos[i + 1]), box.w * circlePos[i + 2], pen);
             }
 
 
-            var rectPos = [0.2, 0.80, 0.3];
+            var recbox = [0.2, 0.80, 0.3];
 
-            for(var i = 0; i < rectPos.length; i += 3) {
+            for(var i = 0; i < recbox.length; i += 3) {
                 pen.strokeStyle = "white";
                 pen.fillStyle = color;
 	            pen.lineWidth = 1;
-                ink.rect(tPos.x + (tPos.w * rectPos[i]), tPos.y - (tPos.w * rectPos[i + 1]), tPos.w * rectPos[i + 2], tPos.w * rectPos[i + 2], pen);
+                ink.rect(box.x + (box.w * recbox[i]), box.y - (box.w * recbox[i + 1]), box.w * recbox[i + 2], box.w * recbox[i + 2], pen);
             }
         };
     },
@@ -104,9 +104,9 @@ var targetStrategies = {
         this.run = function (attacker, prevTarget) {
             //Just trust me
             var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
-            var targetLoc = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Path" ? "Tower" : "Path");
+            var targetLoc = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Path_Piece" ? "Tower" : "Path_Piece");
 
-            var targets = findAllWithin(attacker.base.rootNode, targetLoc, attacker.tPos.center(), attacker.attr.range);
+            var targets = findAllWithin(attacker.base.rootNode, targetLoc, attacker.tpos.center(), attacker.attr.range);
                             
             //Now sort targets by pathPos
             var pathObjs = []
@@ -122,26 +122,26 @@ var targetStrategies = {
             for (var key in pathObjs) {
                 var curPath = pathObjs[key].path;
                 
-                var targetPos = curPath.tPos;
+                var targebox = curPath.tpos;
 
                 if (curPath.nextPath) {
-                    targetPos = curPath.nextPath.tPos;
+                    targebox = curPath.nextPath.tpos;
                 }
 
-                var targets = findAllWithin(attacker.base.rootNode, targetType, curPath.tPos.center(), curPath.tPos.w / 2);
+                var targets = findAllWithin(attacker.base.rootNode, targetType, curPath.tpos.center(), curPath.tpos.w / 2);
 
                 if (!targets || !(targets.length > 0)) {
                     continue;
                 }
 
                 targets.sort(function (a,b) {
-                    return vecToRect(targetPos, a.tPos).magSq() - vecToRect(targetPos, b.tPos).magSq();
+                    return vecToRect(targebox, a.tpos).magSq() - vecToRect(targebox, b.tpos).magSq();
                 });
 
                 return targets[0];
             }
         };
-        this.drawGlyph = function (pen, tPos) {
+        this.drawGlyph = function (pen, box) {
             var color = "grey";
 
             var circlePos = [0.7, 0.9, 0.1];
@@ -152,16 +152,16 @@ var targetStrategies = {
                 pen.strokeStyle = "black";
                 pen.fillStyle = color;
 	            pen.lineWidth = 1;
-                ink.circ(tPos.x + (tPos.w * circlePos[i]), tPos.y - (tPos.w * circlePos[i + 1]), tPos.w * circlePos[i + 2], pen);
+                ink.circ(box.x + (box.w * circlePos[i]), box.y - (box.w * circlePos[i + 1]), box.w * circlePos[i + 2], pen);
             }
 
-            var rectPos = [-0.3, 0.3, 0.3];
+            var recbox = [-0.3, 0.3, 0.3];
 
-            for (var i = 0; i < rectPos.length; i += 3) {
+            for (var i = 0; i < recbox.length; i += 3) {
                 pen.strokeStyle = "white";
                 pen.fillStyle = color;
 	            pen.lineWidth = 1;
-                ink.rect(tPos.x + (tPos.w * rectPos[i]), tPos.y - (tPos.w * rectPos[i + 1]), tPos.w * rectPos[i + 2], tPos.w * rectPos[i + 2], pen);
+                ink.rect(box.x + (box.w * recbox[i]), box.y - (box.w * recbox[i + 1]), box.w * recbox[i + 2], box.w * recbox[i + 2], pen);
             }
         };
     },

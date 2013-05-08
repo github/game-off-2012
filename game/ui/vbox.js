@@ -1,7 +1,7 @@
 // Pack a bunch of UI elements vertically.
 function VBox() {
     this.base = new BaseObj(this, 15);
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     
     var children = [];
     
@@ -9,7 +9,7 @@ function VBox() {
     // all children will have same height.
     this.add = function (ui, height) {
         children.push({ui: ui, height: height});
-        this.base.addObject(ui);
+        this.base.addChild(ui);
     }
     
     this.resize = function (rect) {
@@ -25,7 +25,7 @@ function VBox() {
             // Eventually we can handle this properly with requestResize, but for now... fuck it.
             throw "Attempting to make a vbox smaller than it's fixed size children allow!";
         }
-        this.tPos = rect;
+        this.tpos = rect;
         
         var sharedHeight = ~~((rect.h - h) / shared);
         var y = rect.y;

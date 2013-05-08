@@ -1,6 +1,6 @@
 //This is slow but I don't care... it does what I want to and I will rewrite it if it becomes a problem
 function QTextWrapper(pos, text, zorder, scaleVertically) {
-    this.tPos = pos;
+    this.tpos = pos;
     this.base = new BaseObj(this, zorder, true);
 
     this.scaleVertically = scaleVertically;
@@ -19,7 +19,7 @@ function QTextWrapper(pos, text, zorder, scaleVertically) {
         pen.font = this.fontSize + "px " + this.fontType;
         pen.textAlign = this.textAlign;
 
-        var pos = this.tPos;
+        var pos = this.tpos;
 
         var lines = getWrappedLines(pen, this.text, pos.w);
         var textHeight = this.fontSize * this.lineSpacing;
@@ -47,12 +47,12 @@ function QTextWrapper(pos, text, zorder, scaleVertically) {
         if(this.scaleVertically && curHeight != this.lastHeight) {
             this.lastHeight = curHeight;
             pos.h = curHeight;
-            this.base.parent.tPos.h = curHeight;
+            this.base.parent.tpos.h = curHeight;
         }
     }
 
     this.getHeightBuffer = function(lines) {
-        var pos = this.tPos;
+        var pos = this.tpos;
 
         var textHeight = this.fontSize * this.lineSpacing;
 

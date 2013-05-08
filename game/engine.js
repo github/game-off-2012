@@ -10,7 +10,7 @@
 function Engine(pos, game) {
     this.game = game; //Allows object to access information on the total game-state.
 
-    this.tPos = pos;
+    this.tpos = pos;
     this.color = "black";
     
     this.base = new BaseObj(this);
@@ -50,7 +50,7 @@ function Engine(pos, game) {
         var newObjects = this.base.update(updateAmount / 1000);
 
         for (var key in newObjects)
-            this.base.addObject(newObjects[key]);        
+            this.base.addChild(newObjects[key]);        
     };
 
     this.update = function (dt) {

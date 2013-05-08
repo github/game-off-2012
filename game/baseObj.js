@@ -56,7 +56,7 @@ function BaseObj(holder, zindex, dynamicZIndex) {
     this.allLengths = {};
 
 
-    if (holder.tPos) {
+    if (holder.tpos) {
         //Quadtree maintained properties
         //We default the quadtree to something, that way every object always has one
         var tempArrObjs = {};
@@ -83,8 +83,8 @@ function BaseObj(holder, zindex, dynamicZIndex) {
         }
     };
 
-    this.addObject = function (obj) {
-        if (!assertDefined("addObject", obj) || !assertDefined("addObject", obj.base))
+    this.addChild = function (obj) {
+        if (!assertDefined("addChild", obj) || !assertDefined("addChild", obj.base))
             return;
 
         obj.base.parent = this.holder;
@@ -219,15 +219,14 @@ function BaseObj(holder, zindex, dynamicZIndex) {
     }
 
     //Calls the function, then raises an event called "parent_" + name
-    //to all of its children. Does not collect the return values as this
-    //concept is being phased out as it is not really OO sound.
+    //to all of its children.
     this.callRaise = function (name, args) {
         if(holder[name] && !holder.hidden)
             holder[name](args);
 
         this.loopThroughAllTypes(function (child) {
-            if (child.base) {
-                child.base.raiseEvent("parent_" + name, args);
+            if (child && child["parent_" + name]) {
+                child["parent_" + name](args);
             }
         });
     }
@@ -280,20 +279,18 @@ function BaseObj(holder, zindex, dynamicZIndex) {
     var drawDirty = true;
     this.dirty = function () {
         drawDirty = true;
-        canvas.resize(this.holder.tPos);
     }
     
     var canvas = new Canvas();
-    function draw(child, pen) {
+    function draw(pen) {
         if (holder.hidden) return;
         
         if (holder.draw) {
             // Provide the old API for compatability.
-            pen.save();
             holder.draw(pen);
-            pen.restore();
         } else if (holder.redraw) {
             if (drawDirty) {
+                canvas.resize(holder.tpos);
                 holder.redraw(canvas);
                 canvas.drawTo(pen);
                 drawDirty = false;
@@ -304,7 +301,7 @@ function BaseObj(holder, zindex, dynamicZIndex) {
     }
     
     this.draw = function (pen) {
-        draw(this.holder, pen);
+        draw(pen);
         
         //Sort objects by z-index (low to high) and then draw by that order
         var childWithZIndex = [];

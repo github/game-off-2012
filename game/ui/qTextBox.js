@@ -1,5 +1,5 @@
 function QTextBox(pos, text, zorder) {
-    this.tPos = pos.clone();
+    this.tpos = pos.clone();
 
     if (!zorder) zorder = 15;
     this.base = new BaseObj(this, zorder, true);
@@ -9,12 +9,12 @@ function QTextBox(pos, text, zorder) {
 
     this.wrapper = new QTextWrapper(new Rect(pos.x + 5, pos.y, pos.w - 10, pos.h), text, zorder + 1, true);
     this.wrapper.textAlign = "center";
-    this.base.addObject(this.wrapper);
+    this.base.addChild(this.wrapper);
 
     this.draw = function(pen) {
         pen.fillStyle = "black";
         pen.strokeStyle = "green";
-        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
+        ink.rect(this.tpos.x, this.tpos.y, this.tpos.w, this.tpos.h, pen);
     };
 
     this.resize = function (rect) {

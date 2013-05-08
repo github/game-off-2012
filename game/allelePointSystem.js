@@ -1,6 +1,6 @@
 function AllelePointSystem(pos) {
     this.base = new BaseObj(this, 15);
-    this.tPos = pos;
+    this.tpos = pos;
 
     var vbox;
     this.added = function () {
@@ -16,9 +16,9 @@ function AllelePointSystem(pos) {
             return b;
         }
         vbox = new VBox();
-        this.base.addObject(vbox);
+        this.base.addChild(vbox);
         
-        this.pointIndicator = new Label(pos.clone(), "");
+        this.pointIndicator = new Label("");
         vbox.add(this.pointIndicator);
 
         vbox.add(this.buyButton = pointButton(1, 50));
@@ -27,14 +27,18 @@ function AllelePointSystem(pos) {
         vbox.add(this.spendButton = new Button("Spend Point", bind(this, "spendPoint")));
         vbox.add(this.trashButton = new Button("Trash Point", bind(this, "trashPoint")));
         vbox.add(this.autoTrashButton = new ToggleButton("Auto Trash Worse", bind(this, "autoTrashToggle")));
-        vbox.resize(pos);
     };
+    
+    this.resize = function (rect) {
+        vbox.resize(rect);
+    }
 
     this.pointCost = 50;
 
     this.selectionChanged = function (newSelected) {
-        if(newSelected)
+        if (newSelected) {
             this.autoTrashButton.toggled = newSelected.autoTrash;
+        }
     }
 
     this.buyPoint = function (costData) {

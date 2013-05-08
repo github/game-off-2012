@@ -114,7 +114,7 @@ function findClosestToPoint(engine, type, target, maxDistance) {
         for (var x = 0; x < relevantArray.length; x++) {
             returnedObj = relevantArray[x];
 
-            var disSquared = vecToRect(target, returnedObj.tPos).magSq();
+            var disSquared = vecToRect(target, returnedObj.tpos).magSq();
 
             if (disSquared <= realClosDisSq) {
                 realClosest = returnedObj;
@@ -228,7 +228,7 @@ function findClosestGeneric(quadtree, array, targetFunction, targetDistance, min
     function recalcClosest() {
         if (onlyFindOne && returnedObj) {
             closestObj = returnedObj;
-            minDisSquared = targetDistance(returnedObj.tPos);
+            minDisSquared = targetDistance(returnedObj.tpos);
         }
     }
 
@@ -240,7 +240,7 @@ function findClosestGeneric(quadtree, array, targetFunction, targetDistance, min
             continue; //THIS SHOULDN'T HAPPEN! IT IS EVIDENCE OF A BUG!
         }
 
-        var disSquared = targetDistance(returnedObj.tPos);
+        var disSquared = targetDistance(returnedObj.tpos);
 
         if (disSquared <= minDisSquared) {
             if (onlyFindOne) {
@@ -260,7 +260,7 @@ function findClosestGeneric(quadtree, array, targetFunction, targetDistance, min
 
     var curD = quadtree.splitX ? "x" : "y";
 
-    var splitNumber = targetFunction(quadtree.splitX, quadtree.splitPos);
+    var splitNumber = targetFunction(quadtree.splitX, quadtree.splibox);
 
 
     //splitNumber determines query order

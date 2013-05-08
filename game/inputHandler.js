@@ -21,29 +21,10 @@
     this.events = {};
 
     this.resizeEvent = null;
+    
+    var canvas;
+    
     this.events.resize = function (e) {
-        //We no longer resize the canvas, it is just hardcoded in screenSystem
-
-        /*
-        var minWidth = this.numTilesX * this.tileSize + 150;
-        var minHeight = this.numTilesY * this.tileSize;
-        var canvasWidth = DFlag.width || Math.max(window.innerWidth, minWidth);
-        var canvasHeight = DFlag.height || Math.max(window.innerHeight - 5, minHeight);
-
-        var eng = this.engine;
-
-        eng.tPos.w = canvasWidth;
-        eng.tPos.h = canvasHeight;
-
-        var canvas = eng.pen.canvas;
-
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
-        eng.bufferCanvas.width = canvasWidth;
-        eng.bufferCanvas.height = canvasHeight;
-        */
-        console.log("inputHandler events.resize", e);
-
         this.resizeEvent = e;
     }
 
@@ -56,39 +37,53 @@
     }
 
     this.events.mousemove = function (e) {
-        var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
+        var pos = getMousePos(e);
+        this.ctrlKey = e.ctrlKey;
 
         this.mX = pos.x;
         this.mY = pos.y;
     }
 
     this.events.mouseout = function (e) {
-        var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
+        var pos = getMousePos(e);
+        this.ctrlKey = e.ctrlKey;
 
         this.mX = -1;
         this.mY = -1;
     }
 
     this.events.mousedown = function (e) {
-        var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
+        var pos = getMousePos(e);
+        this.ctrlKey = e.ctrlKey;
 
         this.mdX = pos.x;
         this.mdY = pos.y;
     }
 
     this.events.mouseup = function (e) {
-        var pos = getMousePos(e); this.ctrlKey = e.ctrlKey;
+        var pos = getMousePos(e);
+        this.ctrlKey = e.ctrlKey;
 
         this.muX = pos.x;
         this.muY = pos.y;
     }
     
-    this.globalResize = function (e) {
-        console.log("input handle globalResize", e);
-        this.tPos.w = e.width;
-        this.tPos.h = e.height;
+    this.unBind = function (canvas) {
+        $(canvas).off();
+        $(window).off();
     }
-
+    
+    this.bind = function (newCanvas) {
+        canvas = newCanvas;
+        for (var name in this.events) {
+            // Preserve this context
+            this.events[name] = this.events[name].bind(this);
+            
+            // Resize event is only on window.
+            var src = name == "resize" ? window : canvas;
+            $(src).on(name, this.events[name]);
+        }
+    };
 
     function throwMouseEventAt(mX, mY, eventName, eng, ignore) {
         var allUnderMouse = [];
@@ -130,6 +125,16 @@
 
         if (this.resizeEvent) {
             console.log("this.resizeEvent:", this.resizeEvent);
+
+            var game = eng.game;
+            var minWidth = game.numTilesX * game.tileSize + 150;
+            var minHeight = game.numTilesY * game.tileSize;
+            var width = Math.max(window.innerWidth, minWidth);
+            var height = Math.max(window.innerHeight, minHeight);
+
+            this.resizeEvent.width = canvas.width = width;
+            this.resizeEvent.height = canvas.height = height;
+            
             eng.base.raiseEvent("globalResize", this.resizeEvent);
 
             if (this.consumeEvents)
@@ -175,7 +180,7 @@
 
                 for (var i = 0; i < this.prevMouseDown.length; i++) {
                     if (!this.globalMouseClick[this.prevMouseDown[i].base.id] &&
-                        vecToRect({ x: this.muX, y: this.muY }, this.prevMouseDown[i].tPos).magSq() == 0) {
+                        vecToRect({ x: this.muX, y: this.muY }, this.prevMouseDown[i].tpos).magSq() == 0) {
                         this.prevMouseDown[i].base.callRaise("click", { x: this.muX, y: this.muY });
                     }
                     this.prevMouseDown[i].base.callRaise("dragEnd", { x: this.muX, y: this.muY });
@@ -202,7 +207,7 @@
             //Can actually find mouseout more efficiently... as we have previous and current mouseover...            
             if (this.prevMouseOver && this.prevMouseOver.length > 0) {
                 for (var i = 0; i < this.prevMouseOver.length; i++) {
-                    if (vecToRect({ x: this.mX, y: this.mY }, this.prevMouseOver[i].tPos).magSq() != 0) {
+                    if (vecToRect({ x: this.mX, y: this.mY }, this.prevMouseOver[i].tpos).magSq() != 0) {
                         this.prevMouseOver[i].base.callRaise("mouseout", { x: this.mX, y: this.mY });
                     }
                 }

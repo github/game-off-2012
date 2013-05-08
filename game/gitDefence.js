@@ -1,12 +1,9 @@
-﻿//All the input should likely be combined and put in a few components,
-//as it will likely be the same for most games.
-
-function GitDefence(pos) {
+﻿function GitDefence(pos) {
     var engine = new Engine(pos, this);
     this.engine = engine;
 
     this.numTilesX = 16;
-    this.numTilesY = 12;
+    this.numTilesY = 16;
     this.tileSize = 32;
 
     this.id = 0; //Shouldn't be needed (ids are in base)
@@ -19,143 +16,95 @@ function GitDefence(pos) {
 
     this.lastTowerHover = null;
 
+    
+    var hbox = new HBox();
+    engine.base.addChild(hbox);
+    
+    this.towerbar = new Towerbar();
+    hbox.add(this.towerbar, 64);
+    
+    var vbox = new VBox();
+    hbox.add(vbox);
+    this.gameInfoBar = new GameInfoBar();
+    vbox.add(this.gameInfoBar, 32);
+    this.gameBoard = new GameBoard(this);
+    vbox.add(this.gameBoard);
+    
+    this.infobar = new Infobar();
+    hbox.add(this.infobar, 200);
+    
+    engine.globalResize = function (ev) {
+        console.log("gitDefence globalResize", ev);
+        hbox.resize(new Rect(0, 0, ev.width, ev.height));
+    }
 
-    this.infobar = new Infobar(new Rect(pos.w - 250, 0, 250, pos.h));
-    engine.base.addObject(this.infobar);
 
-    this.towerbar = new Towerbar(new Rect(0, pos.h - 150, pos.w - 260, 150));
-    engine.base.addObject(this.towerbar);
-
-    this.gameInfoBar = new GameInfoBar(new Rect(0, pos.h - 240, pos.w - 260, 90));
-    engine.base.addObject(this.gameInfoBar);
-
-
-    this.selectedObj = null;
     this.globalSelectionChanged = {};
 
-    generatePath(this.engine, this);
-    var bugStart = getAnElement(this.engine.base.children["Path_Start"]);
+    var bugStart = getAnElement(this.engine.base.allChildren["Path_Start"]);
 
-    //Level/Wave generator
-    var lmpos = new Rect(pos.w - 400, 0, 100, pos.h * 0.05);
-    this.lvMan = new LevelManager(bugStart, lmpos);
-    engine.base.addObject(this.lvMan);
+    this.lvMan = new LevelManager(bugStart);
+    engine.base.addChild(this.lvMan);
 
     this.input = new InputHandler();
     var input = this.input;
-    this.input.resizeEvent = pos; //We need to resize right away (shouldn't really have to... but we do)
+    // We need to resize right away (shouldn't really have to... but we do)
+    this.input.resizeEvent = pos;
     
+    var selection = null;
+    var selectionChanged = false;
     this.run = function (timestamp) {
         var eng = this.engine;
         eng.run(timestamp);
 
         this.input.handleEvents(eng);
 
-        if (this.selectionChanged) {
-            this.selectionChanged = false;
+        if (selectionChanged) {
             for (var key in this.globalSelectionChanged) {
                 if (this.globalSelectionChanged[key].base.rootNode != eng) {
                     delete this.globalSelectionChanged[key];
                 } else {
-                    this.globalSelectionChanged[key].base.callRaise("selectionChanged", this.selectedObj);
+                    this.globalSelectionChanged[key].base.callRaise("selectionChanged", selection);
                 }
             }
-        }
-
-        if (currentRangeDisplayed && this.selectedObj) {
-            currentRangeDisplayed.tPos = this.selectedObj.tPos.center();
-        }
-
-        if (this.selectedObj) {
-            this.selectedObj.hover = true;
+            selectionChanged = false;
         }
     };
 
     this.draw = function (pen) {
         engine.base.draw(pen);
-    }
-
-    //Input events now in inputEvents.js
-
-
-    //All selected stuff should probably be in its own object
-    var currentRangeDisplayed = null;
-    //this.base.addObject(hoverIndicator);
-
-    this.selectedBucket = [];
-
-    this.selectionChanged = false;
-    this.changeSel = function (obj) {
-        if (obj == this.selectedObj)
-            return;
-
-        this.selectionChanged = true;
-
-        if (currentRangeDisplayed) {
-            currentRangeDisplayed.base.destroySelf();
-            currentRangeDisplayed = null;
+        
+        var obj = selection;
+        if (obj) {
+            pen.strokeStyle = obj.color;
+            pen.fillStyle = "transparent";
+            pen.lineWidth = 2;
+            var p = obj.tpos.center();
+            ink.circ(p.x, p.y, obj.attr.range, pen);
         }
-
-        if (obj && obj.attr) {
-            //Hooks up our tower range to our actual attributes (but not our center)
-            //so we don't need to maintain it.
-            currentRangeDisplayed = new SCircle(
-                obj.tPos.center(),
-                obj.attr.range,
-                obj.color,
-                "transparent", 11);
-
-            this.engine.base.addObject(currentRangeDisplayed);
-
-            if (this.selectedObj)
-                this.selectedObj.hover = false;
-
-            this.selectedObj = obj;
-            this.infobar.updateAttr(obj);
-
-            if (!this.input.ctrlKey) {
-                for (var key in this.selectedBucket) {
-                    var selected = this.selectedBucket[key];
-                    for (var key in selected.base.children.HoverIndicator) {
-                        var selIndi = selected.base.children.HoverIndicator[key];
-                        selIndi.base.destroySelf();
-                    }
-                }
-                this.selectedBucket = [];
-            }
-            this.selectedBucket.push(obj);
-            obj.base.addObject(new HoverIndicator());
-            //this.towerbreeder.towers = this.selectedBucket;
-        } else {
-            for (var key in this.selectedBucket) {
-                var selected = this.selectedBucket[key];
-                for (var key in selected.base.children.HoverIndicator) {
-                    var selIndi = selected.base.children.HoverIndicator[key];
-                    selIndi.base.destroySelf();
-                }
-            }
-            this.selectedBucket = [];
-
-            if (this.selectedObj)
-                this.selectedObj.hover = false;
-
-            this.selectedObj = null;
-            this.infobar.clearDisplay();
-        }
-
-        return;
-    }
-
-    this.upgradeSel = function () {
-        if(this.selectedObj)
-            this.selectedObj.tryUpgrade();
-        return;
     }
     
-    this.getSelType = function () {
-        if (!this.selectedObj) {
-            return null;
+    this.changeSel = function (obj) {
+        return this.selection(obj);
+    }
+    
+    this.selection = function (newSelection) {
+        if (newSelection === undefined) {
+            return selection;
         }
-        return this.selectedObj.base.type;
+        
+        if (selection && selection.deselected) {
+            selection.deselected();
+        }
+        
+        selectionChanged = true;
+        
+        if (newSelection && newSelection.attr) {
+            selection = newSelection;
+            this.infobar.updateAttr(newSelection);
+        } else {
+            selection = null;
+            this.infobar.clearDisplay();
+        }
     }
 }

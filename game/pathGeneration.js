@@ -1,12 +1,13 @@
+// Unfortunately, Tile has to be here becuase tower placement
+// only works on top of a tile. Eventually we should get rid of
+// it, but having it works fine for now.
+function Tile(x, y, w, h) {
+    this.tpos = new Rect(x, y, w, h);
+    this.base = new BaseObj(this, 1);
+    this.base.addChild(new Selectable());
+}
+
 function generatePath(eng, game) {
-    // Unfortunately, Tile has to be here becuase tower placement
-    // only works on top of a tile. Eventually we should get rid of
-    // it, but having it works fine for now.
-    function Tile(x, y, w, h) {
-        this.tPos = new Rect(x, y, w, h);
-        this.base = new BaseObj(this, 1);
-        this.base.addObject(new Selectable());
-    }
     
     var curPos = { x: 0, y: 0 };
 
@@ -26,7 +27,7 @@ function generatePath(eng, game) {
         board[x] = [];
         for (var y = 0; y < NUM_TILES_Y; y++) {
             board[x][y] = false;
-            eng.base.addObject(new Tile(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+            eng.base.addChild(new Tile(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE));
         }
     }
 
@@ -41,21 +42,21 @@ function generatePath(eng, game) {
         return (pos.x < NUM_TILES_X && pos.y < NUM_TILES_Y && pos.x >= 0 && pos.y >= 0);
     }
 
-    function isDeadEnd(startPos) {
+    function isDeadEnd(starbox) {
         //Not a dead end if any of surrounding are not deadEnds
-        if (!isValid(startPos))
+        if (!isValid(starbox))
             return true;
-        if (uniqueBoard[startPos.x][startPos.y] == curUniqueBoardNum || board[startPos.x][startPos.y])
+        if (uniqueBoard[starbox.x][starbox.y] == curUniqueBoardNum || board[starbox.x][starbox.y])
             return true;
-        uniqueBoard[startPos.x][startPos.y] = curUniqueBoardNum;
+        uniqueBoard[starbox.x][starbox.y] = curUniqueBoardNum;
 
-        if (startPos.x == (NUM_TILES_X - 1) || startPos.y == (NUM_TILES_Y - 1)) {
+        if (starbox.x == (NUM_TILES_X - 1) || starbox.y == (NUM_TILES_Y - 1)) {
             return false;
         }
 
         var deadEnd = true;
         for (var i = 0; i < 4; i++) {
-            var surrounding = { x: startPos.x + vels[i].x, y: startPos.y + vels[i].y };
+            var surrounding = { x: starbox.x + vels[i].x, y: starbox.y + vels[i].y };
             deadEnd &= isDeadEnd(surrounding); //1 not dead end is fine
         }
 
@@ -69,7 +70,7 @@ function generatePath(eng, game) {
             curPath = new Path_End(curPos.x * TILE_SIZE, curPos.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             prevPath.nextPath = curPath;
 
-            eng.base.addObject(curPath);
+            eng.base.addChild(curPath);
             break;
         }
         else {
@@ -88,7 +89,7 @@ function generatePath(eng, game) {
             prevPath = curPath;
             curPath.pathPos = pathPos++;
 
-            eng.base.addObject(curPath);
+            eng.base.addChild(curPath);
 
             //Look around and try to find a square to turn to that is still 1 away from everything else
 
@@ -103,11 +104,11 @@ function generatePath(eng, game) {
 
                 var nextVel = vels[next];
 
-                var nextPos = { x: curPos.x + nextVel.x, y: curPos.y + nextVel.y };
+                var nexbox = { x: curPos.x + nextVel.x, y: curPos.y + nextVel.y };
 
                 curUniqueBoardNum++;
-                if (isValid(nextPos) && !board[nextPos.x][nextPos.y] && !isDeadEnd(nextPos)) {
-                    curPos = nextPos;
+                if (isValid(nexbox) && !board[nexbox.x][nexbox.y] && !isDeadEnd(nexbox)) {
+                    curPos = nexbox;
                     break;
                 }
             }

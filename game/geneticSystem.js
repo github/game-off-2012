@@ -1,5 +1,6 @@
 function Genes() {
     this.base = new BaseObj(this);
+    this.tpos = new Rect(0, 0, 0, 0);
 
     this.alleles = {};
 
@@ -49,8 +50,8 @@ function Genes() {
     //Should only be called if you are fully replacing the targeting strategy and attack types
     this.replaceAlleles = function (newAlleles) {
         var holder = this.base.parent;
-        holder.attr.target_Strategy = null;
-        holder.attr.attack_types = [];
+        holder.attr.targetStrategy = null;
+        holder.attr.attackTypes = [];
 
         this.startAlleleAdd();
 

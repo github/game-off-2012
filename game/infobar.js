@@ -2,19 +2,25 @@ function Infobar(pos) {
     this.base = new BaseObj(this, 14);
     this.tattr = null;
 
-    this.tPos = pos;
+    this.tpos = pos;
 
     var buttonW = 100;
 
     //For each displayed item gives extra info to be displayed in brackets)
     this.extraInfo = {};
 
-    this.allelePoints = new AllelePointSystem(new Rect(pos.x, pos.y + pos.h - 200, pos.w, 190));
-    this.base.addObject(this.allelePoints);
+    this.allelePoints = new AllelePointSystem();
+    this.base.addChild(this.allelePoints);
 
     this.sellButton = new Button("Kill Tower", bind(this, "sellTower"));
-    this.sellButton.resize(new Rect(pos.x, pos.y + pos.h - 250, pos.w, 24));
-    this.base.addObject(this.sellButton);
+    this.base.addChild(this.sellButton);
+    
+    this.resize = function (rect) {
+        this.tpos = rect;
+        this.allelePoints.resize(new Rect(rect.x, rect.y + rect.h - 200, rect.w, 190));
+        this.sellButton.resize(new Rect(rect.x, rect.y + rect.h - 250, rect.w, 24));
+        
+    }
 
     //Add our buttons, should really be done just in the constructor with our given pos information
     this.added = function () {
@@ -36,9 +42,9 @@ function Infobar(pos) {
         pen.fillStyle = "green";
         pen.font = "15px courier";
 
-        var xs = this.tPos.x + 10;
-        var xe = this.tPos.x + this.tPos.w - 10;
-        var y = this.tPos.y + 15;
+        var xs = this.tpos.x + 10;
+        var xe = this.tpos.x + this.tpos.w - 10;
+        var y = this.tpos.y + 15;
 
         if (!this.obj || !this.obj.attr) {
             ink.text(xs, y, "[no selection]", pen);

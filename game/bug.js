@@ -1,7 +1,7 @@
 function Bug(startPath) {
     var r = 8;
     var cen = (function() {
-        var p = startPath.tPos;
+        var p = startPath.tpos;
         var cen = p.center();
         cen.x += Math.floor((p.w - 2*r) * (Math.random() - 0.5));
         cen.y += Math.floor((p.h - 2*r) * (Math.random() - 0.5));
@@ -29,15 +29,16 @@ function Bug(startPath) {
             kills:          0,
             value:          5,
         };
-        this.attr.attack_types = [];
+        this.attr.attackTypes = [];
     }
     this.setBaseAttrs();
 
-    this.tPos = new TemporalPos(cen.x - r, cen.y - r, r * 2, r * 2, this.attr.speed, 0);
+    this.tpos = new Rect(cen.x - r, cen.y - r, r * 2, r * 2);
     this.base = new BaseObj(this, 11);
+    var velocity = new Vector(1, 0).mag(this.attr.speed);
 
     //Will be replaced
-    this.color = "yellow";
+    this.color = "trasparent";
     this.borderColor =  "red";
 
     this.lineWidth = 1;
@@ -45,13 +46,13 @@ function Bug(startPath) {
 
 
     this.genes = new Genes();
-    this.base.addObject(this.genes);
+    this.base.addChild(this.genes);
 
 
 
-    this.base.addObject(new AttackCycle());
+    this.base.addChild(new AttackCycle());
 
-    this.base.addObject(new Selectable());
+    this.base.addChild(new Selectable());
 
     this.curPath = startPath;
 
@@ -62,7 +63,7 @@ function Bug(startPath) {
         this.delay = this.bugRelPathPos + 1;
 
         this.constantOne = 1;
-        this.base.addObject(new UpdateTicker(this, "constantOne", "regenTick"));
+        this.base.addChild(new UpdateTicker(this, "constantOne", "regenTick"));
     };
     
     this.regenTick = function() {
@@ -73,25 +74,30 @@ function Bug(startPath) {
             this.attr.currentHp = this.attr.hp;
         }
     }
+    
+    function move(pos, vec, dt) {
+        pos.x += vec.x * dt;
+        pos.y += vec.y * dt;
+    }
 
     this.update = function(dt) {
-        this.tPos.update(dt);
+        move(this.tpos, velocity, dt);
 
         var cur = this.curPath;
         var next = this.curPath.nextPath;
 
         //Move towards the next rectangle.
-        var vecToCurrent = minVecBetweenRects(this.tPos, cur.tPos);        
-        var vecToNext = minVecFullOverlapRects(this.tPos, next.tPos);
+        var vecToCurrent = minVecBetweenRects(this.tpos, cur.tpos);        
+        var vecToNext = minVecFullOverlapRects(this.tpos, next.tpos);
 
         var overshot = vecToCurrent.magSq() > 0 && vecToNext.magSq() > 0;
 
-        if (overshot)
-            this.tPos.update(-dt);
+        if (overshot) {
+            move(this.tpos, velocity, -dt);
+        }
 
         if (this.delay > this.bugRelPathPos) {
-            this.tPos.dx = vecToNext.x;
-            this.tPos.dy = vecToNext.y;            
+            velocity = vecToNext.clone();          
             this.delay = 0;
         }
 
@@ -108,7 +114,7 @@ function Bug(startPath) {
             }
         }
          
-        this.tPos.setSpeed(this.attr.speed);
+        velocity.mag(this.attr.speed);
         
 
         this.color = getInnerColorFromAttrs(this.attr);
@@ -122,14 +128,14 @@ function Bug(startPath) {
         game.health -= 5;
 
         if (game.health <= 0 && !eng.base.allLengths.GameOver) {
-            eng.base.addObject(new GameOver());
+            eng.base.addChild(new GameOver());
         }
 
         this.base.destroySelf();
     };
 
     this.draw = function(pen) {
-        var pos = this.tPos;
+        var pos = this.tpos;
         var cen = pos.center();
 
         var hpPercent = this.attr.currentHp / this.attr.hp;

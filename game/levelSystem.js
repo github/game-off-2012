@@ -94,7 +94,7 @@ function LevelManager(bugStart) {
 
                 //I am not entirely sure we even need to do this... but we will just to insure
                 //garbage collection doesn't clean it up.
-                this.base.addObject(grimReaper);
+                this.base.addChild(grimReaper);
             }
 
             this.nwicounter = curWaveData.waveTime;
@@ -116,7 +116,8 @@ function LevelManager(bugStart) {
             }
 
             var curBug = currentWave[0];
-            eng.base.addObject(curBug);
+            curBug.tpos.origin(bugStart.tpos.origin());
+            eng.game.gameBoard.base.addChild(curBug);
             currentWave.shift();
 
             if (currentWave.length == 0) {

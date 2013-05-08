@@ -1,6 +1,7 @@
 //Not using UpdateTicker for easier debugging.
 function AttackCycle() {
     this.base = new BaseObj(this);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.attackCounter = 0;
     this.maxCounter = 0;
     this.chargePercent = 0;
@@ -24,7 +25,7 @@ function AttackCycle() {
             this.attackCounter = 0;
 
             var attacker = this.base.parent;
-            var attackTypes = attacker.attr.attack_types || attacker.attr.bug_attack_types;
+            var attackTypes = attacker.attr.attackTypes || attacker.attr.bug_attackTypes;
 
             if (attackTypes && attackTypes.length > 0) {
                 startAttack(new AttackTemplate(attackTypes[0], attacker, null, attacker.attr.damage, attacker, 0));
@@ -94,34 +95,33 @@ function Lifetime(lifetime) {
 
 function Selectable() {
     this.base = new BaseObj(this);
-
-    this.ignoreNext = false;
-
-    //Magical hacks
-    this.topMost = false;
-    //I use mouseup because click doesn't have topMost because I don't want to implement it
-    this.parent_mouseup = function (e) {
-        this.topMost = e.topMost;
+    this.tpos = new Rect(0, 0, 0, 0);
+    
+    if (DFlag.drawSelectableBoxes) {
+        this.draw = function (pen) {
+            pen.beginPath();
+            pen.strokeStyle = "red";
+            pen.lineWidth = 2;
+            var b = this.base.parent.box;
+            pen.rect(b.x, b.y, b.w, b.h);
+            pen.stroke();
+        }
     }
 
     this.parent_click = function () {
         var eng = this.base.rootNode;
         var game = eng.game;
 
-        if (this.ignoreNext) {
-            this.ignoreNext = false;
-            return;
-        }
-        if (this.topMost)
-            game.changeSel(this.base.parent);
+        game.selection(this.base.parent);
     }
 
     this.parent_die = function () {
         var eng = this.base.rootNode;
         var game = eng.game;
 
-        if(game.selectedObj == this.base.parent)
-            game.changeSel(null);
+        if (game.selection == this.base.parent) {
+            game.selection(null);
+        }
     }
 }
 
@@ -129,7 +129,7 @@ function HoverIndicator() {
     this.base = new BaseObj(this, 20);
 
     this.draw = function (pen) {
-        var p = this.base.parent.tPos;
+        var p = this.base.parent.tpos;
 
         pen.fillStyle = "rgba(255, 255, 255, 0.25)";
         pen.strokeStyle = "yellow";
@@ -153,7 +153,7 @@ function SlowEffect(magnitude) {
     }
 
     this.draw = function (pen) {
-        var p = this.base.parent.tPos;
+        var p = this.base.parent.tpos;
         pen.fillStyle = "dodgerblue";
         pen.strokeStyle = "white";
         pen.lineWidth = 1;
@@ -187,8 +187,8 @@ function MotionDelay(start, end, time, callback) {
 
         var progress = this.time / this.baseTime;
 
-        this.base.parent.tPos.x = start.x * progress + end.x * (1 - progress);
-        this.base.parent.tPos.y = start.y * progress + end.y * (1 - progress);
+        this.base.parent.tpos.x = start.x * progress + end.x * (1 - progress);
+        this.base.parent.tpos.y = start.y * progress + end.y * (1 - progress);
     }
 }
 
@@ -268,7 +268,7 @@ function AliveCounter(boundZeroCallback) {
     this.aliveCount = 0;
 
     this.addAliveTracker = function(obj) {
-        obj.base.addObject(new DeathTrigger(bind(this, "death")));
+        obj.base.addChild(new DeathTrigger(bind(this, "death")));
         this.aliveCount++;
     }
 

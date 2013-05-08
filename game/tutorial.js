@@ -6,43 +6,37 @@
 
 function addTextDisplay(text, obj) {
     var message = new QTextBox(new Rect(176, 16, 318, 0), text);
-    obj.base.addObject(message);
+    obj.base.addChild(message);
 }
 
-//Hardcoded position
 function ContinueButton() {
-    var pos = new Rect(400, 344, 90, 30);
-    this.tPos = pos;
+    // Hardcoded position
+    this.tpos = new Rect(400, 344, 90, 30);
     this.base = new BaseObj(this);
 
-    var button = new Button("Continue", bind(this, "continue")).resize(pos);
-    this.base.addObject(button);
+    var button = new Button("Continue", bind(this, "continue")).resize(this.tpos);
+    this.base.addChild(button);
 
     this.continue = function() {
         getGame(this).advanceState();
-    }
-    this.draw = function(pen) {
-        //pen.strokeStyle = "white";
-        //pen.fillStyle = "blue";
-        //ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
     }
 }
 
 var tutorialstates = {};
 tutorialstates.start = function start() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     this.added = function () {
         addTextDisplay("Welcome to GitDefence! Click continue!", this);
-        this.base.addObject(new ContinueButton());
+        this.base.addChild(new ContinueButton());
 
         getGame(this).underlyingGame.lvMan.nwicounter = 1 / 0; //Lol, purposely dividing by 0 to get infinity
     }
 };
 
 tutorialstates.startPlace = function startPlace() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!
@@ -58,8 +52,8 @@ tutorialstates.startPlace = function startPlace() {
         var firstTowerDragger = getAnElement(towerDraggers);
         this.targetDragger = firstTowerDragger;
 
-        var allMouseThrough = new AllMouseThrough(this.targetDragger.tPos);
-        this.base.addObject(allMouseThrough);
+        var allMouseThrough = new AllMouseThrough(this.targetDragger.tpos);
+        this.base.addChild(allMouseThrough);
     }
 
     this.update = function () {
@@ -68,7 +62,7 @@ tutorialstates.startPlace = function startPlace() {
     }
 };
 tutorialstates.endPlace = function endPlace() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!
@@ -85,13 +79,13 @@ tutorialstates.endPlace = function endPlace() {
         this.targetDragger = firstTowerDragger;
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
-        var TILE_SIZE = pathStart.tPos.w;
+        var TILE_SIZE = pathStart.tpos.w;
         var tile = findClosestToPoint(realGame.engine, "Tile", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
         this.tile = tile;
 
 
-        var allMouseThrough = new AllMouseThrough(tile.tPos);
-        this.base.addObject(allMouseThrough);
+        var allMouseThrough = new AllMouseThrough(tile.tpos);
+        this.base.addChild(allMouseThrough);
     }
 
     var wait = false;
@@ -100,7 +94,7 @@ tutorialstates.endPlace = function endPlace() {
         var realGame = getGame(this).underlyingGame;
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
-        var TILE_SIZE = pathStart.tPos.w;
+        var TILE_SIZE = pathStart.tpos.w;
         var tower = findClosestToPoint(realGame.engine, "Tower", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
 
         if(tower) {
@@ -118,7 +112,7 @@ tutorialstates.endPlace = function endPlace() {
 };
 
 tutorialstates.spawnEnemies = function spawnEnemies() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     this.added = function () {
@@ -132,7 +126,7 @@ tutorialstates.spawnEnemies = function spawnEnemies() {
 };
 
 tutorialstates.clickOnTower = function clickOnTower() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     this.added = function () {
@@ -140,11 +134,11 @@ tutorialstates.clickOnTower = function clickOnTower() {
 
         addTextDisplay("You can click on your tower to select it. After selecting a tower its attributes are displayed in the sidebar. Towers are selected by default when placed.", this);
 
-        this.base.addObject(new ContinueButton());
+        this.base.addChild(new ContinueButton());
     }
 };
 tutorialstates.buyAlleles = function buyAlleles() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     this.added = function () {
@@ -156,8 +150,8 @@ tutorialstates.buyAlleles = function buyAlleles() {
         var allelePointSystem = getAnElement(realGame.engine.base.allChildren.AllelePointSystem);
         var buyButton = allelePointSystem.buyButton;
 
-        var allMouseThrough = new AllMouseThrough(buyButton.tPos);
-        this.base.addObject(allMouseThrough);
+        var allMouseThrough = new AllMouseThrough(buyButton.tpos);
+        this.base.addChild(allMouseThrough);
     };
 
     this.update = function () {
@@ -168,7 +162,7 @@ tutorialstates.buyAlleles = function buyAlleles() {
     };
 };
 tutorialstates.spendAlleles = function spendAlleles() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     this.added = function () {
@@ -180,16 +174,16 @@ tutorialstates.spendAlleles = function spendAlleles() {
         var allelePointSystem = getAnElement(realGame.engine.base.allChildren.AllelePointSystem);
 
         var spendButton = allelePointSystem.spendButton;
-        var allMouseThrough = new AllMouseThrough(spendButton.tPos);
-        this.base.addObject(allMouseThrough);
+        var allMouseThrough = new AllMouseThrough(spendButton.tpos);
+        this.base.addChild(allMouseThrough);
 
         var trashButton = allelePointSystem.trashButton;
-        var allMouseThrough = new AllMouseThrough(trashButton.tPos);
-        this.base.addObject(allMouseThrough);
+        var allMouseThrough = new AllMouseThrough(trashButton.tpos);
+        this.base.addChild(allMouseThrough);
 
         var autoTrashButton = allelePointSystem.autoTrashButton;
-        var allMouseThrough = new AllMouseThrough(autoTrashButton.tPos);
-        this.base.addObject(allMouseThrough);
+        var allMouseThrough = new AllMouseThrough(autoTrashButton.tpos);
+        this.base.addChild(allMouseThrough);
     }
 
     this.update = function () {
@@ -201,7 +195,7 @@ tutorialstates.spendAlleles = function spendAlleles() {
 };
 
 tutorialstates.placeAnotherTower = function placeAnotherTower() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!
@@ -217,24 +211,24 @@ tutorialstates.placeAnotherTower = function placeAnotherTower() {
         var firstTowerDragger = getAnElement(towerDraggers);
         this.targetDragger = firstTowerDragger;
 
-        var allMouseThrough = new AllMouseThrough(this.targetDragger.tPos);
-        this.base.addObject(allMouseThrough);
+        var allMouseThrough = new AllMouseThrough(this.targetDragger.tpos);
+        this.base.addChild(allMouseThrough);
 
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
-        var TILE_SIZE = pathStart.tPos.w;
+        var TILE_SIZE = pathStart.tpos.w;
         var tile = findClosestToPoint(realGame.engine, "Tile", {x: TILE_SIZE * 5, y: TILE_SIZE * 6}, 0);
         this.tile = tile;
 
-        var allMouseThrough = new AllMouseThrough(tile.tPos);
-        this.base.addObject(allMouseThrough);
+        var allMouseThrough = new AllMouseThrough(tile.tpos);
+        this.base.addChild(allMouseThrough);
     }
 
     this.update = function () {
         var realGame = getGame(this).underlyingGame;
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
-        var TILE_SIZE = pathStart.tPos.w;
+        var TILE_SIZE = pathStart.tpos.w;
         var tower = findClosestToPoint(realGame.engine, "Tower", {x: TILE_SIZE * 5, y: TILE_SIZE * 6}, 0);
 
         if(tower) {
@@ -252,7 +246,7 @@ tutorialstates.placeAnotherTower = function placeAnotherTower() {
 };
 
 tutorialstates.networkTowerStart = function networkTowerStart() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!
@@ -264,19 +258,19 @@ tutorialstates.networkTowerStart = function networkTowerStart() {
         addTextDisplay("Click and hold on a tower to begin making a network.", this);
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
-        var TILE_SIZE = pathStart.tPos.w;
+        var TILE_SIZE = pathStart.tpos.w;
         var tile = findClosestToPoint(realGame.engine, "Tile", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
         this.tile = tile;
 
-        var allMouseThrough = new AllMouseThrough(tile.tPos);
-        this.base.addObject(allMouseThrough);
+        var allMouseThrough = new AllMouseThrough(tile.tpos);
+        this.base.addChild(allMouseThrough);
     }
 
     this.update = function () {
         var realGame = getGame(this).underlyingGame;
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
-        var TILE_SIZE = pathStart.tPos.w;
+        var TILE_SIZE = pathStart.tpos.w;
         var tower = findClosestToPoint(realGame.engine, "Tower", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
 
         if(tower && tower.startDrag) {
@@ -286,7 +280,7 @@ tutorialstates.networkTowerStart = function networkTowerStart() {
 };
 
 tutorialstates.networkTowerEnd = function networkTowerEnd() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!
@@ -299,22 +293,22 @@ tutorialstates.networkTowerEnd = function networkTowerEnd() {
 
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
-        var TILE_SIZE = pathStart.tPos.w;
+        var TILE_SIZE = pathStart.tpos.w;
         var tile = findClosestToPoint(realGame.engine, "Tile", {x: TILE_SIZE * 5, y: TILE_SIZE * 6}, 0);
         this.tile = tile;
 
-        var allMouseThrough = new AllMouseThrough(tile.tPos);
-        this.base.addObject(allMouseThrough);
+        var allMouseThrough = new AllMouseThrough(tile.tpos);
+        this.base.addChild(allMouseThrough);
 
-        this.base.addObject(new MouseMoveThrough(realGame.engine.tPos));
-        this.base.addObject(new MouseUpThrough(realGame.engine.tPos));
+        this.base.addChild(new MouseMoveThrough(realGame.engine.tpos));
+        this.base.addChild(new MouseUpThrough(realGame.engine.tpos));
     }
 
     this.update = function () {
         var realGame = getGame(this).underlyingGame;
 
         var pathStart = getAnElement(realGame.engine.base.allChildren.Path_Start);
-        var TILE_SIZE = pathStart.tPos.w;
+        var TILE_SIZE = pathStart.tpos.w;
         var tower = findClosestToPoint(realGame.engine, "Tower", {x: TILE_SIZE * 3, y: TILE_SIZE * 5}, 0);
 
         if(!tower.startDrag) {
@@ -331,7 +325,7 @@ tutorialstates.networkTowerEnd = function networkTowerEnd() {
 };
 
 tutorialstates.spawnEnemies2 = function spawnEnemies2() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     this.added = function () {
@@ -345,7 +339,7 @@ tutorialstates.spawnEnemies2 = function spawnEnemies2() {
 };
 
 tutorialstates.done = function done() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!
@@ -356,12 +350,12 @@ tutorialstates.done = function done() {
 
         addTextDisplay("And thats it! Good luck!", this);
 
-        this.base.addObject(new ContinueButton());
+        this.base.addChild(new ContinueButton());
     }
 };
 
 tutorialstates.switchToGame = function switchToGame() {
-    this.tPos = new TemporalPos(0, 0, 0, 0);
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this);
 
     //What we want them to drag from!
@@ -377,7 +371,7 @@ tutorialstates.switchToGame = function switchToGame() {
 //is as simple as: this.screenSystem.bindInput(underlyingGame.input); when we gain focus.
 function AllMouseThrough(pos) {
     this.base = new BaseObj(this, 0);
-    this.tPos = pos;
+    this.tpos = pos;
 
     /* States we pass through
     this.mX = -1;
@@ -413,7 +407,7 @@ function AllMouseThrough(pos) {
         pen.fillStyle = "rgba(255, 255, 255, 0.5)";
         pen.strokeStyle = "transparent";
 
-        ink.rect(this.tPos.x, this.tPos.y, this.tPos.w, this.tPos.h, pen);
+        ink.rect(this.tpos.x, this.tpos.y, this.tpos.w, this.tpos.h, pen);
     };
 }
 
@@ -421,7 +415,7 @@ function AllMouseThrough(pos) {
 //and shouldn't trigger any actions.
 function MouseMoveThrough(pos) {
     this.base = new BaseObj(this, 0);
-    this.tPos = pos;
+    this.tpos = pos;
 
     this.mouseover = function (e) {
         var redirectedInput = getGame(this).underlyingGame.input;
@@ -435,7 +429,7 @@ function MouseMoveThrough(pos) {
 //and shouldn't trigger any actions.
 function MouseUpThrough(pos) {
     this.base = new BaseObj(this, 0);
-    this.tPos = pos;
+    this.tpos = pos;
 
     this.mouseup = function (e) {
         var redirectedInput = getGame(this).underlyingGame.input;
@@ -453,13 +447,13 @@ function hardcodePath(underlyingGame) {
     var pathStart = getAnElement(eng.base.allChildren.Path_Start);
     var pathEnd = getAnElement(eng.base.allChildren.Path_End);
 
-    var TILE_SIZE = pathStart.tPos.w;
+    var TILE_SIZE = pathStart.tpos.w;
 
-    pathStart.tPos.x = TILE_SIZE * 0;
-    pathStart.tPos.y = TILE_SIZE * 0;
+    pathStart.tpos.x = TILE_SIZE * 0;
+    pathStart.tpos.y = TILE_SIZE * 0;
 
-    pathEnd.tPos.x = TILE_SIZE * 3;
-    pathEnd.tPos.y = TILE_SIZE * 11;
+    pathEnd.tpos.x = TILE_SIZE * 3;
+    pathEnd.tpos.y = TILE_SIZE * 11;
 
     var curX = 0;
     var curY = 0;
@@ -470,7 +464,7 @@ function hardcodePath(underlyingGame) {
         var prevPath = curPath;
         curPath = new Path_Piece(curX * TILE_SIZE, curY * TILE_SIZE, TILE_SIZE, TILE_SIZE);
         prevPath.nextPath = curPath;
-        eng.base.addObject(curPath);
+        eng.base.addChild(curPath);
     }
 
     curY++;
@@ -508,7 +502,7 @@ function Tutorial(pos) {
 
     this.input = new InputHandler();
 
-    localEngine.base.addObject(new MouseMoveThrough(underlyingGame.engine.tPos));
+    localEngine.base.addChild(new MouseMoveThrough(underlyingGame.engine.tpos));
 
     
     this.states = [];
@@ -530,7 +524,7 @@ function Tutorial(pos) {
         
         if (this.states[this.curStatePos]) {
             this.curState = new this.states[this.curStatePos]();
-            localEngine.base.addObject(this.curState);
+            localEngine.base.addChild(this.curState);
         }
     }
     this.advanceState();
