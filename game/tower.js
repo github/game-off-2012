@@ -490,24 +490,6 @@ function Tower(baseTile, box) {
 
         this.startDrag = null;
 
-        /*
-        var towerSelected = findClosestToPoint(eng, "Tower", e, 0);
-        if(towerSelected && towerSelected != this)
-        {
-            for (var i = 0; i < this.connections.length; i++)
-                if(this.connections[i].t2 == towerSelected)
-                    return;
-            
-            var conn = new Tower_Connection(this, towerSelected);
-            this.base.addChild(conn);
-            this.connections.push(conn);
-            towerSelected.connections.push(conn);
-
-            game.changeSel(this);
-            getAnElement(this.base.children.Selectable).ignoreNext = true;
-        }
-        */
-
         delete getGame(this).input.globalMouseMove[this.base.id];
         delete getGame(this).input.globalMouseUp[this.base.id];
     };
@@ -526,7 +508,7 @@ function Tower(baseTile, box) {
 
         var collisions = [];
         mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tpos, 0), collisions);
-        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tpos, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Path_Piece", tower.tpos, 0), collisions);
 
         if(collisions.length > 0) {
             var alignTo = collisions[0];
@@ -545,7 +527,7 @@ function Tower(baseTile, box) {
         tower.tpos.x = e.x;
         var collisions = [];
         mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tpos, 0), collisions);
-        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tpos, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Path_Piece", tower.tpos, 0), collisions);
         if(collisions.length > 0) {
             tower.tpos.x = originalPos.x;
         }
@@ -553,7 +535,7 @@ function Tower(baseTile, box) {
         tower.tpos.y = e.y;
         var collisions = [];
         mergeToArray(findAllWithinDistanceToRect(eng, "Tower", tower.tpos, 0), collisions);
-        mergeToArray(findAllWithinDistanceToRect(eng, "Path", tower.tpos, 0), collisions);
+        mergeToArray(findAllWithinDistanceToRect(eng, "Path_Piece", tower.tpos, 0), collisions);
         if(collisions.length > 0) {
             tower.tpos.y = originalPos.y;
         }
@@ -575,7 +557,7 @@ function canPlace(tower, pos, eng) {
 
     var e = pos;
     var towerCollision = findClosestToRect(eng, "Tower", tower.tpos, 0);
-    var pathOnTile = findClosestToRect(eng, "Path", tower.tpos, 0);
+    var pathOnTile = findClosestToRect(eng, "Path_Piece", tower.tpos, 0);
     var tileExist = findClosestToRect(eng, "Tile", tower.tpos, 0);
 
     tower.tpos.x = originalPosX;
