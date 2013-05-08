@@ -181,13 +181,9 @@ function Infobar(pos) {
                         ink.text((xs + xe) / 2, yPos, nameText, pen);
                         pen.font = "10px courier";
                         yPos += 20;
-                        xPos += 5;
-
                         for (var subAttr in val) {
                             tryPrintAsNumber(val[subAttr], subAttr, subExtraInfo);
                         }
-
-                        xPos -= 5;
                     }
                 } //End of looping through arrays within attributes
 
