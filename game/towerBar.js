@@ -12,8 +12,6 @@ function TowerDragger(pos, towerGeneratorFnc) {
     this.placingTower = false;
 
     this.draw = function (pen) {
-        this.displayedTower.tpos = this.tpos;
-        this.displayedTower.recalculateAppearance();
         this.displayedTower.draw(pen);
 
         if (this.placingTower) {
@@ -21,8 +19,11 @@ function TowerDragger(pos, towerGeneratorFnc) {
             this.placingTower.draw(pen);
         }
     }
-    
+
     this.resize = function (rect) {
+        this.tpos = rect.largestSquare();
+        this.displayedTower.tpos = this.tpos;
+        this.displayedTower.recalculateAppearance();
         this.tpos = rect.largestSquare();
     }
 
@@ -91,7 +92,7 @@ function TowerDragger(pos, towerGeneratorFnc) {
     }
 
     this.click = function (e) {
-        if(firstClick) {
+        if (firstClick) {
             firstClick = false;
             return;
         }
@@ -122,10 +123,10 @@ function TowerDragger(pos, towerGeneratorFnc) {
 function Towerbar() {
     this.base = new BaseObj(this, 14);
     this.tpos = new Rect(0, 0, 0, 0);
-    
+
     var vbox = new VBox();
     this.base.addChild(vbox);
-    
+
     var costIndicator = new Label("Tower cost: 50");
     vbox.add(costIndicator);
 
@@ -133,14 +134,12 @@ function Towerbar() {
     var uniqueNum = 1;
 
     for (var key in towerAttackTypes) {
-        var attackTypes = {}; //Obj needed for now, it goes away when added (because we turn it into an array)
-        attackTypes[1] = (towerAttackTypes[key]);
-        attackCombinations.push(attackTypes);
+        //Obj needed for now, it goes away when added (because we turn it into an   array)
+        attackCombinations.push({
+            '1': towerAttackTypes[key],
+        });
     }
 
-    //var superAttack = { 0: allAttackTypes.Pulse, 1: allAttackTypes.Pulse, 2: allAttackTypes.Pulse };
-    //attackCombinations.push(superAttack);
-    
     this.resize = function (rect) {
         costIndicator.resize(rect);
         vbox.resize(rect);
@@ -186,9 +185,6 @@ function Towerbar() {
 
     this.update = function () {
         var game = getGame(this);
-
-//         costIndicator.tpos.x = pos.x + 10;
-//         costIndicator.tpos.y = pos.y + 25;
 
         costIndicator.text("Current tower cost: " + prefixNumber(game.currentCost));
     }

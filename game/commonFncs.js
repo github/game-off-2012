@@ -66,7 +66,7 @@ function hasAtleastXElements(object, x) {
 function sortArrayByProperty(a, prop) {
     a.sort(cmp)
     function cmp(a, b) {
-        // Avoid multiple object dereferences in 
+        // Avoid multiple object dereferences in
         // tight inner loop.
         var ap = a[prop];
         var bp = b[prop];
@@ -132,13 +132,9 @@ function clamp(val, min, max) {
     if (isNaN(val))
         return min / 2 + max / 2;
 
-    return val <
-           min ?
-           min :
-           val >
-           max ?
-           max : 
-           val;
+    if (val < min) return min;
+    else if (val > max) return max;
+    else return val;
 }
 
 
