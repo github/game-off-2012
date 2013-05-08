@@ -13,13 +13,11 @@ function Infobar(pos) {
     this.base.addChild(this.allelePoints);
 
     this.sellButton = new Button("Kill Tower", bind(this, "sellTower"));
-    this.base.addChild(this.sellButton);
     
     this.resize = function (rect) {
         this.tpos = rect;
         this.allelePoints.resize(new Rect(rect.x, rect.y + rect.h - 200, rect.w, 190));
         this.sellButton.resize(new Rect(rect.x, rect.y + rect.h - 250, rect.w, 24));
-        
     }
 
     //Add our buttons, should really be done just in the constructor with our given pos information
@@ -29,6 +27,11 @@ function Infobar(pos) {
 
     this.obj = null;
     this.updateAttr = function (obj) {
+        if(obj.base.type == "Tower") {
+            this.base.addChild(this.sellButton);
+        } else {
+            this.base.removeObject(this.sellButton);
+        }
         this.base.setAttributeRecursive("hidden", false);
         this.obj = obj;
         return;
