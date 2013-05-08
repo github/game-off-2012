@@ -19,6 +19,10 @@ function Tower_Packet(t1, t2, speed, allele) {
         t2.genes.addAllele(allele);
         that.base.destroySelf();
     }
+    
+    this.update = function() {
+        packet.tpos = t1.tpos.center();
+    }
 }
 
 function Tower_Connection(t1, t2) {
@@ -35,7 +39,7 @@ function Tower_Connection(t1, t2) {
     
     var that = this;
     
-    function addDeleteButton() {
+    function getDeleteButtonPos() {
         var width = 20;
         var height = 20;
         
@@ -48,10 +52,14 @@ function Tower_Connection(t1, t2) {
         pos.sub(new Vector(width * 0.5, height * 0.5));
         pos = new Rect(0, 0, width, height).origin(pos);
         
-        deleteButton = new Button("-", bind(that, "deleteSelf"), 50).resize(pos);
-        that.base.addChild(deleteButton);
+        return pos;
     }
-    addDeleteButton();
+    this.added = function() {
+        deleteButton = new Button("-", bind(that, "deleteSelf"), 50);
+        
+        this.base.parent.base.parent.base.addChild(deleteButton);
+        deleteButton.resize(getDeleteButtonPos());
+    }
     
     function dataTransfer(t1, t2) {
         function sendRandomPacket(t1, t2, speed) {
@@ -84,6 +92,7 @@ function Tower_Connection(t1, t2) {
     
     this.deleteSelf = function () {
         var conns = this.base.parent.connections;
+        deleteButton.base.destroySelf();
 
         for(var key in conns) {
             if(conns[key] == this) {
@@ -102,6 +111,8 @@ function Tower_Connection(t1, t2) {
         line.end = t2.tpos.center();
 
         deleteButton.hidden = !this.base.parent.hover;
+        
+        deleteButton.resize(getDeleteButtonPos());
 
         // Wtf... setColorPart() should not be a thing.
         if (this.base.parent.hover) {
@@ -410,6 +421,7 @@ function Tower(baseTile, box) {
         for (var i = 0; i < c.length; i++) {
             c[i].base.destroySelf();
         }
+        this.tempNetworkIndicator.base.destroySelf();
         new Sound("snd/Tower_Die.wav").play();
     };
 
