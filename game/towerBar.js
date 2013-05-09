@@ -17,10 +17,12 @@ function TowerDragger(towerGeneratorFnc) {
 
     this.draw = function (pen) {
         displayedTower.draw(pen);
+        if (placingTower) placingTower.draw(pen);
     }
 
     this.update = function (dt) {
        displayedTower.recalculateAppearance();
+       if (placingTower) placingTower.recalculateAppearance(true);
     }
 
     this.mousemove = function (e) {
@@ -55,7 +57,6 @@ function TowerDragger(towerGeneratorFnc) {
 
         //They are clicking on the placer, so begin placing
         placingTower = towerGeneratorFnc();
-        this.base.addChild(placingTower);
 
         if(!repeatPlace) {
             placeOffset.set(e);
@@ -94,7 +95,6 @@ function TowerDragger(towerGeneratorFnc) {
             return;
         }
 
-        this.base.removeObject(placingTower);
         placingTower = false;
         delete game.input.globalMouseMove[this.base.id];
         delete game.input.globalMouseClick[this.base.id];
