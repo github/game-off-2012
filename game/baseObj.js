@@ -125,8 +125,8 @@ function BaseObj(holder, zindex, dynamicZIndex) {
 
     };
 
-    this.removeObject = function (obj) {
-        if (!assertDefined("removeObject", obj, obj.base))
+    this.removeChild = function (obj) {
+        if (!assertDefined("removeChild", obj, obj.base))
             return;
 
         //Set its root node to itself to let it know we are no longer its parent
@@ -139,7 +139,7 @@ function BaseObj(holder, zindex, dynamicZIndex) {
     this.destroySelf = function () {
         if (this.parent) { //Else there is no way to destroy ourself
             this.holder.base.callRaise("die");
-            this.parent.base.removeObject(this.holder);
+            this.parent.base.removeChild(this.holder);
 
             //Also destroy our children (keeps allChildren working properly)
             this.loopThroughAllTypes(function (child) {

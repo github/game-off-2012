@@ -30,7 +30,7 @@ function Infobar(pos) {
         if(obj.base.type == "Tower") {
             this.base.addChild(this.sellButton);
         } else {
-            this.base.removeObject(this.sellButton);
+            this.base.removeChild(this.sellButton);
         }
         this.base.setAttributeRecursive("hidden", false);
         this.obj = obj;

@@ -484,7 +484,7 @@ function Tower() {
         delete getGame(this).input.globalMouseUp[this.base.id];
 
         if(!this.ctrlDrag && this.tempNetworkIndicator) {
-            this.base.parent.base.removeObject(this.tempNetworkIndicator);
+            this.base.parent.base.removeChild(this.tempNetworkIndicator);
             this.tempNetworkIndicator = null;
 
             var towerSelected = findClosestToPoint(eng, "Tower", e, 0);
