@@ -5,7 +5,6 @@ function TowerDragger(towerGeneratorFnc) {
     this.base = new BaseObj(this, 20);
 
     var displayedTower = towerGeneratorFnc(true);
-    this.base.addChild(displayedTower);
 
     var placeOffset = new Vector(0, 0);
     var placingTower;
@@ -14,14 +13,21 @@ function TowerDragger(towerGeneratorFnc) {
         this.tpos = rect.largestSquare();
         displayedTower.tpos = this.tpos;
         displayedTower.recalculateAppearance();
-        this.tpos = rect.largestSquare();
+    };
+
+    this.draw = function (pen) {
+        displayedTower.draw(pen);
+    }
+
+    this.update = function (dt) {
+       displayedTower.recalculateAppearance();
     }
 
     this.mousemove = function (e) {
         var tower = placingTower;
-        var eng = getEng(this);
-
         if (!tower) return;
+
+        var eng = getEng(this);
 
         var pos = new Vector(0, 0);
 
@@ -48,8 +54,8 @@ function TowerDragger(towerGeneratorFnc) {
         if (placingTower || game.money - curCost < 0) return;
 
         //They are clicking on the placer, so begin placing
-        var tower = towerGeneratorFnc();
-        this.base.addChild(tower);
+        placingTower = towerGeneratorFnc();
+        this.base.addChild(placingTower);
 
         if(!repeatPlace) {
             placeOffset.set(e);
@@ -59,10 +65,10 @@ function TowerDragger(towerGeneratorFnc) {
             placeOffset.y /= this.tpos.h;
         }
 
-        tower.tpos.x = e.x - placeOffset.x * this.tpos.w;
-        tower.tpos.y = e.y - placeOffset.y * this.tpos.h;
+        placingTower.tpos.x = e.x - placeOffset.x * this.tpos.w;
+        placingTower.tpos.y = e.y - placeOffset.y * this.tpos.h;
 
-        tower.recalculateAppearance(true);
+        placingTower.recalculateAppearance(true);
         this.mousemove(e);
 
         game.input.globalMouseMove[this.base.id] = this;
@@ -81,22 +87,21 @@ function TowerDragger(towerGeneratorFnc) {
         var eng = this.base.rootNode;
         var game = eng.game;
 
-        if (this.placingTower) {
-            //They already clicked on the placer, so they are trying to place now
-            if(tryPlaceTower(this.placingTower, this.placingTower.tpos, eng)) {
-                this.placingTower = false;
-                delete game.input.globalMouseMove[this.base.id];
-                delete game.input.globalMouseClick[this.base.id];
+        if (!placingTower) return;
 
-                if(game.input.ctrlKey) {
-                    this.mousedown(e, true);
-                    firstClick = false;
-                }
-            }
-            else {
-                //Nothing, we could not place tower but they paid for it so
-                //they have to place it somewhere!
-            }
+        if (!tryPlaceTower(placingTower, placingTower.tpos, eng)) {
+            console.warn("We couldn't place your tower...");
+            return;
+        }
+
+        this.base.removeObject(placingTower);
+        placingTower = false;
+        delete game.input.globalMouseMove[this.base.id];
+        delete game.input.globalMouseClick[this.base.id];
+
+        if (game.input.ctrlKey) {
+            this.mousedown(e, true);
+            firstClick = false;
         }
     }
 }
