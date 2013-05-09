@@ -1,55 +1,56 @@
 //Make list with lits of alleles to create default tower types.
 
-function TowerDragger(pos, towerGeneratorFnc) {
-    this.tpos = pos;
+function TowerDragger(towerBar, towerGeneratorFnc) {
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this, 20);
 
-    this.towerGeneratorFnc = towerGeneratorFnc;
-
-    this.displayedTower = towerGeneratorFnc(true);
+    var displayedTower = towerGeneratorFnc(true);
 
     var placeOffset = new Vector(0, 0);
-    this.placingTower = false;
+    var placingTower;
 
-    this.draw = function (pen) {
-        this.displayedTower.tpos = this.tpos;
-        this.displayedTower.recalculateAppearance();
-        this.displayedTower.draw(pen);
-
-        if (this.placingTower) {
-            this.placingTower.recalculateAppearance(true);
-            this.placingTower.draw(pen);
-        }
-    }
-    
+    var displayedTowerCanvas = new Canvas();
+    var displayedTowerDirty = true;
     this.resize = function (rect) {
         this.tpos = rect.largestSquare();
+        displayedTower.recalculateAppearance();
+        displayedTower.tpos = this.tpos;
+        displayedTowerCanvas.resize(this.tpos);
+        displayedTowerDirty = true;
+    };
+
+    this.draw = function (pen) {
+        var canvas = displayedTowerCanvas;
+        if (displayedTowerDirty) {
+            var pen2 = canvas.ctx();
+            pen2.translate(-this.tpos.x, -this.tpos.y);
+            displayedTower.draw(pen2);
+            displayedTowerDirty = false;
+        }
+        canvas.drawTo(pen);
+        if (placingTower) placingTower.draw(pen);
     }
 
     this.update = function (dt) {
-        if (this.placingTower) {
-            this.placingTower.base.update(dt);
-        }
+       if (placingTower) placingTower.recalculateAppearance(true);
     }
 
     this.mousemove = function (e) {
-        //var towerCollision = findClosestToPoint(eng, "Tower", tower.tpos.center(), towerRadius);
+        var tower = placingTower;
+        if (!tower) return;
 
-        var tower = this.placingTower;
         var eng = getEng(this);
 
-        if (tower) {
-            var pos = new Vector(0, 0);
+        var pos = new Vector(0, 0);
 
-            pos.x = e.x - placeOffset.x * tower.tpos.w;
-            pos.y = e.y - placeOffset.y * tower.tpos.h;
+        pos.x = e.x - placeOffset.x * tower.tpos.w;
+        pos.y = e.y - placeOffset.y * tower.tpos.h;
 
-            if (canPlace(tower, pos, eng)) {
-                tower.tpos.x = pos.x;
-                tower.tpos.y = pos.y;
-            } else {
-                tower.tryToMove(pos, eng, true);
-            }
+        if (canPlace(tower, pos, eng)) {
+            tower.tpos.x = pos.x;
+            tower.tpos.y = pos.y;
+        } else {
+            tower.tryToMove(pos, eng, true);
         }
     }
 
@@ -60,38 +61,36 @@ function TowerDragger(pos, towerGeneratorFnc) {
 
         firstClick = true;
 
-        var curCost = game.currentCost;
+        var curCost = towerBar.currentCost();
 
-        if (!this.placingTower && game.money - curCost >= 0) {
-            //They are clicking on the placer, so begin placing
-            this.placingTower = this.towerGeneratorFnc();
+        if (placingTower || game.money - curCost < 0) return;
 
-            var tower = this.placingTower;
+        //They are clicking on the placer, so begin placing
+        placingTower = towerGeneratorFnc();
 
-            if(!repeatPlace) {
-                placeOffset.set(e);
-                placeOffset.sub(this.tpos);
+        if(!repeatPlace) {
+            placeOffset.set(e);
+            placeOffset.sub(this.tpos);
 
-                placeOffset.x /= this.tpos.w;
-                placeOffset.y /= this.tpos.h;
-            }
-
-            tower.tpos.x = e.x - placeOffset.x * this.tpos.w;
-            tower.tpos.y = e.y - placeOffset.y * this.tpos.h;
-
-            this.placingTower.recalculateAppearance(true);
-            this.mousemove(e);
-
-            game.input.globalMouseMove[this.base.id] = this;
-            game.input.globalMouseClick[this.base.id] = this;
-
-            game.money -= curCost;
-            game.currentCost *= 1.3;
+            placeOffset.x /= this.tpos.w;
+            placeOffset.y /= this.tpos.h;
         }
+
+        placingTower.tpos.x = e.x - placeOffset.x * this.tpos.w;
+        placingTower.tpos.y = e.y - placeOffset.y * this.tpos.h;
+
+        placingTower.recalculateAppearance(true);
+        this.mousemove(e);
+
+        game.input.globalMouseMove[this.base.id] = this;
+        game.input.globalMouseClick[this.base.id] = this;
+
+        game.money -= curCost;
+        towerBar.setCurrentCost(curCost*1.3);
     }
 
     this.click = function (e) {
-        if(firstClick) {
+        if (firstClick) {
             firstClick = false;
             return;
         }
@@ -99,48 +98,46 @@ function TowerDragger(pos, towerGeneratorFnc) {
         var eng = this.base.rootNode;
         var game = eng.game;
 
-        if (this.placingTower) {
-            //They already clicked on the placer, so they are trying to place now
-            if(tryPlaceTower(this.placingTower, this.placingTower.tpos, eng)) {
-                this.placingTower = false;
-                delete game.input.globalMouseMove[this.base.id];
-                delete game.input.globalMouseClick[this.base.id];
+        if (!placingTower) return;
 
-                if(game.input.ctrlKey) {
-                    this.mousedown(e, true);
-                    firstClick = false;
-                }
-            }
-            else {
-                //Nothing, we could not place tower but they paid for it so
-                //they have to place it somewhere!
-            }
+        if (!tryPlaceTower(placingTower, placingTower.tpos, eng)) {
+            console.warn("We couldn't place your tower...");
+            return;
+        }
+
+        placingTower = false;
+        delete game.input.globalMouseMove[this.base.id];
+        delete game.input.globalMouseClick[this.base.id];
+
+        if (game.input.ctrlKey) {
+            this.mousedown(e, true);
+            firstClick = false;
         }
     }
 }
 
 function Towerbar() {
+    var self = this;
     this.base = new BaseObj(this, 14);
     this.tpos = new Rect(0, 0, 0, 0);
-    
+
     var vbox = new VBox();
     this.base.addChild(vbox);
-    
-    var costIndicator = new Label("Tower cost: 50");
+
+    var towerCost = 50;
+    var costIndicator = new Label("...");
     vbox.add(costIndicator);
 
     var attackCombinations = [];
     var uniqueNum = 1;
 
     for (var key in towerAttackTypes) {
-        var attackTypes = {}; //Obj needed for now, it goes away when added (because we turn it into an array)
-        attackTypes[1] = (towerAttackTypes[key]);
-        attackCombinations.push(attackTypes);
+        //Obj needed for now, it goes away when added (because we turn it into an   array)
+        attackCombinations.push([
+            towerAttackTypes[key],
+        ]);
     }
 
-    //var superAttack = { 0: allAttackTypes.Pulse, 1: allAttackTypes.Pulse, 2: allAttackTypes.Pulse };
-    //attackCombinations.push(superAttack);
-    
     this.resize = function (rect) {
         costIndicator.resize(rect);
         vbox.resize(rect);
@@ -148,14 +145,9 @@ function Towerbar() {
     }
 
     this.added = function () {
-        var game = getGame(this);
-        var tileSize = game.tileSize;
-
-        function tileFnc(obj, refObj, pos) {
-            function towerDraggerFunction(forDisplay) {
-                var fakeTile = {};
-                fakeTile.tpos = new Rect(0, 0, tileSize, tileSize);
-                var tower = new Tower(fakeTile, fakeTile.tpos);
+        function makeTowerDragger(obj) {
+            function makeTower(forDisplay) {
+                var tower = new Tower();
 
                 if (forDisplay) {
                     tower.attr.attackTypes = [];
@@ -173,23 +165,23 @@ function Towerbar() {
 
                 return tower;
             }
-            var towerDragger = new TowerDragger(pos.clone(), towerDraggerFunction);
+            var towerDragger = new TowerDragger(self, makeTower);
 
-            vbox.add(towerDragger);
-
-            return true;
+            return towerDragger;
         }
 
-        var boxBox = new Rect(this.tpos.x + 15, this.tpos.y + 40, 450, 150);
-        makeTiled(this, tileFnc, attackCombinations, boxBox, 6, 2, 0.1);
+        for (var key in attackCombinations) {
+            vbox.add(makeTowerDragger(attackCombinations[key]));
+        }
     };
 
-    this.update = function () {
-        var game = getGame(this);
+    this.currentCost = function () {
+        return towerCost;
+    };
 
-//         costIndicator.tpos.x = pos.x + 10;
-//         costIndicator.tpos.y = pos.y + 25;
-
-        costIndicator.text("Current tower cost: " + prefixNumber(game.currentCost));
-    }
+    this.setCurrentCost = function (newCost) {
+        towerCost = newCost;
+        costIndicator.text("Current tower cost: " + prefixNumber(towerCost));
+    };
+    this.setCurrentCost(towerCost);
 }

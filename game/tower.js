@@ -4,22 +4,22 @@ function Tower_Packet(t1, t2, speed, allele) {
     this.tpos = new Rect(0, 0, 1, 1);
     var p1 = t1.tpos.center();
     var p2 = t2.tpos.center();
-    
+
     var dis = p1.clone().sub(p2).mag();
-    
+
     var packet = new SCircle(p1, 3, allele.getOuterColor(), allele.getInnerColor(), 15);
     packet.lineWidth = 1;
-    
+
     var motionDelay = new MotionDelay(p1, p2, dis / speed, apply);
     this.base.addChild(packet);
     packet.base.addChild(motionDelay);
-    
+
     var that = this;
     function apply() {
         t2.genes.addAllele(allele);
         that.base.destroySelf();
     }
-    
+
     this.update = function() {
         packet.tpos = t1.tpos.center();
     }
@@ -33,34 +33,35 @@ function Tower_Connection(t1, t2) {
 
     var line = new SLine(t1.tpos.center(), t2.tpos.center(), "rgba(0, 255, 0, 0.2)", 11, [0.1, 0.3, 0.5, 0.7, 0.9]);
     this.base.addChild(line);
-    
+
     var prevhitCount;
     var deleteButton;
-    
+
     var that = this;
-    
+
     function getDeleteButtonPos() {
         var width = 20;
         var height = 20;
-        
+
         var delta = t2.tpos.center();
         delta.sub(t1.tpos.center());
         delta.mult(1/2);
-        
+
         var pos = t2.tpos.center();
         pos.sub(delta);
         pos.sub(new Vector(width * 0.5, height * 0.5));
         pos = new Rect(0, 0, width, height).origin(pos);
-        
+
         return pos;
     }
+
     this.added = function() {
         deleteButton = new Button("-", bind(that, "deleteSelf"), 50);
-        
+
         this.base.parent.base.parent.base.addChild(deleteButton);
         deleteButton.resize(getDeleteButtonPos());
     }
-    
+
     function dataTransfer(t1, t2) {
         function sendRandomPacket(t1, t2, speed) {
             var group = pickRandomKey(t1.genes.alleles);
@@ -73,7 +74,7 @@ function Tower_Connection(t1, t2) {
             prevhitCount = t1.attr.kills;
             return;
         }
-        
+
         var dis = cloneObject(t1.tpos.center());
         dis.sub(t2.tpos.center());
         dis = dis.mag() / 1000;
@@ -81,7 +82,7 @@ function Tower_Connection(t1, t2) {
         var speed = Math.max(Math.min(t1.attr.upload, t2.attr.download) / dis, 0.00000001 /* should really be zero */);
         var killsRequired = 10 / speed;
         var killDelta = t1.attr.kills - prevhitCount;
-        
+
         while (Math.floor(killDelta / killsRequired) > 0) {
             sendRandomPacket(t1, t2, speed);
             prevhitCount += killsRequired;
@@ -89,7 +90,7 @@ function Tower_Connection(t1, t2) {
         }
         prevhitCount = t1.attr.kills - killDelta;
     }
-    
+
     this.deleteSelf = function () {
         var conns = this.base.parent.connections;
         deleteButton.base.destroySelf();
@@ -106,17 +107,17 @@ function Tower_Connection(t1, t2) {
 
     this.update = function (dt) {
         dataTransfer(t1, t2);
-        
+
         line.start = t1.tpos.center();
         line.end = t2.tpos.center();
 
         deleteButton.hidden = !this.base.parent.hover;
-        
+
         deleteButton.resize(getDeleteButtonPos());
 
         // Wtf... setColorPart() should not be a thing.
         if (this.base.parent.hover) {
-            line.color = setColorPart(line.color, 3, 0.9);            
+            line.color = setColorPart(line.color, 3, 0.9);
         } else {
             line.color = setColorPart(line.color, 3, 0.2);
         }
@@ -137,10 +138,8 @@ TowerStats = {
         value:          50
     };
 
-function Tower(baseTile, box) {    
-    this.baseTile = baseTile;
-    var p = box;
-    this.tpos = new Rect(p.x, p.y, p.w, p.h);
+function Tower() {
+    this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this, 10);
 
     this.attr = {};
@@ -180,7 +179,7 @@ function Tower(baseTile, box) {
     this.base.addChild(this.attackCycle = new AttackCycle());
     //this.base.addChild(new UpdateTicker(this.attr, "mutate", "mutate", true));
     this.base.addChild(new Selectable());
-    
+
     this.constantOne = 1;
     this.base.addChild(new UpdateTicker(this, "constantOne", "regenTick"));
 
@@ -415,7 +414,7 @@ function Tower(baseTile, box) {
             game.money -= 100;
         }
     };
-    
+
     this.die = function() {
         var c = this.connections;
         for (var i = 0; i < c.length; i++) {
@@ -426,53 +425,13 @@ function Tower(baseTile, box) {
         new Sound("snd/Tower_Die.wav").play();
     };
 
-    this.mutate = function() {
-        function invalid(attr) {
-            // NaN
-            if (attr != attr) return true;
-            if (attr == Infinity) return true;
-            if (attr == -Infinity) return true;
-            return false
-        }
-        
-        //a and at are too small for proper variable names
-        var a = this.attr;
-        
-        for (at in a) {
-            if(typeof a[at] != "number")
-                continue;
-            //Seriously... WTF. This code used to mean if you did:
-            //attr.daf += 1 it causes the object to be deleted.
-            if (invalid(a[at])) {
-                if(a[at] < 0) {
-                    this.die();
-                } else {
-                    fail("Invalid attribute in attr of object (you likely have a typo).");
-                }
-            }
-            if (at == "hitCount") continue;
-            if (at == "mutate" || at == "mutatestrength") {
-                // Avoid exponetial increase in all tower stats if mutate mutation was calculated just like all the other values.
-                a[at] += (Math.random() - 0.5) * a.mutatestrength / 500;
-            } else {
-                a[at] += (Math.random() - 0.5) * a.mutatestrength / 500 * a[at];
-            }
-        }
-        
-        if (a.range < 1) {
-            a.range = 1;
-        }
-        
-        this.recolor();
-    };
-    
     this.mouseover = function(e) {
         // Only required because of issue #29
         for (var i = 0; i < this.connections.length; i++) {
             this.connections[i].hover = true;
         }
     };
-    
+
     this.mouseout = function(e) {
         for (var i = 0; i < this.connections.length; i++) {
             this.connections[i].hover = false;
@@ -490,9 +449,9 @@ function Tower(baseTile, box) {
 
         getGame(this).input.globalMouseMove[this.base.id] = this;
         getGame(this).input.globalMouseUp[this.base.id] = this;
-        
+
         this.ctrlDrag = e.ctrlKey;
-        
+
         if(!this.ctrlDrag) {
             this.tempNetworkIndicator = new SLine(this.startDrag, e, "green", 15, {0: 1.0});
             this.base.parent.base.addChild(this.tempNetworkIndicator);
@@ -505,11 +464,11 @@ function Tower(baseTile, box) {
             this.tempNetworkIndicator.end = e;
         } else {
             var eng = getEng(this);
-    
+
             if(this.startDrag) {
                 var vector = new Vector(e);
                 vector.add(this.dragOffset);
-    
+
                 this.tryToMove(vector, eng);
             }
         }
@@ -523,23 +482,23 @@ function Tower(baseTile, box) {
 
         delete getGame(this).input.globalMouseMove[this.base.id];
         delete getGame(this).input.globalMouseUp[this.base.id];
-        
+
         if(!this.ctrlDrag && this.tempNetworkIndicator) {
             this.base.parent.base.removeObject(this.tempNetworkIndicator);
             this.tempNetworkIndicator = null;
-            
+
             var towerSelected = findClosestToPoint(eng, "Tower", e, 0);
             if(towerSelected && towerSelected != this)
             {
                 for (var i = 0; i < this.connections.length; i++)
                     if(this.connections[i].t2 == towerSelected)
                         return;
-                
+
                 var conn = new Tower_Connection(this, towerSelected);
                 this.base.addChild(conn);
                 this.connections.push(conn);
                 towerSelected.connections.push(conn);
-    
+
                 game.changeSel(this);
                 getAnElement(this.base.children.Selectable).ignoreNext = true;
             }
@@ -557,12 +516,12 @@ function Tower(baseTile, box) {
 
         tower.tpos.x = e.x;
         tower.tpos.y = e.y;
-        
+
         if(!initialPlacement && !findClosestToPoint(eng, "Tile", tower.tpos.center(), 0)) {
             //You cannot move to a position where there are no tiles
             tower.tpos.x = originalPos.x;
             tower.tpos.y = originalPos.y;
-            
+
             tower.hidden = false;
             return;
         }
@@ -643,7 +602,6 @@ function tryPlaceTower(tower, pos, eng)
     if (canPlace(tower, pos, eng)) {
         game.gameBoard.base.addChild(tower);
         game.changeSel(tower);
-        tower.value = game.currentCost;
         if (tileExist) {
             getAnElement(tileExist.base.children.Selectable).ignoreNext = true;
         }
