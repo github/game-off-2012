@@ -9,19 +9,29 @@ function TowerDragger(towerGeneratorFnc) {
     var placeOffset = new Vector(0, 0);
     var placingTower;
 
+    var displayedTowerCanvas = new Canvas();
+    var displayedTowerDirty = true;
     this.resize = function (rect) {
         this.tpos = rect.largestSquare();
-        displayedTower.tpos = this.tpos;
         displayedTower.recalculateAppearance();
+        displayedTower.tpos = this.tpos;
+        displayedTowerCanvas.resize(this.tpos);
+        displayedTowerDirty = true;
     };
 
     this.draw = function (pen) {
-        displayedTower.draw(pen);
+        var canvas = displayedTowerCanvas;
+        if (displayedTowerDirty) {
+            var pen2 = canvas.ctx();
+            pen2.translate(-this.tpos.x, -this.tpos.y);
+            displayedTower.draw(pen2);
+            displayedTowerDirty = false;
+        }
+        canvas.drawTo(pen);
         if (placingTower) placingTower.draw(pen);
     }
 
     this.update = function (dt) {
-       displayedTower.recalculateAppearance();
        if (placingTower) placingTower.recalculateAppearance(true);
     }
 
