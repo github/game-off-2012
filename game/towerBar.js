@@ -1,6 +1,6 @@
 //Make list with lits of alleles to create default tower types.
 
-function TowerDragger(towerGeneratorFnc) {
+function TowerDragger(towerBar, towerGeneratorFnc) {
     this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this, 20);
 
@@ -61,7 +61,7 @@ function TowerDragger(towerGeneratorFnc) {
 
         firstClick = true;
 
-        var curCost = game.currentCost;
+        var curCost = towerBar.currentCost();
 
         if (placingTower || game.money - curCost < 0) return;
 
@@ -86,7 +86,7 @@ function TowerDragger(towerGeneratorFnc) {
         game.input.globalMouseClick[this.base.id] = this;
 
         game.money -= curCost;
-        game.currentCost *= 1.3;
+        towerBar.setCurrentCost(curCost*1.3);
     }
 
     this.click = function (e) {
@@ -117,13 +117,15 @@ function TowerDragger(towerGeneratorFnc) {
 }
 
 function Towerbar() {
+    var self = this;
     this.base = new BaseObj(this, 14);
     this.tpos = new Rect(0, 0, 0, 0);
 
     var vbox = new VBox();
     this.base.addChild(vbox);
 
-    var costIndicator = new Label("Tower cost: 50");
+    var towerCost = 50;
+    var costIndicator = new Label("...");
     vbox.add(costIndicator);
 
     var attackCombinations = [];
@@ -163,7 +165,7 @@ function Towerbar() {
 
                 return tower;
             }
-            var towerDragger = new TowerDragger(makeTower);
+            var towerDragger = new TowerDragger(self, makeTower);
 
             return towerDragger;
         }
@@ -173,9 +175,13 @@ function Towerbar() {
         }
     };
 
-    this.update = function () {
-        var game = getGame(this);
+    this.currentCost = function () {
+        return towerCost;
+    };
 
-        costIndicator.text("Current tower cost: " + prefixNumber(game.currentCost));
-    }
+    this.setCurrentCost = function (newCost) {
+        towerCost = newCost;
+        costIndicator.text("Current tower cost: " + prefixNumber(towerCost));
+    };
+    this.setCurrentCost(towerCost);
 }

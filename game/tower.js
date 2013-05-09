@@ -548,7 +548,6 @@ function tryPlaceTower(tower, pos, eng)
     if (canPlace(tower, pos, eng)) {
         game.gameBoard.base.addChild(tower);
         game.changeSel(tower);
-        tower.value = game.currentCost;
         if (tileExist) {
             getAnElement(tileExist.base.children.Selectable).ignoreNext = true;
         }
