@@ -36,9 +36,8 @@ function InputHandler() {
         return { x: mX + 0.5, y: mY + 0.5 };
     }
 
-    this.events.mousemove = function (e) {
-        console.log("mousemove");
-                
+    this.events.mousemove = function (e) {  
+        if(!e.fromTouch && isTouchDevice()) return;
         var pos = getMousePos(e);
         this.ctrlKey = e.ctrlKey;
 
@@ -47,6 +46,7 @@ function InputHandler() {
     }
 
     this.events.mouseout = function (e) {
+        if(!e.fromTouch && isTouchDevice()) return;
         var pos = getMousePos(e);
         this.ctrlKey = e.ctrlKey;
 
@@ -55,6 +55,7 @@ function InputHandler() {
     }
 
     this.events.mousedown = function (e) {
+        if(!e.fromTouch && isTouchDevice()) return;
         var pos = getMousePos(e);
         this.ctrlKey = e.ctrlKey;
 
@@ -63,6 +64,7 @@ function InputHandler() {
     }
 
     this.events.mouseup = function (e) {
+        if(!e.fromTouch && isTouchDevice()) return;
         var pos = getMousePos(e);
         this.ctrlKey = e.ctrlKey;
 
@@ -85,8 +87,7 @@ function InputHandler() {
             default: return;
         }
         
-        if(type != "mousemove")
-            e.preventDefault();
+        e.preventDefault();
         
         for(var key in e.changedTouches) {
             var touchEvent = e.changedTouches[key];
@@ -96,6 +97,8 @@ function InputHandler() {
                           touchEvent.screenX, touchEvent.screenY,
                           touchEvent.clientX, touchEvent.clientY, false,
                           false, false, false, 0/*left*/, null);
+                          
+            simulatedEvent.fromTouch = true;
 
             e.target.dispatchEvent(simulatedEvent);
             return;
