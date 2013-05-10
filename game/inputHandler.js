@@ -37,14 +37,14 @@ function InputHandler() {
     }
 
     this.nextIsTouch = false;
-    this.screenNonTouchEvents = function() {
-        if(!this.nextIsTouch && isTouchDevice()) return true;
+    this.screenNonTouchEvents = function(e) {
+        if(!this.nextIsTouch && !e.fromTouch && isTouchDevice()) return true;
         this.nextIsTouch = false;
         return false;
     }
 
     this.events.mousemove = function (e) {  
-        if(this.screenNonTouchEvents()) return;
+        if(this.screenNonTouchEvents(e)) return;
         var pos = getMousePos(e);
         this.ctrlKey = e.ctrlKey;
 
@@ -53,7 +53,7 @@ function InputHandler() {
     }
 
     this.events.mouseout = function (e) {
-        if(this.screenNonTouchEvents()) return;
+        if(this.screenNonTouchEvents(e)) return;
         var pos = getMousePos(e);
         this.ctrlKey = e.ctrlKey;
 
@@ -62,7 +62,7 @@ function InputHandler() {
     }
 
     this.events.mousedown = function (e) {
-        if(this.screenNonTouchEvents()) return;
+        if(this.screenNonTouchEvents(e)) return;
         var pos = getMousePos(e);
         this.ctrlKey = e.ctrlKey;
 
@@ -71,7 +71,7 @@ function InputHandler() {
     }
 
     this.events.mouseup = function (e) {
-        if(this.screenNonTouchEvents()) return;
+        if(this.screenNonTouchEvents(e)) return;
         var pos = getMousePos(e);
         this.ctrlKey = e.ctrlKey;
 
@@ -105,9 +105,12 @@ function InputHandler() {
                           touchEvent.clientX, touchEvent.clientY, false,
                           false, false, false, 0/*left*/, null);
                           
-            this.nextIsTouch = true;
-
-            e.target.dispatchEvent(simulatedEvent);
+            //this.nextIsTouch = true;
+            //e.target.dispatchEvent(simulatedEvent);
+            
+            simulatedEvent.fromTouch = true;
+            this.events[type](simulatedEvent);
+            
             return;
         }
     }
