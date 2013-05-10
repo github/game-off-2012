@@ -89,7 +89,6 @@ function InputHandler() {
         
         for(var key in e.changedTouches) {
             var touchEvent = e.changedTouches[key];
-            this.events[type](point);
             
             var simulatedEvent = document.createEvent("MouseEvent");
             simulatedEvent.initMouseEvent(type, true, true, window, 1,
