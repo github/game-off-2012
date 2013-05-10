@@ -7,28 +7,29 @@ function AllelePointSystem(pos) {
         var that = this;
         function pointButton(num, cost) {
             var text;
-            if (num == 1) {
-                text = "Buy point ($" + cost + ")";
-            } else {
-                text = "Buy " + num + " points ($" + cost + ")";
-            }
+            text = "Buy " + num + ": $" + cost;
             var b = new Button(text, bind(that, "buyPoint", {count: num, cost: cost}));
             return b;
         }
         vbox = new VBox();
         this.base.addChild(vbox);
-        
-        this.pointIndicator = new Label("");
-        vbox.add(this.pointIndicator);
 
-        vbox.add(this.buyButton = pointButton(1, 50));
-        vbox.add(this.buyButton1 = pointButton(10, 350));
-        vbox.add(this.buyButton2 = pointButton(100, 2500));
-        vbox.add(this.spendButton = new Button("Spend Point", bind(this, "spendPoint")));
-        vbox.add(this.trashButton = new Button("Trash Point", bind(this, "trashPoint")));
-        vbox.add(this.autoTrashButton = new ToggleButton("Auto Trash Worse", bind(this, "autoTrashToggle")));
+        this.pointIndicator = new Label("");
+        vbox.add(this.pointIndicator, 28);
+
+        var buyHBox = new HBox();
+        vbox.add(buyHBox);
+        buyHBox.add(this.buyButton = pointButton(1, 50));
+        buyHBox.add(this.buyButton1 = pointButton(10, 350));
+        buyHBox.add(this.buyButton2 = pointButton(100, 2500));
+
+        var spendHBox = new HBox();
+        vbox.add(spendHBox);
+        spendHBox.add(this.spendButton = new Button("Spend Point", bind(this, "spendPoint")));
+        spendHBox.add(this.trashButton = new Button("Trash Point", bind(this, "trashPoint")));
+        vbox.add(this.autoTrashButton = new ToggleButton("Auto Trash Worse", bind(this, "autoTrashToggle")), 28);
     };
-    
+
     this.resize = function (rect) {
         vbox.resize(rect);
     }
@@ -158,7 +159,7 @@ function AllelePointSystem(pos) {
     }
 
     this.removeDeltaDisplay = function () {
-        this.base.parent.extraInfo = {};        
+        this.base.parent.extraInfo = {};
     }
 
     var added = false;
