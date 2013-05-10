@@ -90,7 +90,7 @@ function TowerDragger(towerBar, towerGeneratorFnc) {
     }
 
     this.click = function (e) {
-        if (firstClick) {
+        if (firstClick && !isTouchDevice()) {
             firstClick = false;
             return;
         }
