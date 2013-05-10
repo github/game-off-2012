@@ -69,7 +69,6 @@ function InputHandler() {
     }
     
     this.mapTouchToMouse = function(e) {
-        console.log(mouseFncName);
         e = e.originalEvent || e;
         //http://stackoverflow.com/questions/5186441/javascript-drag-and-drop-for-touch-devices
         
@@ -84,6 +83,10 @@ function InputHandler() {
             default: return;
         }
         
+        e.preventDefault();
+        
+        console.log(type);
+        
         for(var key in e.changedTouches) {
             var touchEvent = e.changedTouches[key];
             this.events[type](point);
@@ -96,8 +99,6 @@ function InputHandler() {
 
             touchEvent.target.dispatchEvent(simulatedEvent);
         }
-        
-        e.preventDefault();
     }
     
     this.events.touchstart = function(e) {
