@@ -68,6 +68,27 @@
         this.muY = pos.y;
     }
     
+    this.events.touchstart = function(e) {
+        for(var key in e.changedTouches) {
+            var point = e.changedTouches[key];
+            this.events.mousedown(point);
+        }
+    }
+    
+    this.events.touchmove = function(e) {
+        for(var key in e.changedTouches) {
+            var point = e.changedTouches[key];
+            this.events.mousemove(point);
+        }
+    }
+    
+    this.events.touchend = function(e) {
+        for(var key in e.changedTouches) {
+            var point = e.changedTouches[key];
+            this.events.mouseup(point);
+        }
+    }
+    
     this.unBind = function (canvas) {
         $(canvas).off();
         $(window).off();
