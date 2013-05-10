@@ -77,7 +77,7 @@ function RadioButton(pos, txt, cb, prevRadioButton) {
         return;
     }
     
-    this.mouseover = function() {
+    this.mousemove = function() {
         this.hover = true;
     };
     

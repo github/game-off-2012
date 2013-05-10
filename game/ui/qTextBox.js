@@ -22,7 +22,7 @@ function QTextBox(pos, text, zorder) {
         return this;
     };
 
-    this.mouseover = function() {
+    this.mousemove = function() {
         hover = true;
     };
 

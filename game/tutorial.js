@@ -382,7 +382,7 @@ function AllMouseThrough(pos) {
     this.muY = -1;
     */
 
-    this.mouseover = function (e) {
+    this.mousemove = function (e) {
         var redirectedInput = getGame(this).underlyingGame.input;
 
         redirectedInput.mX = e.x;
@@ -417,7 +417,7 @@ function MouseMoveThrough(pos) {
     this.base = new BaseObj(this, 0);
     this.tpos = pos;
 
-    this.mouseover = function (e) {
+    this.mousemove = function (e) {
         var redirectedInput = getGame(this).underlyingGame.input;
 
         redirectedInput.mX = e.x;

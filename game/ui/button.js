@@ -38,7 +38,7 @@ function Button(text, callback, zorder) {
         if (callback) callback();
     };
     
-    this.mouseover = function () {
+    this.mousemove = function () {
         hover = true;
         this.base.dirty();
     };

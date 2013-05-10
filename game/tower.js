@@ -425,19 +425,6 @@ function Tower() {
         new Sound("snd/Tower_Die.wav").play();
     };
 
-    this.mouseover = function(e) {
-        // Only required because of issue #29
-        for (var i = 0; i < this.connections.length; i++) {
-            this.connections[i].hover = true;
-        }
-    };
-
-    this.mouseout = function(e) {
-        for (var i = 0; i < this.connections.length; i++) {
-            this.connections[i].hover = false;
-        }
-    };
-
     this.startDrag = null;
     this.dragOffset = null;
     this.tempNetworkIndicator = null;
@@ -458,20 +445,32 @@ function Tower() {
         }
     };
 
-    this.mousemove = function(e)
-    {
-        if(!this.ctrlDrag) {
-            this.tempNetworkIndicator.end = e;
-        } else {
-            var eng = getEng(this);
-
-            if(this.startDrag) {
-                var vector = new Vector(e);
-                vector.add(this.dragOffset);
-
-                this.tryToMove(vector, eng);
-            }
+    this.mouseout = function(e) {
+        for (var i = 0; i < this.connections.length; i++) {
+            this.connections[i].hover = false;
         }
+    };
+
+    this.mousemove = function(e) {
+        for (var i = 0; i < this.connections.length; i++) {
+            this.connections[i].hover = true;
+        }
+
+        if (this.startDrag) this.globalMouseMove(e);
+    };
+
+    this.globalMouseMove = function(e) {
+        if (!this.ctrlDrag) {
+            this.tempNetworkIndicator.end = e;
+            return;
+        }
+
+        var eng = getEng(this);
+
+        var vector = new Vector(e);
+        vector.add(this.dragOffset);
+
+        this.tryToMove(vector, eng);
     }
 
     this.mouseup = function(e){

@@ -203,8 +203,8 @@
                     this.globalMouseMove[key].base.callRaise("mousemove", { x: this.mX, y: this.mY });
             }
 
-            var curMouseOver = throwMouseEventAt(this.mX, this.mY, "mouseover", eng, this.globalMouseMove);
-            //Can actually find mouseout more efficiently... as we have previous and current mouseover...            
+            var curMouseOver = throwMouseEventAt(this.mX, this.mY, "mousemove", eng, this.globalMouseMove);
+            //Can actually find mouseout more efficiently... as we have previous and current mousemove...            
             if (this.prevMouseOver && this.prevMouseOver.length > 0) {
                 for (var i = 0; i < this.prevMouseOver.length; i++) {
                     if (vecToRect({ x: this.mX, y: this.mY }, this.prevMouseOver[i].tpos).magSq() != 0) {

@@ -45,7 +45,7 @@ function ToggleButton(text, cb) {
         return;
     }
     
-    this.mouseover = function() {
+    this.mousemove = function() {
         hover = true;
         this.base.dirty();
     };

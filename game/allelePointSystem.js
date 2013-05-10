@@ -114,7 +114,7 @@ function AllelePointSystem(pos) {
         }
     }
 
-    this.mouseover = function () { this.addDeltaDisplay(); };
+    this.mousemove = function () { this.addDeltaDisplay(); };
     this.mouseout = function () { this.removeDeltaDisplay(); };
 
     this.addDeltaDisplay = function () {
