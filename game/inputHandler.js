@@ -31,10 +31,6 @@ function InputHandler() {
     function getMousePos(e) {
         var canpos = document.getElementById("myCanvas")
         var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canpos.offsetLeft;
-Uncaught TypeError: Cannot read property 'offsetLeft' of null
-Uncaught TypeError: Cannot read property 'offsetLeft' of null (repeated 3 times)
-Uncaught TypeError: Cannot read property 'offsetLeft' of null
-Uncaught TypeError: Cannot read property 'offsetLeft' of null
         var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canpos.offsetTop;
 
         return { x: mX + 0.5, y: mY + 0.5 };
