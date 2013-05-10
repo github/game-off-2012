@@ -1,4 +1,4 @@
-﻿function InputHandler() {
+function InputHandler() {
     //Only valid when handling mouse events (just check when it is set)
     this.ctrlKey = false;
 
@@ -29,8 +29,12 @@
     }
 
     function getMousePos(e) {
-        var canpos = document.getElementById("this.mYCanvas")
+        var canpos = document.getElementById("myCanvas")
         var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canpos.offsetLeft;
+Uncaught TypeError: Cannot read property 'offsetLeft' of null
+Uncaught TypeError: Cannot read property 'offsetLeft' of null (repeated 3 times)
+Uncaught TypeError: Cannot read property 'offsetLeft' of null
+Uncaught TypeError: Cannot read property 'offsetLeft' of null
         var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canpos.offsetTop;
 
         return { x: mX + 0.5, y: mY + 0.5 };
@@ -69,6 +73,8 @@
     }
     
     this.events.touchstart = function(e) {
+        console.log("touchstart");
+        e = e.originalEvent || e;
         for(var key in e.changedTouches) {
             var point = e.changedTouches[key];
             this.events.mousedown(point);
@@ -76,6 +82,8 @@
     }
     
     this.events.touchmove = function(e) {
+        console.log("touchmove");
+        e = e.originalEvent || e;
         for(var key in e.changedTouches) {
             var point = e.changedTouches[key];
             this.events.mousemove(point);
@@ -83,9 +91,23 @@
     }
     
     this.events.touchend = function(e) {
+        console.log("touchend");
+        e = e.originalEvent || e;
         for(var key in e.changedTouches) {
             var point = e.changedTouches[key];
             this.events.mouseup(point);
+        }
+        //Prevents hover state from staying
+        this.mX = -1;
+        this.mY = -1;
+    }
+    
+    this.events.touchleave = function(e) {
+        console.log("touchleave");
+        e = e.originalEvent || e;
+        for(var key in e.changedTouches) {
+            var point = e.changedTouches[key];
+            this.events.mouseout (point);
         }
     }
     
