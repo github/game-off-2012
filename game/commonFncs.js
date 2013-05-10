@@ -258,3 +258,10 @@ function loadScripts(prefix, scripts) {
         loadScript(prefix + scripts[i]);
     }
 }
+
+//http://stackoverflow.com/questions/6262584/how-to-determine-if-the-client-is-a-touch-device
+function isTouchDevice() {
+   var el = document.createElement('div');
+   el.setAttribute('ongesturestart', 'return;');
+   return typeof el.ongesturestart === "function";
+}
