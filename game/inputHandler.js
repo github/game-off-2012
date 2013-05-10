@@ -68,37 +68,61 @@ function InputHandler() {
         this.muY = pos.y;
     }
     
-    this.mapTouchToMouse = function(mouseFncName, e) {
-        e.preventDefault();
+    this.mapTouchToMouse = function(e) {
+        console.log(mouseFncName);
         e = e.originalEvent || e;
-        for(var key in e.changedTouches) {
-            var point = e.changedTouches[key];
-            this.events[mouseFncName](point);
+        //http://stackoverflow.com/questions/5186441/javascript-drag-and-drop-for-touch-devices
+        
+        var type = "";
+        switch(event.type)
+        {
+            case "touchstart":  type = "mousedown"; break;
+            case "touchmove":   type = "mousemove"; break;        
+            case "touchend":    type = "mouseup"; break;
+            case "touchleave":  type = "mouseout"; break;
+            case "touchcancel": type = "mouseout"; break;
+            default: return;
         }
+        
+        for(var key in e.changedTouches) {
+            var touchEvent = e.changedTouches[key];
+            this.events[type](point);
+            
+            var simulatedEvent = document.createEvent("MouseEvent");
+            simulatedEvent.initMouseEvent(type, true, true, window, 1,
+                          touchEvent.screenX, touchEvent.screenY,
+                          touchEvent.clientX, touchEvent.clientY, false,
+                          false, false, false, 0/*left*/, null);
+
+            touchEvent.target.dispatchEvent(simulatedEvent);
+        }
+        
+        e.preventDefault();
     }
     
     this.events.touchstart = function(e) {
-        this.mapTouchToMouse("mousedown", e);
+        this.mapTouchToMouse(e);
     }
     
     this.events.touchmove = function(e) {
-        this.mapTouchToMouse("mousemove", e);
+        //e.preventDefault();
+        this.mapTouchToMouse(e);
     }
     
     this.events.touchend = function(e) {
-        this.mapTouchToMouse("mouseup", e);
+        this.mapTouchToMouse(e);
 
         //Prevents hover state from staying
-        this.mX = -1;
-        this.mY = -1;
+        this.mX = 0;
+        this.mY = 0;
     }
     
     this.events.touchleave = function(e) {
-        this.mapTouchToMouse("mouseout", e);
+        this.mapTouchToMouse(e);
     }
     
     this.events.touchcancel = function(e) {
-        this.mapTouchToMouse("mouseout", e);
+        this.mapTouchToMouse(e);
     }
     
     this.unBind = function (canvas) {
