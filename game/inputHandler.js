@@ -68,43 +68,37 @@ function InputHandler() {
         this.muY = pos.y;
     }
     
-    this.events.touchstart = function(e) {
-        console.log("touchstart");
+    this.mapTouchToMouse = function(mouseFncName, e) {
+        e.preventDefault();
         e = e.originalEvent || e;
         for(var key in e.changedTouches) {
             var point = e.changedTouches[key];
-            this.events.mousedown(point);
+            this.events[mouseFncName](point);
         }
+    }
+    
+    this.events.touchstart = function(e) {
+        this.mapTouchToMouse("mousedown", e);
     }
     
     this.events.touchmove = function(e) {
-        console.log("touchmove");
-        e = e.originalEvent || e;
-        for(var key in e.changedTouches) {
-            var point = e.changedTouches[key];
-            this.events.mousemove(point);
-        }
+        this.mapTouchToMouse("mousemove", e);
     }
     
     this.events.touchend = function(e) {
-        console.log("touchend");
-        e = e.originalEvent || e;
-        for(var key in e.changedTouches) {
-            var point = e.changedTouches[key];
-            this.events.mouseup(point);
-        }
+        this.mapTouchToMouse("mouseup", e);
+
         //Prevents hover state from staying
         this.mX = -1;
         this.mY = -1;
     }
     
     this.events.touchleave = function(e) {
-        console.log("touchleave");
-        e = e.originalEvent || e;
-        for(var key in e.changedTouches) {
-            var point = e.changedTouches[key];
-            this.events.mouseout (point);
-        }
+        this.mapTouchToMouse("mouseout", e);
+    }
+    
+    this.events.touchcancel = function(e) {
+        this.mapTouchToMouse("mouseout", e);
     }
     
     this.unBind = function (canvas) {
