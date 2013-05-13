@@ -1,4 +1,4 @@
-﻿function InputHandler() {
+function InputHandler() {
     //Only valid when handling mouse events (just check when it is set)
     this.ctrlKey = false;
 
@@ -29,14 +29,22 @@
     }
 
     function getMousePos(e) {
-        var canpos = document.getElementById("this.mYCanvas")
+        var canpos = document.getElementById("myCanvas")
         var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canpos.offsetLeft;
         var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canpos.offsetTop;
 
         return { x: mX + 0.5, y: mY + 0.5 };
     }
 
-    this.events.mousemove = function (e) {
+    this.nextIsTouch = false;
+    this.screenNonTouchEvents = function(e) {
+        if(!this.nextIsTouch && !e.fromTouch && isTouchDevice()) return true;
+        this.nextIsTouch = false;
+        return false;
+    }
+
+    this.events.mousemove = function (e) {  
+        if(this.screenNonTouchEvents(e)) return;
         var pos = getMousePos(e);
         this.ctrlKey = e.ctrlKey;
 
@@ -45,6 +53,7 @@
     }
 
     this.events.mouseout = function (e) {
+        if(this.screenNonTouchEvents(e)) return;
         var pos = getMousePos(e);
         this.ctrlKey = e.ctrlKey;
 
@@ -53,6 +62,7 @@
     }
 
     this.events.mousedown = function (e) {
+        if(this.screenNonTouchEvents(e)) return;
         var pos = getMousePos(e);
         this.ctrlKey = e.ctrlKey;
 
@@ -61,11 +71,73 @@
     }
 
     this.events.mouseup = function (e) {
+        if(this.screenNonTouchEvents(e)) return;
         var pos = getMousePos(e);
         this.ctrlKey = e.ctrlKey;
 
         this.muX = pos.x;
         this.muY = pos.y;
+    }
+    
+    this.mapTouchToMouse = function(e) {
+        e = e.originalEvent || e;
+        //http://stackoverflow.com/questions/5186441/javascript-drag-and-drop-for-touch-devices
+        
+        var type = "";
+        switch(event.type)
+        {
+            case "touchstart":  type = "mousedown"; break;
+            case "touchmove":   type = "mousemove"; break;        
+            case "touchend":    type = "mouseup"; break;
+            case "touchleave":  type = "mouseout"; break;
+            case "touchcancel": type = "mouseout"; break;
+            default: return;
+        }
+        
+        e.preventDefault();
+        
+        for(var key in e.changedTouches) {
+            var touchEvent = e.changedTouches[key];
+            
+            var simulatedEvent = document.createEvent("MouseEvent");
+            simulatedEvent.initMouseEvent(type, true, true, window, 1,
+                          touchEvent.screenX, touchEvent.screenY,
+                          touchEvent.clientX, touchEvent.clientY, false,
+                          false, false, false, 0/*left*/, null);
+                          
+            //this.nextIsTouch = true;
+            //e.target.dispatchEvent(simulatedEvent);
+            
+            simulatedEvent.fromTouch = true;
+            this.events[type](simulatedEvent);
+            
+            return;
+        }
+    }
+    
+    this.events.touchstart = function(e) {
+        this.mapTouchToMouse(e);
+    }
+    
+    this.events.touchmove = function(e) {
+        //e.preventDefault();
+        this.mapTouchToMouse(e);
+    }
+    
+    this.events.touchend = function(e) {
+        this.mapTouchToMouse(e);
+
+        //Prevents hover state from staying
+        this.mX = 0;
+        this.mY = 0;
+    }
+    
+    this.events.touchleave = function(e) {
+        this.mapTouchToMouse(e);
+    }
+    
+    this.events.touchcancel = function(e) {
+        this.mapTouchToMouse(e);
     }
     
     this.unBind = function (canvas) {
