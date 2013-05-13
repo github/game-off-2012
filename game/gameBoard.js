@@ -6,7 +6,7 @@ function GameBoard(game) {
     generatePath(this, game);
     
     function moveChildren(node, start, end) {
-        node.loopThroughAllTypes(function (child) {
+        node.eachChild(function (child) {
             if (child.tpos) {
                 child.tpos.norm(start).project(end);
             }
