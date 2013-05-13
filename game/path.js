@@ -14,15 +14,6 @@ function Path_Start(x, y, w, h) {
     this.tpos = new Rect(x, y, w, h);
     this.base = new BaseObj(this, 2);
 
-    this.update = function (dt) {
-        if (this.nextPath && !this.pathLine) {
-            var eng = getEng(this);
-
-            this.pathLine = new Path_Line(this);
-            eng.base.addChild(this.pathLine);
-        }
-    };
-
     this.draw = function (pen) {
         var p = this.tpos;
         pen.fillStyle = "yellow";
@@ -31,16 +22,12 @@ function Path_Start(x, y, w, h) {
     };
 }
 
-
-function Path_Line(pathBase) {
-    this.path = pathBase;
-
-    //Our shape is a lie! (its off, not that it really matters)
-    this.tpos = pathBase.tpos;
+function Path_Piece(x, y, w, h) {
+    this.tpos = new Rect(x, y, w, h);
     this.base = new BaseObj(this, 3);
 
     this.redraw = function (canvas) {
-        if (!pathBase.nextPath) return;
+        if (!this.nextPath) return;
 
         var p = this.tpos;
         // tpos x/y give us the origin of our arrow, and w-h give us the
@@ -52,33 +39,18 @@ function Path_Line(pathBase) {
         var pen = canvas.ctx();
         pen.translate(p.w/2-p.x, p.h/2-p.y);
 
-        var t = pathBase.nextPath.tpos.center();
+        var t = this.nextPath.tpos.center();
         var direction = new Vector(t.x, t.y);
-        direction.sub(pathBase.tpos.center());
+        direction.sub(this.tpos.center());
 
-        var start = pathBase.tpos.center();
+        var start = this.tpos.center();
 
         var end = new Vector(start.x, start.y);
-        direction.norm().mult(pathBase.tpos.w);
+        direction.norm().mult(this.tpos.w);
         end.add(direction);
 
         pen.strokeStyle = "blue";
         pen.lineWidth = 2;
         ink.arrow(start.x, start.y, end.x, end.y, pen);
-    };
-}
-
-function Path_Piece(x, y, w, h) {
-    this.tpos = new Rect(x, y, w, h);
-    this.base = new BaseObj(this, 3);
-    this.pathLine = null;
-
-    this.update = function (dt) {
-        if (this.nextPath && !this.pathLine) {
-            var eng = getEng(this);
-
-            this.pathLine = new Path_Line(this);
-            eng.base.addChild(this.pathLine);
-        }
     };
 }
