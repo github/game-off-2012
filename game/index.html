@@ -77,6 +77,12 @@ canvas {
 
 <script>
     window.onload = function () {
+        if (!window.Rect) {
+            // Fix IE's stupid window.onload behaviour.
+            setTimeout(window.onload, 100);
+            return;
+        }
+
         var canvas = document.getElementById("myCanvas");
         var screenSystem = new ScreenSystem(canvas);
         var screen = new Rect(0, 0, window.innerWidth, window.innerHeight);
