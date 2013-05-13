@@ -1,55 +1,56 @@
-var uniqueBaseObjNumber = 1;
+BaseObj.nextUniqueId = 1;
 function BaseObj(holder, zindex, dynamicZIndex) {
+    var self = this;
     if (!assertDefined("BaseObj", holder))
         return;
 
     //Strange... but needed
-    holder.base = this;
+    holder.base = self;
 
 //Identifier properties
-    this.type = getRealType(holder); //.constructor.name;
+    self.type = getRealType(holder); //.constructor.name;
     if (dynamicZIndex)
-        this.type += zindex;
+        self.type += zindex;
 
     //If its not a string then the object degenerates to an array.
-    this.id = 'q' + uniqueBaseObjNumber++;
+    self.id = 'q' + BaseObj.nextUniqueId++;
 
 
 //Drawing properties
     //Will be set to the position in the array it is in,
     //and so will be used to determine order when zindex is equal.
-    this.zoffset = 0; //<--------- THIS IS ALSO QUADTREE MAINTAINED
+    self.zoffset = 0; //<--------- THIS IS ALSO QUADTREE MAINTAINED
 
     if (!zindex)
         zindex = 0;
 
     //Individual objects cannot change their zindex! If they are the same type they must have the same zindex!
-    this.zindex = zindex;
+    self.zindex = zindex;
 
 
 //Hierarchical properties
-    this.rootNode = holder; //Be default we are our own rootNode
-    this.holder = holder;
-    this.parent = null;
+    self.rootNode = holder; //Be default we are our own rootNode
+    self.holder = holder;
+    self.parent = null;
 
     //Organized by type, and then objects of objects (with the index the id)
-    //so this.children['Tower']['q53'] could be a tower (depending on the unique id of the tower)
-    //this.parent
-    this.children = {};
-    this.lengths = {}; //type to length, must be maintained manually (naturally)
+    //so self.children['Tower']['q53'] could be a tower (depending on the unique id of the tower)
+    //self.parent
+    self.children = {};
+    self.lengths = {}; //type to length, must be maintained manually (naturally)
 
     //Flattened structure of children, so grandchildren are in here, etc
-    this.allChildren = {};
-    this.allLengths = {};
+    self.allChildren = {};
+    self.allLengths = {};
 
 
     if (holder.tpos) {
         //Quadtree maintained properties
         //We default the quadtree to something, that way every object always has one
         var tempArrObjs = {};
-        tempArrObjs[this.type] = {};
-        tempArrObjs[this.type][this.id] = holder;
-        this.curQuadTree = new QuadTree(tempArrObjs);
+        tempArrObjs[self.type] = {};
+        tempArrObjs[self.type][self.id] = holder;
+        self.curQuadTree = new QuadTree(tempArrObjs);
         //QuadTree will then set quadNode in us.
     }
 
@@ -70,14 +71,14 @@ function BaseObj(holder, zindex, dynamicZIndex) {
         }
     };
 
-    this.addChild = function (obj) {
+    self.addChild = function (obj) {
         if (!assertDefined("addChild", obj) || !assertDefined("addChild", obj.base))
             return;
 
-        obj.base.parent = this.holder;
-        obj.base.setRootNode(this.rootNode);
+        obj.base.parent = self.holder;
+        obj.base.setRootNode(self.rootNode);
 
-        addToArray(this, obj, "children", "lengths");
+        addToArray(self, obj, "children", "lengths");
 
         if (obj.added)
             obj.added();
@@ -97,17 +98,17 @@ function BaseObj(holder, zindex, dynamicZIndex) {
         }
     }
 
-    this.eachChild = function (funcToExecute) {
-        for (var type in this.children) {
-            for (var id in this.children[type]) {
-                if (funcToExecute(this.children[type][id])) {
+    self.eachChild = function (funcToExecute) {
+        for (var type in self.children) {
+            for (var id in self.children[type]) {
+                if (funcToExecute(self.children[type][id])) {
                     return;
                 }
             }
         }
     };
 
-    this.removeChild = function (obj) {
+    self.removeChild = function (obj) {
         if (!assertDefined("removeChild", obj, obj.base))
             return;
 
@@ -115,70 +116,70 @@ function BaseObj(holder, zindex, dynamicZIndex) {
         obj.base.parent = obj;
         obj.base.setRootNode(obj);
 
-        removeFromArray(this, obj, "children", "lengths");
+        removeFromArray(self, obj, "children", "lengths");
     };
 
-    this.destroySelf = function () {
-        if (!this.parent) return;
+    self.destroySelf = function () {
+        if (!self.parent) return;
 
-        this.holder.base.callRaise("die");
-        this.parent.base.removeChild(this.holder);
+        self.holder.base.callRaise("die");
+        self.parent.base.removeChild(self.holder);
 
         //Also destroy our children (keeps allChildren working properly)
-        this.eachChild(function (child) {
+        self.eachChild(function (child) {
             if (child.base)
                 child.base.destroySelf();
         });
     };
 
-    this.setRootNode = function (rootNode) {
+    self.setRootNode = function (rootNode) {
         if (!assertDefined("setRootNode", rootNode))
             return;
 
         //Remove stuff from old rootNode
-        if (this.rootNode) {
-            removeFromArray(this.rootNode.base, this.holder, "allChildren", "allLengths");
-            if (this.rootNode.curQuadTree)
-                this.rootNode.curQuadTree.removeFromTree(this.holder);
+        if (self.rootNode) {
+            removeFromArray(self.rootNode.base, self.holder, "allChildren", "allLengths");
+            if (self.rootNode.curQuadTree)
+                self.rootNode.curQuadTree.removeFromTree(self.holder);
         }
 
-        this.rootNode = rootNode;
+        self.rootNode = rootNode;
 
-        addToArray(this.rootNode.base, this.holder, "allChildren", "allLengths");
-        if (this.rootNode.curQuadTree)
-            this.rootNode.curQuadTree.addToTree(this.holder);
+        addToArray(self.rootNode.base, self.holder, "allChildren", "allLengths");
+        if (self.rootNode.curQuadTree)
+            self.rootNode.curQuadTree.addToTree(self.holder);
 
-        this.eachChild(function (child) {
+        self.eachChild(function (child) {
             if (child.base) {
                 child.base.setRootNode(rootNode);
             }
         });
     };
 
-    this.removeAllType = function (type) {
-        if (this.children[type]) {
-            this.children[type] = {};
-            this.lengths[type] = 0;
+    self.removeAllType = function (type) {
+        if (self.children[type]) {
+            self.children[type] = {};
+            self.lengths[type] = 0;
         }
         //This is harder, you need to also remove them from their parents
-        if (this.allChildren[type]) {
-            for(var key in this.allChildren[type]) {
-                var toRemove = this.allChildren[type][key];
-                if(toRemove.base.parent != this.holder)
+        if (self.allChildren[type]) {
+            for(var key in self.allChildren[type]) {
+                var toRemove = self.allChildren[type][key];
+                if(toRemove.base.parent != self.holder)
                     delete toRemove.base.parent.base.children[type][key];
             }
-            this.allChildren[type] = {};
-            this.allLengths[type] = 0;
+            self.allChildren[type] = {};
+            self.allLengths[type] = 0;
         }
     };
 
     // Calls the function with the name on our object (and gives it arguments),
     // and calls raiseEvent on our children.
     // Update is basically just raiseEvent("update", dt)
-    this.raiseEvent = function (name, args) {
+    self.raiseEvent = function (name, args) {
         if (holder[name]) holder[name](args);
 
-        this.eachChild(function (child) {
+        self.eachChild(function (child) {
             if (child.base) {
                 child.base.raiseEvent(name, args)
             }
@@ -187,34 +188,34 @@ function BaseObj(holder, zindex, dynamicZIndex) {
 
     // Calls the function, then raises an event called "parent_" + name
     // to all of its children.
-    this.callRaise = function (name, args) {
+    self.callRaise = function (name, args) {
         if(holder[name] && !holder.hidden)
             holder[name](args);
 
-        this.eachChild(function (child) {
+        self.eachChild(function (child) {
             if (child && child["parent_" + name]) {
                 child["parent_" + name](args);
             }
         });
     }
 
-    this.setAttributeRecursive = function (attributeName, value) {
-        this.holder[attributeName] = value;
+    self.setAttributeRecursive = function (attributeName, value) {
+        self.holder[attributeName] = value;
 
-        this.eachChild(function (child) {
+        self.eachChild(function (child) {
             if (child.base) {
                 child.base.setAttributeRecursive(attributeName, value);
             }
         });
     }
 
-    this.canHandleEvent = function (eventName) {
+    self.canHandleEvent = function (eventName) {
         if (holder[eventName])
             return true;
 
         eventName = "parent_" + eventName;
         var childrenHandleIt = false;
-        this.eachChild(function (child) {
+        self.eachChild(function (child) {
             if (child.base && child.base.canHandleEvent(eventName)) {
                 childrenHandleIt = true;
                 return true;
@@ -224,16 +225,16 @@ function BaseObj(holder, zindex, dynamicZIndex) {
         return childrenHandleIt;
     }
 
-    this.update = function (dt) {
+    self.update = function (dt) {
         if (holder.update) holder.update(dt);
 
-        this.eachChild(function (child) {
+        self.eachChild(function (child) {
             if (child.base) child.base.update(dt);
         });
     };
 
     var drawDirty = true;
-    this.dirty = function () {
+    self.dirty = function () {
         drawDirty = true;
     }
 
@@ -256,14 +257,14 @@ function BaseObj(holder, zindex, dynamicZIndex) {
         }
     }
 
-    this.draw = function (pen) {
+    self.draw = function (pen) {
         draw(pen);
 
         //Sort objects by z-index (low to high) and then draw by that order
         var childWithZIndex = [];
 
-        for (var key in this.children) {
-            var child = this.children[key];
+        for (var key in self.children) {
+            var child = self.children[key];
             if (getAnElement(child)) {
                 childWithZIndex.push({
                     zindex: getAnElement(child).base.zindex,

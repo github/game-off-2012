@@ -69,7 +69,6 @@ canvas {
 <script src="screenSystem.js"></script>
 <script src="gitDefence.js"></script>
 
-<script src="tutorial.js"></script>
 <script src="gameBoard.js"></script>
 
 <script src="gfx/include.js"></script>
@@ -80,20 +79,12 @@ canvas {
     window.onload = function () {
         var canvas = document.getElementById("myCanvas");
         var screenSystem = new ScreenSystem(canvas);
-        var width = window.innerWidth;
-        var height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
+        var screen = new Rect(0, 0, window.innerWidth, window.innerHeight);
+        canvas.width = screen.w;
+        canvas.height = screen.h;
 
-        screenSystem.addScreen("MainGame", new GitDefence(new Rect(0, 0, width, height)));
-
-        screenSystem.addScreen("Tutorial", new Tutorial(new Rect(0, 0, width, height)));
-
-        if (DFlag.disableTutorial) {
-            screenSystem.setActiveScreen("MainGame");
-        } else {
-            screenSystem.setActiveScreen("Tutorial");
-        }
+        screenSystem.addScreen("MainGame", new GitDefence(screen));
+        screenSystem.setActiveScreen("MainGame");
     };
 </script>
 </div>
