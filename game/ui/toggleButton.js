@@ -1,4 +1,3 @@
-// Basically a checkbox/label combo
 function ToggleButton(text, cb) {
     this.tpos = new Rect(0, 0, 0, 0);
     this.base = new BaseObj(this, 15);
