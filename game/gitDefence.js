@@ -81,15 +81,14 @@
             selection = object;
             this.infobar.updateAttr(object);
         } else {
-            selection = null;
-            this.infobar.clearDisplay();
+            this.unselect(object);
         }
     }
 
     this.unselect = function (object) {
         if (object !== selection) return;
 
-        selectionChanged = true;
         selection = null;
+        this.infobar.clearDisplay();
     }
 }
