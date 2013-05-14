@@ -294,4 +294,7 @@ function BaseObj(holder, zindex, dynamicZIndex) {
         }
     };
 
+    self.game = function () {
+        return self.rootNode.game;
+    }
 }

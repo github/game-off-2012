@@ -43,7 +43,7 @@ function ToggleButton(text, cb) {
         var size = r.h - 2 * padding;
         box.rect(new Rect(r.x + padding, r.y + padding, size, size));
 
-        fill = this.toggled ? "green" : "black";
+        fill = toggled ? "green" : "black";
         canvas.stroke(box, "green", 1);
         canvas.fill(box, fill);
         return;
