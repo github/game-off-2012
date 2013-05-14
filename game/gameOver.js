@@ -1,31 +1,30 @@
 //Most references to eng in this should likely just reference base.parent.
 
 function GameOver() {
-    this.base = new BaseObj(this, 100);
+    var self = this;
 
-    this.eng;
+    self.base = new BaseObj(self, 100);
 
-    this.alpha = 0;
+    self.alpha = 0;
 
-    this.added = function() {
-        this.eng = this.base.rootNode;
+    self.added = function() {
+        self.base.addChild(new SimpleCallback(2, "addButton"));
 
-        this.base.addChild(new SimpleCallback(2, "addButton"));
+        var eng = self.base.rootNode;
+        eng.base.addChild(new AttributeTween(1, 0, 5, null, "speed"));
 
-        this.base.rootNode.base.addChild(new AttributeTween(1, 0, 5, null, "speed"));
-
-        this.base.addChild(new AttributeTween(0, 0.8, 3, null, "alpha"));
+        self.base.addChild(new AttributeTween(0, 0.8, 3, null, "alpha"));
     }
 
-    this.nothing = function() {}
-
-    this.addButton = function() {
-        this.base.addChild(new Button("Restart", bind(window.location, "reload"), 102).resize(new Rect(360, 300, 100, 30)));
+    var restartButton = new Button("Restart", bind(window.location, "reload"));
+    self.addButton = function() {
+        restartButton.resize(new Rect(360, 300, 100, 30));
+        self.base.addChild(restartButton);
     }
 
-    this.draw = function(pen) {
-        var eng = this.base.rootNode;        
-        pen.fillStyle = rgba(0, 0, 0, this.alpha).str();
+    self.draw = function(pen) {
+        var eng = self.base.rootNode;
+        pen.fillStyle = rgba(0, 0, 0, self.alpha).str();
         pen.fillRect(0, 0, eng.tpos.w, eng.tpos.h, pen);
 
         var pos = new Rect(240, 230, 100, 30);
