@@ -9,7 +9,6 @@ function GameBoard(game) {
         node.eachChild(function (child) {
             if (child.tpos) {
                 child.tpos.norm(start).project(end);
-                child.base.dirty();
             }
             moveChildren(child.base, start, end);
         });
@@ -32,5 +31,18 @@ function GameBoard(game) {
         p.rect(contentBox.clone().moveOrigin(this.tpos.origin().neg()));
         canvas.fill(p, rgba(0, 0, 255, 0.1));
         canvas.stroke(p, rgba(0, 0, 255, 0.5), 2);
+
+        var pen = canvas.ctx();
+        pen.save();
+        pen.translate(-this.tpos.x, -this.tpos.y);
+        for (var type in this.base.children) {
+            var childrenOfType = this.base.children[type];
+            for (var id in childrenOfType) {
+                var child = childrenOfType[id];
+                if (child.drawToGameboard)
+                    child.drawToGameboard(pen);
+            }
+        }
+        pen.restore();
     }
 }
