@@ -422,7 +422,6 @@ function Tower() {
         }
         if(this.tempNetworkIndicator)
             this.tempNetworkIndicator.base.destroySelf();
-        new Sound("snd/Tower_Die.wav").play();
     };
 
     this.startDrag = null;

@@ -11,7 +11,7 @@ function applyAttack(attackTemplate) {
     var attacker = attackTemplate.attacker;
     var damage = attackTemplate.damage;
     var baseAttacker = attackTemplate.baseAttacker;
-    
+
     if(!assertDefined(target, attacker, damage, baseAttacker))
         return;
 
@@ -19,7 +19,7 @@ function applyAttack(attackTemplate) {
         fail("darn it! got to figure out how this happens.");
     }
 
-    target.attr.currentHp -= damage;    
+    target.attr.currentHp -= damage;
     baseAttacker.attr.hitCount++;
 
     var newAttackType = baseAttacker.attr.attackTypes[attackTemplate.currentAtbox + 1];
@@ -35,7 +35,6 @@ function applyAttack(attackTemplate) {
     if(target.attr.currentHp <= 0) {
         var game = getGame(target) || getGame(attacker) || getGame(baseAttacker);
 
-        var sound = new Sound("snd/die.wav");
         target.base.destroySelf();
 
         baseAttacker.attr.kills++;
@@ -51,7 +50,7 @@ function startAttack(attackTemplate) {
 
     if(!assertDefined(attackTemplate.attacker))
         return;
-    
+
     if(attackTemplate.damage < 0)
         return;
 
@@ -78,12 +77,12 @@ function AttackTemplate(attackType, attacker, target, damage, baseAttacker, curr
 {
     this.attackType = attackType;
 
-    this.attacker = attacker; 
-    this.target = target; 
-    this.damage = damage; 
+    this.attacker = attacker;
+    this.target = target;
+    this.damage = damage;
 
     this.baseAttacker = baseAttacker;
-    this.currentAtbox = currentAtbox;    
+    this.currentAtbox = currentAtbox;
 }
 
 //This is needed because old glyphs draw in the wrong spot. This fixes that.
@@ -92,7 +91,7 @@ function adjustBoxForOldGlyphs(box) {
     box.y += box.h * 0.85;
     box.w *= 0.75;
     box.h *= 0.75;
-    
+
     return box;
 }
 
@@ -110,7 +109,7 @@ var allAttackTypes = {
             var baseColor = globalColorPalette.laser;
 
             var bufferPercent = 0.15;
-            
+
             box.x += box.w * bufferPercent;
             box.y += box.h * bufferPercent;
 
@@ -169,7 +168,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new BaseObj(this, 15);         
+            this.base = new BaseObj(this, 15);
             this.attackTemplate = attackTemplate;
 
             var ourStats = attackTemplate.attackType;
@@ -178,21 +177,18 @@ var allAttackTypes = {
             var attacker = attackTemplate.attacker;
             var realAttacker = attackTemplate.baseAttacker;
             var target = attackTemplate.target;
-            var damage = attackTemplate.damage;            
+            var damage = attackTemplate.damage;
 
             this.color = getRealType(realAttacker) == "Bug" ? "rgba(255,0,0,0)" : globalColorPalette.laser;
-            
+
             //AlphaDecay destroys us
-            var line = new SLine(attacker.tpos.center(), target.tpos.center(), this.color, 12);        
+            var line = new SLine(attacker.tpos.center(), target.tpos.center(), this.color, 12);
             this.base.addChild(new AlphaDecay(damageToTime(realAttacker.attr.damage), 1, 0));
 
             this.base.addChild(line);
 
             applyAttack(this.attackTemplate);
 
-            this.sound = new Sound("snd/Laser_Shoot.wav");
-            this.sound.play();
-        
             this.update = function()
             {
                 line.color = this.color;
@@ -286,7 +282,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new BaseObj(this, 15);         
+            this.base = new BaseObj(this, 15);
             this.attackTemplate = attackTemplate;
 
             var ourStats = attackTemplate.attackType;
@@ -295,7 +291,7 @@ var allAttackTypes = {
             var realAttacker = attackTemplate.baseAttacker;
             var attacker = attackTemplate.attacker;
             var target = attackTemplate.target;
-            var damage = attackTemplate.damage;            
+            var damage = attackTemplate.damage;
 
             this.color = "Orange";
 
@@ -325,9 +321,6 @@ var allAttackTypes = {
 
             this.base.addChild(bullet);
 
-            this.sound = new Sound("snd/Laser_Shoot.wav");
-            this.sound.play();            
-
             this.update = function()
             {
                 motionDelay.end = target.tpos.center();
@@ -341,11 +334,11 @@ var allAttackTypes = {
         this.repeatDelay = 0.3;
         this.drawGlyph = function (pen, box) {
             box = adjustBoxForOldGlyphs(box);
-        	
+
             var w = box.w;
             var h = box.h;
 
-            var offsetList = 
+            var offsetList =
                 [3, 2, -3, 0, 5, 3, -4, 0, 5, 3,
                 2, 0,
                 -5, -3, 3, 0, -4, -3, 2, 0, -4, -2];
@@ -367,10 +360,10 @@ var allAttackTypes = {
                 start = cloneObject(end);
                 end = new Vector(start.x + w * (offsetList[i] / scale), start.y - h * (offsetList[i + 1] / scale));
                 pen.strokeStyle = globalColorPalette.chainLightning;
-	            pen.lineWidth = 0.5;	            
-                pen.lineTo(end.x, end.y);   
-                pen.stroke();             
-            }             
+	            pen.lineWidth = 0.5;
+                pen.lineTo(end.x, end.y);
+                pen.stroke();
+            }
 
             pen.closePath();
             pen.fill();
@@ -378,7 +371,7 @@ var allAttackTypes = {
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new BaseObj(this, 15);         
+            this.base = new BaseObj(this, 15);
             this.attackTemplate = attackTemplate;
 
             var attacker = attackTemplate.attacker;
@@ -390,18 +383,15 @@ var allAttackTypes = {
             this.repeatDelay = attackTemplate.attackType.repeatDelay;
 
             this.color = globalColorPalette.chainLightning;
-            
+
             //AlphaDecay destroys us
-            var line = new SLine(attacker.tpos.center(), target.tpos.center(), this.color, 12);        
+            var line = new SLine(attacker.tpos.center(), target.tpos.center(), this.color, 12);
             this.base.addChild(new AlphaDecay(this.repeatDelay, 1, 0));
 
             this.base.addChild(line);
 
             applyAttack(this.attackTemplate);
 
-            this.sound = new Sound("snd/Laser_Shoot.wav");
-            this.sound.play();
-        
             this.update = function()
             {
                 line.color = this.color;
@@ -426,7 +416,7 @@ var allAttackTypes = {
                         this.attackTemplate.prevList[key].hidden = true;
 
                     var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
-                    var targets = findAllWithin(attacker.base.rootNode, targetType, 
+                    var targets = findAllWithin(attacker.base.rootNode, targetType,
                             attacker.tpos.center(), rootAttacker.attr.range);
 
                     for(var key in this.attackTemplate.prevList)
@@ -474,9 +464,9 @@ var allAttackTypes = {
 	        ink.circ(box.x+(box.w*0.3), box.y-(box.w*0.5), box.w*0.1, pen);
         };
         this.AttackNode = function(attackTemplate)
-        {         
+        {
             this.base = new BaseObj(this, 8);
-            
+
             this.attackTemplate = attackTemplate ;
 
             var ourStats = attackTemplate.attackType;
@@ -498,17 +488,13 @@ var allAttackTypes = {
 
             this.base.addChild(circle);
 
-            
-            this.sound = new Sound("snd/Laser_Shoot.wav");
-            this.sound.play();
-        
             this.alpha = 0;
             this.update = function()
             {
                 circle.color = setAlpha(circle.color, this.alpha);
                 circle.fillColor = setAlpha(circle.color, this.alpha);
             };
-            
+
             this.charged = function()
             {
                 this.base.addChild(new SimpleCallback(0.1, "fire"));
@@ -524,13 +510,13 @@ var allAttackTypes = {
                 var target = attackTemplate.target;
                 attackTemplate.damage *= attackTemplate.attackType.damagePercent / 100;
                 var prevTarget = this.attackTemplate.target;
-                
+
                 var chargeTime = attackTemplate.attackType.chargeTime;
                 //We do our own targeting (we hit everything around the attacker)
-                            
+
                 //This is basically just a custom targeting strategy
                 var targetType = prevTarget ? getRealType(prevTarget) : (getRealType(attacker) == "Bug" ? "Tower" : "Bug");
-                var targets = findAllWithin(attacker.base.rootNode, targetType, 
+                var targets = findAllWithin(attacker.base.rootNode, targetType,
                         attacker.tpos.center(), effectRange);
 
                 this.targets = targets;
@@ -552,8 +538,8 @@ var allAttackTypes = {
         this.damagePercent = 30;
         this.drawGlyph = function (pen, box) {
             box = adjustBoxForOldGlyphs(box);
-            var circlePos = [0.2, 0.25, 0.1, 
-                            0.5, 0.1, 0.1, 
+            var circlePos = [0.2, 0.25, 0.1,
+                            0.5, 0.1, 0.1,
                             0.8, 0.25, 0.1,
                             0.2, 0.65, 0.1,
                             0.5, 0.5, 0.1,
@@ -565,16 +551,16 @@ var allAttackTypes = {
                 pen.strokeStyle = globalColorPalette.poison;
                 pen.fillStyle = globalColorPalette.poison;
 	            pen.lineWidth = 1;
-                ink.circ(box.x+(box.w*circlePos[i]), box.y-(box.w*circlePos[i + 1]), 
+                ink.circ(box.x+(box.w*circlePos[i]), box.y-(box.w*circlePos[i + 1]),
                     box.w * circlePos[i + 2], pen);
             }
-            
-            
+
+
             //ink.text(box.x, box.y, "PO", pen);
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new BaseObj(this, 15);         
+            this.base = new BaseObj(this, 15);
             this.attackTemplate = attackTemplate;
 
             var ourStats = attackTemplate.attackType;
@@ -589,16 +575,16 @@ var allAttackTypes = {
             this.repeatDelay = attackTemplate.attackType.repeatDelay;
 
             this.color = globalColorPalette.poison;
-            
+
             //AlphaDecay destroys us
             var line = new SLine(attacker.tpos.center(), target.tpos.center(), this.color, 12);
             this.base.addChild(new AttributeTween(1, 0, this.repeatDelay, "tick", "alpha"));
 
             this.base.addChild(line);
-            
+
             var poisonIndicator = new SCircle(target.tpos.center(), 8, this.color, this.color, 14);
-            this.base.addChild(poisonIndicator);            
-      
+            this.base.addChild(poisonIndicator);
+
             this.alpha = 0;
             this.poisonAlpha = 0;
             this.update = function()
@@ -618,7 +604,7 @@ var allAttackTypes = {
 
                 if(target.base.rootNode == eng &&
                     Math.random() < this.repeatChance / 100)
-                {                    
+                {
                     this.base.addChild(new AttributeTween(1, 0, this.repeatDelay * 0.5, "nothing", "poisonAlpha"));
                     this.base.addChild(new SimpleCallback(this.repeatDelay, "tick"));
 
@@ -639,8 +625,8 @@ var allAttackTypes = {
             var w = box.w;
             var h = box.h;
 
-            var offsetList = 
-                [5, -20, 5, 20,   
+            var offsetList =
+                [5, -20, 5, 20,
                 10, -50, 10, 30,
                 5, -50, 7, 50,
                 5, -90, 7, 100,
@@ -667,17 +653,17 @@ var allAttackTypes = {
                 start = cloneObject(end);
                 end = new Vector(start.x + w * (offsetList[i] / scale), start.y - h * (offsetList[i + 1] / scale));
                 pen.strokeStyle = globalColorPalette.chainLightning;
-	            pen.lineWidth = 0.5;	            
-                pen.lineTo(end.x, end.y);   
-                pen.stroke();             
-            }             
+	            pen.lineWidth = 0.5;
+                pen.lineTo(end.x, end.y);
+                pen.stroke();
+            }
 
             pen.closePath();
             pen.fill();
         };
         this.AttackNode = function(attackTemplate)
         {
-            this.base = new BaseObj(this, 15);         
+            this.base = new BaseObj(this, 15);
             this.attackTemplate = attackTemplate;
 
             var attacker = attackTemplate.attacker;
@@ -690,10 +676,10 @@ var allAttackTypes = {
 
             this.color = globalColorPalette.slow;
 
-            var line = new SLine(attacker.tpos.center(), target.tpos.center(), this.color, 12);        
+            var line = new SLine(attacker.tpos.center(), target.tpos.center(), this.color, 12);
             line.base.addChild(new AlphaDecay(slowTime, 1, 0));
-            this.base.addChild(line);            
-            
+            this.base.addChild(line);
+
             var slow = new SlowEffect(slow);
             slow.base.addChild(new Lifetime(slowTime));
 
@@ -738,13 +724,13 @@ function drawAttributes(user, pen) {
             if (typeof obj == "number")
                 return false;
             if(!obj.drawGlyph)
-                fail("not good");   
-                
+                fail("not good");
+
             DRAW.rect(
-                pen, 
-                new Rect(pos.x, pos.y, pos.w, pos.h), 
-                "transparent", 
-                1, 
+                pen,
+                new Rect(pos.x, pos.y, pos.w, pos.h),
+                "transparent",
+                1,
                 "rgba(255, 255, 255, 0.5)");
 
             obj.drawGlyph(pen, pos, user);

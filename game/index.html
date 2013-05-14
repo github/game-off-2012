@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>
-Tower Defence by Justin, Kevin, Quentin and Wesley
+GitDefence
 </title>
 <style type="text/css">
 body {
@@ -30,7 +30,6 @@ canvas {
 
 <script src="fail.js"></script>
 <script src="type.js"></script>
-<script src="sound.js"></script>
 
 <script src="gameOver.js"></script>
 
@@ -79,6 +78,8 @@ canvas {
     window.onload = function () {
         if (!window.Rect) {
             // Fix IE's stupid window.onload behaviour.
+            // Note that this will sometimes fail, but it's
+            // good enough for development/testing.
             setTimeout(window.onload, 100);
             return;
         }

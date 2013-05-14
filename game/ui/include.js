@@ -2,12 +2,7 @@
 loadScripts('ui/', [
     'button',
     'label',
-    'radioButton',
-    'textBox',
-    'qTextBox',
     'toggleButton',
-    'qTextWrapper',
-    'textWrapper',
     'vbox',
     'hbox',
 ]);
