@@ -27,7 +27,7 @@ function AllelePointSystem(pos) {
         vbox.add(spendHBox);
         spendHBox.add(this.spendButton = new Button("Spend Point", bind(this, "spendPoint")));
         spendHBox.add(this.trashButton = new Button("Trash Point", bind(this, "trashPoint")));
-        vbox.add(this.autoTrashButton = new ToggleButton("Auto Trash Worse", bind(this, "autoTrashToggle")), 28);
+        vbox.add(this.autoTrashButton = new ToggleButton("Auto Trash Worse"), 28);
     };
 
     this.resize = function (rect) {
@@ -35,12 +35,6 @@ function AllelePointSystem(pos) {
     }
 
     this.pointCost = 50;
-
-    this.selectionChanged = function (newSelected) {
-        if (newSelected) {
-            this.autoTrashButton.toggled = newSelected.autoTrash;
-        }
-    }
 
     this.buyPoint = function (costData) {
         var eng = this.base.rootNode;
@@ -77,14 +71,6 @@ function AllelePointSystem(pos) {
         if (selected && selected.base.type == "Tower") {
             if (selected.allelesGenerated.length > 0)
                 selected.allelesGenerated.splice(0, 1);
-        }
-    }
-
-    this.autoTrashToggle = function () {
-        var selected = getSel(this);
-
-        if (selected && selected.base.type == "Tower") {
-            selected.autoTrash = this.autoTrashButton.toggled;
         }
     }
 
@@ -162,25 +148,16 @@ function AllelePointSystem(pos) {
         this.base.parent.extraInfo = {};
     }
 
-    var added = false;
     this.update = function () {
-        if (!added && getGame(this)) {
-            getGame(this).globalSelectionChanged[this.base.id] = this;
-            added = true;
-        }
-
-        var eng = this.base.rootNode;
-        var game = eng.game;
-
-        var selected = getSel(this);
-
-        if (this.autoTrashButton.toggled) {
+        if (this.autoTrashButton.toggled()) {
             this.doAutoTrash();
         }
 
+        var selected = getSel(this);
         if (selected && selected.base.type == "Tower") {
             this.base.setAttributeRecursive("hidden", false);
             this.pointIndicator.text("Allele Points: " + selected.allelesGenerated.length);
+            this.addDeltaDisplay();
         } else {
             this.base.setAttributeRecursive("hidden", true);
         }

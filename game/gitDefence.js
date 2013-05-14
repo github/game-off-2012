@@ -52,59 +52,44 @@
     this.input.resizeEvent = pos;
 
     var selection = null;
-    var selectionChanged = false;
+
     this.run = function (timestamp) {
         var eng = this.engine;
         eng.run(timestamp);
 
         this.input.handleEvents(eng);
-
-        if (selectionChanged) {
-            for (var key in this.globalSelectionChanged) {
-                if (this.globalSelectionChanged[key].base.rootNode != eng) {
-                    delete this.globalSelectionChanged[key];
-                } else {
-                    this.globalSelectionChanged[key].base.callRaise("selectionChanged", selection);
-                }
-            }
-            selectionChanged = false;
-        }
     };
 
     this.draw = function (pen) {
         engine.base.draw(pen);
 
-        var obj = selection;
-        if (obj) {
-            pen.strokeStyle = obj.color;
-            pen.fillStyle = "transparent";
-            pen.lineWidth = 2;
-            var p = obj.tpos.center();
-            ink.circ(p.x, p.y, obj.attr.range, pen);
-        }
+        if (!selection) return;
+
+        pen.strokeStyle = selection.color;
+        pen.fillStyle = "transparent";
+        pen.lineWidth = 2;
+        var p = selection.tpos.center();
+        ink.circ(p.x, p.y, selection.attr.range, pen);
     }
 
-    this.changeSel = function (obj) {
-        return this.selection(obj);
+    this.selection = function () {
+        return selection;
     }
 
-    this.selection = function (newSelection) {
-        if (newSelection === undefined) {
-            return selection;
-        }
-
-        if (selection && selection.deselected) {
-            selection.deselected();
-        }
-
-        selectionChanged = true;
-
-        if (newSelection && newSelection.attr) {
-            selection = newSelection;
-            this.infobar.updateAttr(newSelection);
+    this.select = function (object) {
+        if (object && object.attr) {
+            selection = object;
+            this.infobar.updateAttr(object);
         } else {
             selection = null;
             this.infobar.clearDisplay();
         }
+    }
+
+    this.unselect = function (object) {
+        if (object !== selection) return;
+
+        selectionChanged = true;
+        selection = null;
     }
 }

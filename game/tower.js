@@ -498,7 +498,7 @@ function Tower() {
                 this.connections.push(conn);
                 towerSelected.connections.push(conn);
 
-                game.changeSel(this);
+                game.select(this);
                 getAnElement(this.base.children.Selectable).ignoreNext = true;
             }
         }
@@ -600,7 +600,7 @@ function tryPlaceTower(tower, pos, eng)
 
     if (canPlace(tower, pos, eng)) {
         game.gameBoard.base.addChild(tower);
-        game.changeSel(tower);
+        game.select(tower);
         if (tileExist) {
             getAnElement(tileExist.base.children.Selectable).ignoreNext = true;
         }

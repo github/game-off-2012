@@ -45,7 +45,7 @@ function AttackCycle() {
 
 function UpdateTicker(objWithDelay, tickDelayName, parentTickFunctionName, inverseRate) {
     this.base = new BaseObj(this);
-    
+
     this.objWithDelay = objWithDelay;
     this.tickDelayName = tickDelayName;
 
@@ -96,7 +96,7 @@ function Lifetime(lifetime) {
 function Selectable() {
     this.base = new BaseObj(this);
     this.tpos = new Rect(0, 0, 0, 0);
-    
+
     if (DFlag.drawSelectableBoxes) {
         this.draw = function (pen) {
             pen.beginPath();
@@ -109,19 +109,13 @@ function Selectable() {
     }
 
     this.parent_click = function () {
-        var eng = this.base.rootNode;
-        var game = eng.game;
-
-        game.selection(this.base.parent);
+        var game = this.base.rootNode.game;
+        game.select(this.base.parent);
     }
 
     this.parent_die = function () {
-        var eng = this.base.rootNode;
-        var game = eng.game;
-
-        if (game.selection == this.base.parent) {
-            game.selection(null);
-        }
+        var game = this.base.rootNode.game;
+        game.unselect(this.base.parent);
     }
 }
 
@@ -183,7 +177,7 @@ function MotionDelay(start, end, time, callback) {
         }
 
         var start = this.start;
-        var end = this.end;        
+        var end = this.end;
 
         var progress = this.time / this.baseTime;
 
@@ -208,7 +202,7 @@ function AttributeTween(start, end, time, callbackName, attributeName) {
         this.time -= dt;
         if (this.time < 0) {
             if (this.callbackName && this.callbackName.length > 0)
-                this.base.parent[this.callbackName]();            
+                this.base.parent[this.callbackName]();
 
             this.base.destroySelf();
             return;
