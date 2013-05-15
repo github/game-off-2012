@@ -70,18 +70,33 @@ function InputHandler() {
     };
 
     self.unBind = function (canvas) {
-        $(canvas).off();
-        $(window).off();
+        window.onresize = null;
+
+        canvas.ontouchstart = null;
+        canvas.ontouchmove = null;
+        canvas.ontouchend = null;
+        canvas.ontouchcancel = null;
+
+        canvas.onmousedown = null;
+        canvas.onmousemove = null;
+        canvas.onmouseup = null;
+        canvas.onmouseout = null;
     }
 
     self.bind = function (newCanvas) {
         canvas = newCanvas;
-        window.addEventListener('resize', events.resize, false);
-        var touch = isTouchDevice();
-        canvas.addEventListener(touch ? 'touchstart' : 'mousedown', events.pointerDown, false);
-        canvas.addEventListener(touch ? 'touchmove' : 'mousemove', events.pointerMove, false);
-        canvas.addEventListener(touch ? 'touchend' : 'mouseup', events.pointerEnd, false);
-        canvas.addEventListener(touch ? 'touchcancel' : 'mouseout', events.pointerEnd, false);
+        window.onresize = events.resize;
+        if ('ontouchstart' in canvas) {
+            canvas.ontouchstart = events.pointerDown;
+            canvas.ontouchmove = events.pointerMove;
+            canvas.ontouchend = events.pointerEnd;
+            canvas.ontouchcancel = events.pointerEnd;
+        } else {
+            canvas.onmousedown = events.pointerDown;
+            canvas.onmousemove = events.pointerMove;
+            canvas.onmouseup = events.pointerEnd;
+            canvas.onmouseout = events.pointerEnd;
+        }
     };
 
     function throwMouseEventAt(mX, mY, eventName, eng, ignore, ctrlKey) {
