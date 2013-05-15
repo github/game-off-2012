@@ -10,8 +10,8 @@ function InputHandler() {
     self.globalMouseUp = {};
     self.globalMouseClick = {};
 
-    //The only reason self would be false is if multiple people are sharing the input handler
-    self.consumeEvents = true;
+    //The only reason this would be false is if multiple people are sharing the input handler
+    var consumeEvents = true;
 
     var mouseX = -1;
     var mouseY = -1;
@@ -151,7 +151,7 @@ function InputHandler() {
 
             eng.base.raiseEvent("globalResize", self.resizeEvent);
 
-            if (self.consumeEvents)
+            if (consumeEvents)
                 self.resizeEvent = null;
         }
     };
@@ -169,7 +169,7 @@ function InputHandler() {
             var curMouseDown = throwMouseEventAt(mouseDownX, mouseDownY, "mousedown", eng, self.globalMouseDown, self.ctrlKey);
             self.prevMouseDown = curMouseDown;
 
-            if (self.consumeEvents) {
+            if (consumeEvents) {
                 mouseDownX = -1;
                 mouseDownY = -1;
             }
@@ -203,7 +203,7 @@ function InputHandler() {
 
             self.prevMouseDown = null;
 
-            if (self.consumeEvents) {
+            if (consumeEvents) {
                 mouseUpX = -1;
                 mouseUpY = -1;
             }
@@ -234,7 +234,7 @@ function InputHandler() {
                 }
             }
 
-            if (self.consumeEvents) {
+            if (consumeEvents) {
                 mouseY = -1;
                 mouseX = -1;
             }
