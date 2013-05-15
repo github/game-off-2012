@@ -125,12 +125,12 @@ function Tower_Connection(t1, t2) {
 }
 
 TowerStats = {
-        range:          0,
-        damage:         0,
-        hp:             0,
+        range:          10,
+        damage:         1,
+        hp:             10,
         currentHp:      0,
         hpRegen:        1,
-        attSpeed:       0,
+        attSpeed:       0.2,
         upload:         5,
         download:       5,
         hitCount:       0,
