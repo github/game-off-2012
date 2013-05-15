@@ -13,12 +13,12 @@ function InputHandler() {
     //The only reason self would be false is if multiple people are sharing the input handler
     self.consumeEvents = true;
 
-    self.mX = -1;
-    self.mY = -1;
-    self.mdX = -1; //Mouse down
-    self.mdY = -1;
-    self.muX = -1; //Mouse up
-    self.muY = -1;
+    var mouseX = -1;
+    var mouseY = -1;
+    var mouseDownX = -1;
+    var mouseDownY = -1;
+    var mouseUpX = -1;
+    var mouseUpY = -1;
 
     self.resizeEvent = null;
 
@@ -53,20 +53,20 @@ function InputHandler() {
 
     events.pointerMove = function (e) {
         var pos = pointerCoords(e);
-        self.mX = pos.x;
-        self.mY = pos.y;
+        mouseX = pos.x;
+        mouseY = pos.y;
     };
 
     events.pointerDown = function (e) {
         var pos = pointerCoords(e);
-        self.mdX = pos.x;
-        self.mdY = pos.y;
+        mouseDownX = pos.x;
+        mouseDownY = pos.y;
     };
 
     events.pointerEnd = function (e) {
         var pos = pointerCoords(e);
-        self.muX = pos.x;
-        self.muY = pos.y;
+        mouseUpX = pos.x;
+        mouseUpY = pos.y;
     };
 
     self.unBind = function (canvas) {
@@ -99,11 +99,11 @@ function InputHandler() {
         }
     };
 
-    function throwMouseEventAt(mX, mY, eventName, eng, ignore, ctrlKey) {
+    function throwMouseEventAt(x, y, eventName, eng, ignore, ctrlKey) {
         var allUnderMouse = [];
 
         for (var type in eng.base.allChildren) {
-            mergeToArray(findAllWithin(eng, type, { x: mX, y: mY }, 0), allUnderMouse);
+            mergeToArray(findAllWithin(eng, type, { x: x, y: y }, 0), allUnderMouse);
         }
 
         if (allUnderMouse.length == 0)
@@ -127,9 +127,9 @@ function InputHandler() {
         for (var key in allUnderMouse)
             if(!ignore[key])
                 if (allUnderMouse[key] !== topMost)
-                    allUnderMouse[key].base.callRaise(eventName, { x: mX, y: mY, topMost: false, ctrlKey: ctrlKey });
+                    allUnderMouse[key].base.callRaise(eventName, { x: x, y: y, topMost: false, ctrlKey: ctrlKey });
 
-        topMost.base.callRaise(eventName, { x: mX, y: mY, topMost: true, ctrlKey: ctrlKey });
+        topMost.base.callRaise(eventName, { x: x, y: y, topMost: true, ctrlKey: ctrlKey });
 
         return allUnderMouse;
     }
@@ -158,71 +158,71 @@ function InputHandler() {
 
     //Called in update and uses async flags set when we get events
     self.handleMouseEvents = function (eng) {
-        if (self.mdX > 0 && self.mdY > 0) {
+        if (mouseDownX > 0 && mouseDownY > 0) {
             for (var key in self.globalMouseDown) {
                 if (self.globalMouseDown[key].base.rootNode != eng)
                     delete self.globalMouseDown[key];
                 else
-                    self.globalMouseDown[key].base.callRaise("mousedown", { x: self.mdX, y: self.mdY });
+                    self.globalMouseDown[key].base.callRaise("mousedown", { x: mouseDownX, y: mouseDownY });
             }
 
-            var curMouseDown = throwMouseEventAt(self.mdX, self.mdY, "mousedown", eng, self.globalMouseDown, self.ctrlKey);
+            var curMouseDown = throwMouseEventAt(mouseDownX, mouseDownY, "mousedown", eng, self.globalMouseDown, self.ctrlKey);
             self.prevMouseDown = curMouseDown;
 
             if (self.consumeEvents) {
-                self.mdX = -1;
-                self.mdY = -1;
+                mouseDownX = -1;
+                mouseDownY = -1;
             }
         //We delay the mouse up for one cycle to prevent some bugs
-        } else if (self.muX > 0 && self.muY > 0) {
+        } else if (mouseUpX > 0 && mouseUpY > 0) {
             for (var key in self.globalMouseUp) {
                 if (self.globalMouseUp[key].base.rootNode != eng)
                     delete self.globalMouseUp[key];
                 else
-                    self.globalMouseUp[key].base.callRaise("mouseup", { x: self.muX, y: self.muY });
+                    self.globalMouseUp[key].base.callRaise("mouseup", { x: mouseUpX, y: mouseUpY });
             }
 
-            var curMouseUp = throwMouseEventAt(self.muX, self.muY, "mouseup", eng, self.globalMouseUp, self.ctrlKey);
+            var curMouseUp = throwMouseEventAt(mouseUpX, mouseUpY, "mouseup", eng, self.globalMouseUp, self.ctrlKey);
 
             if (self.prevMouseDown && self.prevMouseDown.length > 0) {
                 for (var key in self.globalMouseClick) {
                     if (self.globalMouseClick[key].base.rootNode != eng)
                         delete self.globalMouseClick[key];
                     else
-                        self.globalMouseClick[key].base.callRaise("click", { x: self.muX, y: self.muY });
+                        self.globalMouseClick[key].base.callRaise("click", { x: mouseUpX, y: mouseUpY });
                 }
 
                 for (var i = 0; i < self.prevMouseDown.length; i++) {
                     if (!self.globalMouseClick[self.prevMouseDown[i].base.id] &&
-                        vecToRect({ x: self.muX, y: self.muY }, self.prevMouseDown[i].tpos).magSq() == 0) {
-                        self.prevMouseDown[i].base.callRaise("click", { x: self.muX, y: self.muY });
+                        vecToRect({ x: mouseUpX, y: mouseUpY }, self.prevMouseDown[i].tpos).magSq() == 0) {
+                        self.prevMouseDown[i].base.callRaise("click", { x: mouseUpX, y: mouseUpY });
                     }
-                    self.prevMouseDown[i].base.callRaise("dragEnd", { x: self.muX, y: self.muY });
+                    self.prevMouseDown[i].base.callRaise("dragEnd", { x: mouseUpX, y: mouseUpY });
                 }
             }
 
             self.prevMouseDown = null;
 
             if (self.consumeEvents) {
-                self.muX = -1;
-                self.muY = -1;
+                mouseUpX = -1;
+                mouseUpY = -1;
             }
         }
 
-        if (self.mY > 0 && self.mX > 0) {
+        if (mouseY > 0 && mouseX > 0) {
             for (var key in self.globalMouseMove) {
                 if (self.globalMouseMove[key].base.rootNode != eng)
                     delete self.globalMouseMove[key];
                 else
-                    self.globalMouseMove[key].base.callRaise("mousemove", { x: self.mX, y: self.mY });
+                    self.globalMouseMove[key].base.callRaise("mousemove", { x: mouseX, y: mouseY });
             }
 
-            var curMouseOver = throwMouseEventAt(self.mX, self.mY, "mousemove", eng, self.globalMouseMove);
+            var curMouseOver = throwMouseEventAt(mouseX, mouseY, "mousemove", eng, self.globalMouseMove);
             //Can actually find mouseout more efficiently... as we have previous and current mousemove...
             if (self.prevMouseOver && self.prevMouseOver.length > 0) {
                 for (var i = 0; i < self.prevMouseOver.length; i++) {
-                    if (vecToRect({ x: self.mX, y: self.mY }, self.prevMouseOver[i].tpos).magSq() != 0) {
-                        self.prevMouseOver[i].base.callRaise("mouseout", { x: self.mX, y: self.mY });
+                    if (vecToRect({ x: mouseX, y: mouseY }, self.prevMouseOver[i].tpos).magSq() != 0) {
+                        self.prevMouseOver[i].base.callRaise("mouseout", { x: mouseX, y: mouseY });
                     }
                 }
             }
@@ -230,13 +230,13 @@ function InputHandler() {
 
             if (self.prevMouseDown && self.prevMouseDown.length > 0) {
                 for (var i = 0; i < self.prevMouseDown.length; i++) {
-                    self.prevMouseDown[i].base.callRaise("dragged", { x: self.mX, y: self.mY });
+                    self.prevMouseDown[i].base.callRaise("dragged", { x: mouseX, y: mouseY });
                 }
             }
 
             if (self.consumeEvents) {
-                self.mY = -1;
-                self.mX = -1;
+                mouseY = -1;
+                mouseX = -1;
             }
         }
     }
