@@ -155,7 +155,7 @@ function QuadTree(arrObjs, splitThreshold) {
                                        true,
                                        0,
                                        splitThreshold,
-                                       Math.ceil(Math.log(MidKey.length) / Math.log(2) + 2),
+                                       Math.ceil(Math.log(idKey.length) / Math.log(2) + 2),
                                        1
                                    );
        
