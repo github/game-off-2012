@@ -177,27 +177,22 @@ function Text() {
 
     //http://stackoverflow.com/questions/2936112/text-wrap-in-a-canvas-element
     //Set font before you call this.
-    function getLines(ctx, phrase, maxPxLength) {
-        var wa = phrase.split(" "),
-        phraseArray = [],
-        lastPhrase = wa[0],
-        l = maxPxLength,
-        measure = 0;
+    function getLines(ctx, text, maxWidth) {
+        var words = text.split(" ");
+        var lines = [];
+        var currentLine = words[0];
 
-        for (var i = 1; i < wa.length; i++) {
-            var w = wa[i];
-            measure = ctx.measureText(lastPhrase + w).width;
-            if (measure < l) {
-                lastPhrase += (" " + w);
+        for (var i = 1; i < words.length; i++) {
+            var word = words[i];
+            var width = ctx.measureText(currentLine + " " + word).width;
+            if (width < maxWidth) {
+                currentLine += " " + word;
             } else {
-                phraseArray.push(lastPhrase);
-                lastPhrase = w;
-            }
-            if (i === wa.length - 1) {
-                phraseArray.push(lastPhrase);
-                break;
+                lines.push(currentLine);
+                currentLine = word;
             }
         }
-        return phraseArray;
+        lines.push(currentLine);
+        return lines;
     }
 }
