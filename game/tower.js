@@ -223,7 +223,7 @@ function Tower() {
         this.outerWidth = outerWidth;
 
         //Show HP regen?
-        var innerWidth = Math.log(this.attr.hp / this.attr.damage / this.attr.attSpeed + 10) * 6; //Math.pow(this.attr.hpRegen * 10, 0.9);
+        var innerWidth = Math.log(Math.abs(this.attr.hp / this.attr.damage / this.attr.attSpeed + 10)) * 6; //Math.pow(this.attr.hpRegen * 10, 0.9);
 
         var center = this.tpos.center();
 

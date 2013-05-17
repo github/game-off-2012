@@ -3,7 +3,7 @@
 //This function grows too slowly!
 function damageToTime(damage) {
     damage += 1;
-    return (Math.log(Math.log(damage)) / Math.E + 1) / 2;
+    return (Math.log(Math.log(Math.abs(damage))) / Math.E + 1) / 2;
 }
 
 function applyAttack(attackTemplate) {
