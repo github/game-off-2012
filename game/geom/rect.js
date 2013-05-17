@@ -9,28 +9,31 @@ var Rect = (function () {
         return false;
     }
     function Rect(x, y, w, h) {
+        if (!assertDefined("Rect", x, y, w, h)) {
+            x = 0;
+            y = 0;
+            w = 1;
+            h = 1;
+        }
+
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
-        
-        if (invalid(x, y, w, h)) {
-            throw "Invalid rectangle! " + this.str();
-        }
-        
+
         if (w < 0) {
             this.x += w;
             this.w = -w;
         }
-        
+
         if (h < 0) {
             this.y += h;
             this.h = -h;
         }
     }
-    
+
     var p = Rect.prototype;
-    
+
     p.center = function (newCenter) {
         if (newCenter === undefined) {
             return new Vector(this.x + this.w / 2, this.y + this.h / 2);
@@ -39,11 +42,11 @@ var Rect = (function () {
         this.y = newCenter.y - this.h / 2;
         return this;
     };
-    
+
     p.clone = function () {
         return new Rect(this.x, this.y, this.w, this.h);
     };
-    
+
     // Assuming this rectangle fits within the unit rectangle
     // with origin (0, 0) and size (1, 1), project it onto
     // a rectangle with the given origin and size. For example,
@@ -56,13 +59,13 @@ var Rect = (function () {
     p.project = function (rect) {
         this.x = rect.x + this.x * rect.w;
         this.y = rect.y + this.y * rect.h;
-        
+
         this.w = this.w * rect.w;
         this.h = this.h * rect.h;
-        
+
         return this;
     }
-    
+
     // Assuming this rectangle fits within the given rectangle,
     // this function will normalize it to fit within the unit
     // rectangle, so that it can be projected onto a different
@@ -70,13 +73,13 @@ var Rect = (function () {
     p.norm = function (rect) {
         this.x = (this.x - rect.x) / rect.w;
         this.y = (this.y - rect.y) / rect.h;
-        
+
         this.w = this.w / rect.w;
         this.h = this.h / rect.h;
-        
+
         return this;
     }
-    
+
     // Returns a rectangle represeting the largest square that
     // can fit inside this rectangle, centered inside the rectangle.
     // Very useful for laying out square objects in the gui.
@@ -84,7 +87,7 @@ var Rect = (function () {
         var size = this.w > this.h ? this.h : this.w;
         return new Rect(0, 0, size, size).center(this.center());
     }
-    
+
     p.origin = function (newOrigin) {
         if (newOrigin === undefined) {
             return new Vector(this.x, this.y);
@@ -93,13 +96,13 @@ var Rect = (function () {
         this.y = newOrigin.y;
         return this;
     }
-    
+
     p.moveOrigin = function (delta) {
         this.x += delta.x;
         this.y += delta.y;
         return this;
     }
-    
+
     p.size = function (newSize) {
         if (newSize === undefined) {
             return new Vector(this.w, this.h);
@@ -108,7 +111,7 @@ var Rect = (function () {
         this.h = newSize.y;
         return this;
     }
-    
+
     // Shrinks a rectangle by amount in all directions.
     // used to add padding.
     p.shrink = function (amount) {
@@ -118,10 +121,10 @@ var Rect = (function () {
         this.h -= 2 * amount;
         return this;
     }
-    
+
     p.str = function () {
         return "Rectangle at (" + this.x + ", " + this.y + ")" + "with size (" + this.w + ", " + this.h + ")";
     }
-    
+
     return Rect;
-}());
+} ());
