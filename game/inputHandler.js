@@ -1,167 +1,109 @@
 function InputHandler() {
+    var self = this;
+
     //Only valid when handling mouse events (just check when it is set)
-    this.ctrlKey = false;
+    self.ctrlKey = false;
 
     //Put yourself in here (index global id) to get global mouse moves
-    this.globalMouseMove = {};
-    this.globalMouseDown = {};
-    this.globalMouseUp = {};
-    this.globalMouseClick = {};
+    self.globalMouseMove = {};
+    self.globalMouseDown = {};
+    self.globalMouseUp = {};
+    self.globalMouseClick = {};
 
     //The only reason this would be false is if multiple people are sharing the input handler
-    this.consumeEvents = true;
-    
-    this.mX = -1;
-    this.mY = -1;
-    this.mdX = -1; //Mouse down
-    this.mdY = -1;
-    this.muX = -1; //Mouse up
-    this.muY = -1;
+    var consumeEvents = true;
 
-    this.events = {};
+    var mouseX = -1;
+    var mouseY = -1;
+    var mouseDownX = -1;
+    var mouseDownY = -1;
+    var mouseUpX = -1;
+    var mouseUpY = -1;
 
-    this.resizeEvent = null;
-    
+    self.resizeEvent = null;
+
     var canvas;
-    
-    this.events.resize = function (e) {
-        this.resizeEvent = e;
-    }
 
-    function getMousePos(e) {
-        var canpos = document.getElementById("myCanvas")
-        var mX = defined(e.offsetX) ? e.offsetX : e.pageX - canpos.offsetLeft;
-        var mY = defined(e.offsetY) ? e.offsetY : e.pageY - canpos.offsetTop;
+    function pointerCoords(e) {
+        var left = canvas.offsetLeft;
+        var top = canvas.offsetTop;
 
-        return { x: mX + 0.5, y: mY + 0.5 };
-    }
-
-    this.nextIsTouch = false;
-    this.screenNonTouchEvents = function(e) {
-        if(!this.nextIsTouch && !e.fromTouch && isTouchDevice()) return true;
-        this.nextIsTouch = false;
-        return false;
-    }
-
-    this.events.mousemove = function (e) {  
-        if(this.screenNonTouchEvents(e)) return;
-        var pos = getMousePos(e);
-        this.ctrlKey = e.ctrlKey;
-
-        this.mX = pos.x;
-        this.mY = pos.y;
-    }
-
-    this.events.mouseout = function (e) {
-        if(this.screenNonTouchEvents(e)) return;
-        var pos = getMousePos(e);
-        this.ctrlKey = e.ctrlKey;
-
-        this.mX = -1;
-        this.mY = -1;
-    }
-
-    this.events.mousedown = function (e) {
-        if(this.screenNonTouchEvents(e)) return;
-        var pos = getMousePos(e);
-        this.ctrlKey = e.ctrlKey;
-
-        this.mdX = pos.x;
-        this.mdY = pos.y;
-    }
-
-    this.events.mouseup = function (e) {
-        if(this.screenNonTouchEvents(e)) return;
-        var pos = getMousePos(e);
-        this.ctrlKey = e.ctrlKey;
-
-        this.muX = pos.x;
-        this.muY = pos.y;
-    }
-    
-    this.mapTouchToMouse = function(e) {
-        e = e.originalEvent || e;
-        //http://stackoverflow.com/questions/5186441/javascript-drag-and-drop-for-touch-devices
-        
-        var type = "";
-        switch(event.type)
-        {
-            case "touchstart":  type = "mousedown"; break;
-            case "touchmove":   type = "mousemove"; break;        
-            case "touchend":    type = "mouseup"; break;
-            case "touchleave":  type = "mouseout"; break;
-            case "touchcancel": type = "mouseout"; break;
-            default: return;
-        }
-        
+        self.ctrlKey = e.ctrlKey;
         e.preventDefault();
-        
-        for(var key in e.changedTouches) {
-            var touchEvent = e.changedTouches[key];
-            
-            var simulatedEvent = document.createEvent("MouseEvent");
-            simulatedEvent.initMouseEvent(type, true, true, window, 1,
-                          touchEvent.screenX, touchEvent.screenY,
-                          touchEvent.clientX, touchEvent.clientY, false,
-                          false, false, false, 0/*left*/, null);
-                          
-            //this.nextIsTouch = true;
-            //e.target.dispatchEvent(simulatedEvent);
-            
-            simulatedEvent.fromTouch = true;
-            this.events[type](simulatedEvent);
-            
-            return;
+
+        if (e.changedTouches) {
+            var touch = e.changedTouches[0];
+            return {
+                x: touch.pageX - left,
+                y: touch.pageY - top,
+            };
+        } else {
+            return {
+                x: e.pageX - left,
+                y: e.pageY - top,
+            };
         }
     }
-    
-    this.events.touchstart = function(e) {
-        this.mapTouchToMouse(e);
-    }
-    
-    this.events.touchmove = function(e) {
-        //e.preventDefault();
-        this.mapTouchToMouse(e);
-    }
-    
-    this.events.touchend = function(e) {
-        this.mapTouchToMouse(e);
 
-        //Prevents hover state from staying
-        this.mX = 0;
-        this.mY = 0;
+    var events = {};
+
+    events.resize = function (e) {
+        self.resizeEvent = e;
     }
-    
-    this.events.touchleave = function(e) {
-        this.mapTouchToMouse(e);
+
+    events.pointerMove = function (e) {
+        var pos = pointerCoords(e);
+        mouseX = pos.x;
+        mouseY = pos.y;
+    };
+
+    events.pointerDown = function (e) {
+        var pos = pointerCoords(e);
+        mouseDownX = pos.x;
+        mouseDownY = pos.y;
+    };
+
+    events.pointerEnd = function (e) {
+        var pos = pointerCoords(e);
+        mouseUpX = pos.x;
+        mouseUpY = pos.y;
+    };
+
+    self.unBind = function (canvas) {
+        window.onresize = null;
+
+        canvas.ontouchstart = null;
+        canvas.ontouchmove = null;
+        canvas.ontouchend = null;
+        canvas.ontouchcancel = null;
+
+        canvas.onmousedown = null;
+        canvas.onmousemove = null;
+        canvas.onmouseup = null;
+        canvas.onmouseout = null;
     }
-    
-    this.events.touchcancel = function(e) {
-        this.mapTouchToMouse(e);
-    }
-    
-    this.unBind = function (canvas) {
-        $(canvas).off();
-        $(window).off();
-    }
-    
-    this.bind = function (newCanvas) {
+
+    self.bind = function (newCanvas) {
         canvas = newCanvas;
-        for (var name in this.events) {
-            // Preserve this context
-            this.events[name] = this.events[name].bind(this);
-            
-            // Resize event is only on window.
-            var src = name == "resize" ? window : canvas;
-            $(src).on(name, this.events[name]);
+        window.onresize = events.resize;
+        if ('ontouchstart' in canvas) {
+            canvas.ontouchstart = events.pointerDown;
+            canvas.ontouchmove = events.pointerMove;
+            canvas.ontouchend = events.pointerEnd;
+            canvas.ontouchcancel = events.pointerEnd;
+        } else {
+            canvas.onmousedown = events.pointerDown;
+            canvas.onmousemove = events.pointerMove;
+            canvas.onmouseup = events.pointerEnd;
+            canvas.onmouseout = events.pointerEnd;
         }
     };
 
-    function throwMouseEventAt(mX, mY, eventName, eng, ignore, ctrlKey) {
+    function throwMouseEventAt(x, y, eventName, eng, ignore, ctrlKey) {
         var allUnderMouse = [];
 
         for (var type in eng.base.allChildren) {
-            mergeToArray(findAllWithin(eng, type, { x: mX, y: mY }, 0), allUnderMouse);
+            mergeToArray(findAllWithin(eng, type, { x: x, y: y }, 0), allUnderMouse);
         }
 
         if (allUnderMouse.length == 0)
@@ -185,18 +127,18 @@ function InputHandler() {
         for (var key in allUnderMouse)
             if(!ignore[key])
                 if (allUnderMouse[key] !== topMost)
-                    allUnderMouse[key].base.callRaise(eventName, { x: mX, y: mY, topMost: false, ctrlKey: ctrlKey });
+                    allUnderMouse[key].base.callRaise(eventName, { x: x, y: y, topMost: false, ctrlKey: ctrlKey });
 
-        topMost.base.callRaise(eventName, { x: mX, y: mY, topMost: true, ctrlKey: ctrlKey });
+        topMost.base.callRaise(eventName, { x: x, y: y, topMost: true, ctrlKey: ctrlKey });
 
         return allUnderMouse;
     }
 
-    this.handleEvents = function (eng) {
-        this.handleMouseEvents(eng);
+    self.handleEvents = function (eng) {
+        self.handleMouseEvents(eng);
 
-        if (this.resizeEvent) {
-            console.log("this.resizeEvent:", this.resizeEvent);
+        if (self.resizeEvent) {
+            console.log("self.resizeEvent:", self.resizeEvent);
 
             var game = eng.game;
             var minWidth = game.numTilesX * game.tileSize + 150;
@@ -204,97 +146,97 @@ function InputHandler() {
             var width = Math.max(window.innerWidth, minWidth);
             var height = Math.max(window.innerHeight, minHeight);
 
-            this.resizeEvent.width = canvas.width = width;
-            this.resizeEvent.height = canvas.height = height;
-            
-            eng.base.raiseEvent("globalResize", this.resizeEvent);
+            self.resizeEvent.width = canvas.width = width;
+            self.resizeEvent.height = canvas.height = height;
 
-            if (this.consumeEvents)
-                this.resizeEvent = null;
+            eng.base.raiseEvent("globalResize", self.resizeEvent);
+
+            if (consumeEvents)
+                self.resizeEvent = null;
         }
     };
 
     //Called in update and uses async flags set when we get events
-    this.handleMouseEvents = function (eng) {
-        if (this.mdX > 0 && this.mdY > 0) {
-            for (var key in this.globalMouseDown) {
-                if (this.globalMouseDown[key].base.rootNode != eng)
-                    delete this.globalMouseDown[key];
+    self.handleMouseEvents = function (eng) {
+        if (mouseDownX > 0 && mouseDownY > 0) {
+            for (var key in self.globalMouseDown) {
+                if (self.globalMouseDown[key].base.rootNode != eng)
+                    delete self.globalMouseDown[key];
                 else
-                    this.globalMouseDown[key].base.callRaise("mousedown", { x: this.mdX, y: this.mdY });
+                    self.globalMouseDown[key].base.callRaise("mousedown", { x: mouseDownX, y: mouseDownY });
             }
 
-            var curMouseDown = throwMouseEventAt(this.mdX, this.mdY, "mousedown", eng, this.globalMouseDown, this.ctrlKey);
-            this.prevMouseDown = curMouseDown;
+            var curMouseDown = throwMouseEventAt(mouseDownX, mouseDownY, "mousedown", eng, self.globalMouseDown, self.ctrlKey);
+            self.prevMouseDown = curMouseDown;
 
-            if (this.consumeEvents) {
-                this.mdX = -1;
-                this.mdY = -1;
+            if (consumeEvents) {
+                mouseDownX = -1;
+                mouseDownY = -1;
             }
         //We delay the mouse up for one cycle to prevent some bugs
-        } else if (this.muX > 0 && this.muY > 0) {
-            for (var key in this.globalMouseUp) {
-                if (this.globalMouseUp[key].base.rootNode != eng)
-                    delete this.globalMouseUp[key];
+        } else if (mouseUpX > 0 && mouseUpY > 0) {
+            for (var key in self.globalMouseUp) {
+                if (self.globalMouseUp[key].base.rootNode != eng)
+                    delete self.globalMouseUp[key];
                 else
-                    this.globalMouseUp[key].base.callRaise("mouseup", { x: this.muX, y: this.muY });
+                    self.globalMouseUp[key].base.callRaise("mouseup", { x: mouseUpX, y: mouseUpY });
             }
 
-            var curMouseUp = throwMouseEventAt(this.muX, this.muY, "mouseup", eng, this.globalMouseUp, this.ctrlKey);
+            var curMouseUp = throwMouseEventAt(mouseUpX, mouseUpY, "mouseup", eng, self.globalMouseUp, self.ctrlKey);
 
-            if (this.prevMouseDown && this.prevMouseDown.length > 0) {
-                for (var key in this.globalMouseClick) {
-                    if (this.globalMouseClick[key].base.rootNode != eng)
-                        delete this.globalMouseClick[key];
+            if (self.prevMouseDown && self.prevMouseDown.length > 0) {
+                for (var key in self.globalMouseClick) {
+                    if (self.globalMouseClick[key].base.rootNode != eng)
+                        delete self.globalMouseClick[key];
                     else
-                        this.globalMouseClick[key].base.callRaise("click", { x: this.muX, y: this.muY });
+                        self.globalMouseClick[key].base.callRaise("click", { x: mouseUpX, y: mouseUpY });
                 }
 
-                for (var i = 0; i < this.prevMouseDown.length; i++) {
-                    if (!this.globalMouseClick[this.prevMouseDown[i].base.id] &&
-                        vecToRect({ x: this.muX, y: this.muY }, this.prevMouseDown[i].tpos).magSq() == 0) {
-                        this.prevMouseDown[i].base.callRaise("click", { x: this.muX, y: this.muY });
+                for (var i = 0; i < self.prevMouseDown.length; i++) {
+                    if (!self.globalMouseClick[self.prevMouseDown[i].base.id] &&
+                        vecToRect({ x: mouseUpX, y: mouseUpY }, self.prevMouseDown[i].tpos).magSq() == 0) {
+                        self.prevMouseDown[i].base.callRaise("click", { x: mouseUpX, y: mouseUpY });
                     }
-                    this.prevMouseDown[i].base.callRaise("dragEnd", { x: this.muX, y: this.muY });
+                    self.prevMouseDown[i].base.callRaise("dragEnd", { x: mouseUpX, y: mouseUpY });
                 }
             }
 
-            this.prevMouseDown = null;
+            self.prevMouseDown = null;
 
-            if (this.consumeEvents) {
-                this.muX = -1;
-                this.muY = -1;
+            if (consumeEvents) {
+                mouseUpX = -1;
+                mouseUpY = -1;
             }
         }
 
-        if (this.mY > 0 && this.mX > 0) {
-            for (var key in this.globalMouseMove) {
-                if (this.globalMouseMove[key].base.rootNode != eng)
-                    delete this.globalMouseMove[key];
+        if (mouseY > 0 && mouseX > 0) {
+            for (var key in self.globalMouseMove) {
+                if (self.globalMouseMove[key].base.rootNode != eng)
+                    delete self.globalMouseMove[key];
                 else
-                    this.globalMouseMove[key].base.callRaise("mousemove", { x: this.mX, y: this.mY });
+                    self.globalMouseMove[key].base.callRaise("mousemove", { x: mouseX, y: mouseY });
             }
 
-            var curMouseOver = throwMouseEventAt(this.mX, this.mY, "mousemove", eng, this.globalMouseMove);
-            //Can actually find mouseout more efficiently... as we have previous and current mousemove...            
-            if (this.prevMouseOver && this.prevMouseOver.length > 0) {
-                for (var i = 0; i < this.prevMouseOver.length; i++) {
-                    if (vecToRect({ x: this.mX, y: this.mY }, this.prevMouseOver[i].tpos).magSq() != 0) {
-                        this.prevMouseOver[i].base.callRaise("mouseout", { x: this.mX, y: this.mY });
+            var curMouseOver = throwMouseEventAt(mouseX, mouseY, "mousemove", eng, self.globalMouseMove);
+            //Can actually find mouseout more efficiently... as we have previous and current mousemove...
+            if (self.prevMouseOver && self.prevMouseOver.length > 0) {
+                for (var i = 0; i < self.prevMouseOver.length; i++) {
+                    if (vecToRect({ x: mouseX, y: mouseY }, self.prevMouseOver[i].tpos).magSq() != 0) {
+                        self.prevMouseOver[i].base.callRaise("mouseout", { x: mouseX, y: mouseY });
                     }
                 }
             }
-            this.prevMouseOver = curMouseOver;
+            self.prevMouseOver = curMouseOver;
 
-            if (this.prevMouseDown && this.prevMouseDown.length > 0) {
-                for (var i = 0; i < this.prevMouseDown.length; i++) {
-                    this.prevMouseDown[i].base.callRaise("dragged", { x: this.mX, y: this.mY });
+            if (self.prevMouseDown && self.prevMouseDown.length > 0) {
+                for (var i = 0; i < self.prevMouseDown.length; i++) {
+                    self.prevMouseDown[i].base.callRaise("dragged", { x: mouseX, y: mouseY });
                 }
             }
 
-            if (this.consumeEvents) {
-                this.mY = -1;
-                this.mX = -1;
+            if (consumeEvents) {
+                mouseY = -1;
+                mouseX = -1;
             }
         }
     }

@@ -2,7 +2,7 @@ function Text() {
     // Will we re-measure and re-fit all of the text on the
     // next call to apply()?
     var dirty = true;
-    
+
     var text = "[No text]";
     this.text = function (newText) {
         if (newText === undefined) {
@@ -13,7 +13,7 @@ function Text() {
         dirty = true;
         return this;
     }
-    
+
     // Should we word wrap long lines to fit within the width
     // of the bounding rect? If no, resize() will return the
     // width actually used by the text, which may be greater
@@ -27,14 +27,14 @@ function Text() {
         dirty = true;
         return this;
     }
-    
+
     var fontSize = 14;
-    
+
     // When shrink == true, fontSize is the size we would ideally
     // line to achieve, and curFontSize is the size we are forced
     // to render at to meet the constraints of our bounding rect.
     var curFontSize = fontSize;
-    
+
     // Should we shrink the text size as required to fit within
     // the bounding rect? If yes, the text is always garuenteed
     // to fit within the bounding rect, but isn't always
@@ -48,7 +48,7 @@ function Text() {
         dirty = true;
         return this;
     }
-    
+
     // The amount of space allocated for each line, as a function
     // of the font size. As lines are positioned in the center of
     // the space allocted for them, the space is evenly distributed
@@ -63,7 +63,7 @@ function Text() {
         dirty = true;
         return this;
     }
-    
+
     // How should we align the text within the box? Currently
     // supported values are "left", "right", and "center".
     // Justified support is not provided by canvas natively,
@@ -88,7 +88,7 @@ function Text() {
         }
         return this;
     }
-    
+
     // Type can be "stroke" or "fill". We need it because
     // the canvas API does'nt let us treat text like every
     // other path...
@@ -102,18 +102,18 @@ function Text() {
         pen.strokeStyle = "green";
         pen.textAlign = align;
         pen.textBaseline = "middle";
-        
+
         var height = lineHeight();
         var unusedHeight = rect.h - usedHeight;
         var x = rect.x;
         var y = rect.y + height / 2 + unusedHeight / 2;
-        
+
         if (align == "center") {
             x += rect.w / 2;
         } else if (align == "right") {
             x += rect.w;
         }
-        
+
         for (var i = 0; i < lines.length; i++) {
             if (type == "stroke") {
                 pen.strokeText(lines[i], x, y);
@@ -125,7 +125,7 @@ function Text() {
             y += height;
         }
     }
-    
+
     var rect;
     var usedHeight = 0;
     this.resize = function (newRect) {
@@ -138,7 +138,6 @@ function Text() {
                     usedHeight = newRect2.h;
                     return newRect;
                 }
-                console.log(curFontSize);
                 curFontSize--;
                 if (curFontSize < 0) {
                     throw "WTF";
@@ -148,7 +147,7 @@ function Text() {
             return fitText(newRect.clone());
         }
     }
-    
+
     function fitText (rect) {
         c.font = font();
         if (wrap) {
@@ -160,22 +159,22 @@ function Text() {
             rect.w = c.measureText(text).width;
             return rect;
         }
-        
+
     }
-    
+
     function font () {
         return curFontSize + "px courier";
     }
-    
+
     function lineHeight () {
         return curFontSize * lineSpacing;
     }
-    
+
     var element = document.createElement('canvas')
     var c = element.getContext('2d');
     c.font = font();
     var lines = [];
-    
+
     //http://stackoverflow.com/questions/2936112/text-wrap-in-a-canvas-element
     //Set font before you call this.
     function getLines(ctx, phrase, maxPxLength) {
@@ -184,7 +183,7 @@ function Text() {
         lastPhrase = wa[0],
         l = maxPxLength,
         measure = 0;
-        
+
         for (var i = 1; i < wa.length; i++) {
             var w = wa[i];
             measure = ctx.measureText(lastPhrase + w).width;
