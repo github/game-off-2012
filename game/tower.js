@@ -271,7 +271,7 @@ function Tower() {
 
         var numberOfBars = this.attr.hp / hpPerBar;
         var barsFilled = this.attr.currentHp / hpPerBar;
-        var barsPerSide = Math.ceil(timePerSide * this.attr.hpRegen / hpPerBar);
+        var barsPerSide = Math.ceil(timePerSide * math.max(this.attr.hpRegen, 0) / hpPerBar);
 
         //Shows HP
         var outerWidth = Math.pow(this.attr.hp / 50, 0.9);
