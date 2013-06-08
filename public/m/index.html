@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Avabranch</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="description" content="">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+		<link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/m/css/style.css">
+        
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <div id='left-controls' class='controls'></div>
+        <canvas id="canv" style="background-color: #6D6D6D"></canvas>
+        <div id='right-controls' class='controls'></div>
+        
+        <i id="mute" class="icon icon-volume-up" style='display:none' onclick=toggleSound()></i><a style='display:none' class="attribution" href="http://soundcloud.com/chrissij/background-music">Background Music - ChrissiJ</a>
+        <audio autoplay loop id="bgaudio">
+        	<source src="/audio/background.ogg"></source>
+        	<source src="/audio/background.mp3"></source>
+        </audio>
+        <div style="display:none">
+	        <div class="controls-text">Edit Controls (click) <a onclick="global_controls.reset()">reset</a></div>
+	        <div id='controls'></div>
+        </div>
+        <script src="/m/js/util.js"></script>
+        <script src="/m/js/controls.js"></script>
+        <script src="/m/js/hud.js"></script>
+        <script src="/m/js/powerups.js"></script>
+        <script src="/m/js/line.js"></script>
+        <script src="/m/js/player.js"></script>
+        <script src="/m/js/blocks.js"></script>
+        <script src="/m/js/game.js"></script>
+        <script src="/m/js/main.js"></script>
+        <script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-30570115-1']);
+		  _gaq.push(['_setDomainName', 'zolmeister.com']);
+		  _gaq.push(['_trackPageview']);
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+    </body>
+</html>
