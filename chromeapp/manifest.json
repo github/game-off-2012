@@ -1,0 +1,19 @@
+{
+  "name": "Avabranch",
+  "version": "1",
+  "description": "Avabranch, the ultimate branching game!",
+  "icons": {
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+    },
+  "app": {
+    "urls": [
+      "http://avabranch.zolmeister.com/"
+    ],
+    "launch": {
+      "web_url": "http://avabranch.zolmeister.com/"
+    }
+  },
+  "manifest_version": 2
+}
