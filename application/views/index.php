@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Welcome to Fork It!</title>
-    
+
     <!-- Resources -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/utilities/underscore-min.js"></script>
@@ -51,7 +51,18 @@
             <span><b>Single Color Box</b>: Boxes with a white outline cannot have color taken or given to them.  They are locked to a single color.</span><br />
         </div>
     </div>
-    
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48986974-1', 'orkit.herokuapp.com');
+  ga('send', 'pageview');
+
+</script>
+
     <div class="screenMask" style="display:none;"></div>
 </body>
 </html>
