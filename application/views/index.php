@@ -58,7 +58,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-48986974-1', 'orkit.herokuapp.com');
+  ga('create', 'UA-48986974-1', 'forkit.herokuapp.com');
   ga('send', 'pageview');
 
 </script>
