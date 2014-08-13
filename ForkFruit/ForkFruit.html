@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<title>ForkFruit</title>
+	<meta charset=utf-8>
+	<!--Source -->
+	<!--
+	
+	<script type="text/javascript" src="../closure/closure/goog/base.js"></script>
+	<script type="text/javascript" src="ForkFruit.js"></script>
+	-->
+	<script type="text/javascript" src="c.js"></script>
+	<style>
+	    body {
+			
+			cursor:url(assets/fork.gif),url(assets/fork.ani),auto;
+		}
+		.content{
+		    width:600px;
+			height:700px;
+			margin:0 auto;
+			
+			/*border:2px groove green;*/
+		}
+		
+		.say{
+			width:200px;
+			/*height:100px;*/
+			margin:100px auto;
+			
+			border:3px groove green;
+			font-style:italic;
+		}
+		.say span{
+			font-size:18px;
+		}
+		.go {
+		    width:200px;
+			margin:-120px auto;
+			
+		}
+		.go span {
+		    float:right;
+			font-size:38px;
+			font-style:italic;
+			color:green;
+		}
+		.go span:hover {
+		    /*float:right;
+			font-size:38px;
+			font-style:italic;*/
+			color:blue;
+		}
+		.hidden{
+			display:none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class='content' id="content">
+		<div class="say"><span>MOM:</span><br/>&nbsp;&nbsp;&nbsp;&nbsp;Tom,don't play with kit! Can you help me with fork the enchanted fruit?!</div>
+		<div class="go"><span onclick="go();">GO</span></div>
+	</div>
+	<div id="play"><div>
+</body>
+<script>
+	function go() {
+		
+		document.getElementById("content").style.display= "none"; 
+		ForkFruit.start();
+	}
+</script>
+</html>
