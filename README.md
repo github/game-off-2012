@@ -6,6 +6,8 @@ Note: under the [Hotfix game](http://sdrdis.github.com/hotfix/), you can find a 
 
 Help Hotfix collect stargazers and avoid enemies. Collect commits to upgrade hotfix and add new features.
 
+Hotfix is one of the [GitHub Game Off winners](http://github.com/blog/1337-github-game-off-winners)!
+
 ## Controls
 
 Click or press space to jump. The longer you hold, the longer the jump (there is a upper threshold of course).
