@@ -2,8 +2,6 @@
 
 An abstract racing game where you fight against the clock and the computer to get as far as you can in a products life-cycle.
 
-You can play the game at [release-cycles.com](http://www.release-cycles.com)
-
 ![menu](https://raw.github.com/RothschildGames/release-cycles/master/public/screen-0.png)..![start](https://raw.github.com/RothschildGames/release-cycles/master/public/screen-1.png)
 ![easy](https://raw.github.com/RothschildGames/release-cycles/master/public/screen-2.png)..![hard](https://raw.github.com/RothschildGames/release-cycles/master/public/screen-3.png)
 
