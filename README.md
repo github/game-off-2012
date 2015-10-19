@@ -29,9 +29,9 @@ Based on the compo's rules, the concepts
 that we tried to incorporate are fork, branch, push, pull, clone.
 
 You are pappu in the game, a little character. You need to
-click the mouse or tap (touch screen) to levitate else
+click the mouse or tap (touch screen) to levitate or else
 pappu will descend. If he hits the top or bottom boundaries
-that'll end the game.
+that will end the game.
 
 There will be some obstacles along the way like forks, branches
 and some enemies who are also known as "pakias". Hitting them
