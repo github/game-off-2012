@@ -1,7 +1,7 @@
 {
-  "name": "Chicago-Game-Jam-2013",
+  "name": "GitHub Game Off 2012",
   "version": "1.0.0",
-  "description": "&lt;it's a metaphor for death&gt;",
+  "description": "Fork It!",
   "main": "server.js",
   "dependencies": {
     "del": "^2.2.1",
@@ -16,13 +16,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ceruleanlabs/Chicago-Game-Jam-2013.git"
+    "url": "https://github.com/ceruleanlabs/game-off-2012.git"
   },
   "author": "",
   "license": "None",
   "bugs": {
-    "url": "https://github.com/ceruleanlabs/Chicago-Game-Jam-2013/issues"
+    "url": "https://github.com/ceruleanlabs/game-off-2012/issues"
   },
-  "homepage": "https://github.com/ceruleanlabs/Chicago-Game-Jam-2013",
+  "homepage": "https://github.com/ceruleanlabs/game-off-2012",
   "private": "true"
 }
