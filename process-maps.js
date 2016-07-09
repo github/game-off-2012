@@ -47,7 +47,8 @@ module.exports = function () {
       // process the rest of the METADATA section directly into mapObj
       mapObj.metadata = {};
       for(; c < lines.length; c++) {
-        var keyVal = lines[c].split(": ");
+        // SO shoutout for greedy operator use: http://stackoverflow.com/a/4607799/1159255
+        var keyVal = lines[c].split(/: (.+)/);
         if (keyVal[0] === "link_items") {
           mapObj.metadata[keyVal[0]] = JSON.parse(keyVal[1]);
         } else {
