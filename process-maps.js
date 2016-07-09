@@ -22,16 +22,22 @@ module.exports = function () {
       var numRows = parseInt(sizes[0]);
       var numCols = parseInt(sizes[1]);
       var mapObj = {};
+      var layerIndex = 0;
 
-      // is an array of arrays b/c we probably initially wanted to support layered maps
-      mapObj.layers = [[]];
-      for (; c <= numRows; c++) {
-        var row = [];
-        for (var i = 0; i < numCols; i++) {
-          row.push(lines[c][i]);
+      // is an array of arrays to store layers
+      mapObj.layers = [];
+      while (lines[c].length === numCols) { // scary, I know
+        mapObj.layers.push([]);
+        var lastRow = c + numRows;
+
+        for (; c < lastRow; c++) {
+          var row = [];
+          for (var i = 0; i < numCols; i++) {
+            row.push(lines[c][i]);
+          }
+          mapObj.layers[layerIndex].push(row);
         }
-        // existing maps only support one layer, so hardcode this for now
-        mapObj.layers[0].push(row);
+        layerIndex++;
       }
 
       // advance cursor until we get to the METADATA section
