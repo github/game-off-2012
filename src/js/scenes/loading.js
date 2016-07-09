@@ -39,9 +39,9 @@ Crafty.scene("loading", function () {
         purpleFloor: [4, 12],
         greenFloor: [4, 14]
     });
-    
+
     // Loads the sprite color module from an external source
-    Crafty.modules({ 'http://forkit.herokuapp.com/js/utilities/SpriteColor.js': 'RELEASE' }, function () {
+    Crafty.modules({ "https://ceruleanlabs.github.io/game-off-2012/js/utilities/SpriteColor.js": "RELEASE" }, function () {
         // Simulate a load time for now to make sure this works
         setTimeout(function () {
           levelManager.loadMap(0, null); //when everything is loaded, run the main scene
