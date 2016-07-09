@@ -1,0 +1,28 @@
+{
+  "name": "Chicago-Game-Jam-2013",
+  "version": "1.0.0",
+  "description": "&lt;it's a metaphor for death&gt;",
+  "main": "server.js",
+  "dependencies": {
+    "del": "^2.2.1",
+    "gulp": "^3.9.1",
+    "gulp-gh-pages": "^0.5.4",
+    "gulp-nodemon": "^2.1.0",
+    "node-static": "^0.7.7",
+    "through2": "^2.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ceruleanlabs/Chicago-Game-Jam-2013.git"
+  },
+  "author": "",
+  "license": "None",
+  "bugs": {
+    "url": "https://github.com/ceruleanlabs/Chicago-Game-Jam-2013/issues"
+  },
+  "homepage": "https://github.com/ceruleanlabs/Chicago-Game-Jam-2013",
+  "private": "true"
+}

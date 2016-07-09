@@ -1,0 +1,170 @@
+body {
+  background-color:#4c4c4c;
+  background-image: url('./../images/defaultBackgroundTile.png');
+}
+
+#gameTitle {
+  margin-left: auto;
+  margin-right: auto;
+  height: 66px;
+  width: 155px;
+  display: block;
+}
+
+#container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 512px;
+}
+
+#cr-stage {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 16px;
+  width: 512px;
+  height: 512px;
+  background-color: #AFAFAF;
+  z-index: 1;
+  box-shadow: 0px 0px 40px 0px #000000, 0px 0px 100px 0px #000000 inset;
+  border: 1px black solid;
+}
+
+#questionMark {
+  position: relative;
+  top: -530px;
+  left: 512px;
+  width: 20px;
+  height: 20px;
+  color: black;
+  background-color: white;
+  padding: 5px;
+  border: 1px solid black;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0px 0px 10px 0px #DFDFDF inset;
+  font-size: 20px;
+}
+
+#levelReset {
+  float: right;
+  width: 120px;
+  color: white;
+  background-color: #9B2121;
+  max-height: 31px;
+  padding: 5px;
+  border: 1px solid black;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0px 0px 10px 0px #000000 inset;
+}
+
+#levelTitle {
+  float: left;
+  width: 348px;
+  color: white;
+  font-family: 'Scada', sans-serif;
+  font-size: 120%;
+  letter-spacing: 3px;
+  background-color: #5468FF;
+  padding: 9px;
+  border: 1px solid black;
+}
+
+#levelText {
+  width: 503px;
+  color: black;
+  font-family: 'Scada', sans-serif;
+  font-size:80%;
+  letter-spacing: 3px;
+  background-color: #bae5bf;
+  min-height: 31px;
+  padding: 5px;
+  border: 1px solid black;
+  margin-top: 16px;
+  text-align:center;
+}
+
+#controlText {
+  width: 493px;
+  color: black;
+  font-size:80%;
+  font-family: 'Source Sans Pro', sans-serif;
+  letter-spacing: 1px;
+  background-color: #fffddd;
+  min-height: 31px;
+  padding: 10px;
+  border: 1px solid black;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+#helpScreen {
+  position: relative;
+  left: -50%;
+  width: 400px;
+  top: 100px;
+  color: black;
+  font-size:80%;
+  font-family: 'Source Sans Pro', sans-serif;
+  background-color: #fffddd;
+  padding: 10px;
+  border: 1px solid black;
+  z-index: 102;
+}
+
+#helpScreenClose {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
+  border: 1px solid black;
+  font-size:100%;
+  font-family: 'Source Sans Pro', sans-serif;
+  letter-spacing: 1px;
+  background-color: #2c2c2c;
+  color: white;
+  border: 1px solid black;
+  width: 60px;
+  height: 20px;
+  text-align: center;
+  padding-top: 2px;
+  cursor: pointer;
+}
+
+.clear {
+  clear: both;
+}
+
+.largeText {
+  font-family: 'Scada', sans-serif;
+  letter-spacing: 3px;
+  font-size: 20px;
+  top: -3px;
+  position: relative;
+}
+
+.smallText {
+  font-family: 'Scada', sans-serif;
+  letter-spacing: 3px;
+  top: -7px;
+  font-size: 13px;
+  position: relative;
+}
+
+.headerText {
+  font-family: 'Scada', sans-serif;
+  letter-spacing: 1px;
+  font-size: 20px;
+}
+
+.screenMask {
+    opacity:0.5;
+    display:block;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color: #000000;
+    z-index: 101;
+    position:fixed;
+}
