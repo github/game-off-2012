@@ -1,6 +1,6 @@
 /**
 * Main entry point for the game.
-* 
+*
 * Author: Fork It, We'll do it live!
 */
 
@@ -14,7 +14,7 @@ var gameBoard = {
   standardAnimationLength: 50,   // Number of frames to play animations
   nextMap: '',
   currentMap: '',
-  
+
   colorTextMap: {
     white: "#AFAFAF",
     blue: "#4D45E6",
@@ -22,7 +22,7 @@ var gameBoard = {
     purple: "#DFDFDF",
     green: "#87E01B"
   },
-  
+
   colorMap: {
     white: "#DFDFDF",
     blue: "#000051",
@@ -34,19 +34,19 @@ var gameBoard = {
   getHeight: function () {
     return this.height * this.tileSize;
   },
-  
+
   getWidth: function () {
     return this.width * this.tileSize;
   },
-  
+
   setMap: function(name) {
     this.nextMap = name;
   },
-  
+
   getMap: function() {
     return this.nextMap;
   }
-}
+};
 
 function showHelp()
 {
@@ -63,9 +63,9 @@ function closeHelp()
 $(document).ready(function () {
   Crafty.init(gameBoard.getWidth(), gameBoard.getHeight());
   Crafty.scene("loading");
-  
+
   // Disable space bar page scrolling
-  window.onkeydown = function(e) { 
+  window.onkeydown = function(e) {
     return !($.inArray(e.keyCode, [33,34,35,36,37,38,39,40,72]));
   };
 });

@@ -1,6 +1,6 @@
 /**
 * This file contains the player movement component.
-*  
+*
 * Author: Fork It, We'll do it live!
 */
 
@@ -30,16 +30,17 @@ Crafty.c("Movement", {
 
         // Trigger a movement in the direction
         this.bind("KeyDown",function(e) {
+            var direction;
             if(this._keys[e.key] && this.movementEnabled) {
-                var direction = this._keys[e.key];
+                direction = this._keys[e.key];
                 // Add the direction to the movement stack
                 this._directions.push(direction);
                 // Tell the player to face a new direction
                 this.trigger('NewDirection',direction);
-            } 
+            }
             // If the action key is down, perform a push in the direction
             else if (this._keys[e.key] && this.isDown(gameBoard.actionKey)) {
-                var direction = this._keys[e.key];
+                direction = this._keys[e.key];
                 this.trigger('Push',direction);
             }
             // Disable movement if the space key is down
@@ -87,7 +88,7 @@ Crafty.c("Movement", {
             this._directions = [];
         });
     },
-  
+
     applyTrigger: function(action) {
         for(var k in this._keys) {
             if(this.isDown(k)) {
@@ -98,7 +99,7 @@ Crafty.c("Movement", {
         }
     }
 });
- 
+
 // This component contains the functions required for Phil to interact with the environment
 Crafty.c("CharacterInteractions", {
     _holdingColor: null, // The color the player is holding
@@ -129,12 +130,12 @@ Crafty.c("CharacterInteractions", {
           }
           collisionDetector.destroy();
         });
-        
+
         this.bind("RemoveBox", function(direction) {
             // Figure out what direction we are pushing
             this._pushDestX = this.x + direction[0] * gameBoard.tileSize;
             this._pushDestY = this.y + direction[1] * gameBoard.tileSize;
-          
+
             // Send the push command to anything in that space
             var collisionDetector = Crafty.e("2D, Collision").attr({ x: this._pushDestX, y: this._pushDestY, w: 1, h: 1 });
             entitiesHit = collisionDetector.hit("removable");
@@ -153,14 +154,15 @@ Crafty.c("CharacterInteractions", {
             var collisionDetector = Crafty.e("2D, Collision").attr({ x: this._pushDestX, y: this._pushDestY, w: 1, h: 1 });
             entitiesHit = collisionDetector.hit("ColorableBox");
             if(entitiesHit.length > 0) {
+                var colorTaken;
                 // Give a color if Phil is holding one
                 if(this._holdingColor) {
-                    var colorTaken = entitiesHit[0].obj.giveColor(this._holdingColor);
+                    colorTaken = entitiesHit[0].obj.giveColor(this._holdingColor);
                     this._holdingColor = colorTaken;
                 }
                 // Otherwise take the color
                 else {
-                    var colorTaken = entitiesHit[0].obj.takeColor();
+                    colorTaken = entitiesHit[0].obj.takeColor();
                     if(colorTaken)
                         this._holdingColor = colorTaken;
                 }
@@ -168,10 +170,10 @@ Crafty.c("CharacterInteractions", {
             collisionDetector.destroy();
             this.trigger("ChangePlayerColor", this._holdingColor);
         });
-        
+
         this.bind("ChangePlayerColor", function(color) {
             if(this.has("SpriteColor")) {
-                if(color == null) {
+                if(color === null) {
                     this.spriteColor("#FFFFFF", 0.0);
                 } else {
                     this.spriteColor(gameBoard.colorMap[color], 0.5);
@@ -180,4 +182,4 @@ Crafty.c("CharacterInteractions", {
         });
     }
  });
- 
+

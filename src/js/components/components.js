@@ -1,6 +1,6 @@
 /**
 * This file contains the common components for the game.
-*  
+*
 * Author: Fork It, We'll do it live!
 */
 
@@ -20,7 +20,7 @@ Crafty.c("Moveable", {
     init: function() {
         this._destX = 0; this._sourceX = 0;
         this._destY = 0; this._sourceY = 0;
-        this._speed = 200 || this._speed; 
+        this._speed = 200 || this._speed;
         this._lastFrame = 0;
         this._moving = false;
 
@@ -29,7 +29,7 @@ Crafty.c("Moveable", {
     this.bind("EnterFrame",function(e) {
             if(!this._moving) return false;
 
-            var now = new Date().getTime()
+            var now = new Date().getTime();
             var dt = (now - (this._lastFrame || now)) / 1000; // Elapsed time in seconds
             this._lastFrame = now;
 
@@ -40,7 +40,7 @@ Crafty.c("Moveable", {
 
             this.x += normalizedVector[0] * this._speed * dt;
             this.y += normalizedVector[1] * this._speed * dt;
-      
+
             if((this.x === this._destX && this.y === this._destY)) // If the we're at the destination, stop
             this._moving = false;
             // But that rarely happens due to rounding, so if we overshot the destination, set us back at the destination and stop
@@ -51,14 +51,14 @@ Crafty.c("Moveable", {
             }
 
             // If we're done moving, players can check to see if they're done with the level
-            if(this._moving == false)
+            if(this._moving === false)
                 this.trigger("CheckForFinish", [this.x, this.y]);
         });
     },
-  
+
     EntityMove: function (direction) {
         var force = direction[2] ? direction[2] : false;
-  
+
         // Can only move one tile
         if(this._length(direction[0], direction[1]) > 1)
             return false;
@@ -84,7 +84,7 @@ Crafty.c("Moveable", {
             if(!this.canMoveToCoordinates(this._destX, this._destY))
                 return false;
         }
-      
+
         // Start timing frames
         this._lastFrame = new Date().getTime();
 
@@ -130,7 +130,7 @@ Crafty.c('FancyText', {
         .bind("setTextCSS", function(cssValues) {
             if(!this._textElement) return;
             that = this;
-            _.each(cssValues, function(cssVal, key) { 
+            _.each(cssValues, function(cssVal, key) {
                 that._textElement.css(key, cssVal);
             });
         })
@@ -147,4 +147,4 @@ Crafty.c('FancyText', {
         return this;
     }
 });
- 
+

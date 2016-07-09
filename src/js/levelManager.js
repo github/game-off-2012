@@ -74,7 +74,7 @@ var levelManager = {
         .attr({x: x*gameBoard.tileSize, y: y*gameBoard.tileSize, w: gameBoard.tileSize, h: gameBoard.tileSize})
         .ColorFloor(color);
     },
-    
+
     loadMap: function (level, loadComplete) {
         var map = null;
         $.get('map/load/'+level, function(data) {
@@ -92,7 +92,7 @@ var levelManager = {
                 gameBoard.setMap(nextMap);
                 gameBoard.currentMap = level;
                 console.log("set", nextMap);
-              
+
                 for (var a = 0; a < mapData.layers.length; a++) {
                     map = mapData.layers[a];
                     for (var i = 0; i < map.length; i++) {
@@ -108,9 +108,9 @@ var levelManager = {
             Crafty.trigger("StopMovement");
         });
     },
-    
+
     resetLevel: function () {
       Crafty.scene(gameBoard.currentMap);
     }
-}
+};
 

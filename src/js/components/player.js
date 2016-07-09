@@ -1,6 +1,6 @@
 /**
 * This file contains the Phil character.
-*  
+*
 * Author: Fork It, We'll do it live!
 */
 
@@ -66,7 +66,7 @@ Crafty.c("Phil", {
                     }
                     collisionDetector.destroy();
                 });
-        
+
         return this;
     }
 });

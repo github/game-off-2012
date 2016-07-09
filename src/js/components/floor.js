@@ -1,6 +1,6 @@
 /**
 * Floor
-* Entity for plain floor tile  
+* Entity for plain floor tile
 */
 Crafty.c('Floor', {
   init: function() {

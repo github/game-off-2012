@@ -1,24 +1,24 @@
 /**
 * Box
-* Adds a listener to the push trigger.  
+* Adds a listener to the push trigger.
 */
 Crafty.c('Box', {
   init: function() {
     this.requires("solid, Moveable");
   },
-  
+
   getNeighbors: function(type) {
     var neighbors = [];
-    var directions = [[1,0], [0,1], [-1,0], [0,-1]]
+    var directions = [[1,0], [0,1], [-1,0], [0,-1]];
     var collisionDetector = null;
-    
+
     for (var i = 0; i < directions.length; i++) {
       collisionDetector = Crafty.e("2D, Collision").attr({ x: (this.x+directions[i][0]*gameBoard.tileSize), y: this.y+directions[i][1]*gameBoard.tileSize, w: 1, h: 1 });
       entitiesHit = collisionDetector.hit(type);
       if (entitiesHit.length > 0)
         neighbors.push(entitiesHit[0].obj);
     }
-    
+
     return neighbors;
   },
 
@@ -29,13 +29,13 @@ Crafty.c('Box', {
 
 /**
 * Pushable Box
-* Adds a listener to the push trigger.  
+* Adds a listener to the push trigger.
 */
 Crafty.c('PushableBox', {
     init: function() {
-        this.requires("pushable, Box")
+        this.requires("pushable, Box");
     },
-    
+
     push: function(direction) {
         // Can only push to same color squares if its a colored box
         if(this.has("ColorBox") && !this.canMoveToColorTile(direction))
@@ -43,7 +43,7 @@ Crafty.c('PushableBox', {
 
         return this.EntityMove(direction);
     },
-    
+
     PushableBox: function() {
         return this;
     }
@@ -51,17 +51,17 @@ Crafty.c('PushableBox', {
 
 /**
 * Finishable Box
-* Adds a listener to the push trigger.  
+* Adds a listener to the push trigger.
 */
 Crafty.c('FinishableBox', {
     init: function() {
-      
+
     },
-    
+
     finish: function() {
         console.log(this.nextMapKey);
     },
-    
+
     FinishableBox: function() {
         return this;
     }
@@ -90,15 +90,15 @@ Crafty.c('RemovableBox', {
         removableNeighbors[this.x + "," + this.y] = this;
         // Then add the immediate neighbors to the ones to check
         neighborsToCheck = neighborsToCheck.concat(this.getNeighbors('removable'));
-        
+
         // While there are still blocks to check, check to see if we already checked it.
         // If not, add the neighbor of that block to the list to check
         while(neighborsToCheck.length > 0) {
             var neighbor = neighborsToCheck.pop();
             // Skip it if we've already checked it, if its not a color, or its not the same color
-            if(removableNeighbors[neighbor.x + "," + neighbor.y] 
-                || !neighbor.has("ColorBox") 
-                || neighbor.colorString() != this.colorString())
+            if(removableNeighbors[neighbor.x + "," + neighbor.y] ||
+               !neighbor.has("ColorBox") ||
+               neighbor.colorString() != this.colorString())
                 continue;
             else {
                 removableNeighbors[neighbor.x + "," + neighbor.y] = neighbor;
@@ -108,12 +108,12 @@ Crafty.c('RemovableBox', {
 
         // If the number of removable blocks is >= 3 then remove them
         if(_.size(removableNeighbors) > 2) {
-            _.each(removableNeighbors, function(neighborToDestroy, key){ 
+            _.each(removableNeighbors, function(neighborToDestroy, key){
                 neighborToDestroy.destroy();
             });
         }
     },
-  
+
     RemovableBox: function() {
         return this;
     }
@@ -156,12 +156,12 @@ Crafty.c('ColorBox', {
     colorComponentString: function() {
         return (this._colorString || "white") + "Box" + (this.has("ColorableBox") ? "" : "NotColorable" ) + (this.has("PushableBox") ? "" : "Unmovable" );
     },
-    
+
     canMoveToColorTile: function(direction) {
         // Figure out our destination
         var xLoc = this.x + direction[0] * gameBoard.tileSize;
         var yLoc = this.y + direction[1] * gameBoard.tileSize;
-    
+
         var collisionDetector = Crafty.e("2D, Collision").attr({ x: xLoc, y: yLoc, w: 1, h: 1 });
         entitiesHit = collisionDetector.hit("ColorFloor");
         if(entitiesHit.length > 0) {
