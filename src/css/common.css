@@ -1,6 +1,6 @@
 body {
   background-color:#4c4c4c;
-  background-image: url('/images/defaultBackgroundTile.png');
+  background-image: url('./../images/defaultBackgroundTile.png');
 }
 
 #gameTitle {
@@ -99,8 +99,8 @@ body {
 }
 
 #helpScreen {
-  position: relative; 
-  left: -50%; 
+  position: relative;
+  left: -50%;
   width: 400px;
   top: 100px;
   color: black;
