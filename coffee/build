@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+# a quick & dirty script to compile all our *.coffee files to *.js files & stuff them in the proper place!
+
+coffee -c -o ../js/ *.coffee
