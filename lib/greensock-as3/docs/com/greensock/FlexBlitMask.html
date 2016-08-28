@@ -1,0 +1,905 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../print.css" type="text/css" media="print">
+<meta content="FlexBlitMask,com.greensock.FlexBlitMask,autoUpdate,bitmapMode,fillColor,height,scaleX,scaleY,scrollX,scrollY,smoothing,target,width,wrap,wrapOffsetX,wrapOffsetY,x,y,rotation,disableBitmapMode,dispose,enableBitmapMode,normalizePosition,setActualSize,setSize,update" name="keywords">
+<title>com.greensock.FlexBlitMask</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'FlexBlitMask - API Documentation';
+				var baseRef = '../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../all-classes.html')" href="../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../all-classes.html')" href="../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../index-list.html')" href="../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../index.html?com/greensock/FlexBlitMask.html&amp;com/greensock/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;FlexBlitMask</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class FlexBlitMask"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class FlexBlitMask</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">FlexBlitMask <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../images/inherit-arrow.gif"> mx.core.UIComponent</td>
+</tr>
+</table>
+<p></p>
+ A FlexBlitMask is basically a rectangular UIComponent that acts as a high-performance mask for a DisplayObject
+ by caching a bitmap version of it and blitting only the pixels that should be visible at any given time,
+ although its <code>bitmapMode</code> can be turned off to restore interactivity in the DisplayObject 
+ whenever you want. It is a Flex-friendly version of BlitMask. When scrolling very large images or text 
+ blocks, a FlexBlitMask can greatly improve performance, especially on mobile devices that have weaker 
+ processors. <br /><br />
+ 
+ Here are some of the conveniences FlexBlitMask offers:<br />
+ <ul>
+   <li>Excellent scrolling performance</li>
+   <li>You don't need to do anything special with your target DisplayObject - move/scale/rotate it 
+    however you please and then <code>update()</code> the FlexBlitMask and it syncs the pixels.
+    The FlexBlitMask basically sits on top of the DisplayObject in the display list and you can 
+    move it independently too if you want.</li>
+   <li>Use the FlexBlitMask's <code>scrollX</code> and <code>scrollY</code> properties to move the
+    target DisplayObject inside the masked area. For example, to scroll from top to bottom over 
+    the course of 2 seconds, simply do: <br /><code>myFlexBlitMask.scrollY = 0;<br />
+    TweenLite.to(myFlexBlitMask, 2, {scrollY:1});</code> </li>
+   <li>Use the "wrap" feature to make the bitmap wrap around to the opposite side when it scrolls 
+    off one of the edges (only in <code>bitmapMode</code> of course), as though the FlexBlitMask is 
+    filled with a grid of bitmap copies of the target.</li>
+   <li>For maximum <i>performance</i> in bitmapMode, set <code>smoothing</code> to <code>false</code> or 
+    for maximum <i>quality</i>, set it to <code>true</code></li>
+   <li>You can toggle the <code>bitmapMode</code> to get either maximum performance or interactivity 
+    in the target DisplayObject anytime. (some other solutions out there are only viable for 
+    non-interactive bitmap content) </li>
+   <li>MouseEvents are dispatched by the FlexBlitMask, so you can listen for clicks, rollovers, rollouts, etc.</li>
+ </ul>
+ 
+ <p></p>
+<br>
+<span class="label">Example</span>
+<br>Example AS3 code:<div class='listing'><pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" frameRate="60" layout="absolute" xmlns:greensock="com.greensock.*" creationComplete="tween()"&gt;
+ &lt;mx:Script&gt;
+  &lt;![CDATA[
+   import com.greensock.TweenLite;
+   private function tween():void {
+    myText.y = 50;
+    TweenLite.to(myText, 6, {y:-100});
+   }
+  ]]&gt;
+ &lt;/mx:Script&gt;
+ &lt;greensock:FlexBlitMask id="blitMask" target="{myText}" wrap="false" x="20" y="50" width="300" height="200" smoothing="true" /&gt;
+ &lt;mx:Label text="FlexBlitMask Example" fontSize="24" /&gt;
+ &lt;mx:Text id="myText" x="20" y="50" width="135" height="500" text="FlexBlitMask can be great for high-performance scrolling. Performance is of paramount importance in mobile apps. There is, of course, a trade-off in memory because an extra bitmap version of the target needs to be captured/maintained, but overall performance while scrolling can be significantly improved. It doesn't make sense to use FlexBlitMask if you're tweening the scale or rotation of the target, though - it is primarily for scrolling (tweening the x and/or y properties)." /&gt;
+ &lt;mx:Button id="tweenButton" label="Tween" x="20" y="260" click="tween()" /&gt;
+&lt;/mx:Application&gt;
+</pre></div>
+ 
+ Notes:
+ <ul>
+   <li>FlexBlitMasks themselves should not be rotated or scaled (although technically you can alter the scaleX and scaleY 
+    but doing so will only change the width or height instead). You can, of course, alter their x, y, width, 
+    or height properties as much as you want. </li>
+   <li>FlexBlitMasks don't perform nearly as well in bitmapMode when the <code>target</code> is being scaled or rotated 
+    because it forces a flushing and recapture of the internal bitmap. FlexBlitMasks are <b>MUCH</b> better when you are
+    simply changing x/y properties (scrolling) because it can reuse the same cached bitmap over and over.</li>
+   <li>If the target content is changing frequently (like if it has nested MovieClips that are animating on every frame),
+    you'd need to call update(null, true) each time you want the FlexBlitMask to redraw itself to sync with the changes 
+    in the target, but that's a relatively expensive operation so it's not a great use case for FlexBlitMask. You may
+    be better off just turning off bitmapMode during that animation sequence.</li>
+ </ul><br /><br />
+ 
+ <b>Copyright 2011-2012, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#autoUpdate">autoUpdate</a> : Boolean<div class="summaryTableDescription"> 
+   If <code>true</code>, the FlexBlitMask will automatically watch the <code>target</code> to see if 
+   its position/scale/rotation has changed on each frame (while <code>bitmapMode</code> is <code>true</code>) 
+   and if so, it will <code>update()</code> to make sure the FlexBlitMask always stays synced with the <code>target</code>.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#bitmapMode">bitmapMode</a> : Boolean<div class="summaryTableDescription"> 
+   When <code>true</code>, the FlexBlitMask optimizes itself for performance by setting the <code>target's</code> 
+   <code>visible</code> property to <code>false</code> (greatly reducing the load on Flash's graphics rendering 
+   routines) and uses its internally cached bitmap version of the <code>target</code> to redraw only the necessary
+   pixels inside the masked area.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#fillColor">fillColor</a> : uint<div class="summaryTableDescription"> 
+   The ARGB hexadecimal color that should fill the empty areas of the FlexBlitMask.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#height">height</a> : Number<div class="summaryTableDescription"> Height of the FlexBlitMask </div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#rotation">rotation</a> : Number<div class="summaryTableDescription">[write-only] Rotation of the FlexBlitMask (always 0 because FlexBlitMasks can't be rotated!) </div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#scaleX">scaleX</a> : Number<div class="summaryTableDescription"> scaleX (warning: altering the scaleX won't actually change its value - instead, it affects the <code>width</code> property accordingly) </div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#scaleY">scaleY</a> : Number<div class="summaryTableDescription"> scaleY (warning: altering the scaleY won't actually change its value - instead, it affects the <code>height</code> property accordingly) </div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#scrollX">scrollX</a> : Number<div class="summaryTableDescription"> 
+   Typically a value between 0 and 1 indicating the <code>target's</code> position in relation to the FlexBlitMask 
+   on the x-axis where 0 is at the beginning, 0.5 is scrolled to exactly the halfway point, and 1 is scrolled 
+   all the way.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#scrollY">scrollY</a> : Number<div class="summaryTableDescription"> 
+   Typically a value between 0 and 1 indicating the <code>target's</code> position in relation to the FlexBlitMask 
+   on the y-axis where 0 is at the beginning, 0.5 is scrolled to exactly the halfway point, and 1 is scrolled 
+   all the way.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#smoothing">smoothing</a> : Boolean<div class="summaryTableDescription"> 
+   If <code>false</code> (the default), the bitmap (and the FlexBlitMask's x/y coordinates) 
+   will be rendered only on whole pixels which is faster in terms of processing.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#target">target</a> : DisplayObject<div class="summaryTableDescription"> The target DisplayObject that the FlexBlitMask should mask </div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#width">width</a> : Number<div class="summaryTableDescription"> Width of the FlexBlitMask </div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#wrap">wrap</a> : Boolean<div class="summaryTableDescription"> 
+   If <code>true</code>, the bitmap will be wrapped around to the opposite side when it scrolls off 
+   one of the edges (only in <code>bitmapMode</code> of course), like the FlexBlitMask is filled with a 
+   grid of bitmap copies of the target.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#wrapOffsetX">wrapOffsetX</a> : Number<div class="summaryTableDescription"> 
+   When <code>wrap</code> is <code>true</code>, <code>wrapOffsetX</code> controls how many pixels
+   along the x-axis the wrapped copies of the bitmap are spaced.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#wrapOffsetY">wrapOffsetY</a> : Number<div class="summaryTableDescription"> 
+   When <code>wrap</code> is <code>true</code>, <code>wrapOffsetY</code> controls how many pixels
+   along the y-axis the wrapped copies of the bitmap are spaced.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#x">x</a> : Number<div class="summaryTableDescription"> x coordinate of the FlexBlitMask (it will automatically be forced to whole pixel values if <code>smoothing</code> is <code>false</code>).</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#y">y</a> : Number<div class="summaryTableDescription"> y coordinate of the FlexBlitMask (it will automatically be forced to whole pixel values if <code>smoothing</code> is <code>false</code>).</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#FlexBlitMask()">FlexBlitMask</a>(target:DisplayObject = null, x:Number = 0, y:Number = 0, width:Number = 100, height:Number = 100, smoothing:Boolean = false, autoUpdate:Boolean = true, fillColor:uint = 0x00000000, wrap:Boolean = false)</div>
+<div class="summaryTableDescription">
+   Constructor
+   
+   </div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#disableBitmapMode()">disableBitmapMode</a>(event:Event = null):void</div>
+<div class="summaryTableDescription">
+   Identical to setting <code>bitmapMode = false</code> but this method simplifies adding that
+   functionality to tweens or using it as an event handler.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#dispose()">dispose</a>():void</div>
+<div class="summaryTableDescription"> Disposes of the FlexBlitMask and its internal BitmapData instances, releasing them for garbage collection.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#enableBitmapMode()">enableBitmapMode</a>(event:Event = null):void</div>
+<div class="summaryTableDescription">
+   Identical to setting <code>bitmapMode = true</code> but this method simplifies adding that
+   functionality to tweens or using it as an event handler.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#normalizePosition()">normalizePosition</a>():void</div>
+<div class="summaryTableDescription">
+   Repositions the <code>target</code> so that it is visible within the BlitMask, as though <code>wrap</code>
+   was enabled (this method is called automatically when <code>bitmapMode</code> is disabled while <code>wrap</code> 
+   is <code>true</code>).</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#setActualSize()">setActualSize</a>(w:Number, h:Number):void</div>
+<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#setSize()">setSize</a>(width:Number, height:Number):void</div>
+<div class="summaryTableDescription"> 
+   Sets the width and height of the FlexBlitMask.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#update()">update</a>(event:Event = null, forceRecaptureBitmap:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Updates the FlexBlitMask's internal bitmap to reflect the <code>target's</code> current position/scale/rotation.</div>
+</td><td class="summaryTableOwnerCol">FlexBlitMask</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="autoUpdate"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">autoUpdate</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>autoUpdate:Boolean</code>&nbsp;&nbsp;[read-write]<p> 
+   If <code>true</code>, the FlexBlitMask will automatically watch the <code>target</code> to see if 
+   its position/scale/rotation has changed on each frame (while <code>bitmapMode</code> is <code>true</code>) 
+   and if so, it will <code>update()</code> to make sure the FlexBlitMask always stays synced with the <code>target</code>. 
+   This is the easiest way to use FlexBlitMask but it is slightly less efficient than manually calling <code>update()</code> 
+   whenever you need to. Keep in mind that if you're tweening with TweenLite or TweenMax, you can simply set 
+   its <code>onUpdate</code> to the FlexBlitMask's <code>update()</code> method to keep things synced. 
+   Like <code>onUpdate:myFlexBlitMask.update</code>. 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get autoUpdate():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set autoUpdate(value:Boolean):void</code>
+<br>
+</div>
+<a name="bitmapMode"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bitmapMode</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>bitmapMode:Boolean</code>&nbsp;&nbsp;[read-write]<p> 
+   When <code>true</code>, the FlexBlitMask optimizes itself for performance by setting the <code>target's</code> 
+   <code>visible</code> property to <code>false</code> (greatly reducing the load on Flash's graphics rendering 
+   routines) and uses its internally cached bitmap version of the <code>target</code> to redraw only the necessary
+   pixels inside the masked area. Since only a bitmap version of the <code>target</code> is shown while in bitmapMode,
+   the <code>target</code> won't be interactive. So if you have buttons and other objects that normally react to 
+   MouseEvents, they won't while in bitmapMode. If you need the interactivity, simply set <code>bitmapMode</code>
+   to <code>false</code> and then it will turn the <code>target's</code> <code>visible</code> property back to <code>true</code>
+   and its <code>mask</code> property to the FlexBlitMask itself. Typically it is best to turn bitmapMode on at least when you're 
+   animating the <code>target</code> or the FlexBlitMask itself, and then when the tween/animation is done and you need 
+   interactivity, set bitmapMode back to false. For example: <br /><br /><code>
+   
+   var bm:FlexBlitMask = new FlexBlitMask(mc, 0, 0, 300, 200, true);<br /><br />
+   
+   TweenLite.to(mc, 3, {x:200, onUpdate:bm.update, onComplete:completeHandler});<br /><br />
+   
+   function completeHandler():void {<br />
+       bm.bitmapMode = false;<br />
+   }<br />
+   </code><br /><br />
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get bitmapMode():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set bitmapMode(value:Boolean):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../greensock/FlexBlitMask.html#enableBitmapMode()" target="">enableBitmapMode()</a>
+<br>
+<a href="../greensock/FlexBlitMask.html#disableBitmapMode()" target="">disableBitmapMode()</a>
+</div>
+</div>
+<a name="fillColor"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fillColor</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>fillColor:uint</code>&nbsp;&nbsp;[read-write]<p> 
+   The ARGB hexadecimal color that should fill the empty areas of the FlexBlitMask. By default, 
+   it is transparent (0x00000000). If you wanted a red color, for example, it would be 
+   <code>0xFFFF0000</code>. 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get fillColor():uint</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set fillColor(value:uint):void</code>
+<br>
+</div>
+<a name="height"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">height</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>height:Number</code>&nbsp;&nbsp;[read-write]<p> Height of the FlexBlitMask </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get height():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set height(value:Number):void</code>
+<br>
+</div>
+<a name="rotation"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">rotation</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>rotation:Number</code>&nbsp;&nbsp;[write-only]<p> Rotation of the FlexBlitMask (always 0 because FlexBlitMasks can't be rotated!) </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set rotation(value:Number):void</code>
+<br>
+</div>
+<a name="scaleX"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">scaleX</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>scaleX:Number</code>&nbsp;&nbsp;[read-write]<p> scaleX (warning: altering the scaleX won't actually change its value - instead, it affects the <code>width</code> property accordingly) </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scaleX():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set scaleX(value:Number):void</code>
+<br>
+</div>
+<a name="scaleY"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">scaleY</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>scaleY:Number</code>&nbsp;&nbsp;[read-write]<p> scaleY (warning: altering the scaleY won't actually change its value - instead, it affects the <code>height</code> property accordingly) </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scaleY():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set scaleY(value:Number):void</code>
+<br>
+</div>
+<a name="scrollX"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">scrollX</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>scrollX:Number</code>&nbsp;&nbsp;[read-write]<p> 
+   Typically a value between 0 and 1 indicating the <code>target's</code> position in relation to the FlexBlitMask 
+   on the x-axis where 0 is at the beginning, 0.5 is scrolled to exactly the halfway point, and 1 is scrolled 
+   all the way. This makes it very easy to animate the scroll. For example, to scroll from beginning to end 
+   over 5 seconds, you could do: <br /><br /><code>
+   
+   myFlexBlitMask.scrollX = 0; <br />
+   TweenLite.to(myFlexBlitMask, 5, {scrollX:1});
+   </code>
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scrollX():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set scrollX(value:Number):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../greensock/FlexBlitMask.html#scrollY" target="">scrollY</a>
+</div>
+</div>
+<a name="scrollY"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">scrollY</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>scrollY:Number</code>&nbsp;&nbsp;[read-write]<p> 
+   Typically a value between 0 and 1 indicating the <code>target's</code> position in relation to the FlexBlitMask 
+   on the y-axis where 0 is at the beginning, 0.5 is scrolled to exactly the halfway point, and 1 is scrolled 
+   all the way. This makes it very easy to animate the scroll. For example, to scroll from beginning to end 
+   over 5 seconds, you could do: <br /><br /><code>
+   
+   myFlexBlitMask.scrollY = 0; <br />
+   TweenLite.to(myFlexBlitMask, 5, {scrollY:1});
+   </code>
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scrollY():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set scrollY(value:Number):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../greensock/FlexBlitMask.html#scrollX" target="">scrollX</a>
+</div>
+</div>
+<a name="smoothing"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">smoothing</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>smoothing:Boolean</code>&nbsp;&nbsp;[read-write]<p> 
+   If <code>false</code> (the default), the bitmap (and the FlexBlitMask's x/y coordinates) 
+   will be rendered only on whole pixels which is faster in terms of processing. However, 
+   for the best quality and smoothest animation, set <code>smoothing</code> to <code>true</code>. 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get smoothing():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set smoothing(value:Boolean):void</code>
+<br>
+</div>
+<a name="target"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">target</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>target:DisplayObject</code>&nbsp;&nbsp;[read-write]<p> The target DisplayObject that the FlexBlitMask should mask </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get target():DisplayObject</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set target(value:DisplayObject):void</code>
+<br>
+</div>
+<a name="width"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">width</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>width:Number</code>&nbsp;&nbsp;[read-write]<p> Width of the FlexBlitMask </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get width():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set width(value:Number):void</code>
+<br>
+</div>
+<a name="wrap"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">wrap</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>wrap:Boolean</code>&nbsp;&nbsp;[read-write]<p> 
+   If <code>true</code>, the bitmap will be wrapped around to the opposite side when it scrolls off 
+   one of the edges (only in <code>bitmapMode</code> of course), like the FlexBlitMask is filled with a 
+   grid of bitmap copies of the target. Use the <code>wrapOffsetX</code> and <code>wrapOffsetY</code> 
+   properties to affect how far apart the copies are from each other. You can reposition the 
+   <code>target</code> anywhere and FlexBlitMask will align the copies accordingly.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get wrap():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set wrap(value:Boolean):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../greensock/FlexBlitMask.html#wrapOffsetX" target="">wrapOffsetX</a>
+<br>
+<a href="../greensock/FlexBlitMask.html#wrapOffsetY" target="">wrapOffsetY</a>
+</div>
+</div>
+<a name="wrapOffsetX"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">wrapOffsetX</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>wrapOffsetX:Number</code>&nbsp;&nbsp;[read-write]<p> 
+   When <code>wrap</code> is <code>true</code>, <code>wrapOffsetX</code> controls how many pixels
+   along the x-axis the wrapped copies of the bitmap are spaced. It is essentially the gap between
+   the copies (although you can use a negative value or 0 to avoid any gap). 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get wrapOffsetX():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set wrapOffsetX(value:Number):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../greensock/FlexBlitMask.html#wrap" target="">wrap</a>
+<br>
+<a href="../greensock/FlexBlitMask.html#wrapOffsetY" target="">wrapOffsetY</a>
+</div>
+</div>
+<a name="wrapOffsetY"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">wrapOffsetY</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>wrapOffsetY:Number</code>&nbsp;&nbsp;[read-write]<p> 
+   When <code>wrap</code> is <code>true</code>, <code>wrapOffsetY</code> controls how many pixels
+   along the y-axis the wrapped copies of the bitmap are spaced. It is essentially the gap between
+   the copies (although you can use a negative value or 0 to avoid any gap). 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get wrapOffsetY():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set wrapOffsetY(value:Number):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../greensock/FlexBlitMask.html#wrap" target="">wrap</a>
+<br>
+<a href="../greensock/FlexBlitMask.html#wrapOffsetX" target="">wrapOffsetX</a>
+</div>
+</div>
+<a name="x"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">x</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>x:Number</code>&nbsp;&nbsp;[read-write]<p> x coordinate of the FlexBlitMask (it will automatically be forced to whole pixel values if <code>smoothing</code> is <code>false</code>). </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get x():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set x(value:Number):void</code>
+<br>
+</div>
+<a name="y"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">y</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>y:Number</code>&nbsp;&nbsp;[read-write]<p> y coordinate of the FlexBlitMask (it will automatically be forced to whole pixel values if <code>smoothing</code> is <code>false</code>). </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get y():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set y(value:Number):void</code>
+<br>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="FlexBlitMask()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">FlexBlitMask</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function FlexBlitMask(target:DisplayObject = null, x:Number = 0, y:Number = 0, width:Number = 100, height:Number = 100, smoothing:Boolean = false, autoUpdate:Boolean = true, fillColor:uint = 0x00000000, wrap:Boolean = false)</code><p>
+   Constructor
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:DisplayObject</code> (default = <code>null</code>)<code></code> &mdash; The DisplayObject that will be masked by the FlexBlitMask
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">x</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; x coorinate of the upper left corner of the FlexBlitMask. If <code>smoothing</code> is <code>false</code>, the x coordinate will be rounded to the closest integer.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">y</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; y coordinate of the upper right corner of the FlexBlitMask
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">width</span>:Number</code> (default = <code>100</code>)<code></code> &mdash; width of the FlexBlitMask (in pixels)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">height</span>:Number</code> (default = <code>100</code>)<code></code> &mdash; height of the FlexBlitMask (in pixels)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">smoothing</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If <code>false</code> (the default), the bitmap (and the FlexBlitMask's x/y coordinates) will be rendered only on whole pixels which is faster in terms of processing. However, for the best quality and smoothest animation, set <code>smoothing</code> to <code>true</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">autoUpdate</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If <code>true</code> (the default), the FlexBlitMask will automatically watch the <code>target</code> to see if its position/scale/rotation has changed on each frame (while <code>bitmapMode</code> is <code>true</code>) and if so, it will <code>update()</code> to make sure the FlexBlitMask always stays synced with the <code>target</code>. This is the easiest way to use FlexBlitMask but it is slightly less efficient than manually calling <code>update()</code> whenever you need to. Keep in mind that if you're tweening with TweenLite or TweenMax, you can simply set its <code>onUpdate</code> to the FlexBlitMask's <code>update()</code> method to keep things synced. Like <code>onUpdate:myFlexBlitMask.update</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">fillColor</span>:uint</code> (default = <code>0x00000000</code>)<code></code> &mdash; The ARGB hexadecimal color that should fill the empty areas of the FlexBlitMask. By default, it is transparent (0x00000000). If you wanted a red color, for example, it would be <code>0xFFFF0000</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">wrap</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If <code>true</code>, the bitmap will be wrapped around to the opposite side when it scrolls off one of the edges (only in <code>bitmapMode</code> of course), like the FlexBlitMask is filled with a grid of bitmap copies of the target. Use the <code>wrapOffsetX</code> and <code>wrapOffsetY</code> properties to affect how far apart the copies are from each other. 
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="disableBitmapMode()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">disableBitmapMode</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function disableBitmapMode(event:Event = null):void</code><p>
+   Identical to setting <code>bitmapMode = false</code> but this method simplifies adding that
+   functionality to tweens or using it as an event handler. For example, to enable bitmapMode at
+   the beginning of a tween and then disable it when the tween completes, you could do: <br /><br /><code>
+   
+   TweenLite.to(mc, 3, {x:400, onStart:myFlexBlitMask.enableBitmapMode, onUpdate:myFlexBlitMask.update, onComplete:myFlexBlitMask.disableBitmapMode});
+   </code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:Event</code> (default = <code>null</code>)<code></code> &mdash; An optional Event that isn't used internally but makes it possible to use the method as an event handler like <code>addEventListener(MouseEvent.CLICK, myFlexBlitMask.disableBitmapMode)</code>.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../greensock/FlexBlitMask.html#enableBitmapMode()" target="">enableBitmapMode()</a>
+<br>
+<a href="../greensock/FlexBlitMask.html#bitmapMode" target="">bitmapMode</a>
+</div>
+</div>
+<a name="dispose()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">dispose</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function dispose():void</code><p> Disposes of the FlexBlitMask and its internal BitmapData instances, releasing them for garbage collection. </p></div>
+<a name="enableBitmapMode()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">enableBitmapMode</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function enableBitmapMode(event:Event = null):void</code><p>
+   Identical to setting <code>bitmapMode = true</code> but this method simplifies adding that
+   functionality to tweens or using it as an event handler. For example, to enable bitmapMode at
+   the beginning of a tween and then disable it when the tween completes, you could do: <br /><br /><code>
+   
+   TweenLite.to(mc, 3, {x:400, onStart:myFlexBlitMask.enableBitmapMode, onUpdate:myFlexBlitMask.update, onComplete:myFlexBlitMask.disableBitmapMode});
+   </code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:Event</code> (default = <code>null</code>)<code></code> &mdash; An optional Event that isn't used internally but makes it possible to use the method as an event handler like <code>addEventListener(MouseEvent.CLICK, myFlexBlitMask.enableBitmapMode)</code>.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../greensock/FlexBlitMask.html#disableBitmapMode()" target="">disableBitmapMode()</a>
+<br>
+<a href="../greensock/FlexBlitMask.html#bitmapMode" target="">bitmapMode</a>
+</div>
+</div>
+<a name="normalizePosition()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">normalizePosition</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function normalizePosition():void</code><p>
+   Repositions the <code>target</code> so that it is visible within the BlitMask, as though <code>wrap</code>
+   was enabled (this method is called automatically when <code>bitmapMode</code> is disabled while <code>wrap</code> 
+   is <code>true</code>). For example, if you tween the <code>target</code> way off the edge of the BlitMask and
+   have <code>wrap</code> enabled, it will appear to come back in from the other side even though the raw coordinates
+   of the target would indicate that it is outside the BlitMask. If you want to force the coordinates to normalize 
+   so that they reflect that wrapped position, simply call <code>normalizePosition()</code>. It will automatically 
+   choose the coordinates that would maximize the visible portion of the target if a seam is currently showing.
+   </p></div>
+<a name="setActualSize()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">setActualSize</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function setActualSize(w:Number, h:Number):void</code><p> </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">w</span>:Number</code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">h</span>:Number</code></td>
+</tr>
+</table>
+</div>
+<a name="setSize()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">setSize</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function setSize(width:Number, height:Number):void</code><p> 
+   Sets the width and height of the FlexBlitMask. 
+   Keep in mind that a FlexBlitMask should not be rotated or scaled. 
+   You can also directly set the <code>width</code> or <code>height</code> properties. 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">width</span>:Number</code> &mdash; The width of the FlexBlitMask
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">height</span>:Number</code> &mdash; The height of the FlexBlitMask
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../greensock/FlexBlitMask.html#width" target="">width</a>
+<br>
+<a href="../greensock/FlexBlitMask.html#height" target="">height</a>
+</div>
+</div>
+<a name="update()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">update</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function update(event:Event = null, forceRecaptureBitmap:Boolean = false):void</code><p>
+   Updates the FlexBlitMask's internal bitmap to reflect the <code>target's</code> current position/scale/rotation. 
+   This is a very important method that you'll need to call whenever visual or transformational changes are made 
+   to the target so that the FlexBlitMask remains synced with it. 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:Event</code> (default = <code>null</code>)<code></code> &mdash; An optional Event object (which isn't used at all internally) in order to make it easier to use <code>update()</code> as an event handler. For example, you could <code>addEventListener(Event.ENTER_FRAME, myFlexBlitMask.update)</code> to make sure it is updated on every frame (although it would be more efficient to simply set <code>autoUpdate</code> to <code>true</code> in this case). 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">forceRecaptureBitmap</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Normally, the cached bitmap of the <code>target</code> is only recaptured if its scale or rotation changed because doing so is rather processor-intensive, but you can force a full update (and regeneration of the cached bitmap) by setting <code>forceRecaptureBitmap</code> to <code>true</code>.
+   </td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

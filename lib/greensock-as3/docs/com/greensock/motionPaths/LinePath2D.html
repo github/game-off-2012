@@ -1,0 +1,783 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="LinePath2D,com.greensock.motionPaths.LinePath2D,autoUpdatePoints,points,totalLength,appendMultiplePoints,appendPoint,getClosestProgress,getSegmentProgress,insertMultiplePoints,insertPoint,removePoint,removePointByIndex,renderObjectAt,snap,update" name="keywords">
+<title>com.greensock.motionPaths.LinePath2D</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'LinePath2D - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?com/greensock/motionPaths/LinePath2D.html&amp;com/greensock/motionPaths/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;LinePath2D</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class LinePath2D"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock.motionPaths</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class LinePath2D</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">LinePath2D <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> <a href="MotionPath.html">MotionPath</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> flash.display.Shape</td>
+</tr>
+</table>
+<p></p>
+ A LinePath2D defines a path (using as many Points as you want) on which a PathFollower can be 
+ placed and animated. A PathFollower's position along the path is described using the PathFollower's 
+ <code>progress</code> property, a value between 0 and 1 where 0 is at the beginning of the path, 
+ 0.5 is in the middle, and 1 is at the very end. To tween a PathFollower along the path, simply tween its
+ <code>progress</code> property. To tween ALL of the followers on the path at once, you can tween the 
+ LinePath2D's <code>progress</code> property which performs better than tweening every PathFollower's 
+ <code>progress</code> property individually. PathFollowers automatically wrap so that if the 
+ <code>progress</code> value exceeds 1 it continues at the beginning of the path, meaning that tweening
+ its <code>progress</code> from 0 to 2 would have the same effect as tweening it from 0 to 1 twice 
+ (it would appear to loop).<br /><br />
+  
+ Since LinePath2D extends the Shape class, you can add an instance to the display list to see a line representation
+ of the path drawn which can be particularly helpful during the production phase. Use <code>lineStyle()</code> 
+ to adjust the color, thickness, and other attributes of the line that is drawn (or set the LinePath2D's 
+ <code>visible</code> property to false or don't add it to the display list if you don't want to see the line 
+ at all). You can also adjust all of its properties like <code>scaleX, scaleY, rotation, width, height, x,</code> 
+ and <code>y</code>. That means you can tween those values as well to achieve very dynamic, complex effects 
+ with ease.<br /><br />
+ 
+ <p></p>
+<br>
+<span class="label">Example</span>
+<br>Example AS3 code:<div class='listing'><pre>
+import com.greensock.*;
+import com.greensock.easing.*;
+import com.greensock.motionPaths.*;
+import flash.geom.Point;
+
+//create a LinePath2D with 5 Points
+var path:LinePath2D = new LinePath2D([new Point(0, 0), 
+           new Point(100, 100), 
+           new Point(350, 150),
+           new Point(50, 200),
+           new Point(550, 400)]);
+
+//add it to the display list so we can see it (you can skip this if you prefer)
+addChild(path);
+
+//create an array containing 30 blue squares
+var boxes:Array = [];
+for (var i:int = 0; i &lt; 30; i++) {
+ boxes.push(createSquare(10, 0x0000FF));
+}
+
+//distribute the blue squares evenly across the entire path and set them to autoRotate
+path.distribute(boxes, 0, 1, true);
+
+//put a red square exactly halfway through the 2nd segment
+path.addFollower(createSquare(10, 0xFF0000), path.getSegmentProgress(2, 0.5));
+
+//tween all of the squares through the path once (wrapping when they reach the end)
+TweenMax.to(path, 20, {progress:1});
+
+//while the squares are animating through the path, tween the path's position and rotation too!
+TweenMax.to(path, 3, {rotation:180, x:550, y:400, ease:Back.easeOut, delay:3});
+
+//method for creating squares
+function createSquare(size:Number, color:uint=0xFF0000):Shape {
+ var s:Shape = new Shape();
+ s.graphics.beginFill(color, 1);
+ s.graphics.drawRect(-size / 2, -size / 2, size, size);
+ s.graphics.endFill();
+ this.addChild(s);
+ return s;
+}
+</pre></div>
+ 
+ <b>NOTES</b><br />
+ <ul>
+   <li>All followers' positions are automatically updated when you alter the MotionPath that they're following.</li>
+   <li>To tween all followers along the path at once, simply tween the MotionPath's <code>progress</code> 
+    property which will provide better performance than tweening each follower independently.</li>
+ </ul>
+ 
+ <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<div class="showHideLinks">
+<div class="hideInheritedProperty" id="hideInheritedProperty">
+<a onclick="javascript:setInheritedVisible(false,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Properties</a>
+</div>
+<div class="showInheritedProperty" id="showInheritedProperty">
+<a onclick="javascript:setInheritedVisible(true,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Properties</a>
+</div>
+</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#autoUpdatePoints">autoUpdatePoints</a> : Boolean<div class="summaryTableDescription"> If true, the LinePath2D will analyze every Point whenever it renders to see if any Point's x or y value has changed, thus making it possible to tween them dynamically.</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#followers">followers</a> : Array<div class="summaryTableDescription"> Returns an array of all PathFollower instances associated with this path </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#height">height</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#points">points</a> : Array<div class="summaryTableDescription"> The array of Points through which the LinePath2D is drawn.</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#progress">progress</a> : Number<div class="summaryTableDescription"> 
+   A value between 0 and 1 that can be used to move all followers along the path.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#rawProgress">rawProgress</a> : Number<div class="summaryTableDescription"> 
+   Identical to <code>progress</code> except that the value is not re-interpolated between 0 and 1.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#rotation">rotation</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#scaleX">scaleX</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#scaleY">scaleY</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#targets">targets</a> : Array<div class="summaryTableDescription"> Returns an array of all target instances associated with the PathFollowers of this path </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#totalLength">totalLength</a> : Number<div class="summaryTableDescription">[read-only] Total length of the LinePath2D as though it were stretched out in a straight, flat line.</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#visible">visible</a> : Boolean<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#width">width</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#x">x</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#y">y</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<div class="showHideLinks">
+<div class="hideInheritedMethod" id="hideInheritedMethod">
+<a onclick="javascript:setInheritedVisible(false,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Methods</a>
+</div>
+<div class="showInheritedMethod" id="showInheritedMethod">
+<a onclick="javascript:setInheritedVisible(true,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Methods</a>
+</div>
+</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#LinePath2D()">LinePath2D</a>(points:Array = null, x:Number = 0, y:Number = 0, autoUpdatePoints:Boolean = false)</div>
+<div class="summaryTableDescription">
+   Constructor
+   
+   </div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="MotionPath.html#addFollower()">addFollower</a>(target:*, progress:Number = 0, autoRotate:Boolean = false, rotationOffset:Number = 0):<a href="../motionPaths/PathFollower.html">PathFollower</a>
+</div>
+<div class="summaryTableDescription">
+   Adds a follower to the path, optionally setting it to a particular progress position.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#appendMultiplePoints()">appendMultiplePoints</a>(points:Array):void</div>
+<div class="summaryTableDescription">
+   Appends multiple Points to the end of the <code>points</code> array.</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#appendPoint()">appendPoint</a>(point:Point):void</div>
+<div class="summaryTableDescription"> 
+   Adds a Point to the end of the current LinePath2D (essentially redefining its end point).</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="MotionPath.html#distribute()">distribute</a>(targets:Array = null, min:Number = 0, max:Number = 1, autoRotate:Boolean = false, rotationOffset:Number = 0):void</div>
+<div class="summaryTableDescription">
+   Distributes objects evenly along the MotionPath.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getClosestProgress()">getClosestProgress</a>(target:Object):Number</div>
+<div class="summaryTableDescription">
+   Finds the closest overall <code>progress</code> value on the LinePath2D based on the 
+   target object's current position (<code>x</code> and <code>y</code> properties).</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="MotionPath.html#getFollower()">getFollower</a>(target:Object):<a href="../motionPaths/PathFollower.html">PathFollower</a>
+</div>
+<div class="summaryTableDescription">
+   Returns the PathFollower instance associated with a particular target or null if none exists.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getSegmentProgress()">getSegmentProgress</a>(segment:uint, progress:Number):Number</div>
+<div class="summaryTableDescription">
+   Translates the progress along a particular segment of the LinePath2D to an overall <code>progress</code>
+   value, making it easy to position an object like "halfway along the 2nd segment of the line".</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#insertMultiplePoints()">insertMultiplePoints</a>(points:Array, index:uint = 0):void</div>
+<div class="summaryTableDescription">
+   Inserts multiple Points into the <code>points</code> array at a particular index/position.</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#insertPoint()">insertPoint</a>(point:Point, index:uint = 0):void</div>
+<div class="summaryTableDescription"> 
+   Inserts a Point at a particular index value in the <code>points</code> array, similar to splice() in an array.</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="MotionPath.html#lineStyle()">lineStyle</a>(thickness:Number = 1, color:uint = 0x666666, alpha:Number = 1, pixelHinting:Boolean = false, scaleMode:String = "none", caps:String = null, joints:String = null, miterLimit:Number = 3, skipRedraw:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Sets the line style for the path which you will only see if you add the path to the display list
+   with something like addChild() and make sure the visible property is true.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="MotionPath.html#removeAllFollowers()">removeAllFollowers</a>():void</div>
+<div class="summaryTableDescription"> Removes all followers.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="MotionPath.html#removeFollower()">removeFollower</a>(target:*):void</div>
+<div class="summaryTableDescription">
+   Removes the target as a follower.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#removePoint()">removePoint</a>(point:Point):void</div>
+<div class="summaryTableDescription">
+   Removes a particular Point instance from the <code>points</code> array.</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#removePointByIndex()">removePointByIndex</a>(index:uint):void</div>
+<div class="summaryTableDescription">
+   Removes the Point that resides at a particular index/position in the <code>points</code> array.</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#renderObjectAt()">renderObjectAt</a>(target:Object, progress:Number, autoRotate:Boolean = false, rotationOffset:Number = 0):void</div>
+<div class="summaryTableDescription"> 
+   Positions any object with x and y properties on the path at a specific progress position.</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#snap()">snap</a>(target:Object, autoRotate:Boolean = false, rotationOffset:Number = 0):<a href="../motionPaths/PathFollower.html">PathFollower</a>
+</div>
+<div class="summaryTableDescription">
+   Allows you to snap an object like a Sprite, Point, MovieClip, etc.</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#update()">update</a>(event:Event = null):void</div>
+<div class="summaryTableDescription">  
+   Forces the MotionPath to re-render itself and all of its followers.</div>
+</td><td class="summaryTableOwnerCol">LinePath2D</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="autoUpdatePoints"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">autoUpdatePoints</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var autoUpdatePoints:Boolean</code><p> If true, the LinePath2D will analyze every Point whenever it renders to see if any Point's x or y value has changed, thus making it possible to tween them dynamically. Setting <code>autoUpdatePoints</code> to <code>true</code> increases the CPU load due to the extra processing, so only set it to <code>true</code> if you plan to change one or more of the Points' position. </p></div>
+<a name="points"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">points</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>points:Array</code>&nbsp;&nbsp;[read-write]<p> The array of Points through which the LinePath2D is drawn. IMPORTANT: Changes to the array are NOT automatically applied or reflected in the LinePath2D - just like the <code>filters</code> property of a DisplayObject, you must set the <code>points</code> property of a LinePath2D directly to ensure that any changes are applied internally. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get points():Array</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set points(value:Array):void</code>
+<br>
+</div>
+<a name="totalLength"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">totalLength</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>totalLength:Number</code>&nbsp;&nbsp;[read-only]<p> Total length of the LinePath2D as though it were stretched out in a straight, flat line. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get totalLength():Number</code>
+<br>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="LinePath2D()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">LinePath2D</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function LinePath2D(points:Array = null, x:Number = 0, y:Number = 0, autoUpdatePoints:Boolean = false)</code><p>
+   Constructor
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">points</span>:Array</code> (default = <code>null</code>)<code></code> &mdash; An array of Points that define the line
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">x</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; The x coordinate of the origin of the line
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">y</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; The y coordinate of the origin of the line
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">autoUpdatePoints</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true, the LinePath2D will analyze every Point whenever it renders to see if any Point's x or y value has changed, thus making it possible to tween them dynamically. Setting <code>autoUpdatePoints</code> to <code>true</code> increases the CPU load due to the extra processing, so only set it to <code>true</code> if you plan to change one or more of the Points' position.
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="appendMultiplePoints()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">appendMultiplePoints</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function appendMultiplePoints(points:Array):void</code><p>
+   Appends multiple Points to the end of the <code>points</code> array. Identical to 
+   the <code>appendPoint()</code> method, but accepts an array of Points instead of just one.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">points</span>:Array</code> &mdash; An array of Points to append.
+   </td>
+</tr>
+</table>
+</div>
+<a name="appendPoint()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">appendPoint</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function appendPoint(point:Point):void</code><p> 
+   Adds a Point to the end of the current LinePath2D (essentially redefining its end point).
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">point</span>:Point</code> &mdash; A Point describing the local coordinates through which the line should be drawn.
+   </td>
+</tr>
+</table>
+</div>
+<a name="getClosestProgress()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getClosestProgress</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getClosestProgress(target:Object):Number</code><p>
+   Finds the closest overall <code>progress</code> value on the LinePath2D based on the 
+   target object's current position (<code>x</code> and <code>y</code> properties). For example,
+   to position the mc object on the LinePath2D at the spot that's closest to the Point x:100, y:50, 
+   you could do:<br /><br /><code>
+   
+   path.addFollower(mc, path.getClosestProgress(new Point(100, 50)));
+   
+   </code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; The target object whose position (x/y property values) are analyzed for proximity to the LinePath2D.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Number</code> &mdash; The overall <code>progress</code> value describing the position on the LinePath2D that is closest to the target's current position.
+   </td>
+</tr>
+</table>
+</div>
+<a name="getSegmentProgress()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getSegmentProgress</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getSegmentProgress(segment:uint, progress:Number):Number</code><p>
+   Translates the progress along a particular segment of the LinePath2D to an overall <code>progress</code>
+   value, making it easy to position an object like "halfway along the 2nd segment of the line". For example:
+   <br /><br /><code>
+   
+   path.addFollower(mc, path.getSegmentProgress(2, 0.5));
+   
+   </code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">segment</span>:uint</code> &mdash; The segment number of the line. For example, a line defined by 3 Points would have two segments.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">progress</span>:Number</code> &mdash; The <code>progress</code> along the segment. For example, the midpoint of the second segment would be <code>getSegmentProgress(2, 0.5);</code>.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Number</code> &mdash; The progress value (between 0 and 1) describing the overall progress on the entire LinePath2D.
+   </td>
+</tr>
+</table>
+</div>
+<a name="insertMultiplePoints()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">insertMultiplePoints</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function insertMultiplePoints(points:Array, index:uint = 0):void</code><p>
+   Inserts multiple Points into the <code>points</code> array at a particular index/position.
+   Identical to the <code>insertPoint()</code> method, but accepts an array of points instead of just one.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">points</span>:Array</code> &mdash; An array of Points to insert.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">index</span>:uint</code> (default = <code>0</code>)<code></code> &mdash; The index value in the <code>points</code> array at which the Points should be inserted.
+   </td>
+</tr>
+</table>
+</div>
+<a name="insertPoint()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">insertPoint</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function insertPoint(point:Point, index:uint = 0):void</code><p> 
+   Inserts a Point at a particular index value in the <code>points</code> array, similar to splice() in an array.
+   For example, if a LinePath2D instance has 3 Points already and you want to insert a new Point right after the
+   first one, you would do:<br /><br /><code>
+   
+   var path:LinePath2D = new LinePath2D([new Point(0, 0), <br />
+              new Point(100, 50), <br />
+              new Point(200, 300)]); <br />
+   path.insertPoint(new Point(50, 50), 1); <br /><br /></code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">point</span>:Point</code> &mdash; A Point describing the local coordinates through which the line should be drawn.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">index</span>:uint</code> (default = <code>0</code>)<code></code> &mdash; The index value in the <code>points</code> array at which the Point should be inserted.
+   </td>
+</tr>
+</table>
+</div>
+<a name="removePoint()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">removePoint</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function removePoint(point:Point):void</code><p>
+   Removes a particular Point instance from the <code>points</code> array.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">point</span>:Point</code> &mdash; The Point object to remove from the <code>points</code> array.
+   </td>
+</tr>
+</table>
+</div>
+<a name="removePointByIndex()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">removePointByIndex</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function removePointByIndex(index:uint):void</code><p>
+   Removes the Point that resides at a particular index/position in the <code>points</code> array. 
+   Just like in arrays, the index is zero-based. For example, to remove the second Point in the array, 
+   do <code>removePointByIndex(1)</code>;
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">index</span>:uint</code> &mdash; The index value of the Point that should be removed from the <code>points</code> array.
+   </td>
+</tr>
+</table>
+</div>
+<a name="renderObjectAt()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">renderObjectAt</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function renderObjectAt(target:Object, progress:Number, autoRotate:Boolean = false, rotationOffset:Number = 0):void</code><p> 
+   Positions any object with x and y properties on the path at a specific progress position. 
+   For example, to position <code>mc</code> in the middle of the path, you would do:<br /><br /><code>
+   
+   myPath.renderObjectAt(mc, 0.5);</code><br /><br />
+   
+   Some paths have methods to translate other meaningful information into a progress value, like
+   for a <code>CirclePath2D</code> you can get the progress associated with the 90-degree position with the
+   <code>angleToPosition()</code> method like this:<br /><br /><code>
+   
+   myCircle.renderObjectAt(mc, myCircle.angleToProgress(90));
+   
+   </code><br />
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; The target object to position
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">progress</span>:Number</code> &mdash; The progress value (typically between 0 and 1 where 0 is the beginning of the path, 0.5 is in the middle, and 1 is at the end)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">autoRotate</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; When <code>autoRotate</code> is <code>true</code>, the target will automatically be rotated so that it is oriented to the angle of the path. To offset this value (like to always add 90 degrees for example), use the <code>rotationOffset</code> property.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">rotationOffset</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; When <code>autoRotate</code> is <code>true</code>, this value will always be added to the resulting <code>rotation</code> of the target.
+   </td>
+</tr>
+</table>
+</div>
+<a name="snap()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">snap</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function snap(target:Object, autoRotate:Boolean = false, rotationOffset:Number = 0):<a href="../motionPaths/PathFollower.html">PathFollower</a></code><p>
+   Allows you to snap an object like a Sprite, Point, MovieClip, etc. to the LinePath2D by determining
+   the closest position along the line to the current position of the object. It will automatically
+   create a PathFollower instance for the target object and reposition it on the LinePath2D. 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; The target object that should be repositioned onto the LinePath2D.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">autoRotate</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; When <code>autoRotate</code> is <code>true</code>, the follower will automatically be rotated so that it is oriented to the angle of the path that it is following. To offset this value (like to always add 90 degrees for example), use the <code>rotationOffset</code> property.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">rotationOffset</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; When <code>autoRotate</code> is <code>true</code>, this value will always be added to the resulting <code>rotation</code> of the target.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../motionPaths/PathFollower.html">PathFollower</a></code> &mdash; 
+                        A PathFollower instance that was created for the target.
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="update()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">update</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function update(event:Event = null):void</code><p>  
+   Forces the MotionPath to re-render itself and all of its followers.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:Event</code> (default = <code>null</code>)<code></code> &mdash; An optional Event that is accepted just to make it easier for use as an event handler (to have it update automatically on every frame, for example, you could add an ENTER_FRAME listener and point it to this method).  </td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

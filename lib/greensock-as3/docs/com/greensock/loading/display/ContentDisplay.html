@@ -1,0 +1,549 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
+<meta content="ContentDisplay,com.greensock.loading.display.ContentDisplay,data,bgAlpha,bgColor,centerRegistration,crop,fitHeight,fitWidth,hAlign,loader,rawContent,scaleMode,vAlign,dispose" name="keywords">
+<title>com.greensock.loading.display.ContentDisplay</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'ContentDisplay - API Documentation';
+				var baseRef = '../../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../index-list.html')" href="../../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../../index.html?com/greensock/loading/display/ContentDisplay.html&amp;com/greensock/loading/display/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;ContentDisplay</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class ContentDisplay"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock.loading.display</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class ContentDisplay</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">ContentDisplay <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> flash.display.Sprite</td>
+</tr>
+</table>
+<p></p>
+ A container for visual content that is loaded by any of the following: ImageLoaders, SWFLoaders, 
+ or VideoLoaders. It is essentially a Sprite that has a <code>loader</code> property for easily referencing
+ the original loader, as well as several other useful properties for controling the placement of 
+ <code>rawContent</code> and the way it is scaled to fit (if at all). You can add a ContentDisplay
+ to the display list or populate an array with as many as you want and then if you ever need to unload() 
+ the content or reload it or figure out its url, etc., you can reference your ContentDisplay's <code>loader</code>
+ property like <code>myContent.loader.url</code> or <code>(myContent.loader as SWFLoader).getClass("com.greensock.TweenLite");</code>
+ <br /><br />
+ 
+ Flex users can utilize the <code>FlexContentDisplay</code> class instead which extends <code>UIComponent</code> (a Flex requirement). 
+ All you need to do is set the <code>LoaderMax.contentDisplayClass</code> property to FlexContentDisplay once like:
+ <p></p>
+<br>
+<span class="label">Example</span>
+<br>Example AS3 code:<div class='listing'><pre>
+ import com.greensock.loading.*;
+ import com.greensock.loading.display.*;
+ 
+LoaderMax.contentDisplayClass = FlexContentDisplay;
+ </pre></div>
+ 
+ After that, all ImageLoaders, SWFLoaders, and VideoLoaders will return FlexContentDisplay objects 
+ as their <code>content</code> instead of regular ContentDisplay objects. <br /><br />
+ 
+ <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#bgAlpha">bgAlpha</a> : Number<div class="summaryTableDescription"> 
+   Controls the alpha of the rectangle that is drawn when the ContentDisplay's <code>fitWidth</code> and <code>fitHeight</code> 
+   properties are defined (or <code>width</code> and <code>height</code> in the loader's <code>vars</code> property/parameter).</div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#bgColor">bgColor</a> : uint<div class="summaryTableDescription"> 
+   When the ContentDisplay's <code>fitWidth</code> and <code>fitHeight</code> properties are defined (or <code>width</code> 
+   and <code>height</code> in the loader's <code>vars</code> property/parameter), a rectangle will be drawn inside the 
+   ContentDisplay object immediately in order to ease the development process (for example, you can add <code>ROLL_OVER/ROLL_OUT</code>
+   event listeners immediately).</div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#centerRegistration">centerRegistration</a> : Boolean<div class="summaryTableDescription"> 
+   If <code>true</code>, the ContentDisplay's registration point will be placed in the center of the <code>rawContent</code> 
+   which can be useful if, for example, you want to animate its scale and have it grow/shrink from its center.</div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#crop">crop</a> : Boolean<div class="summaryTableDescription"> 
+   When the ContentDisplay's <code>fitWidth</code> and <code>fitHeight</code> properties are defined (or <code>width</code> 
+   and <code>height</code> in the loader's <code>vars</code> property/parameter), setting <code>crop</code> to 
+   <code>true</code> will cause the <code>rawContent</code> to be cropped within that area (by applying a <code>scrollRect</code> 
+   for maximum performance).</div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#data">data</a> : *<div class="summaryTableDescription"> Arbitrary data that you can associate with the ContentDisplay instance.</div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#fitHeight">fitHeight</a> : Number<div class="summaryTableDescription"> 
+   The height to which the <code>rawContent</code> should be fit according to the ContentDisplay's <code>scaleMode</code>
+   (this height is figured before rotation, scaleX, and scaleY).</div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#fitWidth">fitWidth</a> : Number<div class="summaryTableDescription"> 
+   The width to which the <code>rawContent</code> should be fit according to the ContentDisplay's <code>scaleMode</code>
+   (this width is figured before rotation, scaleX, and scaleY).</div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#hAlign">hAlign</a> : String<div class="summaryTableDescription"> 
+   When the ContentDisplay's <code>fitWidth</code> and <code>fitHeight</code> properties are defined (or <code>width</code> 
+   and <code>height</code> in the loader's <code>vars</code> property/parameter), the <code>hAlign</code> determines how 
+   the <code>rawContent</code> is horizontally aligned within that area.</div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#loader">loader</a> : <a href="../core/LoaderItem.html">LoaderItem</a>
+<div class="summaryTableDescription"> The loader whose rawContent populates this ContentDisplay.</div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#rawContent">rawContent</a> : *<div class="summaryTableDescription"> The raw content which can be a Bitmap, a MovieClip, a Loader, or a Video depending on the type of loader associated with the ContentDisplay.</div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#scaleMode">scaleMode</a> : String<div class="summaryTableDescription"> 
+   When the ContentDisplay's <code>fitWidth</code> and <code>fitHeight</code> properties are defined (or <code>width</code> 
+   and <code>height</code> in the loader's <code>vars</code> property/parameter), the <code>scaleMode</code> controls how 
+   the <code>rawContent</code> will be scaled to fit the area.</div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#vAlign">vAlign</a> : String<div class="summaryTableDescription"> 
+   When the ContentDisplay's <code>fitWidth</code> and <code>fitHeight</code> properties are defined (or <code>width</code> 
+   and <code>height</code> in the loader's <code>vars</code> property/parameter), the <code>vAlign</code> determines how 
+   the <code>rawContent</code> is vertically aligned within that area.</div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#ContentDisplay()">ContentDisplay</a>(loader:<a href="../core/LoaderItem.html">LoaderItem</a>)</div>
+<div class="summaryTableDescription">
+   Constructor
+   
+   </div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#dispose()">dispose</a>(unloadLoader:Boolean = true, disposeLoader:Boolean = true):void</div>
+<div class="summaryTableDescription">
+   Removes the ContentDisplay from the display list (if necessary), dumps the <code>rawContent</code>,
+   and calls <code>unload()</code> and <code>dispose()</code> on the loader (unless you define otherwise with 
+   the optional parameters).</div>
+</td><td class="summaryTableOwnerCol">ContentDisplay</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="bgAlpha"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bgAlpha</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>bgAlpha:Number</code>&nbsp;&nbsp;[read-write]<p> 
+   Controls the alpha of the rectangle that is drawn when the ContentDisplay's <code>fitWidth</code> and <code>fitHeight</code> 
+   properties are defined (or <code>width</code> and <code>height</code> in the loader's <code>vars</code> property/parameter). 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get bgAlpha():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set bgAlpha(value:Number):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../display/ContentDisplay.html#bgColor" target="">bgColor</a>
+<br>
+<a href="../display/ContentDisplay.html#fitWidth" target="">fitWidth</a>
+<br>
+<a href="../display/ContentDisplay.html#fitHeight" target="">fitHeight</a>
+</div>
+</div>
+<a name="bgColor"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bgColor</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>bgColor:uint</code>&nbsp;&nbsp;[read-write]<p> 
+   When the ContentDisplay's <code>fitWidth</code> and <code>fitHeight</code> properties are defined (or <code>width</code> 
+   and <code>height</code> in the loader's <code>vars</code> property/parameter), a rectangle will be drawn inside the 
+   ContentDisplay object immediately in order to ease the development process (for example, you can add <code>ROLL_OVER/ROLL_OUT</code>
+   event listeners immediately). It is transparent by default, but you may define a <code>bgAlpha</code> if you prefer. 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get bgColor():uint</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set bgColor(value:uint):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../display/ContentDisplay.html#bgAlpha" target="">bgAlpha</a>
+<br>
+<a href="../display/ContentDisplay.html#fitWidth" target="">fitWidth</a>
+<br>
+<a href="../display/ContentDisplay.html#fitHeight" target="">fitHeight</a>
+</div>
+</div>
+<a name="centerRegistration"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">centerRegistration</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>centerRegistration:Boolean</code>&nbsp;&nbsp;[read-write]<p> 
+   If <code>true</code>, the ContentDisplay's registration point will be placed in the center of the <code>rawContent</code> 
+   which can be useful if, for example, you want to animate its scale and have it grow/shrink from its center. 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get centerRegistration():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set centerRegistration(value:Boolean):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../display/ContentDisplay.html#scaleMode" target="">scaleMode</a>
+</div>
+</div>
+<a name="crop"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">crop</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>crop:Boolean</code>&nbsp;&nbsp;[read-write]<p> 
+   When the ContentDisplay's <code>fitWidth</code> and <code>fitHeight</code> properties are defined (or <code>width</code> 
+   and <code>height</code> in the loader's <code>vars</code> property/parameter), setting <code>crop</code> to 
+   <code>true</code> will cause the <code>rawContent</code> to be cropped within that area (by applying a <code>scrollRect</code> 
+   for maximum performance). This is typically useful when the <code>scaleMode</code> is <code>"proportionalOutside"</code> 
+   or <code>"none"</code> so that any parts of the <code>rawContent</code> that exceed the dimensions defined by 
+   <code>fitWidth</code> and <code>fitHeight</code> are visually chopped off. Use the <code>hAlign</code> and 
+   <code>vAlign</code> properties to control the vertical and horizontal alignment within the cropped area. 
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get crop():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set crop(value:Boolean):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../display/ContentDisplay.html#scaleMode" target="">scaleMode</a>
+</div>
+</div>
+<a name="data"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">data</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var data:*</code><p> Arbitrary data that you can associate with the ContentDisplay instance. For example, you could set <code>data</code> to be an object containing various other properties or set it to an index number related to an array in your application. It is completely optional and arbitrary. </p></div>
+<a name="fitHeight"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fitHeight</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>fitHeight:Number</code>&nbsp;&nbsp;[read-write]<p> 
+   The height to which the <code>rawContent</code> should be fit according to the ContentDisplay's <code>scaleMode</code>
+   (this height is figured before rotation, scaleX, and scaleY). When a "height" property is defined in the loader's <code>vars</code>
+   property/parameter, it is automatically applied to this <code>fitHeight</code> property. For example, the following code will
+   set the loader's ContentDisplay <code>fitHeight</code> to 80:<code><br /><br />
+   
+   var loader:ImageLoader = new ImageLoader("photo.jpg", {width:100, height:80, container:this});</code>
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get fitHeight():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set fitHeight(value:Number):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../display/ContentDisplay.html#fitWidth" target="">fitWidth</a>
+<br>
+<a href="../display/ContentDisplay.html#scaleMode" target="">scaleMode</a>
+</div>
+</div>
+<a name="fitWidth"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fitWidth</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>fitWidth:Number</code>&nbsp;&nbsp;[read-write]<p> 
+   The width to which the <code>rawContent</code> should be fit according to the ContentDisplay's <code>scaleMode</code>
+   (this width is figured before rotation, scaleX, and scaleY). When a "width" property is defined in the loader's <code>vars</code>
+   property/parameter, it is automatically applied to this <code>fitWidth</code> property. For example, the following code will
+   set the loader's ContentDisplay <code>fitWidth</code> to 100:<code><br /><br />
+   
+   var loader:ImageLoader = new ImageLoader("photo.jpg", {width:100, height:80, container:this});</code>
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get fitWidth():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set fitWidth(value:Number):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../display/ContentDisplay.html#fitHeight" target="">fitHeight</a>
+<br>
+<a href="../display/ContentDisplay.html#scaleMode" target="">scaleMode</a>
+</div>
+</div>
+<a name="hAlign"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">hAlign</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>hAlign:String</code>&nbsp;&nbsp;[read-write]<p> 
+   When the ContentDisplay's <code>fitWidth</code> and <code>fitHeight</code> properties are defined (or <code>width</code> 
+   and <code>height</code> in the loader's <code>vars</code> property/parameter), the <code>hAlign</code> determines how 
+   the <code>rawContent</code> is horizontally aligned within that area. The following values are recognized (you may use the 
+   <code>com.greensock.layout.AlignMode</code> constants if you prefer):
+   <ul>
+     <li><code>"center"</code> (the default) - The <code>rawContent</code> will be centered horizontally in the ContentDisplay</li>
+     <li><code>"left"</code> - The <code>rawContent</code> will be aligned with the left side of the ContentDisplay</li>
+     <li><code>"right"</code> - The <code>rawContent</code> will be aligned with the right side of the ContentDisplay</li>
+   </ul> 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get hAlign():String</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set hAlign(value:String):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../display/ContentDisplay.html#scaleMode" target="">scaleMode</a>
+<br>
+<a href="../display/ContentDisplay.html#vAlign" target="">vAlign</a>
+</div>
+</div>
+<a name="loader"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">loader</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>loader:<a href="../core/LoaderItem.html">LoaderItem</a></code>&nbsp;&nbsp;[read-write]<p> The loader whose rawContent populates this ContentDisplay. If you get the loader's <code>content</code>, it will return this ContentDisplay object. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get loader():<a href="../core/LoaderItem.html">LoaderItem</a></code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set loader(value:<a href="../core/LoaderItem.html">LoaderItem</a>):void</code>
+<br>
+</div>
+<a name="rawContent"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">rawContent</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>rawContent:*</code>&nbsp;&nbsp;[read-write]<p> The raw content which can be a Bitmap, a MovieClip, a Loader, or a Video depending on the type of loader associated with the ContentDisplay. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get rawContent():*</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set rawContent(value:*):void</code>
+<br>
+</div>
+<a name="scaleMode"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">scaleMode</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>scaleMode:String</code>&nbsp;&nbsp;[read-write]<p> 
+   When the ContentDisplay's <code>fitWidth</code> and <code>fitHeight</code> properties are defined (or <code>width</code> 
+   and <code>height</code> in the loader's <code>vars</code> property/parameter), the <code>scaleMode</code> controls how 
+   the <code>rawContent</code> will be scaled to fit the area. The following values are recognized (you may use the 
+   <code>com.greensock.layout.ScaleMode</code> constants if you prefer):
+   <ul>
+     <li><code>"stretch"</code> (the default) - The <code>rawContent</code> will fill the width/height exactly.</li>
+     <li><code>"proportionalInside"</code> - The <code>rawContent</code> will be scaled proportionally to fit inside the area defined by the width/height</li>
+     <li><code>"proportionalOutside"</code> - The <code>rawContent</code> will be scaled proportionally to completely fill the area, allowing portions of it to exceed the bounds defined by the width/height.</li>
+     <li><code>"widthOnly"</code> - Only the width of the <code>rawContent</code> will be adjusted to fit.</li>
+     <li><code>"heightOnly"</code> - Only the height of the <code>rawContent</code> will be adjusted to fit.</li>
+     <li><code>"none"</code> - No scaling of the <code>rawContent</code> will occur.</li>
+   </ul> 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scaleMode():String</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set scaleMode(value:String):void</code>
+<br>
+</div>
+<a name="vAlign"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">vAlign</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>vAlign:String</code>&nbsp;&nbsp;[read-write]<p> 
+   When the ContentDisplay's <code>fitWidth</code> and <code>fitHeight</code> properties are defined (or <code>width</code> 
+   and <code>height</code> in the loader's <code>vars</code> property/parameter), the <code>vAlign</code> determines how 
+   the <code>rawContent</code> is vertically aligned within that area. The following values are recognized (you may use the 
+   <code>com.greensock.layout.AlignMode</code> constants if you prefer):
+   <ul>
+     <li><code>"center"</code> (the default) - The <code>rawContent</code> will be centered vertically in the ContentDisplay</li>
+     <li><code>"top"</code> - The <code>rawContent</code> will be aligned with the top of the ContentDisplay</li>
+     <li><code>"bottom"</code> - The <code>rawContent</code> will be aligned with the bottom of the ContentDisplay</li>
+   </ul> 
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get vAlign():String</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set vAlign(value:String):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../display/ContentDisplay.html#scaleMode" target="">scaleMode</a>
+<br>
+<a href="../display/ContentDisplay.html#hAlign" target="">hAlign</a>
+</div>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="ContentDisplay()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">ContentDisplay</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function ContentDisplay(loader:<a href="../core/LoaderItem.html">LoaderItem</a>)</code><p>
+   Constructor
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">loader</span>:<a href="../core/LoaderItem.html">LoaderItem</a></code> &mdash; The Loader object that will populate the ContentDisplay's <code>rawContent</code>.
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="dispose()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">dispose</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function dispose(unloadLoader:Boolean = true, disposeLoader:Boolean = true):void</code><p>
+   Removes the ContentDisplay from the display list (if necessary), dumps the <code>rawContent</code>,
+   and calls <code>unload()</code> and <code>dispose()</code> on the loader (unless you define otherwise with 
+   the optional parameters). This essentially destroys the ContentDisplay and makes it eligible for garbage 
+   collection internally, although if you added any listeners manually, you should remove them as well.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">unloadLoader</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If <code>true</code>, <code>unload()</code> will be called on the loader. It is <code>true</code> by default.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">disposeLoader</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If <code>true</code>, <code>dispose()</code> will be called on the loader. It is <code>true</code> by default.
+   </td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

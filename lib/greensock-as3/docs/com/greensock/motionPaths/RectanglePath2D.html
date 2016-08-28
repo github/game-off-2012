@@ -1,0 +1,443 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="RectanglePath2D,com.greensock.motionPaths.RectanglePath2D,centerOrigin,rawHeight,rawWidth,renderObjectAt,update" name="keywords">
+<title>com.greensock.motionPaths.RectanglePath2D</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'RectanglePath2D - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?com/greensock/motionPaths/RectanglePath2D.html&amp;com/greensock/motionPaths/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;RectanglePath2D</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class RectanglePath2D"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock.motionPaths</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class RectanglePath2D</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">RectanglePath2D <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> <a href="MotionPath.html">MotionPath</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> flash.display.Shape</td>
+</tr>
+</table>
+<p></p>
+ A RectanglePath2D defines a rectangular path on which a PathFollower can be placed, making it simple to tween objects
+ along a rectangle's perimeter. A PathFollower's position along the path is described using its <code>progress</code> property, 
+ a value between 0 and 1 where 0 is at the beginning of the path (top left corner), and as the value increases, it
+ moves clockwise along the path so that 0.5 would be at the lower right corner, and 1 is all the way back at the 
+ upper left corner of the path. So to tween a PathFollower along the path, you can simply tween its
+ <code>progress</code> property. To tween ALL of the followers on the path at once, you can tween the 
+ RectanglePath2D's <code>progress</code> property. PathFollowers automatically wrap so that if the <code>progress</code> 
+ value exceeds 1 it continues at the beginning of the path.<br /><br />
+  
+ Since RectanglePath2D extends the Shape class, you can add an instance to the display list to see a line representation
+ of the path drawn which can be helpful especially during the production phase. Use <code>lineStyle()</code> 
+ to adjust the color, thickness, and other attributes of the line that is drawn (or set the RectanglePath2D's 
+ <code>visible</code> property to false or don't add it to the display list if you don't want to see the line 
+ at all). You can also adjust all of its properties like <code>scaleX, scaleY, rotation, width, height, x,</code> 
+ and <code>y</code>. That means you can tween those values as well to achieve very dynamic, complex effects 
+ with ease.<br /><br />
+ 
+ <p></p>
+<br>
+<span class="label">Example</span>
+<br>Example AS3 code:<div class='listing'><pre>
+import com.greensock.*;
+import com.greensock.motionPaths.*;
+
+//create a rectangular motion path at coordinates x:25, y:25 with a width of 150 and a height of 100
+var rect:RectanglePath2D = new RectanglePath2D(25, 25, 150, 100, false);
+
+//position the MovieClip "mc" at the beginning of the path (upper left corner), and reference the resulting PathFollower instance with a "follower" variable.
+var follower:PathFollower = rect.addFollower(mc, 0);
+
+//tween the follower clockwise along the path all the way to the end, one full revolution
+TweenLite.to(follower, 2, {progress:1});
+
+//tween the follower counter-clockwise by using a negative progress value
+TweenLite.to(follower, 2, {progress:-1});
+</pre></div>
+ 
+ <b>NOTES</b><br />
+ <ul>
+   <li>All followers' positions are automatically updated when you alter the MotionPath that they're following.</li>
+   <li>To tween all followers along the path at once, simply tween the MotionPath's <code>progress</code> 
+    property which will provide better performance than tweening each follower independently.</li>
+ </ul>
+ 
+ <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<div class="showHideLinks">
+<div class="hideInheritedProperty" id="hideInheritedProperty">
+<a onclick="javascript:setInheritedVisible(false,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Properties</a>
+</div>
+<div class="showInheritedProperty" id="showInheritedProperty">
+<a onclick="javascript:setInheritedVisible(true,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Properties</a>
+</div>
+</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#centerOrigin">centerOrigin</a> : Boolean<div class="summaryTableDescription"> height of the rectangle in its unrotated, unscaled state (does not factor in any transformations like scaleX/scaleY/rotation) </div>
+</td><td class="summaryTableOwnerCol">RectanglePath2D</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#followers">followers</a> : Array<div class="summaryTableDescription"> Returns an array of all PathFollower instances associated with this path </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#height">height</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#progress">progress</a> : Number<div class="summaryTableDescription"> 
+   A value between 0 and 1 that can be used to move all followers along the path.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#rawHeight">rawHeight</a> : Number<div class="summaryTableDescription"> height of the rectangle in its unrotated, unscaled state (does not factor in any transformations like scaleX/scaleY/rotation) </div>
+</td><td class="summaryTableOwnerCol">RectanglePath2D</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#rawProgress">rawProgress</a> : Number<div class="summaryTableDescription"> 
+   Identical to <code>progress</code> except that the value is not re-interpolated between 0 and 1.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#rawWidth">rawWidth</a> : Number<div class="summaryTableDescription"> width of the rectangle in its unrotated, unscaled state (does not factor in any transformations like scaleX/scaleY/rotation) </div>
+</td><td class="summaryTableOwnerCol">RectanglePath2D</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#rotation">rotation</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#scaleX">scaleX</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#scaleY">scaleY</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#targets">targets</a> : Array<div class="summaryTableDescription"> Returns an array of all target instances associated with the PathFollowers of this path </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#visible">visible</a> : Boolean<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#width">width</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#x">x</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="MotionPath.html#y">y</a> : Number<div class="summaryTableDescription"> </div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<div class="showHideLinks">
+<div class="hideInheritedMethod" id="hideInheritedMethod">
+<a onclick="javascript:setInheritedVisible(false,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Methods</a>
+</div>
+<div class="showInheritedMethod" id="showInheritedMethod">
+<a onclick="javascript:setInheritedVisible(true,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Methods</a>
+</div>
+</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#RectanglePath2D()">RectanglePath2D</a>(x:Number, y:Number, rawWidth:Number, rawHeight:Number, centerOrigin:Boolean = false)</div>
+<div class="summaryTableDescription">
+   Constructor
+   
+   </div>
+</td><td class="summaryTableOwnerCol">RectanglePath2D</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="MotionPath.html#addFollower()">addFollower</a>(target:*, progress:Number = 0, autoRotate:Boolean = false, rotationOffset:Number = 0):<a href="../motionPaths/PathFollower.html">PathFollower</a>
+</div>
+<div class="summaryTableDescription">
+   Adds a follower to the path, optionally setting it to a particular progress position.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="MotionPath.html#distribute()">distribute</a>(targets:Array = null, min:Number = 0, max:Number = 1, autoRotate:Boolean = false, rotationOffset:Number = 0):void</div>
+<div class="summaryTableDescription">
+   Distributes objects evenly along the MotionPath.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="MotionPath.html#getFollower()">getFollower</a>(target:Object):<a href="../motionPaths/PathFollower.html">PathFollower</a>
+</div>
+<div class="summaryTableDescription">
+   Returns the PathFollower instance associated with a particular target or null if none exists.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="MotionPath.html#lineStyle()">lineStyle</a>(thickness:Number = 1, color:uint = 0x666666, alpha:Number = 1, pixelHinting:Boolean = false, scaleMode:String = "none", caps:String = null, joints:String = null, miterLimit:Number = 3, skipRedraw:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Sets the line style for the path which you will only see if you add the path to the display list
+   with something like addChild() and make sure the visible property is true.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="MotionPath.html#removeAllFollowers()">removeAllFollowers</a>():void</div>
+<div class="summaryTableDescription"> Removes all followers.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="MotionPath.html#removeFollower()">removeFollower</a>(target:*):void</div>
+<div class="summaryTableDescription">
+   Removes the target as a follower.</div>
+</td><td class="summaryTableOwnerCol"><a href="MotionPath.html">MotionPath</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#renderObjectAt()">renderObjectAt</a>(target:Object, progress:Number, autoRotate:Boolean = false, rotationOffset:Number = 0):void</div>
+<div class="summaryTableDescription"> 
+   Positions any object with x and y properties on the path at a specific progress position.</div>
+</td><td class="summaryTableOwnerCol">RectanglePath2D</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#update()">update</a>(event:Event = null):void</div>
+<div class="summaryTableDescription">  
+   Forces the MotionPath to re-render itself and all of its followers.</div>
+</td><td class="summaryTableOwnerCol">RectanglePath2D</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="centerOrigin"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">centerOrigin</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>centerOrigin:Boolean</code>&nbsp;&nbsp;[read-write]<p> height of the rectangle in its unrotated, unscaled state (does not factor in any transformations like scaleX/scaleY/rotation) </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get centerOrigin():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set centerOrigin(value:Boolean):void</code>
+<br>
+</div>
+<a name="rawHeight"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">rawHeight</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>rawHeight:Number</code>&nbsp;&nbsp;[read-write]<p> height of the rectangle in its unrotated, unscaled state (does not factor in any transformations like scaleX/scaleY/rotation) </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get rawHeight():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set rawHeight(value:Number):void</code>
+<br>
+</div>
+<a name="rawWidth"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">rawWidth</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>rawWidth:Number</code>&nbsp;&nbsp;[read-write]<p> width of the rectangle in its unrotated, unscaled state (does not factor in any transformations like scaleX/scaleY/rotation) </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get rawWidth():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set rawWidth(value:Number):void</code>
+<br>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="RectanglePath2D()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">RectanglePath2D</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function RectanglePath2D(x:Number, y:Number, rawWidth:Number, rawHeight:Number, centerOrigin:Boolean = false)</code><p>
+   Constructor
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">x</span>:Number</code> &mdash; The x coordinate of the origin of the rectangle (typically its top left corner unless <code>centerOrigin</code> is <code>true</code>)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">y</span>:Number</code> &mdash; The y coordinate of the origin of the rectangle (typically its top left corner unless <code>centerOrigin</code> is <code>true</code>)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">rawWidth</span>:Number</code> &mdash; The width of the rectangle in its unrotated and unscaled state
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">rawHeight</span>:Number</code> &mdash; The height of the rectangle in its unrotated and unscaled state
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">centerOrigin</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; To position the origin (registration point around which transformations occur) at the center of the rectangle instead of its upper left corner, set <code>centerOrigin</code> to <code>true</code> (it is false by default).
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="renderObjectAt()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">renderObjectAt</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function renderObjectAt(target:Object, progress:Number, autoRotate:Boolean = false, rotationOffset:Number = 0):void</code><p> 
+   Positions any object with x and y properties on the path at a specific progress position. 
+   For example, to position <code>mc</code> in the middle of the path, you would do:<br /><br /><code>
+   
+   myPath.renderObjectAt(mc, 0.5);</code><br /><br />
+   
+   Some paths have methods to translate other meaningful information into a progress value, like
+   for a <code>CirclePath2D</code> you can get the progress associated with the 90-degree position with the
+   <code>angleToPosition()</code> method like this:<br /><br /><code>
+   
+   myCircle.renderObjectAt(mc, myCircle.angleToProgress(90));
+   
+   </code><br />
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:Object</code> &mdash; The target object to position
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">progress</span>:Number</code> &mdash; The progress value (typically between 0 and 1 where 0 is the beginning of the path, 0.5 is in the middle, and 1 is at the end)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">autoRotate</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; When <code>autoRotate</code> is <code>true</code>, the target will automatically be rotated so that it is oriented to the angle of the path. To offset this value (like to always add 90 degrees for example), use the <code>rotationOffset</code> property.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">rotationOffset</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; When <code>autoRotate</code> is <code>true</code>, this value will always be added to the resulting <code>rotation</code> of the target.
+   </td>
+</tr>
+</table>
+</div>
+<a name="update()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">update</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function update(event:Event = null):void</code><p>  
+   Forces the MotionPath to re-render itself and all of its followers.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:Event</code> (default = <code>null</code>)<code></code> &mdash; An optional Event that is accepted just to make it easier for use as an event handler (to have it update automatically on every frame, for example, you could add an ENTER_FRAME listener and point it to this method).  </td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

@@ -1,0 +1,727 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="LiquidStage,com.greensock.layout.LiquidStage,BOTTOM_CENTER,BOTTOM_LEFT,BOTTOM_RIGHT,CENTER,LEFT_CENTER,RIGHT_CENTER,TOP_CENTER,TOP_LEFT,TOP_RIGHT,defaultStage,maxHeight,maxWidth,minHeight,minWidth,isBaseSize,retroMode,stage,stageBox,addEventListener,attach,getByStage,release,update" name="keywords">
+<title>com.greensock.layout.LiquidStage</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'LiquidStage - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?com/greensock/layout/LiquidStage.html&amp;com/greensock/layout/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;LiquidStage</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class LiquidStage"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.greensock.layout</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class LiquidStage</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">LiquidStage <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
+</tr>
+</table>
+<p></p>
+ LiquidStage allows you to "pin" DisplayObjects to reference points on the stage (or inside other DisplayObjects) 
+ so that when the stage is resized, they are repositioned and maintain their relative distance from
+ the PinPoint. For example, you could make a logo Sprite stay in the bottom right corner when the stage is resized.
+ 
+ You can also scale or stretch DisplayObjects using the LiquidArea class which allows you to define a rectangular
+ area that expands and contracts as the stage resizes, and you attach DisplayObjects so that they
+ fill the area, scaling in any of the following modes: <code>STRETCH, PROPORTIONAL_INSIDE, PROPORTIONAL_OUTSIDE, WIDTH_ONLY,</code>
+ or <code>HEIGHT_ONLY</code>. For example, you could have a bar snap to the bottom of the screen and 
+ stretch horizontally to fill the width of the stage. Or add a background image that proportionally scales 
+ to fill the entire stage.<br /><br />
+ 
+ There are a few things that make LiquidStage particularly useful:
+ <ul>
+  <li> Your DisplayObjects do not need to be at the root level - LiquidStage will compensate for nesting even if the DisplayObject's
+    anscestors are offset and/or scaled. </li>
+  <li> By default, repositioning only factors in the amount of change in the PinPoint's position, meaning 
+    you are free to move the DisplayObject manually and LiquidStage will honor its new position instead of 
+    forcing it to always remain a certain distance from the PinPoint (although a "strict" mode is available too).</li>
+  <li> Not only can you pin things to the <code>TOP_LEFT, TOP_CENTER, TOP_RIGHT, RIGHT_CENTER, BOTTOM_RIGHT, 
+    BOTTOM_CENTER, BOTTOM_LEFT, LEFT_CENTER,</code> and <code>CENTER</code>, but you can create your own 
+    custom PinPoints in any DisplayObject.</li>
+  <li> LiquidStage leverages the TweenLite engine to allow for animated transitions. Simply define the duration 
+    of the tween and optionally pass in a tween vars object to control other aspects of the tween like its
+    ease, delay, add an onComplete, onUpdate, etc.</li>
+  <li> LiquidStage does NOT force you to align the stage to the upper left corner - it will honor whatever StageAlign you choose.</li>
+  <li> Optionally define a minimum/maximum width and height to prevent objects from repositioning when the stage 
+    gets too small or too big.</li>
+  <li> LiquidStage only does its work when the stage resizes, and it is built for maximum performance.</li>
+ </ul> 
+ 
+ 
+ <p></p>
+<br>
+<span class="label">Example</span>
+<br>Example AS3 code:<div class='listing'><pre>
+import com.greensock.layout.*;
+
+//create a LiquidStage instance for the current stage which was built at an original size of 550x400
+//don't allow the stage to collapse smaller than 550x400 either.
+var ls:LiquidStage = new LiquidStage(this.stage, 550, 400, 550, 400);
+ 
+//attach a "logo" Sprite to the BOTTOM_RIGHT PinPoint
+ls.attach(logo, ls.BOTTOM_RIGHT);
+
+//create a 300x100 rectangular area at x:50, y:70 that stretches when the stage resizes (as though its top left and bottom right corners are pinned to their corresponding PinPoints on the stage)
+var area:LiquidArea = new LiquidArea(this, 50, 70, 300, 100);
+
+//attach a "myImage" Sprite to the area and set its ScaleMode to PROPORTIONAL_INSIDE and horizontally and vertically align it in the center of the area
+area.attach(myImage, ScaleMode.PROPORTIONAL_INSIDE, AlignMode.CENTER, AlignMode.CENTER);
+
+//if you'd like to preview the area visually (by default previewColor is red), set preview to true
+area.preview = true;
+ 
+//attach a RESIZE event listener to the LiquidStage instance (you could do this with the LiquidArea as well)
+ls.addEventListener(Event.RESIZE, onLiquidStageUpdate);
+function onLiquidStageUpdate(event:Event):void {
+ trace("updated LiquidStage");
+}
+
+</pre></div>
+  
+ <b>NOTES / LIMITATIONS:</b>
+ <ul>
+  <li> You need to set up your objects on the stage initially with the desired relative distance between
+    them and their PinPoint; LiquidStage doesn't reposition them initially. For example, if you want
+    logo_mc to be exactly 20 pixels away from the BOTTOM_RIGHT corner of the stage on both axis (x and y),
+    you must put it there before attach()-ing it.</li>
+  <li> If a DisplayObject is not in the display list (has no parent), LiquidStage will ignore it until it 
+    is back in the display list.</li>
+   <li> If you plan to set the <code>align</code> property of your stage, do so before creating its LiquidStage
+    instance.</li>
+   <li> LiquidStage is a <a href="http://www.greensock.com/club/">Club GreenSock</a> membership benefit. 
+    You must have a valid membership to use this class without violating the terms of use. Visit 
+    <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a> to sign up or get more details.</li>
+ </ul>
+ 
+ <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the license that came with your Club GreenSock membership and is <b>ONLY</b> to be used by corporate or "Shockingly Green" Club GreenSock members. To learn more about Club GreenSock, visit <a href="http://blog.greensock.com/club/">http://blog.greensock.com/club/</a>.
+ 
+ <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#BOTTOM_CENTER">BOTTOM_CENTER</a> : <a href="../layout/PinPoint.html">PinPoint</a>
+<div class="summaryTableDescription"> bottom center of the stage </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#BOTTOM_LEFT">BOTTOM_LEFT</a> : <a href="../layout/PinPoint.html">PinPoint</a>
+<div class="summaryTableDescription"> bottom left corner of the stage </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#BOTTOM_RIGHT">BOTTOM_RIGHT</a> : <a href="../layout/PinPoint.html">PinPoint</a>
+<div class="summaryTableDescription"> bottom right corner of the stage </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#CENTER">CENTER</a> : <a href="../layout/PinPoint.html">PinPoint</a>
+<div class="summaryTableDescription"> center of the stage </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#defaultStage">defaultStage</a> : <a href="../layout/LiquidStage.html">LiquidStage</a>
+<div class="summaryTableDescription">[static] Refers to the first LiquidStage instance created (or you can set it to any other instance) - it serves as an easy way to reference a LiquidStage through a static variable.</div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#isBaseSize">isBaseSize</a> : Boolean<div class="summaryTableDescription">[read-only] Only <code>true</code> when the LiquidStage instance is at the base size as it was defined in the constructor (<code>baseWidth</code> and <code>baseHeight</code>).</div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#LEFT_CENTER">LEFT_CENTER</a> : <a href="../layout/PinPoint.html">PinPoint</a>
+<div class="summaryTableDescription"> left center of the stage </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#maxHeight">maxHeight</a> : uint<div class="summaryTableDescription"> maximum height of the LiquidStage area </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#maxWidth">maxWidth</a> : uint<div class="summaryTableDescription"> maximum width of the LiquidStage area </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#minHeight">minHeight</a> : uint<div class="summaryTableDescription"> minimum height of the LiquidStage area </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#minWidth">minWidth</a> : uint<div class="summaryTableDescription"> minimum width of the LiquidStage area </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#retroMode">retroMode</a> : Boolean<div class="summaryTableDescription"> When <code>retroMode</code> is <code>true</code>, LiquidStage will revert to (and stay at) the base stage size as it was defined in the constructor (<code>baseWidth</code> and <code>baseHeight</code>) which can be useful when you want to pin objects according to coordinates on the original (unscaled) stage.</div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#RIGHT_CENTER">RIGHT_CENTER</a> : <a href="../layout/PinPoint.html">PinPoint</a>
+<div class="summaryTableDescription"> right center of the stage </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#stage">stage</a> : Stage<div class="summaryTableDescription">[read-only] The stage associated with the LiquidStage instance </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#stageBox">stageBox</a> : Sprite<div class="summaryTableDescription">[read-only] A Sprite that starts out at the native size of the stage (baseWidth/baseHeight) and then gets scaled to fit the stage - you can use this for the <code>target</code> parameter for custom PinPoints that you place positions on the stage.</div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#TOP_CENTER">TOP_CENTER</a> : <a href="../layout/PinPoint.html">PinPoint</a>
+<div class="summaryTableDescription"> top center of the stage </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#TOP_LEFT">TOP_LEFT</a> : <a href="../layout/PinPoint.html">PinPoint</a>
+<div class="summaryTableDescription"> top left corner of the stage </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#TOP_RIGHT">TOP_RIGHT</a> : <a href="../layout/PinPoint.html">PinPoint</a>
+<div class="summaryTableDescription"> top right corner of the stage </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#LiquidStage()">LiquidStage</a>(stage:Stage, baseWidth:uint, baseHeight:uint, minWidth:uint = 0, minHeight:uint = 0, maxWidth:uint = 99999999, maxHeight:uint = 99999999)</div>
+<div class="summaryTableDescription">
+   Constructor
+   
+   </div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addEventListener()">addEventListener</a>(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Use this to add an <code>Event.RESIZE</code> event listener which can be
+   particularly handy if you need to run other functions AFTER LiquidStage does all its repositioning.</div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#attach()">attach</a>(target:DisplayObject, pin:<a href="PinPoint.html">PinPoint</a>, strict:Boolean = false, reconcile:Boolean = true, tweenDuration:Number = 0, tweenVars:Object = null, roundPosition:Boolean = false):void</div>
+<div class="summaryTableDescription">
+   Attaches a DisplayObject to a particular PinPoint (like <code>TOP_RIGHT</code>) so that any movement of the 
+   PinPoint will also affect the relative position of the DisplayObject.</div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getByStage()">getByStage</a>(stage:Stage):<a href="../layout/LiquidStage.html">LiquidStage</a>
+</div>
+<div class="summaryTableDescription">[static]
+   Retrieves the LiquidStage instance associated with a particular stage.</div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#release()">release</a>(target:DisplayObject):Boolean</div>
+<div class="summaryTableDescription">
+   Releases a DisplayObject from being controlled by LiquidStage after having been attached.</div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#update()">update</a>(event:Event = null, suppressEvents:Boolean = false):void</div>
+<div class="summaryTableDescription"> Forces an update of all PinPoints and DisplayObject positions.</div>
+</td><td class="summaryTableOwnerCol">LiquidStage</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="BOTTOM_CENTER"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">BOTTOM_CENTER</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var BOTTOM_CENTER:<a href="../layout/PinPoint.html">PinPoint</a></code><p> bottom center of the stage </p></div>
+<a name="BOTTOM_LEFT"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">BOTTOM_LEFT</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var BOTTOM_LEFT:<a href="../layout/PinPoint.html">PinPoint</a></code><p> bottom left corner of the stage </p></div>
+<a name="BOTTOM_RIGHT"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">BOTTOM_RIGHT</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var BOTTOM_RIGHT:<a href="../layout/PinPoint.html">PinPoint</a></code><p> bottom right corner of the stage </p></div>
+<a name="CENTER"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">CENTER</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var CENTER:<a href="../layout/PinPoint.html">PinPoint</a></code><p> center of the stage </p></div>
+<a name="defaultStage"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">defaultStage</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static var defaultStage:<a href="../layout/LiquidStage.html">LiquidStage</a></code><p> Refers to the first LiquidStage instance created (or you can set it to any other instance) - it serves as an easy way to reference a LiquidStage through a static variable. </p></div>
+<a name="isBaseSize"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isBaseSize</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>isBaseSize:Boolean</code>&nbsp;&nbsp;[read-only]<p> Only <code>true</code> when the LiquidStage instance is at the base size as it was defined in the constructor (<code>baseWidth</code> and <code>baseHeight</code>). This essentially indicates whether or not the stage is currently scaled. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get isBaseSize():Boolean</code>
+<br>
+</div>
+<a name="LEFT_CENTER"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">LEFT_CENTER</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var LEFT_CENTER:<a href="../layout/PinPoint.html">PinPoint</a></code><p> left center of the stage </p></div>
+<a name="maxHeight"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">maxHeight</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var maxHeight:uint</code><p> maximum height of the LiquidStage area </p></div>
+<a name="maxWidth"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">maxWidth</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var maxWidth:uint</code><p> maximum width of the LiquidStage area </p></div>
+<a name="minHeight"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">minHeight</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var minHeight:uint</code><p> minimum height of the LiquidStage area </p></div>
+<a name="minWidth"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">minWidth</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var minWidth:uint</code><p> minimum width of the LiquidStage area </p></div>
+<a name="retroMode"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">retroMode</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>retroMode:Boolean</code>&nbsp;&nbsp;[read-write]<p> When <code>retroMode</code> is <code>true</code>, LiquidStage will revert to (and stay at) the base stage size as it was defined in the constructor (<code>baseWidth</code> and <code>baseHeight</code>) which can be useful when you want to pin objects according to coordinates on the original (unscaled) stage. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get retroMode():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set retroMode(value:Boolean):void</code>
+<br>
+</div>
+<a name="RIGHT_CENTER"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">RIGHT_CENTER</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var RIGHT_CENTER:<a href="../layout/PinPoint.html">PinPoint</a></code><p> right center of the stage </p></div>
+<a name="stage"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">stage</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>stage:Stage</code>&nbsp;&nbsp;[read-only]<p> The stage associated with the LiquidStage instance </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get stage():Stage</code>
+<br>
+</div>
+<a name="stageBox"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">stageBox</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>stageBox:Sprite</code>&nbsp;&nbsp;[read-only]<p> A Sprite that starts out at the native size of the stage (baseWidth/baseHeight) and then gets scaled to fit the stage - you can use this for the <code>target</code> parameter for custom PinPoints that you place positions on the stage. </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get stageBox():Sprite</code>
+<br>
+</div>
+<a name="TOP_CENTER"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">TOP_CENTER</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var TOP_CENTER:<a href="../layout/PinPoint.html">PinPoint</a></code><p> top center of the stage </p></div>
+<a name="TOP_LEFT"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">TOP_LEFT</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var TOP_LEFT:<a href="../layout/PinPoint.html">PinPoint</a></code><p> top left corner of the stage </p></div>
+<a name="TOP_RIGHT"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">TOP_RIGHT</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var TOP_RIGHT:<a href="../layout/PinPoint.html">PinPoint</a></code><p> top right corner of the stage </p></div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="LiquidStage()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">LiquidStage</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function LiquidStage(stage:Stage, baseWidth:uint, baseHeight:uint, minWidth:uint = 0, minHeight:uint = 0, maxWidth:uint = 99999999, maxHeight:uint = 99999999)</code><p>
+   Constructor
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">stage</span>:Stage</code> &mdash; The Stage to which LiquidStage is applied
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">baseWidth</span>:uint</code> &mdash; The width of the SWF as it was built in the IDE originally (NOT the width that it is stretched to in the browser or standalone player). 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">baseHeight</span>:uint</code> &mdash; The height of the SWF as it was built in the IDE originally (NOT the height that it is stretched to in the browser or standalone player). 
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">minWidth</span>:uint</code> (default = <code>0</code>)<code></code> &mdash; Minimum width (if you never want the width of LiquidStage to go below a certain amount, use minWidth).
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">minHeight</span>:uint</code> (default = <code>0</code>)<code></code> &mdash; Minimum height (if you never want the height of LiquidStage to go below a certain amount, use minHeight).
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">maxWidth</span>:uint</code> (default = <code>99999999</code>)<code></code> &mdash; Maximum width (if you never want the width of LiquidStage to exceed a certain amount, use maxWidth).
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">maxHeight</span>:uint</code> (default = <code>99999999</code>)<code></code> &mdash; Maximum height (if you never want the height of LiquidStage to exceed a certain amount, use maxHeight).
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="addEventListener()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addEventListener</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void</code><p>
+   Use this to add an <code>Event.RESIZE</code> event listener which can be
+   particularly handy if you need to run other functions AFTER LiquidStage does all its repositioning.
+    
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">type</span>:String</code> &mdash; Event type (<code>Event.RESIZE</code>)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">listener</span>:Function</code> &mdash; Listener function
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">useCapture</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; useCapture
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">priority</span>:int</code> (default = <code>0</code>)<code></code> &mdash; Priority level
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">useWeakReference</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Use weak references
+   </td>
+</tr>
+</table>
+</div>
+<a name="attach()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">attach</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function attach(target:DisplayObject, pin:<a href="PinPoint.html">PinPoint</a>, strict:Boolean = false, reconcile:Boolean = true, tweenDuration:Number = 0, tweenVars:Object = null, roundPosition:Boolean = false):void</code><p>
+   Attaches a DisplayObject to a particular PinPoint (like <code>TOP_RIGHT</code>) so that any movement of the 
+   PinPoint will also affect the relative position of the DisplayObject. Attaching the DisplayObject
+   does NOT force it to share the same coordinates as the PinPoint - it simply causes the PinPoint's 
+   movement to proportionally affect the position of the DisplayObject. The relationship is one-way
+   so moving the DisplayObject will not move the PinPoint. Unless the <code>strict</code> parameter
+   is <code>true</code>, changes are relative so you are free to move the DisplayObject as you wish and when the 
+   PinPoint's position changes, its proportional movement will honor the DisplayObject's new position
+   instead of forcing it back to the same distance from the PinPoint. But again, you can set
+   the <code>strict</code> parameter to <code>true</code> if you want to force the object to always 
+   maintain a certain distance from the PinPoint<br /><br />
+   
+   For example, if your object is 100 pixels away from the PinPoint and the PinPoint moves 15 pixels,
+   the DisplayObject will move 15 pixels as well (or however many pixels it takes to maintain its relative
+   distance to the PinPoint which may be more or less than 15 pixels if it is nested inside a scaled parent).
+   Strict mode, however, will force the DisplayObject to maintain its exact distance away from the PinPoint
+   (no manual position changes will be honored when LiquidStage updates).
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:DisplayObject</code> &mdash; The DisplayObject to attach
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">pin</span>:<a href="PinPoint.html">PinPoint</a></code> &mdash; The PinPoint to which the target should be attached (like <code>TOP_RIGHT</code> or <code>CENTER</code> or a custom PinPoint)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">strict</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; In strict mode, the target will be forced to remain <b>EXACTLY</b> the same distance from the pin as it was when it was attached. If strict is false, LiquidStage will honor any manual changes you make to the target's position, making it more flexible. Note that LiquidStage only performs updates to the target's position when the stage resizes and/or when <code>update()</code> is called.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">reconcile</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true, the target's position will immediately be moved as far as the PinPoint has moved from its original position, effectively acting as though the target was attached BEFORE the stage was scaled. If you attach an object after the stage has been scaled and you don't want it to reconcile with the PinPoint initially, set <code>reconcile</code> to <code>false</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">tweenDuration</span>:Number</code> (default = <code>0</code>)<code></code> &mdash; To make the target tween to its new position instead of immediately moving there, set the tween duration (in seconds) to a non-zero value. A <code>TweenLite</code> instance will be used for the tween.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">tweenVars</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; To control other aspects of the tween (like ease, onComplete, delay, etc.), use an object just like the one you'd pass into a <code>TweenLite</code> instance as the 3rd parameter (like <code>{ease:Elastic.easeOut, delay:0.2}</code>)
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">roundPosition</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; To force the target's x/y position to snap to whole pixel values, set <code>roundPosition</code> to <code>true</code> (it is <code>false</code> by default).
+   </td>
+</tr>
+</table>
+</div>
+<a name="getByStage()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getByStage</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function getByStage(stage:Stage):<a href="../layout/LiquidStage.html">LiquidStage</a></code><p>
+   Retrieves the LiquidStage instance associated with a particular stage. For example:<br /><br /><code>
+   
+   //create the LiquidStage instance<br />
+   var ls:LiquidStage = new LiquidStage(this.stage, 550, 400); <br /><br />
+   
+   //then later, if you need to find the LiquidStage instance for this stage to attach() objects, you could do this:<br />
+   var ls:LiquidStage = LiquidStage.getByStage(this.stage);<br />
+   ls.attach(mc1, ls.TOP_RIGHT);<br />
+   ls.attach(mc2, ls.BOTTOM_CENTER);<br /></code>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">stage</span>:Stage</code> &mdash; The stage whose LiquidStage instance to return
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../layout/LiquidStage.html">LiquidStage</a></code> &mdash; 
+                        LiquidStage instance associated with the stage
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="release()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">release</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function release(target:DisplayObject):Boolean</code><p>
+   Releases a DisplayObject from being controlled by LiquidStage after having been attached. 
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">target</span>:DisplayObject</code> &mdash; The DisplayObject to release
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; if the target was found and released, this value will be true. Otherwise, it will be false.
+   </td>
+</tr>
+</table>
+</div>
+<a name="update()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">update</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function update(event:Event = null, suppressEvents:Boolean = false):void</code><p> Forces an update of all PinPoints and DisplayObject positions. </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:Event</code> (default = <code>null</code>)<code></code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">suppressEvents</span>:Boolean</code> (default = <code>false</code>)<code></code></td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->
