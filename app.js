@@ -1,33 +1,24 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express')
-  , http = require('http')
   , path = require('path');
 
 var app = express();
+var port = process.env.PORT || 3000;
 
-app.configure(function(){
-  app.set('port', process.env.PORT || 3005);
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+app.all('/', function(req, res){
+	res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 
-app.configure('development', function(){
-  app.use(express.errorHandler());
+app.get('/ping', function (req, res) {
+  res.send('pong');
+})
+
+app.get('/manifest.webapp', function(req, res){
+	res.header('Content-Type', 'application/x-web-app-manifest+json');
+	res.sendfile('manifest.webapp');
 });
 
-app.get('/', function(req, res){
-	res.sendfile('views/index.html');
-});
+app.use(express.static(path.join(__dirname, 'public')));
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+app.listen(port, function(){
+  console.log("Express server listening on port " + port);
 });
